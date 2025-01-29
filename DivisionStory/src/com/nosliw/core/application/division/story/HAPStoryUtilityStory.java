@@ -30,8 +30,9 @@ public class HAPStoryUtilityStory {
 	static private int index = 0;
 
 	
-	public static void addNodeAsChild(HAPStoryReferenceElement eleRefParent, HAPStoryReferenceElement eleRefChild, String childId, HAPStoryRequestChangeWrapper changeRequest, boolean inheritVar) {
-		if(!inheritVar){
+	//return connection ref
+	public static HAPStoryReferenceElement addNodeAsChild(HAPStoryReferenceElement eleRefParent, HAPStoryReferenceElement eleRefChild, String childId, HAPStoryRequestChangeWrapper changeRequest, boolean inheritVar) {
+		if(inheritVar){
 			HAPStoryStory story = changeRequest.getStory();
 			HAPStoryNode parent = (HAPStoryNode)story.getElement(eleRefParent);
 			HAPStoryNode child = (HAPStoryNode)story.getElement(eleRefChild);
@@ -44,7 +45,7 @@ public class HAPStoryUtilityStory {
 		}
 
 		//build parent-child relation
-		changeRequest.addNewChange(HAPStoryUtilityConnection.newConnectionContain(eleRefParent, eleRefChild, childId, null));
+		return changeRequest.addNewChange(HAPStoryUtilityConnection.newConnectionContain(eleRefParent, eleRefChild, childId, null)).getElement().getElementId();
 	}
 	
 	

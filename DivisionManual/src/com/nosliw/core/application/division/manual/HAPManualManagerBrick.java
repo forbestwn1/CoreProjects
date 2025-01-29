@@ -18,6 +18,8 @@ import com.nosliw.core.application.HAPIdBrickType;
 import com.nosliw.core.application.HAPManagerApplicationBrick;
 import com.nosliw.core.application.HAPPluginDivision;
 import com.nosliw.core.application.HAPWrapperBrickRoot;
+import com.nosliw.core.application.common.dataexpressionimp.HAPPluginProcessorEntityWithVariableDataExpression;
+import com.nosliw.core.application.common.scriptexpression.HAPPluginProcessorEntityWithVariableScriptExpression;
 import com.nosliw.core.application.common.withvariable.HAPManagerWithVariablePlugin;
 import com.nosliw.core.application.common.withvariable.HAPPluginProcessorEntityWithVariable;
 import com.nosliw.core.application.division.manual.brick.adapter.dataassociation.HAPManaualPluginAdapterProcessorDataAssociation;
@@ -74,9 +76,6 @@ import com.nosliw.core.application.division.manual.brick.wrapperbrick.HAPManualP
 import com.nosliw.core.application.division.manual.brick.wrappertask.HAPManualPluginParserBlockTaskWrapper;
 import com.nosliw.core.application.division.manual.brick.wrappertask.HAPManualPluginProcessorBlockSimpleImpTaskWrapper;
 import com.nosliw.core.application.division.manual.common.attachment.HAPManualUtilityAttachment;
-import com.nosliw.core.application.division.manual.common.dataexpression.HAPPluginProcessorEntityWithVariableDataExpression;
-import com.nosliw.core.application.division.manual.common.scriptexpression.HAPManualUtilityScriptExpressionConstant;
-import com.nosliw.core.application.division.manual.common.scriptexpression.HAPPluginProcessorEntityWithVariableScriptExpression;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionAttributeInBrick;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrick;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionContextParse;

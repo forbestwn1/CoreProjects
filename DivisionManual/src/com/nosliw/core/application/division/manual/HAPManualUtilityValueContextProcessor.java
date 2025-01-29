@@ -108,7 +108,7 @@ public class HAPManualUtilityValueContextProcessor {
 				
 				//normalizeRelativeElement
 				for(String valueStructureId : valueContextExe.getValueStructureIds()) {
-					for(HAPRootInStructure root: valueStructureDomain.getStructureDefinitionByRuntimeId(valueStructureId).getRoots()) {
+					for(HAPRootInStructure root: valueStructureDomain.getStructureDefinitionByRuntimeId(valueStructureId).getRoots().values()) {
 						HAPInfoValueStructureRuntime valueStructureRuntimeInfo = valueStructureDomain.getValueStructureRuntimeInfo(valueStructureId);
 						HAPUtilityStructure.traverseElement(root.getDefinition(), null, new HAPProcessorStructureElement() {
 
@@ -200,7 +200,7 @@ public class HAPManualUtilityValueContextProcessor {
 				HAPManualValueContext valueContextExe = complexEntityExe.getManualValueContext();
 				
 				for(String valueStructureId : valueContextExe.getValueStructureIds()) {
-					for(HAPRootInStructure root: valueStructureDomain.getStructureDefinitionByRuntimeId(valueStructureId).getRoots()) {
+					for(HAPRootInStructure root: valueStructureDomain.getStructureDefinitionByRuntimeId(valueStructureId).getRoots().values()) {
 						HAPInfoValueStructureRuntime valueStructureRuntimeInfo = valueStructureDomain.getValueStructureRuntimeInfo(valueStructureId);
 						HAPUtilityStructure.traverseElement(root.getDefinition(), null, new HAPProcessorStructureElement() {
 

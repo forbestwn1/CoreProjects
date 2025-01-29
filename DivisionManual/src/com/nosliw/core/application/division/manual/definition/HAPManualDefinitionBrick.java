@@ -17,6 +17,8 @@ import com.nosliw.core.application.brick.wrappertask.HAPBlockTaskWrapper;
 import com.nosliw.core.application.common.constant.HAPDefinitionConstant;
 import com.nosliw.core.application.common.constant.HAPWithConstantDefinition;
 import com.nosliw.core.application.common.parentrelation.HAPManualDefinitionBrickRelationValueContext;
+import com.nosliw.core.application.common.scriptexpression.HAPDefinitionContainerScriptExpression;
+import com.nosliw.core.application.common.scriptexpression.HAPWithScriptExpressionConstantMaster;
 import com.nosliw.core.application.common.structure.HAPWrapperValueStructure;
 import com.nosliw.core.application.division.manual.HAPManualManagerBrick;
 import com.nosliw.core.application.division.manual.brick.data.HAPManualDefinitionBlockData;
@@ -24,8 +26,6 @@ import com.nosliw.core.application.division.manual.brick.value.HAPManualDefiniti
 import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualDefinitionBrickValueContext;
 import com.nosliw.core.application.division.manual.brick.wrappertask.HAPManualDefinitionBlockTaskWrapper;
 import com.nosliw.core.application.division.manual.common.attachment.HAPManualDefinitionAttachment;
-import com.nosliw.core.application.division.manual.common.scriptexpression.HAPManualDefinitionContainerScriptExpression;
-import com.nosliw.core.application.division.manual.common.scriptexpression.HAPWithScriptExpressionConstantMaster;
 import com.nosliw.data.core.resource.HAPResourceId;
 
 public abstract class HAPManualDefinitionBrick extends HAPSerializableImp implements HAPEntityOrReference, HAPWithConstantDefinition, HAPWithScriptExpressionConstantMaster{
@@ -41,7 +41,7 @@ public abstract class HAPManualDefinitionBrick extends HAPSerializableImp implem
 
 	private HAPManualDefinitionAttachment m_attachment;
 	
-	private HAPManualDefinitionContainerScriptExpression m_constantScriptExpressions;
+	private HAPDefinitionContainerScriptExpression m_constantScriptExpressions;
 	
 	private HAPIdBrickType m_brickTypeId;
 
@@ -51,7 +51,7 @@ public abstract class HAPManualDefinitionBrick extends HAPSerializableImp implem
 		this.m_attributes = new ArrayList<HAPManualDefinitionAttributeInBrick>();
 		this.m_attachment = new HAPManualDefinitionAttachment();
 		this.m_brickTypeId = brickTypeId;
-		this.m_constantScriptExpressions = new HAPManualDefinitionContainerScriptExpression();
+		this.m_constantScriptExpressions = new HAPDefinitionContainerScriptExpression();
 	}
 
 	protected void init() {}
@@ -78,7 +78,7 @@ public abstract class HAPManualDefinitionBrick extends HAPSerializableImp implem
 	public HAPManualDefinitionAttachment getAttachment() {    return this.m_attachment;      }
 	
 	@Override
-	public HAPManualDefinitionContainerScriptExpression getScriptExpressionConstantContainer() {   return this.m_constantScriptExpressions;  }
+	public HAPDefinitionContainerScriptExpression getScriptExpressionConstantContainer() {   return this.m_constantScriptExpressions;  }
 
 	@Override
 	public void discoverConstantScript() {

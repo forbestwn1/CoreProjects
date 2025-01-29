@@ -1,10 +1,7 @@
 package com.nosliw.core.application.division.story.design.wizard.servicedriven;
 
-import com.nosliw.core.application.division.story.HAPStoryAliasElement;
-import com.nosliw.core.application.division.story.HAPStoryIdElement;
 import com.nosliw.core.application.division.story.HAPStoryReferenceElement;
 import com.nosliw.core.application.division.story.HAPStoryStory;
-import com.nosliw.core.application.division.story.brick.node.HAPStoryNodeUI;
 
 public class HAPStoryUIChild {
 
@@ -23,14 +20,8 @@ public class HAPStoryUIChild {
 		this.m_story = story;
 	}
 
-	//for new node
-	public HAPStoryUIChild(HAPStoryNodeUI storyNode, HAPStoryAliasElement alias, Object childId, HAPStoryReferenceElement connectionRef, HAPStoryStory story) {
-		this(new HAPStoryUINode(storyNode, alias, story), childId, connectionRef, story);
-	}
-
-	//for solid node
-	public HAPStoryUIChild(HAPStoryIdElement storyNodeId, Object childId, HAPStoryReferenceElement connectionRef, HAPStoryStory story) {
-		this(new HAPStoryUINode(storyNodeId, story), childId, connectionRef, story);
+	public HAPStoryUIChild(HAPStoryReferenceElement storyNodeRef, Object childId, HAPStoryReferenceElement connectionRef, HAPStoryStory story) {
+		this(new HAPStoryUINode(storyNodeRef, story), childId, connectionRef, story);
 	}
 
 	public HAPStoryUINode getUINode() {    return this.m_node;     }

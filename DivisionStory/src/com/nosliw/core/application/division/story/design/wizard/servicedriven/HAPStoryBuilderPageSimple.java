@@ -41,6 +41,7 @@ import com.nosliw.core.application.division.story.brick.node.HAPStoryNodeService
 import com.nosliw.core.application.division.story.brick.node.HAPStoryNodeServiceOutputItem;
 import com.nosliw.core.application.division.story.brick.node.HAPStoryNodeUI;
 import com.nosliw.core.application.division.story.brick.node.HAPStoryNodeUIHtml;
+import com.nosliw.core.application.division.story.brick.node.HAPStoryNodeUIPage;
 import com.nosliw.core.application.division.story.brick.node.HAPStoryNodeUITagData;
 import com.nosliw.core.application.division.story.brick.node.HAPStoryNodeUITagOther;
 import com.nosliw.core.application.division.story.brick.node.HAPStoryNodeVariable;
@@ -118,7 +119,7 @@ public class HAPStoryBuilderPageSimple implements HAPStoryBuilderStory{
 		changeRequest.addChange(new HAPStoryChangeItemNew(new HAPStoryNodeService(), ELEMENT_SERVICE));
 
 		//module container service
-		HAPStoryUtilityStory.addNodeAsChild(ELEMENT_MODULE, ELEMENT_SERVICE, HAPStoryNodeService.STORYNODE_TYPE, changeRequest, true);
+		HAPStoryUtilityStory.addNodeAsChild(ELEMENT_MODULE, ELEMENT_SERVICE, HAPStoryNodeService.STORYNODE_TYPE, changeRequest, false);
 		
 		changeRequest.close();
 		HAPStoryResultTransaction transactionResult = story.commitTransaction();
@@ -247,7 +248,7 @@ public class HAPStoryBuilderPageSimple implements HAPStoryBuilderStory{
 					parmBranchInfo.variableAlias = dataLayerChangeRequest.addNewChange(new HAPStoryNodeVariable(parmBranchInfo.parmDef, defaultData)).getAlias();
 					dataLayerChangeRequest.addPatchChange(parmBranchInfo.variableAlias, HAPStoryElement.DISPLAYRESOURCE, inputDisplayResource.getResourceNode(parmName));
 					HAPStoryAliasElement variableConnectionNodeName = dataLayerChangeRequest.addNewChange(HAPStoryUtilityConnection.newConnectionOnewayDataIO(parmBranchInfo.variableAlias, parmNodeName, null, null)).getAlias();
-					dataLayerChangeRequest.addNewChange(HAPStoryUtilityConnection.newConnectionContain(moduleStoryNode.getElementId(), parmBranchInfo.variableAlias, parmBranchInfo.variableAlias.getName(), null));
+					HAPStoryUtilityVariable.addVariableToNode(moduleStoryNode.getElementId(), parmBranchInfo.variableAlias, null, dataLayerChangeRequest);
 
 					parmBranchInfo.varGroupAlias = dataLayerChangeRequest.addNewChange(new HAPStoryElementGroupBatch()).getAlias();
 					dataLayerChangeRequest.addPatchChangeGroupAppendElement(parmBranchInfo.varGroupAlias, new HAPStoryInfoElement(parmBranchInfo.variableAlias));
@@ -323,6 +324,7 @@ public class HAPStoryBuilderPageSimple implements HAPStoryBuilderStory{
 				//page node and tree
 				uiLayerChangeRequest.addNewChange(HAPStoryUtility.buildPageStoryNode(story));
 				HAPStoryUIPage uiPage = HAPStoryUtility.buildUITree(story, this.m_runtimeEnv, this.m_uiTagManager, this.m_changeManager);
+				HAPStoryUtilityStory.addNodeAsChild(ELEMENT_MODULE, uiPage.getStoryNodeRef(), HAPStoryNodeUIPage.STORYNODE_TYPE, uiLayerChangeRequest, true);
 
 				//page layout node
 				HAPStoryUINode pageLayoutUINode = uiPage.newChildNode(new HAPStoryNodeUIHtml(HAPUtilityFile.readFile(HAPStoryBuilderPageSimple.class, "page_html.tmp")), ALIAS_LAYOUTNODE, null, uiLayerChangeRequest, this.m_runtimeEnv, m_uiTagManager);

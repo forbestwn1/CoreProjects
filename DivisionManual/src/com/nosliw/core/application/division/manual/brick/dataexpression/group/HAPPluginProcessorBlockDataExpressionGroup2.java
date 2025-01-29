@@ -8,14 +8,14 @@ import com.nosliw.core.application.brick.dataexpression.group.HAPBlockDataExpres
 import com.nosliw.core.application.brick.dataexpression.group.HAPGroupDataExpression;
 import com.nosliw.core.application.brick.dataexpression.group.HAPItemInGroupDataExpression;
 import com.nosliw.core.application.common.dataexpression.HAPItemInContainerDataExpression;
+import com.nosliw.core.application.common.dataexpressionimp.HAPManualExpressionData;
+import com.nosliw.core.application.common.dataexpressionimp.HAPManualUtilityProcessorDataExpression;
+import com.nosliw.core.application.common.dataexpressionimp.HAPUtilityExpressionProcessor;
 import com.nosliw.core.application.common.valueport.HAPUtilityValuePortVariable;
 import com.nosliw.core.application.common.withvariable.HAPContainerVariableInfo;
 import com.nosliw.core.application.division.manual.HAPManualContextProcessBrick;
 import com.nosliw.core.application.division.manual.HAPManualManagerBrick;
 import com.nosliw.core.application.division.manual.HAPManualPluginProcessorBlockComplex;
-import com.nosliw.core.application.division.manual.common.dataexpression.HAPManualExpressionData;
-import com.nosliw.core.application.division.manual.common.dataexpression.HAPManualUtilityProcessorDataExpression;
-import com.nosliw.core.application.division.manual.common.dataexpression.HAPUtilityExpressionProcessor;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrick;
 import com.nosliw.core.application.division.manual.executable.HAPManualBrick;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;

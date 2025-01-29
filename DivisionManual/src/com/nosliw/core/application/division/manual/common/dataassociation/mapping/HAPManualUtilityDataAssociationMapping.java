@@ -22,10 +22,10 @@ import com.nosliw.core.application.common.structure.HAPPathElementMapping;
 import com.nosliw.core.application.common.structure.HAPPathElementMappingConstantToVariable;
 import com.nosliw.core.application.common.structure.HAPPathElementMappingVariableToVariable;
 import com.nosliw.core.application.common.structure.HAPProcessorStructureElement;
+import com.nosliw.core.application.common.structure.HAPStructureImp;
 import com.nosliw.core.application.common.structure.HAPUtilityStructure;
 import com.nosliw.core.application.common.valueport.HAPIdRootElement;
 import com.nosliw.core.application.common.valueport.HAPIdValuePortInBundle;
-import com.nosliw.core.application.valuestructure.HAPDefinitionStructure;
 import com.nosliw.core.application.valuestructure.HAPDomainValueStructure;
 import com.nosliw.data.core.matcher.HAPMatchers;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
@@ -40,7 +40,7 @@ public class HAPManualUtilityDataAssociationMapping {
 		
 		HAPDomainValueStructure toValueStructureDomain = HAPUtilityBrickValuePort.getDescdentValuePortContainerInfo(bundle, rootBrickName, new HAPPath(rootEleId.getValuePortId().getBrickId().getIdPath()), runtimeEnv.getResourceManager(), runtimeEnv.getRuntime().getRuntimeInfo()).getValueStructureDomain();		
 		
-		HAPDefinitionStructure toValueStructure=toValueStructureDomain.getStructureDefinitionByRuntimeId(toValueStructureId);
+		HAPStructureImp toValueStructure=toValueStructureDomain.getStructureDefinitionByRuntimeId(toValueStructureId);
 
 		List<HAPTunnel> out = new ArrayList<HAPTunnel>();
 		HAPUtilityStructure.traverseElement(structureEle, rootEleId.getRootName(), new HAPProcessorStructureElement() {

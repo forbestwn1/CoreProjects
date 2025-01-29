@@ -1,5 +1,9 @@
 package com.nosliw.core.application.brick.task.flow;
 
-public interface HAPBlockTaskFlowEnd {
+import com.nosliw.core.application.HAPBrick;
 
+public interface HAPBlockTaskFlowEnd extends HAPBrick{
+
+	
+	
 }

@@ -1,6 +1,6 @@
 package com.nosliw.core.application.division.manual.brick.valuestructure;
 
-import com.nosliw.core.application.common.structure.HAPValueStructureDefinition;
+import com.nosliw.core.application.common.structure.HAPValueStructure;
 import com.nosliw.core.application.common.structure.HAPWrapperValueStructure;
 import com.nosliw.core.application.division.manual.HAPManualEnumBrickType;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrickWithEntityInfo;
@@ -22,10 +22,10 @@ public class HAPManualDefinitionBrickWrapperValueStructure extends HAPManualDefi
 	public void setValueStructure(HAPManualDefinitionBrickValueStructure valueStructure) {   this.setAttributeValueWithBrick(VALUESTRUCTURE, valueStructure);  }
 
 	@Override
-	public HAPValueStructureDefinition getValueStructure() {   return this.getValueStructureBlock().getValue();  }
+	public HAPValueStructure getValueStructure() {   return this.getValueStructureBlock().getValue();  }
 
 	@Override
-	public void setValueStructure(HAPValueStructureDefinition valueStructure) {   this.getValueStructureBlock().setValue(valueStructure);  }
+	public void setValueStructure(HAPValueStructure valueStructure) {   this.getValueStructureBlock().setValue(valueStructure);  }
 
 	@Override
 	public String getGroupType() {   return (String)this.getAttributeValueOfValue(GROUPTYPE);    }

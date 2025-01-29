@@ -15,8 +15,8 @@ import com.nosliw.core.application.common.structure.HAPElementStructureLeafData;
 import com.nosliw.core.application.common.structure.HAPElementStructureLeafRelativeForValue;
 import com.nosliw.core.application.common.structure.HAPRootInStructure;
 import com.nosliw.core.application.common.structure.HAPUtilityValueStructureParser;
-import com.nosliw.core.application.common.structure.HAPValueStructureDefinition;
-import com.nosliw.core.application.common.structure.HAPValueStructureDefinitionImp;
+import com.nosliw.core.application.common.structure.HAPValueStructure;
+import com.nosliw.core.application.common.structure.HAPValueStructureImp;
 import com.nosliw.core.application.common.structure.HAPWrapperValueStructure;
 import com.nosliw.data.core.resource.HAPFactoryResourceId;
 import com.nosliw.data.core.resource.HAPResourceId;
@@ -49,7 +49,7 @@ public class HAPUtilityUITagDefinitionParser {
 		//parse data type criteria
 		if(HAPConstantShared.UITAG_TYPE_DATA.equals(uiTagType)) {
 			for(HAPWrapperValueStructure wrapper : valueContext.getValueStructures()) {
-				HAPValueStructureDefinition vs = wrapper.getValueStructure();
+				HAPValueStructure vs = wrapper.getValueStructure();
 				Map<String, HAPRootInStructure> roots = vs.getRoots();
 				for(String rootName : roots.keySet()) {
 					if(HAPConstantShared.NAME_ROOT_TAGDATA.equals(rootName)) {
@@ -191,7 +191,7 @@ public class HAPUtilityUITagDefinitionParser {
 			
 			HAPUtilityValueStructureParser.parseValueStructureWrapper(valueStructureWrapper, valueStructureWrapperObj);
 			
-			HAPValueStructureDefinition valueStructure = new HAPValueStructureDefinitionImp();
+			HAPValueStructure valueStructure = new HAPValueStructureImp();
 			HAPUtilityValueStructureParser.parseValueStructureJson(valueStructureWrapperObj.getJSONObject(HAPWrapperValueStructure.VALUESTRUCTURE), valueStructure);
 			valueStructureWrapper.setValueStructure(valueStructure);
 			

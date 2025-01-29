@@ -3,10 +3,10 @@ package com.nosliw.core.application.division.story.design.wizard.servicedriven;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.nosliw.core.application.division.story.HAPStoryAliasElement;
 import com.nosliw.core.application.division.story.HAPStoryReferenceElement;
 import com.nosliw.core.application.division.story.HAPStoryStory;
 import com.nosliw.core.application.division.story.HAPStoryUtilityConnection;
+import com.nosliw.core.application.division.story.HAPStoryUtilityStory;
 import com.nosliw.core.application.division.story.brick.connection.HAPStoryConnectionContain;
 import com.nosliw.core.application.division.story.brick.node.HAPStoryNodeUI;
 import com.nosliw.core.application.division.story.brick.node.HAPStoryNodeVariable;
@@ -34,10 +34,10 @@ public class HAPStoryUINode {
 	}
 
 	//this is for new story node
-	public HAPStoryUINode(HAPStoryNodeUI storyNode, HAPStoryAliasElement alias, HAPStoryStory story) {
-		this(alias, story);
-		this.m_storyNode = storyNode;
-	}
+//	public HAPStoryUINode(HAPStoryNodeUI storyNode, HAPStoryAliasElement alias, HAPStoryStory story) {
+//		this(alias, story);
+//		this.m_storyNode = storyNode;
+//	}
 
 	public HAPStoryUINode getUINodeByStoryElementId(String storyEleId) {
 		
@@ -65,14 +65,19 @@ public class HAPStoryUINode {
 	}
 	
 	public HAPStoryUINode newChildNode(HAPStoryNodeUI childStoryNode, String alias, Object childId, HAPStoryRequestChangeWrapper changeRequest, HAPRuntimeEnvironment runtimeEnv, HAPManagerUITag uiTagMan) {
+		
+		changeRequest.addNewChange(childStoryNode, alias);
+		HAPStoryReferenceElement connectionRef = HAPStoryUtilityStory.addNodeAsChild(this.getStoryNodeRef(), childStoryNode.getElementId(), (String)childId, changeRequest, true);
+
+		
 		//build data info in ui node
-		HAPStoryUIDataStructureInfo dataStructureInfo = HAPStoryUtility.buildDataStructureInfoForUIStoryNode(childStoryNode, this.getStoryNode().getDataStructureInfo().getContext(), runtimeEnv, uiTagMan);
-		childStoryNode.setDataStructureInfo(dataStructureInfo);
+//		HAPStoryUIDataStructureInfo dataStructureInfo = HAPStoryUtility.buildDataStructureInfoForUIStoryNode(childStoryNode, this.getStoryNode().getDataStructureInfo().getContext(), runtimeEnv, uiTagMan);
+//		childStoryNode.setDataStructureInfo(dataStructureInfo);
 		
-		HAPStoryAliasElement nodeName = changeRequest.addNewChange(childStoryNode, alias).getAlias();
-		HAPStoryAliasElement connectionName = changeRequest.addNewChange(HAPStoryUtilityConnection.newConnectionContain(m_nodeRef, nodeName, (String)childId, null)).getAlias();
+//		HAPStoryAliasElement nodeName = changeRequest.addNewChange(childStoryNode, alias).getAlias();
+//		HAPStoryAliasElement connectionName = changeRequest.addNewChange(HAPStoryUtilityConnection.newConnectionContain(m_nodeRef, nodeName, (String)childId, null)).getAlias();
 		
-		HAPStoryUIChild childNode = new HAPStoryUIChild(childStoryNode, nodeName, childId, connectionName, this.m_story);
+		HAPStoryUIChild childNode = new HAPStoryUIChild(childStoryNode.getElementId(), childId, connectionRef, this.m_story);
 		this.m_children.add(childNode);
 		return childNode.getUINode();
 	}
@@ -155,10 +160,6 @@ public class HAPStoryUINode {
 	
 	public List<HAPStoryUIChild> getChildren(){   return this.m_children;    }
 	public HAPStoryReferenceElement getStoryNodeRef() {   return this.m_nodeRef;    }
-	
-	private List<HAPStoryNodeVariable> getAllVariables(){
-		return HAPStoryUtility.getAllChildVariableNodes(this.getStoryNode(), m_story);
-	}
 	
 	
 //	public String getNodeId() {  return this.m_nodeId; 	}

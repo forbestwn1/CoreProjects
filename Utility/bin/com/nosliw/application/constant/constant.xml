@@ -600,6 +600,7 @@
 			<definition name="RUNTIME_RESOURCE_TYPE_TEST_COMPLEX_TASK" value="test_complex_task"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_TASK_TASK_SCRIPT" value="taskTaskScript"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_TASK_EXPRESSION_SCRIPT" value="taskExpressionScript"/>
+			<definition name="RUNTIME_RESOURCE_TYPE_TASK_FLOW" value="flow"/>
 
 
 			<definition name="RUNTIME_RESOURCE_TYPE_VALUESTRUCTUREWRAPPER" value="valuestructurewrapper"/>

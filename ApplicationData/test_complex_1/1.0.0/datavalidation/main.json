@@ -32,16 +32,16 @@
 							"trigguerType" : "dataValidation",
 							"name" : "testDataValidation1",
 							"handlerId" : {
-								"idPath" : "#task",
-								"idPath0" : "datavalidation_mandatory-taskTaskScript",
-								"idPath1" : "datavalidation_enum-taskTaskScript",
-								"idPath2" : "datavalidation_mandatory-taskWrapper"
+								"idPath0" : "#task",
+								"idPath1" : "datavalidation_mandatory-taskTaskScript",
+								"idPath2" : "datavalidation_enum-taskTaskScript",
+								"idPath" : "datavalidation_mandatory-taskWrapper"
 							},
 							"dataDefinition" : {
 								"criteria": "test.string;1.0.0"
 							}
 						},
-						"testData" : {
+						"testData1" : {
 							"dataTypeId": "test.string;1.0.0",
 							"value": "data for validation"
 						}
@@ -157,7 +157,7 @@
 		{
 			"info": {
 				"name" : "datavalidation_mandatory-taskWrapper",
-				"status": "disabled",
+				"status": "disabled1",
 				"description" : ""
 			},
 			"resourceId":"taskTaskScript|1.0.0|@task=taskWrapper|1.0.0|datavalidationmandatory",  

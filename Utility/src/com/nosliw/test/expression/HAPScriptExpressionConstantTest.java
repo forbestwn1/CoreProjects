@@ -6,8 +6,8 @@ import java.util.Map;
 import org.json.JSONObject;
 
 import com.nosliw.common.exception.HAPServiceData;
-import com.nosliw.core.application.division.manual.common.scriptexpression.HAPManualDefinitionScriptExpression;
-import com.nosliw.core.application.division.manual.common.scriptexpression.HAPManualUtilityScriptExpressionConstant;
+import com.nosliw.core.application.common.scriptexpression.HAPDefinitionScriptExpression;
+import com.nosliw.core.application.division.manual.HAPManualUtilityScriptExpressionConstant;
 import com.nosliw.data.core.imp.runtime.js.rhino.HAPRuntimeEnvironmentImpRhino;
 
 public class HAPScriptExpressionConstantTest {
@@ -25,7 +25,7 @@ public class HAPScriptExpressionConstantTest {
 		constants.put("fromConstant", new JSONObject("{'value':'kkkkkkkkk'}"));
 		constants.put("value1", "value1111111");
 		
-		HAPServiceData out = HAPManualUtilityScriptExpressionConstant.executeScriptExpressionConstant(new HAPManualDefinitionScriptExpression(scriptExpression, null), constants, runtimeEnvironment);
+		HAPServiceData out = HAPManualUtilityScriptExpressionConstant.executeScriptExpressionConstant(new HAPDefinitionScriptExpression(scriptExpression, null), constants, runtimeEnvironment);
 
 		System.out.println("--------------------   -------------------------");
 		System.out.println(out);

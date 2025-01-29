@@ -3,22 +3,22 @@ package com.nosliw.core.application.division.manual.brick.valuestructure;
 import java.util.Map;
 
 import com.nosliw.core.application.common.structure.HAPRootInStructure;
-import com.nosliw.core.application.common.structure.HAPValueStructureDefinition;
-import com.nosliw.core.application.common.structure.HAPValueStructureDefinitionImp;
+import com.nosliw.core.application.common.structure.HAPValueStructure;
+import com.nosliw.core.application.common.structure.HAPValueStructureImp;
 import com.nosliw.core.application.division.manual.HAPManualEnumBrickType;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrick;
 
-public class HAPManualDefinitionBrickValueStructure extends HAPManualDefinitionBrick implements HAPValueStructureDefinition{
+public class HAPManualDefinitionBrickValueStructure extends HAPManualDefinitionBrick implements HAPValueStructure{
 
 	public static final String VALUE = "value";
 
 	public HAPManualDefinitionBrickValueStructure() {
 		super(HAPManualEnumBrickType.VALUESTRUCTURE_100);
-		this.setAttributeValueWithValue(VALUE, new HAPValueStructureDefinitionImp());
+		this.setAttributeValueWithValue(VALUE, new HAPValueStructureImp());
 	}
 
-	public HAPValueStructureDefinition getValue() {   return (HAPValueStructureDefinition)this.getAttributeValueOfValue(VALUE);       }
-	public void setValue(HAPValueStructureDefinition valueStructureDef) {   this.setAttributeValueWithValue(VALUE, valueStructureDef);     }
+	public HAPValueStructure getValue() {   return (HAPValueStructure)this.getAttributeValueOfValue(VALUE);       }
+	public void setValue(HAPValueStructure valueStructureDef) {   this.setAttributeValueWithValue(VALUE, valueStructureDef);     }
 
 	@Override
 	public Object getInitValue() {    return this.getValue().getInitValue();  }

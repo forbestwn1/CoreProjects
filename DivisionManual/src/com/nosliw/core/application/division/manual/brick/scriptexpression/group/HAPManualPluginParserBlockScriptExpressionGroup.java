@@ -8,9 +8,9 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.core.application.HAPEnumBrickType;
 import com.nosliw.core.application.common.scriptexpression.HAPContainerScriptExpression;
 import com.nosliw.core.application.common.scriptexpression.HAPItemInContainerScriptExpression;
+import com.nosliw.core.application.common.scriptexpression.HAPDefinitionScriptExpression;
+import com.nosliw.core.application.common.scriptexpression.HAPDefinitionScriptExpressionItemInContainer;
 import com.nosliw.core.application.division.manual.HAPManualManagerBrick;
-import com.nosliw.core.application.division.manual.common.scriptexpression.HAPManualDefinitionScriptExpression;
-import com.nosliw.core.application.division.manual.common.scriptexpression.HAPManualDefinitionScriptExpressionItemInContainer;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrick;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionContextParse;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionPluginParserBrickImpComplex;
@@ -30,9 +30,9 @@ public class HAPManualPluginParserBlockScriptExpressionGroup extends HAPManualDe
 		for(int i=0; i<scriptExpressionArray.length(); i++) {
 			JSONObject elementObj = scriptExpressionArray.getJSONObject(i);
 			if(HAPUtilityEntityInfo.isEnabled(elementObj)) {
-				HAPManualDefinitionScriptExpression scriptExpression = new HAPManualDefinitionScriptExpression();
+				HAPDefinitionScriptExpression scriptExpression = new HAPDefinitionScriptExpression();
 				scriptExpression.buildObject(elementObj.get(HAPItemInContainerScriptExpression.SCRIPTEXPRESSION), HAPSerializationFormat.JSON);
-				HAPManualDefinitionScriptExpressionItemInContainer item = new HAPManualDefinitionScriptExpressionItemInContainer(scriptExpression);
+				HAPDefinitionScriptExpressionItemInContainer item = new HAPDefinitionScriptExpressionItemInContainer(scriptExpression);
 				item.buildEntityInfoByJson(elementObj);
 				groupBlock.getValue().addItem(item);
 			}

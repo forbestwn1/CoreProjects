@@ -13,6 +13,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.utils.HAPGeneratorId;
 import com.nosliw.core.application.common.structure.HAPRootInStructure;
+import com.nosliw.core.application.common.structure.HAPStructureImp;
 import com.nosliw.core.application.common.structure.HAPUtilityStructure;
 
 //all value structure infor in domain
@@ -31,7 +32,7 @@ public class HAPDomainValueStructure extends HAPSerializableImp{
 	public static final String DEFINITIONBYRUNTIME = "definitionByRuntime";
 
 	//value structure definitions by id
-	private Map<String, HAPDefinitionStructure> m_structureDefinition;
+	private Map<String, HAPStructureImp> m_structureDefinition;
 	
 	//value structure runtime by id
 	private Map<String, HAPInfoValueStructureRuntime> m_valueStructureRuntime;
@@ -46,7 +47,7 @@ public class HAPDomainValueStructure extends HAPSerializableImp{
 	
 	public HAPDomainValueStructure() {
 		this.m_idGenerator = new HAPGeneratorId();
-		this.m_structureDefinition = new LinkedHashMap<String, HAPDefinitionStructure>();
+		this.m_structureDefinition = new LinkedHashMap<String, HAPStructureImp>();
 		this.m_valueStructureRuntime = new LinkedHashMap<String, HAPInfoValueStructureRuntime>();
 		this.m_definitionIdByRuntimeId = new LinkedHashMap<String, String>();
 		this.m_isDirty = false;
@@ -55,8 +56,8 @@ public class HAPDomainValueStructure extends HAPSerializableImp{
 	public void setIsDirty(boolean isDirty) {    this.m_isDirty = isDirty;     }
 	public boolean getIsDirty() {     return this.m_isDirty;   }
 	
-	public HAPDefinitionStructure getStructureDefinitionByRuntimeId(String runtimeId) {	return getStructureDefinition(getStructureDefinitionIdByRuntimeId(runtimeId));	}
-	public HAPDefinitionStructure getStructureDefinition(String structureDefId) {    return this.m_structureDefinition.get(structureDefId);     }
+	public HAPStructureImp getStructureDefinitionByRuntimeId(String runtimeId) {	return getStructureDefinition(getStructureDefinitionIdByRuntimeId(runtimeId));	}
+	public HAPStructureImp getStructureDefinition(String structureDefId) {    return this.m_structureDefinition.get(structureDefId);     }
 
 	public String getStructureDefinitionIdByRuntimeId(String runtimeId) {	return this.m_definitionIdByRuntimeId.get(runtimeId);	}
 	
@@ -67,7 +68,7 @@ public class HAPDomainValueStructure extends HAPSerializableImp{
 		
 		Set<String> vsDefIds = new HashSet<String>();
 		for(String vsDefId : this.m_structureDefinition.keySet()) {
-			HAPDefinitionStructure vsDef = this.m_structureDefinition.get(vsDefId);
+			HAPStructureImp vsDef = this.m_structureDefinition.get(vsDefId);
 			if(vsDef.isEmpty()) {
 				vsDefIds.add(vsDefId);
 			}
@@ -101,7 +102,7 @@ public class HAPDomainValueStructure extends HAPSerializableImp{
 
 	public String newValueStructure() {
 		String defId = this.m_idGenerator.generateId();
-		this.m_structureDefinition.put(defId, new HAPDefinitionStructure());
+		this.m_structureDefinition.put(defId, new HAPStructureImp());
 		return this.newRuntime(defId, null, null, null);
 	}
 	
@@ -109,23 +110,23 @@ public class HAPDomainValueStructure extends HAPSerializableImp{
 	//return runtime id
 	public String newValueStructure(Set<HAPRootInStructure> roots, Object initValue, HAPInfo info, String name) {
 		String id = this.m_idGenerator.generateId();
-		this.m_structureDefinition.put(id, new HAPDefinitionStructure(roots));
+		this.m_structureDefinition.put(id, new HAPStructureImp(roots));
 		return this.newRuntime(id, initValue, info, name);
 	}
 
 	private String cloneDefinition(String defId) {
-		HAPDefinitionStructure structureDef = this.getStructureDefinition(defId);
+		HAPStructureImp structureDef = this.getStructureDefinition(defId);
 		String id = this.m_idGenerator.generateId();
 		
 		Set<HAPRootInStructure> roots = new HashSet<HAPRootInStructure>();
-		for(HAPRootInStructure oldRoot : structureDef.getRoots()) {
+		for(HAPRootInStructure oldRoot : structureDef.getRoots().values()) {
 			HAPRootInStructure newRoot = new HAPRootInStructure();
 			oldRoot.cloneToEntityInfo(newRoot);
 			newRoot.setDefinition(HAPUtilityStructure.solidateStructureElement(oldRoot.getDefinition()));
 			roots.add(newRoot);
 		}
 		
-		this.m_structureDefinition.put(id, new HAPDefinitionStructure(roots));
+		this.m_structureDefinition.put(id, new HAPStructureImp(roots));
 		return id;
 	}
 	

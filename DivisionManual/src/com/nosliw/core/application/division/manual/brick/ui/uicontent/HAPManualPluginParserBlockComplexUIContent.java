@@ -20,10 +20,10 @@ import com.nosliw.core.application.HAPWithValueContext;
 import com.nosliw.core.application.brick.ui.uicontent.HAPElementEvent;
 import com.nosliw.core.application.brick.ui.uicontent.HAPUIEmbededScriptExpressionInAttribute;
 import com.nosliw.core.application.brick.ui.uicontent.HAPUIEmbededScriptExpressionInContent;
+import com.nosliw.core.application.common.scriptexpression.HAPDefinitionContainerScriptExpression;
+import com.nosliw.core.application.common.scriptexpression.HAPManualUtilityScriptExpressionParser;
 import com.nosliw.core.application.division.manual.HAPManualEnumBrickType;
 import com.nosliw.core.application.division.manual.HAPManualManagerBrick;
-import com.nosliw.core.application.division.manual.common.scriptexpression.HAPManualDefinitionContainerScriptExpression;
-import com.nosliw.core.application.division.manual.common.scriptexpression.HAPManualUtilityScriptExpressionParser;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrick;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionContextParse;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionPluginParserBrickImp;
@@ -156,7 +156,7 @@ public class HAPManualPluginParserBlockComplexUIContent extends HAPManualDefinit
 	 * process element's attribute that have script expression value
 	 */
 	private void parseScriptExpressionInTagAttribute(Element ele, HAPManualDefinitionBlockComplexUIContent uiContent, boolean isCustomerTag, HAPManualDefinitionContextParse parserContext){
-		HAPManualDefinitionContainerScriptExpression scriptEntityGroupEntity = uiContent.getScriptExpressions();
+		HAPDefinitionContainerScriptExpression scriptEntityGroupEntity = uiContent.getScriptExpressions();
 		String uiId = HAPUtilityUIResourceParser.getUIIdInElement(ele); 
 		
 		//read attributes
@@ -182,7 +182,7 @@ public class HAPManualPluginParserBlockComplexUIContent extends HAPManualDefinit
 	 * process expression in child text content within element 
 	 */
 	private void parseChildScriptExpressionInContent(Element ele, HAPManualDefinitionBlockComplexUIContent uiContent, HAPManualDefinitionContextParse parseContext){
-		HAPManualDefinitionContainerScriptExpression scriptEntityGroupEntity = uiContent.getScriptExpressions();
+		HAPDefinitionContainerScriptExpression scriptEntityGroupEntity = uiContent.getScriptExpressions();
 
 		List<TextNode> textNodes = ele.textNodes();
 		for(TextNode textNode : textNodes){

@@ -7,7 +7,7 @@
 		{
 			"info": {
 				"name" : "variablebynameshow-test_complex_script",
-				"status": "disabled",
+				"status": "disabled1",
 				"description" : ""
 			},
 			"brick":{
@@ -21,7 +21,7 @@
 		{
 			"info": {
 				"name" : "variablebyidshow-test_complex_script",
-				"status": "disabled1",
+				"status": "disabled",
 				"description" : ""
 			},
 			"brick":{
@@ -32,7 +32,7 @@
 		{
 			"info": {
 				"name" : "valueportshow-test_complex_script",
-				"status": "disabled1",
+				"status": "disabled",
 				"description" : ""
 			},
 			"brick":{
@@ -57,7 +57,7 @@
 		{
 			"info": {
 				"name" : "test_array-uicustomertagdebugger",
-				"status": "disabled1",
+				"status": "disabled",
 				"description" : ""
 			},
 			"brick":{

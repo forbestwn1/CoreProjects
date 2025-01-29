@@ -11,8 +11,8 @@ import com.nosliw.core.application.brick.ui.uicontent.HAPElementEvent;
 import com.nosliw.core.application.brick.ui.uicontent.HAPUIEmbededScriptExpressionInAttribute;
 import com.nosliw.core.application.brick.ui.uicontent.HAPUIEmbededScriptExpressionInContent;
 import com.nosliw.core.application.common.parentrelation.HAPManualDefinitionBrickRelation;
+import com.nosliw.core.application.common.scriptexpression.HAPDefinitionContainerScriptExpression;
 import com.nosliw.core.application.division.manual.brick.container.HAPManualDefinitionBrickContainerList;
-import com.nosliw.core.application.division.manual.common.scriptexpression.HAPManualDefinitionContainerScriptExpression;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionAttributeInBrick;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrick;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionWrapperValueBrick;
@@ -23,7 +23,7 @@ public class HAPManualDefinitionBlockComplexUIContent extends HAPManualDefinitio
 	
 	public HAPManualDefinitionBlockComplexUIContent() {
 		super(HAPEnumBrickType.UICONTENT_100);
-		this.setAttributeValueWithValue(HAPBlockComplexUIContent.SCRIPTEXPRESSIONS, new HAPManualDefinitionContainerScriptExpression());
+		this.setAttributeValueWithValue(HAPBlockComplexUIContent.SCRIPTEXPRESSIONS, new HAPDefinitionContainerScriptExpression());
 		this.setAttributeValueWithValue(HAPBlockComplexUIContent.SCRIPTEXPRESSIONINCONTENT, new ArrayList<HAPUIEmbededScriptExpressionInContent>());
 		this.setAttributeValueWithValue(HAPBlockComplexUIContent.SCRIPTEXPRESSIONINNORMALTAGATTRIBUTE, new ArrayList<HAPUIEmbededScriptExpressionInAttribute>());
 		this.setAttributeValueWithValue(HAPBlockComplexUIContent.SCRIPTEXPRESSIONINCUSTOMERTAGATTRIBUTE, new ArrayList<HAPUIEmbededScriptExpressionInAttribute>());
@@ -64,7 +64,7 @@ public class HAPManualDefinitionBlockComplexUIContent extends HAPManualDefinitio
 	public List<HAPUIEmbededScriptExpressionInAttribute> getScriptExpressionInCustomerTagAttribute(){   return (List<HAPUIEmbededScriptExpressionInAttribute>)this.getAttributeValueOfValue(HAPBlockComplexUIContent.SCRIPTEXPRESSIONINCUSTOMERTAGATTRIBUTE);       }
 	public void addScriptExpressionInCustomerTagAttribute(HAPUIEmbededScriptExpressionInAttribute scriptExpressionInAttribute) {   this.getScriptExpressionInCustomerTagAttribute().add(scriptExpressionInAttribute);    }
 	
-	public HAPManualDefinitionContainerScriptExpression getScriptExpressions() {    return (HAPManualDefinitionContainerScriptExpression)this.getAttributeValueOfValue(HAPBlockComplexUIContent.SCRIPTEXPRESSIONS);      }
+	public HAPDefinitionContainerScriptExpression getScriptExpressions() {    return (HAPDefinitionContainerScriptExpression)this.getAttributeValueOfValue(HAPBlockComplexUIContent.SCRIPTEXPRESSIONS);      }
 
 	public List<HAPElementEvent> getNormalTagEvents(){    return (List<HAPElementEvent>)this.getAttributeValueOfValue(HAPBlockComplexUIContent.NORMALTAGEVENT);       }
 	public void addNormalTagEvent(HAPElementEvent event) {    this.getNormalTagEvents().add(event);     }

@@ -6,13 +6,15 @@ import java.util.Map;
 
 import org.json.JSONObject;
 
-import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.utils.HAPConstantShared;
 
 public abstract class HAPStoryNodeImp extends HAPStoryElementImp implements HAPStoryNode{
 
 	private List<String> m_connections;
+
+	private List<HAPStoryInfoVariable> m_variables;
 	
 	public HAPStoryNodeImp() {
 		super(HAPConstantShared.STORYELEMENT_CATEGARY_NODE);

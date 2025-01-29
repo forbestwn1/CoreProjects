@@ -121,7 +121,7 @@ var loc_createValuePortContainer = function(id, valuePortContainerDef, variableD
 		if(buildRootEle!=false){
 			var valueStructureDefId = variableDomainDef[node_COMMONATRIBUTECONSTANT.DOMAINVALUESTRUCTURE_DEFINITIONBYRUNTIME][valueStructureRuntimeId];
 			var valueStructureDefinitionInfo = variableDomainDef[node_COMMONATRIBUTECONSTANT.DOMAINVALUESTRUCTURE_VALUESTRUCTUREDEFINITION][valueStructureDefId];
-			var roots = valueStructureDefinitionInfo[node_COMMONATRIBUTECONSTANT.DEFINITIONSTRUCTURE_ROOT];
+			var roots = valueStructureDefinitionInfo[node_COMMONATRIBUTECONSTANT.STRUCTURE_ROOT];
 								
 			_.each(roots, function(valueStructureDefRootObj, rootName){
 				var valueStructureDefRootEle = valueStructureDefRootObj[node_COMMONATRIBUTECONSTANT.ROOTINSTRUCTURE_DEFINITION];

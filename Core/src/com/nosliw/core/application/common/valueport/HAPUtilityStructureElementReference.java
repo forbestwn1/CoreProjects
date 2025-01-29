@@ -2,16 +2,14 @@ package com.nosliw.core.application.common.valueport;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import com.nosliw.common.path.HAPComplexPath;
 import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.core.application.HAPBundle;
-import com.nosliw.core.application.common.structure.HAPRootInStructure;
-import com.nosliw.core.application.common.structure.HAPUtilityStructure;
-import com.nosliw.core.application.valuestructure.HAPDefinitionStructure;
+import com.nosliw.core.application.common.structure.HAPStructureImp;
+import com.nosliw.core.application.common.structure.reference.HAPUtilityProcessRelativeElement;
 import com.nosliw.core.application.valuestructure.HAPDomainValueStructure;
 import com.nosliw.data.core.resource.HAPManagerResource;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
@@ -155,7 +153,7 @@ public class HAPUtilityStructureElementReference {
 		for(String valueStructureId : valuePort.getValueStructureIds()) {
 			boolean isValid = true;
 
-			HAPDefinitionStructure valueStructureDefInfo = valueStructureDomain.getStructureDefinitionByRuntimeId(valueStructureId);
+			HAPStructureImp valueStructureDefInfo = valueStructureDomain.getStructureDefinitionByRuntimeId(valueStructureId);
 
 			//check runtime id
 			if(isValid) {
@@ -207,30 +205,12 @@ public class HAPUtilityStructureElementReference {
 		
 		List<HAPResultReferenceResolve> resolveCandidates = new ArrayList<HAPResultReferenceResolve>();
 		for(HAPInfoValueStructureReference valueStructureInfo : targetStructures) {
-			HAPDefinitionStructure valueStructure = valueStructureInfo.getStructureDefinition();
-			HAPComplexPath complexPath = new HAPComplexPath(elementPath);
-			String rootName = complexPath.getRoot();
-			String path = complexPath.getPathStr();
-			
-			HAPRootInStructure root = valueStructure.getRootByName(rootName);
-			if(root!=null) {
-				HAPResultReferenceResolve resolved = new HAPResultReferenceResolve(); 
+			HAPResultReferenceResolve resolved = HAPUtilityProcessRelativeElement.analyzeElementReference(elementPath, valueStructureInfo.getStructureDefinition(), resolveConfigure);
+			if(resolved!=null) {
 				resolved.structureId = valueStructureInfo.getValueStructureId();
-				resolved.rootName = rootName;
-				resolved.elementPath = path;
-				resolved.fullPath = elementPath;
-
-				resolved.elementInfoSolid = HAPUtilityStructure.resolveDescendant(root.getDefinition().getSolidStructureElement(), path);
-				if(resolved.elementInfoSolid!=null) {
-					resolved.elementInfoOriginal = HAPUtilityStructure.resolveDescendant(root.getDefinition(), path);
-					
-					Set<String> elementTypes = resolveConfigure.candidateElementTypes;
-					if(elementTypes==null || elementTypes.contains(resolved.elementInfoSolid.resolvedElement.getType())) {
-						resolveCandidates.add(resolved);
-						if(HAPConstant.RESOLVEPARENTMODE_FIRST.equals(resolveConfigure.searchMode)) {
-							break;
-						}
-					}
+				resolveCandidates.add(resolved);
+				if(HAPConstant.RESOLVEPARENTMODE_FIRST.equals(resolveConfigure.searchMode)) {
+					break;
 				}
 			}
 		}

@@ -27,14 +27,14 @@ public class HAPUtilityValueStructureParser {
 		}
 	}
 	
-	static public void parseValueStructureJson(JSONObject structureJson, HAPValueStructureDefinition valueStructure) {
+	static public void parseValueStructureJson(JSONObject structureJson, HAPValueStructure valueStructure) {
 		if(structureJson!=null) {
-			Object rootsObj = structureJson.opt(HAPValueStructureDefinition.ROOT);
+			Object rootsObj = structureJson.opt(HAPStructure.ROOT);
 			if(rootsObj==null) {
 				rootsObj = structureJson;
 			}
 			else {
-				valueStructure.setInitValue(structureJson.opt(HAPValueStructureDefinition.INITVALUE));
+				valueStructure.setInitValue(structureJson.opt(HAPValueStructure.INITVALUE));
 			}
 			List<HAPRootInStructure> roots = parseStructureRoots(rootsObj);
 			for(HAPRootInStructure root : roots) {

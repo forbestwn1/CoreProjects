@@ -6,6 +6,7 @@ import java.util.List;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.common.structure.HAPElementStructure;
 import com.nosliw.core.application.common.structure.HAPRootInStructure;
+import com.nosliw.core.application.common.structure.HAPStructureImp;
 import com.nosliw.core.application.common.valueport.HAPConfigureResolveElementReference;
 import com.nosliw.core.application.common.valueport.HAPIdElement;
 import com.nosliw.core.application.common.valueport.HAPReferenceValueStructure;
@@ -15,7 +16,6 @@ import com.nosliw.core.application.common.valueport.HAPValuePort;
 import com.nosliw.core.application.common.valueport.HAPValueStructureInValuePort11111;
 import com.nosliw.core.application.division.manual.executable.HAPManualBrick;
 import com.nosliw.core.application.valuestructure.HAPDomainValueStructure;
-import com.nosliw.core.application.valuestructure.HAPDefinitionStructure;
 import com.nosliw.core.application.valuestructure.HAPInfoValueStructureRuntime;
 
 public class HAPManualValuePortValueContext2 extends HAPValuePort{
@@ -38,7 +38,7 @@ public class HAPManualValuePortValueContext2 extends HAPValuePort{
 			HAPManualInfoValueStructure wraper = valueStructureInfo.getValueStructure();
 			boolean isValid = true;
 
-			HAPDefinitionStructure valueStructureDefInfo = m_valueStructureDomain.getStructureDefinitionByRuntimeId(wraper.getValueStructureRuntimeId());
+			HAPStructureImp valueStructureDefInfo = m_valueStructureDomain.getStructureDefinitionByRuntimeId(wraper.getValueStructureRuntimeId());
 
 			//check runtime id
 			if(isValid) {
@@ -80,7 +80,7 @@ public class HAPManualValuePortValueContext2 extends HAPValuePort{
 	@Override
 	public HAPValueStructureInValuePort11111 getValueStructureDefintion(String valueStructureId) {
 		HAPValueStructureInValuePort11111 out = new HAPValueStructureInValuePort11111();
-		HAPDefinitionStructure valueStructureDefInfo = this.m_valueStructureDomain.getStructureDefinitionByRuntimeId(valueStructureId);
+		HAPStructureImp valueStructureDefInfo = this.m_valueStructureDomain.getStructureDefinitionByRuntimeId(valueStructureId);
 		
 		HAPInfoValueStructureRuntime valueStrcutreRuntimeInfo = m_valueStructureDomain.getValueStructureRuntimeInfo(valueStructureId);
 		valueStrcutreRuntimeInfo.cloneToEntityInfo(out);

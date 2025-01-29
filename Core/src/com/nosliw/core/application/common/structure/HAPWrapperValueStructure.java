@@ -8,8 +8,8 @@ public interface HAPWrapperValueStructure extends HAPEntityInfo{
 	public static final String VALUESTRUCTURE = "valueStructure";
 	public static final String INHERITMODE = "inheritMode";
 
-	HAPValueStructureDefinition getValueStructure();
-	void setValueStructure(HAPValueStructureDefinition valueStructure);
+	HAPValueStructure getValueStructure();
+	void setValueStructure(HAPValueStructure valueStructure);
 
 	String getGroupType();
 	void setGroupType(String groupType);
