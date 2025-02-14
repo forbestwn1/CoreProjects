@@ -1,0 +1,74 @@
+{
+	"info": {
+		"name": "basic entity",
+		"description": "include all basic feature"
+	},
+	"brick": [
+		{
+			"info": {
+				"name" : "variablebynameshow-test_complex_script",
+				"status": "disabled1",
+				"description" : ""
+			},
+			"brick":{
+				"script": "complexscript_test_value",
+				"parm" : {
+					"variable" : ["output1"]
+				}
+			}
+		},
+
+		{
+			"info": {
+				"name" : "variablebynameshow1-test_complex_script",
+				"status": "disabled1",
+				"description" : ""
+			},
+			"brick":{
+				"script": "complexscript_test_value",
+				"parm" : {
+					"variable" : ["output1"]
+				}
+			}
+		},
+
+		{
+			"info": {
+				"name" : "valueport-test_complex_script",
+				"status": "disabled",
+				"description" : ""
+			},
+			"brick":{
+				"script": "complexscript_test_valueport"
+			}
+		},
+
+		{
+			"info": {
+				"name": "valueContext",
+				"status": "disabled1"
+			},
+			"brick": [
+				{
+					"groupType" : "public",
+					"valueStructure" : {
+						"root": {
+							"output1": {
+								"definition":{
+									"criteria": "test.string;1.0.0"
+								}
+							}
+						},
+						"initValue": {
+							"output1": {
+								"dataTypeId": "test.string;1.0.0",
+								"value": "default value of output1"
+							}
+						}
+					}
+				}
+			]
+		}
+		
+	]
+}

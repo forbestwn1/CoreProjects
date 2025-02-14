@@ -4,7 +4,6 @@ import org.json.JSONObject;
 
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.HAPEnumBrickType;
-import com.nosliw.core.application.common.interactive.HAPWithBlockInteractiveTask;
 import com.nosliw.core.application.common.script.HAPWithScriptReference;
 import com.nosliw.core.application.division.manual.HAPManualManagerBrick;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrick;
@@ -29,7 +28,7 @@ public class HAPManualPluginParserBlockTaskTaskScript extends HAPManualDefinitio
 		taskBrick.setScriptResourceId(scriptResourceId);
 		
 		//task interactive
-		this.parseBrickAttributeJson(entityDefinition, jsonObj, HAPWithBlockInteractiveTask.TASKINTERFACE, HAPEnumBrickType.INTERACTIVETASKINTERFACE_100, null, parseContext);
+		this.parseTaskInterfaceAttribute(entityDefinition, jsonObj, parseContext);
 		
 	}
 }

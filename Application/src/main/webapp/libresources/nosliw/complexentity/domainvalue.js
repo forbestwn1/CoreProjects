@@ -259,6 +259,8 @@ var loc_createValuePortContainer = function(id, valuePortContainerDef, variableD
 	
 	var loc_out = {
 
+		prv_idDebug : nosliw.runtime.getIdService().generateId(),
+
 		getId : function(){  return loc_id;   },
 		
 		getExportRequest : function(handlers, request){
@@ -273,7 +275,7 @@ var loc_createValuePortContainer = function(id, valuePortContainerDef, variableD
 					valueByValuePortName[valuePortName] = vsById;
 					_.each(vses, function(vsWrapper, vsId){
 						var values = {};
-						vsById[vsId] = values;
+						vsById[vsId+(vsWrapper.isSolid()==true?"solid":"soft")] = values;
 						var vs = vsWrapper.getValueStructure();
 						var vsEleNames = vs.getElementsName();
 						_.each(vsEleNames, function(eleName){

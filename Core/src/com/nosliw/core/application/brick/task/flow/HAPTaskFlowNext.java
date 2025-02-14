@@ -1,9 +1,11 @@
 package com.nosliw.core.application.brick.task.flow;
 
-import com.nosliw.common.constant.HAPAttribute;
-import com.nosliw.core.application.HAPBrick;
+import java.util.Map;
 
-public interface HAPBlockTaskFlowNext extends HAPBrick{
+import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.serialization.HAPSerializableImp;
+
+public class HAPTaskFlowNext extends HAPSerializableImp{
 
 	@HAPAttribute
 	public static final String DECISION = "decision";
@@ -11,5 +13,8 @@ public interface HAPBlockTaskFlowNext extends HAPBrick{
 	@HAPAttribute
 	public static final String TARGET = "target";
 
+	private HAPTaskFlowDecision m_decision;
 
+	private Map<String, HAPTaskFlowTarget> m_target;
+	
 }

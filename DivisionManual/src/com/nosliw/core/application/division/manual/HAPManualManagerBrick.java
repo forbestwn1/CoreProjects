@@ -49,6 +49,10 @@ import com.nosliw.core.application.division.manual.brick.scriptexpression.group.
 import com.nosliw.core.application.division.manual.brick.scriptexpression.group.HAPManualPluginProcessorBlockScriptExpressionGroup;
 import com.nosliw.core.application.division.manual.brick.service.provider.HAPManualPluginParserBlockServiceProvider;
 import com.nosliw.core.application.division.manual.brick.service.provider.HAPManualPluginProcessorBlockSimpleImpServiceProvider;
+import com.nosliw.core.application.division.manual.brick.task.flow.HAPManualPluginParserBlockTaskFlowActivityTask;
+import com.nosliw.core.application.division.manual.brick.task.flow.HAPManualPluginParserBlockTaskFlowFlow;
+import com.nosliw.core.application.division.manual.brick.task.flow.HAPManualPluginProcessorBlockTaskFlowActivityTask;
+import com.nosliw.core.application.division.manual.brick.task.flow.HAPManualPluginProcessorBlockTaskFlowFlow;
 import com.nosliw.core.application.division.manual.brick.task.script.task.HAPManualPluginParserBlockTaskTaskScript;
 import com.nosliw.core.application.division.manual.brick.task.script.task.HAPManualPluginProcessorBlockTaskTaskScript;
 import com.nosliw.core.application.division.manual.brick.test.complex.script.HAPManualPluginParserBlockTestComplexScript;
@@ -232,7 +236,7 @@ public class HAPManualManagerBrick implements HAPPluginDivision, HAPManagerWithV
 		HAPManualUtilityProcessor.processBrick(processContext, this.getBrickManager());
 		
 		//process adapter
-		HAPManualUtilityProcessor.processAdapter(processContext);
+		HAPManualUtilityProcessor.processAdapterInAttribute(processContext);
 		
 		HAPManualUtilityProcessor.cleanupEmptyValueStructure(processContext);
 		
@@ -277,6 +281,8 @@ public class HAPManualManagerBrick implements HAPPluginDivision, HAPManagerWithV
 
 		this.registerBlockPluginInfo(HAPEnumBrickType.TASK_TASK_SCRIPT_100, new HAPInfoBrickType(false, HAPConstantShared.TASK_TYPE_TASK), new HAPManualPluginParserBlockTaskTaskScript(this, this.m_runtimeEnv), new HAPManualPluginProcessorBlockTaskTaskScript(this.m_runtimeEnv, this));
 		
+		this.registerBlockPluginInfo(HAPEnumBrickType.TASK_TASK_FLOW_100, new HAPInfoBrickType(false, HAPConstantShared.TASK_TYPE_TASK), new HAPManualPluginParserBlockTaskFlowFlow(this, this.m_runtimeEnv), new HAPManualPluginProcessorBlockTaskFlowFlow(this.m_runtimeEnv, this));
+		this.registerBlockPluginInfo(HAPEnumBrickType.TASK_TASK_ACTIVITYTASK_100, new HAPInfoBrickType(false, HAPConstantShared.TASK_TYPE_TASK), new HAPManualPluginParserBlockTaskFlowActivityTask(this, this.m_runtimeEnv), new HAPManualPluginProcessorBlockTaskFlowActivityTask(this.m_runtimeEnv, this));
 		
 		this.registerBlockPluginInfo(HAPEnumBrickType.WRAPPERBRICK_100, new HAPInfoBrickType(false), new HAPManualPluginParserBrickWrapperBrick(this, this.m_runtimeEnv), new HAPManualPluginProcessorBlockSimpleImpWrapperBrick(this.m_runtimeEnv, this));
 		this.registerBlockPluginInfo(HAPEnumBrickType.TASKWRAPPER_100, new HAPInfoBrickType(false), new HAPManualPluginParserBlockTaskWrapper(this, this.m_runtimeEnv), new HAPManualPluginProcessorBlockSimpleImpTaskWrapper(this.m_runtimeEnv, this));

@@ -2,8 +2,13 @@ package com.nosliw.core.application.division.manual;
 
 import org.apache.commons.lang3.tuple.Pair;
 
+import com.nosliw.common.interfac.HAPEntityOrReference;
 import com.nosliw.common.path.HAPPath;
 import com.nosliw.core.application.HAPIdBrickType;
+import com.nosliw.core.application.HAPUtilityBrick;
+import com.nosliw.core.application.brick.interactive.interfacee.task.HAPBlockInteractiveInterfaceTask;
+import com.nosliw.core.application.common.interactive.HAPWithBlockInteractiveTask;
+import com.nosliw.core.application.division.manual.common.task.HAPManualUtilityTask;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrick;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionUtilityBrick;
 import com.nosliw.core.application.division.manual.executable.HAPManualBrick;
@@ -20,7 +25,17 @@ public abstract class HAPManualPluginProcessorBlockComplex extends HAPManualPlug
 	public void postProcessInit(HAPPath pathFromRoot, HAPManualContextProcessBrick processContext) {}
 
 	//build other value port
-	public void processOtherValuePortBuild(HAPPath pathFromRoot, HAPManualContextProcessBrick processContext) {}
+	public void processOtherValuePortBuild(HAPPath pathFromRoot, HAPManualContextProcessBrick processContext) {
+		Pair<HAPManualDefinitionBrick, HAPManualBrick> blockPair = this.getBrickPair(pathFromRoot, processContext);
+		if(blockPair.getRight() instanceof HAPWithBlockInteractiveTask) {
+			//build task interface value port group
+			HAPEntityOrReference taskInterface = ((HAPWithBlockInteractiveTask)blockPair.getRight()).getTaskInterface();
+			if(taskInterface!=null) {
+				HAPBlockInteractiveInterfaceTask taskInterfaceBlock = (HAPBlockInteractiveInterfaceTask)HAPUtilityBrick.getBrick(taskInterface, processContext.getRuntimeEnv().getBrickManager());
+				HAPManualUtilityTask.buildValuePortGroupForInteractiveTask(blockPair.getRight(), taskInterfaceBlock.getValue(), processContext.getCurrentBundle().getValueStructureDomain());
+			}
+		}
+	}
 	public void postProcessOtherValuePortBuild(HAPPath pathFromRoot, HAPManualContextProcessBrick processContext) {}
 	
 	//value context extension, variable resolve

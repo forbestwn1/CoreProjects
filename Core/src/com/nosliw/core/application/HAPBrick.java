@@ -18,8 +18,13 @@ public interface HAPBrick extends HAPSerializable, HAPEntityOrReference, HAPWith
 	@HAPAttribute
 	public final static String ATTRIBUTE = "attribute"; 
 
+	@HAPAttribute
+	public final static String ADAPTER = "adapter"; 
+
 	HAPIdBrickType getBrickType();
 
 	List<HAPAttributeInBrick> getAttributes();
+
+	List<HAPAdapter> getAdapters();
 
 }

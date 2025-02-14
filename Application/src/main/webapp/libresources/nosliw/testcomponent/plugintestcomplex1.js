@@ -71,6 +71,8 @@ var loc_createTestComplex1ComponentCore = function(complexEntityDef, configure){
 			loc_parentView = $(view);
 //			loc_mainView = $('<div class="view view-main" style="overflow-y1: scroll; border-width:thick; border-style:solid; border-color:black">testComplex</div>');
 			loc_mainView = $('<div style="border-width:thick; border-style:solid; border-color:black">testComplex</div>');
+			var parentValuePortView = $('<div>valuePortContainerId: '+node_getEntityObjectInterface(loc_out).getInternalValuePortContainer().getId()+"--"+node_getEntityObjectInterface(loc_out).getExternalValuePortContainer().getId()+'</div>');
+			loc_mainView.append(parentValuePortView);
 			loc_parentView.append(loc_mainView);
 			
 			//complex children
@@ -78,19 +80,20 @@ var loc_createTestComplex1ComponentCore = function(complexEntityDef, configure){
 				var attrName = child.getChildName();
 				
 				var childCoreEntity = node_complexEntityUtility.getBrickNode(child).getChildValue().getCoreEntity();
-				var childValuePortContainer = node_getEntityObjectInterface(childCoreEntity).getInternalValuePortContainer();
+				var internalChildValuePortContainer = node_getEntityObjectInterface(childCoreEntity).getInternalValuePortContainer();
+				var externalChildValuePortContainer = node_getEntityObjectInterface(childCoreEntity).getExternalValuePortContainer();
 				
 				//not nosliw attribute
 				var rootViewWrapper = $('<div style="overflow-y1: scroll; border-width:thick; border-style:solid; border-color:green"/>');
 				var attributeView = $('<div>childAttr: '+attrName+'</div>');
-				var valuePortView = $('<div>valuePortContainerId: '+childValuePortContainer.getId()+'</div>');
+				var valuePortView = $('<div>valuePortContainerId: '+internalChildValuePortContainer.getId()+"--"+externalChildValuePortContainer.getId()+'</div>');
 				attributeView.append(valuePortView);
 				
 
 				//adapter view
 				var childEntityCore = node_complexEntityUtility.getCoreEntity(child.getChildValue());
 				var childEntityType = node_getComponentInterface(childEntityCore).getDataType();
-				if(false){  //childEntityType[node_COMMONATRIBUTECONSTANT.IDBRICKTYPE_BRICKTYPE]==node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_TASKWRAPPER){
+				if(childEntityType[node_COMMONATRIBUTECONSTANT.IDBRICKTYPE_BRICKTYPE]==node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_TASKWRAPPER){
 					//for task wrapper attribute
 					var childEntityDef = node_getBasicEntityObjectInterface(childEntityCore).getEntityDefinition();
 					var adapterNames = childEntityDef.getAttribute(node_COMMONATRIBUTECONSTANT.BLOCKTASKWRAPPER_TASK).getAdapterNames();

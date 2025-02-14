@@ -20,8 +20,8 @@ public class HAPFactoryResourceId {
 		}
 		
 		if(resourceTypeRestrict==true&&
-			!HAPUtilityBasic.isEquals(out.getResourceTypeId().getResourceType(), resourceType)&&
-			!HAPUtilityBasic.isEquals(out.getResourceTypeId().getVersion(), version)) {
+			((resourceType!=null&&!HAPUtilityBasic.isEquals(out.getResourceTypeId().getResourceType(), resourceType))||
+			(version!=null&&!HAPUtilityBasic.isEquals(out.getResourceTypeId().getVersion(), version)))) {
 			throw new RuntimeException();
 		}
 		return out;

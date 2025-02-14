@@ -15,6 +15,9 @@ public class HAPEnumBrickType {
 	public static HAPIdBrickType TASK_TASK_SCRIPT_100 = new HAPIdBrickType(HAPConstantShared.RUNTIME_RESOURCE_TYPE_TASK_TASK_SCRIPT, "1.0.0");
 	public static HAPIdBrickType TASK_EXPRESSION_SCRIPT_100 = new HAPIdBrickType(HAPConstantShared.RUNTIME_RESOURCE_TYPE_TASK_EXPRESSION_SCRIPT, "1.0.0");
 
+	public static HAPIdBrickType TASK_TASK_FLOW_100 = new HAPIdBrickType(HAPConstantShared.RUNTIME_RESOURCE_TYPE_TASK_FLOW, "1.0.0");
+	public static HAPIdBrickType TASK_TASK_ACTIVITYTASK_100 = new HAPIdBrickType(HAPConstantShared.RUNTIME_RESOURCE_TYPE_FLOW_ACTIVITYTASK, "1.0.0");
+
 	public static HAPIdBrickType TASKWRAPPER_100 = new HAPIdBrickType(HAPConstantShared.RUNTIME_RESOURCE_TYPE_TASKWRAPPER, "1.0.0");
 
 	

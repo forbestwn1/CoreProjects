@@ -20,8 +20,33 @@
 
 		{
 			"info": {
-				"name" : "datavalidationtrigguer-test_complex_script",
+				"name" : "variablebynameshow1-test_complex_script",
 				"status": "disabled1",
+				"description" : ""
+			},
+			"brick":{
+				"script": "complexscript_test_value",
+				"parm" : {
+					"variable" : ["output1"]
+				}
+			}
+		},
+
+		{
+			"info": {
+				"name" : "valueport-test_complex_script",
+				"status": "disabled1",
+				"description" : ""
+			},
+			"brick":{
+				"script": "complexscript_test_valueport"
+			}
+		},
+
+		{
+			"info": {
+				"name" : "datavalidationtrigguer-test_complex_script",
+				"status": "disabled",
 				"description" : ""
 			},
 			"brick":{
@@ -33,15 +58,15 @@
 							"name" : "testDataValidation1",
 							"handlerId" : {
 								"idPath0" : "#task",
-								"idPath1" : "datavalidation_mandatory-taskTaskScript",
+								"idPath" : "datavalidation_mandatory-taskTaskScript",
 								"idPath2" : "datavalidation_enum-taskTaskScript",
-								"idPath" : "datavalidation_mandatory-taskWrapper"
+								"idPath3" : "datavalidation_mandatory_resource-taskTaskScript"
 							},
 							"dataDefinition" : {
 								"criteria": "test.string;1.0.0"
 							}
 						},
-						"testData1" : {
+						"testData" : {
 							"dataTypeId": "test.string;1.0.0",
 							"value": "data for validation"
 						}
@@ -52,119 +77,15 @@
 			
 		{
 			"info": {
-				"name" : "datavalidation_group-taskTaskScript",
+				"name" : "datavalidation_mandatory_resource-taskTaskScript",
 				"status": "disabled",
-				"description" : ""
-			},
-			"brick":{
-				"scriptResourceId": "task_datavalidation_group",
-				"taskInterface" : {
-					"request" : [
-						{
-							"name" : "tasks"
-						}
-					],
-					"result" : {
-						"success": {
-							"output": [
-								{
-									"name" : "task_result_success_string1",
-									"criteria" : "test.string;1.0.0"
-								}
-							]
-						}
-					}
-				}
-			},
-			"adapter":[
-				{
-					"name" : "interactivetaskAdapter",
-					"status": "disabled1",
-					"brickTypeId" : {
-						"brickType": "dataAssociationForTask",
-						"version": "1.0.0"
-					},
-					"brick" : {
-						"definition" : {
-							"in" : {
-								"type" : "mapping",
-								"mapping" : [
-									{
-										"target" : {
-											"rootName" : "tasks",
-											"valuePortId" : {
-												"valuePortId" : {
-													"group" : "taskInteractive"
-												}
-											}
-										},
-										"definition" : {
-											"runtime" : [
-												{
-													"name" : "",
-													"brickId" : {
-														"idPath" : "datavalidation_mandatory-taskTaskScript"
-													}
-												}
-											],
-											"handler" : ""
-										}
-									}
-								]
-							},
-							"out" : {
-								"success" : {
-									"type" : "mapping",
-									"mapping" : [
-										{
-											"target" : {
-												"rootName" : "output1"
-											},
-											"definition" : {
-												"dataTypeId": "test.string;1.0.0",
-												"value": "validation success"
-											}
-										}
-									]
-								},
-								"error" : {
-									"type" : "mapping",
-									"mapping" : [
-										{
-											"target" : {
-												"rootName" : "output1"
-											},
-											"definition" : {
-												"mapping" : {
-													"elementPath": "error",
-													"valuePortId" : {
-														"valuePortId" : {
-															"group" : "taskInteractive"
-														}
-													}
-												}
-											}
-										}
-									]
-								}
-							}
-						}
-					}
-				}
-			]		
-		},
-
-		{
-			"info": {
-				"name" : "datavalidation_mandatory-taskWrapper",
-				"status": "disabled1",
 				"description" : ""
 			},
 			"resourceId":"taskTaskScript|1.0.0|@task=taskWrapper|1.0.0|datavalidationmandatory",  
 			"adapter":[
 				{
 					"name" : "interactivetaskAdapter",
-					"status": "disabled",
+					"status": "disabled1",
 					"brickTypeId" : {
 						"brickType": "dataAssociationForTask",
 						"version": "1.0.0"
@@ -390,6 +311,33 @@
 			"info": {
 				"name": "valueContext",
 				"status": "disabled1"
+			},
+			"brick": [
+				{
+					"groupType" : "public",
+					"valueStructure" : {
+						"root": {
+							"output1": {
+								"definition":{
+									"criteria": "test.string;1.0.0"
+								}
+							}
+						},
+						"initValue": {
+							"output1": {
+								"dataTypeId": "test.string;1.0.0",
+								"value": "default value of output1"
+							}
+						}
+					}
+				}
+			]
+		},
+
+		{
+			"info": {
+				"name": "valueContext1",
+				"status": "disabled"
 			},
 			"brick": [
 				{

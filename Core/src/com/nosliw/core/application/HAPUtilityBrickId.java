@@ -76,6 +76,11 @@ public class HAPUtilityBrickId {
 				entityTypeVersion = entityTypeIfNotProvided.getVersion();
 			}
 		}
+		
+		if(entityType==null) {
+			return null;
+		}
+		
 		//if version not provided, then use latest version
 		if(entityTypeVersion==null) {
 			entityTypeVersion = entityManager.getLatestVersion(entityType).getVersion();

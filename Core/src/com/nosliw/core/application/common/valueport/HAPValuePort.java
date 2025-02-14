@@ -49,7 +49,9 @@ public class HAPValuePort extends HAPEntityInfoImp{
 	public void setIODirection(String ioDirection) {   this.m_ioDirection = ioDirection;   }
 
 	public void cleanValueStucture(Set<String> valueStrucutreIds) {
+		System.out.println(this.m_valueStructures.stream().map(HAPInfoValueStructure::getValueStructureId).collect(Collectors.toList()));
 		this.m_valueStructures =  this.m_valueStructures.stream().filter(vsInfo->!valueStrucutreIds.contains(vsInfo.getValueStructureId())).collect(Collectors.toList());
+		int kkkk = 5555;
 	}
 
 	public boolean isEmpty() {
@@ -71,6 +73,7 @@ public class HAPValuePort extends HAPEntityInfoImp{
 		private int m_priority;
 		
 		public HAPInfoValueStructure(String valueStructureId, int priority) {
+			System.out.println(valueStructureId);
 			this.m_valueStructureId = valueStructureId;
 			this.m_priority = priority;
 		}

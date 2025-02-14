@@ -74,7 +74,7 @@ var node_createBundleCore = function(parm, configure){
 					_.each(brickDefs, function(brickDef, name){
 						branchBrickRequest.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
 							//build variable domain in bundle
-							loc_variableDomain = nod_createVariableDomain(loc_bundleDef[node_COMMONATRIBUTECONSTANT.RESOURCEDATABRICK_VALUESTRUCTUREDOMAIN]);
+//							loc_variableDomain = nod_createVariableDomain(loc_bundleDef[node_COMMONATRIBUTECONSTANT.RESOURCEDATABRICK_VALUESTRUCTUREDOMAIN]);
 							return nosliw.runtime.getComplexEntityService().getCreateEntityRuntimeRequest(brickDef, undefined, loc_out, undefined, loc_configure, {
 								success : function(request, mainEntityRuntime){
 									node_getEntityTreeNodeInterface(mainEntityRuntime.getCoreEntity()).setParentCore(loc_out);

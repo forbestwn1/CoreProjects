@@ -512,6 +512,7 @@ public class HAPConstantShared {
 		public static final String RUNTIME_RESOURCE_TYPE_TASK_TASK_SCRIPT = "taskTaskScript";
 		public static final String RUNTIME_RESOURCE_TYPE_TASK_EXPRESSION_SCRIPT = "taskExpressionScript";
 		public static final String RUNTIME_RESOURCE_TYPE_TASK_FLOW = "flow";
+		public static final String RUNTIME_RESOURCE_TYPE_FLOW_ACTIVITYTASK = "activityTask";
 		public static final String RUNTIME_RESOURCE_TYPE_VALUESTRUCTUREWRAPPER = "valuestructurewrapper";
 		public static final String RUNTIME_RESOURCE_TYPE_WRAPPERBRICK = "wrapperbrick";
 		public static final String RUNTIME_RESOURCE_TYPE_MODULE = "module";

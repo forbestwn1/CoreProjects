@@ -601,6 +601,7 @@
 			<definition name="RUNTIME_RESOURCE_TYPE_TASK_TASK_SCRIPT" value="taskTaskScript"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_TASK_EXPRESSION_SCRIPT" value="taskExpressionScript"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_TASK_FLOW" value="flow"/>
+			<definition name="RUNTIME_RESOURCE_TYPE_FLOW_ACTIVITYTASK" value="activityTask"/>
 
 
 			<definition name="RUNTIME_RESOURCE_TYPE_VALUESTRUCTUREWRAPPER" value="valuestructurewrapper"/>
