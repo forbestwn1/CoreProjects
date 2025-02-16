@@ -46,7 +46,7 @@
 		{
 			"info": {
 				"name" : "datavalidationtrigguer-test_complex_script",
-				"status": "disabled",
+				"status": "disabled1",
 				"description" : ""
 			},
 			"brick":{
@@ -144,7 +144,7 @@
 		{
 			"info": {
 				"name" : "datavalidation_mandatory-taskTaskScript",
-				"status": "disabled",
+				"status": "disabled1",
 				"description" : ""
 			},
 			"brick":{

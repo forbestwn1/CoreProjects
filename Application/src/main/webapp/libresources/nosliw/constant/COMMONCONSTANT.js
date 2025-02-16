@@ -621,7 +621,8 @@ var COMMONCONSTANT=
   "WITHVARIABLE_ENTITYTYPE_SCRIPTEXPRESSION": "scriptExpression",
   "VALUESTRUCTURE_PRIORITY_DEFINED": 0,
   "VALUESTRUCTURE_PRIORITY_IMPLIED": 10,
-  "NAME_ROOTBRICK_MAIN": "main"
+  "NAME_ROOTBRICK_MAIN": "main",
+  "FLOW_DECISION_TYPE_JAVASCRIPT": "javascript"
 };
 
 //*******************************************   End Node Definition  ************************************** 	

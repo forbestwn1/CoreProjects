@@ -1044,6 +1044,8 @@
 			<definition type="space"/>
 			<definition name="NAME_ROOTBRICK_MAIN" value="main"/>
 
+			<definition type="space"/>
+			<definition name="FLOW_DECISION_TYPE_JAVASCRIPT" value="javascript"/>
 
 		</definitions>
 	</constants>

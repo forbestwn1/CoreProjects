@@ -41,7 +41,6 @@ import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 public class HAPManualUtilityProcessor {
 
 	public static void cleanupEmptyValueStructure(HAPManualContextProcessBrick processContext) {
-//kkkkkkk
 		Set<String> vsIds = processContext.getCurrentBundle().getValueStructureDomain().cleanupEmptyValueStructure();
 
 		HAPUtilityBrickTraverse.traverseTreeWithLocalBrick(processContext.getCurrentBundle(), processContext.getRootBrickName(), new HAPHandlerDownward() {
