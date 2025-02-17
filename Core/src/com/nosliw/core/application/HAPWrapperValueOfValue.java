@@ -35,7 +35,9 @@ public class HAPWrapperValueOfValue extends HAPWrapperValue{
 	protected void buildJSJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJSJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(VALUE, HAPManagerSerialize.getInstance().toStringValue(this.m_value, HAPSerializationFormat.JAVASCRIPT));
-		typeJsonMap.put(VALUE, this.m_value.getClass());
+		if(this.m_value!=null) {
+			typeJsonMap.put(VALUE, this.m_value.getClass());
+		}
 	}
 
 	@Override

@@ -9,20 +9,19 @@ import com.nosliw.core.application.division.manual.executable.HAPManualBrickImp;
 public class HAPManualBlockTaskFlowFlow extends HAPManualBrickImp implements HAPBlockTaskFlowFlow{
 
 	@Override
-	public HAPBrickContainer getActivities() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	@Override
-	public HAPTaskFlowNext getStart() {
-		// TODO Auto-generated method stub
-		return null;
+	public void init() {
+		super.init();
 	}
 	
 	@Override
-	public HAPEntityOrReference getTaskInterface() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	public HAPBrickContainer getActivities() {   return (HAPBrickContainer)this.getAttributeValueOfBrickLocal(HAPBlockTaskFlowFlow.ACTIVITY);   }
+
+	@Override
+	public HAPTaskFlowNext getStart() {   return (HAPTaskFlowNext)this.getAttributeValueOfValue(HAPBlockTaskFlowFlow.START);  }
+	public void setStart(HAPTaskFlowNext start) {   this.setAttributeValueWithValue(HAPBlockTaskFlowFlow.START, start);    }
+	
+	@Override
+	public HAPEntityOrReference getTaskInterface() {    return this.getAttributeValueOfBrick(TASKINTERFACE);  }
+	public void setTaskInterface(HAPEntityOrReference taskInterface) {   this.setAttributeValueWithBrick(TASKINTERFACE, taskInterface);     }
 
 }

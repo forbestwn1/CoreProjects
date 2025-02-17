@@ -7,7 +7,7 @@
 		{
 			"info": {
 				"name" : "variablebynameshow-test_complex_script",
-				"status": "disabled1",
+				"status": "disabled",
 				"description" : ""
 			},
 			"brick":{
@@ -21,7 +21,7 @@
 		{
 			"info": {
 				"name" : "variablebynameshow1-test_complex_script",
-				"status": "disabled1",
+				"status": "disabled",
 				"description" : ""
 			},
 			"brick":{
@@ -35,7 +35,7 @@
 		{
 			"info": {
 				"name" : "valueport-test_complex_script",
-				"status": "disabled1",
+				"status": "disabled",
 				"description" : ""
 			},
 			"brick":{
@@ -46,7 +46,7 @@
 		{
 			"info": {
 				"name" : "datavalidationtrigguer-test_complex_script",
-				"status": "disabled1",
+				"status": "disabled",
 				"description" : ""
 			},
 			"brick":{

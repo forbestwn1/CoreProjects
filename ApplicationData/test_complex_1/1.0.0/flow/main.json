@@ -7,7 +7,7 @@
 		{
 			"info": {
 				"name" : "datavalidationtrigguer-test_complex_script",
-				"status": "disabled1",
+				"status": "disabled",
 				"description" : ""
 			},
 			"brick":{
@@ -42,28 +42,6 @@
 				"name" : "flow-flow",
 				"status": "disabled1",
 				"description" : ""
-			},
-			"taskInterface" : {
-				"request" : [
-					{
-						"name" : "data",
-						"dataInfo" : ""
-					}
-				],
-				"result" : {
-					"success": {
-						"output": [
-						]
-					},
-					"fail": {
-						"output": [
-							{
-								"name" : "error",
-								"criteria" : "test.string;1.0.0"
-							}
-						]
-					}
-				}
 			},
 			"internalAdapter" : [
 				{
@@ -121,6 +99,28 @@
 				}
 			],
 			"brick":{
+				"taskInterface" : {
+					"request" : [
+						{
+							"name" : "data",
+							"dataInfo" : ""
+						}
+					],
+					"result" : {
+						"success": {
+							"output": [
+							]
+						},
+						"fail": {
+							"output": [
+								{
+									"name" : "error",
+									"criteria" : "test.string;1.0.0"
+								}
+							]
+						}
+					}
+				},
 				"start": {
 					"target" : {
 						"activity" : "activity1",

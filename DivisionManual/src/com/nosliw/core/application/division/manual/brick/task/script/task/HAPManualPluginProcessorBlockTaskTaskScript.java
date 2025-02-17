@@ -29,17 +29,6 @@ public class HAPManualPluginProcessorBlockTaskTaskScript extends HAPManualPlugin
 	@Override
 	public void processOtherValuePortBuild(HAPPath pathFromRoot, HAPManualContextProcessBrick processContext) {
 		super.processOtherValuePortBuild(pathFromRoot, processContext);
-		
-		Pair<HAPManualDefinitionBrick, HAPManualBrick> blockPair = this.getBrickPair(pathFromRoot, processContext);
-		HAPManualDefinitionBlockTaskTaskScript definitionBlock = (HAPManualDefinitionBlockTaskTaskScript)blockPair.getLeft();
-		HAPManualBlockTaskTaskScript executableBlock = (HAPManualBlockTaskTaskScript)blockPair.getRight();
-
-		//build value port group
-//		HAPEntityOrReference taskInterface = executableBlock.getTaskInterface();
-//		if(taskInterface!=null) {
-//			HAPBlockInteractiveInterfaceTask taskInterfaceBlock = (HAPBlockInteractiveInterfaceTask)HAPUtilityBrick.getBrick(taskInterface, processContext.getRuntimeEnv().getBrickManager());
-//			HAPManualUtilityTask.buildValuePortGroupForInteractiveTask(executableBlock, taskInterfaceBlock.getValue(), processContext.getCurrentBundle().getValueStructureDomain());
-//		}
 	}
 
 	@Override

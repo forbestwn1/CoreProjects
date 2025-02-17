@@ -95,7 +95,9 @@ public class HAPUtilityEntityInfo {
 		to.setStatus(from.getStatus());
 		to.setDisplayName(from.getDisplayName());
 		to.setDescription(from.getDescription());
-		to.setInfo(from.getInfo().cloneInfo());
+		if(from.getInfo()!=null) {
+			to.setInfo(from.getInfo().cloneInfo());
+		}
 	}
 	
 	public static void buildJsonMap(Map<String, String> jsonMap, HAPEntityInfo entityInfo){

@@ -1,8 +1,5 @@
 package com.nosliw.core.application.division.manual.executable;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.HAPAttributeInBrick;
@@ -16,9 +13,6 @@ import com.nosliw.core.application.common.valueport.HAPGroupValuePorts;
 import com.nosliw.core.application.common.valueport.HAPValuePort;
 import com.nosliw.core.application.common.withvariable.HAPContainerVariableInfo;
 import com.nosliw.core.application.division.manual.HAPManualManagerBrick;
-import com.nosliw.core.application.division.manual.HAPManualUtilityValueContextProcessor;
-import com.nosliw.core.application.division.manual.common.valuecontext.HAPManualPartInValueContext;
-import com.nosliw.core.application.division.manual.common.valuecontext.HAPManualUtilityValueContext;
 import com.nosliw.core.application.division.manual.common.valuecontext.HAPManualValueContext;
 import com.nosliw.data.core.resource.HAPManagerResource;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
@@ -44,6 +38,8 @@ public abstract class HAPManualBrick extends HAPBrickImp{
 	private HAPContainerValuePorts m_otherInternalValuePortsContainer;
 	
 	private HAPContainerValuePorts m_otherExternalValuePortsContainer;
+	
+	
 	
 	public HAPManualBrick() {
 		this.m_valueContext = new HAPManualValueContext(); 
@@ -92,13 +88,13 @@ public abstract class HAPManualBrick extends HAPBrickImp{
 		return new HAPManualAttributeInBrick(attrName, valueWrapper);
 	}
 	
-	public List<HAPManualPartInValueContext> getValueContextInhertanceDownstream(){
-		List<HAPManualPartInValueContext> out = new ArrayList<HAPManualPartInValueContext>();
-		for(HAPManualPartInValueContext part : this.getManualValueContext().getParts()) {
-			out.add(HAPManualUtilityValueContextProcessor.inheritFromParent(part, HAPManualUtilityValueContext.getInheritableCategaries()));
-		}
-		return out;
-	}
+//	public List<HAPManualPartInValueContext> getValueContextInhertanceDownstream(){
+//		List<HAPManualPartInValueContext> out = new ArrayList<HAPManualPartInValueContext>();
+//		for(HAPManualPartInValueContext part : this.getManualValueContext().getParts()) {
+//			out.add(HAPManualUtilityValueContextProcessor.inheritFromParent(part, HAPManualUtilityValueContext.getInheritableCategaries()));
+//		}
+//		return out;
+//	}
 
 	public HAPContainerValuePorts getOtherInternalValuePortContainer() {   return this.m_otherInternalValuePortsContainer;    }
 	public HAPContainerValuePorts getOtherExternalValuePortContainer() {   return this.m_otherExternalValuePortsContainer;    }

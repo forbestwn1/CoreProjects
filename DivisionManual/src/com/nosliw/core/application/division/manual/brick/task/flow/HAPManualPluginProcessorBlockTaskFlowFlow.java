@@ -20,11 +20,15 @@ public class HAPManualPluginProcessorBlockTaskFlowFlow extends HAPManualPluginPr
 	@Override
 	public void processInit(HAPPath pathFromRoot, HAPManualContextProcessBrick processContext) {
 		Pair<HAPManualDefinitionBrick, HAPManualBrick> blockPair = this.getBrickPair(pathFromRoot, processContext);
+		HAPManualDefinitionBlockTaskFlowFlow definitionBlock = (HAPManualDefinitionBlockTaskFlowFlow)blockPair.getLeft();
+		HAPManualBlockTaskFlowFlow executableBlock = (HAPManualBlockTaskFlowFlow)blockPair.getRight();
+		
+		executableBlock.setStart(definitionBlock.getStart());
 	}
 
 	@Override
 	public void processOtherValuePortBuild(HAPPath pathFromRoot, HAPManualContextProcessBrick processContext) {
-		Pair<HAPManualDefinitionBrick, HAPManualBrick> blockPair = this.getBrickPair(pathFromRoot, processContext);
+		super.processOtherValuePortBuild(pathFromRoot, processContext);
 	}
 
 	@Override

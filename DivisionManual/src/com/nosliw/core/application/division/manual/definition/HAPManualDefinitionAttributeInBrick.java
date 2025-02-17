@@ -80,6 +80,9 @@ public class HAPManualDefinitionAttributeInBrick extends HAPEntityInfoImp implem
 		if(this.m_pathFromRoot!=null) {
 			jsonMap.put(PATHFROMROOT, this.m_pathFromRoot.toString());
 		}
+		
+		jsonMap.put(RELATION, HAPManagerSerialize.getInstance().toStringValue(this.m_relations, HAPSerializationFormat.JSON));
+		
 		if(!this.m_adapters.isEmpty()) {
 			jsonMap.put(ADAPTER, HAPManagerSerialize.getInstance().toStringValue(this.m_adapters, HAPSerializationFormat.JSON));
 		}

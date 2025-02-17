@@ -95,7 +95,7 @@ public class HAPManualUtilityValueContextProcessor {
 				}
 				
 				if(!HAPConstantShared.INHERITMODE_NONE.equals(inheritMode)) {
-					List<HAPManualPartInValueContext> fromParentParts = parentBrickManual.getValueContextInhertanceDownstream();
+					List<HAPManualPartInValueContext> fromParentParts = getValueContextInhertanceDownstream(parentBrickManual, processContext.getManualBrickManager()); 
 					List<HAPManualPartInValueContext> inheritParts = new ArrayList<HAPManualPartInValueContext>();
 					for(HAPManualPartInValueContext fromParentPart : fromParentParts) {
 						HAPManualPartInValueContext inheritPart = inheritToChild(fromParentPart, inheritMode, valueStructureDomain);
@@ -252,7 +252,7 @@ public class HAPManualUtilityValueContextProcessor {
 				}
 				
 				if(!HAPConstantShared.INHERITMODE_NONE.equals(inheritMode)) {
-					List<HAPManualPartInValueContext> fromParentParts = parentBrickManual.getValueContextInhertanceDownstream();
+					List<HAPManualPartInValueContext> fromParentParts = getValueContextInhertanceDownstream(parentBrickManual, processContext.getManualBrickManager()); 
 					List<HAPManualPartInValueContext> inheritParts = new ArrayList<HAPManualPartInValueContext>();
 					for(HAPManualPartInValueContext fromParentPart : fromParentParts) {
 						HAPManualPartInValueContext inheritPart = inheritToChild(fromParentPart, inheritMode, valueStructureDomain);
@@ -431,7 +431,23 @@ public class HAPManualUtilityValueContextProcessor {
 	}
 
 	
-	
+	private static List<HAPManualPartInValueContext> getValueContextInhertanceDownstream(HAPManualBrick brick, HAPManualManagerBrick manualBrickMan) {
+		if(HAPManualUtilityBrick.isBrickComplex(brick.getBrickType(), manualBrickMan)) {
+			//for complex brick, 
+			List<HAPManualPartInValueContext> out = new ArrayList<HAPManualPartInValueContext>();
+			for(HAPManualPartInValueContext part : brick.getManualValueContext().getParts()) {
+				out.add(HAPManualUtilityValueContextProcessor.inheritFromParent(part, HAPManualUtilityValueContext.getInheritableCategaries()));
+			}
+			return out;
+		}
+		else {
+			HAPManualBrick parent = brick.getTreeNodeInfo().getParent();
+			if(parent!=null) {
+				return getValueContextInhertanceDownstream(parent, manualBrickMan);
+			}
+			return null;
+		}
+	}
 	
 	
 	

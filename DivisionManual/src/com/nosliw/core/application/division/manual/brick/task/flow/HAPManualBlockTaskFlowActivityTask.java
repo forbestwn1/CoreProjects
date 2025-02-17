@@ -8,15 +8,10 @@ import com.nosliw.core.application.division.manual.executable.HAPManualBrickWith
 public class HAPManualBlockTaskFlowActivityTask extends HAPManualBrickWithEntityInfo implements HAPBlockTaskFlowActivityTask{
 
 	@Override
-	public HAPTaskFlowNext getNext() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	public HAPTaskFlowNext getNext() {   return (HAPTaskFlowNext)this.getAttributeValueOfValue(HAPBlockTaskFlowActivityTask.NEXT);   }
+	public void setNext(HAPTaskFlowNext next) {   this.setAttributeValueWithValue(HAPBlockTaskFlowActivityTask.NAME, next);    }
 
 	@Override
-	public HAPEntityOrReference getTask() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	public HAPEntityOrReference getTask() {   return this.getAttributeValueOfBrick(HAPBlockTaskFlowActivityTask.TASK);  }
 
 }
