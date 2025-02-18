@@ -7,7 +7,7 @@
 		{
 			"info": {
 				"name" : "variablebynameshow-test_complex_script",
-				"status": "disabled",
+				"status": "disabled1",
 				"description" : ""
 			},
 			"brick":{
@@ -46,7 +46,7 @@
 		{
 			"info": {
 				"name" : "datavalidationtrigguer-test_complex_script",
-				"status": "disabled",
+				"status": "disabled1",
 				"description" : ""
 			},
 			"brick":{
@@ -58,9 +58,9 @@
 							"name" : "testDataValidation1",
 							"handlerId" : {
 								"idPath0" : "#task",
-								"idPath" : "datavalidation_mandatory-taskTaskScript",
+								"idPath1" : "datavalidation_mandatory-taskTaskScript",
 								"idPath2" : "datavalidation_enum-taskTaskScript",
-								"idPath3" : "datavalidation_mandatory_resource-taskTaskScript"
+								"idPath" : "datavalidation_mandatory_resource-taskTaskScript"
 							},
 							"dataDefinition" : {
 								"criteria": "test.string;1.0.0"
@@ -78,7 +78,7 @@
 		{
 			"info": {
 				"name" : "datavalidation_mandatory_resource-taskTaskScript",
-				"status": "disabled",
+				"status": "disabled1",
 				"description" : ""
 			},
 			"resourceId":"taskTaskScript|1.0.0|@task=taskWrapper|1.0.0|datavalidationmandatory",  
@@ -144,7 +144,7 @@
 		{
 			"info": {
 				"name" : "datavalidation_mandatory-taskTaskScript",
-				"status": "disabled1",
+				"status": "disabled",
 				"description" : ""
 			},
 			"brick":{

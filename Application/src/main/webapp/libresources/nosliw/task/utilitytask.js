@@ -93,22 +93,16 @@ var node_taskUtility = {
 			});
 			initRequestWrapper.addRequest(task.getTaskInitRequest());
 			out.addRequest(initRequestWrapper);
-
-/*
-			out.addRequest(task.getTaskInitRequest({
-				success : function(request){
-					var task1 = task;
-					return task.getTaskExecuteRequest({
-						success : function(request){
-							return task1;
-						}
-					});
-				}
-			}));
-*/			
 		}
 		return out;		
 	},
+
+
+
+
+
+
+
 
 
 

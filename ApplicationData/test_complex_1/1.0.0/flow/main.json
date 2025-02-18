@@ -124,7 +124,7 @@
 				"start": {
 					"target" : {
 						"activity" : "activity1",
-						"adatper" : "interactivetaskAdapter"
+						"adapter" : "interactivetaskAdapter"
 					}
 				},
 				"activity" : [

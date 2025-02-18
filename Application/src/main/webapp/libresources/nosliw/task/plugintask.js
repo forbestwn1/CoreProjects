@@ -118,7 +118,6 @@ var loc_createTaskCore = function(taskDef, configure){
 			loc_envInterface = envInterface;
 		},
 		
-		
 		updateView : function(view){
 			var rootView =  $('<div>Task' + '</div>');
 			$(view).append(rootView);
@@ -137,6 +136,10 @@ var loc_createTaskCore = function(taskDef, configure){
 				node_requestServiceProcessor.processRequest(out);
 			});
 			rootView.append(taskTrigueView);
+		},
+		
+		getExecuteTaskWithAdapter : function(adapterName, handlers, request){
+			
 		}
 	};
 	
