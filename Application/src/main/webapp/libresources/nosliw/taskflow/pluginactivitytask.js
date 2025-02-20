@@ -18,13 +18,13 @@ var packageObj = library;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
-var node_createFlowTaskPlugin = function(){
+var node_createTaskActivityPlugin = function(){
 	
 	var loc_out = {
 
 		getCreateEntityCoreRequest : function(entityDef, internalValuePortContainerId, externalValuePortContainerId, bundleCore, configure, handlers, request){
 			return node_createServiceRequestInfoSimple(undefined, function(request){
-				return loc_createFlowTaskCore(entityDef, configure);
+				return loc_createTaskActivityCore(entityDef, configure);
 			}, handlers, request);
 		},
 	};
@@ -33,36 +33,16 @@ var node_createFlowTaskPlugin = function(){
 };
 
 
-var loc_createFlowTaskCore = function(entityDef, configure){
+var loc_createTaskActivityCore = function(entityDef, configure){
 	
-	var loc_valueContext;
-
 	var loc_entityDef = entityDef;
+	var loc_next = loc_entityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.BLOCKTASKFLOWACTIVITY_NEXT);
+	var loc_decision = loc_next[node_COMMONATRIBUTECONSTANT.TASKFLOWNEXT_DECISION];
+	var loc_target = loc_next[node_COMMONATRIBUTECONSTANT.TASKFLOWNEXT_TARGET];
 
 	var loc_envInterface = {};
 	
-	var loc_taskContext;
-	
-	var loc_activities;
-
-	var loc_facadeTaskFactory = {
-		//return a task
-		createTask : function(taskContext){
-			loc_taskContext = taskContext;
-			return loc_out;
-		},
-	};
-
-	var loc_getExecuteTargetRequest = function(target, handlers, request){
-		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-		var activity = loc_activities.getChildrenEntity()[target[node_COMMONATRIBUTECONSTANT.TASKFLOWTARGET_ACTIVITY]].getCoreEntity();
-		out.addRequest(activity.getExecuteActivityRequest(target[node_COMMONATRIBUTECONSTANT.TASKFLOWTARGET_ADAPTER], loc_taskContext, {
-			success : function(request, target){
-				return loc_getExecuteTargetRequest(target);
-			}
-		}));
-		return out;
-	};
+	var loc_task;
 
 	var loc_out = {
 
@@ -70,42 +50,27 @@ var loc_createFlowTaskCore = function(entityDef, configure){
 		
 		getEntityInitRequest : function(handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-			out.addRequest(loc_envInterface[node_CONSTANT.INTERFACE_ENTITY].createAttributeRequest(node_COMMONATRIBUTECONSTANT.BLOCKTASKFLOWFLOW_ACTIVITY, undefined, {
+			out.addRequest(loc_envInterface[node_CONSTANT.INTERFACE_ENTITY].createAttributeRequest(node_COMMONATRIBUTECONSTANT.BLOCKTASKFLOWACTIVITYTASK_TASK, undefined), {
 				success : function(request, childNode){
-					loc_activities = childNode.getChildValue().getCoreEntity();;
+					loc_task = childNode.getChildValue();
+				}
+			});
+			return out;
+		},
+		
+		getExecuteActivityRequest : function(adapterName, taskContext, handlers, request){
+			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+			out.addRequest(loc_task.getExecuteTaskWithAdapter(adapterName, taskContext, {
+				success : function(request, task){
+					var taskResult = task.getTaskResult();
+					return loc_target.default; 
 				}
 			}));
-			return out;
+			
 		},
-		
-		getPreInitRequest : function(){
-		},
-		
-		updateView : function(view){
-		},
-
-		getTaskInitRequest : function(handlers, request){
-			if(loc_taskContext!=undefined){
-				return loc_taskContext.getInitTaskRequest(loc_out, handlers, request);
-			}
-		},
-
-		getTaskExecuteRequest : function(handlers, request){
-			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-			var valuePortContainer = node_getEntityObjectInterface(loc_out).getInternalValuePortContainer();
-			var withValuePort = loc_envInterface[node_CONSTANT.INTERFACE_WITHVALUEPORT];
-
-			var start = loc_entityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.BLOCKTASKFLOWFLOW_START);
-			var startTarget = start[node_COMMONATRIBUTECONSTANT.TASKFLOWNEXT_TARGET].default;
-			out.addRequest(loc_getExecuteTargetRequest(startTarget));
-			return out;
-		},
-		
-		getTaskResult : function(){   return loc_taskResult;    }
 		
 	};
 
-	loc_out = node_makeObjectWithApplicationInterface(loc_out, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_TASKFACTORY, loc_facadeTaskFactory);
 	return loc_out;
 };
 
@@ -127,6 +92,6 @@ nosliw.registerSetNodeDataEvent("component.makeObjectWithApplicationInterface", 
 nosliw.registerSetNodeDataEvent("task.interactiveUtility", function(){node_interactiveUtility = this.getData();});
 
 //Register Node by Name
-packageObj.createChildNode("createFlowTaskPlugin", node_createFlowTaskPlugin); 
+packageObj.createChildNode("createTaskActivityPlugin", node_createTaskActivityPlugin); 
 
 })(packageObj);

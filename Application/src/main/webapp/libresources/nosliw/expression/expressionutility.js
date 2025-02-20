@@ -359,9 +359,9 @@ var node_utility = function()
 							return out;
 						};
 						
-						return node_taskUtility.getExecuteTask(dataExpressionLibEleCore, onInitTaskRequest, undefined, undefined, {
-							success : function(request, taskResult){
-								return taskResult;
+						return node_taskUtility.getExecuteEntityTaskRequest(dataExpressionLibEleCore, onInitTaskRequest, undefined, undefined, {
+							success : function(request, task){
+								return task.getTaskResult();
 							}
 						});
 					}

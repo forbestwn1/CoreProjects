@@ -9,19 +9,9 @@ var packageObj = library;
 	var node_createServiceRequestInfoSimple;
 	var node_createServiceRequestInfoSequence;
 	var node_ServiceInfo;
-	var node_createConfigure;
-	var node_createErrorData;
-	var node_componentUtility;
-	var node_requestServiceProcessor;
 	var node_createDataAssociation;
-	var node_createIODataSet;
-	var node_dataIOUtility;
 	var node_taskUtility;
-	var node_ioDataFactory;
-	var node_getBasicEntityObjectInterface;
-	var node_IOTaskInfo;
 	var node_getApplicationInterface;
-	var node_complexEntityUtility;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -63,6 +53,19 @@ var loc_createDataAssociationForTaskAdapter = function(dataAssociationTask, base
 	var loc_out = {
 		
 		getExecuteTaskRequest : function(taskContext, handlers, request){
+			
+			var onInitTaskRequest = function(handlers, request){
+				return loc_dataAssociationIn.getExecuteRequest(handlers, request);
+			};
+			
+			var onFinishTaskRequest = function(task, handlers, request){
+				return loc_dataAssociationOut[task.getTaskResult().resultName].getExecuteRequest(handlers, request);
+			};
+			
+			return node_taskUtility.getExecuteEntityTaskRequest(loc_baseEntityCore, onInitTaskRequest, taskContext, onFinishTaskRequest, handlers, request)
+		},
+		
+		getExecuteTaskRequest1 : function(taskContext, handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 			
 			var taskFactory = node_getApplicationInterface(loc_baseEntityCore, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_TASKFACTORY);
@@ -106,19 +109,9 @@ nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){no
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple", function(){	node_createServiceRequestInfoSimple = this.getData();	});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequence", function(){	node_createServiceRequestInfoSequence = this.getData();	});
 nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();	});
-nosliw.registerSetNodeDataEvent("component.createConfigure", function(){node_createConfigure = this.getData();});
-nosliw.registerSetNodeDataEvent("error.entity.createErrorData", function(){node_createErrorData = this.getData();});
-nosliw.registerSetNodeDataEvent("component.componentUtility", function(){node_componentUtility = this.getData();});
-nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
 nosliw.registerSetNodeDataEvent("iovalue.createDataAssociation", function(){node_createDataAssociation = this.getData();});
-nosliw.registerSetNodeDataEvent("iovalue.entity.createIODataSet", function(){node_createIODataSet = this.getData();});
-nosliw.registerSetNodeDataEvent("iovalue.dataIOUtility", function(){node_dataIOUtility = this.getData();});
-nosliw.registerSetNodeDataEvent("iovalue.taskUtility", function(){node_taskUtility = this.getData();});
-nosliw.registerSetNodeDataEvent("iovalue.ioDataFactory", function(){node_ioDataFactory = this.getData();});
-nosliw.registerSetNodeDataEvent("common.getBasicEntityObjectInterface", function(){node_getBasicEntityObjectInterface = this.getData();});
-nosliw.registerSetNodeDataEvent("iovalue.entity.IOTaskInfo", function(){node_IOTaskInfo = this.getData();});
+nosliw.registerSetNodeDataEvent("task.taskUtility", function(){node_taskUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("component.getApplicationInterface", function(){node_getApplicationInterface = this.getData();});
-nosliw.registerSetNodeDataEvent("complexentity.complexEntityUtility", function(){node_complexEntityUtility = this.getData();});
 
 
 //Register Node by Name

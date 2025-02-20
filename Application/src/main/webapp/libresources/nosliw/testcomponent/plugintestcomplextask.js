@@ -80,7 +80,7 @@ var loc_createTestTaskCore = function(complexEntityDef, valueContextId, bundleCo
 				var taskInteractiveTrigueView = $('<button>Execute Task Interactive</button>');
 				rootView.append(taskInteractiveTrigueView);
 				taskInteractiveTrigueView.click(function() {
-					var executeTaskInteractiveRequest = node_taskUtility.getExecuteTaskWithAdapterRequest(loc_out, loc_taskContext);
+					var executeTaskInteractiveRequest = node_taskUtility.getExecuteTaskWithAdapterRequest(loc_out, undefined, loc_taskContext);
 					node_requestServiceProcessor.processRequest(executeTaskInteractiveRequest);
 				});
 			}
@@ -88,7 +88,7 @@ var loc_createTestTaskCore = function(complexEntityDef, valueContextId, bundleCo
 				var expressionInteractiveTrigueView = $('<button>Execute Expression Interactive</button>');
 				rootView.append(expressionInteractiveTrigueView);
 				expressionInteractiveTrigueView.click(function() {
-					var executeExpressionInteractiveRequest = node_taskUtility.getExecuteTaskWithAdapterRequest(loc_out, loc_taskContext);
+					var executeExpressionInteractiveRequest = node_taskUtility.getExecuteTaskWithAdapterRequest(loc_out, undefined, loc_taskContext);
 					node_requestServiceProcessor.processRequest(executeExpressionInteractiveRequest);
 				});
 			}

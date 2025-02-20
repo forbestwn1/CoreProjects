@@ -9,7 +9,7 @@ public class HAPManualBlockTaskFlowActivityTask extends HAPManualBrickWithEntity
 
 	@Override
 	public HAPTaskFlowNext getNext() {   return (HAPTaskFlowNext)this.getAttributeValueOfValue(HAPBlockTaskFlowActivityTask.NEXT);   }
-	public void setNext(HAPTaskFlowNext next) {   this.setAttributeValueWithValue(HAPBlockTaskFlowActivityTask.NAME, next);    }
+	public void setNext(HAPTaskFlowNext next) {   this.setAttributeValueWithValue(HAPBlockTaskFlowActivityTask.NEXT, next);    }
 
 	@Override
 	public HAPEntityOrReference getTask() {   return this.getAttributeValueOfBrick(HAPBlockTaskFlowActivityTask.TASK);  }

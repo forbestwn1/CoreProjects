@@ -47,8 +47,8 @@ var loc_createTaskEntityCoreRequest = function(envInterface, taskId, handlers, r
 	return out;
 };
 
-var loc_createTaskWrapper = function(taskContext, taskId, getEnvInterface){
-
+var loc_createTaskWrapper = function(adapterName, taskContext, taskId, getEnvInterface){
+	var loc_adapterName = adapterName;
 	var loc_taskContext = taskContext;
 	var loc_taskId = taskId;
 	var loc_getEnvInterface = getEnvInterface;
@@ -73,7 +73,7 @@ var loc_createTaskWrapper = function(taskContext, taskId, getEnvInterface){
 		
 		getTaskExecuteRequest : function(handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-			out.addRequest(node_taskUtility.getExecuteTaskWithAdapterRequest(loc_taskEntityCore, loc_taskContext, {
+			out.addRequest(node_taskUtility.getExecuteTaskWithAdapterRequest(loc_taskEntityCore, loc_adapterName, loc_taskContext, {
 				success : function(request, task){
 					loc_task = task;					
 				}
@@ -107,8 +107,8 @@ var loc_createTaskCore = function(taskDef, configure){
 
 	var loc_facadeTaskFactory = {
 		//return a task
-		createTask : function(taskContext){
-			return loc_createTaskWrapper(taskContext, loc_createTaskId(), function(){ return loc_envInterface;  });
+		createTask : function(taskContext, adapterName){
+			return loc_createTaskWrapper(adapterName, taskContext, loc_createTaskId(), function(){ return loc_envInterface;  });
 		},
 	};
 
@@ -138,8 +138,9 @@ var loc_createTaskCore = function(taskDef, configure){
 			rootView.append(taskTrigueView);
 		},
 		
-		getExecuteTaskWithAdapter : function(adapterName, handlers, request){
-			
+		getExecuteTaskWithAdapter : function(adapterName, taskContext, handlers, request){
+			var task = loc_facadeTaskFactory.createTask(taskContext, adapterName);
+			return node_taskUtility.getExecuteTaskRequest(task, undefined, undefined, handlers, request);
 		}
 	};
 	

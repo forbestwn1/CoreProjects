@@ -30,7 +30,7 @@ public class HAPManualDefinitionBlockTaskFlowFlow extends HAPManualDefinitionBri
 	public HAPManualDefinitionBrickContainer getActivityContainer() {		return (HAPManualDefinitionBrickContainer)this.getAttributeValueOfBrick(HAPBlockTaskFlowFlow.ACTIVITY);	}
 	
 	public void addActivity(HAPManualDefinitionBlockTaskFlowActivity activity) {
-		this.getActivityContainer().addElementWithBrickOrReference((HAPManualDefinitionBrick)activity);
+		this.getActivityContainer().addElementWithBrick(activity);
 	}
 	
 }

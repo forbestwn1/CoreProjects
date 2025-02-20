@@ -119,7 +119,7 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 						}
 					};
 					
-					var taskExeRequest = node_taskUtility.getExecuteTaskWithAdapterRequest(handlerEntityCore, taskContext, {
+					var taskExeRequest = node_taskUtility.getExecuteTaskWithAdapterRequest(handlerEntityCore, undefined, taskContext, {
 						success : function(request, task){
 							eventResultView.val(JSON.stringify(task.getTaskResult()));
 						}

@@ -1,10 +1,14 @@
 package com.nosliw.core.application.brick.task.flow;
 
+import java.util.Map;
+
 import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfoImp;
 
+@HAPEntityWithAttribute
 public class HAPTaskFlowTarget extends HAPEntityInfoImp{
 
 	@HAPAttribute
@@ -30,6 +34,13 @@ public class HAPTaskFlowTarget extends HAPEntityInfoImp{
 	public String getAdapter() {	return this.m_adapter;	}
 	
 	@Override
+	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		super.buildJsonMap(jsonMap, typeJsonMap);
+		jsonMap.put(ADAPTER, this.m_adapter);
+		jsonMap.put(ACTIVITY, this.m_targetActivity);
+	}
+	
+	@Override
 	protected boolean buildObjectByJson(Object json){
 		this.buildEntityInfoByJson(json);
 		
@@ -39,5 +50,4 @@ public class HAPTaskFlowTarget extends HAPEntityInfoImp{
 		
 		return true;  
 	}
-	
 }

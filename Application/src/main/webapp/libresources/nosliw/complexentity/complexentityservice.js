@@ -59,6 +59,8 @@ var packageObj = library;
 	var node_createScriptTaskTaskPlugin;
 	var node_createDecorationScriptPlugin;
 	var node_createScriptTaskGroupEntityPlugin;
+	var node_createFlowTaskPlugin;
+	var node_createTaskActivityPlugin;
 	
 	var node_createContainerPlugin;
 	var node_createContainerListPlugin;
@@ -182,6 +184,8 @@ var node_createComplexEntityRuntimeService = function() {
 
 		loc_out.registerEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_SCRIPTTASKGROUP, "1.0.0", node_createScriptTaskGroupEntityPlugin());
 
+		loc_out.registerEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_TASK_FLOW, "1.0.0", node_createFlowTaskPlugin());
+		loc_out.registerEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_FLOW_ACTIVITYTASK, "1.0.0", node_createTaskActivityPlugin());
 
 
 
@@ -403,10 +407,12 @@ nosliw.registerSetNodeDataEvent("expression.createDataExpressionLibraryElementPl
 nosliw.registerSetNodeDataEvent("task.createTaskPlugin", function(){node_createTaskPlugin = this.getData();});
 nosliw.registerSetNodeDataEvent("taskscript.createScriptTaskTaskPlugin", function(){node_createScriptTaskTaskPlugin = this.getData();});
 
-
 nosliw.registerSetNodeDataEvent("expression.createExpressionGroupPlugin", function(){node_createExpressionGroupPlugin = this.getData();});
 nosliw.registerSetNodeDataEvent("expression.createExpressionSinglePlugin", function(){node_createExpressionSinglePlugin = this.getData();});
 nosliw.registerSetNodeDataEvent("scripttaskgroup.createScriptTaskGroupEntityPlugin", function(){node_createScriptTaskGroupEntityPlugin = this.getData();});
+
+nosliw.registerSetNodeDataEvent("taskflow.createFlowTaskPlugin", function(){node_createFlowTaskPlugin = this.getData();});
+nosliw.registerSetNodeDataEvent("taskflow.createTaskActivityPlugin", function(){node_createTaskActivityPlugin = this.getData();});
 
 nosliw.registerSetNodeDataEvent("entitycontainer.createContainerPlugin", function(){node_createContainerPlugin = this.getData();});
 nosliw.registerSetNodeDataEvent("entitycontainer.createContainerListPlugin", function(){node_createContainerListPlugin = this.getData();});
