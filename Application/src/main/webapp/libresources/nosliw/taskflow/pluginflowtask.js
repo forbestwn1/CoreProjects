@@ -44,6 +44,8 @@ var loc_createFlowTaskCore = function(entityDef, configure){
 	var loc_taskContext;
 	
 	var loc_activities;
+	
+	var loc_taskResult;
 
 	var loc_facadeTaskFactory = {
 		//return a task
@@ -58,7 +60,18 @@ var loc_createFlowTaskCore = function(entityDef, configure){
 		var activity = loc_activities.getChildrenEntity()[target[node_COMMONATRIBUTECONSTANT.TASKFLOWTARGET_ACTIVITY]].getCoreEntity();
 		out.addRequest(activity.getExecuteActivityRequest(target[node_COMMONATRIBUTECONSTANT.TASKFLOWTARGET_ADAPTER], loc_taskContext, {
 			success : function(request, target){
-				return loc_getExecuteTargetRequest(target);
+				var targetActivityName = target[node_COMMONATRIBUTECONSTANT.TASKFLOWTARGET_ACTIVITY];
+				if(targetActivityName.startsWith("#")){
+					var i = targetActivityName.indexOf("_");
+					var resultName = targetActivityName.substring(i+1);
+					var valuePortContainer = node_getEntityObjectInterface(loc_out).getInternalValuePortContainer();
+					var withValuePort = loc_envInterface[node_CONSTANT.INTERFACE_WITHVALUEPORT];
+					var valueStructures = valuePortContainer.getValueStructuresByGroupTypeAndValuePortName(node_COMMONCONSTANT.VALUEPORTGROUP_TYPE_INTERACTIVETASK, node_interactiveUtility.getResultValuePortNameByResultName(resultName));
+					var kkkk = 5555;
+				}
+				else{
+					return loc_getExecuteTargetRequest(target);
+				}
 			}
 		}));
 		return out;
@@ -92,12 +105,14 @@ var loc_createFlowTaskCore = function(entityDef, configure){
 
 		getTaskExecuteRequest : function(handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-			var valuePortContainer = node_getEntityObjectInterface(loc_out).getInternalValuePortContainer();
-			var withValuePort = loc_envInterface[node_CONSTANT.INTERFACE_WITHVALUEPORT];
 
 			var start = loc_entityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.BLOCKTASKFLOWFLOW_START);
 			var startTarget = start[node_COMMONATRIBUTECONSTANT.TASKFLOWNEXT_TARGET].default;
-			out.addRequest(loc_getExecuteTargetRequest(startTarget));
+			out.addRequest(loc_getExecuteTargetRequest(startTarget, {
+				success : function(request, taskResult){
+					loc_taskResult = taskResult;
+				}
+			}));
 			return out;
 		},
 		

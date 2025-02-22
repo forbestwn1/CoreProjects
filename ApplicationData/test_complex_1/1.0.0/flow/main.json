@@ -28,7 +28,7 @@
 								"criteria": "test.string;1.0.0"
 							}
 						},
-						"testData" : {
+						"testData1" : {
 							"dataTypeId": "test.string;1.0.0",
 							"value": "data for validation"
 						}
@@ -199,8 +199,11 @@
 							"target" : [
 								{
 									"name" : "success",
-									"activity" : "#end_success",
-									"adapter" : "adapterId"
+									"activity" : "#end_success"
+								},
+								{
+									"name" : "fail",
+									"activity" : "#end_fail"
 								}
 							]
 						}
