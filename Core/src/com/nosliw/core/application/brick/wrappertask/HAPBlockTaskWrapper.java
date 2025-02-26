@@ -10,13 +10,11 @@ public interface HAPBlockTaskWrapper extends HAPBrick{
 	public static final String CHILD_TASK = "task";
 
 	@HAPAttribute
-	public static String TASK = "task";
+	public static String TASK = "__task__";
 	
 	@HAPAttribute
 	public static String TASKTYPE = "taskType";
 	
 	String getTaskType();
 	
-
-
 }

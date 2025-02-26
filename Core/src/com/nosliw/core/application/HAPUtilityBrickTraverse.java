@@ -1,6 +1,8 @@
 package com.nosliw.core.application;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import com.nosliw.common.path.HAPPath;
 
@@ -24,10 +26,15 @@ public class HAPUtilityBrickTraverse {
 	}
 	
 	public static void traverseTree(HAPBundle bundle, String rootName, HAPHandlerDownward processor, HAPManagerApplicationBrick brickMan, Object data) {
-		traverseTree(bundle, new HAPPath(HAPUtilityBundle.buildBranchPathSegment(rootName)), processor, brickMan, data);
+		Set<HAPPath> validPath = new HashSet<HAPPath>();
+		
+		traversePreTree(bundle, new HAPPath(HAPUtilityBundle.buildBranchPathSegment(rootName)), processor, brickMan, data, validPath);
+		
+		traversePostTree(bundle, new HAPPath(HAPUtilityBundle.buildBranchPathSegment(rootName)), processor, brickMan, data, validPath);
 	}
 	
-	private static void traverseTree(HAPBundle bundle, HAPPath path, HAPHandlerDownward processor, HAPManagerApplicationBrick brickMan, Object data) {
+	private static void traversePreTree(HAPBundle bundle, HAPPath path, HAPHandlerDownward processor, HAPManagerApplicationBrick brickMan, Object data, Set<HAPPath> validPath) {
+		validPath.add(path);
 		if(processor.processBrickNode(bundle, path, data)) {
 			HAPBrick leafBrick = HAPUtilityBrick.getDescdentBrickLocal(bundle, path);
 			
@@ -36,12 +43,26 @@ public class HAPUtilityBrickTraverse {
 				List<HAPAttributeInBrick> attrsExe = leafBrick.getAttributes();
 				for(HAPAttributeInBrick attrExe : attrsExe) {
 					HAPPath attrPath = path.appendSegment(attrExe.getName());
-					traverseTree(bundle, attrPath, processor, brickMan, data);
+					traversePreTree(bundle, attrPath, processor, brickMan, data, validPath);
 				}
 			}
 		}
-		
-		processor.postProcessBrickNode(bundle, path, data);
+	}
+
+	private static void traversePostTree(HAPBundle bundle, HAPPath path, HAPHandlerDownward processor, HAPManagerApplicationBrick brickMan, Object data, Set<HAPPath> validPath) {
+		if(validPath.contains(path)) {
+			processor.postProcessBrickNode(bundle, path, data);
+			HAPBrick leafBrick = HAPUtilityBrick.getDescdentBrickLocal(bundle, path);
+			
+			if(leafBrick!=null) {
+				//only process child for brick
+				List<HAPAttributeInBrick> attrsExe = leafBrick.getAttributes();
+				for(HAPAttributeInBrick attrExe : attrsExe) {
+					HAPPath attrPath = path.appendSegment(attrExe.getName());
+					traversePostTree(bundle, attrPath, processor, brickMan, data, validPath);
+				}
+			}
+		}
 	}
 
 }

@@ -1,11 +1,9 @@
 package com.nosliw.core.application.division.manual.definition;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import com.nosliw.common.interfac.HAPEntityOrReference;
 import com.nosliw.common.serialization.HAPSerializableImp;
@@ -28,14 +26,13 @@ import com.nosliw.core.application.division.manual.brick.value.HAPManualDefiniti
 import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualDefinitionBrickValueContext;
 import com.nosliw.core.application.division.manual.brick.wrappertask.HAPManualDefinitionBlockTaskWrapper;
 import com.nosliw.core.application.division.manual.common.attachment.HAPManualDefinitionAttachment;
+import com.nosliw.core.application.division.manual.common.task.HAPManualUtilityTask;
 import com.nosliw.data.core.resource.HAPResourceId;
 
 public abstract class HAPManualDefinitionBrick extends HAPSerializableImp implements HAPEntityOrReference, HAPWithConstantDefinition, HAPWithScriptExpressionConstantMaster{
 
 	public final static String ATTRIBUTE = "attribute"; 
 	
-	public final static String INTERNALADAPTER = "internalAdapter"; 
-
 	final private static String ATTR_IDINDEX = HAPUtilityNosliw.buildNosliwFullName("idIndex"); 
 
 	static private String VALUECONTEXT = "valueContext"; 
@@ -43,9 +40,6 @@ public abstract class HAPManualDefinitionBrick extends HAPSerializableImp implem
 	//all attributes
 	private List<HAPManualDefinitionAttributeInBrick> m_attributes;
 
-	//multiple adapters by name
-	private Map<String, HAPManualDefinitionAdapter> m_adapters;
-	
 	private HAPManualDefinitionAttachment m_attachment;
 	
 	private HAPDefinitionContainerScriptExpression m_constantScriptExpressions;
@@ -56,7 +50,6 @@ public abstract class HAPManualDefinitionBrick extends HAPSerializableImp implem
 	
 	public HAPManualDefinitionBrick (HAPIdBrickType brickTypeId) {
 		this.m_attributes = new ArrayList<HAPManualDefinitionAttributeInBrick>();
-		this.m_adapters = new LinkedHashMap<String, HAPManualDefinitionAdapter>();
 		this.m_attachment = new HAPManualDefinitionAttachment();
 		this.m_brickTypeId = brickTypeId;
 		this.m_constantScriptExpressions = new HAPDefinitionContainerScriptExpression();
@@ -98,10 +91,6 @@ public abstract class HAPManualDefinitionBrick extends HAPSerializableImp implem
 		HAPManualDefinitionUtilityValueContext.solidateConstantScript(this.getValueContextBrick(), values);
 	}
 
-	public void addAdapter(HAPManualDefinitionAdapter adapter) {    this.m_adapters.put(adapter.getName(), adapter);     }
-	public Set<HAPManualDefinitionAdapter> getAdapters(){   return new HashSet<HAPManualDefinitionAdapter>(this.m_adapters.values());      }
-	
-	
 	public void setManualBrickManager(HAPManualManagerBrick manualBrickMan) {     this.m_manualBrickMan = manualBrickMan;       }
 	protected HAPManualManagerBrick getManualBrickManager() {    return this.m_manualBrickMan;     }
 	
@@ -116,7 +105,7 @@ public abstract class HAPManualDefinitionBrick extends HAPSerializableImp implem
 		boolean isTaskAttr = false;
 		HAPIdBrickType attrBrickTypeId = HAPManualDefinitionUtilityBrick.getBrickType(attribute.getValueWrapper());
 		if(attrBrickTypeId!=null) {
-			isTaskAttr = this.getManualBrickManager().getBrickTypeInfo(attrBrickTypeId).getTaskType()!=null;
+			isTaskAttr = HAPManualUtilityTask.getBrickTaskType(attrBrickTypeId, this.getManualBrickManager())!=null;
 		}
 		
 		if(isTaskAttr&&this.getBrickTypeId()!=HAPEnumBrickType.TASKWRAPPER_100) {

@@ -32,7 +32,7 @@ public class HAPManaualPluginAdapterProcessorDataAssociationForExpression extend
 		HAPDataAssociationForExpression daForExpressionExe = new HAPDataAssociationForExpression(); 
 		
 		HAPPath baseBlockPath = processContext.getRootPathForBaseBrick();
-		HAPPath secondBlockPath = baseBlockPath.trimLast().getLeft().trimLast().getLeft();
+		HAPPath secondBlockPath = this.getSecondBlockPath(processContext);
 		HAPDataAssociation daForRequest = HAPManualProcessorDataAssociation.processDataAssociation(daForExpressionDef.getInDataAssociation(), baseBlockPath, secondBlockPath, processContext.getCurrentBundle(), processContext.getRootBrickName(), this.m_runtimeEnv);
 		daForExpressionExe.setInDataAssociation(daForRequest);
 

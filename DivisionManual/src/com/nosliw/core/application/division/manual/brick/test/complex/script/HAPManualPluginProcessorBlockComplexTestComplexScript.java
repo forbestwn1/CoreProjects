@@ -14,6 +14,7 @@ import com.nosliw.core.application.HAPBundle;
 import com.nosliw.core.application.HAPEnumBrickType;
 import com.nosliw.core.application.HAPIdBrickInBundle;
 import com.nosliw.core.application.HAPUtilityBrick;
+import com.nosliw.core.application.HAPUtilityBrickPath;
 import com.nosliw.core.application.HAPUtilityBundle;
 import com.nosliw.core.application.brick.test.complex.script.HAPBlockTestComplexScript;
 import com.nosliw.core.application.brick.test.complex.script.HAPTestTaskTrigguer;
@@ -39,7 +40,22 @@ public class HAPManualPluginProcessorBlockComplexTestComplexScript extends HAPMa
 	}
 
 	@Override
-	public void processOtherValuePortBuild(HAPPath pathFromRoot, HAPManualContextProcessBrick processContext) {
+	public void normalizeBrickPath(HAPPath pathFromRoot, HAPManualContextProcessBrick processContext) {
+		HAPBundle bundle = processContext.getCurrentBundle();
+		Pair<HAPManualDefinitionBrick, HAPManualBrick> blockPair = this.getBrickPair(pathFromRoot, processContext);
+		HAPManualDefinitionBlockTestComplexScript definitionBlock = (HAPManualDefinitionBlockTestComplexScript)blockPair.getLeft();
+		HAPManualBlockTestComplexScript executableBlock = (HAPManualBlockTestComplexScript)blockPair.getRight();
+
+		for(HAPTestTaskTrigguer taskTrigguer : definitionBlock.getTaskTrigguers()) {
+			HAPInfoTrigguerTask trigguerInfo = taskTrigguer.getTaskTrigguerInfo();
+			HAPIdBrickInBundle handlerIdInBundle = trigguerInfo.getHandlerId();
+			handlerIdInBundle.setIdPath(HAPUtilityBrickPath.normalizeBrickPath(new HAPPath(handlerIdInBundle.getIdPath()), processContext.getRootBrickName(), processContext.getCurrentBundle()).toString());
+		}
+		
+	}
+
+	@Override
+	public void postProcessOtherValuePortBuild(HAPPath pathFromRoot, HAPManualContextProcessBrick processContext) {
 		HAPBundle bundle = processContext.getCurrentBundle();
 		Pair<HAPManualDefinitionBrick, HAPManualBrick> blockPair = this.getBrickPair(pathFromRoot, processContext);
 		HAPManualDefinitionBlockTestComplexScript definitionBlock = (HAPManualDefinitionBlockTestComplexScript)blockPair.getLeft();
@@ -62,6 +78,32 @@ public class HAPManualPluginProcessorBlockComplexTestComplexScript extends HAPMa
 			
 			executableBlock.getTaskTrigguers().add(taskTrigguer);
 		}
+	}
+
+	@Override
+	public void processOtherValuePortBuild(HAPPath pathFromRoot, HAPManualContextProcessBrick processContext) {
+//		HAPBundle bundle = processContext.getCurrentBundle();
+//		Pair<HAPManualDefinitionBrick, HAPManualBrick> blockPair = this.getBrickPair(pathFromRoot, processContext);
+//		HAPManualDefinitionBlockTestComplexScript definitionBlock = (HAPManualDefinitionBlockTestComplexScript)blockPair.getLeft();
+//		HAPManualBlockTestComplexScript executableBlock = (HAPManualBlockTestComplexScript)blockPair.getRight();
+//
+//		for(HAPTestTaskTrigguer taskTrigguer : definitionBlock.getTaskTrigguers()) {
+//			HAPInfoTrigguerTask trigguerInfo = taskTrigguer.getTaskTrigguerInfo();
+//			HAPIdBrickInBundle handlerIdInBundle = trigguerInfo.getHandlerId();
+//			HAPUtilityBundle.processBrickIdInBundle(handlerIdInBundle, executableBlock.getTreeNodeInfo().getPathFromRoot().toString());
+//			
+//			String trigguerType = trigguerInfo.getTrigguerType();
+//			if(trigguerType.equals(HAPConstantShared.TASK_TRIGGUER_EVENTHANDLE)) {
+//				HAPManualBlockTaskWrapper taskWrapperBrick = (HAPManualBlockTaskWrapper)HAPUtilityBrick.getDescdentBrickLocal(bundle, handlerIdInBundle, processContext.getRootBrickName());
+//				HAPManualUtilityTask.buildValuePortGroupForInteractiveTaskEventHandler(taskWrapperBrick, trigguerInfo.getEventDataDefinition(), bundle.getValueStructureDomain());
+//			}
+//			else if(trigguerType.equals(HAPConstantShared.TASK_TRIGGUER_DATAVALIDATION)) {
+//				HAPManualUtilityTask.buildValuePortGroupForInteractiveTaskDataValidation(bundle, new HAPPath(handlerIdInBundle.getIdPath()), processContext.getRootBrickName(), trigguerInfo.getEventDataDefinition(), bundle.getValueStructureDomain(), processContext.getRuntimeEnv());
+//			}
+//			trigguerInfo.setExternalValuePortGroupName(HAPManualUtilityTask.getExternalValuePortGroupNameOfInteractiveTask(bundle, new HAPPath(handlerIdInBundle.getIdPath()), processContext.getRootBrickName(), processContext.getRuntimeEnv().getResourceManager(), processContext.getRuntimeEnv().getRuntime().getRuntimeInfo()));
+//			
+//			executableBlock.getTaskTrigguers().add(taskTrigguer);
+//		}
 	}
 
 	@Override

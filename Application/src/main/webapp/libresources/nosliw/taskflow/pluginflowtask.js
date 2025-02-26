@@ -68,6 +68,10 @@ var loc_createFlowTaskCore = function(entityDef, configure){
 					var withValuePort = loc_envInterface[node_CONSTANT.INTERFACE_WITHVALUEPORT];
 					var valueStructures = valuePortContainer.getValueStructuresByGroupTypeAndValuePortName(node_COMMONCONSTANT.VALUEPORTGROUP_TYPE_INTERACTIVETASK, node_interactiveUtility.getResultValuePortNameByResultName(resultName));
 					var kkkk = 5555;
+					return {
+					    "resultName": resultName,
+					    "resultValue": kkkk + ""
+					};
 				}
 				else{
 					return loc_getExecuteTargetRequest(target);

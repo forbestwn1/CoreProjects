@@ -174,13 +174,6 @@ public class HAPManualDefinitionUtilityParserBrickFormatJson {
 			}
 			HAPManualDefinitionBrick brickDef = manualDivisionEntityMan.parseBrickDefinition(brickObj, brickTypeId, HAPSerializationFormat.JSON, parseContext);
 
-			//parse internal adapter
-			Object adapterObj = jsonObj.opt(HAPManualDefinitionBrick.INTERNALADAPTER);
-			if(adapterObj!=null) {
-				List<HAPManualDefinitionAdapter> adapters = parseAdapters(adapterObj, null, parseContext, manualDivisionEntityMan, entityManager);
-				adapters.forEach(adapter->brickDef.addAdapter(adapter));
-			}
-
 			out = new HAPManualDefinitionWrapperValueBrick(brickDef);
 		}
 		

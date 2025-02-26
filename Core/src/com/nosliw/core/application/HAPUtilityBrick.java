@@ -42,9 +42,9 @@ public class HAPUtilityBrick {
 		return bundle.getRootBrickWrapper(rootBrickName);
 	}
 
-	public static HAPResultBrick getDescdentResultWithLocalBrick(HAPBundle bundle, HAPPath path, String rootNameIfNotProvide) {
+	public static HAPResultBrick getDescdentBrickResult(HAPBundle bundle, HAPPath path, String rootNameIfNotProvide) {
 		HAPComplexPath fullPathInfo = HAPUtilityBundle.getBrickFullPathInfo(path.toString(), rootNameIfNotProvide);
-		return getDescendantBrickResult(bundle.getRootBrickWrapper(fullPathInfo.getRoot()).getBrick(), fullPathInfo.getPath());
+		return getDescendantResult(bundle.getRootBrickWrapper(fullPathInfo.getRoot()).getBrick(), fullPathInfo.getPath());
 	}
 
 	public static HAPBrick getDescdentBrickLocal(HAPBundle bundle, HAPPath path, String rootNameIfNotProvide) {
@@ -68,7 +68,7 @@ public class HAPUtilityBrick {
 	
 	
 	private static HAPBrick getDescdentBrickLocal(HAPBrick brick, HAPPath path) {
-		HAPResultBrick brickResult = getDescendantBrickResult(brick, path);
+		HAPResultBrick brickResult = getDescendantResult(brick, path);
 		if(brickResult!=null) {
 			return brickResult.getBrick();
 		}
@@ -77,7 +77,7 @@ public class HAPUtilityBrick {
 	
 	
 
-	private static HAPResultBrick getDescendantBrickResult(HAPBrick brick, HAPPath path) {
+	private static HAPResultBrick getDescendantResult(HAPBrick brick, HAPPath path) {
 		if(path==null||path.isEmpty()) {
 			return new HAPResultBrick(brick);
 		} else {

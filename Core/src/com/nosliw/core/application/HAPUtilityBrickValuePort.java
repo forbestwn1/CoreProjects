@@ -15,7 +15,7 @@ public class HAPUtilityBrickValuePort {
 	public static HAPInfoValuePortContainer getDescdentValuePortContainerInfo(HAPBundle bundle, String rootBrickNameIfNotProvide, HAPPath path, HAPManagerResource resourceMan, HAPRuntimeInfo runtimeInfo) {
 		HAPBrick brick = null;
 		HAPDomainValueStructure valueStructureDomain = null;
-		HAPResultBrick brickResult = HAPUtilityBrick.getDescdentResultWithLocalBrick(bundle, path, rootBrickNameIfNotProvide);
+		HAPResultBrick brickResult = HAPUtilityBrick.getDescdentBrickResult(bundle, path, rootBrickNameIfNotProvide);
 		if(brickResult.isInternalBrick()) {
 			brick = brickResult.getBrick();
 			valueStructureDomain = bundle.getValueStructureDomain();

@@ -18,8 +18,8 @@ public class HAPUtilityBundle {
 	}
 
 	public static void processBrickIdInBundle(HAPIdBrickInBundle brickIdInBundle, String basePath) {
-		HAPComplexPath basePathInfo = getBrickFullPathInfo(new HAPPath(basePath));
-		brickIdInBundle.setIdPath(normalizeBranchPath(brickIdInBundle.getIdPath(), basePathInfo.getRoot()));
+//		HAPComplexPath basePathInfo = getBrickFullPathInfo(new HAPPath(basePath));
+//		brickIdInBundle.setIdPath(normalizePathWithBranch(brickIdInBundle.getIdPath(), basePathInfo.getRoot()));
 		brickIdInBundle.setRelativePath(HAPUtilityPath.fromAbsoluteToRelativePath(brickIdInBundle.getIdPath(), basePath));
 	}
 	
@@ -27,7 +27,7 @@ public class HAPUtilityBundle {
 		return HAPConstantShared.SYMBOL_KEYWORD + branchName;
 	}
 	
-	public static String normalizeBranchPath(String path, String defaultBranch) {
+	public static String normalizePathWithBranch(String path, String defaultBranch) {
 		String out = path;
 		if(!path.startsWith(HAPConstantShared.SYMBOL_KEYWORD)) {
 			out = HAPUtilityNamingConversion.cascadePath(buildBranchPathSegment(defaultBranch), path);
@@ -36,7 +36,7 @@ public class HAPUtilityBundle {
 	}
 	
 	public static HAPComplexPath getBrickFullPathInfo(String path, String defaultBranch) {
-		HAPPath pathNorm = new HAPPath(normalizeBranchPath(path, defaultBranch));
+		HAPPath pathNorm = new HAPPath(normalizePathWithBranch(path, defaultBranch));
 		Pair<String, HAPPath> pathPair = pathNorm.trimFirst();
 		return new HAPComplexPath(getBranchName(pathPair.getLeft()), pathPair.getRight());
 	}

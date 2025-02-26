@@ -204,6 +204,8 @@ public class HAPManualManagerBrick implements HAPPluginDivision, HAPManagerWithV
 		//init
 		HAPManualUtilityProcessor.processComplexBrickInit(processContext);
 
+		HAPManualUtilityProcessor.processComplexBrickNormalizeBrickPath(processContext);
+		
 		//complex entity, build value context domain, create extension value structure if needed
 //		HAPManualUtilityValueContextProcessor.processValueContext(out.getBrickWrapper(), processContext, this, this.m_runtimeEnv);
 

@@ -75,6 +75,9 @@ public abstract class HAPManualPluginProcessorBlockComplex extends HAPManualPlug
 	public void processValueContextDiscovery(HAPPath pathFromRoot, HAPManualContextProcessBrick processContext) {}
 	public void postProcessValueContextDiscovery(HAPPath pathFromRoot, HAPManualContextProcessBrick processContext) {}
 
+	public void normalizeBrickPath(HAPPath pathFromRoot, HAPManualContextProcessBrick processContext) {}
+	public void postNormalizeBrickPath(HAPPath pathFromRoot, HAPManualContextProcessBrick processContext) {}
+	
 	//
 	public void processBrick(HAPPath pathFromRoot, HAPManualContextProcessBrick processContext) {}
 	public void postProcessBrick(HAPPath pathFromRoot, HAPManualContextProcessBrick processContext) {}

@@ -4,6 +4,7 @@ import org.json.JSONObject;
 
 import com.nosliw.core.application.HAPEnumBrickType;
 import com.nosliw.core.application.HAPUtilityBrickId;
+import com.nosliw.core.application.brick.wrappertask.HAPBlockTaskWrapper;
 import com.nosliw.core.application.division.manual.HAPManualManagerBrick;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrick;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionContextParse;
@@ -23,6 +24,6 @@ public class HAPManualPluginParserBlockTaskWrapper extends HAPManualDefinitionPl
 		HAPManualDefinitionBlockTaskWrapper taskWrapperDef = (HAPManualDefinitionBlockTaskWrapper)entityDefinition;
 		taskWrapperDef.setTaskBrickType(HAPUtilityBrickId.parseBrickTypeId(jsonObj.get(HAPManualDefinitionBlockTaskWrapper.TASKBRICKTYPE)));
 		
-		this.parseBrickAttributeJson(entityDefinition, jsonObj, HAPManualBlockTaskWrapper.TASK, taskWrapperDef.getTaskBrickType(), null, parseContext);
+		this.parseBrickAttributeJson(entityDefinition, jsonObj, HAPBlockTaskWrapper.TASK, taskWrapperDef.getTaskBrickType(), null, parseContext);
 	}
 }

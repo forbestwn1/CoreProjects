@@ -80,6 +80,25 @@ public class HAPManualUtilityProcessor {
 		}, processContext.getRuntimeEnv().getBrickManager(), null);
 	}
 	
+	public static void processComplexBrickNormalizeBrickPath(HAPManualContextProcessBrick processContext) {
+		HAPManualUtilityBrickTraverse.traverseTreeWithLocalBrick(processContext, new HAPHandlerDownward() {
+
+			@Override
+			public boolean processBrickNode(HAPBundle bundle, HAPPath path, Object data) {
+				HAPBrick complexBrick = HAPUtilityBrick.getDescdentBrickLocal(bundle, path);
+				((HAPManualPluginProcessorBlockComplex)processContext.getManualBrickManager().getBlockProcessPlugin(complexBrick.getBrickType())).normalizeBrickPath(path, processContext);
+				return true;
+			}
+
+			@Override
+			public void postProcessBrickNode(HAPBundle bundle, HAPPath path, Object data) {
+				HAPBrick complexBrick = HAPUtilityBrick.getDescdentBrickLocal(bundle, path);
+				((HAPManualPluginProcessorBlockComplex)processContext.getManualBrickManager().getBlockProcessPlugin(complexBrick.getBrickType())).postNormalizeBrickPath(path, processContext);
+			}
+
+		}, processContext.getRuntimeEnv().getBrickManager(), null);
+	}
+	
 	public static void processOtherValuePortBuild(HAPManualContextProcessBrick processContext) {
 		HAPManualManagerBrick manualBrickMan = processContext.getManualBrickManager();
 		HAPManualUtilityBrickTraverse.traverseTreeWithLocalBrick(processContext, new HAPHandlerDownward() {
@@ -200,7 +219,7 @@ public class HAPManualUtilityProcessor {
 								HAPManualPluginProcessorAdapter adapterProcessPlugin = manualBrickMan.getAdapterProcessPlugin(adapterWrapperDef.getBrick().getBrickTypeId());
 								
 								HAPManualBrick brick = (HAPManualBrick)((HAPWrapperValueOfBrick)adapterExe.getValueWrapper()).getBrick();
-								adapterProcessPlugin.process(brick, adapterWrapperDef.getBrick(), new HAPManualContextProcessAdapter(processContext.getCurrentBundle(), processContext.getRootBrickName(), treeNode.getTreeNodeInfo().getPathFromRoot(), processContext.getRuntimeEnv()));
+								adapterProcessPlugin.process(brick, adapterWrapperDef.getBrick(), new HAPManualContextProcessAdapter(processContext.getCurrentBundle(), processContext.getRootBrickName(), treeNode.getTreeNodeInfo().getPathFromRoot(), processContext.getRuntimeEnv(), manualBrickMan));
 							}
 							
 							return true;
@@ -368,6 +387,8 @@ public class HAPManualUtilityProcessor {
 			}
 		}
 	}
+	
+
 	
 	private static HAPManagerApplicationBrick getBrickManager(HAPManualContextProcessBrick processContext) {   return processContext.getRuntimeEnv().getBrickManager(); 	}
 

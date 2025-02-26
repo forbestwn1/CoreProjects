@@ -22,6 +22,9 @@ public class HAPResultReferenceResolve extends HAPSerializableImp{
 	public static final String BRICKID = "brickId";
 	
 	@HAPAttribute
+	public static final String VALUEPORTSIDE = "valuePortSide";
+	
+	@HAPAttribute
 	public static final String VALUEPORTID = "valuePortId";
 	
 	@HAPAttribute
@@ -50,6 +53,8 @@ public class HAPResultReferenceResolve extends HAPSerializableImp{
 	//ref to brick
 	public HAPIdBrickInBundle brickId;
 	
+	public String valuePortSide;
+	
 	//value port id
 	public HAPIdValuePortInBrick valuePortId;
 	
@@ -72,11 +77,16 @@ public class HAPResultReferenceResolve extends HAPSerializableImp{
 	//final element, solid (maybe logic element which embeded in real element)
 	public HAPElementStructure finalElement;
 	
+	public HAPResultReferenceResolve() {
+		
+	}
+	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		if(this.brickId!=null) {
 			jsonMap.put(BRICKID, this.brickId.toStringValue(HAPSerializationFormat.JSON));
 		}
+		jsonMap.put(VALUEPORTSIDE, this.valuePortSide);
 		jsonMap.put(VALUEPORTID, this.valuePortId.toStringValue(HAPSerializationFormat.JSON));
 		jsonMap.put(FULLPATH, this.fullPath);
 		jsonMap.put(ROOTNAME, this.rootName);

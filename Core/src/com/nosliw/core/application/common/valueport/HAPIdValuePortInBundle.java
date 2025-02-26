@@ -19,12 +19,17 @@ public class HAPIdValuePortInBundle extends HAPSerializableImp{
 	public static final String BRICKID = "brickId";
 
 	@HAPAttribute
+	public static final String VALUEPORTSIDE = "valuePortSide";
+
+	@HAPAttribute
 	public static final String VALUEPORTID = "valuePortId";
 
 	@HAPAttribute
 	public static final String KEY = "key";
 
 	private HAPIdBrickInBundle m_brickId;
+	
+	private String m_valuePortSide;
 	
 	private HAPIdValuePortInBrick m_valuePortId;
 	
@@ -35,6 +40,12 @@ public class HAPIdValuePortInBundle extends HAPSerializableImp{
 		this.m_valuePortId = valuePortId;
 	}
 	
+	public HAPIdValuePortInBundle(HAPIdBrickInBundle brickRef, String valuePortSide, HAPIdValuePortInBrick valuePortId) {
+		this.m_brickId = brickRef;
+		this.m_valuePortSide = valuePortSide;
+		this.m_valuePortId = valuePortId;
+	}
+	
 	//which entity this value port belong
 	public HAPIdBrickInBundle getBrickId() {    return this.m_brickId;     }
 	public void setBlockId(HAPIdBrickInBundle blockId) {     this.m_brickId = blockId;      }
@@ -42,7 +53,10 @@ public class HAPIdValuePortInBundle extends HAPSerializableImp{
 	public HAPIdValuePortInBrick getValuePortId() {   return this.m_valuePortId;     }
 	public void setValuePortId(HAPIdValuePortInBrick valuePortId) {     this.m_valuePortId = valuePortId;      }
 
-	public String getKey() {    return HAPUtilityNamingConversion.cascadeComponents(this.m_brickId!=null?this.m_brickId.getIdPath():"", this.m_valuePortId!=null?this.m_valuePortId.getKey():"", HAPConstantShared.SEPERATOR_PREFIX);       }
+	public String getKey() {    
+		String[] segs =  {this.m_brickId!=null?this.m_brickId.getIdPath():"", this.m_valuePortSide, this.m_valuePortId!=null?this.m_valuePortId.getKey():""};
+		return HAPUtilityNamingConversion.cascadeComponents(segs, HAPConstantShared.SEPERATOR_PREFIX);       
+	}
 	
 	@Override
 	public HAPIdValuePortInBundle cloneValue() {
@@ -59,6 +73,8 @@ public class HAPIdValuePortInBundle extends HAPSerializableImp{
 			this.m_brickId.buildObject(brickRefObj, HAPSerializationFormat.JSON);
 		}
 		
+		this.m_valuePortSide = (String)jsonObj.opt(VALUEPORTSIDE);
+		
 		Object valuePortIdObj = jsonObj.opt(VALUEPORTID);
 		if(valuePortIdObj!=null) {
 			this.m_valuePortId = new HAPIdValuePortInBrick();
@@ -73,6 +89,7 @@ public class HAPIdValuePortInBundle extends HAPSerializableImp{
 		if(this.m_brickId!=null) {
 			jsonMap.put(BRICKID, this.m_brickId.toStringValue(HAPSerializationFormat.JSON));
 		}
+		jsonMap.put(VALUEPORTSIDE, this.m_valuePortSide);
 		if(this.m_valuePortId!=null) {
 			jsonMap.put(VALUEPORTID, this.m_valuePortId.toStringValue(HAPSerializationFormat.JSON));
 		}

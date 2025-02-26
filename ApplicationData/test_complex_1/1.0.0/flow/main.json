@@ -6,6 +6,20 @@
 	"brick": [
 		{
 			"info": {
+				"name" : "variablebynameshow-test_complex_script",
+				"status": "disabled1",
+				"description" : ""
+			},
+			"brick":{
+				"script": "complexscript_test_value",
+				"parm" : {
+					"variable" : ["output1"]
+				}
+			}
+		},
+
+		{
+			"info": {
 				"name" : "datavalidationtrigguer-test_complex_script",
 				"status": "disabled1",
 				"description" : ""
@@ -43,61 +57,6 @@
 				"status": "disabled1",
 				"description" : ""
 			},
-			"internalAdapter" : [
-				{
-					"name" : "success",
-					"brickTypeId" : {
-						"brickType": "dataAssociation",
-						"version": "1.0.0"
-					},
-					"brick" : {
-						"definition" : {
-							"type" : "mapping",
-							"direction" : "downStream",
-							"mapping" : [
-								{
-									"target" : {
-										"rootName" : "task_result_success_string1"
-									},
-									"definition" : {
-										"value" : "validation success"
-									}
-								}
-							]
-						}
-					}						
-				},
-				{
-					"name" : "fail",
-					"brickTypeId" : {
-						"brickType": "dataAssociation",
-						"version": "1.0.0"
-					},
-					"brick" : {
-						"definition" : {
-							"type" : "mapping",
-							"direction" : "downStream",
-							"mapping" : [
-								{
-									"definition" : {
-										"rootName" : "value1"
-									},
-									"target" : {
-										"mapping" : {
-											"elementPath": "error",
-											"valuePortId" : {
-												"valuePortId" : {
-													"group" : "taskInteractive"
-												}
-											}
-										}
-									}
-								}
-							]
-						}
-					}						
-				}
-			],
 			"brick":{
 				"taskInterface" : {
 					"request" : [
@@ -130,13 +89,14 @@
 				"activity" : [
 					{
 						"id" : "activity1",
+						"status": "disabled1",
 						"type" : "task",
 						"task" : {
 							"resourceId":"taskTaskScript|1.0.0|@task=taskWrapper|1.0.0|datavalidationmandatory",
 							"adapter":[
 								{
 									"name" : "interactivetaskAdapter",
-									"status": "disabled",
+									"status": "disabled1",
 									"brickTypeId" : {
 										"brickType": "dataAssociationForTask",
 										"version": "1.0.0"
@@ -170,7 +130,16 @@
 													"mapping" : [
 														{
 															"target" : {
-																"rootName" : "output1"
+																"rootName" : "error",
+																"ioDirection" : "IN",
+																"valuePortId" : {
+																	"brickId" : {
+																		"idPath" : "flow-flow"
+																	},
+																	"valuePortId" : {
+																		"group" : "taskInteractive"
+																	}
+																}
 															},
 															"definition" : {
 																"mapping" : {

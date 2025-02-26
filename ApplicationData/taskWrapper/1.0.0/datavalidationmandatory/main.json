@@ -8,7 +8,7 @@
 			"brickType" : "taskTaskScript",
 			"version" : "1.0.0"
 		},
-		"task" : {
+		"__task__" : {
 			"scriptResourceId": "task_datavalidation_mandatory",
 			"taskInterface" : {
 				"request" : [
