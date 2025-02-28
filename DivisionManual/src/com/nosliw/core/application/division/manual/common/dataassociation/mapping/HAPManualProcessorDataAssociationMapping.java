@@ -150,7 +150,7 @@ public class HAPManualProcessorDataAssociationMapping {
 			out = baseBlockPath;
 		}
 		
-		normalizeRootReference(targetRef, HAPConstantShared.IO_DIRECTION_IN, out, brickRootNameIfNotProvided, currentBundle, resourceMan, runtimeInfo);
+		normalizeRootReference(targetRef, HAPConstantShared.IO_DIRECTION_IN, out, baseBlockPath, brickRootNameIfNotProvided, currentBundle, resourceMan, runtimeInfo);
 		
 		HAPUtilityStructure.traverseElement(mappingItem.getDefinition(), null, new HAPProcessorStructureElement() {
 
@@ -158,7 +158,7 @@ public class HAPManualProcessorDataAssociationMapping {
 			public Pair<Boolean, HAPElementStructure> process(HAPInfoElement eleInfo, Object value) {
 				if(eleInfo.getElement().getType().equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_RELATIVE_FOR_MAPPING)) {
 					HAPElementStructureLeafRelativeForMapping mappingEle = (HAPElementStructureLeafRelativeForMapping)eleInfo.getElement();
-					normalizeRootReference(mappingEle.getReference(), HAPConstantShared.IO_DIRECTION_OUT, in, brickRootNameIfNotProvided, currentBundle, resourceMan, runtimeInfo);
+					normalizeRootReference(mappingEle.getReference(), HAPConstantShared.IO_DIRECTION_OUT, in, baseBlockPath, brickRootNameIfNotProvided, currentBundle, resourceMan, runtimeInfo);
 				}
 				return null;
 			}
@@ -168,8 +168,8 @@ public class HAPManualProcessorDataAssociationMapping {
 		}, targetRef);
 	}
 	
-	private static void normalizeRootReference(HAPReferenceRootElement rootRef, String ioDirection, HAPPath blockPathFromRoot, String brickRootNameIfNotProvided, HAPBundle currentBundle, HAPManagerResource resourceMan, HAPRuntimeInfo runtimeInfo) {
-		rootRef.setValuePortId(HAPUtilityValuePort.normalizeInBundleValuePortId(rootRef.getValuePortId(), HAPConstantShared.VALUEPORTGROUP_SIDE_EXTERNAL, ioDirection, blockPathFromRoot, brickRootNameIfNotProvided, currentBundle, resourceMan, runtimeInfo));
+	private static void normalizeRootReference(HAPReferenceRootElement rootRef, String ioDirection, HAPPath blockPathFromRootIfNotProvided, HAPPath baseBlockPathFromRoot, String brickRootNameIfNotProvided, HAPBundle currentBundle, HAPManagerResource resourceMan, HAPRuntimeInfo runtimeInfo) {
+		rootRef.setValuePortId(HAPUtilityValuePort.normalizeInBundleValuePortId(rootRef.getValuePortId(), HAPConstantShared.VALUEPORTGROUP_SIDE_EXTERNAL, ioDirection, blockPathFromRootIfNotProvided, baseBlockPathFromRoot, brickRootNameIfNotProvided, currentBundle, resourceMan, runtimeInfo));
 	}
 	
 

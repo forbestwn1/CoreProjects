@@ -92,7 +92,7 @@ public class HAPUtilityStructureElementReference {
 		if(refResolve==null) {
 			return null;
 		}
-		HAPIdRootElement rootEleId = new HAPIdRootElement(new HAPIdValuePortInBundle(refResolve.brickId, refResolve.valuePortId), refResolve.structureId, refResolve.rootName);
+		HAPIdRootElement rootEleId = new HAPIdRootElement(new HAPIdValuePortInBundle(refResolve.brickId, refResolve.valuePortSide, refResolve.valuePortId), refResolve.structureId, refResolve.rootName);
 		return new HAPIdElement(rootEleId, new HAPComplexPath(refResolve.elementPath).getPathStr());
 	}
 	
@@ -120,6 +120,7 @@ public class HAPUtilityStructureElementReference {
 		if(resolve!=null) {
 			resolve.valueStructureDomain = valueStructureDomain;
 			resolve.valuePortId = reference.getValuePortId().getValuePortId();
+			resolve.valuePortSide = reference.getValuePortId().getValuePortSide();
 			resolve.elementPath = reference.getElementPath();
 		}
 		return resolve;

@@ -19,6 +19,7 @@ var packageObj = library;
 	var node_getObjectType;
 	var node_ElementIdValuePair;
 	var node_complexEntityUtility;
+	var node_getEntityObjectInterface;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -29,7 +30,18 @@ var loc_getValuePort = function(valuePortEndPoint, baseEntityCore){
 	var relativePath = valuePortRef[node_COMMONATRIBUTECONSTANT.IDVALUEPORTINBUNDLE_BRICKID][node_COMMONATRIBUTECONSTANT.IDBRICKINBUNDLE_RELATIVEPATH];
 	var valuePortId = valuePortRef[node_COMMONATRIBUTECONSTANT.IDVALUEPORTINBUNDLE_VALUEPORTID];
 	var hostEntityCore = node_complexEntityUtility.getBrickCoreByRelativePath(baseEntityCore, relativePath);
-	return node_getWithValuePortInterface(hostEntityCore).getValuePort(valuePortId[node_COMMONATRIBUTECONSTANT.IDVALUEPORTINBRICK_GROUP], valuePortId[node_COMMONATRIBUTECONSTANT.IDVALUEPORTINBRICK_NAME]);
+	
+	var valuePortSide = valuePortRef[node_COMMONATRIBUTECONSTANT.IDVALUEPORTINBUNDLE_VALUEPORTSIDE];
+	var valuePortContainer;
+	if(valuePortSide==node_COMMONCONSTANT.VALUEPORTGROUP_SIDE_INTERNAL){
+		valuePortContainer = node_getEntityObjectInterface(hostEntityCore).getInternalValuePortContainer();
+	}
+	else{
+		valuePortContainer = node_getEntityObjectInterface(hostEntityCore).getExternalValuePortContainer();
+	}
+	
+	return valuePortContainer.createValuePort(valuePortId[node_COMMONATRIBUTECONSTANT.IDVALUEPORTINBRICK_GROUP], valuePortId[node_COMMONATRIBUTECONSTANT.IDVALUEPORTINBRICK_NAME]);
+//	return node_getWithValuePortInterface(hostEntityCore).getValuePort(valuePortId[node_COMMONATRIBUTECONSTANT.IDVALUEPORTINBRICK_GROUP], valuePortId[node_COMMONATRIBUTECONSTANT.IDVALUEPORTINBRICK_NAME]);
 };
 
 
@@ -225,6 +237,7 @@ nosliw.registerSetNodeDataEvent("valueport.createValuePortElementInfo", function
 nosliw.registerSetNodeDataEvent("common.objectwithtype.getObjectType", function(){node_getObjectType = this.getData();});
 nosliw.registerSetNodeDataEvent("valueport.ElementIdValuePair", function(){node_ElementIdValuePair = this.getData();});
 nosliw.registerSetNodeDataEvent("complexentity.complexEntityUtility", function(){node_complexEntityUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("complexentity.getEntityObjectInterface", function(){node_getEntityObjectInterface = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("getExecuteMappingDataAssociationRequest", node_getExecuteMappingDataAssociationRequest); 

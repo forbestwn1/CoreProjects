@@ -49,7 +49,7 @@ public class HAPManualPluginProcessorBlockComplexTestComplexScript extends HAPMa
 		for(HAPTestTaskTrigguer taskTrigguer : definitionBlock.getTaskTrigguers()) {
 			HAPInfoTrigguerTask trigguerInfo = taskTrigguer.getTaskTrigguerInfo();
 			HAPIdBrickInBundle handlerIdInBundle = trigguerInfo.getHandlerId();
-			handlerIdInBundle.setIdPath(HAPUtilityBrickPath.normalizeBrickPath(new HAPPath(handlerIdInBundle.getIdPath()), processContext.getRootBrickName(), processContext.getCurrentBundle()).toString());
+			handlerIdInBundle.setIdPath(HAPUtilityBrickPath.normalizeBrickPath(new HAPPath(handlerIdInBundle.getIdPath()), processContext.getRootBrickName(), false, processContext.getCurrentBundle()).toString());
 		}
 		
 	}

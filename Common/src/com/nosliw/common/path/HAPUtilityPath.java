@@ -6,6 +6,27 @@ import com.nosliw.common.utils.HAPConstantShared;
 
 public class HAPUtilityPath {
 
+	public static int comparePath(HAPPath path, HAPPath basePath) {
+		if(path.isEmpty()&&basePath.isEmpty()) {
+			return 0;
+		}
+		if(path.isEmpty()) {
+			return 1;
+		}
+		if(basePath.isEmpty()) {
+			return -1;
+		}
+		String pathStr = path.toString();
+		String basePathStr = basePath.toString();
+		if(pathStr.equals(basePathStr)) {
+			return 0;
+		}
+		if(pathStr.startsWith(basePathStr)) {
+			return -1;
+		}
+		return 1;
+	}
+	
 	public static HAPPath getParentPath(HAPPath path){
 		Pair<HAPPath, String> parentInfo = getParentPathInfo(path);
 		if(parentInfo==null) {

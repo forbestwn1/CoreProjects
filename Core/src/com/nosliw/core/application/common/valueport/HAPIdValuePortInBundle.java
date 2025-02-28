@@ -35,11 +35,6 @@ public class HAPIdValuePortInBundle extends HAPSerializableImp{
 	
 	public HAPIdValuePortInBundle() {}
 	
-	public HAPIdValuePortInBundle(HAPIdBrickInBundle brickRef, HAPIdValuePortInBrick valuePortId) {
-		this.m_brickId = brickRef;
-		this.m_valuePortId = valuePortId;
-	}
-	
 	public HAPIdValuePortInBundle(HAPIdBrickInBundle brickRef, String valuePortSide, HAPIdValuePortInBrick valuePortId) {
 		this.m_brickId = brickRef;
 		this.m_valuePortSide = valuePortSide;
@@ -49,6 +44,9 @@ public class HAPIdValuePortInBundle extends HAPSerializableImp{
 	//which entity this value port belong
 	public HAPIdBrickInBundle getBrickId() {    return this.m_brickId;     }
 	public void setBlockId(HAPIdBrickInBundle blockId) {     this.m_brickId = blockId;      }
+	
+	public String getValuePortSide() {    return this.m_valuePortSide;    }
+	public void setValuePortSide(String valuePortSide) {     this.m_valuePortSide = valuePortSide;       }
 	
 	public HAPIdValuePortInBrick getValuePortId() {   return this.m_valuePortId;     }
 	public void setValuePortId(HAPIdValuePortInBrick valuePortId) {     this.m_valuePortId = valuePortId;      }
@@ -60,7 +58,7 @@ public class HAPIdValuePortInBundle extends HAPSerializableImp{
 	
 	@Override
 	public HAPIdValuePortInBundle cloneValue() {
-		return new HAPIdValuePortInBundle(this.m_brickId.cloneValue(), this.m_valuePortId.cloneValue());
+		return new HAPIdValuePortInBundle(this.m_brickId.cloneValue(), this.m_valuePortSide, this.m_valuePortId.cloneValue());
 	}
 	
 	@Override

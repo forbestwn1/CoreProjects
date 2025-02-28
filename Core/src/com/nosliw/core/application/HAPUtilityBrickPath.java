@@ -7,7 +7,7 @@ import com.nosliw.core.application.common.brick.HAPBrickImp;
 
 public class HAPUtilityBrickPath {
 
-	public static HAPPath normalizeBrickPath(HAPPath path, String brickRootNameIfNotProvided, HAPBundle currentBundle) {
+	public static HAPPath normalizeBrickPath(HAPPath path, String brickRootNameIfNotProvided, boolean processEnd, HAPBundle currentBundle) {
 		HAPPath out = new HAPPath();
 		
 		HAPComplexPath pathInfo = HAPUtilityBundle.getBrickFullPathInfo(path.toString(), brickRootNameIfNotProvided);
@@ -19,8 +19,11 @@ public class HAPUtilityBrickPath {
 			if(brick!=null) {
 				if(brick.getBrickType().equals(HAPEnumBrickType.TASKWRAPPER_100)) {
 					//task wrapper
-					if(i==segs.length-1||!segs[i+1].equals(HAPBlockTaskWrapper.TASK)) {
-						out = out.appendSegment(HAPBlockTaskWrapper.TASK);
+					
+					if(!(i==segs.length-1&&!processEnd)) {
+						if(i==segs.length-1||!segs[i+1].equals(HAPBlockTaskWrapper.TASK)) {
+							out = out.appendSegment(HAPBlockTaskWrapper.TASK);
+						}
 					}
 				}
 			}

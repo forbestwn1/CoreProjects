@@ -68,43 +68,41 @@ public class HAPUtilityValuePort {
 		return null;
 	}
 	
-	public static HAPElementStructure getInternalElement(HAPIdElement varId, HAPDomainValueStructure valueStructureDomain) {
-		HAPStructureImp structureDef = valueStructureDomain.getStructureDefinitionByRuntimeId(varId.getRootElementId().getValueStructureId());
-		HAPElementStructure structureEle = HAPUtilityStructure.getDescendant(structureDef.getRootByName(varId.getRootElementId().getRootName()).getDefinition(), varId.getElementPath().toString());
-		return structureEle;
-	}
 	
-	public static HAPElementStructure getInternalElement(HAPIdElement varId, HAPWithInternalValuePort withInternalValuePort) {
-		HAPValuePort valuePort = getInternalValuePort(varId, withInternalValuePort);
-		HAPValueStructureInValuePort11111 valueStructureInValuePort = valuePort.getValueStructureDefintion(varId.getRootElementId().getValueStructureId());
-		HAPElementStructure structureEle = HAPUtilityStructure.getDescendant(valueStructureInValuePort.getRoot(varId.getRootElementId().getRootName()).getDefinition(), varId.getElementPath().toString());
-		return structureEle;
-	}
-	
-	public static HAPValuePort getInternalValuePort(HAPIdElement varId, HAPWithInternalValuePort withInternalValuePort) {
-		return withInternalValuePort.getInternalValuePorts().getValuePort(varId.getRootElementId().getValuePortId().getValuePortId());
-	}
-
-	
-	public static HAPIdValuePortInBundle normalizeInBundleValuePortId(HAPIdValuePortInBundle valuePortIdInBundle, String valueGroupContainerSide, String ioDirection, HAPPath blockPathFromRoot, String brickRootNameIfNotProvided, HAPBundle currentBundle, HAPManagerResource resourceMan, HAPRuntimeInfo runtimeInfo) {
+	public static HAPIdValuePortInBundle normalizeInBundleValuePortId(HAPIdValuePortInBundle valuePortIdInBundle, String valuePortSideIfNotProvided, String ioDirection, HAPPath blockPathFromRootIfNotProvided, HAPPath baseBlockPathFromRoot, String brickRootNameIfNotProvided, HAPBundle currentBundle, HAPManagerResource resourceMan, HAPRuntimeInfo runtimeInfo) {
 		HAPIdValuePortInBundle out = valuePortIdInBundle;
 		if(out==null) {
 			out = new HAPIdValuePortInBundle();
 		}
 		
-		//normalize block reference
+		//normalize block id path
 		HAPIdBrickInBundle brickId = out.getBrickId();
 		if(brickId==null) {
-			brickId = new HAPIdBrickInBundle(blockPathFromRoot.toString());
+			brickId = new HAPIdBrickInBundle(blockPathFromRootIfNotProvided.toString());
 		}
-		brickId.setIdPath(HAPUtilityBrickPath.normalizeBrickPath(new HAPPath(brickId.getIdPath()), brickRootNameIfNotProvided, currentBundle).toString());
+		brickId.setIdPath(HAPUtilityBrickPath.normalizeBrickPath(new HAPPath(brickId.getIdPath()), brickRootNameIfNotProvided, true, currentBundle).toString());
 		out.setBlockId(brickId);
+		
+		if(out.getValuePortSide()==null) {
+			//figure out value port side
+			String valuePortSide;
+			int k = HAPUtilityPath.comparePath(new HAPPath(brickId.getIdPath()), baseBlockPathFromRoot);
+			if(k==0) {
+				valuePortSide = valuePortSideIfNotProvided;
+			} else if(k>0) {
+				valuePortSide = HAPConstantShared.VALUEPORTGROUP_SIDE_INTERNAL;
+			} else {
+				valuePortSide = HAPConstantShared.VALUEPORTGROUP_SIDE_EXTERNAL;
+			}
+			
+			out.setValuePortSide(valuePortSide);
+		}
 
 		//normalize value port id
 		HAPIdValuePortInBrick valuePortIdInBrick = out.getValuePortId();
 		Pair<HAPContainerValuePorts, HAPContainerValuePorts> valuePortContainerPair = HAPUtilityBrickValuePort.getDescdentValuePortContainerInfo(currentBundle, brickRootNameIfNotProvided, new HAPPath(brickId.getIdPath()), resourceMan, runtimeInfo).getValuePortContainerPair();
 		HAPContainerValuePorts valuePortContainer;
-		if(valueGroupContainerSide.equals(HAPConstantShared.VALUEPORTGROUP_SIDE_INTERNAL)) {
+		if(HAPConstantShared.VALUEPORTGROUP_SIDE_INTERNAL.equals(out.getValuePortSide())) {
 			valuePortContainer = valuePortContainerPair.getLeft();
 		}
 		else {
@@ -122,6 +120,7 @@ public class HAPUtilityValuePort {
 		if(out==null) {
 			out = new HAPIdValuePortInBundle();
 		}
+		out.setValuePortSide(HAPConstantShared.VALUEPORTGROUP_SIDE_INTERNAL);
 		out.setValuePortId(withValuePort.getInternalValuePorts().normalizeValuePortId(out.getValuePortId(), ioDirection));
 		return out;
 	}
@@ -131,6 +130,7 @@ public class HAPUtilityValuePort {
 		if(out==null) {
 			out = new HAPIdValuePortInBundle();
 		}
+		out.setValuePortSide(HAPConstantShared.VALUEPORTGROUP_SIDE_EXTERNAL);
 		out.setValuePortId(withValuePort.getExternalValuePorts().normalizeValuePortId(out.getValuePortId(), ioDirection));
 		return out;
 	}
@@ -149,10 +149,50 @@ public class HAPUtilityValuePort {
 	public static HAPValuePort getValuePortExternal(HAPIdValuePortInBundle valuePortRef, HAPWithExternalValuePort withValuePort) {
 		return withValuePort.getExternalValuePorts().getValuePort(valuePortRef.getValuePortId());
 	}
+	
+	public static HAPValuePort getValuePort(HAPIdValuePortInBundle valuePortRef, HAPWithValuePort withValuePort) {
+		if(HAPConstantShared.VALUEPORTGROUP_SIDE_INTERNAL.equals(valuePortRef.getValuePortSide())) {
+			return withValuePort.getInternalValuePorts().getValuePort(valuePortRef.getValuePortId());
+		}
+		else {
+			return withValuePort.getExternalValuePorts().getValuePort(valuePortRef.getValuePortId());
+		}
+	}
 
 	public static HAPInfoValuePort getValuePortInBundle(HAPIdValuePortInBundle valuePortRef, HAPBundle bundle, HAPManagerResource resourceMan, HAPRuntimeInfo runtimeInfo) {
 		HAPInfoValuePortContainer valuePortContainerInfo = HAPUtilityBrickValuePort.getDescdentValuePortContainerInfo(bundle, null, new HAPPath(valuePortRef.getBrickId().getIdPath()), resourceMan, runtimeInfo);
-		return new HAPInfoValuePort(valuePortContainerInfo.getValuePortContainerPair().getRight().getValuePort(valuePortRef.getValuePortId()), valuePortContainerInfo.getValueStructureDomain());
+		HAPContainerValuePorts valuePortContainer;
+		if(HAPConstantShared.VALUEPORTGROUP_SIDE_INTERNAL.equals(valuePortRef.getValuePortSide())) {
+			valuePortContainer = valuePortContainerInfo.getValuePortContainerPair().getLeft();
+		}
+		else {
+			valuePortContainer = valuePortContainerInfo.getValuePortContainerPair().getRight();
+		}
+		return new HAPInfoValuePort(valuePortContainer.getValuePort(valuePortRef.getValuePortId()), valuePortContainerInfo.getValueStructureDomain());
 	}
+	
+
+	
+	
+	
+	
+	public static HAPElementStructure getInternalElement(HAPIdElement varId, HAPDomainValueStructure valueStructureDomain) {
+		HAPStructureImp structureDef = valueStructureDomain.getStructureDefinitionByRuntimeId(varId.getRootElementId().getValueStructureId());
+		HAPElementStructure structureEle = HAPUtilityStructure.getDescendant(structureDef.getRootByName(varId.getRootElementId().getRootName()).getDefinition(), varId.getElementPath().toString());
+		return structureEle;
+	}
+	
+	public static HAPElementStructure getInternalElement(HAPIdElement varId, HAPWithInternalValuePort withInternalValuePort) {
+		HAPValuePort valuePort = getInternalValuePort(varId, withInternalValuePort);
+		HAPValueStructureInValuePort11111 valueStructureInValuePort = valuePort.getValueStructureDefintion(varId.getRootElementId().getValueStructureId());
+		HAPElementStructure structureEle = HAPUtilityStructure.getDescendant(valueStructureInValuePort.getRoot(varId.getRootElementId().getRootName()).getDefinition(), varId.getElementPath().toString());
+		return structureEle;
+	}
+	
+	public static HAPValuePort getInternalValuePort(HAPIdElement varId, HAPWithInternalValuePort withInternalValuePort) {
+		return withInternalValuePort.getInternalValuePorts().getValuePort(varId.getRootElementId().getValuePortId().getValuePortId());
+	}
+
+	
 	
 }
