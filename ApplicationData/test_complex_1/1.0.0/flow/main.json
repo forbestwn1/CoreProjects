@@ -42,7 +42,7 @@
 								"criteria": "test.string;1.0.0"
 							}
 						},
-						"testData1" : {
+						"testData" : {
 							"dataTypeId": "test.string;1.0.0",
 							"value": "data for validation"
 						}
@@ -68,6 +68,10 @@
 					"result" : {
 						"success": {
 							"output": [
+								{
+									"name" : "success",
+									"criteria" : "test.string;1.0.0"
+								}
 							]
 						},
 						"fail": {
@@ -114,7 +118,17 @@
 													"mapping" : [
 														{
 															"target" : {
-																"rootName" : "output1"
+																"rootName" : "success",
+																"ioDirection" : "IN",
+																"valuePortId" : {
+																	"brickId" : {
+																		"idPath" : "flow-flow"
+																	},
+																	"valuePortId" : {
+																		"group" : "taskInteractive",
+																		"name" : "interactiveResult_success"
+																	}
+																}
 															},
 															"definition" : {
 																"value" : {
@@ -137,7 +151,8 @@
 																		"idPath" : "flow-flow"
 																	},
 																	"valuePortId" : {
-																		"group" : "taskInteractive"
+																		"group" : "taskInteractive",
+																		"name" : "interactiveResult_fail"
 																	}
 																}
 															},
@@ -146,7 +161,8 @@
 																	"elementPath": "error",
 																	"valuePortId" : {
 																		"valuePortId" : {
-																			"group" : "taskInteractive"
+																			"group" : "taskInteractive",
+																			"name" : "interactiveResult_fail"
 																		}
 																	}
 																}
@@ -162,8 +178,8 @@
 						},
 						"next" : {
 							"decision" : {
-								"type" : "script",
-								"script" : "aaaa"
+								"type" : "javascript",
+								"script" : "return result.resultName"
 							},
 							"target" : [
 								{
@@ -204,10 +220,15 @@
 												"rootName" : "output1"
 											},
 											"definition" : {
-												"value" : {
-													"dataTypeId": "test.string;1.0.0",
-													"value": "validation success"
-												} 
+												"mapping" : {
+													"elementPath": "success",
+													"valuePortId" : {
+														"valuePortId" : {
+															"group" : "taskInteractive",
+															"name" : "interactiveResult_success"
+														}
+													}
+												}
 											}
 										}
 									]
@@ -224,7 +245,8 @@
 													"elementPath": "error",
 													"valuePortId" : {
 														"valuePortId" : {
-															"group" : "taskInteractive"
+															"group" : "taskInteractive",
+															"name" : "interactiveResult_fail"
 														}
 													}
 												}

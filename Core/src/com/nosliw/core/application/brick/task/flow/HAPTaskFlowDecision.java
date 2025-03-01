@@ -23,6 +23,7 @@ public interface HAPTaskFlowDecision extends HAPSerializable{
 		if(type.equals(HAPConstantShared.FLOW_DECISION_TYPE_JAVASCRIPT)) {
 			HAPTaskFlowDecisionJS jsDecision = new HAPTaskFlowDecisionJS();
 			jsDecision.buildObject(jsonObj, HAPSerializationFormat.JSON);
+			return jsDecision;
 		}
 		return null;
 	}

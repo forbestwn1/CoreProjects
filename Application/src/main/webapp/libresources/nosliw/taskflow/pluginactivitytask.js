@@ -63,7 +63,8 @@ var loc_createTaskActivityCore = function(entityDef, configure){
 			out.addRequest(loc_task.getExecuteTaskWithAdapter(adapterName, taskContext, {
 				success : function(request, task){
 					var taskResult = task.getTaskResult();
-					return loc_target[taskResult.resultName]; 
+					var decsionOutput = loc_decision[node_COMMONATRIBUTECONSTANT.TASKFLOWDECISIONJS_SCRIPT](taskResult);
+					return loc_target[decsionOutput]; 
 				}
 			}));
 			return out;
