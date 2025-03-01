@@ -67,11 +67,17 @@ var loc_createFlowTaskCore = function(entityDef, configure){
 					var valuePortContainer = node_getEntityObjectInterface(loc_out).getInternalValuePortContainer();
 					var withValuePort = loc_envInterface[node_CONSTANT.INTERFACE_WITHVALUEPORT];
 					var valueStructures = valuePortContainer.getValueStructuresByGroupTypeAndValuePortName(node_COMMONCONSTANT.VALUEPORTGROUP_TYPE_INTERACTIVETASK, node_interactiveUtility.getResultValuePortNameByResultName(resultName));
-					var kkkk = 5555;
-					return {
-					    "resultName": resultName,
-					    "resultValue": kkkk + ""
-					};
+					
+					for(var vsId in valueStructures){
+						return valueStructures[vsId].getAllElementsValuesRequest({
+							success : function(request, values){
+								return {
+								    "resultName": resultName,
+								    "resultValue": values
+								};
+							}
+						});
+					}
 				}
 				else{
 					return loc_getExecuteTargetRequest(target);
