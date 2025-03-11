@@ -45,7 +45,7 @@ public class HAPManualDefinitionUtilityBrickLocation {
 					if(HAPUtilityEntityInfo.isEnabled(brickInfoObj)) {
 						Pair<File, HAPSerializationFormat> result = findBrickFile(branchFolder, "main");
 						HAPIdBrickType brickTypeId = HAPUtilityBrickId.parseBrickTypeId(brickInfoObj.get("brickTypeId"));
-						out.put(branchName, new HAPManualDefinitionInfoBrickLocation(brickTypeId, result.getLeft(), result.getRight(), new HAPPathLocationBase(basePath)));
+						out.put(branchName, new HAPManualDefinitionInfoBrickLocation(brickTypeId, result.getLeft(), result.getRight(), new HAPPathLocationBase(basePath), true));
 					}				
 				}
 			}
@@ -67,18 +67,21 @@ public class HAPManualDefinitionUtilityBrickLocation {
 		String newBasePath = basePath+brickId.getId()+ "/";
 		File folder = new File(newBasePath);
 		Pair<File, HAPSerializationFormat> result;
+		boolean isSingleFile;
 		if(folder.isDirectory()&&folder.exists()) {
 			//from folder
 			result = findBrickFile(folder, "main");
+			isSingleFile = false;
 		}
 		else {
 			//from file
 			newBasePath = basePath;
 			result = findBrickFile(new File(newBasePath), brickId.getId());
+			isSingleFile = true;
 		}
 		
 		if(result!=null) {
-			return new HAPManualDefinitionInfoBrickLocation(brickTypeId, result.getLeft(), result.getRight(), new HAPPathLocationBase(newBasePath));
+			return new HAPManualDefinitionInfoBrickLocation(brickTypeId, result.getLeft(), result.getRight(), new HAPPathLocationBase(newBasePath), isSingleFile);
 		}
 		else {
 			HAPErrorUtility.invalid("Cannot find module resource " + brickId);

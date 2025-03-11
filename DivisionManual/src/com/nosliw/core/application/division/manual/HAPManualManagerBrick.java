@@ -1,5 +1,6 @@
 package com.nosliw.core.application.division.manual;
 
+import java.io.File;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
@@ -49,8 +50,10 @@ import com.nosliw.core.application.division.manual.brick.scriptexpression.group.
 import com.nosliw.core.application.division.manual.brick.scriptexpression.group.HAPManualPluginProcessorBlockScriptExpressionGroup;
 import com.nosliw.core.application.division.manual.brick.service.provider.HAPManualPluginParserBlockServiceProvider;
 import com.nosliw.core.application.division.manual.brick.service.provider.HAPManualPluginProcessorBlockSimpleImpServiceProvider;
+import com.nosliw.core.application.division.manual.brick.task.flow.HAPManualPluginParserBlockTaskFlowActivityDynamic;
 import com.nosliw.core.application.division.manual.brick.task.flow.HAPManualPluginParserBlockTaskFlowActivityTask;
 import com.nosliw.core.application.division.manual.brick.task.flow.HAPManualPluginParserBlockTaskFlowFlow;
+import com.nosliw.core.application.division.manual.brick.task.flow.HAPManualPluginProcessorBlockTaskFlowActivityDynamic;
 import com.nosliw.core.application.division.manual.brick.task.flow.HAPManualPluginProcessorBlockTaskFlowActivityTask;
 import com.nosliw.core.application.division.manual.brick.task.flow.HAPManualPluginProcessorBlockTaskFlowFlow;
 import com.nosliw.core.application.division.manual.brick.task.script.task.HAPManualPluginParserBlockTaskTaskScript;
@@ -146,14 +149,23 @@ public class HAPManualManagerBrick implements HAPPluginDivision, HAPManagerWithV
 			definitions.put(HAPConstantShared.NAME_ROOTBRICK_MAIN, rootBrick.getDefinition());
 		}
 		
+		//bundle info
+		if(!entityLocationInfo.getIsSingleFile()) {
+			File bundleInfoFile = new File(entityLocationInfo.getBasePath().getPath()+"/bundle.json");
+			if(bundleInfoFile.exists()) {
+				JSONObject bundleInfoObj = new JSONObject(HAPUtilityFile.readFile(bundleInfoFile));
+				Object dynamicTaskObj = bundleInfoObj.opt(HAPBundle.DYNAMICTASK);
+				if(dynamicTaskObj!=null) {
+					out.getDynamicTaskInfo().buildObject(dynamicTaskObj, HAPSerializationFormat.JSON);
+				}
+			}
+		}
 		
 		out.setExtraData(definitions);
 		
 		return out;
 	}
 
-	
-	
 	private HAPWrapperBrickRoot createRootBrick(HAPManualDefinitionInfoBrickLocation entityLocationInfo, HAPManualContextProcessBrick processContext) {
 		HAPManualDefinitionContextParse parseContext = new HAPManualDefinitionContextParse(entityLocationInfo.getBasePath().getPath(), HAPConstantShared.BRICK_DIVISION_MANUAL);
 		
@@ -285,6 +297,7 @@ public class HAPManualManagerBrick implements HAPPluginDivision, HAPManagerWithV
 		
 		this.registerBlockPluginInfo(HAPEnumBrickType.TASK_TASK_FLOW_100, new HAPInfoBrickType(true, HAPConstantShared.TASK_TYPE_TASK), new HAPManualPluginParserBlockTaskFlowFlow(this, this.m_runtimeEnv), new HAPManualPluginProcessorBlockTaskFlowFlow(this.m_runtimeEnv, this));
 		this.registerBlockPluginInfo(HAPEnumBrickType.TASK_TASK_ACTIVITYTASK_100, new HAPInfoBrickType(true), new HAPManualPluginParserBlockTaskFlowActivityTask(this, this.m_runtimeEnv), new HAPManualPluginProcessorBlockTaskFlowActivityTask(this.m_runtimeEnv, this));
+		this.registerBlockPluginInfo(HAPEnumBrickType.TASK_TASK_ACTIVITYDYNAMIC_100, new HAPInfoBrickType(true), new HAPManualPluginParserBlockTaskFlowActivityDynamic(this, this.m_runtimeEnv), new HAPManualPluginProcessorBlockTaskFlowActivityDynamic(this.m_runtimeEnv, this));
 		
 		this.registerBlockPluginInfo(HAPEnumBrickType.WRAPPERBRICK_100, new HAPInfoBrickType(false), new HAPManualPluginParserBrickWrapperBrick(this, this.m_runtimeEnv), new HAPManualPluginProcessorBlockSimpleImpWrapperBrick(this.m_runtimeEnv, this));
 		this.registerBlockPluginInfo(HAPEnumBrickType.TASKWRAPPER_100, new HAPInfoBrickType(false), new HAPManualPluginParserBlockTaskWrapper(this, this.m_runtimeEnv), new HAPManualPluginProcessorBlockSimpleImpTaskWrapper(this.m_runtimeEnv, this));

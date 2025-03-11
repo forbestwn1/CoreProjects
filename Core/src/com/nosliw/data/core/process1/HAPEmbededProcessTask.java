@@ -19,7 +19,7 @@ public class HAPEmbededProcessTask extends HAPSerializableImp{
 
 	public void setTask(HAPDefinitionWrapperTask<String> processTask) {  this.m_wrapperTask = processTask;  }
 
-	public String getProcess() {  return this.m_wrapperTask.getTaskDefinition(); }
+	public String getProcess() {  return this.m_wrapperTask.getDefinition(); }
 
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){

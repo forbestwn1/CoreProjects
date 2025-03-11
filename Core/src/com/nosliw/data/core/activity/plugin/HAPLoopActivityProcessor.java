@@ -67,7 +67,7 @@ public class HAPLoopActivityProcessor implements HAPProcessorActivity{
 		
 		//index data definition
 		HAPExecutableWrapperTask<HAPExecutableProcess> stepProcessExe = processManager.getEmbededProcess(
-				loopActivityDef.getStep().getTaskDefinition(),
+				loopActivityDef.getStep().getDefinition(),
 				processContext,
 				loopActivityDef.getStep().getInDataAssociation(), 
 				loopActivityDef.getStep().getOutDataAssociations(),

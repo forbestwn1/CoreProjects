@@ -100,6 +100,9 @@ var loc_createAttributeDefinition = function(attrDef){
 		else if(valueType==node_COMMONCONSTANT.ENTITYATTRIBUTE_VALUETYPE_VALUE){
 			return loc_createAttributeValueWithValue(rawObj);
 		}
+		else if(valueType==node_COMMONCONSTANT.ENTITYATTRIBUTE_VALUETYPE_DYNAMIC){
+			return loc_createAttributeValueWithDynamic(rawObj);
+		}
 	};
 	
 	var loc_out = {
@@ -171,6 +174,21 @@ var loc_createAttributeValueWithResourceReference = function(valueWrapper){
 		getValueType : function(){   return loc_valueWrapper[node_COMMONATRIBUTECONSTANT.WRAPPERVALUE_VALUETYPE];     },
 		
 		getResourceId : function(){   return loc_resourceId;    }
+	};
+	
+	return loc_out;
+};
+
+var loc_createAttributeValueWithDynamic = function(valueWrapper){
+	var loc_valueWrapper = valueWrapper;
+	var loc_dynamic = loc_valueWrapper[node_COMMONATRIBUTECONSTANT.WRAPPERVALUE_DYNAMIC];
+
+	var loc_out = {
+
+		getValueType : function(){   return loc_valueWrapper[node_COMMONATRIBUTECONSTANT.WRAPPERVALUE_VALUETYPE];     },
+		
+		getDynamic : function(){   return loc_dynamic;    }
+		
 	};
 	
 	return loc_out;

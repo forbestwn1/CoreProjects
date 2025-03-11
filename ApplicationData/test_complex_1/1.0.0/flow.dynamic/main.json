@@ -1,0 +1,141 @@
+{
+	"info": {
+		"name": "flow",
+		"description": "include all basic feature"
+	},
+	"brick": [
+		{
+			"info": {
+				"name" : "datavalidationtrigguer-test_complex_script",
+				"status": "disabled1",
+				"description" : ""
+			},
+			"brick":{
+				"script": "complexscript_test_triggueevent",
+				"taskTrigguer" : [
+					{
+						"trigguerInfo" : {
+							"trigguerType" : "dataValidation",
+							"name" : "testDataValidation1",
+							"handlerId" : {
+								"idPath0" : "#task",
+								"idPath1" : "datavalidation_mandatory-taskTaskScript",
+								"idPath2" : "datavalidation_enum-taskTaskScript",
+								"idPath3" : "datavalidation_mandatory-taskWrapper",
+								"idPath" : "flow-flow"
+							},
+							"dataDefinition" : {
+								"criteria": "test.string;1.0.0"
+							}
+						},
+						"testData" : {
+							"dataTypeId": "test.string;1.0.0",
+							"value": "data for validation"
+						}
+					}
+				]
+			}
+		},
+			
+		{
+			"info": {
+				"name" : "flow-flow",
+				"status": "disabled1",
+				"description" : ""
+			},
+			"resourceId":"flow|1.0.0|@task=taskWrapper|1.0.0|flow.dynamic",  
+			"adapter":[
+				{
+					"name" : "interactivetaskAdapter",
+					"status": "disabled1",
+					"brickTypeId" : {
+						"brickType": "dataAssociationForTask",
+						"version": "1.0.0"
+					},
+					"brick" : {
+						"definition" : {
+							"in" : {
+								"type" : "mapping",
+								"mapping" : [
+								]
+							},
+							"out" : {
+								"success" : {
+									"type" : "mapping",
+									"mapping" : [
+										{
+											"target" : {
+												"rootName" : "output1"
+											},
+											"definition" : {
+												"mapping" : {
+													"elementPath": "success",
+													"valuePortId" : {
+														"valuePortId" : {
+															"group" : "taskInteractive",
+															"name" : "interactiveResult_success"
+														}
+													}
+												}
+											}
+										}
+									]
+								},
+								"fail" : {
+									"type" : "mapping",
+									"mapping" : [
+										{
+											"target" : {
+												"rootName" : "output1"
+											},
+											"definition" : {
+												"mapping" : {
+													"elementPath": "error",
+													"valuePortId" : {
+														"valuePortId" : {
+															"group" : "taskInteractive",
+															"name" : "interactiveResult_fail"
+														}
+													}
+												}
+											}
+										}
+									]
+								}
+							}
+						}
+					}
+				}
+			]		
+		},
+
+
+		{
+			"info": {
+				"name": "valueContext",
+				"status": "disabled1"
+			},
+			"brick": [
+				{
+					"groupType" : "public",
+					"valueStructure" : {
+						"root": {
+							"output1": {
+								"definition":{
+									"criteria": "test.string;1.0.0"
+								}
+							}
+						},
+						"initValue": {
+							"output1": {
+								"dataTypeId": "test.string;1.0.0",
+								"value": "default value of output1"
+							}
+						}
+					}
+				}
+			]
+		}
+		
+	]
+}

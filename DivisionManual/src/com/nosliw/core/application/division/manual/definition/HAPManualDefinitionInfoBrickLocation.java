@@ -13,12 +13,14 @@ public class HAPManualDefinitionInfoBrickLocation {
 	//for resource in a folder, the base path
 	private HAPPathLocationBase m_basePath;
 	
+	private boolean m_isSingleFile;
+	
 	//core file
 	private File m_file;
 	
 	private HAPSerializationFormat m_format;
 	
-	public HAPManualDefinitionInfoBrickLocation(HAPIdBrickType brickTypeId, File file, HAPSerializationFormat format, HAPPathLocationBase basePath) {
+	public HAPManualDefinitionInfoBrickLocation(HAPIdBrickType brickTypeId, File file, HAPSerializationFormat format, HAPPathLocationBase basePath, boolean isSingleFile) {
 		this.m_brickTypeId = brickTypeId;
 		this.m_file = file;
 		this.m_format = format;
@@ -27,11 +29,14 @@ public class HAPManualDefinitionInfoBrickLocation {
 		}
 		
 		this.m_basePath = basePath;
+		this.m_isSingleFile = isSingleFile;
 	}
 	
 	public HAPIdBrickType getBrickTypeId() {     return this.m_brickTypeId;      }
 	
 	public HAPPathLocationBase getBasePath() {    return this.m_basePath;    }
+	
+	public boolean getIsSingleFile() {   return this.m_isSingleFile;   }
 	
 	public File getFiile() {   return this.m_file;    }
 	

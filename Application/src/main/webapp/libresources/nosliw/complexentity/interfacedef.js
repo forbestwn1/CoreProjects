@@ -131,6 +131,9 @@ var node_makeObjectEntityObjectInterface = function(rawEntity, internalValuePort
 						}
 					}));
 				}
+				else if(attrValueWrapper.getValueType()==node_COMMONCONSTANT.ENTITYATTRIBUTE_VALUETYPE_RESOURCEID){
+					
+				}
 
 				return out;
 			},

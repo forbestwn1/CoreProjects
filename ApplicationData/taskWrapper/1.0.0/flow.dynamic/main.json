@@ -1,0 +1,75 @@
+{
+	"info": {
+		"name": "flow.dynamic",
+		"description": "flow.dynamic"
+	},
+	"brick": {
+		"taskBrickType" : {
+			"brickType" : "flow",
+			"version" : "1.0.0"
+		},
+		"__task__" : {
+			
+			"taskInterface" : {
+				"request" : [
+					{
+						"name" : "data",
+						"dataInfo" : ""
+					}
+				],
+				"result" : {
+					"success": {
+						"output": [
+						]
+					},
+					"fail": {
+						"output": [
+						]
+					}
+				}
+			},
+
+			"start": {
+				"target" : {
+					"activity" : "activity1",
+					"adapter" : "interactivetaskAdapter"
+				}
+			},
+			"activity" : [
+				{
+					"brickTypeId" : {
+						"brickType" : "activityDynamic",
+						"version" : "1.0.0"
+					},
+					"brick"	: {
+						"id" : "activity1",
+						"status": "disabled1",
+						"definition" : {
+							"dynamic" : "default"						
+						},
+						"taskAddress" : {
+						
+						},
+						"next" : {
+							"decision" : {
+								"type" : "javascript",
+								"script" : "return result.resultName"
+							},
+							"target" : [
+								{
+									"name" : "success",
+									"activity" : "#end_success"
+								},
+								{
+									"name" : "fail",
+									"activity" : "#end_fail"
+								}
+							]
+						}
+					
+					}
+				}
+			]		
+		}
+	}
+}

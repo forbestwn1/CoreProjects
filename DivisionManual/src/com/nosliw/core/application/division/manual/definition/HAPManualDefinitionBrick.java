@@ -13,6 +13,7 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityNosliw;
 import com.nosliw.core.application.HAPEnumBrickType;
 import com.nosliw.core.application.HAPIdBrickType;
+import com.nosliw.core.application.HAPValueOfDynamic;
 import com.nosliw.core.application.brick.wrappertask.HAPBlockTaskWrapper;
 import com.nosliw.core.application.common.constant.HAPDefinitionConstant;
 import com.nosliw.core.application.common.constant.HAPWithConstantDefinition;
@@ -153,6 +154,7 @@ public abstract class HAPManualDefinitionBrick extends HAPSerializableImp implem
 			this.setAttributeWithValueWrapper(attributeName, new HAPManualDefinitionWrapperValueReferenceResource((HAPResourceId)brickOrRef));
 		}
 	}
+	public void setAttributeValueWithDynamic(String attributeName, HAPValueOfDynamic attrValue) {  this.setAttributeWithValueWrapper(attributeName, new HAPManualDefinitionWrapperValueDynamic(attrValue));  }	
 	
 	public Object getAttributeValueOfValue(String attributeName){
 		HAPManualDefinitionAttributeInBrick attr = this.getAttribute(attributeName);
@@ -184,6 +186,14 @@ public abstract class HAPManualDefinitionBrick extends HAPSerializableImp implem
 			}
 		}
 		return out;
+	}
+
+	public HAPValueOfDynamic getAttributeValueOfDynamic(String attributeName){
+		HAPManualDefinitionAttributeInBrick attr = this.getAttribute(attributeName);
+		if(attr!=null) {
+			return ((HAPManualDefinitionWrapperValueDynamic)attr.getValueWrapper()).getDynamicValue();
+		}
+		return null;
 	}
 
 	@Override

@@ -602,6 +602,7 @@
 			<definition name="RUNTIME_RESOURCE_TYPE_TASK_EXPRESSION_SCRIPT" value="taskExpressionScript"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_TASK_FLOW" value="flow"/>
 			<definition name="RUNTIME_RESOURCE_TYPE_FLOW_ACTIVITYTASK" value="activityTask"/>
+			<definition name="RUNTIME_RESOURCE_TYPE_FLOW_ACTIVITYDYNAMIC" value="activityDynamic"/>
 
 
 			<definition name="RUNTIME_RESOURCE_TYPE_VALUESTRUCTUREWRAPPER" value="valuestructurewrapper"/>
@@ -999,6 +1000,7 @@
 			<definition name="EMBEDEDVALUE_TYPE_ENTITYID" value="entityId"/>
 			<definition name="EMBEDEDVALUE_TYPE_BRICK" value="brick"/>
 			<definition name="EMBEDEDVALUE_TYPE_VALUE" value="value"/>
+			<definition name="EMBEDEDVALUE_TYPE_DYNAMIC" value="dynamic"/>
 			<definition name="EMBEDEDVALUE_TYPE_ATTACHMENTREFERENCE" value="attachmentReference"/>
 			<definition name="EMBEDEDVALUE_TYPE_BRICKREFERENCE" value="brickReference"/>
 			<definition name="EMBEDEDVALUE_TYPE_RESOURCEREFERENCE" value="resourceReference"/>
@@ -1007,6 +1009,7 @@
 			<definition name="ENTITYATTRIBUTE_VALUETYPE_BRICK" value="brick"/>
 			<definition name="ENTITYATTRIBUTE_VALUETYPE_VALUE" value="value"/>
 			<definition name="ENTITYATTRIBUTE_VALUETYPE_RESOURCEID" value="resourceId"/>
+			<definition name="ENTITYATTRIBUTE_VALUETYPE_DYNAMIC" value="dynamic"/>
 
 			<definition type="space"/>
 			<definition name="BRICK_DIVISION_MANUAL" value="manual"/>
@@ -1040,6 +1043,12 @@
 			<definition type="space"/>
 			<definition name="VALUESTRUCTURE_PRIORITY_DEFINED" value="0" type="int"/>
 			<definition name="VALUESTRUCTURE_PRIORITY_IMPLIED" value="10" type="int"/>
+
+			<definition type="space"/>
+			<definition name="DYNAMICTASK_INFO_TYPE_SIMPLE" value="simple"/>
+			<definition name="DYNAMICTASK_INFO_TYPE_SET" value="set"/>
+			<definition name="DYNAMICTASK_INFO_TYPE_NODE" value="node"/>
+
 
 			<definition type="space"/>
 			<definition name="NAME_ROOTBRICK_MAIN" value="main"/>

@@ -513,6 +513,7 @@ public class HAPConstantShared {
 		public static final String RUNTIME_RESOURCE_TYPE_TASK_EXPRESSION_SCRIPT = "taskExpressionScript";
 		public static final String RUNTIME_RESOURCE_TYPE_TASK_FLOW = "flow";
 		public static final String RUNTIME_RESOURCE_TYPE_FLOW_ACTIVITYTASK = "activityTask";
+		public static final String RUNTIME_RESOURCE_TYPE_FLOW_ACTIVITYDYNAMIC = "activityDynamic";
 		public static final String RUNTIME_RESOURCE_TYPE_VALUESTRUCTUREWRAPPER = "valuestructurewrapper";
 		public static final String RUNTIME_RESOURCE_TYPE_WRAPPERBRICK = "wrapperbrick";
 		public static final String RUNTIME_RESOURCE_TYPE_MODULE = "module";
@@ -959,6 +960,7 @@ public class HAPConstantShared {
 		public static final String EMBEDEDVALUE_TYPE_ENTITYID = "entityId";
 		public static final String EMBEDEDVALUE_TYPE_BRICK = "brick";
 		public static final String EMBEDEDVALUE_TYPE_VALUE = "value";
+		public static final String EMBEDEDVALUE_TYPE_DYNAMIC = "dynamic";
 		public static final String EMBEDEDVALUE_TYPE_ATTACHMENTREFERENCE = "attachmentReference";
 		public static final String EMBEDEDVALUE_TYPE_BRICKREFERENCE = "brickReference";
 		public static final String EMBEDEDVALUE_TYPE_RESOURCEREFERENCE = "resourceReference";
@@ -968,6 +970,7 @@ public class HAPConstantShared {
 		public static final String ENTITYATTRIBUTE_VALUETYPE_BRICK = "brick";
 		public static final String ENTITYATTRIBUTE_VALUETYPE_VALUE = "value";
 		public static final String ENTITYATTRIBUTE_VALUETYPE_RESOURCEID = "resourceId";
+		public static final String ENTITYATTRIBUTE_VALUETYPE_DYNAMIC = "dynamic";
 
 
 
@@ -1008,6 +1011,12 @@ public class HAPConstantShared {
 
 		public static final int VALUESTRUCTURE_PRIORITY_DEFINED = 0;
 		public static final int VALUESTRUCTURE_PRIORITY_IMPLIED = 10;
+
+
+
+		public static final String DYNAMICTASK_INFO_TYPE_SIMPLE = "simple";
+		public static final String DYNAMICTASK_INFO_TYPE_SET = "set";
+		public static final String DYNAMICTASK_INFO_TYPE_NODE = "node";
 
 
 

@@ -5,17 +5,17 @@ import java.util.List;
 import java.util.Map;
 
 import com.nosliw.common.interfac.HAPEntityOrReference;
-import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.core.application.HAPAdapter;
 import com.nosliw.core.application.HAPAttributeInBrick;
 import com.nosliw.core.application.HAPBrick;
 import com.nosliw.core.application.HAPIdBrickType;
+import com.nosliw.core.application.HAPValueOfDynamic;
 import com.nosliw.core.application.HAPWrapperValue;
 import com.nosliw.core.application.HAPWrapperValueOfBrick;
+import com.nosliw.core.application.HAPWrapperValueOfDynamic;
 import com.nosliw.core.application.HAPWrapperValueOfReferenceResource;
 import com.nosliw.core.application.HAPWrapperValueOfValue;
 import com.nosliw.data.core.resource.HAPResourceDependency;
@@ -29,11 +29,8 @@ public abstract class HAPBrickImp extends HAPSerializableImp implements HAPBrick
 	//all attributes
 	private List<HAPAttributeInBrick> m_attributes;
 	
-	private List<HAPAdapter> m_adapters;
-
 	public HAPBrickImp() {
 		this.m_attributes = new ArrayList<HAPAttributeInBrick>();
-		this.m_adapters = new ArrayList<HAPAdapter>();
 	}
 
 	@Override
@@ -53,15 +50,6 @@ public abstract class HAPBrickImp extends HAPSerializableImp implements HAPBrick
 			}
 		}
 		return null;
-	}
-	
-	@Override
-	public List<HAPAdapter> getAdapters() {
-		return this.m_adapters;
-	}
-	
-	public void addAdapter(HAPAdapter adapter) {
-		this.m_adapters.add(adapter);
 	}
 	
 	public Object getAttributeValueOfValue(String attributeName) {
@@ -97,6 +85,15 @@ public abstract class HAPBrickImp extends HAPSerializableImp implements HAPBrick
 		return out;
 	}
 
+	public HAPValueOfDynamic getAttributeValueOfDynamic(String attributeName) {
+		HAPValueOfDynamic out = null;
+		HAPWrapperValueOfDynamic dynamicWrapper = (HAPWrapperValueOfDynamic)this.getAttributeValueWrapper(attributeName);
+		if(dynamicWrapper!=null) {
+			out = dynamicWrapper.getDynamicValue();
+		}
+		return out;
+	}
+	
 	public void setAttribute(HAPAttributeInBrick attribute) {
 		for(int i=0; i<this.m_attributes.size(); i++) {
 			if(this.m_attributes.get(i).getName().equals(attribute.getName())) {
@@ -116,6 +113,7 @@ public abstract class HAPBrickImp extends HAPSerializableImp implements HAPBrick
 			this.setAttribute(newAttribute(attributeName, new HAPWrapperValueOfReferenceResource((HAPResourceId)brickOrRef)));
 		}
 	}
+	public void setAttributeValueWithDynamic(String attributeName, HAPValueOfDynamic dynamic) {	this.setAttribute(newAttribute(attributeName, new HAPWrapperValueOfDynamic(dynamic)));	}
 	
 	protected HAPAttributeInBrick newAttribute(String attrName, HAPWrapperValue valueWrapper) {		return new HAPAttributeInBrick(attrName, valueWrapper);	}
 	
@@ -144,10 +142,6 @@ public abstract class HAPBrickImp extends HAPSerializableImp implements HAPBrick
 		if(this.getExternalValuePorts()!=null) {
 			jsonMap.put(EXTERNALVALUEPORT, this.getExternalValuePorts().toStringValue(HAPSerializationFormat.JSON));
 		}
-		
-		if(this.m_adapters!=null) {
-			jsonMap.put(ADAPTER, HAPManagerSerialize.getInstance().toStringValue(this.getAdapters(), HAPSerializationFormat.JAVASCRIPT));
-		}
 	}
 	
 	@Override
@@ -156,5 +150,4 @@ public abstract class HAPBrickImp extends HAPSerializableImp implements HAPBrick
 			attr.buildResourceDependency(dependency, runtimeInfo);
 		}
 	}
-
 }

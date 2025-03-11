@@ -15,8 +15,9 @@ public interface HAPBlockTaskFlowFlow extends HAPBrick, HAPWithBlockInteractiveT
 	@HAPAttribute
 	public static final String ACTIVITY = "activity";
 
-	HAPBrickContainer getActivities();
 	
 	HAPTaskFlowNext getStart();
+	
+	HAPBrickContainer getActivities();
 	
 }
