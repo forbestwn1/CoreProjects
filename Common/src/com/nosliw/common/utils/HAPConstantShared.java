@@ -1020,6 +1020,10 @@ public class HAPConstantShared {
 
 
 
+		public static final String DYNAMICTASK_REF_TYPE_SIMPLE = "simple";
+
+
+
 		public static final String NAME_ROOTBRICK_MAIN = "main";
 
 

@@ -47,15 +47,19 @@ public class HAPManualDataAssociationForTask extends HAPSerializableImp{
 		JSONObject inputMappingJson = jsonObj.optJSONObject(IN);
 		if(inputMappingJson!=null) {
 			this.m_inDataAssociation = HAPManualParserDataAssociation.buildDefinitionByJson(inputMappingJson);
-			this.m_inDataAssociation.setDirection(HAPConstantShared.DATAASSOCIATION_DIRECTION_DOWNSTREAM);
+			if(this.m_inDataAssociation!=null) {
+				this.m_inDataAssociation.setDirection(HAPConstantShared.DATAASSOCIATION_DIRECTION_DOWNSTREAM);
+			}
 		}
 
 		JSONObject outputMappingJson = jsonObj.optJSONObject(OUT);
 		if(outputMappingJson!=null) {
 			for(Object key : outputMappingJson.keySet()) {
 				HAPManualDataAssociation dataAssociation = HAPManualParserDataAssociation.buildDefinitionByJson(outputMappingJson.optJSONObject((String)key));
-				dataAssociation.setDirection(HAPConstantShared.DATAASSOCIATION_DIRECTION_UPSTREAM);
-				this.addOutDataAssociation((String)key, dataAssociation);
+				if(dataAssociation!=null) {
+					dataAssociation.setDirection(HAPConstantShared.DATAASSOCIATION_DIRECTION_UPSTREAM);
+					this.addOutDataAssociation((String)key, dataAssociation);
+				}
 			}
 		}
 	}

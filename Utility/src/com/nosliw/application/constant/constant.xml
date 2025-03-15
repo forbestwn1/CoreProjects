@@ -1049,6 +1049,8 @@
 			<definition name="DYNAMICTASK_INFO_TYPE_SET" value="set"/>
 			<definition name="DYNAMICTASK_INFO_TYPE_NODE" value="node"/>
 
+			<definition type="space"/>
+			<definition name="DYNAMICTASK_REF_TYPE_SIMPLE" value="simple"/>
 
 			<definition type="space"/>
 			<definition name="NAME_ROOTBRICK_MAIN" value="main"/>

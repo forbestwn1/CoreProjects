@@ -20,6 +20,7 @@ import com.nosliw.core.application.HAPWrapperValue;
 import com.nosliw.core.application.HAPWrapperValueOfBrick;
 import com.nosliw.core.application.HAPWrapperValueOfDynamic;
 import com.nosliw.core.application.HAPWrapperValueOfReferenceResource;
+import com.nosliw.core.application.common.dynamic.HAPInputDynamicTask;
 import com.nosliw.core.application.common.dynamic.HAPUtilityInfoDynamic;
 import com.nosliw.core.application.common.interactive.HAPInteractiveTask;
 import com.nosliw.core.application.common.parentrelation.HAPManualDefinitionBrickRelationAutoProcess;
@@ -387,6 +388,9 @@ public class HAPManualUtilityProcessor {
 					//resource reference
 					HAPManualDefinitionWrapperValueReferenceResource resourceRefValueDef = (HAPManualDefinitionWrapperValueReferenceResource)attrValueInfo;
 					HAPWrapperValueOfReferenceResource resourceRefValue = new HAPWrapperValueOfReferenceResource(resourceRefValueDef.getResourceId());
+					for(HAPInputDynamicTask dynamicInput : resourceRefValueDef.getDyanmicInputs()) {
+						resourceRefValue.addDyanmicInput(dynamicInput);
+					}
 					attrExe.setValueWrapper(resourceRefValue);
 				}
 				else if(attrValueType.equals(HAPConstantShared.EMBEDEDVALUE_TYPE_DYNAMIC)) {

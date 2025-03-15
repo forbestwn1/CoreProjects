@@ -39,7 +39,9 @@ public class HAPDataAssociationForTask extends HAPSerializableImp{
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(IN, this.m_inDataAssociation.toStringValue(HAPSerializationFormat.JSON));
+		if(this.m_inDataAssociation!=null) {
+			jsonMap.put(IN, this.m_inDataAssociation.toStringValue(HAPSerializationFormat.JSON));
+		}
 		
 		Map<String, String> outJsonStr = new LinkedHashMap<String, String>(); 
 		for(String outName : this.m_outDataAssociation.keySet()) {

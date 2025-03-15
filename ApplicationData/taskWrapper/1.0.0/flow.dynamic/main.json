@@ -20,10 +20,18 @@
 				"result" : {
 					"success": {
 						"output": [
+							{
+								"name" : "success",
+								"criteria" : "test.string;1.0.0"
+							}
 						]
 					},
 					"fail": {
 						"output": [
+							{
+								"name" : "error",
+								"criteria" : "test.string;1.0.0"
+							}
 						]
 					}
 				}
@@ -57,6 +65,7 @@
 									"brick" : {
 										"definition" : {
 											"in" : {
+												"status": "disabled1",
 												"type" : "mapping",
 												"mapping" : [
 														{
@@ -85,7 +94,7 @@
 														}
 												]
 											},
-											"out1" : {
+											"out" : {
 												"success" : {
 													"type" : "mapping",
 													"mapping" : [
@@ -113,6 +122,7 @@
 													]
 												},
 												"fail" : {
+													"status": "disabled1",
 													"type" : "mapping",
 													"mapping" : [
 														{
