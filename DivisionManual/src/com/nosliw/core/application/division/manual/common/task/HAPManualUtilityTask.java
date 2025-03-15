@@ -32,6 +32,7 @@ import com.nosliw.core.application.common.valueport.HAPContainerValuePorts;
 import com.nosliw.core.application.common.valueport.HAPInfoValuePortContainer;
 import com.nosliw.core.application.common.valueport.HAPUtilityValuePort;
 import com.nosliw.core.application.common.valueport.HAPValuePort;
+import com.nosliw.core.application.common.valueport.HAPWithExternalValuePort;
 import com.nosliw.core.application.division.manual.HAPManualManagerBrick;
 import com.nosliw.core.application.division.manual.executable.HAPManualBrick;
 import com.nosliw.core.application.valuestructure.HAPDomainValueStructure;
@@ -143,9 +144,16 @@ public class HAPManualUtilityTask {
 		
 	}
 
+	public static void buildValuePortGroupForInteractiveTask(HAPWithExternalValuePort withExternalValuePort, HAPInteractiveTask taskInteractive, HAPDomainValueStructure valueStructureDomain) {
+		buildValuePortGroupForInteractiveTask(Pair.of(null, withExternalValuePort.getExternalValuePorts()), taskInteractive, valueStructureDomain);
+	}
+	
+	
 	public static void buildValuePortGroupForInteractiveTask(HAPManualBrick brick, HAPInteractiveTask taskInteractive, HAPDomainValueStructure valueStructureDomain) {
-		Pair<HAPContainerValuePorts, HAPContainerValuePorts> valuePortContainerPair = Pair.of(brick.getOtherInternalValuePortContainer(), brick.getOtherExternalValuePortContainer());
-		
+		buildValuePortGroupForInteractiveTask(Pair.of(brick.getOtherInternalValuePortContainer(), brick.getOtherExternalValuePortContainer()), taskInteractive, valueStructureDomain);
+	}
+
+	private static void buildValuePortGroupForInteractiveTask(Pair<HAPContainerValuePorts, HAPContainerValuePorts> valuePortContainerPair, HAPInteractiveTask taskInteractive, HAPDomainValueStructure valueStructureDomain) {
 		//request
 		Pair<HAPValuePort, HAPValuePort> requestValuePortPair = getOrCreateInteractiveRequestValuePort(valuePortContainerPair);
 		buildInteractiveRequestValuePort(requestValuePortPair, taskInteractive.getRequestParms(), valueStructureDomain);
@@ -156,10 +164,12 @@ public class HAPManualUtilityTask {
 			buildTaskInteractiveResultValuePort(resultValuePortPair, result, valueStructureDomain);
 		}
 	}
-	
+
 	public static void buildValuePortGroupForInteractiveExpression(HAPManualBrick brick, HAPInteractiveExpression expressionInteractive, HAPDomainValueStructure valueStructureDomain) {
-		Pair<HAPContainerValuePorts, HAPContainerValuePorts> valuePortContainerPair = Pair.of(brick.getOtherInternalValuePortContainer(), brick.getOtherExternalValuePortContainer());
-		
+		buildValuePortGroupForInteractiveExpression(Pair.of(brick.getOtherInternalValuePortContainer(), brick.getOtherExternalValuePortContainer()), expressionInteractive, valueStructureDomain);
+	}
+
+	private static void buildValuePortGroupForInteractiveExpression(Pair<HAPContainerValuePorts, HAPContainerValuePorts> valuePortContainerPair, HAPInteractiveExpression expressionInteractive, HAPDomainValueStructure valueStructureDomain) {
 		//request
 		Pair<HAPValuePort, HAPValuePort> requestValuePortPair = getOrCreateInteractiveRequestValuePort(valuePortContainerPair);
 		buildInteractiveRequestValuePort(requestValuePortPair, expressionInteractive.getRequestParms(), valueStructureDomain);
@@ -168,7 +178,7 @@ public class HAPManualUtilityTask {
 		Pair<HAPValuePort, HAPValuePort> resultValuePortPair = getOrCreateExpressionInteractiveResultValuePort(valuePortContainerPair);
 		buildExpressionInteractiveResultValuePort(resultValuePortPair, expressionInteractive.getResult(), valueStructureDomain);
 	}
-	
+
 	private static Pair<HAPValuePort, HAPValuePort> getOrCreateInteractiveRequestValuePort(Pair<HAPContainerValuePorts, HAPContainerValuePorts> valuePortContainerPair){
 		return HAPUtilityValuePort.getOrCreateValuePort(
 				valuePortContainerPair, 
@@ -214,10 +224,14 @@ public class HAPManualUtilityTask {
 		String requestVSId = valueStructureDomain.newValueStructure(requestRoots, defaultValue, null, null);
 		
 		//request value port -- internal
-		valuePortPair.getLeft().addValueStructureId(requestVSId);
+		if(valuePortPair.getLeft()!=null) {
+			valuePortPair.getLeft().addValueStructureId(requestVSId);
+		}
 		
 		//request value port -- external
-		valuePortPair.getRight().addValueStructureId(requestVSId);
+		if(valuePortPair.getRight()!=null) {
+			valuePortPair.getRight().addValueStructureId(requestVSId);
+		}
 	}
 
 
@@ -236,8 +250,12 @@ public class HAPManualUtilityTask {
 		}
 		String resultVSId = valueStructureDomain.newValueStructure(outputRoots, null, null, null);
 		
-		valuePortPair.getLeft().addValueStructureId(resultVSId);
-		valuePortPair.getRight().addValueStructureId(resultVSId);
+		if(valuePortPair.getLeft()!=null) {
+			valuePortPair.getLeft().addValueStructureId(resultVSId);
+		}
+		if(valuePortPair.getRight()!=null) {
+			valuePortPair.getRight().addValueStructureId(resultVSId);
+		}
 	}
 
 	private static String buildResultValuePortName(String resultName) {
@@ -252,8 +270,12 @@ public class HAPManualUtilityTask {
 		resultRoots.add(resultRoot);
 		String resultVSId = valueStructureDomain.newValueStructure(resultRoots, null, null, null);
 		
-		valuePortPair.getLeft().addValueStructureId(resultVSId);
-		valuePortPair.getRight().addValueStructureId(resultVSId);
+		if(valuePortPair.getLeft()!=null) {
+			valuePortPair.getLeft().addValueStructureId(resultVSId);
+		}
+		if(valuePortPair.getRight()!=null) {
+			valuePortPair.getRight().addValueStructureId(resultVSId);
+		}
 	}
 	
 }

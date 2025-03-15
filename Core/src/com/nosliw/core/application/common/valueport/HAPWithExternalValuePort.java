@@ -4,7 +4,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 
 @HAPEntityWithAttribute
-public interface HAPWithExternalValuePort {
+public interface HAPWithExternalValuePort extends HAPWithValuePort{
 
 	@HAPAttribute
 	public final static String EXTERNALVALUEPORT = "externalValuePort"; 

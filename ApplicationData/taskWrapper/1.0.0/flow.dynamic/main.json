@@ -45,7 +45,114 @@
 						"id" : "activity1",
 						"status": "disabled1",
 						"definition" : {
-							"dynamic" : "default"						
+							"dynamic" : "default",
+							"adapter" : [
+								{
+									"name" : "interactivetaskAdapter",
+									"status": "disabled1",
+									"brickTypeId" : {
+										"brickType": "dataAssociationForTask",
+										"version": "1.0.0"
+									},
+									"brick" : {
+										"definition" : {
+											"in" : {
+												"type" : "mapping",
+												"mapping" : [
+														{
+															"target" : {
+																"rootName" : "data",
+																"ioDirection" : "IN",
+																"valuePortId" : {
+																	"brickId" : {
+																		"idPath" : "__task__"
+																	},
+																	"valuePortId" : {
+																		"group" : "taskInteractive"
+																	}
+																}
+															},
+															"definition" : {
+																"mapping" : {
+																	"elementPath": "data",
+																	"valuePortId" : {
+																		"valuePortId" : {
+																			"group" : "taskInteractive"
+																		}
+																	}
+																}
+															}
+														}
+												]
+											},
+											"out" : {
+												"success" : {
+													"type" : "mapping",
+													"mapping" : [
+														{
+															"target" : {
+																"rootName" : "success",
+																"ioDirection" : "IN",
+																"valuePortId" : {
+																	"brickId" : {
+																		"idPath" : "__task__"
+																	},
+																	"valuePortId" : {
+																		"group" : "taskInteractive",
+																		"name" : "interactiveResult_success"
+																	}
+																}
+															},
+															"definition" : {
+																"value" : {
+																	"dataTypeId": "test.string;1.0.0",
+																	"value": "validation success"
+																} 
+															}
+														}
+													]
+												},
+												"fail" : {
+													"type" : "mapping",
+													"mapping" : [
+														{
+															"target" : {
+																"rootName" : "error",
+																"ioDirection" : "IN",
+																"valuePortId" : {
+																	"brickId" : {
+																		"idPath" : "__task__"
+																	},
+																	"valuePortId" : {
+																		"group" : "taskInteractive",
+																		"name" : "interactiveResult_fail"
+																	}
+																}
+															},
+															"definition" : {
+																"mapping" : {
+																	"elementPath": "error",
+																	"valuePortId" : {
+																		"valuePortId" : {
+																			"group" : "taskInteractive",
+																			"name" : "interactiveResult_fail"
+																		}
+																	}
+																}
+															}
+														}
+													]
+												}
+											}
+										}
+									}
+								}
+
+
+
+
+							
+							]					
 						},
 						"taskAddress" : {
 						

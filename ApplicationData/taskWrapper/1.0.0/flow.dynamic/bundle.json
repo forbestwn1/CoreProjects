@@ -16,6 +16,10 @@
 					},
 					"fail": {
 						"output": [
+							{
+								"name" : "error",
+								"criteria" : "test.string;1.0.0"
+							}
 						]
 					}
 				}

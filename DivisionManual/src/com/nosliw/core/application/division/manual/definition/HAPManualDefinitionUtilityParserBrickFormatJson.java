@@ -163,7 +163,7 @@ public class HAPManualDefinitionUtilityParserBrickFormatJson {
 			Object dynamicObj = jsonObj.opt(HAPManualDefinitionWrapperValueDynamic.DYNAMIC);
 			if(dynamicObj!=null) {
 				HAPValueOfDynamic dynamicValue = new HAPValueOfDynamic();
-				dynamicValue.buildObject(dynamicValue, HAPSerializationFormat.JSON);
+				dynamicValue.buildObject(dynamicObj, HAPSerializationFormat.JSON);
 				out = new HAPManualDefinitionWrapperValueDynamic(dynamicValue);
 			}
 		}

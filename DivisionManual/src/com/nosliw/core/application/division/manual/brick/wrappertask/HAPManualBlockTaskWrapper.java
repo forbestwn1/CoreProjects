@@ -14,7 +14,7 @@ public class HAPManualBlockTaskWrapper extends HAPManualBrickImp implements HAPB
 	public String getTaskType() {	return (String)this.getAttributeValueOfValue(TASKTYPE);	}
 	public void setTaskType(String taskType) {    this.setAttributeValueWithValue(TASKTYPE, taskType);     }
 
-//	private HAPResultBrick getTaskResult() {
+//	private HAPResultBrickDescentValue getTaskResult() {
 //		return HAPUtilityBrick.getAttributeResultOfBrickGlobal(this, HAPBlockTaskWrapper.TASK, getBrickManager());
 //	}
 //	
@@ -28,7 +28,7 @@ public class HAPManualBlockTaskWrapper extends HAPManualBrickImp implements HAPB
 //
 //	@Override
 //	public HAPContainerValuePorts getOtherInternalValuePortContainer() {
-//		HAPResultBrick brickResult = this.getTaskResult();
+//		HAPResultBrickDescentValue brickResult = this.getTaskResult();
 //		if(brickResult.isInternalBrick()) {
 //			return ((HAPManualBrick)brickResult.getBrick()).getOtherInternalValuePortContainer();
 //		}
@@ -36,7 +36,7 @@ public class HAPManualBlockTaskWrapper extends HAPManualBrickImp implements HAPB
 //	}
 //	@Override
 //	public HAPContainerValuePorts getOtherExternalValuePortContainer() {   
-//		HAPResultBrick brickResult = this.getTaskResult();
+//		HAPResultBrickDescentValue brickResult = this.getTaskResult();
 //		if(brickResult.isInternalBrick()) {
 //			return ((HAPManualBrick)brickResult.getBrick()).getOtherExternalValuePortContainer();
 //		}

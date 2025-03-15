@@ -42,7 +42,7 @@ public class HAPUtilityBrick {
 		return bundle.getRootBrickWrapper(rootBrickName);
 	}
 
-	public static HAPResultBrick getDescdentBrickResult(HAPBundle bundle, HAPPath path, String rootNameIfNotProvide) {
+	public static HAPResultBrickDescentValue getDescdentBrickResult(HAPBundle bundle, HAPPath path, String rootNameIfNotProvide) {
 		HAPComplexPath fullPathInfo = HAPUtilityBundle.getBrickFullPathInfo(path.toString(), rootNameIfNotProvide);
 		return getDescendantResult(bundle.getRootBrickWrapper(fullPathInfo.getRoot()).getBrick(), fullPathInfo.getPath());
 	}
@@ -68,7 +68,7 @@ public class HAPUtilityBrick {
 	
 	
 	private static HAPBrick getDescdentBrickLocal(HAPBrick brick, HAPPath path) {
-		HAPResultBrick brickResult = getDescendantResult(brick, path);
+		HAPResultBrickDescentValue brickResult = getDescendantResult(brick, path);
 		if(brickResult!=null) {
 			return brickResult.getBrick();
 		}
@@ -77,18 +77,26 @@ public class HAPUtilityBrick {
 	
 	
 
-	private static HAPResultBrick getDescendantResult(HAPBrick brick, HAPPath path) {
+	private static HAPResultBrickDescentValue getDescendantResult(HAPBrick brick, HAPPath path) {
 		if(path==null||path.isEmpty()) {
-			return new HAPResultBrick(brick);
+			return new HAPResultBrickDescentValue(brick);
 		} else {
 			HAPWrapperValue attrValueWrapper = getDescendantAttribute(brick, path).getValueWrapper();
 			String attrValueType = attrValueWrapper.getValueType();
 			if(attrValueType.equals(HAPConstantShared.ENTITYATTRIBUTE_VALUETYPE_BRICK)) {
-				return new HAPResultBrick(((HAPWithBrick)attrValueWrapper).getBrick());
+				return new HAPResultBrickDescentValue(((HAPWithBrick)attrValueWrapper).getBrick());
 			}
 			else if(attrValueType.equals(HAPConstantShared.ENTITYATTRIBUTE_VALUETYPE_RESOURCEID)) {
 				HAPWrapperValueOfReferenceResource valueWrapper = (HAPWrapperValueOfReferenceResource)attrValueWrapper;
-				return new HAPResultBrick(valueWrapper.getResourceId());
+				return new HAPResultBrickDescentValue(valueWrapper.getResourceId());
+			}
+			else if(attrValueType.equals(HAPConstantShared.ENTITYATTRIBUTE_VALUETYPE_DYNAMIC)) {
+				HAPWrapperValueOfDynamic valueWrapper = (HAPWrapperValueOfDynamic)attrValueWrapper;
+				return new HAPResultBrickDescentValue(valueWrapper.getDynamicValue());
+			}
+			else if(attrValueType.equals(HAPConstantShared.ENTITYATTRIBUTE_VALUETYPE_VALUE)) {
+				HAPWrapperValueOfValue valueWrapper = (HAPWrapperValueOfValue)attrValueWrapper;
+				return new HAPResultBrickDescentValue(valueWrapper.getValue());
 			}
 			return null;
 		}

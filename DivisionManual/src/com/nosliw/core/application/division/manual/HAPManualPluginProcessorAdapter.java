@@ -2,7 +2,7 @@ package com.nosliw.core.application.division.manual;
 
 import com.nosliw.common.path.HAPPath;
 import com.nosliw.core.application.HAPIdBrickType;
-import com.nosliw.core.application.HAPResultBrick;
+import com.nosliw.core.application.HAPResultBrickDescentValue;
 import com.nosliw.core.application.HAPUtilityBrick;
 import com.nosliw.core.application.HAPUtilityBrickId;
 import com.nosliw.core.application.division.manual.common.task.HAPManualUtilityTask;
@@ -26,13 +26,13 @@ public abstract class HAPManualPluginProcessorAdapter extends HAPManualPluginPro
 		return processContext.getRootPathForBaseBrick();
 	}
 
-	protected HAPResultBrick getBaseBrickResult(HAPManualContextProcessAdapter processContext) {
+	protected HAPResultBrickDescentValue getBaseBrickResult(HAPManualContextProcessAdapter processContext) {
 		return HAPUtilityBrick.getDescdentBrickResult(processContext.getCurrentBundle(), getRootPathForBaseBrick(processContext), processContext.getRootBrickName());
 	}
 
 	protected HAPIdBrickType getBaseBrickType(HAPManualContextProcessAdapter processContext) {
-		HAPResultBrick result = this.getBaseBrickResult(processContext);
-		if(result.isInternalBrick()) {
+		HAPResultBrickDescentValue result = this.getBaseBrickResult(processContext);
+		if(result.getBrick()!=null) {
 			return result.getBrick().getBrickType();
 		} else {
 			return HAPUtilityBrickId.getBrickTypeIdFromResourceId(result.getResourceId());

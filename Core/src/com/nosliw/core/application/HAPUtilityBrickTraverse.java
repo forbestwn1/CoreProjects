@@ -5,9 +5,27 @@ import java.util.List;
 import java.util.Set;
 
 import com.nosliw.common.path.HAPPath;
+import com.nosliw.common.utils.HAPConstantShared;
 
 public class HAPUtilityBrickTraverse {
 
+	public static void traverseTreeWithDynamic(HAPBundle bundle, String rootName, HAPHandlerDownward processor, HAPManagerApplicationBrick brickMan, Object data) {
+		traverseTree(
+			bundle, 
+			rootName,
+			new HAPHandlerBrickWrapper(processor, true) {
+				@Override
+				protected boolean isValidAttribute(HAPAttributeInBrick attr) {
+					if(attr.getValueWrapper().getValueType().equals(HAPConstantShared.ENTITYATTRIBUTE_VALUETYPE_DYNAMIC)) {
+						return true;
+					}
+					return false;
+				}
+			}, 
+			brickMan,
+			data);
+	}
+	
 	public static void traverseTreeWithLocalBrick(HAPBundle bundle, String rootName, HAPHandlerDownward processor, HAPManagerApplicationBrick brickMan, Object data) {
 		traverseTree(
 			bundle, 

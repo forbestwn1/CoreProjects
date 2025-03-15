@@ -3,7 +3,9 @@ package com.nosliw.core.application;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
@@ -89,6 +91,11 @@ public class HAPUtilityExport {
 			HAPUtilityFile.writeJsonFile(bundleFolder, "valuestructure.json", "");
 		}
 
+		//bundle infor
+		Map<String, String> bundleJsonMap = new LinkedHashMap<String, String>();
+		bundleJsonMap.put(HAPBundle.DYNAMICTASK, bundle.getDynamicTaskInfo().toStringValue(HAPSerializationFormat.JSON));
+		HAPUtilityFile.writeJsonFile(bundleFolder, "bundle.json", HAPUtilityJson.buildMapJson(bundleJsonMap));
+		
 		//write package definition
 		HAPUtilityFile.writeJsonFile(bundleFolder, "extra.json", HAPManagerSerialize.getInstance().toStringValue(bundle.getExtraData(), HAPSerializationFormat.JSON));
 		

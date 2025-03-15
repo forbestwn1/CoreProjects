@@ -9,7 +9,9 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.path.HAPComplexPath;
+import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.serialization.HAPSerializableImp;
+import com.nosliw.common.serialization.HAPSerializationFormat;
 
 @HAPEntityWithAttribute
 public class HAPInfoDynamicTask extends HAPSerializableImp{
@@ -35,6 +37,12 @@ public class HAPInfoDynamicTask extends HAPSerializableImp{
 			out = out.getChild(seg);
 		}
 		return out;
+	}
+	
+	@Override
+	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		super.buildJsonMap(jsonMap, typeJsonMap);
+		jsonMap.put(ELEMENT, HAPManagerSerialize.getInstance().toStringValue(m_elements, HAPSerializationFormat.JSON));
 	}
 	
 	@Override

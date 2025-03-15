@@ -1,5 +1,7 @@
 package com.nosliw.core.application.common.dynamic;
 
+import java.util.Map;
+
 import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
@@ -24,6 +26,13 @@ public abstract class HAPInfoDynamicTaskElement extends HAPEntityInfoImp{
 		this.buildEntityInfoByJson(jsonObj);
 		return true;
 	}
+	
+	@Override
+	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		super.buildJsonMap(jsonMap, typeJsonMap);
+		jsonMap.put(TYPE, this.getType());
+	}
+
 	
 	public static HAPInfoDynamicTaskElement parse(Object obj) {
 		HAPInfoDynamicTaskElement out = null;

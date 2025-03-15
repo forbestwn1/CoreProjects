@@ -8,6 +8,7 @@ import java.util.Set;
 import com.nosliw.common.interfac.HAPTreeNode;
 import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.core.application.HAPAttributeInBrick;
 import com.nosliw.core.application.HAPBrick;
 import com.nosliw.core.application.HAPBundle;
 import com.nosliw.core.application.HAPHandlerDownward;
@@ -17,9 +18,13 @@ import com.nosliw.core.application.HAPUtilityBrick;
 import com.nosliw.core.application.HAPUtilityBrickTraverse;
 import com.nosliw.core.application.HAPWrapperValue;
 import com.nosliw.core.application.HAPWrapperValueOfBrick;
+import com.nosliw.core.application.HAPWrapperValueOfDynamic;
 import com.nosliw.core.application.HAPWrapperValueOfReferenceResource;
+import com.nosliw.core.application.common.dynamic.HAPUtilityInfoDynamic;
+import com.nosliw.core.application.common.interactive.HAPInteractiveTask;
 import com.nosliw.core.application.common.parentrelation.HAPManualDefinitionBrickRelationAutoProcess;
 import com.nosliw.core.application.common.valueport.HAPUtilityValuePortVariable;
+import com.nosliw.core.application.division.manual.common.task.HAPManualUtilityTask;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionAdapter;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionAttributeInBrick;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrick;
@@ -27,6 +32,7 @@ import com.nosliw.core.application.division.manual.definition.HAPManualDefinitio
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionWrapperBrickRoot;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionWrapperValue;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionWrapperValueBrick;
+import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionWrapperValueDynamic;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionWrapperValueReferenceResource;
 import com.nosliw.core.application.division.manual.executable.HAPHandlerDownwardImpTreeNode;
 import com.nosliw.core.application.division.manual.executable.HAPManualAdapter;
@@ -40,6 +46,28 @@ import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPManualUtilityProcessor {
 
+	public static void processComplexDynamicAttribute(HAPManualContextProcessBrick processContext) {
+		HAPManualUtilityBrickTraverse.traverseTreeWithDynamic(processContext, new HAPHandlerDownward() {
+
+			@Override
+			public boolean processBrickNode(HAPBundle bundle, HAPPath path, Object data) {
+				HAPAttributeInBrick attr = HAPUtilityBrick.getDescendantAttribute(bundle, path);
+				
+				
+				HAPBrick complexBrick = HAPUtilityBrick.getDescdentBrickLocal(bundle, path);
+				((HAPManualPluginProcessorBlockComplex)processContext.getManualBrickManager().getBlockProcessPlugin(complexBrick.getBrickType())).processInit(path, processContext);
+				return true;
+			}
+
+			@Override
+			public void postProcessBrickNode(HAPBundle bundle, HAPPath path, Object data) {
+				HAPBrick complexBrick = HAPUtilityBrick.getDescdentBrickLocal(bundle, path);
+				((HAPManualPluginProcessorBlockComplex)processContext.getManualBrickManager().getBlockProcessPlugin(complexBrick.getBrickType())).postProcessInit(path, processContext);
+			}
+
+		}, processContext.getRuntimeEnv().getBrickManager(), null);
+	}
+	
 	public static void cleanupEmptyValueStructure(HAPManualContextProcessBrick processContext) {
 		Set<String> vsIds = processContext.getCurrentBundle().getValueStructureDomain().cleanupEmptyValueStructure();
 
@@ -361,6 +389,14 @@ public class HAPManualUtilityProcessor {
 					HAPWrapperValueOfReferenceResource resourceRefValue = new HAPWrapperValueOfReferenceResource(resourceRefValueDef.getResourceId());
 					attrExe.setValueWrapper(resourceRefValue);
 				}
+				else if(attrValueType.equals(HAPConstantShared.EMBEDEDVALUE_TYPE_DYNAMIC)) {
+					HAPManualDefinitionWrapperValueDynamic dynamicValueDef = (HAPManualDefinitionWrapperValueDynamic)attrValueInfo;
+					HAPWrapperValueOfDynamic dynamicValue = new HAPWrapperValueOfDynamic(dynamicValueDef.getDynamicValue());
+					attrExe.setValueWrapper(dynamicValue);
+					
+					HAPInteractiveTask taskInterface = HAPUtilityInfoDynamic.getTaskInterfaceForDynamic(dynamicValueDef.getDynamicValue(), processContext.getCurrentBundle().getDynamicTaskInfo());
+					HAPManualUtilityTask.buildValuePortGroupForInteractiveTask(dynamicValue.getDynamicValue(), taskInterface, processContext.getCurrentBundle().getValueStructureDomain());
+				}
 				
 				//adapter
 				for(HAPManualDefinitionAdapter defAdapterInfo : attrDef.getAdapters()) {
@@ -379,6 +415,9 @@ public class HAPManualUtilityProcessor {
 						//resource reference
 						HAPManualDefinitionWrapperValueReferenceResource adpaterValueDefWrapperResourceRef = (HAPManualDefinitionWrapperValueReferenceResource)adapterValueWrapper;
 						adapterValueWrapperExe = new HAPWrapperValueOfReferenceResource(adpaterValueDefWrapperResourceRef.getResourceId());
+					}
+					else if(attrValueType.equals(HAPConstantShared.EMBEDEDVALUE_TYPE_DYNAMIC)) {
+						
 					}
 					HAPManualAdapter adapter = new HAPManualAdapter(adapterValueWrapperExe);
 					defAdapterInfo.cloneToEntityInfo(adapter);

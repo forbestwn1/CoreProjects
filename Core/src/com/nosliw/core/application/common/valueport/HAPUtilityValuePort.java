@@ -20,29 +20,50 @@ import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 public class HAPUtilityValuePort {
 
 	public static Pair<HAPValuePort, HAPValuePort> getOrCreateValuePort(Pair<HAPContainerValuePorts, HAPContainerValuePorts> valuePortContainers, String valuePortGroupType, String valuePortType, String valuePortName, Pair<String, String> io){
-		HAPContainerValuePorts internalValuePortContainer = valuePortContainers.getLeft();
-		HAPContainerValuePorts externalValuePortContainer = valuePortContainers.getRight();
 		
-		HAPGroupValuePorts internalValuePortGroup = internalValuePortContainer.getValuePortGroupByType(valuePortGroupType);
-		HAPGroupValuePorts externalValuePortGroup = externalValuePortContainer.getValuePortGroupByType(valuePortGroupType);
-		if(internalValuePortGroup==null) {
-			internalValuePortGroup = new HAPGroupValuePorts(valuePortGroupType);
-			externalValuePortGroup = new HAPGroupValuePorts(valuePortGroupType);
-			internalValuePortContainer.addValuePortGroup(internalValuePortGroup);
-			externalValuePortContainer.addValuePortGroup(externalValuePortGroup);
+		return Pair.of(
+				valuePortContainers.getLeft()==null? null : getOrCreateValuePort(valuePortContainers.getLeft(), valuePortGroupType, valuePortType, valuePortName, io.getLeft()),
+				valuePortContainers.getRight()==null? null : getOrCreateValuePort(valuePortContainers.getRight(), valuePortGroupType, valuePortType, valuePortName, io.getRight()));
+		
+//		HAPContainerValuePorts internalValuePortContainer = valuePortContainers.getLeft();
+//		HAPContainerValuePorts externalValuePortContainer = valuePortContainers.getRight();
+//		
+//		HAPGroupValuePorts internalValuePortGroup = internalValuePortContainer.getValuePortGroupByType(valuePortGroupType);
+//		HAPGroupValuePorts externalValuePortGroup = externalValuePortContainer.getValuePortGroupByType(valuePortGroupType);
+//		if(internalValuePortGroup==null) {
+//			internalValuePortGroup = new HAPGroupValuePorts(valuePortGroupType);
+//			externalValuePortGroup = new HAPGroupValuePorts(valuePortGroupType);
+//			internalValuePortContainer.addValuePortGroup(internalValuePortGroup);
+//			externalValuePortContainer.addValuePortGroup(externalValuePortGroup);
+//		}
+//		
+//		HAPValuePort internalValuePort = internalValuePortGroup.getValuePortByName(valuePortName);
+//		HAPValuePort externalValuePort = externalValuePortGroup.getValuePortByName(valuePortName);
+//		if(internalValuePort==null) {
+//			internalValuePort = new HAPValuePort(valuePortType, io.getLeft());
+//			internalValuePort.setName(valuePortName);
+//			internalValuePortGroup.addValuePort(internalValuePort);
+//			externalValuePort = new HAPValuePort(valuePortType, io.getRight());
+//			externalValuePort.setName(valuePortName);
+//			externalValuePortGroup.addValuePort(externalValuePort);
+//		}
+//		return Pair.of(internalValuePort, externalValuePort);
+	}
+	
+	public static HAPValuePort getOrCreateValuePort(HAPContainerValuePorts valuePortContainer, String valuePortGroupType, String valuePortType, String valuePortName, String io){
+		HAPGroupValuePorts valuePortGroup = valuePortContainer.getValuePortGroupByType(valuePortGroupType);
+		if(valuePortGroup==null) {
+			valuePortGroup = new HAPGroupValuePorts(valuePortGroupType);
+			valuePortContainer.addValuePortGroup(valuePortGroup);
 		}
 		
-		HAPValuePort internalValuePort = internalValuePortGroup.getValuePortByName(valuePortName);
-		HAPValuePort externalValuePort = externalValuePortGroup.getValuePortByName(valuePortName);
+		HAPValuePort internalValuePort = valuePortGroup.getValuePortByName(valuePortName);
 		if(internalValuePort==null) {
-			internalValuePort = new HAPValuePort(valuePortType, io.getLeft());
+			internalValuePort = new HAPValuePort(valuePortType, io);
 			internalValuePort.setName(valuePortName);
-			internalValuePortGroup.addValuePort(internalValuePort);
-			externalValuePort = new HAPValuePort(valuePortType, io.getRight());
-			externalValuePort.setName(valuePortName);
-			externalValuePortGroup.addValuePort(externalValuePort);
+			valuePortGroup.addValuePort(internalValuePort);
 		}
-		return Pair.of(internalValuePort, externalValuePort);
+		return internalValuePort;
 	}
 	
 	public static boolean isValuePortContainerEmpty(HAPContainerValuePorts valuePortContainer, HAPDomainValueStructure valueStructureDomain) {
@@ -150,7 +171,7 @@ public class HAPUtilityValuePort {
 		return withValuePort.getExternalValuePorts().getValuePort(valuePortRef.getValuePortId());
 	}
 	
-	public static HAPValuePort getValuePort(HAPIdValuePortInBundle valuePortRef, HAPWithValuePort withValuePort) {
+	public static HAPValuePort getValuePort(HAPIdValuePortInBundle valuePortRef, HAPWithBothsideValuePort withValuePort) {
 		if(HAPConstantShared.VALUEPORTGROUP_SIDE_INTERNAL.equals(valuePortRef.getValuePortSide())) {
 			return withValuePort.getInternalValuePorts().getValuePort(valuePortRef.getValuePortId());
 		}

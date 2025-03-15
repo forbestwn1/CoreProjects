@@ -134,6 +134,19 @@ public class HAPManualManagerBrick implements HAPPluginDivision, HAPManagerWithV
 		Map<String, HAPManualDefinitionWrapperBrickRoot> definitions = new LinkedHashMap();
 		
 		HAPManualDefinitionInfoBrickLocation entityLocationInfo = HAPManualDefinitionUtilityBrickLocation.getBrickLocationInfo(brickId);
+
+		//bundle info
+		if(!entityLocationInfo.getIsSingleFile()) {
+			File bundleInfoFile = new File(entityLocationInfo.getBasePath().getPath()+"/bundle.json");
+			if(bundleInfoFile.exists()) {
+				JSONObject bundleInfoObj = new JSONObject(HAPUtilityFile.readFile(bundleInfoFile));
+				Object dynamicTaskObj = bundleInfoObj.opt(HAPBundle.DYNAMICTASK);
+				if(dynamicTaskObj!=null) {
+					out.getDynamicTaskInfo().buildObject(dynamicTaskObj, HAPSerializationFormat.JSON);
+				}
+			}
+		}
+		
 		//branch
 		Map<String, HAPManualDefinitionInfoBrickLocation> branchInfos = HAPManualDefinitionUtilityBrickLocation.getBranchBrickLocationInfos(entityLocationInfo.getBasePath().getPath());
 		for(String branchName : branchInfos.keySet()) {
@@ -147,18 +160,6 @@ public class HAPManualManagerBrick implements HAPPluginDivision, HAPManagerWithV
 			HAPManualContextProcessBrick processContext = new HAPManualContextProcessBrick(out, HAPConstantShared.NAME_ROOTBRICK_MAIN, this.m_runtimeEnv, this);
 			HAPManualWrapperBrickRoot rootBrick = (HAPManualWrapperBrickRoot)createRootBrick(entityLocationInfo, processContext);
 			definitions.put(HAPConstantShared.NAME_ROOTBRICK_MAIN, rootBrick.getDefinition());
-		}
-		
-		//bundle info
-		if(!entityLocationInfo.getIsSingleFile()) {
-			File bundleInfoFile = new File(entityLocationInfo.getBasePath().getPath()+"/bundle.json");
-			if(bundleInfoFile.exists()) {
-				JSONObject bundleInfoObj = new JSONObject(HAPUtilityFile.readFile(bundleInfoFile));
-				Object dynamicTaskObj = bundleInfoObj.opt(HAPBundle.DYNAMICTASK);
-				if(dynamicTaskObj!=null) {
-					out.getDynamicTaskInfo().buildObject(dynamicTaskObj, HAPSerializationFormat.JSON);
-				}
-			}
 		}
 		
 		out.setExtraData(definitions);

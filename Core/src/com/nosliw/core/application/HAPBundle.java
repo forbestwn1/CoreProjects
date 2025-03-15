@@ -87,8 +87,8 @@ public class HAPBundle extends HAPSerializableImp implements HAPWithResourceDepe
 		}
 		
 		HAPResourceDataBrick out = null;
-		HAPResultBrick brickResult = HAPUtilityBrick.getDescdentBrickResult(this, exportInfo.getPathFromRoot(), HAPConstantShared.NAME_ROOTBRICK_MAIN);
-		if(brickResult.isInternalBrick()) {
+		HAPResultBrickDescentValue brickResult = HAPUtilityBrick.getDescdentBrickResult(this, exportInfo.getPathFromRoot(), HAPConstantShared.NAME_ROOTBRICK_MAIN);
+		if(brickResult.getBrick()!=null) {
 			Map<String, HAPBrick> suportBricks = new LinkedHashMap<String, HAPBrick>();
 			for(String n : this.m_branchBricks.keySet()) {
 				suportBricks.put(n, this.m_branchBricks.get(n).getBrick());

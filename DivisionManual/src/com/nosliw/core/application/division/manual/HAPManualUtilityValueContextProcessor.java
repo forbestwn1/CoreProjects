@@ -97,13 +97,15 @@ public class HAPManualUtilityValueContextProcessor {
 				if(!HAPConstantShared.INHERITMODE_NONE.equals(inheritMode)) {
 					List<HAPManualPartInValueContext> fromParentParts = getValueContextInhertanceDownstream(parentBrickManual, processContext.getManualBrickManager()); 
 					List<HAPManualPartInValueContext> inheritParts = new ArrayList<HAPManualPartInValueContext>();
-					for(HAPManualPartInValueContext fromParentPart : fromParentParts) {
-						HAPManualPartInValueContext inheritPart = inheritToChild(fromParentPart, inheritMode, valueStructureDomain);
-						if(!inheritPart.isEmptyOfValueStructure(valueStructureDomain)) {
-							inheritParts.add(inheritPart);
+					if(fromParentParts!=null) {
+						for(HAPManualPartInValueContext fromParentPart : fromParentParts) {
+							HAPManualPartInValueContext inheritPart = inheritToChild(fromParentPart, inheritMode, valueStructureDomain);
+							if(!inheritPart.isEmptyOfValueStructure(valueStructureDomain)) {
+								inheritParts.add(inheritPart);
+							}
 						}
+						childBrick.getManualValueContext().addPartGroup(inheritParts, HAPManualUtilityValueContext.createPartInfoFromParent());
 					}
-					childBrick.getManualValueContext().addPartGroup(inheritParts, HAPManualUtilityValueContext.createPartInfoFromParent());
 				}
 				
 				//normalizeRelativeElement

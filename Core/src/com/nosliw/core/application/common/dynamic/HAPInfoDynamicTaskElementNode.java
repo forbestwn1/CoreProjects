@@ -7,6 +7,8 @@ import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
+import com.nosliw.common.serialization.HAPManagerSerialize;
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 
 @HAPEntityWithAttribute
@@ -29,6 +31,13 @@ public class HAPInfoDynamicTaskElementNode extends HAPInfoDynamicTaskElement{
 	@Override
 	public HAPInfoDynamicTaskElement getChild(String childName) {   return this.m_children.get(childName);     }
 
+	@Override
+	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		super.buildJsonMap(jsonMap, typeJsonMap);
+		jsonMap.put(CHILD, HAPManagerSerialize.getInstance().toStringValue(this.m_children.values(), HAPSerializationFormat.JSON));
+	}
+
+	
 	@Override
 	protected boolean buildObjectByJson(Object json){
 		super.buildObjectByJson(json);
