@@ -23,7 +23,6 @@ public class HAPManualPluginProcessorBlockTaskFlowActivityDynamic extends HAPMan
 		HAPManualDefinitionBlockTaskFlowActivityDynamic definitionBlock = (HAPManualDefinitionBlockTaskFlowActivityDynamic)blockPair.getLeft();
 		HAPManualBlockTaskFlowActivityDynamic executableBlock = (HAPManualBlockTaskFlowActivityDynamic)blockPair.getRight();
 		
-		executableBlock.setDefinition(definitionBlock.getDefinition());
 		executableBlock.setRuntime(definitionBlock.getRuntime());
 	}
 

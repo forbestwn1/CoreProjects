@@ -34,20 +34,23 @@ public abstract class HAPManualPluginProcessorAdapter extends HAPManualPluginPro
 		HAPResultBrickDescentValue result = this.getBaseBrickResult(processContext);
 		if(result.getBrick()!=null) {
 			return result.getBrick().getBrickType();
-		} else {
+		} else if(result.getResourceId()!=null){
 			return HAPUtilityBrickId.getBrickTypeIdFromResourceId(result.getResourceId());
 		}
+		return null;
 	}
 	
 	protected HAPPath getSecondBlockPath(HAPManualContextProcessAdapter processContext) {
 		HAPPath out;
 		HAPPath baseBlockPath = getRootPathForBaseBrick(processContext);
+		
 		HAPIdBrickType brickTypeId = this.getBaseBrickType(processContext);
-		if(HAPManualUtilityTask.getBrickTaskType(brickTypeId, this.getManualBrickManager())==null){
-			out = baseBlockPath.trimLast().getLeft();
+		if(brickTypeId!=null && HAPManualUtilityTask.getBrickTaskType(brickTypeId, this.getManualBrickManager())!=null){
+			//base is task type, then second is parent's parent's
+			out = baseBlockPath.trimLast().getLeft().trimLast().getLeft();
 		}
 		else {
-			out = baseBlockPath.trimLast().getLeft().trimLast().getLeft();
+			out = baseBlockPath.trimLast().getLeft();
 		}
 		return out;
 	}

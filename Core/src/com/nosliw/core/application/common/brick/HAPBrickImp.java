@@ -79,8 +79,10 @@ public abstract class HAPBrickImp extends HAPSerializableImp implements HAPBrick
 	public HAPBrick getAttributeValueOfBrickLocal(String attributeName) {
 		HAPBrick out = null;
 		HAPEntityOrReference eORr = getAttributeValueOfBrick(attributeName);
-		if(eORr.getEntityOrReferenceType().equals(HAPConstantShared.BRICK)) {
-			out = (HAPBrick)eORr;
+		if(eORr!=null) {
+			if(eORr.getEntityOrReferenceType().equals(HAPConstantShared.BRICK)) {
+				out = (HAPBrick)eORr;
+			}
 		}
 		return out;
 	}

@@ -64,9 +64,6 @@
 																"rootName" : "data",
 																"ioDirection" : "IN",
 																"valuePortId" : {
-																	"brickId" : {
-																		"idPath" : "__task__"
-																	},
 																	"valuePortId" : {
 																		"group" : "taskInteractive"
 																	}
@@ -76,6 +73,9 @@
 																"mapping" : {
 																	"elementPath": "data",
 																	"valuePortId" : {
+																		"brickId" : {
+																			"idPath" : "__task__"
+																		},
 																		"valuePortId" : {
 																			"group" : "taskInteractive"
 																		}
@@ -85,7 +85,7 @@
 														}
 												]
 											},
-											"out" : {
+											"out1" : {
 												"success" : {
 													"type" : "mapping",
 													"mapping" : [

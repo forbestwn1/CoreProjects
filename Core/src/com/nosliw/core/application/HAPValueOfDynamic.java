@@ -17,11 +17,13 @@ public class HAPValueOfDynamic extends HAPSerializableImp implements HAPWithExte
 
 	private HAPContainerValuePorts m_valuePortsContainer;
 	
-	public HAPValueOfDynamic() {}
+	public HAPValueOfDynamic() {
+		this.m_valuePortsContainer = new HAPContainerValuePorts(); 
+	}
 
 	public HAPValueOfDynamic(String interfaceId) {
+		this();
 		this.m_interfaceId = interfaceId;
-		this.m_valuePortsContainer = new HAPContainerValuePorts(); 
 	}
 
 	public String getInterfaceId() {	return this.m_interfaceId;	}
