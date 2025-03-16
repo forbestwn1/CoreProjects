@@ -1,8 +1,10 @@
 package com.nosliw.core.application;
 
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPManagerSerialize;
@@ -36,9 +38,9 @@ public class HAPWrapperValueOfReferenceResource extends HAPWrapperValue{
 
 	public HAPResourceId getResourceId() {    return this.m_resourceId;     }
 	
-	public void addDyanmicInput(HAPInputDynamicTask dyanmicInput) {
-		this.m_dynamicInput.put(dyanmicInput.getName(), dyanmicInput);
-	}
+	public void addDyanmicInput(HAPInputDynamicTask dyanmicInput) {		this.m_dynamicInput.put(dyanmicInput.getName(), dyanmicInput);	}
+	
+	public Set<HAPInputDynamicTask> getDynamicTaskInputs(){    return new HashSet(this.m_dynamicInput.values());        }
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){

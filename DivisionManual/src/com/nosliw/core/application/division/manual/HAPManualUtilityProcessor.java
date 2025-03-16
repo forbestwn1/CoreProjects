@@ -7,20 +7,26 @@ import java.util.Set;
 
 import com.nosliw.common.interfac.HAPTreeNode;
 import com.nosliw.common.path.HAPPath;
+import com.nosliw.common.path.HAPUtilityPath;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.HAPAttributeInBrick;
 import com.nosliw.core.application.HAPBrick;
 import com.nosliw.core.application.HAPBundle;
 import com.nosliw.core.application.HAPHandlerDownward;
+import com.nosliw.core.application.HAPIdBrickInBundle;
 import com.nosliw.core.application.HAPIdBrickType;
 import com.nosliw.core.application.HAPManagerApplicationBrick;
 import com.nosliw.core.application.HAPUtilityBrick;
+import com.nosliw.core.application.HAPUtilityBrickPath;
 import com.nosliw.core.application.HAPUtilityBrickTraverse;
+import com.nosliw.core.application.HAPUtilityBundle;
 import com.nosliw.core.application.HAPWrapperValue;
 import com.nosliw.core.application.HAPWrapperValueOfBrick;
 import com.nosliw.core.application.HAPWrapperValueOfDynamic;
 import com.nosliw.core.application.HAPWrapperValueOfReferenceResource;
 import com.nosliw.core.application.common.dynamic.HAPInputDynamicTask;
+import com.nosliw.core.application.common.dynamic.HAPRefDynamicTask;
+import com.nosliw.core.application.common.dynamic.HAPRefDynamicTaskSimple;
 import com.nosliw.core.application.common.dynamic.HAPUtilityInfoDynamic;
 import com.nosliw.core.application.common.interactive.HAPInteractiveTask;
 import com.nosliw.core.application.common.parentrelation.HAPManualDefinitionBrickRelationAutoProcess;
@@ -126,6 +132,45 @@ public class HAPManualUtilityProcessor {
 			}
 
 		}, processContext.getRuntimeEnv().getBrickManager(), null);
+
+		HAPManualUtilityBrickTraverse.traverseTree(processContext, new HAPHandlerDownward() {
+
+			@Override
+			public boolean processBrickNode(HAPBundle bundle, HAPPath path, Object data) {
+				if(path.isEmpty()) {
+					return true;
+				}
+				
+				if(HAPUtilityBundle.getBrickFullPathInfo(path).getPath().isEmpty()) {
+					return true;
+				}
+				
+				HAPAttributeInBrick attr = HAPUtilityBrick.getDescendantAttribute(bundle, path);
+				if(attr.getValueWrapper().getValueType().equals(HAPConstantShared.ENTITYATTRIBUTE_VALUETYPE_RESOURCEID)) {
+					HAPWrapperValueOfReferenceResource resourceIdWrapper = (HAPWrapperValueOfReferenceResource)attr.getValueWrapper();
+					for(HAPInputDynamicTask dynamicTaskInput : resourceIdWrapper.getDynamicTaskInputs()) {
+						HAPRefDynamicTask taskRef = dynamicTaskInput.getDyanmicTaskReference();
+						switch(taskRef.getType()) {
+						case HAPConstantShared.DYNAMICTASK_REF_TYPE_SIMPLE:
+							HAPRefDynamicTaskSimple simpleDynamicTask = (HAPRefDynamicTaskSimple)taskRef;
+							HAPIdBrickInBundle taskIdRef = simpleDynamicTask.getTaskId();
+							taskIdRef.setIdPath(HAPUtilityBrickPath.normalizeBrickPath(new HAPPath(taskIdRef.getIdPath()), processContext.getRootBrickName(), false, processContext.getCurrentBundle()).toString());
+							taskIdRef.setRelativePath(HAPUtilityPath.fromAbsoluteToRelativePath(taskIdRef.getIdPath(), path.toString()));
+							simpleDynamicTask.setTaskId(taskIdRef);
+							break;
+						}
+					}
+					
+				}
+				return true;
+			}
+
+			@Override
+			public void postProcessBrickNode(HAPBundle bundle, HAPPath path, Object data) {
+			}
+
+		}, processContext.getRuntimeEnv().getBrickManager(), null);
+
 	}
 	
 	public static void processOtherValuePortBuild(HAPManualContextProcessBrick processContext) {

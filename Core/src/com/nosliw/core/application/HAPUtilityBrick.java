@@ -61,6 +61,11 @@ public class HAPUtilityBrick {
 		return getDescdentBrickLocal(bundle, new HAPPath(brickInBundleId.getIdPath()), rootNameIfNotProvide);
 	}
 
+	public static HAPWrapperValueOfReferenceResource getDescdentResourceResourceIdLocal(HAPBundle bundle, HAPPath path) {
+		HAPAttributeInBrick attr = getDescendantAttribute(bundle, path);
+		return (HAPWrapperValueOfReferenceResource)attr.getValueWrapper();
+	}
+	
 	public static HAPAttributeInBrick getDescendantAttribute(HAPBundle bundle, HAPPath path) {
 		HAPComplexPath fullPathInfo = HAPUtilityBundle.getBrickFullPathInfo(path);
 		return getDescendantAttribute(bundle.getRootBrickWrapper(fullPathInfo.getRoot()).getBrick(), fullPathInfo.getPath());
@@ -74,6 +79,7 @@ public class HAPUtilityBrick {
 		}
 		return null;
 	}
+	
 	
 	
 

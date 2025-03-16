@@ -18,10 +18,6 @@ public class HAPManualUtilityBrickTraverse {
 		HAPUtilityBrickTraverse.traverseTree(processContext.getCurrentBundle(), processContext.getRootBrickName(), processor, brickMan, data);
 	}
 
-	public static void traverseTreeWithDynamic(HAPManualContextProcessBrick processContext, HAPHandlerDownward processor, HAPManagerApplicationBrick brickMan, Object data) {
-		HAPUtilityBrickTraverse.traverseTreeWithDynamic(processContext.getCurrentBundle(), processContext.getRootBrickName(), processor, brickMan, data);
-	}
-
 	public static void traverseTreeWithLocalBrick(HAPManualContextProcessBrick processContext, HAPHandlerDownward processor, HAPManagerApplicationBrick brickMan, Object data) {
 		HAPUtilityBrickTraverse.traverseTreeWithLocalBrick(processContext.getCurrentBundle(), processContext.getRootBrickName(), processor, brickMan, data);
 	}

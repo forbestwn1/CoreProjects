@@ -26,6 +26,7 @@ public class HAPRefDynamicTaskSimple extends HAPRefDynamicTask{
 	public String getType() {   return HAPConstantShared.DYNAMICTASK_REF_TYPE_SIMPLE;  }
 
 	public HAPIdBrickInBundle getTaskId() {    return this.m_taskId;     }
+	public void setTaskId(HAPIdBrickInBundle taskId) {    this.m_taskId = taskId;      }
 	
 	@Override
 	protected boolean buildObjectByJson(Object json){
