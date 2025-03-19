@@ -83,15 +83,18 @@
 				"description" : ""
 			},
 			"resourceId":"flow|1.0.0|@task=taskWrapper|1.0.0|flow.dynamic",
-			"dynamicInput" : [
-				{
-					"dynamicTask" : {
+			"dynamicInput" : { 
+				"dynamicTask" :
+				[ 
+					{
+						"type" : "simple",
+						"name" : "default",
 						"taskId" : {
-							"idPath0" : "#task"
+							"idPath" : "#task"
 						}
 					}
-				}			
-			]
+				]
+			}			
 		},
 		  
 		{

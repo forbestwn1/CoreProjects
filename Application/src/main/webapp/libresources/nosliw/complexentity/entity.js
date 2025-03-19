@@ -173,7 +173,9 @@ var loc_createAttributeValueWithResourceReference = function(valueWrapper){
 		
 		getValueType : function(){   return loc_valueWrapper[node_COMMONATRIBUTECONSTANT.WRAPPERVALUE_VALUETYPE];     },
 		
-		getResourceId : function(){   return loc_resourceId;    }
+		getResourceId : function(){   return loc_resourceId;    },
+		
+		getDynamicInput : function(){     return loc_valueWrapper[node_COMMONATRIBUTECONSTANT.WRAPPERVALUE_DYNAMICINPUT];    }
 	};
 	
 	return loc_out;

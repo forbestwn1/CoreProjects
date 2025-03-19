@@ -1,6 +1,7 @@
 {
 	"dynamicTask" : [
 		{
+			"name" : "default",	
 			"type" : "simple",		
 			"taskInterface" : {
 				"request" : [

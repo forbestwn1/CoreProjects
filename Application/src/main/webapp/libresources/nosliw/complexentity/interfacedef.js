@@ -20,13 +20,13 @@ var packageObj = library;
 
 //*******************************************   Start Node Definition  **************************************
 
-var node_makeObjectEntityObjectInterface = function(rawEntity, internalValuePortContainerId, externalValuePortContainerId, bundleCore){
+var node_makeObjectEntityObjectInterface = function(rawEntity, internalValuePortContainerIdOrFactory, externalValuePortContainerIdOrFactory, bundleCore){
 	
 	var loc_rawEntity = rawEntity;
 	
-	var loc_internalValuePortContainerId = internalValuePortContainerId;
+	var loc_internalValuePortContainerIdOrFactory = internalValuePortContainerIdOrFactory;
 	
-	var loc_externalValuePortContainerId = externalValuePortContainerId;
+	var loc_externalValuePortContainerIdOrFactory = externalValuePortContainerIdOrFactory;
 	
 	var loc_bundleCore = bundleCore;
 	
@@ -34,13 +34,31 @@ var node_makeObjectEntityObjectInterface = function(rawEntity, internalValuePort
 
 		getEntityInitRequest : function(handlers, request){   return loc_rawEntity.getEntityInitRequest==undefined?undefined:loc_rawEntity.getEntityInitRequest(handlers, request);     },
 
-		getInternalValuePortContainerId : function(){   return loc_internalValuePortContainerId;   },
+//		getInternalValuePortContainerId : function(){   return loc_internalValuePortContainerId;   },
 		
-		getInternalValuePortContainer : function(){    return loc_bundleCore.getVariableDomain().getValuePortContainer(loc_internalValuePortContainerId);   },
+		getInternalValuePortContainer : function(){
+			if(loc_internalValuePortContainerIdOrFactory!=undefined){
+				if(node_basicUtility.isStringValue(loc_internalValuePortContainerIdOrFactory)){
+					return loc_bundleCore.getVariableDomain().getValuePortContainer(loc_internalValuePortContainerIdOrFactory);   
+				}
+			}
+			else{
+				return loc_internalValuePortContainerIdOrFactory();
+			}
+		},
 
-		getExternalValuePortContainerId : function(){   return loc_externalValuePortContainerId;   },
+//		getExternalValuePortContainerId : function(){   return loc_externalValuePortContainerId;   },
 		
-		getExternalValuePortContainer : function(){    return loc_bundleCore.getVariableDomain().getValuePortContainer(loc_externalValuePortContainerId);   },
+		getExternalValuePortContainer : function(){
+			if(loc_externalValuePortContainerIdOrFactory!=undefined){
+				if(node_basicUtility.isStringValue(loc_externalValuePortContainerIdOrFactory)){
+					return loc_bundleCore.getVariableDomain().getValuePortContainer(loc_externalValuePortContainerIdOrFactory);   
+				}
+			}
+			else{
+				return loc_externalValuePortContainerIdOrFactory();
+			}
+		},
 
 		getBundle : function(){   return loc_bundleCore;  },
 		
@@ -118,6 +136,11 @@ var node_makeObjectEntityObjectInterface = function(rawEntity, internalValuePort
 						success: function(request, bundleRuntime){
 							node_getEntityTreeNodeInterface(bundleRuntime.getCoreEntity()).setParentCore(rawEntity);
 
+							//set dynamic task input
+							bundleRuntime.getCoreEntity().setDynamicTaskFunction(function(handlers, request){
+								return node_getDynamicTaskInputRequest(attrValueWrapper.getDynamicInput(), bundleRuntime.getCoreEntity(), handlers, request);
+							});
+
 							return node_getComponentInterface(bundleRuntime.getCoreEntity()).getPreInitRequest({
 								success : function(request){
 									return loc_createAdaptersRequest(attrDef, bundleRuntime, {
@@ -131,8 +154,20 @@ var node_makeObjectEntityObjectInterface = function(rawEntity, internalValuePort
 						}
 					}));
 				}
-				else if(attrValueWrapper.getValueType()==node_COMMONCONSTANT.ENTITYATTRIBUTE_VALUETYPE_RESOURCEID){
+				else if(attrValueWrapper.getValueType()==node_COMMONCONSTANT.ENTITYATTRIBUTE_VALUETYPE_DYNAMIC){
+					var dynamicValue = attrValueWrapper.getDynamic()
 					
+					out.addRequest(nosliw.runtime.getComplexEntityService().getCreateDynamicRuntimeRequest(dynamicValue, loc_out, loc_bundleCore, variationPoints, childConfigure, {
+						success : function(request, dynamicRuntime){
+							node_getEntityTreeNodeInterface(dynamicRuntime.getCoreEntity()).setParentCore(rawEntity);
+							return loc_createAdaptersRequest(attrDef, dynamicRuntime, {
+								success : function(request, adapters){
+									node_getEntityTreeNodeInterface(dynamicRuntime.getCoreEntity()).setAdapters(adapters);
+									return treeNodeEntityInterface.addChild(childName, dynamicRuntime, adapters, true);
+								}
+							});
+						}
+					}));
 				}
 
 				return out;

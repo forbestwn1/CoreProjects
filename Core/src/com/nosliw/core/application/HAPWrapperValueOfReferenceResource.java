@@ -1,10 +1,7 @@
 package com.nosliw.core.application;
 
-import java.util.HashSet;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPManagerSerialize;
@@ -25,12 +22,12 @@ public class HAPWrapperValueOfReferenceResource extends HAPWrapperValue{
 
 	private HAPResourceId m_resourceId;
 	
-	private Map<String, HAPInputDynamicTask> m_dynamicInput;
+	private HAPInputDynamicTask m_dynamicInput;
 	
 	public HAPWrapperValueOfReferenceResource(HAPResourceId resourceId) {
 		super(HAPConstantShared.ENTITYATTRIBUTE_VALUETYPE_RESOURCEID);
 		this.m_resourceId = resourceId;
-		this.m_dynamicInput = new LinkedHashMap<String, HAPInputDynamicTask>();
+		this.m_dynamicInput = new HAPInputDynamicTask();
 	}
 	
 	@Override
@@ -38,9 +35,7 @@ public class HAPWrapperValueOfReferenceResource extends HAPWrapperValue{
 
 	public HAPResourceId getResourceId() {    return this.m_resourceId;     }
 	
-	public void addDyanmicInput(HAPInputDynamicTask dyanmicInput) {		this.m_dynamicInput.put(dyanmicInput.getName(), dyanmicInput);	}
-	
-	public Set<HAPInputDynamicTask> getDynamicTaskInputs(){    return new HashSet(this.m_dynamicInput.values());        }
+	public HAPInputDynamicTask getDynamicTaskInput(){    return this.m_dynamicInput;        }
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){

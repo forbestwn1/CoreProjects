@@ -42,6 +42,10 @@ var node_createBundleCore = function(parm, configure){
 
 	var loc_parentView;
 	
+	var loc_dynamicTaskFunction = {};
+	var loc_dynamicTask;
+	var loc_isDynamicTaskFetched = false;
+	
 	var loc_init = function(parm, configure){
 		loc_configure = configure;
 		loc_configureValue = node_createConfigure(loc_configure).getConfigureValue();
@@ -148,6 +152,29 @@ var node_createBundleCore = function(parm, configure){
 			return node_createServiceRequestInfoSimple(undefined, function(request){
 				loc_runtimeEnv = runtimeEnv;
 			}, handlers, request);
+		},
+		
+		setDynamicTaskFunction : function(dynamicTaskFunction){
+			loc_dynamicTaskFunction = dynamicTaskFunction;
+		},
+		
+		getDynamicTaskRequest : function(handlers, request){
+			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+			if(loc_isDynamicTaskFetched==true){
+				out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
+					return loc_dynamicTasks;
+				}));
+			}
+			else{
+				out.addRequest(loc_dynamicTaskFunction({
+					succcess : function(request, dynamicTasks){
+						loc_dynamicTasks = dynamicTasks;
+						loc_isDynamicTaskFetched = true;
+						return loc_dynamicTasks;
+					}
+				}));
+			}
+			return out;
 		},
 		
 	};

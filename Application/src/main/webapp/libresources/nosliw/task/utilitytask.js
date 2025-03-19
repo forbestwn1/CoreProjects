@@ -88,23 +88,6 @@ var node_taskUtility = {
 		}
 		else{
 			out.addRequest(this.getExecuteEntityTaskRequest(entityCore, undefined, taskContext, undefined));
-			
-/*			
-			var taskFactory = node_getApplicationInterface(entityCore, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_TASKFACTORY);
-			var task = taskFactory.createTask(taskContext);
-			
-			var initRequestWrapper = node_createServiceRequestInfoSequence(undefined, {
-				success : function(request){
-					return task.getTaskExecuteRequest({
-						success : function(request){
-							return task;
-						}
-					});
-				}
-			});
-			initRequestWrapper.addRequest(task.getTaskInitRequest());
-			out.addRequest(initRequestWrapper);
-*/			
 		}
 		return out;		
 	},

@@ -24,7 +24,6 @@ import com.nosliw.core.application.HAPWrapperValue;
 import com.nosliw.core.application.HAPWrapperValueOfBrick;
 import com.nosliw.core.application.HAPWrapperValueOfDynamic;
 import com.nosliw.core.application.HAPWrapperValueOfReferenceResource;
-import com.nosliw.core.application.common.dynamic.HAPInputDynamicTask;
 import com.nosliw.core.application.common.dynamic.HAPRefDynamicTask;
 import com.nosliw.core.application.common.dynamic.HAPRefDynamicTaskSimple;
 import com.nosliw.core.application.common.dynamic.HAPUtilityInfoDynamic;
@@ -148,8 +147,7 @@ public class HAPManualUtilityProcessor {
 				HAPAttributeInBrick attr = HAPUtilityBrick.getDescendantAttribute(bundle, path);
 				if(attr.getValueWrapper().getValueType().equals(HAPConstantShared.ENTITYATTRIBUTE_VALUETYPE_RESOURCEID)) {
 					HAPWrapperValueOfReferenceResource resourceIdWrapper = (HAPWrapperValueOfReferenceResource)attr.getValueWrapper();
-					for(HAPInputDynamicTask dynamicTaskInput : resourceIdWrapper.getDynamicTaskInputs()) {
-						HAPRefDynamicTask taskRef = dynamicTaskInput.getDyanmicTaskReference();
+					for(HAPRefDynamicTask taskRef : resourceIdWrapper.getDynamicTaskInput().getDyanmicTaskReference().values()) {
 						switch(taskRef.getType()) {
 						case HAPConstantShared.DYNAMICTASK_REF_TYPE_SIMPLE:
 							HAPRefDynamicTaskSimple simpleDynamicTask = (HAPRefDynamicTaskSimple)taskRef;
@@ -160,7 +158,6 @@ public class HAPManualUtilityProcessor {
 							break;
 						}
 					}
-					
 				}
 				return true;
 			}
@@ -433,8 +430,8 @@ public class HAPManualUtilityProcessor {
 					//resource reference
 					HAPManualDefinitionWrapperValueReferenceResource resourceRefValueDef = (HAPManualDefinitionWrapperValueReferenceResource)attrValueInfo;
 					HAPWrapperValueOfReferenceResource resourceRefValue = new HAPWrapperValueOfReferenceResource(resourceRefValueDef.getResourceId());
-					for(HAPInputDynamicTask dynamicInput : resourceRefValueDef.getDyanmicInputs()) {
-						resourceRefValue.addDyanmicInput(dynamicInput);
+					for(HAPRefDynamicTask dynamicTask : resourceRefValueDef.getDyanmicInput().getDyanmicTaskReference().values()) {
+						resourceRefValue.getDynamicTaskInput().addDynamicTaskReference(dynamicTask);
 					}
 					attrExe.setValueWrapper(resourceRefValue);
 				}

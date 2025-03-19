@@ -6,12 +6,12 @@ import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.serialization.HAPSerializableImp;
+import com.nosliw.common.info.HAPEntityInfoImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 
 @HAPEntityWithAttribute
-public abstract class HAPRefDynamicTask extends HAPSerializableImp{
+public abstract class HAPRefDynamicTask extends HAPEntityInfoImp{
 
 	@HAPAttribute
 	public final static String TYPE = "type"; 

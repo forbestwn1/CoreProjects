@@ -61,6 +61,7 @@ var packageObj = library;
 	var node_createScriptTaskGroupEntityPlugin;
 	var node_createFlowTaskPlugin;
 	var node_createTaskActivityPlugin;
+	var node_createDynamicActivityPlugin;
 	
 	var node_createContainerPlugin;
 	var node_createContainerListPlugin;
@@ -127,6 +128,31 @@ var node_createComplexEntityRuntimeService = function() {
 		return out;
 	};
 
+	var loc_getCreateDynamicRuntimeRequest = function(dynamicDef, parentEntityCore, bundleCore, variationPoints, configure, handlers, request){
+
+		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+
+		out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
+			var dynamicCore = node_createDynamicCore(dynamicDef);
+			
+			dynamicCore = node_makeObjectWithEmbededEntityInterface(dynamicCore);
+			
+			dynamicCore = node_makeObjectEntityTreeNodeInterface(dynamicCore);
+			
+			dynamicCore = node_makeObjectBasicEntityObjectInterface(dynamicCore, brickDef, configure);
+			
+			dynamicCore = node_makeObjectEntityObjectInterface(dynamicCore, undefined, function(){
+					return node_getEntityObjectInterface(dynamicCore.getCurrentTask()).getExternalValuePortContainer();
+				}, bundleCore);
+	
+			
+			var runtimeConfigureInfo = node_componentUtility.processRuntimeConfigure(configure);
+			return node_createComponentRuntime(dynamicCore, runtimeConfigureInfo.decorations, request);
+		}));
+		
+		return out;
+	};
+
 	var loc_getCreateEntityRuntimeRequest = function(entityDef, parentEntityCore, bundleCore, variationPoints, configure, handlers, request){
 
 		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
@@ -186,6 +212,7 @@ var node_createComplexEntityRuntimeService = function() {
 
 		loc_out.registerEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_TASK_FLOW, "1.0.0", node_createFlowTaskPlugin());
 		loc_out.registerEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_FLOW_ACTIVITYTASK, "1.0.0", node_createTaskActivityPlugin());
+		loc_out.registerEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_FLOW_ACTIVITYDYNAMIC, "1.0.0", node_createDynamicActivityPlugin());
 
 
 
@@ -328,6 +355,10 @@ var node_createComplexEntityRuntimeService = function() {
 			return loc_getCreateEntityRuntimeRequest(entityDef, parentCore, bundleCore, variationPoints, configure, handlers, request);
 		},
 
+		getCreateDynamicRuntimeRequest : function(dynamicDef, parentCore, bundleCore, variationPoints, configure, handlers, request){
+			return loc_getCreateDynamicRuntimeRequest(dynamicDef, parentCore, bundleCore, variationPoints, configure, handlers, request);
+		},
+
 		getCreateAdapterRequest : function(adapterDefinition, baseCore, handlers, request){
 			return loc_getCreateAdapterRequest(adapterDefinition, baseCore, handlers, request);
 		},
@@ -413,6 +444,7 @@ nosliw.registerSetNodeDataEvent("scripttaskgroup.createScriptTaskGroupEntityPlug
 
 nosliw.registerSetNodeDataEvent("taskflow.createFlowTaskPlugin", function(){node_createFlowTaskPlugin = this.getData();});
 nosliw.registerSetNodeDataEvent("taskflow.createTaskActivityPlugin", function(){node_createTaskActivityPlugin = this.getData();});
+nosliw.registerSetNodeDataEvent("taskflow.createDynamicActivityPlugin", function(){node_createDynamicActivityPlugin = this.getData();});
 
 nosliw.registerSetNodeDataEvent("entitycontainer.createContainerPlugin", function(){node_createContainerPlugin = this.getData();});
 nosliw.registerSetNodeDataEvent("entitycontainer.createContainerListPlugin", function(){node_createContainerListPlugin = this.getData();});
