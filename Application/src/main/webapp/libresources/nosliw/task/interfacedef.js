@@ -3,13 +3,6 @@ var packageObj = library;
 
 (function(packageObj){
 	//get used node
-	var node_CONSTANT;
-	var node_COMMONATRIBUTECONSTANT;
-	var node_COMMONCONSTANT;
-	var node_createEventObject;
-	var node_createServiceRequestInfoSequence;
-	var node_createServiceRequestInfoSimple;
-	var node_ServiceInfo;
 
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -19,84 +12,48 @@ var node_createTaskContextInterface = function(rawInterfaceObj){
 		
 		getInitTaskRequest : function(coreEntity, handlers, request){},
 		
-		getRuntimeEnv : function(){}
+		getRuntimeEnvValue : function(name){}
 		
 	};
 	return _.extend({}, interfaceDef, rawInterfaceObj);
 	
 };
 
-
-var node_createTaskFactoryInterface = function(rawInterfaceObj){
-	
-	var interfaceDef = {
-		
-		createTask : function(taskContext){},
-		
-	};
-	return _.extend({}, interfaceDef, rawInterfaceObj);
-};
-
-
-var node_createTaskInterface = function(rawInterfaceObj){
+var node_createTaskImpInterface = function(rawInterfaceObj){
 	
 	var interfaceDef = {
 		
-		getTaskInitRequest : function(handlers, request){},
-		
-		getTaskExecuteRequest : function(handlers, request){},
-		
-		getTaskFinishRequest : function(handlers, request){},
-		
-		getTaskResult : function(){}
-	
+		getTaskExecuteRequest : function(runtimeEnv, handlers, request){},
+
 	};
 	return _.extend({}, interfaceDef, rawInterfaceObj);
+
 };
 
-
-
-var node_createTaskContainerInterface = function(rawInterfaceObj){
-	var interfaceDef = {
-		getAllItemIds : function(){	},
-		
-		getItemVariableInfos : function(itemId){},
-		
-		getItemRequirement : function(itemId){},
-		
-		getExecuteItemRequest : function(itemId, taskInput, handlers, request){}
-	};
-	return _.extend({}, interfaceDef, rawInterfaceObj);
-};
-
-var node_createTaskInterface1 = function(rawInterfaceObj){
+var node_createTaskLifecycleInterface = function(rawInterfaceObj){
 	
 	var interfaceDef = {
 		
-		getVariableInfos : function(){},
+		onTaskCreate : function(){},
 		
-		getRequirement : function(){},
+		onTaskInit : function(){},
 		
-		getExecuteRequest : function(taskInput, requirement, handlers, request){}
+		onTaskExecute : function(){},
+		
+		onTaskFinish : function(){},
 		
 	};
 	return _.extend({}, interfaceDef, rawInterfaceObj);
-};
 
+};
 
 //*******************************************   End Node Definition  ************************************** 	
 
 //populate dependency node data
-nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = this.getData();});
-nosliw.registerSetNodeDataEvent("constant.COMMONCONSTANT", function(){node_COMMONCONSTANT = this.getData();});
-nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){node_COMMONATRIBUTECONSTANT = this.getData();});
-nosliw.registerSetNodeDataEvent("common.event.createEventObject", function(){node_createEventObject = this.getData();});
-nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequence", function(){	node_createServiceRequestInfoSequence = this.getData();	});
-nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple", function(){node_createServiceRequestInfoSimple = this.getData();});
-nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();	});
 
 //Register Node by Name
-packageObj.createChildNode("createTaskContainerInterface", node_createTaskContainerInterface); 
-packageObj.createChildNode("createTaskInterface", node_createTaskInterface); 
+packageObj.createChildNode("createTaskContextInterface", node_createTaskContextInterface); 
+packageObj.createChildNode("createTaskImpInterface", node_createTaskImpInterface); 
+packageObj.createChildNode("createTaskLifecycleInterface", node_createTaskLifecycleInterface); 
 
 })(packageObj);

@@ -17,6 +17,7 @@ var packageObj = library;
 	var node_getObjectType;
 	var node_getBasicEntityObjectInterface;
 	var node_complexEntityUtility;
+	var node_basicUtility;
 
 //*******************************************   Start Node Definition  **************************************
 
@@ -327,6 +328,7 @@ nosliw.registerSetNodeDataEvent("common.embeded.getEmbededEntityInterface", func
 nosliw.registerSetNodeDataEvent("common.objectwithtype.getObjectType", function(){node_getObjectType = this.getData();});
 nosliw.registerSetNodeDataEvent("common.getBasicEntityObjectInterface", function(){node_getBasicEntityObjectInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("complexentity.complexEntityUtility", function(){node_complexEntityUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();});
 
 
 

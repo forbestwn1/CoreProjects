@@ -158,8 +158,8 @@ var node_createComplexEntityRuntimeService = function() {
 		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 		
 		//build value context
-		var parentValuePortContainerId = parentEntityCore==undefined?undefined : node_getEntityObjectInterface(parentEntityCore).getInternalValuePortContainerId();
-		var externalValuePortContainerId = bundleCore.getVariableDomain().creatValuePortContainer(entityDef[node_COMMONATRIBUTECONSTANT.WITHEXTERNALVALUEPORT_EXTERNALVALUEPORT], parentValuePortContainerId);
+		var parentValuePortContainer = parentEntityCore==undefined?undefined : node_getEntityObjectInterface(parentEntityCore).getInternalValuePortContainer();
+		var externalValuePortContainerId = bundleCore.getVariableDomain().creatValuePortContainer(entityDef[node_COMMONATRIBUTECONSTANT.WITHEXTERNALVALUEPORT_EXTERNALVALUEPORT], parentValuePortContainer==undefined?undefined:parentValuePortContainer.getId());
 		var internalValuePortContainerId = bundleCore.getVariableDomain().creatValuePortContainer(entityDef[node_COMMONATRIBUTECONSTANT.WITHINTERNALVALUEPORT_INTERNALVALUEPORT], externalValuePortContainerId);
 		
 		//process raw configure			

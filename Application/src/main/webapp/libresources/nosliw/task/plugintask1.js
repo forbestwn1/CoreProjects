@@ -47,6 +47,51 @@ var loc_createTaskEntityCoreRequest = function(envInterface, taskId, handlers, r
 	return out;
 };
 
+var loc_createTaskWrapper = function(adapterName, taskContext, taskId, getEnvInterface){
+	var loc_adapterName = adapterName;
+	var loc_taskContext = taskContext;
+	var loc_taskId = taskId;
+	var loc_getEnvInterface = getEnvInterface;
+
+	var loc_taskEntityCore;
+	var loc_task;
+	
+	var loc_taskNode;
+
+	var loc_out = {
+
+		getTaskInitRequest : function(handlers, request){
+			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+			out.addRequest(loc_getEnvInterface()[node_CONSTANT.INTERFACE_ENTITY].createChildByAttributeRequest(taskId, node_COMMONATRIBUTECONSTANT.BLOCKTASKWRAPPER_TASK, undefined, {
+				success : function(request, node){
+					loc_taskNode = node;
+					loc_taskEntityCore = node_complexEntityUtility.getBrickNode(loc_taskNode).getChildValue().getCoreEntity();
+				}
+			}));
+			return out;
+		},
+		
+		getTaskExecuteRequest : function(handlers, request){
+			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+			out.addRequest(node_taskUtility.getExecuteTaskWithAdapterRequest(loc_taskEntityCore, loc_adapterName, loc_taskContext, {
+				success : function(request, task){
+					loc_task = task;					
+				}
+			}));
+			return out;
+		},
+
+		getTaskResult : function(){
+			return loc_task.getTaskResult();
+		},
+		
+		isTaskWrapper : true,
+
+	};
+	return loc_out;
+};
+
+
 var loc_createTaskCore = function(taskDef, configure){
 
 	var loc_taskDef = taskDef;
@@ -61,18 +106,10 @@ var loc_createTaskCore = function(taskDef, configure){
 	};
 
 	var loc_facadeTaskFactory = {
-		getCreateTaskEntityRequest : function(handlers, request){
-			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-			var taskId = loc_createTaskId();
-			out.addRequest(loc_envInterface[node_CONSTANT.INTERFACE_ENTITY].createChildByAttributeRequest(taskId, node_COMMONATRIBUTECONSTANT.BLOCKTASKWRAPPER_TASK, undefined, {
-				success : function(request, node){
-					var taskEntity = node_complexEntityUtility.getBrickNode(node).getChildValue().getCoreEntity();
-					
-					return taskEntity;
-				}
-			}));
-			return out;
-		}
+		//return a task
+		createTask : function(taskContext, adapterName){
+			return loc_createTaskWrapper(adapterName, taskContext, loc_createTaskId(), function(){ return loc_envInterface;  });
+		},
 	};
 
 	var loc_out = {
@@ -101,6 +138,10 @@ var loc_createTaskCore = function(taskDef, configure){
 			rootView.append(taskTrigueView);
 		},
 		
+		getExecuteTaskWithAdapter : function(adapterName, taskContext, handlers, request){
+			var task = loc_facadeTaskFactory.createTask(taskContext, adapterName);
+			return node_taskUtility.getExecuteTaskRequest(task, undefined, undefined, handlers, request);
+		}
 	};
 	
 	return node_makeObjectWithApplicationInterface(loc_out, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_TASKFACTORY, loc_facadeTaskFactory);
@@ -128,6 +169,6 @@ nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){no
 nosliw.registerSetNodeDataEvent("complexentity.complexEntityUtility", function(){node_complexEntityUtility = this.getData();});
 
 //Register Node by Name
-packageObj.createChildNode("createTaskPlugin", node_createTaskPlugin); 
+packageObj.createChildNode("createTaskPlugin1", node_createTaskPlugin); 
 
 })(packageObj);

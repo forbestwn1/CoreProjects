@@ -74,7 +74,7 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 
 				taskTrigueView.click(function() {
 					var relativePath = trigguerInfo[node_COMMONATRIBUTECONSTANT.INFOTRIGGUERTASK_HANDLERID][node_COMMONATRIBUTECONSTANT.IDBRICKINBUNDLE_RELATIVEPATH];
-					var handlerEntityCore = node_complexEntityUtility.getBrickCoreByRelativePath(loc_out, relativePath);
+					var handlerEntityCoreWrapper = node_complexEntityUtility.getBrickCoreByRelativePath(loc_out, relativePath);
 					
 					var taskContext = {
 						getInitTaskRequest : function(coreEntity, handlers, request){
@@ -110,9 +110,9 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 						}
 					};
 					
-					var taskExeRequest = node_taskUtility.getExecuteTaskWithAdapterRequest(handlerEntityCore, undefined, taskContext, {
-						success : function(request, task){
-							eventResultView.val(JSON.stringify(task.getTaskResult()));
+					var taskExeRequest = node_taskUtility.getExecuteWrapperedTaskWithAdapterRequest(handlerEntityCoreWrapper, undefined, undefined, taskContext, {
+						success : function(request, taskResult){
+							eventResultView.val(JSON.stringify(taskResult));
 						}
 					});
 					node_requestServiceProcessor.processRequest(taskExeRequest);
