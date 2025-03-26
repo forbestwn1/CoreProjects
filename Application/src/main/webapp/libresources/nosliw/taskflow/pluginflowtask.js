@@ -15,6 +15,7 @@ var packageObj = library;
 	var node_utilityNamedVariable;
 	var node_makeObjectWithApplicationInterface;
 	var node_interactiveUtility;
+	var node_createTaskCore;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -35,8 +36,6 @@ var node_createFlowTaskPlugin = function(){
 
 var loc_createFlowTaskCore = function(entityDef, configure){
 	
-	var loc_valueContext;
-
 	var loc_entityDef = entityDef;
 
 	var loc_envInterface = {};
@@ -47,12 +46,17 @@ var loc_createFlowTaskCore = function(entityDef, configure){
 	
 	var loc_taskResult;
 
-	var loc_facadeTaskFactory = {
+	var loc_taskCore;
+
+	var loc_facadeTaskCore = {
 		//return a task
-		createTask : function(taskContext){
-			loc_taskContext = taskContext;
-			return loc_out;
+		getTaskCore : function(){
+			return loc_taskCore;
 		},
+	};
+
+	var loc_init = function(entityDef, configure){
+		loc_taskCore = node_createTaskCore(loc_out, loc_out);
 	};
 
 	var loc_getExecuteTargetRequest = function(target, handlers, request){
@@ -129,8 +133,9 @@ var loc_createFlowTaskCore = function(entityDef, configure){
 		getTaskResult : function(){   return loc_taskResult;    }
 		
 	};
-
-	loc_out = node_makeObjectWithApplicationInterface(loc_out, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_TASKFACTORY, loc_facadeTaskFactory);
+	
+	loc_init(entityDef, configure);
+	loc_out = node_makeObjectWithApplicationInterface(loc_out, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_TASK, loc_facadeTaskCore);
 	return loc_out;
 };
 
@@ -150,6 +155,7 @@ nosliw.registerSetNodeDataEvent("complexentity.getEntityObjectInterface", functi
 nosliw.registerSetNodeDataEvent("valueport.utilityNamedVariable", function(){node_utilityNamedVariable = this.getData();});
 nosliw.registerSetNodeDataEvent("component.makeObjectWithApplicationInterface", function(){node_makeObjectWithApplicationInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("task.interactiveUtility", function(){node_interactiveUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("task.createTaskCore", function(){node_createTaskCore = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createFlowTaskPlugin", node_createFlowTaskPlugin); 

@@ -18,6 +18,7 @@ var packageObj = library;
 	var node_getBasicEntityObjectInterface;
 	var node_complexEntityUtility;
 	var node_basicUtility;
+	var node_createDynamicTaskInputContainer;
 
 //*******************************************   Start Node Definition  **************************************
 
@@ -138,9 +139,7 @@ var node_makeObjectEntityObjectInterface = function(rawEntity, internalValuePort
 							node_getEntityTreeNodeInterface(bundleRuntime.getCoreEntity()).setParentCore(rawEntity);
 
 							//set dynamic task input
-							bundleRuntime.getCoreEntity().setDynamicTaskFunction(function(handlers, request){
-								return node_getDynamicTaskInputRequest(attrValueWrapper.getDynamicInput(), bundleRuntime.getCoreEntity(), handlers, request);
-							});
+							bundleRuntime.getCoreEntity().setDynamicTaskInputContainer(node_createDynamicTaskInputContainer(attrValueWrapper.getDynamicInput(), bundleRuntime.getCoreEntity()));
 
 							return node_getComponentInterface(bundleRuntime.getCoreEntity()).getPreInitRequest({
 								success : function(request){
@@ -329,6 +328,7 @@ nosliw.registerSetNodeDataEvent("common.objectwithtype.getObjectType", function(
 nosliw.registerSetNodeDataEvent("common.getBasicEntityObjectInterface", function(){node_getBasicEntityObjectInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("complexentity.complexEntityUtility", function(){node_complexEntityUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("complexentity.entity.createDynamicTaskInputContainer", function(){node_createDynamicTaskInputContainer = this.getData();});
 
 
 

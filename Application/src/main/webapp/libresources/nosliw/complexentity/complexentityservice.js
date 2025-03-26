@@ -40,6 +40,7 @@ var packageObj = library;
 	var node_complexEntityUtility;
 	var node_makeObjectWithType;
 	var node_buildComplexEntityCreationVariationPointObject;
+    var node_createDynamicCore;
     
 	var node_createTestComplex1Plugin;
 	var node_createTestComplexScriptPlugin;
@@ -139,12 +140,13 @@ var node_createComplexEntityRuntimeService = function() {
 			
 			dynamicCore = node_makeObjectEntityTreeNodeInterface(dynamicCore);
 			
-			dynamicCore = node_makeObjectBasicEntityObjectInterface(dynamicCore, brickDef, configure);
+			dynamicCore = node_makeObjectBasicEntityObjectInterface(dynamicCore, dynamicDef, configure);
+			
+			dynamicCore = node_makeObjectWithComponentInterface(undefined, dynamicCore, false);
 			
 			dynamicCore = node_makeObjectEntityObjectInterface(dynamicCore, undefined, function(){
-					return node_getEntityObjectInterface(dynamicCore.getCurrentTask()).getExternalValuePortContainer();
+					return node_getEntityObjectInterface(dynamicCore.getCurrentTaskEntityCore()).getExternalValuePortContainer();
 				}, bundleCore);
-	
 			
 			var runtimeConfigureInfo = node_componentUtility.processRuntimeConfigure(configure);
 			return node_createComponentRuntime(dynamicCore, runtimeConfigureInfo.decorations, request);
@@ -421,6 +423,7 @@ nosliw.registerSetNodeDataEvent("complexentity.complexEntityUtility", function()
 nosliw.registerSetNodeDataEvent("scriptbased.createScriptBasedPlugin", function(){node_createScriptBasedPlugin = this.getData();});
 nosliw.registerSetNodeDataEvent("common.objectwithtype.makeObjectWithType", function(){node_makeObjectWithType = this.getData();});
 nosliw.registerSetNodeDataEvent("complexentity.buildComplexEntityCreationVariationPointObject", function(){node_buildComplexEntityCreationVariationPointObject = this.getData();});
+nosliw.registerSetNodeDataEvent("complexentity.createDynamicCore", function(){node_createDynamicCore = this.getData();});
 
 
 nosliw.registerSetNodeDataEvent("testcomponent.createTestComplex1Plugin", function(){node_createTestComplex1Plugin = this.getData();});

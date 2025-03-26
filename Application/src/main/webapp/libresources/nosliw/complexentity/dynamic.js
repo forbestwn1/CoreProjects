@@ -19,6 +19,8 @@ var packageObj = library;
 	var node_componentUtility;
 	var node_namingConvensionUtility;
 	var node_getEntityTreeNodeInterface;
+	var node_makeObjectWithApplicationInterface;
+	var node_getApplicationInterface;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -27,12 +29,15 @@ var node_createDynamicCore = function(dynamicDef, configure){
 
 	var loc_dynamicDef;
 	
-	var loc_taskFactory;
-	var loc_currentTask;
-
+	var loc_dynamicTaskInput;
+	var loc_currentTaskEntityCore;
 
 	var loc_configure;
 	var loc_configureValue;
+	
+	
+	
+	
 	
 	//variable domain for this bundle
 	var loc_variableDomain;
@@ -44,33 +49,59 @@ var node_createDynamicCore = function(dynamicDef, configure){
 	var loc_parentView;
 	
 	var loc_init = function(dynamicDef, configure){
+		loc_dynamicDef = dynamicDef;
 		loc_configure = configure;
 		loc_configureValue = node_createConfigure(loc_configure).getConfigureValue();
 
 	};
-	
+
+	var loc_facadeTaskCore = {
+		//return a task
+		getTaskCore : function(){
+			return node_getApplicationInterface(loc_currentTaskEntityCore, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_TASK).getTaskCore();
+		},
+	};
+
 
 	var loc_out = {
 
 		getDataType: function(){    return  "dyanmic";   },
 
-		setTaskFactory : function(taskFactory){   loc_taskFactory = taskFactory;       },
+		setDynamicTaskInput : function(dynamicTaskInput){   loc_dynamicTaskInput = dynamicTaskInput;       },
 
-		getCurrentTask : function(){   return loc_currentTask;   },
-		
-		
+		getCurrentTaskEntityCore : function(){    return loc_currentTaskEntityCore;      },
 
-		getMainEntityNode : function(){		return loc_envInterface[node_CONSTANT.INTERFACE_TREENODEENTITY].getChild(loc_MAIN_NAME);	},
+		getExecuteTaskWithAdapterRequest : function(adapterName, taskContextInit, handlers, request){
+			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+			
+			var taskFactory = node_getApplicationInterface(loc_dynamicTaskInput.getDynamicTaskFactoryEntity(), node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_TASKFACTORY);
+			out.addRequest(taskFactory.getCreateTaskEntityRequest({
+				success : function(request, entityCore){
+					loc_currentTaskEntityCore = entityCore;
+					var taskCore = node_getApplicationInterface(entityCore, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_TASK).getTaskCore();
+					return taskCore.getTaskCreationRequest(loc_dynamicTaskInput.getTaskContextCreation(), {
+						success : function(request){
+							return node_taskUtility.getExecuteEntityTaskWithAdapterRequest(entityCore, adapterName, taskContextInit);
+						}
+					});
+				}
+			}));
+			return out;
+		},
+
+		getPreInitRequest : function(handlers, request){   },
 
 		setEnvironmentInterface : function(envInterface){	loc_envInterface = envInterface;	},
 		
-		getPreInitRequest : function(handlers, request){   return loc_getPreInitRequest(handlers, request);	},
-
 		updateView : function(view){    
 			loc_parentView = view;
-			loc_getMainEntity().updateView(view);     
 		},
 		
+
+
+
+		
+
 		getBundleDefinition : function(){		return loc_bundleDef;	},
 
 		getVariableDomain : function(){		return loc_variableDomain;	},
@@ -86,21 +117,8 @@ var node_createDynamicCore = function(dynamicDef, configure){
 	loc_out = node_makeObjectWithType(loc_out, node_CONSTANT.TYPEDOBJECT_TYPE_DYNAMIC);
 
 	loc_init(dynamicDef, configure);
-	return loc_out;
-};
-
-node_getDynamicTaskInputRequest = function(dynamicTaskInputDef, bundleCore, handlers, request){
-	var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-
-	out.addRequest(node_createServiceRequestInfoSequence(undefined, function(request){
-		var allTask = {};
-		_.each(dynamicTaskInputDef[node_COMMONATRIBUTECONSTANT.INPUTDYNAMICTASK_DYNAMICTASK], function(dynamicTask, name){
-			var handlerEntityCore = node_complexEntityUtility.getBrickCoreByRelativePath(bundleCore, dynamicTask[node_COMMONATRIBUTECONSTANT.DYNAMICTASK_TASKID][node_COMMONATRIBUTECONSTANT.IDBRICKINBUNDLE_RELATIVEPATH]);
-			allTask[name] = handlerEntityCore;
-		});
-		
-	}));
-	return out;	
+	
+	return node_makeObjectWithApplicationInterface(loc_out, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_TASK, loc_facadeTaskCore);
 };
 
 
@@ -122,6 +140,8 @@ nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_b
 nosliw.registerSetNodeDataEvent("component.componentUtility", function(){node_componentUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("common.namingconvension.namingConvensionUtility", function(){node_namingConvensionUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("complexentity.getEntityTreeNodeInterface", function(){node_getEntityTreeNodeInterface = this.getData();});
+nosliw.registerSetNodeDataEvent("component.makeObjectWithApplicationInterface", function(){node_makeObjectWithApplicationInterface = this.getData();});
+nosliw.registerSetNodeDataEvent("component.getApplicationInterface", function(){node_getApplicationInterface = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createDynamicCore", node_createDynamicCore); 

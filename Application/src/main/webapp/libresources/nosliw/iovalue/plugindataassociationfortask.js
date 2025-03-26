@@ -52,7 +52,7 @@ var loc_createDataAssociationForTaskAdapter = function(dataAssociationTask, base
 	
 	var loc_out = {
 		
-		getExecuteTaskRequest : function(taskContext, handlers, request){
+		getExecuteTaskRequest : function(taskContextInit, handlers, request){
 			
 			var onInitTaskRequest = function(handlers, request){
 				return loc_dataAssociationIn.getExecuteRequest(handlers, request);
@@ -62,7 +62,7 @@ var loc_createDataAssociationForTaskAdapter = function(dataAssociationTask, base
 				return loc_dataAssociationOut[taskResult.resultName].getExecuteRequest(handlers, request);
 			};
 			
-			return node_taskUtility.getExecuteEntityTaskRequest(loc_baseEntityCore, taskContext, onInitTaskRequest, onFinishTaskRequest, handlers, request);
+			return node_taskUtility.getExecuteEntityTaskRequest(loc_baseEntityCore, taskContextInit, onInitTaskRequest, onFinishTaskRequest, handlers, request);
 		},
 		
 	};

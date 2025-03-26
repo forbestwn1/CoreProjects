@@ -58,10 +58,10 @@
 							"name" : "testDataValidation1",
 							"handlerId" : {
 								"idPath0" : "#task",
-								"idPath" : "datavalidation_mandatory-taskTaskScript",
+								"idPath1" : "datavalidation_mandatory-taskTaskScript",
 								"idPath2" : "datavalidation_enum-taskTaskScript",
 								"idPath3" : "datavalidation_mandatory_resource-taskTaskScript",
-								"idPath4" : "datavalidation_mandatory_dynamic-flow"
+								"idPath" : "datavalidation_mandatory_dynamic-flow"
 							},
 							"dataDefinition" : {
 								"criteria": "test.string;1.0.0"
@@ -79,7 +79,7 @@
 		{
 			"info": {
 				"name" : "datavalidation_mandatory_dynamic-flow",
-				"status": "disabled",
+				"status": "disabled1",
 				"description" : ""
 			},
 			"resourceId":"flow|1.0.0|@task=taskWrapper|1.0.0|flow.dynamic",
@@ -166,7 +166,7 @@
 		{
 			"info": {
 				"name" : "datavalidation_mandatory-taskTaskScript",
-				"status": "disabled1",
+				"status": "disabled",
 				"description" : ""
 			},
 			"brick":{

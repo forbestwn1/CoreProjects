@@ -6,10 +6,66 @@ var packageObj = library.getChildPackage("entity");
 	var node_CONSTANT;
 	var node_COMMONCONSTANT;
 	var node_COMMONATRIBUTECONSTANT;
+	var node_createServiceRequestInfoSimple;
 	var node_makeObjectWithType;
 	var node_complexEntityUtility;
 	
 //*******************************************   Start Node Definition  ************************************** 	
+
+var node_createDynamicTaskInput = function(dynamicTaskFactoryEntity, taskContextCreation){
+	
+	var loc_dynamicTaskFactoryEntity = dynamicTaskFactoryEntity;
+	var loc_taskContextCreation = taskContextCreation;
+	
+	var loc_out = {
+		
+		getDynamicTaskFactoryEntity : function(){    return loc_dynamicTaskFactoryEntity;    },
+		
+		getTaskContextCreation : function(){    return loc_taskContextCreation;    }
+		
+	};
+	return loc_out;
+};
+
+var node_createDynamicTaskInputContainer = function(dynamicInput, coreEntity){
+	
+	var loc_dynamicInput = dynamicInput;
+	
+	var loc_coreEntity = coreEntity;
+	
+	var loc_dynamicTaskInputs = {};
+	
+	var loc_out = {
+
+		getDyanmicTaskInputRequest : function(inputId, handlers, request){
+			var out = loc_dynamicTaskInputs[inputId];
+			if(out==undefined){
+				var taskRef = loc_dynamicInput[node_COMMONATRIBUTECONSTANT.INPUTDYNAMICTASK_DYNAMICTASK][inputId];
+				var refType = taskRef[node_COMMONATRIBUTECONSTANT.REFDYNAMICTASK_TYPE];
+				if(refType==node_COMMONCONSTANT.DYNAMICTASK_REF_TYPE_SIMPLE){
+					var relativePath = taskRef[node_COMMONATRIBUTECONSTANT.REFDYNAMICTASK_TASKID][node_COMMONATRIBUTECONSTANT.IDBRICKINBUNDLE_RELATIVEPATH];
+					var taskWrapperEntityCore = node_complexEntityUtility.getBrickCoreByRelativePath(loc_coreEntity, relativePath);
+					return node_createServiceRequestInfoSimple(undefined, function(request){
+						var dynamicTaskInput = node_createDynamicTaskInput(taskWrapperEntityCore);
+						loc_dynamicTaskInputs[inputId] = dynamicTaskInput;
+						return dynamicTaskInput;  
+					}, handlers, request);
+				}
+			}
+			else{
+					return node_createServiceRequestInfoSimple(undefined, function(request){
+						return out;  
+					}, handlers, request);
+			}
+			
+		}
+		
+	};
+	
+	return loc_out;
+};
+
+
 
 var node_EntityIdInDomain = function(parm1, parm2){
 	if(typeof parm1 === 'object'){
@@ -189,6 +245,8 @@ var loc_createAttributeValueWithDynamic = function(valueWrapper){
 
 		getValueType : function(){   return loc_valueWrapper[node_COMMONATRIBUTECONSTANT.WRAPPERVALUE_VALUETYPE];     },
 		
+		getValue : function(){   return loc_dynamic;    },
+		
 		getDynamic : function(){   return loc_dynamic;    }
 		
 	};
@@ -202,11 +260,13 @@ var loc_createAttributeValueWithDynamic = function(valueWrapper){
 nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("constant.COMMONCONSTANT", function(){node_COMMONCONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){node_COMMONATRIBUTECONSTANT = this.getData();});
+nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple", function(){	node_createServiceRequestInfoSimple = this.getData();	});
 nosliw.registerSetNodeDataEvent("common.objectwithtype.makeObjectWithType", function(){node_makeObjectWithType = this.getData();});
 nosliw.registerSetNodeDataEvent("complexentity.complexEntityUtility", function(){node_complexEntityUtility = this.getData();	});
 
 //Register Node by Name
 packageObj.createChildNode("EntityIdInDomain", node_EntityIdInDomain); 
 packageObj.createChildNode("createBrickDefinition", node_createBrickDefinition); 
+packageObj.createChildNode("createDynamicTaskInputContainer", node_createDynamicTaskInputContainer); 
 
 })(packageObj);

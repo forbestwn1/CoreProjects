@@ -32,6 +32,7 @@ public class HAPManualDefinitionWrapperValueReferenceResource extends HAPManualD
 	public void setResourceId(HAPResourceId resourceId) {    this.m_resourceId = resourceId;      }
 
 	public HAPInputDynamicTask getDyanmicInput(){   return this.m_dynamicInput;     }
+	public void setDynamicInput(HAPInputDynamicTask dynamicInput) {     this.m_dynamicInput = dynamicInput;     }
 
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){

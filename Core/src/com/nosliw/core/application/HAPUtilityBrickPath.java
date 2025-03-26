@@ -11,6 +11,7 @@ public class HAPUtilityBrickPath {
 		HAPPath out = new HAPPath();
 		
 		HAPComplexPath pathInfo = HAPUtilityBundle.getBrickFullPathInfo(path.toString(), brickRootNameIfNotProvided);
+		out = out.appendSegment(HAPUtilityBundle.buildBranchPathSegment(pathInfo.getRoot()));
 		HAPBrickImp brick = (HAPBrickImp)currentBundle.getRootBrickWrapper(pathInfo.getRoot()).getBrick();
 		
 		String[] segs = pathInfo.getPathSegs();

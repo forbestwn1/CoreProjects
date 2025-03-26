@@ -24,7 +24,7 @@ var packageObj = library;
 
 var node_taskUtility = {
 
-	getExecuteTaskRequest : function(taskCore, taskContext, onInitTaskRequest, onFinishTaskRequest, handlers, request){
+	getExecuteTaskRequest : function(taskCore, taskContextInit, onInitTaskRequest, onFinishTaskRequest, handlers, request){
 		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 		
 		if(onInitTaskRequest==undefined){
@@ -40,7 +40,7 @@ var node_taskUtility = {
 		}
 		
 		//task init			
-		out.addRequest(taskCore.getTaskInitRequest(taskContext));
+		out.addRequest(taskCore.getTaskInitRequest(taskContextInit));
 
 		out.addRequest(onInitTaskRequest({
 			success : function(request){
@@ -58,12 +58,22 @@ var node_taskUtility = {
 		return out;		
 	},
 
-	getExecuteEntityTaskRequest : function(entityCore, taskContext, onInitTaskRequest, onFinishTaskRequest, handlers, request){
+	getExecuteEntityTaskRequest : function(entityCore, taskContextInit, onInitTaskRequest, onFinishTaskRequest, handlers, request){
 		var taskCoreFacade = node_getApplicationInterface(entityCore, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_TASK);
 		var taskCore = taskCoreFacade.getTaskCore();
-		return this.getExecuteTaskRequest(taskCore, taskContext, onInitTaskRequest, onFinishTaskRequest, handlers, request);
+		return this.getExecuteTaskRequest(taskCore, taskContextInit, onInitTaskRequest, onFinishTaskRequest, handlers, request);
 	},
 
+	getExecuteEntityTaskWithAdapterRequest : function(entityCore, adapterName, taskContextInit, handlers, request){
+		var taskAdapter = this.getTaskAdapter(entityCore, adapterName);
+		
+		if(taskAdapter!=undefined){
+			return taskAdapter.getExecuteTaskRequest(taskContextInit);
+		}
+		else{
+			return this.getExecuteEntityTaskRequest(entityCore, taskContextInit, undefined, undefined);
+		}
+	},
 
 	getExecuteWrapperedTaskWithAdapterRequest : function(wrapperCore, adapterName, taskContextCreation, taskContextInit, handlers, request){
 		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
@@ -74,29 +84,7 @@ var node_taskUtility = {
 				var taskCore = node_getApplicationInterface(entityCore, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_TASK).getTaskCore();
 				return taskCore.getTaskCreationRequest(taskContextCreation, {
 					success : function(request){
-						var adapters = node_getEntityTreeNodeInterface(entityCore).getAdapters();
-						var taskAdapter;
-						if(adapterName==undefined){
-							//if adapter name not provided, then find adapter for task
-							for(var name in adapters){
-								var adapter = adapters[name];
-								var adapterDef = node_getBasicEntityObjectInterface(adapter).getEntityDefinition();
-								var adapterBrickType = adapterDef.getBrickType()[node_COMMONATRIBUTECONSTANT.IDBRICKTYPE_BRICKTYPE]; 
-								if(adapterBrickType==node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_DATAASSOCIATIONFORTASK||adapterBrickType==node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_DATAASSOCIATIONFOREXPRESSION){
-									taskAdapter = adapter;
-								}
-							}
-						}
-						else{
-							taskAdapter = adapters[adapterName];
-						}
-						
-						if(taskAdapter!=undefined){
-							return taskAdapter.getExecuteTaskRequest(taskContextInit);
-						}
-						else{
-							return this.getExecuteEntityTaskRequest(entityCore, taskContextInit, undefined, undefined);
-						}
+						return node_taskUtility.getExecuteEntityTaskWithAdapterRequest(entityCore, adapterName, taskContextInit);
 					}
 				});
 			}
@@ -104,6 +92,29 @@ var node_taskUtility = {
 
 		return out;		
 	},
+
+	getTaskAdapter : function(entityCore, adapterName){
+		var adapters = node_getEntityTreeNodeInterface(entityCore).getAdapters();
+		var taskAdapter;
+		if(adapterName==undefined){
+			//if adapter name not provided, then find adapter for task
+			for(var name in adapters){
+				var adapter = adapters[name];
+				var adapterDef = node_getBasicEntityObjectInterface(adapter).getEntityDefinition();
+				var adapterBrickType = adapterDef.getBrickType()[node_COMMONATRIBUTECONSTANT.IDBRICKTYPE_BRICKTYPE]; 
+				if(adapterBrickType==node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_DATAASSOCIATIONFORTASK||adapterBrickType==node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_DATAASSOCIATIONFOREXPRESSION){
+					taskAdapter = adapter;
+				}
+			}
+		}
+		else{
+			taskAdapter = adapters[adapterName];
+		}
+		return taskAdapter;
+	},
+
+
+
 
 
 

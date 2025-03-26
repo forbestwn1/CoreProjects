@@ -16,6 +16,7 @@ import com.nosliw.core.application.HAPIdBrickType;
 import com.nosliw.core.application.HAPManagerApplicationBrick;
 import com.nosliw.core.application.HAPUtilityBrickId;
 import com.nosliw.core.application.HAPValueOfDynamic;
+import com.nosliw.core.application.common.dynamic.HAPInputDynamicTask;
 import com.nosliw.core.application.common.parentrelation.HAPManualDefinitionBrickRelation;
 import com.nosliw.core.application.division.manual.HAPManualManagerBrick;
 import com.nosliw.core.application.division.manual.HAPManualWithBrick;
@@ -149,7 +150,9 @@ public class HAPManualDefinitionUtilityParserBrickFormatJson {
 				
 				JSONObject dynamicInputsObj = jsonObj.optJSONObject(HAPManualDefinitionWrapperValueReferenceResource.DYNAMICINPUT);
 				if(dynamicInputsObj!=null) {
-					((HAPManualDefinitionWrapperValueReferenceResource)out).buildObject(dynamicInputsObj, HAPSerializationFormat.JSON);
+					HAPInputDynamicTask dynamicTaskInput = new HAPInputDynamicTask();
+					dynamicTaskInput.buildObject(dynamicInputsObj, HAPSerializationFormat.JSON);
+					((HAPManualDefinitionWrapperValueReferenceResource)out).setDynamicInput(dynamicTaskInput);
 				}
 			}
 		}
