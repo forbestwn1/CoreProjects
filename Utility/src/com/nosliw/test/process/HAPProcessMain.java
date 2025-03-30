@@ -21,7 +21,7 @@ public class HAPProcessMain {
 
 		HAPExecutableProcess processExe = runtimeEnvironment.getProcessManager().getProcess(HAPUtilityProcess.buildResourceId(suite, id), null);
 		
-		HAPContextDataFlat input = HAPUtilityAttachment.getTestDataFromAttachment(processExe.getDefinition(), testData);
+		HAPContextDataFlat input = HAPUtilityAttachment.getTestDataFromAttachment(processExe.getTask(), testData);
 		
 		HAPRuntimeTaskExecuteProcessRhino task = new HAPRuntimeTaskExecuteProcessRhino(processExe, input, runtimeEnvironment.getResourceManager());
 		HAPServiceData out = runtimeEnvironment.getRuntime().executeTaskSync(task);

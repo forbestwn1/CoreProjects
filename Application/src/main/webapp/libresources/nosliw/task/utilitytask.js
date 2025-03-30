@@ -24,7 +24,7 @@ var packageObj = library;
 
 var node_taskUtility = {
 
-	getExecuteTaskRequest : function(taskCore, taskContextInit, onInitTaskRequest, onFinishTaskRequest, handlers, request){
+	getExecuteTaskRequest : function(taskCore, taskSetup, onInitTaskRequest, onFinishTaskRequest, handlers, request){
 		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 		
 		if(onInitTaskRequest==undefined){
@@ -39,8 +39,9 @@ var node_taskUtility = {
 			}
 		}
 		
-		//task init			
-		out.addRequest(taskCore.getTaskInitRequest(taskContextInit));
+		//task init
+		taskCore.addSetup(taskSetup``);
+		out.addRequest(taskCore.getTaskInitRequest());
 
 		out.addRequest(onInitTaskRequest({
 			success : function(request){
@@ -58,35 +59,32 @@ var node_taskUtility = {
 		return out;		
 	},
 
-	getExecuteEntityTaskRequest : function(entityCore, taskContextInit, onInitTaskRequest, onFinishTaskRequest, handlers, request){
+	getExecuteEntityTaskRequest : function(entityCore, taskSetup, onInitTaskRequest, onFinishTaskRequest, handlers, request){
 		var taskCoreFacade = node_getApplicationInterface(entityCore, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_TASK);
 		var taskCore = taskCoreFacade.getTaskCore();
-		return this.getExecuteTaskRequest(taskCore, taskContextInit, onInitTaskRequest, onFinishTaskRequest, handlers, request);
+		return this.getExecuteTaskRequest(taskCore, taskSetup, onInitTaskRequest, onFinishTaskRequest, handlers, request);
 	},
 
-	getExecuteEntityTaskWithAdapterRequest : function(entityCore, adapterName, taskContextInit, handlers, request){
+	getExecuteEntityTaskWithAdapterRequest : function(entityCore, adapterName, taskSetup, handlers, request){
 		var taskAdapter = this.getTaskAdapter(entityCore, adapterName);
 		
 		if(taskAdapter!=undefined){
-			return taskAdapter.getExecuteTaskRequest(taskContextInit);
+			return taskAdapter.getExecuteTaskRequest(taskSetup);
 		}
 		else{
-			return this.getExecuteEntityTaskRequest(entityCore, taskContextInit, undefined, undefined);
+			return this.getExecuteEntityTaskRequest(entityCore, taskSetup, undefined, undefined);
 		}
 	},
 
-	getExecuteWrapperedTaskWithAdapterRequest : function(wrapperCore, adapterName, taskContextCreation, taskContextInit, handlers, request){
+	getExecuteWrapperedTaskWithAdapterRequest : function(wrapperCore, adapterName, taskSetupCreation, taskSetupInit, handlers, request){
 		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 		
 		var taskFactory = node_getApplicationInterface(wrapperCore, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_TASKFACTORY);
 		out.addRequest(taskFactory.getCreateTaskEntityRequest({
 			success : function(request, entityCore){
 				var taskCore = node_getApplicationInterface(entityCore, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_TASK).getTaskCore();
-				return taskCore.getTaskCreationRequest(taskContextCreation, {
-					success : function(request){
-						return node_taskUtility.getExecuteEntityTaskWithAdapterRequest(entityCore, adapterName, taskContextInit);
-					}
-				});
+				taskCore.addTaskSetup(taskSetupCreation);
+				return node_taskUtility.getExecuteEntityTaskWithAdapterRequest(entityCore, adapterName, taskSetupInit);
 			}
 		}));
 

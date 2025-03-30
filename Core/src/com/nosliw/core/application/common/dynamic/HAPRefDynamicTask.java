@@ -22,10 +22,14 @@ public abstract class HAPRefDynamicTask extends HAPEntityInfoImp{
 		HAPRefDynamicTask out = null;
 		JSONObject jsonObj = (JSONObject)obj;
 		Object typeObj = jsonObj.opt(TYPE);
-		String type = typeObj!=null? (String)typeObj : HAPConstantShared.DYNAMICTASK_REF_TYPE_SIMPLE;
+		String type = typeObj!=null? (String)typeObj : HAPConstantShared.DYNAMICTASK_REF_TYPE_SINGLE;
 		switch(type) {
-		case HAPConstantShared.DYNAMICTASK_REF_TYPE_SIMPLE:
-			out = new HAPRefDynamicTaskSimple();
+		case HAPConstantShared.DYNAMICTASK_REF_TYPE_SINGLE:
+			out = new HAPRefDynamicTaskSingle();
+			out.buildObject(jsonObj, HAPSerializationFormat.JSON);
+			break;
+		case HAPConstantShared.DYNAMICTASK_REF_TYPE_MULTIPLE:
+			out = new HAPRefDynamicTaskMultiple();
 			out.buildObject(jsonObj, HAPSerializationFormat.JSON);
 			break;
 		}

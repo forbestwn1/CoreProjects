@@ -1050,13 +1050,19 @@
 			<definition name="DYNAMICTASK_INFO_TYPE_NODE" value="node"/>
 
 			<definition type="space"/>
-			<definition name="DYNAMICTASK_REF_TYPE_SIMPLE" value="simple"/>
+			<definition name="DYNAMICTASK_REF_TYPE_SINGLE" value="single"/>
+			<definition name="DYNAMICTASK_REF_TYPE_MULTIPLE" value="multiple"/>
 
 			<definition type="space"/>
 			<definition name="NAME_ROOTBRICK_MAIN" value="main"/>
 
 			<definition type="space"/>
 			<definition name="FLOW_DECISION_TYPE_JAVASCRIPT" value="javascript"/>
+
+			<definition type="space"/>
+			<definition name="VALUEADDRESSCATEGARY_BUNDLE" value="bundle"/>
+			<definition name="VALUEADDRESSCATEGARY_TASKCONTEXT" value="taskContext"/>
+			<definition name="VALUEADDRESSCATEGARY_FLOWCONTEXT" value="flowContext"/>
 
 		</definitions>
 	</constants>

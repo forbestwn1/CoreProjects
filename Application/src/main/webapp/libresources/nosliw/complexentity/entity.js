@@ -12,16 +12,16 @@ var packageObj = library.getChildPackage("entity");
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
-var node_createDynamicTaskInput = function(dynamicTaskFactoryEntity, taskContextCreation){
+var node_createDynamicTaskInput = function(dynamicTaskFactoryEntity, taskSetup){
 	
 	var loc_dynamicTaskFactoryEntity = dynamicTaskFactoryEntity;
-	var loc_taskContextCreation = taskContextCreation;
+	var loc_taskSetup = taskSetup;
 	
 	var loc_out = {
 		
 		getDynamicTaskFactoryEntity : function(){    return loc_dynamicTaskFactoryEntity;    },
 		
-		getTaskContextCreation : function(){    return loc_taskContextCreation;    }
+		getTaskSetup : function(){    return loc_taskSetup;    }
 		
 	};
 	return loc_out;
@@ -42,7 +42,7 @@ var node_createDynamicTaskInputContainer = function(dynamicInput, coreEntity){
 			if(out==undefined){
 				var taskRef = loc_dynamicInput[node_COMMONATRIBUTECONSTANT.INPUTDYNAMICTASK_DYNAMICTASK][inputId];
 				var refType = taskRef[node_COMMONATRIBUTECONSTANT.REFDYNAMICTASK_TYPE];
-				if(refType==node_COMMONCONSTANT.DYNAMICTASK_REF_TYPE_SIMPLE){
+				if(refType==node_COMMONCONSTANT.DYNAMICTASK_REF_TYPE_SINGLE){
 					var relativePath = taskRef[node_COMMONATRIBUTECONSTANT.REFDYNAMICTASK_TASKID][node_COMMONATRIBUTECONSTANT.IDBRICKINBUNDLE_RELATIVEPATH];
 					var taskWrapperEntityCore = node_complexEntityUtility.getBrickCoreByRelativePath(loc_coreEntity, relativePath);
 					return node_createServiceRequestInfoSimple(undefined, function(request){

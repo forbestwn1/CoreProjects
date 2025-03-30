@@ -87,7 +87,7 @@
 				"dynamicTask" :
 				[ 
 					{
-						"type" : "simple",
+						"type" : "single",
 						"name" : "default",
 						"taskId" : {
 							"idPath" : "#task"

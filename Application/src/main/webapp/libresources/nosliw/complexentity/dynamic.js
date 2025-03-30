@@ -72,7 +72,7 @@ var node_createDynamicCore = function(dynamicDef, configure){
 
 		getCurrentTaskEntityCore : function(){    return loc_currentTaskEntityCore;      },
 
-		getExecuteTaskWithAdapterRequest : function(adapterName, taskContextInit, handlers, request){
+		getExecuteTaskWithAdapterRequest : function(adapterName, taskSetup, handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 			
 			var taskFactory = node_getApplicationInterface(loc_dynamicTaskInput.getDynamicTaskFactoryEntity(), node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_TASKFACTORY);
@@ -80,11 +80,8 @@ var node_createDynamicCore = function(dynamicDef, configure){
 				success : function(request, entityCore){
 					loc_currentTaskEntityCore = entityCore;
 					var taskCore = node_getApplicationInterface(entityCore, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_TASK).getTaskCore();
-					return taskCore.getTaskCreationRequest(loc_dynamicTaskInput.getTaskContextCreation(), {
-						success : function(request){
-							return node_taskUtility.getExecuteEntityTaskWithAdapterRequest(loc_out, adapterName, taskContextInit);
-						}
-					});
+					taskCore.addSetup(loc_dynamicTaskInput.getTaskSetup());
+					return node_taskUtility.getExecuteEntityTaskWithAdapterRequest(loc_out, adapterName, taskSetup);
 				}
 			}));
 			return out;

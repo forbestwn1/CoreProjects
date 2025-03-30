@@ -311,6 +311,7 @@ var node_CONSTANT=
 	  "INTERFACE_COMPONENTENTITY_DEBUG" : "componentEntityDebug",
 	  "INTERFACE_APPLICATIONENTITY" : "applicationEntity",
 	  "INTERFACE_WITHVALUEPORT" : "withValuePort",
+	  "INTERFACE_VALUECONTAINER" : "valueContainer",
 
 	  "INTERFACE_COMPONENTENTITYMANAGE" : "componentEntityManage",
 	  

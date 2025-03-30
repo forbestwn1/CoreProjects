@@ -52,7 +52,7 @@
 					"brick"	: {
 						"id" : "activity1",
 						"status": "disabled1",
-						"definition" : {
+						"task" : {
 							"dynamic" : "default",
 							"adapter" : [
 								{

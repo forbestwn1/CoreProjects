@@ -33,6 +33,30 @@ var node_createFlowTaskPlugin = function(){
 	return loc_out;
 };
 
+var loc_createFlowContext = function(){
+	
+	var loc_value = {};
+	
+	var loc_out = {
+		
+		getGetValueRequest : function(name, handlers, request){
+			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+			out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
+				return loc_value[name];
+			}));
+			return out;
+		},
+		
+		setValue : function(name, value){
+			loc_value[name] = value;
+		}
+		
+	};
+
+	loc_out = node_makeObjectValueContainerInterface(loc_out, node_COMMONCONSTANT.VALUEADDRESSCATEGARY_FLOWCONTEXT);
+	return loc_out;
+};
+
 
 var loc_createFlowTaskCore = function(entityDef, configure){
 	
@@ -48,6 +72,8 @@ var loc_createFlowTaskCore = function(entityDef, configure){
 
 	var loc_taskCore;
 
+	var loc_flowContext = loc_createFlowContext();
+
 	var loc_facadeTaskCore = {
 		//return a task
 		getTaskCore : function(){
@@ -62,7 +88,7 @@ var loc_createFlowTaskCore = function(entityDef, configure){
 	var loc_getExecuteTargetRequest = function(target, handlers, request){
 		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 		var activity = loc_activities.getChildrenEntity()[target[node_COMMONATRIBUTECONSTANT.TASKFLOWTARGET_ACTIVITY]].getCoreEntity();
-		out.addRequest(activity.getExecuteActivityRequest(target[node_COMMONATRIBUTECONSTANT.TASKFLOWTARGET_ADAPTER], loc_taskContext, {
+		out.addRequest(activity.getExecuteActivityRequest(target[node_COMMONATRIBUTECONSTANT.TASKFLOWTARGET_ADAPTER], loc_flowContext, loc_taskContext, {
 			success : function(request, target){
 				var targetActivityName = target[node_COMMONATRIBUTECONSTANT.TASKFLOWTARGET_ACTIVITY];
 				if(targetActivityName.startsWith("#")){
@@ -109,12 +135,6 @@ var loc_createFlowTaskCore = function(entityDef, configure){
 		},
 		
 		updateView : function(view){
-		},
-
-		getTaskInitRequest : function(handlers, request){
-			if(loc_taskContext!=undefined){
-				return loc_taskContext.getInitTaskRequest(loc_out, handlers, request);
-			}
 		},
 
 		getTaskExecuteRequest : function(handlers, request){

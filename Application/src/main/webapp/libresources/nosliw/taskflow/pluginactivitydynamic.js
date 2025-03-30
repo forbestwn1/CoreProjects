@@ -40,14 +40,14 @@ var loc_createDynamicActivityCore = function(entityDef, configure){
 	var loc_decision = loc_next[node_COMMONATRIBUTECONSTANT.TASKFLOWNEXT_DECISION];
 	var loc_target = loc_next[node_COMMONATRIBUTECONSTANT.TASKFLOWNEXT_TARGET];
 
-	var loc_dynamicDef = loc_entityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.BLOCKTASKFLOWACTIVITYDYNAMIC_DEFINITION);
-	var loc_dynamicRuntime = loc_entityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.BLOCKTASKFLOWACTIVITYDYNAMIC_RUNTIME);
+	var loc_dynamicTask = loc_entityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.BLOCKTASKFLOWACTIVITYDYNAMIC_TASK);
+	var loc_taskAddress = loc_entityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.BLOCKTASKFLOWACTIVITYDYNAMIC_TASKADDRESS);
 
 	var loc_envInterface = {};
 	
 	var loc_dynamic;
 
-	var loc_getDynamicTaskInputRequest = function(taskContext, handlers, request){
+	var loc_getDynamicTaskInputRequest = function(taskContext, flowContext, handlers, request){
 		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 		out.addRequest(node_getEntityObjectInterface(loc_out).getBundle().getDynamicTaskInputContainer().getDyanmicTaskInputRequest("default"));
 		return out;
@@ -59,7 +59,7 @@ var loc_createDynamicActivityCore = function(entityDef, configure){
 		
 		getEntityInitRequest : function(handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-			out.addRequest(loc_envInterface[node_CONSTANT.INTERFACE_ENTITY].createAttributeRequest(node_COMMONATRIBUTECONSTANT.BLOCKTASKFLOWACTIVITYDYNAMIC_DEFINITION, undefined, {
+			out.addRequest(loc_envInterface[node_CONSTANT.INTERFACE_ENTITY].createAttributeRequest(node_COMMONATRIBUTECONSTANT.BLOCKTASKFLOWACTIVITYDYNAMIC_TASK, undefined, {
 				success : function(request, childNode){
 					loc_dynamic = childNode.getChildValue().getCoreEntity();
 				}
@@ -67,10 +67,10 @@ var loc_createDynamicActivityCore = function(entityDef, configure){
 			return out;
 		},
 		
-		getExecuteActivityRequest : function(adapterName, taskContext, handlers, request){
+		getExecuteActivityRequest : function(adapterName, flowContext, taskContext, handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 			
-			out.addRequest(loc_getDynamicTaskInputRequest(taskContext, {
+			out.addRequest(loc_getDynamicTaskInputRequest(taskContext, flowContext, {
 				success : function(request, dynamicTaskInput){
 					loc_dynamic.setDynamicTaskInput(dynamicTaskInput);
 					

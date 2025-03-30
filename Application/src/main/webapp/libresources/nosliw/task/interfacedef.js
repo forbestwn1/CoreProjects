@@ -6,19 +6,6 @@ var packageObj = library;
 
 //*******************************************   Start Node Definition  ************************************** 	
 
-var node_createTaskContextInterface = function(rawInterfaceObj){
-	
-	var interfaceDef = {
-		
-		getInitTaskRequest : function(coreEntity, handlers, request){},
-		
-		getRuntimeEnvValue : function(name){}
-		
-	};
-	return _.extend({}, interfaceDef, rawInterfaceObj);
-	
-};
-
 var node_createTaskImpInterface = function(rawInterfaceObj){
 	
 	var interfaceDef = {
@@ -52,7 +39,6 @@ var node_createTaskLifecycleInterface = function(rawInterfaceObj){
 //populate dependency node data
 
 //Register Node by Name
-packageObj.createChildNode("createTaskContextInterface", node_createTaskContextInterface); 
 packageObj.createChildNode("createTaskImpInterface", node_createTaskImpInterface); 
 packageObj.createChildNode("createTaskLifecycleInterface", node_createTaskLifecycleInterface); 
 

@@ -73,10 +73,10 @@ public class HAPProcessorProcess{
 		HAPValueStructureDefinitionGroup context = originContext.cloneValueStructureGroup();
 		Map<String, HAPExecutableDataAssociation> results = new LinkedHashMap<String, HAPExecutableDataAssociation>();
 
-		Map<String, HAPDefinitionServiceProvider> allServiceProviders = HAPUtilityServiceUse.buildServiceProvider(out.getDefinition().getAttachmentContainer(), serviceProviders, runtimeEnv.getServiceManager().getServiceDefinitionManager()); 
+		Map<String, HAPDefinitionServiceProvider> allServiceProviders = HAPUtilityServiceUse.buildServiceProvider(out.getTask().getAttachmentContainer(), serviceProviders, runtimeEnv.getServiceManager().getServiceDefinitionManager()); 
 		
-		for(String activityId : out.getDefinition().getProcess().getActivities().keySet()) {
-			HAPDefinitionActivity activity = out.getDefinition().getProcess().getActivityById(activityId);
+		for(String activityId : out.getTask().getProcess().getActivities().keySet()) {
+			HAPDefinitionActivity activity = out.getTask().getProcess().getActivityById(activityId);
 			
 			//start activity
 			if(activity.getActivityType().equals(HAPConstantShared.ACTIVITY_TYPE_START))    out.setStartActivityId(activityId);    

@@ -57,7 +57,7 @@ public class HAPUtilityContextScript {
 		JSONObject output = new JSONObject();
 		for(String rootName : context.getRootNames()) {
 			if(HAPConstantShared.UIRESOURCE_CONTEXTINFO_RELATIVECONNECTION_PHYSICAL.equals(HAPUtilityContextInfo.getRelativeConnectionValue(context.getRoot(rootName).getInfo()))) {
-				HAPElementStructure contextDefEle = context.getRoot(rootName).getDefinition();
+				HAPElementStructure contextDefEle = context.getRoot(rootName).getTask();
 				Object contextEleJson = buildJsonValue(contextDefEle);
 
 				if(contextEleJson!=null) {

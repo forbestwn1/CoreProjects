@@ -9,21 +9,21 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.HAPIdBrickInBundle;
 
-public class HAPRefDynamicTaskSimple extends HAPRefDynamicTask{
+public class HAPRefDynamicTaskSingle extends HAPRefDynamicTask{
 
 	@HAPAttribute
 	public final static String TASKID = "taskId"; 
 	
 	private HAPIdBrickInBundle m_taskId;
 	
-	public HAPRefDynamicTaskSimple() {	}
+	public HAPRefDynamicTaskSingle() {	}
 	
-	public HAPRefDynamicTaskSimple(HAPIdBrickInBundle taskId) {
+	public HAPRefDynamicTaskSingle(HAPIdBrickInBundle taskId) {
 		this.m_taskId = taskId;
 	}
 	
 	@Override
-	public String getType() {   return HAPConstantShared.DYNAMICTASK_REF_TYPE_SIMPLE;  }
+	public String getType() {   return HAPConstantShared.DYNAMICTASK_REF_TYPE_SINGLE;  }
 
 	public HAPIdBrickInBundle getTaskId() {    return this.m_taskId;     }
 	public void setTaskId(HAPIdBrickInBundle taskId) {    this.m_taskId = taskId;      }

@@ -627,9 +627,13 @@ var COMMONCONSTANT=
   "DYNAMICTASK_INFO_TYPE_SIMPLE": "simple",
   "DYNAMICTASK_INFO_TYPE_SET": "set",
   "DYNAMICTASK_INFO_TYPE_NODE": "node",
-  "DYNAMICTASK_REF_TYPE_SIMPLE": "simple",
+  "DYNAMICTASK_REF_TYPE_SINGLE": "single",
+  "DYNAMICTASK_REF_TYPE_MULTIPLE": "multiple",
   "NAME_ROOTBRICK_MAIN": "main",
-  "FLOW_DECISION_TYPE_JAVASCRIPT": "javascript"
+  "FLOW_DECISION_TYPE_JAVASCRIPT": "javascript",
+  "VALUEADDRESSCATEGARY_BUNDLE": "bundle",
+  "VALUEADDRESSCATEGARY_TASKCONTEXT": "taskContext",
+  "VALUEADDRESSCATEGARY_FLOWCONTEXT": "flowContext"
 };
 
 //*******************************************   End Node Definition  ************************************** 	

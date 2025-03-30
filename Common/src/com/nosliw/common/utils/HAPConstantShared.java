@@ -1020,7 +1020,8 @@ public class HAPConstantShared {
 
 
 
-		public static final String DYNAMICTASK_REF_TYPE_SIMPLE = "simple";
+		public static final String DYNAMICTASK_REF_TYPE_SINGLE = "single";
+		public static final String DYNAMICTASK_REF_TYPE_MULTIPLE = "multiple";
 
 
 
@@ -1029,6 +1030,12 @@ public class HAPConstantShared {
 
 
 		public static final String FLOW_DECISION_TYPE_JAVASCRIPT = "javascript";
+
+
+
+		public static final String VALUEADDRESSCATEGARY_BUNDLE = "bundle";
+		public static final String VALUEADDRESSCATEGARY_TASKCONTEXT = "taskContext";
+		public static final String VALUEADDRESSCATEGARY_FLOWCONTEXT = "flowContext";
 
 
 }

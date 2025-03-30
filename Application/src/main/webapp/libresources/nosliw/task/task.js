@@ -14,70 +14,60 @@ var packageObj = library;
 
 //*******************************************   Start Node Definition  ************************************** 	
 
-var loc_createTaskContextCompose = function(entityCore){
+var node_createTaskSetup = function(initRequest, runtimeEnv){
 	
-	var loc_taskContexts = [];
+	var loc_initRequest = initRequest;
 	
-	var loc_entityCore = entityCore;
-	
-	var loc_runtimeEnv = {
-		getRuntimeEnvValue : function(name){
-			for(var i in loc_taskContexts){
-				var value = loc_taskContexts[i].getRuntimeEnvValue(name);
-				if(value!=undefined)  return value;
-			}
-		}
-	}
+	var loc_runtimeEnv = runtimeEnv;
 	
 	var loc_out = {
-	
-		addTaskContext : function(taskContext){
-			loc_taskContexts.push(node_createTaskContextInterface(taskContext));
-		},
 		
-		getRuntimeEnv : function(){
-			return loc_runtimeEnv;
-		},
+		getInitRequest : function(){   return loc_initRequest;      },
 		
-		getTaskInitRequest : function(handlers, request){
-			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-			for(var i in loc_taskContexts){
-				out.addRequest(loc_taskContexts[i].getInitTaskRequest(loc_entityCore));
-			}
-			return out;
-		},
+		getRuntimeEnv : function(){  return loc_runtimeEnv;    }
 		
 	};
 	
 	return loc_out;
-	
 };
 
 var node_createTaskCore = function(taskImp, entityCore){
 	
 	var loc_taskImp = taskImp;
-	
-	var loc_taskContexts = loc_createTaskContextCompose(entityCore);
-	
+
 	var loc_taskResult;
 	
 	var loc_lifecycleHandlers = [];
 	
+	var loc_runtimeEnv = node_createValueContainerList();
+
+	var loc_initSetupRequests = [];
+	
+	var loc_addTaskSetup = function(taskSetup){
+		//add init request
+		loc_initSetupRequests.push(taskSetup.getInitRequest());
+		
+		//add runtime env
+		loc_runtimeEnv.addChild(taskSetup.getRuntimeEnv());
+	};
+	
 	var loc_out = {
 		
-		getTaskCreationRequest : function(taskContext, handlers, request){
-			loc_taskContexts.addTaskContext(taskContext);
-			return node_createServiceRequestInfoSequence(undefined, handlers, request);
-		},
-
-		getTaskInitRequest : function(taskContext, handlers, request){
-			loc_taskContexts.addTaskContext(taskContext);
-			return loc_taskContexts.getTaskInitRequest(handlers, request);
-		},
+		registerLifecycleHandler : function(handler){  loc_lifecycleHandlers.push(handler);  },
 		
+		getTaskResult : function(){   return loc_taskResult;    },
+
+		getTaskInitRequest : function(request, handlers){
+			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+			for(var i in loc_initSetupRequests){
+				out.addRequest(loc_initSetupRequests[i](loc_entityCore));
+			}
+			return out;
+		},
+	
 		getTaskExecuteRequest : function(handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-			out.addRequest(loc_taskImp.getTaskExecuteRequest(loc_taskContexts.getRuntimeEnv(), {
+			out.addRequest(loc_taskImp.getTaskExecuteRequest(loc_runtimeEnv, {
 				success : function(request, taskResult){
 					loc_taskResult = taskResult;
 					return loc_taskResult;
@@ -86,10 +76,19 @@ var node_createTaskCore = function(taskImp, entityCore){
 			return out;
 		},
 		
-		registerLifecycleHandler : function(handler){  loc_lifecycleHandlers.push(handler);  },
-		
-		getTaskResult : function(){   return loc_taskResult;    }
-	
+		addTaskSetup : function(taskSetup){
+			if(taskSetup!=undefined){
+				if(node_basicUtility.isArray(taskSetup)==true){
+					_.each(taskSetup, function(item, i){
+						loc_addTaskSetup(item);
+					});
+				}
+				else{
+					loc_addTaskSetup(taskSetup);
+				}
+			}
+		},
+
 	};
 	
 	return loc_out;
@@ -110,6 +109,7 @@ nosliw.registerSetNodeDataEvent("task.createTaskContextInterface", function(){no
 
 
 //Register Node by Name
+packageObj.createChildNode("createTaskSetup", node_createTaskSetup); 
 packageObj.createChildNode("createTaskCore", node_createTaskCore); 
 
 })(packageObj);

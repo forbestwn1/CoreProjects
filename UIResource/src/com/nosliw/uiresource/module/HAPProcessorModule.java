@@ -118,7 +118,7 @@ public class HAPProcessorModule {
 		
 		HAPValueStructureDefinitionFlat dataDef = eventDef.getDataDefinition();
 		for(String dataName : dataDef.getRootNames()) {
-			nodeEle.addChild(dataName, dataDef.getRoot(dataName).getDefinition());
+			nodeEle.addChild(dataName, dataDef.getRoot(dataName).getTask());
 		}
 		root.setDefinition(nodeEle);
 		return root;

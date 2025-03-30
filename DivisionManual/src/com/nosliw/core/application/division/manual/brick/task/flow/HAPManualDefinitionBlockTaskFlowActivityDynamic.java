@@ -1,9 +1,9 @@
 package com.nosliw.core.application.division.manual.brick.task.flow;
 
+import com.nosliw.core.application.HAPAddressValue;
 import com.nosliw.core.application.HAPEnumBrickType;
 import com.nosliw.core.application.HAPValueOfDynamic;
 import com.nosliw.core.application.brick.task.flow.HAPBlockTaskFlowActivityDynamic;
-import com.nosliw.core.application.brick.task.flow.HAPTaskFlowAddressTask;
 
 public class HAPManualDefinitionBlockTaskFlowActivityDynamic extends HAPManualDefinitionBlockTaskFlowActivity{
 
@@ -11,10 +11,10 @@ public class HAPManualDefinitionBlockTaskFlowActivityDynamic extends HAPManualDe
 		super(HAPEnumBrickType.TASK_TASK_ACTIVITYDYNAMIC_100);
 	}
 
-	public HAPValueOfDynamic getDefinition() {   return this.getAttributeValueOfDynamic(HAPBlockTaskFlowActivityDynamic.DEFINITION);    }
-	public void setDefinition(HAPValueOfDynamic definition) {    this.setAttributeValueWithDynamic(HAPBlockTaskFlowActivityDynamic.DEFINITION, definition);    }
+	public HAPValueOfDynamic getTask() {   return this.getAttributeValueOfDynamic(HAPBlockTaskFlowActivityDynamic.TASK);    }
+	public void setTask(HAPValueOfDynamic task) {    this.setAttributeValueWithDynamic(HAPBlockTaskFlowActivityDynamic.TASK, task);    }
 	
-	public HAPTaskFlowAddressTask getRuntime() {    return (HAPTaskFlowAddressTask)this.getAttributeValueOfValue(HAPBlockTaskFlowActivityDynamic.RUNTIME);       }
-	public void setRuntime(HAPTaskFlowAddressTask runtime) {    this.setAttributeValueWithValue(HAPBlockTaskFlowActivityDynamic.RUNTIME, runtime);      }
+	public HAPAddressValue getTaskAddress() {    return (HAPAddressValue)this.getAttributeValueOfValue(HAPBlockTaskFlowActivityDynamic.TASKADDRESS);       }
+	public void setTaskAddress(HAPAddressValue taskAddress) {    this.setAttributeValueWithValue(HAPBlockTaskFlowActivityDynamic.TASKADDRESS, taskAddress);      }
 	
 }

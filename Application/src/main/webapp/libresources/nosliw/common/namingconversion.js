@@ -53,6 +53,19 @@ var node_namingConvensionUtility = function(){
 		parsePathInfos : function(fullPath){
 			return fullPath.split(node_COMMONCONSTANT.SEPERATOR_PATH);
 		},
+
+		parseComplexPath : function(fullPath){
+			var root;
+			var path;
+			var index = fullPath.indexOf(node_COMMONCONSTANT.SEPERATOR_PATH);
+			if(index==-1){
+				root = fullPath;
+			}
+			else{
+				root = fullPath.subString(0, index-1);
+				path = fullPath.subString(index+1);
+			}
+		},
 		
 		/*
 		 * get all sub path from full path

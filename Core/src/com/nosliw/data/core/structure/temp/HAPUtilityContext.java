@@ -137,7 +137,7 @@ public class HAPUtilityContext {
 		HAPValueStructureDefinitionFlat out = new HAPValueStructureDefinitionFlat();
 		
 		for(String rootName : context.getRootNames()) {
-			HAPElementStructure def = context.getRoot(rootName).getDefinition();
+			HAPElementStructure def = context.getRoot(rootName).getTask();
 			HAPUtilityContext.setDescendant(out, rootName, def);
 		}
 		return out;

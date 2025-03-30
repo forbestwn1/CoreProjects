@@ -1,5 +1,5 @@
 //get/create package
-var packageObj = library;    
+var packageObj = library.getChildPackage("valuecontainer");    
 
 (function(packageObj){
 	//get used node
@@ -17,35 +17,61 @@ var packageObj = library;
 
 //*******************************************   Start Node Definition  **************************************
 
-var node_makeObjectBasicEntityObjectInterface = function(rawEntity, entityDefinition, configure){
-
+var node_makeObjectValueContainerProvider = function(rawEntity){
+	
 	var loc_rawEntity = rawEntity;
-	
-	var loc_entityDefinition = entityDefinition;
-	
-	var loc_configure = configure;
-	
-	var loc_extraData = {};
-	
+
 	var loc_interfaceEntity = {
-		getConfigure : function(){    return loc_configure;     },
-		getEntityDefinition : function(){   return loc_entityDefinition;    },
-		getExtraData : function(name){   return loc_extraData[name];    },
-		setExtraData : function(name, data){    loc_extraData[name] = data;   },
+		getValueContainer : function(){   return loc_rawEntity.getValueContainer==undefined?undefined:loc_rawEntity.getValueContainer();    }
 	};
-
-	var embededEntityInterface =  node_getEmbededEntityInterface(rawEntity);
-	if(embededEntityInterface!=null){
-		embededEntityInterface.setEnvironmentInterface(node_CONSTANT.INTERFACE_BASICENTITY, {});
-	}
-
-	var loc_out = node_buildInterface(rawEntity, node_CONSTANT.INTERFACE_BASICENTITY, loc_interfaceEntity);
+	
+	var loc_out = node_buildInterface(rawEntity, node_CONSTANT.INTERFACE_VALUECONTAINERPROVIDER, loc_interfaceEntity);
 	return loc_out;
 };
 
-var node_getBasicEntityObjectInterface = function(baseObject){
-	return node_getInterface(baseObject, node_CONSTANT.INTERFACE_BASICENTITY);
+
+var node_createValueContainerList = function(){
+	
+	var loc_children = [];
+	
+	var loc_out = {
+		
+		addChild : function(){},
+
+		getGetValueRequest : function(categary, name, handlers, request){   
+			
+		}
+		
+	};
+
+	return loc_out;	
 };
+
+
+
+
+
+
+
+
+var node_makeObjectValueContainerInterface = function(rawEntity, categary){
+
+	var loc_categary = categary;
+	var loc_rawEntity = rawEntity;
+
+	var loc_interfaceEntity = {
+		getCategary : function(){    return loc_categary;     },
+		getGetValueRequest : function(name, handlers, request){   return loc_rawEntity.getGetValueRequest==undefined?undefined:loc_rawEntity.getGetValueRequest(name, handlers, request);    }
+	};
+	
+	var loc_out = node_buildInterface(rawEntity, node_CONSTANT.INTERFACE_VALUECONTAINER, loc_interfaceEntity);
+	return loc_out;
+};
+
+var node_getValueContainerInterface = function(baseObject){
+	return node_getInterface(baseObject, node_CONSTANT.INTERFACE_VALUECONTAINER);
+};
+
 
 
 //*******************************************   End Node Definition  ************************************** 	
@@ -66,8 +92,8 @@ nosliw.registerSetNodeDataEvent("common.objectwithtype.getObjectType", function(
 
 
 //Register Node by Name
-packageObj.createChildNode("makeObjectBasicEntityObjectInterface", node_makeObjectBasicEntityObjectInterface); 
-packageObj.createChildNode("getBasicEntityObjectInterface", node_getBasicEntityObjectInterface); 
+packageObj.createChildNode("makeObjectValueContainerInterface", node_makeObjectValueContainerInterface); 
+packageObj.createChildNode("getValueContainerInterface", node_getValueContainerInterface); 
 
 
 })(packageObj);

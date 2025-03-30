@@ -15,7 +15,7 @@ public class HAPEmbededAttachmentReference extends HAPEntityInfoWritableImp{
 	private HAPDefinitionWrapperTask<HAPReferenceAttachment> m_embeded;
 
 	
-	public HAPReferenceAttachment getAttachmentReference() {	return this.m_embeded.getDefinition();	}
+	public HAPReferenceAttachment getAttachmentReference() {	return this.m_embeded.getTask();	}
 	
 	public HAPDefinitionWrapperTask<HAPReferenceAttachment> getEmbeded(){   return this.m_embeded;  }
 	

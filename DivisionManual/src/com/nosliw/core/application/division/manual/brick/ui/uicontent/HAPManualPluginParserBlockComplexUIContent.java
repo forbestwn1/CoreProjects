@@ -334,7 +334,7 @@ public class HAPManualPluginParserBlockComplexUIContent extends HAPManualDefinit
 		List<TextNode> textNodes = ele.textNodes();
 		for(TextNode textNode : textNodes){
 			String text = textNode.text();
-			style.setDefinition(text);
+			style.setTask(text);
 			break;
 		}
 		ele.remove();

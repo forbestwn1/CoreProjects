@@ -1,16 +1,16 @@
 package com.nosliw.core.application.division.manual.brick.task.flow;
 
+import com.nosliw.core.application.HAPAddressValue;
 import com.nosliw.core.application.HAPValueOfDynamic;
 import com.nosliw.core.application.brick.task.flow.HAPBlockTaskFlowActivityDynamic;
-import com.nosliw.core.application.brick.task.flow.HAPTaskFlowAddressTask;
 
 public class HAPManualBlockTaskFlowActivityDynamic extends HAPManualBlockTaskFlowActivity implements HAPBlockTaskFlowActivityDynamic{
 
 	@Override
-	public HAPValueOfDynamic getDefinition() {    return this.getAttributeValueOfDynamic(DEFINITION);   }
-	public void setDefinition(HAPValueOfDynamic dynamicValue) {    this.setAttributeValueWithDynamic(DEFINITION, dynamicValue);      }
+	public HAPValueOfDynamic getTask() {    return this.getAttributeValueOfDynamic(TASK);   }
+	public void setDefinition(HAPValueOfDynamic dynamicValue) {    this.setAttributeValueWithDynamic(TASK, dynamicValue);      }
 
 	@Override
-	public HAPTaskFlowAddressTask getRuntime() {   return (HAPTaskFlowAddressTask)this.getAttributeValueOfValue(RUNTIME);  }
-	public void setRuntime(HAPTaskFlowAddressTask runtime) {    this.setAttributeValueWithValue(RUNTIME, runtime);     }
+	public HAPAddressValue getTaskAddress() {   return (HAPAddressValue)this.getAttributeValueOfValue(TASKADDRESS);  }
+	public void setRuntime(HAPAddressValue runtime) {    this.setAttributeValueWithValue(TASKADDRESS, runtime);     }
 }

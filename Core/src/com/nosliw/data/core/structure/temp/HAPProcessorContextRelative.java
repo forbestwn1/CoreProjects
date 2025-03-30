@@ -119,12 +119,12 @@ public class HAPProcessorContextRelative {
 			if(!configure.tolerantNoParentForRelative)  throw new RuntimeException();
 		}
 		else {
-			switch(resolveInfo.referredRoot.getDefinition().getBrickTypeId()) {
+			switch(resolveInfo.referredRoot.getTask().getBrickTypeId()) {
 			case HAPConstantShared.CONTEXT_ELEMENTTYPE_CONSTANT:
 			{
 				//if refer to a constant element
 				out = new HAPElementStructureLeafConstant();
-				Object constantValue = ((HAPElementStructureLeafConstant)resolveInfo.referredRoot.getDefinition()).getValue();
+				Object constantValue = ((HAPElementStructureLeafConstant)resolveInfo.referredRoot.getTask()).getValue();
 				((HAPElementStructureLeafConstant)out).setValue(constantValue);
 				break;
 			}
@@ -153,7 +153,7 @@ public class HAPProcessorContextRelative {
 						defContextElementRelative.setSolidNodeReference(new HAPInfoPathToSolidRoot(refRootId, refPath));
 					}
 					
-					HAPElementStructure relativeContextEle = defContextElementRelative.getDefinition();
+					HAPElementStructure relativeContextEle = defContextElementRelative.getTask();
 					if(relativeContextEle==null) {
 						defContextElementRelative.setDefinition(solvedContextEle.cloneStructureElement());
 					}

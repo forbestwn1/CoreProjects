@@ -58,8 +58,8 @@ public class HAPParserUITagDefinition {
 	}
 	
 	private static void parseUITagDefinitionData(HAPUITagDefinitionData definition, NativeObject defObjJS) {
-		HAPElementStructureLeafRelative eleDef = (HAPElementStructureLeafRelative)definition.getValueStructureDefinition().resolveRoot(new HAPReferenceRootInGroup(HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PRIVATE, "internal_data"), false).iterator().next().getDefinition();
-		definition.setDataTypeCriteria(((HAPElementStructureLeafData)eleDef.getDefinition()).getCriteria());
+		HAPElementStructureLeafRelative eleDef = (HAPElementStructureLeafRelative)definition.getValueStructureDefinition().resolveRoot(new HAPReferenceRootInGroup(HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PRIVATE, "internal_data"), false).iterator().next().getTask();
+		definition.setDataTypeCriteria(((HAPElementStructureLeafData)eleDef.getTask()).getCriteria());
 	}
 	
 	private static void parseUITagDefinition(HAPUITagDefinition definition, NativeObject defObjJS) throws Exception {

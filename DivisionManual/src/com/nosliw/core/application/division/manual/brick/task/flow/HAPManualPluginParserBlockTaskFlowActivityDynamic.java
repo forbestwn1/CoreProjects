@@ -3,9 +3,9 @@ package com.nosliw.core.application.division.manual.brick.task.flow;
 import org.json.JSONObject;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.core.application.HAPAddressValue;
 import com.nosliw.core.application.HAPEnumBrickType;
 import com.nosliw.core.application.brick.task.flow.HAPBlockTaskFlowActivityDynamic;
-import com.nosliw.core.application.brick.task.flow.HAPTaskFlowAddressTask;
 import com.nosliw.core.application.division.manual.HAPManualManagerBrick;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrick;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionContextParse;
@@ -24,13 +24,13 @@ public class HAPManualPluginParserBlockTaskFlowActivityDynamic extends HAPManual
 		HAPManualDefinitionBlockTaskFlowActivityDynamic activityBrick = (HAPManualDefinitionBlockTaskFlowActivityDynamic)entityDefinition;
 
 		
-		this.parseBrickAttributeJson(activityBrick, jsonObj, HAPBlockTaskFlowActivityDynamic.DEFINITION, null, null, parseContext);
+		this.parseBrickAttributeJson(activityBrick, jsonObj, HAPBlockTaskFlowActivityDynamic.TASK, null, null, parseContext);
 		
-		JSONObject runtimeJson = jsonObj.optJSONObject(HAPBlockTaskFlowActivityDynamic.RUNTIME);
+		JSONObject runtimeJson = jsonObj.optJSONObject(HAPBlockTaskFlowActivityDynamic.TASKADDRESS);
 		if(runtimeJson!=null) {
-			HAPTaskFlowAddressTask runtime = new HAPTaskFlowAddressTask();
+			HAPAddressValue runtime = new HAPAddressValue();
 			runtime.buildObject(runtimeJson, HAPSerializationFormat.JSON);
-			activityBrick.setRuntime(runtime);
+			activityBrick.setTaskAddress(runtime);
 		}
 	}
 }

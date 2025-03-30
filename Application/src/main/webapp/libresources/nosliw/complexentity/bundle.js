@@ -152,16 +152,20 @@ var node_createBundleCore = function(parm, configure){
 			}, handlers, request);
 		},
 		
-		setDynamicTaskInputContainer : function(dynamicTaskInputContainer){
-			loc_dynamicTaskInputContainer = dynamicTaskInputContainer;
-		},
+		setDynamicTaskInputContainer : function(dynamicTaskInputContainer){		loc_dynamicTaskInputContainer = dynamicTaskInputContainer;		},
 		
-		getDynamicTaskInputContainer : function(){
-			return loc_dynamicTaskInputContainer;
-		},
+		getDynamicTaskInputContainer : function(){	return loc_dynamicTaskInputContainer;		},
+		
+		getGetValueRequest : function(name, handlers, request){
+			var complexPath = node_namingConvensionUtility.parseComplexPath(name);
+			if(complexPath.root=="#dynamicTask"){
+				return loc_dynamicTaskInputContainer.getDyanmicTaskInputRequest(complexPath.path, handlers, request);
+			}
+		}
 		
 	};
 	
+	loc_out = node_makeObjectValueContainerInterface(loc_out, node_COMMONCONSTANT.VALUEADDRESSCATEGARY_BUNDLE);
 	loc_out = node_makeObjectWithType(loc_out, node_CONSTANT.TYPEDOBJECT_TYPE_BUNDLE);
 
 	loc_init(parm, configure);

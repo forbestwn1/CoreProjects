@@ -59,7 +59,7 @@ var loc_createTaskActivityCore = function(entityDef, configure){
 			return out;
 		},
 		
-		getExecuteActivityRequest : function(adapterName, taskContext, handlers, request){
+		getExecuteActivityRequest : function(adapterName, flowContext, taskContext, handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 			
 			

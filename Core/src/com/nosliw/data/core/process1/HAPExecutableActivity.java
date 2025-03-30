@@ -64,6 +64,6 @@ public abstract class HAPExecutableActivity extends HAPExecutableImpEntityInfo{
 		jsonMap.put(ID, this.m_id);
 		jsonMap.put(CATEGARY, this.m_categary);
 		jsonMap.put(TYPE, this.m_type);
-//		jsonMap.put(DEFINITION, this.m_activityDefinition.toStringValue(HAPSerializationFormat.JSON));
+//		jsonMap.put(TASK, this.m_activityDefinition.toStringValue(HAPSerializationFormat.JSON));
 	}
 }
