@@ -38,7 +38,7 @@ import com.nosliw.data.core.runtime.js.gateway.HAPGatewayResource;
 import com.nosliw.data.core.runtime.js.gateway.HAPGatewayResourceDefinition;
 import com.nosliw.data.core.task.HAPManagerTask;
 
-@HAPEntityWithAttribute(baseName="TASKADDRESS")
+@HAPEntityWithAttribute(baseName="RUNTIME")
 public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 
 	@HAPAttribute

@@ -80,7 +80,7 @@ var node_createDynamicCore = function(dynamicDef, configure){
 				success : function(request, entityCore){
 					loc_currentTaskEntityCore = entityCore;
 					var taskCore = node_getApplicationInterface(entityCore, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_TASK).getTaskCore();
-					taskCore.addSetup(loc_dynamicTaskInput.getTaskSetup());
+					taskCore.addTaskSetup(loc_dynamicTaskInput.getTaskSetup());
 					return node_taskUtility.getExecuteEntityTaskWithAdapterRequest(loc_out, adapterName, taskSetup);
 				}
 			}));

@@ -160,7 +160,7 @@
 							]					
 						},
 						"taskAddress" : {
-							
+							"id" : "#dynamicTask.default"
 						},
 						"next" : {
 							"decision" : {

@@ -19,6 +19,7 @@ var packageObj = library;
 	var node_componentUtility;
 	var node_namingConvensionUtility;
 	var node_getEntityTreeNodeInterface;
+	var node_buildInterface;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -109,6 +110,18 @@ var node_createBundleCore = function(parm, configure){
 		return loc_envInterface[node_CONSTANT.INTERFACE_TREENODEENTITY].getChild(loc_MAIN_NAME).getChildValue();
 	};
 
+	var loc_valueContainer = {
+		
+		getGetValueRequest : function(categary, name, handlers, request){ 
+			if(categary!=undefined&&categar!=node_COMMONCONSTANT.VALUEADDRESSCATEGARY_BUNDLE)  return;
+			var complexPath = node_namingConvensionUtility.parseComplexPath(name);
+			if(complexPath.root=="#dynamicTask"){
+				return loc_dynamicTaskInputContainer.getDyanmicTaskInputRequest(complexPath.path, handlers, request);
+			}
+		}
+		
+	};
+
 	var loc_out = {
 
 		getDataType: function(){    return  "bundle";   },
@@ -156,16 +169,11 @@ var node_createBundleCore = function(parm, configure){
 		
 		getDynamicTaskInputContainer : function(){	return loc_dynamicTaskInputContainer;		},
 		
-		getGetValueRequest : function(name, handlers, request){
-			var complexPath = node_namingConvensionUtility.parseComplexPath(name);
-			if(complexPath.root=="#dynamicTask"){
-				return loc_dynamicTaskInputContainer.getDyanmicTaskInputRequest(complexPath.path, handlers, request);
-			}
-		}
+		getValueContainer : function(){		return loc_valueContainer;	},
 		
 	};
 	
-	loc_out = node_makeObjectValueContainerInterface(loc_out, node_COMMONCONSTANT.VALUEADDRESSCATEGARY_BUNDLE);
+	loc_out = node_buildInterface(loc_out, node_CONSTANT.INTERFACE_VALUECONTAINERPROVIDER, loc_out);
 	loc_out = node_makeObjectWithType(loc_out, node_CONSTANT.TYPEDOBJECT_TYPE_BUNDLE);
 
 	loc_init(parm, configure);
@@ -190,6 +198,7 @@ nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_b
 nosliw.registerSetNodeDataEvent("component.componentUtility", function(){node_componentUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("common.namingconvension.namingConvensionUtility", function(){node_namingConvensionUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("complexentity.getEntityTreeNodeInterface", function(){node_getEntityTreeNodeInterface = this.getData();});
+nosliw.registerSetNodeDataEvent("common.interface.buildInterface", function(){node_buildInterface = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createBundleCore", node_createBundleCore); 

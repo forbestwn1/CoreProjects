@@ -17,29 +17,78 @@ var packageObj = library.getChildPackage("valuecontainer");
 
 //*******************************************   Start Node Definition  **************************************
 
-var node_makeObjectValueContainerProvider = function(rawEntity){
+var node_createValueContainerSimple = function(categary){
 	
-	var loc_rawEntity = rawEntity;
+	var loc_value = [];
+	
+	var loc_categary = categary;
+	
+	var loc_getGetValueRequest = function(index, categary, name, handlers, request){
+		if(index>=loc_children.length)  return;
 
-	var loc_interfaceEntity = {
-		getValueContainer : function(){   return loc_rawEntity.getValueContainer==undefined?undefined:loc_rawEntity.getValueContainer();    }
+		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+		out.addRequest(loc_children[index].getGetValueRequest(categary, name, {
+			success : function(request, value){
+				if(value!=undefined)   return value;
+				else{
+					return loc_getGetValueRequest(index+1, categary, name);
+				}
+			}
+		}));
+		return out;		
 	};
 	
-	var loc_out = node_buildInterface(rawEntity, node_CONSTANT.INTERFACE_VALUECONTAINERPROVIDER, loc_interfaceEntity);
-	return loc_out;
+	var loc_out = {
+		
+		getGetValueRequest : function(categary, name, handlers, request){
+			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+			out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
+				if(categary!=loc_categary)  return;
+				else{
+					return loc_value[name];
+				}
+			}));
+			return out;
+		},
+		
+		setValue : function(name, value){
+			loc_value[name] = value;
+		}
+		
+	};
+
+	return loc_out;	
 };
 
 
 var node_createValueContainerList = function(){
-	
 	var loc_children = [];
+	
+	var loc_getGetValueRequest = function(index, categary, name, handlers, request){
+		if(index>=loc_children.length)  return;
+
+		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+		out.addRequest(loc_children[index].getGetValueRequest(categary, name, {
+			success : function(request, value){
+				if(value!=undefined)   return value;
+				else{
+					return loc_getGetValueRequest(index+1, categary, name);
+				}
+			}
+		}));
+		return out;		
+	};
 	
 	var loc_out = {
 		
-		addChild : function(){},
+		addChild : function(child){
+			loc_children.push(child);
+		},
 
 		getGetValueRequest : function(categary, name, handlers, request){   
-			
+			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+			out.addRequest(loc_getGetValueRequest(0, categary, name));
+			return out;
 		}
 		
 	};
@@ -56,12 +105,10 @@ var node_createValueContainerList = function(){
 
 var node_makeObjectValueContainerInterface = function(rawEntity, categary){
 
-	var loc_categary = categary;
 	var loc_rawEntity = rawEntity;
 
 	var loc_interfaceEntity = {
-		getCategary : function(){    return loc_categary;     },
-		getGetValueRequest : function(name, handlers, request){   return loc_rawEntity.getGetValueRequest==undefined?undefined:loc_rawEntity.getGetValueRequest(name, handlers, request);    }
+		getGetValueRequest : function(categary, name, handlers, request){   return loc_rawEntity.getGetValueRequest==undefined?undefined:loc_rawEntity.getGetValueRequest(name, handlers, request);    }
 	};
 	
 	var loc_out = node_buildInterface(rawEntity, node_CONSTANT.INTERFACE_VALUECONTAINER, loc_interfaceEntity);
@@ -92,6 +139,9 @@ nosliw.registerSetNodeDataEvent("common.objectwithtype.getObjectType", function(
 
 
 //Register Node by Name
+packageObj.createChildNode("createValueContainerList", node_createValueContainerList); 
+packageObj.createChildNode("createValueContainerSimple", node_createValueContainerSimple); 
+
 packageObj.createChildNode("makeObjectValueContainerInterface", node_makeObjectValueContainerInterface); 
 packageObj.createChildNode("getValueContainerInterface", node_getValueContainerInterface); 
 

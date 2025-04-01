@@ -11,6 +11,7 @@ var packageObj = library;
 	var node_createServiceRequestInfoSimple;
 	var node_ServiceInfo;
 	var node_createTaskContextInterface;
+	var node_basicUtility;
 
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -22,7 +23,7 @@ var node_createTaskSetup = function(initRequest, runtimeEnv){
 	
 	var loc_out = {
 		
-		getInitRequest : function(){   return loc_initRequest;      },
+		getInitTaskRequest : function(){   return loc_initRequest;      },
 		
 		getRuntimeEnv : function(){  return loc_runtimeEnv;    }
 		
@@ -34,6 +35,8 @@ var node_createTaskSetup = function(initRequest, runtimeEnv){
 var node_createTaskCore = function(taskImp, entityCore){
 	
 	var loc_taskImp = taskImp;
+	
+	var loc_entityCore = entityCore;
 
 	var loc_taskResult;
 	
@@ -45,13 +48,15 @@ var node_createTaskCore = function(taskImp, entityCore){
 	
 	var loc_addTaskSetup = function(taskSetup){
 		//add init request
-		loc_initSetupRequests.push(taskSetup.getInitRequest());
+		if(taskSetup.getInitTaskRequest()!=undefined) loc_initSetupRequests.push(taskSetup.getInitTaskRequest());
 		
 		//add runtime env
-		loc_runtimeEnv.addChild(taskSetup.getRuntimeEnv());
+		if(taskSetup.getRuntimeEnv()!=undefined)  loc_runtimeEnv.addChild(taskSetup.getRuntimeEnv());
 	};
 	
 	var loc_out = {
+	
+		getRuntimeEnv : function(){   return loc_runtimeEnv;      },
 		
 		registerLifecycleHandler : function(handler){  loc_lifecycleHandlers.push(handler);  },
 		
@@ -106,6 +111,8 @@ nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequenc
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple", function(){node_createServiceRequestInfoSimple = this.getData();});
 nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();	});
 nosliw.registerSetNodeDataEvent("task.createTaskContextInterface", function(){node_createTaskContextInterface = this.getData();	});
+nosliw.registerSetNodeDataEvent("common.valuecontainer.createValueContainerList", function(){node_createValueContainerList = this.getData();	});
+nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();});
 
 
 //Register Node by Name

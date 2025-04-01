@@ -312,6 +312,7 @@ var node_CONSTANT=
 	  "INTERFACE_APPLICATIONENTITY" : "applicationEntity",
 	  "INTERFACE_WITHVALUEPORT" : "withValuePort",
 	  "INTERFACE_VALUECONTAINER" : "valueContainer",
+	  "INTERFACE_VALUECONTAINERPROVIDER" : "valueContainerProvider",
 
 	  "INTERFACE_COMPONENTENTITYMANAGE" : "componentEntityManage",
 	  
@@ -339,6 +340,7 @@ var node_CONSTANT=
 	  "UICONTENT_ENTITYTYPE_HANDLER" : "handler",
 	  "UICONTENT_ENTITYTYPE_SERVICE" : "service",
 	  
+	  "NAME_RUNTIMEENVITEM_FLOWCONTEXT" : "flow",
 };
 
 //*******************************************   End Node Definition  ************************************** 	

@@ -40,7 +40,7 @@ var node_taskUtility = {
 		}
 		
 		//task init
-		taskCore.addSetup(taskSetup``);
+		taskCore.addTaskSetup(taskSetup);
 		out.addRequest(taskCore.getTaskInitRequest());
 
 		out.addRequest(onInitTaskRequest({
@@ -76,15 +76,15 @@ var node_taskUtility = {
 		}
 	},
 
-	getExecuteWrapperedTaskWithAdapterRequest : function(wrapperCore, adapterName, taskSetupCreation, taskSetupInit, handlers, request){
+	getExecuteWrapperedTaskWithAdapterRequest : function(wrapperCore, adapterName, taskSetup, handlers, request){
 		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 		
 		var taskFactory = node_getApplicationInterface(wrapperCore, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_TASKFACTORY);
 		out.addRequest(taskFactory.getCreateTaskEntityRequest({
 			success : function(request, entityCore){
 				var taskCore = node_getApplicationInterface(entityCore, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_TASK).getTaskCore();
-				taskCore.addTaskSetup(taskSetupCreation);
-				return node_taskUtility.getExecuteEntityTaskWithAdapterRequest(entityCore, adapterName, taskSetupInit);
+				taskCore.addTaskSetup(taskSetup);
+				return node_taskUtility.getExecuteEntityTaskWithAdapterRequest(entityCore, adapterName);
 			}
 		}));
 

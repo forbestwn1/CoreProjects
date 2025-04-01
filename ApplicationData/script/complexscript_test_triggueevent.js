@@ -11,6 +11,7 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 	var node_getWithValuePortInterface = nosliw.getNodeData("valueport.getWithValuePortInterface");
 	var node_getEntityObjectInterface = nosliw.getNodeData("complexentity.getEntityObjectInterface");
 	var node_utilityNamedVariable = nosliw.getNodeData("valueport.utilityNamedVariable");
+	var node_createTaskSetup = nosliw.getNodeData("task.createTaskSetup");
 
 	var loc_parms;
     var loc_scriptVars;
@@ -76,8 +77,8 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 					var relativePath = trigguerInfo[node_COMMONATRIBUTECONSTANT.INFOTRIGGUERTASK_HANDLERID][node_COMMONATRIBUTECONSTANT.IDBRICKINBUNDLE_RELATIVEPATH];
 					var handlerEntityCoreWrapper = node_complexEntityUtility.getBrickCoreByRelativePath(loc_out, relativePath);
 					
-					var taskContext = {
-						getInitTaskRequest : function(coreEntity, handlers, request){
+					var taskSetup = node_createTaskSetup(
+						function(coreEntity, handlers, request){
 							//set event data to value port
 							var internalValuePortContainer = node_getEntityObjectInterface(coreEntity).getExternalValuePortContainer();
 							
@@ -100,17 +101,10 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 								rootEleName,
 								taskTrigguer[node_COMMONATRIBUTECONSTANT.TESTTASKTRIGGUER_TESTDATA],
 								handlers, request);
-							
-							
-							
-//							var eventValuePort = node_getWithValuePortInterface(coreEntity).getValuePort(eventInfo[node_COMMONATRIBUTECONSTANT.INFOTRIGGUERTASK_VALUEPORTGROUPNAME], node_COMMONCONSTANT.VALUEPORT_NAME_EVENT);
-//							var internalValuePortContainer = node_getEntityObjectInterface(coreEntity).getExternalValuePortContainer();
-//							var valueStructureId = internalValuePortContainer.getValueStructureIdByGroupAndValuePort(node_COMMONCONSTANT.VALUEPORTGROUP_TYPE_EVENT, node_COMMONCONSTANT.VALUEPORT_TYPE_EVENT);
-//							return eventValuePort.setValueRequest(node_createValuePortElementInfo(undefined, node_COMMONCONSTANT.NAME_ROOT_EVENT), event[node_COMMONATRIBUTECONSTANT.TESTTASKTRIGGUER_TESTDATA], handlers, request);
 						}
-					};
+					);
 					
-					var taskExeRequest = node_taskUtility.getExecuteWrapperedTaskWithAdapterRequest(handlerEntityCoreWrapper, undefined, undefined, taskContext, {
+					var taskExeRequest = node_taskUtility.getExecuteWrapperedTaskWithAdapterRequest(handlerEntityCoreWrapper, undefined, taskSetup, {
 						success : function(request, taskResult){
 							eventResultView.val(JSON.stringify(taskResult));
 						}

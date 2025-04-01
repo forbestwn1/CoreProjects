@@ -62,8 +62,12 @@ var node_namingConvensionUtility = function(){
 				root = fullPath;
 			}
 			else{
-				root = fullPath.subString(0, index-1);
-				path = fullPath.subString(index+1);
+				root = fullPath.substring(0, index);
+				path = fullPath.substring(index+1);
+			}
+			return {
+				root : root,
+				path : path
 			}
 		},
 		

@@ -59,27 +59,15 @@ var loc_createTaskActivityCore = function(entityDef, configure){
 			return out;
 		},
 		
-		getExecuteActivityRequest : function(adapterName, flowContext, taskContext, handlers, request){
+		getExecuteActivityRequest : function(adapterName, valueContainer, taskSetup, handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 			
-			
-			out.addRequest(node_taskUtility.getExecuteWrapperedTaskWithAdapterRequest(loc_task, adapterName, undefined, undefined, {
+			out.addRequest(node_taskUtility.getExecuteWrapperedTaskWithAdapterRequest(loc_task, adapterName, taskSetup, {
 				success : function(request, taskResult){
 					var decsionOutput = loc_decision[node_COMMONATRIBUTECONSTANT.TASKFLOWDECISIONJS_SCRIPT](taskResult);
 					return loc_target[decsionOutput]; 
 				}
 			}));
-			
-			
-/*			
-			out.addRequest(loc_task.getExecuteTaskWithAdapter(adapterName, taskContext, {
-				success : function(request, task){
-					var taskResult = task.getTaskResult();
-					var decsionOutput = loc_decision[node_COMMONATRIBUTECONSTANT.TASKFLOWDECISIONJS_SCRIPT](taskResult);
-					return loc_target[decsionOutput]; 
-				}
-			}));
-*/
 			
 			return out;
 		},

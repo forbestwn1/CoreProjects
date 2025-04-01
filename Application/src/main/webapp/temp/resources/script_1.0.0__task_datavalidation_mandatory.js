@@ -54,12 +54,6 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 		updateView : function(view){
 		},
 
-		getTaskInitRequest : function(handlers, request){
-			if(loc_taskContext!=undefined){
-				return loc_taskContext.getInitTaskRequest(loc_out, handlers, request);
-			}
-		},
-
 		getTaskExecuteRequest : function(handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 			var valuePortContainer = node_getEntityObjectInterface(loc_out).getInternalValuePortContainer();

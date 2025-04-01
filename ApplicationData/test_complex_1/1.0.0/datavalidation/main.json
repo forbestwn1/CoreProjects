@@ -67,7 +67,7 @@
 								"criteria": "test.string;1.0.0"
 							}
 						},
-						"testData1" : {
+						"testData" : {
 							"dataTypeId": "test.string;1.0.0",
 							"value": "data for validation"
 						}

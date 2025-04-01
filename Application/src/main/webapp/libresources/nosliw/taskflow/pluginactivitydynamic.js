@@ -47,9 +47,11 @@ var loc_createDynamicActivityCore = function(entityDef, configure){
 	
 	var loc_dynamic;
 
-	var loc_getDynamicTaskInputRequest = function(taskContext, flowContext, handlers, request){
+	var loc_getDynamicTaskInputRequest = function(valueContainer, handlers, request){
 		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-		out.addRequest(node_getEntityObjectInterface(loc_out).getBundle().getDynamicTaskInputContainer().getDyanmicTaskInputRequest("default"));
+		out.addRequest(valueContainer.getGetValueRequest(loc_taskAddress[node_COMMONATRIBUTECONSTANT.ADDRESSVALUE_CATEGARY], loc_taskAddress[node_COMMONATRIBUTECONSTANT.ADDRESSVALUE_ID]));
+		
+//		out.addRequest(node_getEntityObjectInterface(loc_out).getBundle().getDynamicTaskInputContainer().getDyanmicTaskInputRequest("default"));
 		return out;
 	};
 
@@ -67,14 +69,14 @@ var loc_createDynamicActivityCore = function(entityDef, configure){
 			return out;
 		},
 		
-		getExecuteActivityRequest : function(adapterName, flowContext, taskContext, handlers, request){
+		getExecuteActivityRequest : function(adapterName, valueContainer, taskSetup, handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 			
-			out.addRequest(loc_getDynamicTaskInputRequest(taskContext, flowContext, {
+			out.addRequest(loc_getDynamicTaskInputRequest(valueContainer, {
 				success : function(request, dynamicTaskInput){
 					loc_dynamic.setDynamicTaskInput(dynamicTaskInput);
 					
-					return loc_dynamic.getExecuteTaskWithAdapterRequest(adapterName, taskContext, {
+					return loc_dynamic.getExecuteTaskWithAdapterRequest(adapterName, taskSetup, {
 						success : function(request, taskResult){
 							var decsionOutput = loc_decision[node_COMMONATRIBUTECONSTANT.TASKFLOWDECISIONJS_SCRIPT](taskResult);
 							return loc_target[decsionOutput]; 
