@@ -3,8 +3,8 @@ package com.nosliw.test.uisource;
 import java.io.FileNotFoundException;
 
 import com.nosliw.common.serialization.HAPUtilityJson;
+import com.nosliw.core.runtimeenv.js.browser.HAPRuntimeEnvironmentImpBrowser;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.data.core.imp.runtime.js.browser.HAPRuntimeEnvironmentImpBrowser;
 import com.nosliw.uiresource.module.HAPExecutableModule;
 import com.nosliw.uiresource.resource.HAPResourceIdUIModule;
 

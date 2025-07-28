@@ -9,13 +9,14 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.info.HAPEntityInfoImpWrapper;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.core.application.HAPExecutable;
+import com.nosliw.core.resource.imp.js.HAPResourceDataFactory;
+import com.nosliw.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.component.HAPDefinitionEntityComponent;
 import com.nosliw.data.core.process1.resource.HAPResourceDefinitionProcess;
 import com.nosliw.data.core.process1.resource.HAPResourceDefinitionProcessSuite;
 import com.nosliw.data.core.resource.HAPResourceData;
 import com.nosliw.data.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.resource.HAPManagerResource;
-import com.nosliw.data.core.runtime.js.HAPResourceDataFactory;
 import com.nosliw.data.core.service.use.HAPDefinitionServiceProvider;
 
 public class HAPExecutableImpComponent extends HAPEntityInfoImpWrapper implements HAPExecutable{

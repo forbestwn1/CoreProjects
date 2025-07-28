@@ -12,6 +12,7 @@ import org.json.JSONObject;
 
 import com.google.common.collect.Sets;
 import com.nosliw.common.exception.HAPServiceData;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.core.data.HAPData;
 import com.nosliw.core.data.HAPDataTypeFamily;
@@ -31,17 +32,15 @@ import com.nosliw.core.data.criteria.HAPDataTypeSubCriteriaGroupImp;
 import com.nosliw.core.data.criteria.HAPParserCriteria;
 import com.nosliw.core.data.matcher.HAPMatcher;
 import com.nosliw.core.data.matcher.HAPMatchers;
-import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPDataTypeHelperImp implements HAPDataTypeHelper{
 
 	private HAPDataAccessDataType m_dataAccess = null;
-	private HAPRuntimeEnvironment m_runtimeEnv;
+	private HAPRuntime m_runtime;
 	
-	public HAPDataTypeHelperImp(HAPRuntimeEnvironment runtimeEnv, HAPDataAccessDataType dataAccess){
+	public HAPDataTypeHelperImp(HAPRuntime runtime, HAPDataAccessDataType dataAccess){
+		this.m_runtime = runtime;
 		this.m_dataAccess = dataAccess;
-		this.m_runtimeEnv = runtimeEnv;
 	}
 	
 	@Override
@@ -62,12 +61,16 @@ public class HAPDataTypeHelperImp implements HAPDataTypeHelper{
 					break;
 				}
 			}
-			if(isCandidate)   candidates.add(firstRelationship);
+			if(isCandidate) {
+				candidates.add(firstRelationship);
+			}
 		}
 		
-		if(candidates.size()==0)  return null;
-		else if(candidates.size()==1)  return candidates.get(0).getTarget();
-		else{
+		if(candidates.size()==0) {
+			return null;
+		} else if(candidates.size()==1) {
+			return candidates.get(0).getTarget();
+		} else{
 			HAPDataTypeId out = candidates.get(0).getTarget();
 			for(int i=1; i<candidates.size(); i++){
 				HAPDataTypeId candidateTarget = candidates.get(i).getTarget();
@@ -112,8 +115,9 @@ public class HAPDataTypeHelperImp implements HAPDataTypeHelper{
 		List<HAPDataTypeId> dataTypeIds = new ArrayList<HAPDataTypeId>(dataTypeIds1);
 		Set<HAPDataTypeId> out = new HashSet<HAPDataTypeId>();
 		if(dataTypeIds.size()==0){}
-		else if(dataTypeIds.size()==1)  out.add(dataTypeIds.get(0));
-		else{
+		else if(dataTypeIds.size()==1) {
+			out.add(dataTypeIds.get(0));
+		} else{
 			out.addAll(dataTypeIds1);
 			Set<HAPDataTypeId> removes = new HashSet<HAPDataTypeId>();
 			for(int i=0; i< dataTypeIds.size()-1; i++){
@@ -136,8 +140,9 @@ public class HAPDataTypeHelperImp implements HAPDataTypeHelper{
 		List<HAPDataTypeCriteriaId> dataTypeCriteriaIds = new ArrayList<HAPDataTypeCriteriaId>(dataTypeCriteriaIds1);
 		Set<HAPDataTypeCriteriaId> out = new HashSet<HAPDataTypeCriteriaId>();
 		if(dataTypeCriteriaIds.size()==0){}
-		else if(dataTypeCriteriaIds.size()==1)  out.add(dataTypeCriteriaIds.get(0));
-		else{
+		else if(dataTypeCriteriaIds.size()==1) {
+			out.add(dataTypeCriteriaIds.get(0));
+		} else{
 			out.addAll(dataTypeCriteriaIds1);
 			Set<HAPDataTypeCriteriaId> removes = new HashSet<HAPDataTypeCriteriaId>();
 			for(int i=0; i< dataTypeCriteriaIds.size()-1; i++){
@@ -164,8 +169,11 @@ public class HAPDataTypeHelperImp implements HAPDataTypeHelper{
 	@Override
 	public HAPMatchers convertable(HAPDataTypeCriteria sourceCriteria, HAPDataTypeCriteria targetCriteria) {
 		if(targetCriteria==null){
-			if(sourceCriteria==null)  return new HAPMatchers();
-			else return null; 
+			if(sourceCriteria==null) {
+				return new HAPMatchers();
+			} else {
+				return null;
+			} 
 		}
 		else if(targetCriteria==HAPDataTypeCriteriaAny.getCriteria()){
 			return new HAPMatchers();
@@ -185,7 +193,9 @@ public class HAPDataTypeHelperImp implements HAPDataTypeHelper{
 						break;
 					}
 				}
-				if(!match)  return null;
+				if(!match) {
+					return null;
+				}
 			}
 			return out;
 		}
@@ -230,8 +240,12 @@ public class HAPDataTypeHelperImp implements HAPDataTypeHelper{
 	@Override
 	public HAPDataTypeCriteria merge(HAPDataTypeCriteria criteria1, HAPDataTypeCriteria criteria2) {
 		
-		if(criteria1==null)   return criteria2;
-		if(criteria2==null || criteria2==HAPDataTypeCriteriaAny.getCriteria())   return criteria1;
+		if(criteria1==null) {
+			return criteria2;
+		}
+		if(criteria2==null || criteria2==HAPDataTypeCriteriaAny.getCriteria()) {
+			return criteria1;
+		}
 		
 		List<HAPDataTypeCriteriaId> criterias1 = new ArrayList(criteria1.getValidDataTypeCriteriaId(this));
 		List<HAPDataTypeCriteriaId> leaves1 = this.getLeafCriteriaIds(criterias1);
@@ -252,8 +266,11 @@ public class HAPDataTypeHelperImp implements HAPDataTypeHelper{
 				}
 			}
 		}
-		if(out.size()==0)   return null;
-		else	return new HAPDataTypeCriteriaIds(out);
+		if(out.size()==0) {
+			return null;
+		} else {
+			return new HAPDataTypeCriteriaIds(out);
+		}
 	}
 
 	
@@ -282,8 +299,9 @@ public class HAPDataTypeHelperImp implements HAPDataTypeHelper{
 						matchers = this.buildMatchers(sourceSubCriteria, targetSubCriteria);
 						if(matchers!=null){
 							out.addSubMatchers(targetSubName, matchers);
+						} else {
+							return null;
 						}
-						else return null;
 					}
 					sourceSubNames.remove(targetSubName);
 				}
@@ -295,7 +313,9 @@ public class HAPDataTypeHelperImp implements HAPDataTypeHelper{
 				}
 				
 			}
-			if(out!=null)   this.processSubMatcher(out);
+			if(out!=null) {
+				this.processSubMatcher(out);
+			}
 		}
 		return out;
 	}
@@ -305,11 +325,15 @@ public class HAPDataTypeHelperImp implements HAPDataTypeHelper{
 		boolean canRemove = true;
 		Map<String, HAPMatchers> subMatchers = parentMatcher.getSubMatchers();
 		for(String subName : subMatchers.keySet()){
-			if(!canRemove)  break;
+			if(!canRemove) {
+				break;
+			}
 			HAPMatchers matchers = subMatchers.get(subName);
 			Map<HAPDataTypeId, HAPMatcher> matchByDataTypes = matchers.getMatchers();
 			for(HAPDataTypeId dataTypeId : matchByDataTypes.keySet()){
-				if(!canRemove)   break;
+				if(!canRemove) {
+					break;
+				}
 				HAPMatcher matcher = matchByDataTypes.get(dataTypeId);
 				this.processSubMatcher(matcher);
 				
@@ -346,7 +370,9 @@ public class HAPDataTypeHelperImp implements HAPDataTypeHelper{
 					j++;
 				}
 			}
-			if(increasI)  i++;
+			if(increasI) {
+				i++;
+			}
 		}
 		return out;
 	}
@@ -387,9 +413,13 @@ public class HAPDataTypeHelperImp implements HAPDataTypeHelper{
 			}
 		}
 		
-		if(to==null)  out = fromSet;
-		else if(from==null)  out = toSet;
-		else out = Sets.intersection(fromSet, toSet);
+		if(to==null) {
+			out = fromSet;
+		} else if(from==null) {
+			out = toSet;
+		} else {
+			out = Sets.intersection(fromSet, toSet);
+		}
 		return out;
 	}
 
@@ -433,7 +463,9 @@ public class HAPDataTypeHelperImp implements HAPDataTypeHelper{
 					j++;
 				}
 			}
-			if(increasI)  i++;
+			if(increasI) {
+				i++;
+			}
 		}
 		return out;
 	}
@@ -452,18 +484,20 @@ public class HAPDataTypeHelperImp implements HAPDataTypeHelper{
 		if(hasChild){
 			List<HAPOperationParm> parmsDataGetChildrenNames = new ArrayList<HAPOperationParm>();
 			parmsDataGetChildrenNames.add(new HAPOperationParm(data));
-			HAPServiceData serviceDataChildNames = this.m_runtimeEnv.getRuntime().executeDataOperationSync(data.getDataTypeId(), HAPConstantShared.DATAOPERATION_COMPLEX_GETCHILDRENNAMES, parmsDataGetChildrenNames);
+			HAPServiceData serviceDataChildNames = this.m_runtime.executeDataOperationSync(data.getDataTypeId(), HAPConstantShared.DATAOPERATION_COMPLEX_GETCHILDRENNAMES, parmsDataGetChildrenNames);
 			HAPData getChildrenNamesResultData = (HAPData)serviceDataChildNames.getData();
 			try {
 				JSONArray getChildrenNamesResultJsonArray = new JSONArray(getChildrenNamesResultData.getValue().toString());
 				for(int i=0; i<getChildrenNamesResultJsonArray.length(); i++){
-					if(group==null)  group = new HAPDataTypeSubCriteriaGroupImp(false);
+					if(group==null) {
+						group = new HAPDataTypeSubCriteriaGroupImp(false);
+					}
 					JSONObject childNameDataJson = getChildrenNamesResultJsonArray.getJSONObject(i);
 					String childName = childNameDataJson.getString(HAPData.VALUE);
 					List<HAPOperationParm> parmsDataGetChildData = new ArrayList<HAPOperationParm>();
 					parmsDataGetChildData.add(new HAPOperationParm(data));
 					parmsDataGetChildData.add(new HAPOperationParm("name", HAPUtilityData.buildDataWrapperFromJson(childNameDataJson)));
-					HAPServiceData serviceDataChildData = this.m_runtimeEnv.getRuntime().executeDataOperationSync(data.getDataTypeId(), HAPConstantShared.DATAOPERATION_COMPLEX_GETCHILDDATA, parmsDataGetChildData);
+					HAPServiceData serviceDataChildData = this.m_runtime.executeDataOperationSync(data.getDataTypeId(), HAPConstantShared.DATAOPERATION_COMPLEX_GETCHILDDATA, parmsDataGetChildData);
 					HAPData getChildDataResultData = (HAPData)serviceDataChildData.getData();
 					group.addSubCriteria(childName, this.getDataTypeCriteriaByData(getChildDataResultData));
 				}
@@ -480,7 +514,7 @@ public class HAPDataTypeHelperImp implements HAPDataTypeHelper{
 		this.discoverExpressionCriteria(criteria, expCriterias);
 		for(HAPDataTypeCriteriaExpression expCriteria : expCriterias){
 			String expressionStr = expCriteria.getExpression();
-			HAPServiceData serviceData = this.m_runtimeEnv.getRuntime().executeExpressionSync(expressionStr, parms);
+			HAPServiceData serviceData = this.m_runtime.executeExpressionSync(expressionStr, parms);
 			HAPData expressionResult = (HAPData)serviceData.getData();
 			String criteriaStr = expressionResult.getValue().toString();
 			HAPDataTypeCriteria solidCriteria = HAPParserCriteria.getInstance().parseCriteria(criteriaStr);

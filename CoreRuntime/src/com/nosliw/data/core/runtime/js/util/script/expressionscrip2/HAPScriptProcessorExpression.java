@@ -2,7 +2,6 @@ package com.nosliw.data.core.runtime.js.util.script.expressionscrip2;
 
 import java.util.List;
 
-import com.nosliw.data.core.runtime.js.HAPUtilityRuntimeJS;
 import com.nosliw.data.core.script.expression1.HAPExecutableScript;
 import com.nosliw.data.core.script.expression1.HAPExecutableScriptWithSegment;
 import com.nosliw.data.core.script.expression1.imp.expression.HAPConstantInScript;
@@ -44,7 +43,7 @@ public class HAPScriptProcessorExpression implements HAPScriptProcessor{
 							funScript.append(constantsDataParmName + "[\"" + ((HAPConstantInScript)scriptSegmentEle).getConstantName()+"\"]");
 						}
 						else {
-							funScript.append("("+HAPUtilityRuntimeJS.buildConstantValue(constantValue)+")");
+							funScript.append("("+HAPUtilityJavaScript.buildConstantValue(constantValue)+")");
 						}
 					}
 					else if(scriptSegmentEle instanceof HAPVariableInScript){

@@ -10,8 +10,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.nosliw.common.utils.HAPUtilityFile;
+import com.nosliw.core.runtimeenv.js.rhino.HAPRuntimeEnvironmentImpRhino;
 import com.nosliw.common.utils.HAPGeneratorId;
-import com.nosliw.data.core.imp.runtime.js.rhino.HAPRuntimeEnvironmentImpRhino;
 import com.nosliw.uiresource.page.definition.HAPDefinitionUIUnitPage;
 import com.nosliw.uiresource.page.processor.HAPProcessorUIConstantInValueStructure;
 

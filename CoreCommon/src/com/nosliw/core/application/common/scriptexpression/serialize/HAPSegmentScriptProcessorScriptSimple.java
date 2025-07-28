@@ -2,11 +2,11 @@ package com.nosliw.core.application.common.scriptexpression.serialize;
 
 import java.util.List;
 
+import com.nosliw.common.serialization.HAPUtilityJavaScript;
 import com.nosliw.core.application.common.scriptexpression.HAPManualConstantInScript;
 import com.nosliw.core.application.common.scriptexpression.HAPManualSegmentScriptExpression;
 import com.nosliw.core.application.common.scriptexpression.HAPManualSegmentScriptExpressionScriptSimple;
 import com.nosliw.core.application.common.scriptexpression.HAPManualVariableInScript;
-import com.nosliw.data.core.runtime.js.HAPUtilityRuntimeJS;
 
 public class HAPSegmentScriptProcessorScriptSimple implements HAPSegmentScriptProcessor{
 
@@ -31,7 +31,7 @@ public class HAPSegmentScriptProcessorScriptSimple implements HAPSegmentScriptPr
 					funScript.append(constantsDataParmName + "[\"" + ((HAPManualConstantInScript)scriptSegmentEle).getConstantName()+"\"]");
 				}
 				else {
-					funScript.append("("+HAPUtilityRuntimeJS.buildConstantValue(constantValue)+")");
+					funScript.append("("+HAPUtilityJavaScript.buildConstantValue(constantValue)+")");
 				}
 			}
 			else if(scriptSegmentEle instanceof HAPManualVariableInScript){

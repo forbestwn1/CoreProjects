@@ -35,7 +35,7 @@ public class HAPUtilityResource {
 			info = new LinkedHashMap<String, Object>();
 		}
 		if(isLoadResoureByFile(resourceId.getResourceTypeId().getResourceType())) {
-			info.put(HAPUtilityRuntimeJS.RESOURCE_LOADPATTERN, HAPUtilityRuntimeJS.RESOURCE_LOADPATTERN_FILE);
+			info.put(HAPConfigureResource.RESOURCE_LOADPATTERN, HAPConfigureResource.RESOURCE_LOADPATTERN_FILE);
 		}
 		return info;
 	}

@@ -12,7 +12,7 @@ import com.nosliw.core.application.HAPIdBrickType;
 import com.nosliw.core.application.HAPUtilityBrickId;
 import com.nosliw.core.application.HAPUtilityBundle;
 import com.nosliw.core.resource.HAPResourceIdSimple;
-import com.nosliw.data.core.imp.runtime.js.rhino.HAPRuntimeEnvironmentImpRhino;
+import com.nosliw.core.runtimeenv.js.rhino.HAPRuntimeEnvironmentImpRhino;
 
 class A {
 	private int i = 10;

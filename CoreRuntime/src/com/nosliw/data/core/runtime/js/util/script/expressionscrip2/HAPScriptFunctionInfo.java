@@ -3,7 +3,7 @@ package com.nosliw.data.core.runtime.js.util.script.expressionscrip2;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.nosliw.data.core.runtime.js.HAPJSScriptInfo;
+import com.nosliw.core.resource.imp.js.HAPJSScriptInfo;
 
 public class HAPScriptFunctionInfo {
 

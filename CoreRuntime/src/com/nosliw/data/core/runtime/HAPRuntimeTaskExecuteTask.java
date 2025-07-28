@@ -2,6 +2,7 @@ package com.nosliw.data.core.runtime;
 
 import java.util.Map;
 
+import com.nosliw.core.runtime.HAPRuntimeTask;
 import com.nosliw.data.core.process1.HAPExecutableProcess;
 
 public abstract class HAPRuntimeTaskExecuteTask extends HAPRuntimeTask{
