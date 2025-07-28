@@ -11,9 +11,9 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfoImp;
 import com.nosliw.common.serialization.HAPUtilityJson;
+import com.nosliw.core.data.HAPData;
+import com.nosliw.core.data.HAPUtilityData;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.data.core.data.HAPData;
-import com.nosliw.data.core.data.HAPUtilityData;
 
 @HAPEntityWithAttribute
 public class HAPCodeTable extends HAPEntityInfoImp{

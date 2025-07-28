@@ -7,7 +7,7 @@ import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.path.HAPUtilityPath;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
-import com.nosliw.data.core.resource.HAPResourceIdSimple;
+import com.nosliw.core.resource.HAPResourceIdSimple;
 
 public class HAPUtilityBundle {
 

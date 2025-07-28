@@ -5,7 +5,7 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPUtilitySerialize;
-import com.nosliw.data.core.data.HAPDataTypeId;
+import com.nosliw.core.data.HAPDataTypeId;
 
 public class HAPDefinitionVariableExpected extends HAPSerializableImp{
 

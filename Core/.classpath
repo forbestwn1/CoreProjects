@@ -17,7 +17,7 @@
 	<classpathentry kind="lib" path="libs/org-apache-commons-logging.jar"/>
 	<classpathentry kind="lib" path="libs/org.apache.commons.collections.jar"/>
 	<classpathentry kind="lib" path="libs/org.apache.commons.beanutils.jar"/>
-	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/CriteriaParser"/>
+	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/UtilityParserCriteria"/>
 	<classpathentry exported="true" kind="lib" path="libs/rhino-1.7.9.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
@@ -33,6 +33,6 @@
 			<attribute name="owner.project.facets" value="jst.utility"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/CommontApplication"/>
+	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/CoreCommon"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

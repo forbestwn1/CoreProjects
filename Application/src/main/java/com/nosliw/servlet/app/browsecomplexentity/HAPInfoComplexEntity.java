@@ -7,8 +7,8 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.resource.HAPResourceId;
-import com.nosliw.data.core.resource.HAPResourceIdSimple;
+import com.nosliw.core.resource.HAPResourceId;
+import com.nosliw.core.resource.HAPResourceIdSimple;
 
 @HAPEntityWithAttribute
 public class HAPInfoComplexEntity extends HAPSerializableImp{

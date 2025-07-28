@@ -8,7 +8,7 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.HAPAttributeInBrick;
 import com.nosliw.core.application.HAPWrapperValue;
 import com.nosliw.core.application.HAPWrapperValueOfBrick;
-import com.nosliw.data.core.resource.HAPWithResourceDependency;
+import com.nosliw.core.resource.HAPWithResourceDependency;
 
 @HAPEntityWithAttribute
 public class HAPManualAttributeInBrick extends HAPAttributeInBrick implements HAPTreeNodeBrick, HAPWithResourceDependency{

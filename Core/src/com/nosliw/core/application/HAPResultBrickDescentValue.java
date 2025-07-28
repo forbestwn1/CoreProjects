@@ -1,6 +1,6 @@
 package com.nosliw.core.application;
 
-import com.nosliw.data.core.resource.HAPResourceId;
+import com.nosliw.core.resource.HAPResourceId;
 
 public class HAPResultBrickDescentValue {
 

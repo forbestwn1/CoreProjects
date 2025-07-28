@@ -7,7 +7,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.resource.HAPResourceDependency;
+import com.nosliw.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
 public class HAPWrapperValueOfValue extends HAPWrapperValue{

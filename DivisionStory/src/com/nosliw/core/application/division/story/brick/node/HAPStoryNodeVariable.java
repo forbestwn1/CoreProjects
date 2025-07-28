@@ -13,8 +13,8 @@ import com.nosliw.core.application.division.story.brick.HAPStoryElement;
 import com.nosliw.core.application.division.story.brick.HAPStoryNodeImp;
 import com.nosliw.core.application.division.story.change.HAPStoryChangeResult;
 import com.nosliw.core.application.division.story.change.HAPStoryUtilityChange;
-import com.nosliw.data.core.data.HAPData;
-import com.nosliw.data.core.data.HAPUtilityData;
+import com.nosliw.core.data.HAPData;
+import com.nosliw.core.data.HAPUtilityData;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 @HAPEntityWithAttribute

@@ -36,10 +36,10 @@ import com.nosliw.core.application.common.valueport.HAPWithExternalValuePort;
 import com.nosliw.core.application.division.manual.HAPManualManagerBrick;
 import com.nosliw.core.application.division.manual.executable.HAPManualBrick;
 import com.nosliw.core.application.valuestructure.HAPDomainValueStructure;
-import com.nosliw.data.core.data.HAPData;
-import com.nosliw.data.core.data.criteria.HAPParserCriteria;
-import com.nosliw.data.core.matcher.HAPMatchers;
-import com.nosliw.data.core.resource.HAPManagerResource;
+import com.nosliw.core.data.HAPData;
+import com.nosliw.core.data.criteria.HAPParserCriteria;
+import com.nosliw.core.data.matcher.HAPMatchers;
+import com.nosliw.core.resource.HAPManagerResource;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 

@@ -2,11 +2,11 @@ package com.nosliw.data.core.imp.runtime.js;
 
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.data.HAPDataTypeConverter;
-import com.nosliw.data.core.data.HAPOperationId;
+import com.nosliw.core.data.HAPDataTypeConverter;
+import com.nosliw.core.data.HAPOperationId;
+import com.nosliw.core.resource.HAPResourceHelper;
 import com.nosliw.data.core.imp.HAPDataAccessDataType;
 import com.nosliw.data.core.imp.HAPModuleDataType;
-import com.nosliw.data.core.resource.HAPResourceHelper;
 import com.nosliw.data.core.runtime.HAPResourceIdConverter;
 import com.nosliw.data.core.runtime.HAPResourceIdOperation;
 import com.nosliw.data.core.runtime.js.resource.HAPJSGatewayId;

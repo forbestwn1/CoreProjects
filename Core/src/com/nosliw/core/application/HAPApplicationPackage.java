@@ -10,7 +10,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
-import com.nosliw.data.core.resource.HAPResourceId;
+import com.nosliw.core.resource.HAPResourceId;
 import com.nosliw.data.core.runtime.HAPExecutableImp;
 
 //a package is all information for a resource runtime, it include resource id and all resource bundles required

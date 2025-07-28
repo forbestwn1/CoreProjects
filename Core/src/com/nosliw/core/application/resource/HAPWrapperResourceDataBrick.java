@@ -2,9 +2,9 @@ package com.nosliw.core.application.resource;
 
 import com.nosliw.common.path.HAPPath;
 import com.nosliw.core.application.HAPBundle;
-import com.nosliw.data.core.resource.HAPResourceData;
-import com.nosliw.data.core.resource.HAPResourceDataOrWrapper;
-import com.nosliw.data.core.resource.HAPWrapperResourceDataImp;
+import com.nosliw.core.resource.HAPResourceData;
+import com.nosliw.core.resource.HAPResourceDataOrWrapper;
+import com.nosliw.core.resource.HAPWrapperResourceDataImp;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPWrapperResourceDataBrick extends HAPWrapperResourceDataImp{

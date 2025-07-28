@@ -7,7 +7,7 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.interfac.HAPEntityOrReference;
 import com.nosliw.common.serialization.HAPSerializable;
 import com.nosliw.core.application.common.valueport.HAPWithBothsideValuePort;
-import com.nosliw.data.core.resource.HAPWithResourceDependency;
+import com.nosliw.core.resource.HAPWithResourceDependency;
 
 @HAPEntityWithAttribute
 public interface HAPBrick extends HAPSerializable, HAPEntityOrReference, HAPWithBothsideValuePort, HAPWithResourceDependency{

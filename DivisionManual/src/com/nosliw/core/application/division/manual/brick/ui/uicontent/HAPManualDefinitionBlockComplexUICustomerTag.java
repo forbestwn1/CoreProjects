@@ -11,7 +11,7 @@ import com.nosliw.core.application.common.constant.HAPDefinitionConstant;
 import com.nosliw.core.application.common.parentrelation.HAPManualDefinitionBrickRelation;
 import com.nosliw.core.application.uitag.HAPUITagAttributeDefinition;
 import com.nosliw.core.application.uitag.HAPUITagDefinition;
-import com.nosliw.data.core.resource.HAPResourceId;
+import com.nosliw.core.resource.HAPResourceId;
 
 public class HAPManualDefinitionBlockComplexUICustomerTag extends HAPManualDefinitionBlockComplxWithUIContent{
 

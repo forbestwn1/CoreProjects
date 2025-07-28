@@ -1,7 +1,0 @@
-package ||packagename||;
-
-public class ||classname|| {
-
-||attrdef||
-
-}

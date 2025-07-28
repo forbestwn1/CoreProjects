@@ -9,12 +9,12 @@ import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.core.application.common.dataexpression.HAPOperandConstant;
 import com.nosliw.core.application.common.dataexpression.definition.HAPDefinitionOperandConstant;
 import com.nosliw.core.application.common.withvariable.HAPContainerVariableInfo;
-import com.nosliw.data.core.data.HAPData;
-import com.nosliw.data.core.data.HAPDataTypeHelper;
-import com.nosliw.data.core.data.HAPUtilityData;
-import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
-import com.nosliw.data.core.data.criteria.HAPUtilityCriteria;
-import com.nosliw.data.core.matcher.HAPMatchers;
+import com.nosliw.core.data.HAPData;
+import com.nosliw.core.data.HAPDataTypeHelper;
+import com.nosliw.core.data.HAPUtilityData;
+import com.nosliw.core.data.criteria.HAPDataTypeCriteria;
+import com.nosliw.core.data.criteria.HAPUtilityCriteria;
+import com.nosliw.core.data.matcher.HAPMatchers;
 
 public class HAPManualOperandConstant extends HAPManualOperand implements HAPOperandConstant{
 

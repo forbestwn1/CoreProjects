@@ -9,7 +9,7 @@ import com.nosliw.core.application.HAPEnumBrickType;
 import com.nosliw.core.application.brick.test.complex.script.HAPBlockTestComplexScript;
 import com.nosliw.core.application.brick.test.complex.script.HAPTestTaskTrigguer;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrick;
-import com.nosliw.data.core.resource.HAPResourceId;
+import com.nosliw.core.resource.HAPResourceId;
 
 public class HAPManualDefinitionBlockTestComplexScript extends HAPManualDefinitionBrick{
 

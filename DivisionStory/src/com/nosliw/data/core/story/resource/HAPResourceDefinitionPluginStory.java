@@ -3,9 +3,9 @@ package com.nosliw.data.core.story.resource;
 import org.json.JSONObject;
 
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.resource.HAPPluginResourceDefinition;
-import com.nosliw.data.core.resource.HAPResourceDefinition1;
-import com.nosliw.data.core.resource.HAPResourceIdSimple;
+import com.nosliw.core.resource.HAPPluginResourceDefinition;
+import com.nosliw.core.resource.HAPResourceDefinition1;
+import com.nosliw.core.resource.HAPResourceIdSimple;
 import com.nosliw.data.core.system.HAPSystemFolderUtility;
 
 public class HAPResourceDefinitionPluginStory implements HAPPluginResourceDefinition{

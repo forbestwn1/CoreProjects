@@ -15,8 +15,8 @@ import com.nosliw.core.application.HAPUtilityBrickId;
 import com.nosliw.core.application.HAPWrapperValue;
 import com.nosliw.core.application.HAPWrapperValueOfReferenceResource;
 import com.nosliw.core.application.HAPWrapperValueOfValue;
-import com.nosliw.data.core.resource.HAPFactoryResourceId;
-import com.nosliw.data.core.resource.HAPResourceId;
+import com.nosliw.core.resource.HAPFactoryResourceId;
+import com.nosliw.core.resource.HAPResourceId;
 
 public class HAPManualBrickImp extends HAPManualBrick{
 

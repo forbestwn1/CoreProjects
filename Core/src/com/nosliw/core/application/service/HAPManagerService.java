@@ -18,7 +18,7 @@ import com.nosliw.core.application.HAPWrapperBrickRoot;
 import com.nosliw.core.application.brick.interactive.interfacee.task.HAPBlockInteractiveInterfaceTask;
 import com.nosliw.core.application.brick.service.profile.HAPBlockServiceProfile;
 import com.nosliw.core.application.common.interactive.HAPRequestParmInInteractive;
-import com.nosliw.data.core.data.HAPData;
+import com.nosliw.core.data.HAPData;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 //service manager, it is used for runtime purpose

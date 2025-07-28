@@ -9,8 +9,8 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.data.core.data.HAPData;
-import com.nosliw.data.core.data.HAPUtilityData;
+import com.nosliw.core.data.HAPData;
+import com.nosliw.core.data.HAPUtilityData;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.HAPGatewayImp;
 

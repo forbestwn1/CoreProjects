@@ -5,7 +5,7 @@ import java.util.Map;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializableImp;
-import com.nosliw.data.core.resource.HAPWithResourceDependency;
+import com.nosliw.core.resource.HAPWithResourceDependency;
 
 @HAPEntityWithAttribute
 public abstract class HAPWrapperValue extends HAPSerializableImp implements HAPWithResourceDependency{

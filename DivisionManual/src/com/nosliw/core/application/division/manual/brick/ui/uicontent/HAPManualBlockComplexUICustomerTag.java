@@ -7,7 +7,7 @@ import com.nosliw.core.application.brick.ui.uicontent.HAPBlockComplexUICustomerT
 import com.nosliw.core.application.division.manual.executable.HAPManualBrickImp;
 import com.nosliw.core.application.uitag.HAPUITagAttributeDefinition;
 import com.nosliw.core.application.uitag.HAPUITagDefinition;
-import com.nosliw.data.core.resource.HAPResourceId;
+import com.nosliw.core.resource.HAPResourceId;
 
 public class HAPManualBlockComplexUICustomerTag extends HAPManualBrickImp implements HAPBlockComplexUICustomerTag{
 

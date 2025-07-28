@@ -4,17 +4,17 @@
 	<comment></comment>
 	<projects>
 		<project>DataTypeManager</project>
-		<project>ExpressionParser</project>
-		<project>CriteriaParser</project>
-		<project>UIResource</project>
-		<project>DataTypeTest</project>
 		<project>Common</project>
 		<project>Core</project>
-		<project>ServiceTest</project>
 		<project>MiniApp</project>
 		<project>DivisionManual</project>
-		<project>CommontApplication</project>
 		<project>DivisionStory</project>
+		<project>XXXServiceTest</project>
+		<project>LibraryDataTypeTest</project>
+		<project>XXXUIResource</project>
+		<project>CoreCommon</project>
+		<project>UtilityParserCriteria</project>
+		<project>UtilityParserExpression</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

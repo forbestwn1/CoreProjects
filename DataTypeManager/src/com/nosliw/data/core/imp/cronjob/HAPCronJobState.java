@@ -3,8 +3,8 @@ package com.nosliw.data.core.imp.cronjob;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import com.nosliw.core.data.HAPData;
 import com.nosliw.data.core.cronjob.HAPInstancePollSchedule;
-import com.nosliw.data.core.data.HAPData;
 
 public class HAPCronJobState {
 

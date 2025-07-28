@@ -6,8 +6,8 @@ import java.util.Map;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfoImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.data.core.resource.HAPResourceDependency;
-import com.nosliw.data.core.resource.HAPWithResourceDependency;
+import com.nosliw.core.resource.HAPResourceDependency;
+import com.nosliw.core.resource.HAPWithResourceDependency;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
 @HAPEntityWithAttribute

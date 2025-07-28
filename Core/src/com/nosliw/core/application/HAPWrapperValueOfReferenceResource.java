@@ -8,8 +8,8 @@ import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.common.dynamic.HAPInputDynamicTask;
-import com.nosliw.data.core.resource.HAPResourceDependency;
-import com.nosliw.data.core.resource.HAPResourceId;
+import com.nosliw.core.resource.HAPResourceDependency;
+import com.nosliw.core.resource.HAPResourceId;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
 public class HAPWrapperValueOfReferenceResource extends HAPWrapperValue{

@@ -1,11 +1,11 @@
 package com.nosliw.data.core.codetable;
 
-import com.nosliw.data.core.resource.HAPResource;
-import com.nosliw.data.core.resource.HAPResourceId;
-import com.nosliw.data.core.resource.HAPResourceIdSimple;
-import com.nosliw.data.core.resource.HAPResourceManagerImp;
-import com.nosliw.data.core.resource.HAPManagerResource;
-import com.nosliw.data.core.resource.HAPUtilityResource;
+import com.nosliw.core.resource.HAPManagerResource;
+import com.nosliw.core.resource.HAPResource;
+import com.nosliw.core.resource.HAPResourceId;
+import com.nosliw.core.resource.HAPResourceIdSimple;
+import com.nosliw.core.resource.HAPResourceManagerImp;
+import com.nosliw.core.resource.HAPUtilityResource;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
 public class HAPResourceManagerCodeTable extends HAPResourceManagerImp{

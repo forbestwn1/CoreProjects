@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.nosliw.core.application.HAPAdapter;
 import com.nosliw.core.application.HAPWrapperValue;
-import com.nosliw.data.core.resource.HAPResourceDependency;
+import com.nosliw.core.resource.HAPResourceDependency;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
 public class HAPManualAdapter extends HAPAdapter{

@@ -18,8 +18,8 @@ import com.nosliw.core.application.common.structure.HAPUtilityValueStructurePars
 import com.nosliw.core.application.common.structure.HAPValueStructure;
 import com.nosliw.core.application.common.structure.HAPValueStructureImp;
 import com.nosliw.core.application.common.structure.HAPWrapperValueStructure;
-import com.nosliw.data.core.resource.HAPFactoryResourceId;
-import com.nosliw.data.core.resource.HAPResourceId;
+import com.nosliw.core.resource.HAPFactoryResourceId;
+import com.nosliw.core.resource.HAPResourceId;
 
 public class HAPUtilityUITagDefinitionParser {
 

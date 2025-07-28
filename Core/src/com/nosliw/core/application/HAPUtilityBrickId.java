@@ -5,10 +5,10 @@ import org.json.JSONObject;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
-import com.nosliw.data.core.resource.HAPFactoryResourceTypeId;
-import com.nosliw.data.core.resource.HAPIdResourceType;
-import com.nosliw.data.core.resource.HAPResourceId;
-import com.nosliw.data.core.resource.HAPResourceIdSimple;
+import com.nosliw.core.resource.HAPFactoryResourceTypeId;
+import com.nosliw.core.resource.HAPIdResourceType;
+import com.nosliw.core.resource.HAPResourceId;
+import com.nosliw.core.resource.HAPResourceIdSimple;
 
 public class HAPUtilityBrickId {
 

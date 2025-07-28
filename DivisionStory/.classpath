@@ -9,7 +9,7 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry combineaccessrules="false" kind="src" path="/Common"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/CommontApplication"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/CoreCommon"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/Core"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

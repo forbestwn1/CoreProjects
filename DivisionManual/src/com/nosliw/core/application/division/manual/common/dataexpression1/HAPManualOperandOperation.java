@@ -14,17 +14,17 @@ import com.nosliw.core.application.common.dataexpression.HAPOperand;
 import com.nosliw.core.application.common.dataexpression.HAPOperandOperation;
 import com.nosliw.core.application.common.dataexpression.definition.HAPDefinitionOperandOperation;
 import com.nosliw.core.application.common.withvariable.HAPContainerVariableInfo;
-import com.nosliw.data.core.data.HAPData;
-import com.nosliw.data.core.data.HAPDataTypeHelper;
-import com.nosliw.data.core.data.HAPDataTypeId;
-import com.nosliw.data.core.data.HAPDataTypeOperation;
-import com.nosliw.data.core.data.HAPDataWrapper;
-import com.nosliw.data.core.data.HAPOperationOutInfo;
-import com.nosliw.data.core.data.HAPOperationParmInfo;
-import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
-import com.nosliw.data.core.data.criteria.HAPDataTypeCriteriaId;
-import com.nosliw.data.core.data.criteria.HAPUtilityCriteria;
-import com.nosliw.data.core.matcher.HAPMatchers;
+import com.nosliw.core.data.HAPData;
+import com.nosliw.core.data.HAPDataTypeHelper;
+import com.nosliw.core.data.HAPDataTypeId;
+import com.nosliw.core.data.HAPDataTypeOperation;
+import com.nosliw.core.data.HAPDataWrapper;
+import com.nosliw.core.data.HAPOperationOutInfo;
+import com.nosliw.core.data.HAPOperationParmInfo;
+import com.nosliw.core.data.criteria.HAPDataTypeCriteria;
+import com.nosliw.core.data.criteria.HAPDataTypeCriteriaId;
+import com.nosliw.core.data.criteria.HAPUtilityCriteria;
+import com.nosliw.core.data.matcher.HAPMatchers;
 
 public class HAPManualOperandOperation extends HAPManualOperand implements HAPOperandOperation{
 

@@ -6,11 +6,11 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPInfo;
 import com.nosliw.common.strvalue.HAPStringableValueEntity;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.data.HAPDataType;
-import com.nosliw.data.core.data.HAPDataTypeId;
-import com.nosliw.data.core.data.HAPDataTypeVersion;
+import com.nosliw.core.data.HAPDataType;
+import com.nosliw.core.data.HAPDataTypeId;
+import com.nosliw.core.data.HAPDataTypeVersion;
 
-@HAPEntityWithAttribute(parent="com.nosliw.data.core.data.HAPDataType")
+@HAPEntityWithAttribute(parent="com.nosliw.core.data.HAPDataType")
 public class HAPDataTypeImp extends HAPStringableValueEntity implements HAPDataType{
 
 	public HAPDataTypeImp(){}

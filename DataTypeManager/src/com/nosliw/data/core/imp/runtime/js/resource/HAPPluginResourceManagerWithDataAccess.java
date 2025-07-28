@@ -3,12 +3,12 @@ package com.nosliw.data.core.imp.runtime.js.resource;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.nosliw.core.resource.HAPPluginResourceManager;
+import com.nosliw.core.resource.HAPResourceDependency;
+import com.nosliw.core.resource.HAPResourceId;
+import com.nosliw.core.resource.HAPResourceIdSimple;
 import com.nosliw.data.core.imp.runtime.js.HAPDataAccessRuntimeJS;
 import com.nosliw.data.core.imp.runtime.js.HAPJSResourceDependency;
-import com.nosliw.data.core.resource.HAPPluginResourceManager;
-import com.nosliw.data.core.resource.HAPResourceDependency;
-import com.nosliw.data.core.resource.HAPResourceId;
-import com.nosliw.data.core.resource.HAPResourceIdSimple;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
 public abstract class HAPPluginResourceManagerWithDataAccess implements HAPPluginResourceManager{

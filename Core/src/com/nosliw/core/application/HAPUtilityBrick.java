@@ -4,9 +4,9 @@ import com.nosliw.common.interfac.HAPEntityOrReference;
 import com.nosliw.common.path.HAPComplexPath;
 import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.resource.HAPInfoResourceIdNormalize;
-import com.nosliw.data.core.resource.HAPResourceId;
-import com.nosliw.data.core.resource.HAPUtilityResourceId;
+import com.nosliw.core.resource.HAPInfoResourceIdNormalize;
+import com.nosliw.core.resource.HAPResourceId;
+import com.nosliw.core.resource.HAPUtilityResourceId;
 
 public class HAPUtilityBrick {
 

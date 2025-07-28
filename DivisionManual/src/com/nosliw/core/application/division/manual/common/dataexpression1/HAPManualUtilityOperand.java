@@ -5,10 +5,10 @@ import java.util.List;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.core.application.common.withvariable.HAPContainerVariableInfo;
-import com.nosliw.data.core.data.HAPDataTypeHelper;
-import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
-import com.nosliw.data.core.data.criteria.HAPDataTypeCriteriaAny;
-import com.nosliw.data.core.matcher.HAPMatchers;
+import com.nosliw.core.data.HAPDataTypeHelper;
+import com.nosliw.core.data.criteria.HAPDataTypeCriteria;
+import com.nosliw.core.data.criteria.HAPDataTypeCriteriaAny;
+import com.nosliw.core.data.matcher.HAPMatchers;
 
 public class HAPManualUtilityOperand {
 

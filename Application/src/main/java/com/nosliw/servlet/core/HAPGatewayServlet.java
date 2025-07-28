@@ -9,7 +9,7 @@ import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityFile;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
-import com.nosliw.data.core.resource.HAPUtilityResource;
+import com.nosliw.core.resource.HAPUtilityResource;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.HAPGatewayOutput;
 import com.nosliw.data.core.runtime.js.HAPJSScriptInfo;

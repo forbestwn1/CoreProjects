@@ -2,7 +2,7 @@ package com.nosliw.core.application.service;
 
 import java.util.Map;
 
-import com.nosliw.data.core.data.HAPData;
+import com.nosliw.core.data.HAPData;
 
 //entity that answer service call
 public interface HAPExecutableService {

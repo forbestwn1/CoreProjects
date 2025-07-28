@@ -7,10 +7,10 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.strvalue.HAPStringableValueEntityWithID;
 import com.nosliw.common.utils.HAPUtilityBasic;
-import com.nosliw.data.core.data.HAPDataTypeId;
-import com.nosliw.data.core.data.HAPRelationship;
-import com.nosliw.data.core.data.HAPRelationshipPath;
-import com.nosliw.data.core.data.HAPRelationshipPathSegment;
+import com.nosliw.core.data.HAPDataTypeId;
+import com.nosliw.core.data.HAPRelationship;
+import com.nosliw.core.data.HAPRelationshipPath;
+import com.nosliw.core.data.HAPRelationshipPathSegment;
 
 public class HAPRelationshipImp extends HAPStringableValueEntityWithID implements HAPRelationship{
 

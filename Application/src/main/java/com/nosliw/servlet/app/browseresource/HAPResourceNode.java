@@ -4,9 +4,9 @@ import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPUtilityJson;
+import com.nosliw.core.resource.HAPResourceId;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.data.core.resource.HAPResourceId;
 
 public class HAPResourceNode extends HAPSerializableImp{
 

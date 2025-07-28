@@ -14,7 +14,7 @@ import com.nosliw.core.application.common.valueport.HAPValuePort;
 import com.nosliw.core.application.common.withvariable.HAPContainerVariableInfo;
 import com.nosliw.core.application.division.manual.HAPManualManagerBrick;
 import com.nosliw.core.application.division.manual.common.valuecontext.HAPManualValueContext;
-import com.nosliw.data.core.resource.HAPManagerResource;
+import com.nosliw.core.resource.HAPManagerResource;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public abstract class HAPManualBrick extends HAPBrickImp{

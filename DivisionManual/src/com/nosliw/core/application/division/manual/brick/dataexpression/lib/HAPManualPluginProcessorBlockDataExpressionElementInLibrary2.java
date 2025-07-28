@@ -23,8 +23,8 @@ import com.nosliw.core.application.division.manual.HAPManualManagerBrick;
 import com.nosliw.core.application.division.manual.HAPManualPluginProcessorBlockSimple;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrickBlockSimple;
 import com.nosliw.core.application.division.manual.executable.HAPManualBrick;
-import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
-import com.nosliw.data.core.matcher.HAPMatchers;
+import com.nosliw.core.data.criteria.HAPDataTypeCriteria;
+import com.nosliw.core.data.matcher.HAPMatchers;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPManualPluginProcessorBlockDataExpressionElementInLibrary2 extends HAPManualPluginProcessorBlockSimple{

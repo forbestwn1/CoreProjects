@@ -32,7 +32,7 @@ import com.nosliw.core.application.common.valueport.HAPReferenceRootElement;
 import com.nosliw.core.application.common.valueport.HAPResultReferenceResolve;
 import com.nosliw.core.application.common.valueport.HAPUtilityStructureElementReference;
 import com.nosliw.core.application.common.valueport.HAPUtilityValuePort;
-import com.nosliw.data.core.resource.HAPManagerResource;
+import com.nosliw.core.resource.HAPManagerResource;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 

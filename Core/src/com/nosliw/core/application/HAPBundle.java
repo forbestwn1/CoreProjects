@@ -18,11 +18,11 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.common.dynamic.HAPInfoDynamicTask;
 import com.nosliw.core.application.resource.HAPResourceDataBrick;
 import com.nosliw.core.application.valuestructure.HAPDomainValueStructure;
-import com.nosliw.data.core.resource.HAPManagerResource;
-import com.nosliw.data.core.resource.HAPResourceDependency;
-import com.nosliw.data.core.resource.HAPResourceIdSimple;
-import com.nosliw.data.core.resource.HAPUtilityResource;
-import com.nosliw.data.core.resource.HAPWithResourceDependency;
+import com.nosliw.core.resource.HAPManagerResource;
+import com.nosliw.core.resource.HAPResourceDependency;
+import com.nosliw.core.resource.HAPResourceIdSimple;
+import com.nosliw.core.resource.HAPUtilityResource;
+import com.nosliw.core.resource.HAPWithResourceDependency;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
 @HAPEntityWithAttribute

@@ -7,9 +7,9 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfoImp;
 import com.nosliw.common.serialization.HAPUtilityJson;
+import com.nosliw.core.data.matcher.HAPMatchers;
+import com.nosliw.core.data.matcher.HAPMatchersCombo;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.data.core.matcher.HAPMatchers;
-import com.nosliw.data.core.matcher.HAPMatchersCombo;
 
 @HAPEntityWithAttribute
 public class HAPUITagInfo extends HAPEntityInfoImp{

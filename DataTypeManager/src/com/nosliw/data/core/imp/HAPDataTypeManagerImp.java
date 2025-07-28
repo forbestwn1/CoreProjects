@@ -4,10 +4,10 @@ import java.util.List;
 
 import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.strvalue.valueinfo.HAPDBAccess;
-import com.nosliw.data.core.data.HAPDataType;
-import com.nosliw.data.core.data.HAPDataTypeId;
-import com.nosliw.data.core.data.HAPDataTypeManager;
-import com.nosliw.data.core.data.HAPDataTypeOperation;
+import com.nosliw.core.data.HAPDataType;
+import com.nosliw.core.data.HAPDataTypeId;
+import com.nosliw.core.data.HAPDataTypeManager;
+import com.nosliw.core.data.HAPDataTypeOperation;
 
 public class HAPDataTypeManagerImp implements HAPDataTypeManager{
 

@@ -12,8 +12,8 @@ import com.nosliw.core.application.division.story.design.wizard.HAPStoryDesignSt
 import com.nosliw.core.application.division.story.design.wizard.HAPStoryQuestionnaire;
 import com.nosliw.core.application.division.story.design.wizard.HAPStoryRequestDesign;
 import com.nosliw.core.application.division.story.design.wizard.HAPStoryUtilityDesign;
-import com.nosliw.data.core.resource.HAPResourceDefinition1;
-import com.nosliw.data.core.resource.HAPUtilityResourceId;
+import com.nosliw.core.resource.HAPResourceDefinition1;
+import com.nosliw.core.resource.HAPUtilityResourceId;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.story.resource.HAPResourceDefinitionStory;
 import com.nosliw.data.core.story.resource.HAPResourceIdStory;

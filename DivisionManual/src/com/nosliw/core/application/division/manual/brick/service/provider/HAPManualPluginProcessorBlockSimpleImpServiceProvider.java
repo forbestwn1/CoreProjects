@@ -17,8 +17,8 @@ import com.nosliw.core.application.division.manual.HAPManualPluginProcessorBlock
 import com.nosliw.core.application.division.manual.common.task.HAPManualUtilityTask;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrick;
 import com.nosliw.core.application.division.manual.executable.HAPManualBrick;
-import com.nosliw.data.core.resource.HAPResourceIdSimple;
-import com.nosliw.data.core.resource.HAPUtilityResourceId;
+import com.nosliw.core.resource.HAPResourceIdSimple;
+import com.nosliw.core.resource.HAPUtilityResourceId;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPManualPluginProcessorBlockSimpleImpServiceProvider extends HAPManualPluginProcessorBlockComplex{

@@ -2,14 +2,14 @@ package com.nosliw.data.core.imp.runtime.js;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
-import com.nosliw.data.core.data.HAPDataTypeConverter;
-import com.nosliw.data.core.data.HAPOperationId;
+import com.nosliw.core.data.HAPDataTypeConverter;
+import com.nosliw.core.data.HAPOperationId;
+import com.nosliw.core.resource.HAPResourceIdSimple;
 import com.nosliw.data.core.imp.io.HAPDBSource;
 import com.nosliw.data.core.imp.io.HAPDataAccess;
 import com.nosliw.data.core.imp.runtime.js.resource.HAPResourceDataHelperImp;
 import com.nosliw.data.core.imp.runtime.js.resource.HAPResourceDataJSConverterImp;
 import com.nosliw.data.core.imp.runtime.js.resource.HAPResourceDataJSOperationImp;
-import com.nosliw.data.core.resource.HAPResourceIdSimple;
 
 public class HAPDataAccessRuntimeJS extends HAPDataAccess{
 

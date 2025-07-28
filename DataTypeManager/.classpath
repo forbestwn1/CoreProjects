@@ -3,16 +3,16 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/Common"/>
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/Core"/>
-	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/DataType"/>
+	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/LibraryDataType"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
 	<classpathentry exported="true" kind="lib" path="libs/rhino-1.7.7.1.jar">
 		<attributes>
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/ExpressionParser"/>
-	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/DataTypeTest"/>
-	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/CriteriaParser"/>
+	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/UtilityParserExpression"/>
+	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/LibraryDataTypeTest"/>
+	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/UtilityParserCriteria"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8">
 		<attributes>
 			<attribute name="owner.project.facets" value="java"/>
@@ -23,7 +23,7 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry combineaccessrules="false" kind="src" path="/UIResource"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/XXXUIResource"/>
 	<classpathentry kind="con" path="org.eclipse.jst.server.core.container/org.eclipse.jst.server.tomcat.runtimeTarget/Apache Tomcat v9.0">
 		<attributes>
 			<attribute name="owner.project.facets" value="jst.utility"/>

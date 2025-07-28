@@ -9,9 +9,9 @@ import java.util.Set;
 
 import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPUtilityFile;
-import com.nosliw.data.core.resource.HAPPluginResourceManager;
-import com.nosliw.data.core.resource.HAPResourceDataOrWrapper;
-import com.nosliw.data.core.resource.HAPResourceIdSimple;
+import com.nosliw.core.resource.HAPPluginResourceManager;
+import com.nosliw.core.resource.HAPResourceDataOrWrapper;
+import com.nosliw.core.resource.HAPResourceIdSimple;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.resource.HAPJSLibraryId;
 import com.nosliw.data.core.runtime.js.resource.HAPResourceDataJSLibrary;

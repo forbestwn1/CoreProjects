@@ -118,8 +118,17 @@ var node_createBundleCore = function(parm, configure){
 			if(complexPath.root=="#dynamicTask"){
 				return loc_dynamicTaskInputContainer.getDyanmicTaskInputRequest(complexPath.path, handlers, request);
 			}
-		}
+		},
 		
+		getAllValueInfoRequest : function(handlers, request){
+			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+			out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
+				return {
+					categary : node_COMMONCONSTANT.VALUEADDRESSCATEGARY_BUNDLE
+				};
+			}));
+			return out;
+		},
 	};
 
 	var loc_out = {

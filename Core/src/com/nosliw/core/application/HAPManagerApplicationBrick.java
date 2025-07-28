@@ -16,9 +16,9 @@ import com.nosliw.core.application.brick.scriptexpression.library.HAPPluginBrick
 import com.nosliw.core.application.brick.service.interfacee.HAPPluginBrickServiceInterface;
 import com.nosliw.core.application.brick.service.profile.HAPPluginBrickServiceProfile;
 import com.nosliw.core.application.brick.wrappertask.HAPPluginBrickTaskWrapper;
-import com.nosliw.data.core.resource.HAPResourceId;
-import com.nosliw.data.core.resource.HAPResourceIdEmbeded;
-import com.nosliw.data.core.resource.HAPResourceIdSimple;
+import com.nosliw.core.resource.HAPResourceId;
+import com.nosliw.core.resource.HAPResourceIdEmbeded;
+import com.nosliw.core.resource.HAPResourceIdSimple;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.system.HAPSystemUtility;
 

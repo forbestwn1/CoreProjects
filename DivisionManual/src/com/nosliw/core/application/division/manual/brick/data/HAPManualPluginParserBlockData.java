@@ -5,8 +5,8 @@ import com.nosliw.core.application.division.manual.HAPManualManagerBrick;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrick;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionContextParse;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionPluginParserBrickImpSimple;
-import com.nosliw.data.core.data.HAPData;
-import com.nosliw.data.core.data.HAPUtilityData;
+import com.nosliw.core.data.HAPData;
+import com.nosliw.core.data.HAPUtilityData;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPManualPluginParserBlockData extends HAPManualDefinitionPluginParserBrickImpSimple{

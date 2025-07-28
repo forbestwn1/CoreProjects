@@ -5,10 +5,10 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
-import com.nosliw.data.core.data.HAPDataType;
-import com.nosliw.data.core.data.HAPDataTypeFamily;
-import com.nosliw.data.core.data.HAPDataTypeId;
-import com.nosliw.data.core.data.HAPRelationship;
+import com.nosliw.core.data.HAPDataType;
+import com.nosliw.core.data.HAPDataTypeFamily;
+import com.nosliw.core.data.HAPDataTypeId;
+import com.nosliw.core.data.HAPRelationship;
 
 public class HAPDataTypeFamilyImp implements HAPDataTypeFamily{
 

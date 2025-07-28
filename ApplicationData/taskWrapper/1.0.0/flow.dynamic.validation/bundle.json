@@ -1,0 +1,30 @@
+{
+	"dynamicTask" : [
+		{
+			"name" : "default",	
+			"type" : "set",		
+			"taskInterface" : {
+				"request" : [
+					{
+						"name" : "data",
+						"dataInfo" : ""
+					}
+				],
+				"result" : {
+					"success": {
+						"output": [
+						]
+					},
+					"fail": {
+						"output": [
+							{
+								"name" : "error",
+								"criteria" : "test.string;1.0.0"
+							}
+						]
+					}
+				}
+			}
+		}
+	]
+}

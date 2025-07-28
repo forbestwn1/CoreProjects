@@ -9,8 +9,8 @@ import com.nosliw.core.application.division.manual.HAPManualManagerBrick;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrick;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionContextParse;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionPluginParserBrickImpComplex;
-import com.nosliw.data.core.resource.HAPFactoryResourceId;
-import com.nosliw.data.core.resource.HAPResourceId;
+import com.nosliw.core.resource.HAPFactoryResourceId;
+import com.nosliw.core.resource.HAPResourceId;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPManualPluginParserBlockTaskTaskScript extends HAPManualDefinitionPluginParserBrickImpComplex{

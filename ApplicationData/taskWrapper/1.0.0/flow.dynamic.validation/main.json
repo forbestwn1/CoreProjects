@@ -1,0 +1,338 @@
+{
+	"info": {
+		"name": "flow.dynamic",
+		"description": "flow.dynamic"
+	},
+	"brick": {
+		"taskBrickType" : {
+			"brickType" : "flow",
+			"version" : "1.0.0"
+		},
+		"__task__" : {
+			
+			"taskInterface" : {
+				"request" : [
+					{
+						"name" : "data",
+						"dataInfo" : ""
+					}
+				],
+				"result" : {
+					"success": {
+						"output": [
+							{
+								"name" : "success",
+								"criteria" : "test.string;1.0.0"
+							}
+						]
+					},
+					"fail": {
+						"output": [
+							{
+								"name" : "error",
+								"criteria" : "test.string;1.0.0"
+							}
+						]
+					}
+				}
+			},
+
+			"start": {
+				"target" : {
+					"activity" : "activity1",
+					"adapter" : "activityIterate"
+				}
+			},
+			"activity" : [
+				{
+					"brickTypeId" : {
+						"brickType" : "activityTask",
+						"version" : "1.0.0"
+					},
+					"brick"	: {
+						"id" : "activityIterate",
+						"status": "disabled1",
+
+						"next" : {
+							"decision" : {
+								"type" : "javascript",
+								"script" : "return result.resultValue"
+							},
+							"target" : [
+								{
+									"name" : "continue",
+									"activity" : "activityDebug"
+								},
+								{
+									"name" : "end",
+									"activity" : "#end_success"
+								}
+							]
+						},
+
+
+						"task" : {
+							"brick" : {
+								"scriptResourceId": "task_datavalidation_iterate",
+								"taskInterface" : {
+									"request" : [
+										{
+											"name" : "indexVarName",
+											"dataInfo" : "test.string;1.0.0"
+										},
+										{
+											"name" : "eleVarName",
+											"dataInfo" : "test.string;1.0.0"
+										},
+										{
+											"name" : "address"
+										}
+									]
+								}
+							},
+							"adapter" : [
+								{
+									"name" : "interactivetaskAdapter",
+									"status": "disabled1",
+									"brickTypeId" : {
+										"brickType": "dataAssociationForTask",
+										"version": "1.0.0"
+									},
+									"brick" : {
+										"definition" : {
+											"in" : {
+												"type" : "mapping",
+												"mapping" : [
+													{
+														"target" : {
+															"rootName" : "indexVarName",
+															"valuePortId" : {
+																"valuePortId" : {
+																	"group" : "taskInteractive"
+																}
+															}
+														},
+														"definition" : {
+															"value" : {
+																"dataTypeId": "test.string;1.0.0",
+																"value": {
+																	"dataTypeId": "test.string;1.0.0",
+																	"value": "indexVarName"
+																}
+															}
+														}
+													},
+													{
+														"target" : {
+															"rootName" : "eleVarName",
+															"valuePortId" : {
+																"valuePortId" : {
+																	"group" : "taskInteractive"
+																}
+															}
+														},
+														"definition" : {
+															"value" : {
+																"dataTypeId": "test.string;1.0.0",
+																"value": {
+																	"dataTypeId": "test.string;1.0.0",
+																	"value": "eleVarName"
+																}
+															}
+														}
+													},
+													{
+														"target" : {
+															"rootName" : "address",
+															"valuePortId" : {
+																"valuePortId" : {
+																	"group" : "taskInteractive"
+																}
+															}
+														},
+														"definition" : {
+															"value" : {
+																"categary" : "bundle",
+																"id" : "#dynamicTask.default"									
+															}
+														}
+													}
+												]
+											},
+											"out" : {
+												"success" : {
+													"type" : "mapping",
+													"mapping" : [
+													]
+												}
+											}
+										}
+									}
+								}
+							]
+						}
+					}
+				},
+			
+				{
+					"brickTypeId" : {
+						"brickType" : "activityTask",
+						"version" : "1.0.0"
+					},
+					"brick"	: {
+						"id" : "activityDebug",
+						"status": "disabled1",
+						"task" : {
+							"scriptResourceId": "task_flowactivity_debug"
+						},
+						"next" : {
+							"target" : [
+								{
+									"activity" : "activityIterate"
+								}
+							]
+						}
+					}
+				},
+			
+				{
+					"brickTypeId" : {
+						"brickType" : "activityDynamic",
+						"version" : "1.0.0"
+					},
+					"brick"	: {
+						"id" : "activity1",
+						"status": "disabled1",
+						"task" : {
+							"dynamic" : "default",
+							"adapter" : [
+								{
+									"name" : "interactivetaskAdapter",
+									"status": "disabled1",
+									"brickTypeId" : {
+										"brickType": "dataAssociationForTask",
+										"version": "1.0.0"
+									},
+									"brick" : {
+										"definition" : {
+											"in" : {
+												"status": "disabled1",
+												"type" : "mapping",
+												"mapping" : [
+														{
+															"target" : {
+																"rootName" : "data",
+																"ioDirection" : "IN",
+																"valuePortId" : {
+																	"valuePortId" : {
+																		"group" : "taskInteractive"
+																	}
+																}
+															},
+															"definition" : {
+																"mapping" : {
+																	"elementPath": "data",
+																	"valuePortId" : {
+																		"brickId" : {
+																			"idPath" : "__task__"
+																		},
+																		"valuePortId" : {
+																			"group" : "taskInteractive"
+																		}
+																	}
+																}
+															}
+														}
+												]
+											},
+											"out" : {
+												"success" : {
+													"type" : "mapping",
+													"mapping" : [
+														{
+															"target" : {
+																"rootName" : "success",
+																"ioDirection" : "IN",
+																"valuePortId" : {
+																	"brickId" : {
+																		"idPath" : "__task__"
+																	},
+																	"valuePortId" : {
+																		"group" : "taskInteractive",
+																		"name" : "interactiveResult_success"
+																	}
+																}
+															},
+															"definition" : {
+																"value" : {
+																	"dataTypeId": "test.string;1.0.0",
+																	"value": "validation success"
+																} 
+															}
+														}
+													]
+												},
+												"fail" : {
+													"status": "disabled1",
+													"type" : "mapping",
+													"mapping" : [
+														{
+															"target" : {
+																"rootName" : "error",
+																"ioDirection" : "IN",
+																"valuePortId" : {
+																	"brickId" : {
+																		"idPath" : "__task__"
+																	},
+																	"valuePortId" : {
+																		"group" : "taskInteractive",
+																		"name" : "interactiveResult_fail"
+																	}
+																}
+															},
+															"definition" : {
+																"mapping" : {
+																	"elementPath": "error",
+																	"valuePortId" : {
+																		"valuePortId" : {
+																			"group" : "taskInteractive",
+																			"name" : "interactiveResult_fail"
+																		}
+																	}
+																}
+															}
+														}
+													]
+												}
+											}
+										}
+									}
+								}
+							]					
+						},
+						"taskAddress" : {
+							"id" : "#dynamicTask.default"
+						},
+						"next" : {
+							"decision" : {
+								"type" : "javascript",
+								"script" : "return result.resultName"
+							},
+							"target" : [
+								{
+									"name" : "success",
+									"activity" : "#end_success"
+								},
+								{
+									"name" : "fail",
+									"activity" : "#end_fail"
+								}
+							]
+						}
+					
+					}
+				}
+			]		
+		}
+	}
+}

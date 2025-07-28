@@ -1,9 +1,9 @@
 package com.nosliw.data.core.imp.runtime.js.resource;
 
 import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.core.resource.HAPFactoryResourceTypeId;
 import com.nosliw.data.core.imp.HAPDataAccessDataType;
 import com.nosliw.data.core.imp.runtime.js.HAPDataAccessRuntimeJS;
-import com.nosliw.data.core.resource.HAPFactoryResourceTypeId;
 import com.nosliw.data.core.runtime.js.HAPManagerResourceJS;
 
 public class HAPManagerResourceJSImp extends HAPManagerResourceJS{

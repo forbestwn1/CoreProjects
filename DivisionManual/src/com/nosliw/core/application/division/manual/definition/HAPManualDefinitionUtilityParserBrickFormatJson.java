@@ -21,8 +21,8 @@ import com.nosliw.core.application.common.parentrelation.HAPManualDefinitionBric
 import com.nosliw.core.application.division.manual.HAPManualManagerBrick;
 import com.nosliw.core.application.division.manual.HAPManualWithBrick;
 import com.nosliw.core.application.division.manual.common.attachment.HAPReferenceAttachment;
-import com.nosliw.data.core.resource.HAPFactoryResourceId;
-import com.nosliw.data.core.resource.HAPResourceId;
+import com.nosliw.core.resource.HAPFactoryResourceId;
+import com.nosliw.core.resource.HAPResourceId;
 
 public class HAPManualDefinitionUtilityParserBrickFormatJson {
 

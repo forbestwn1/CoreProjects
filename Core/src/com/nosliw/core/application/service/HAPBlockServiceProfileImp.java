@@ -16,8 +16,8 @@ import com.nosliw.core.application.brick.service.profile.HAPBlockServiceProfile;
 import com.nosliw.core.application.common.brick.HAPBrickImpWithEntityInfo;
 import com.nosliw.core.application.common.interactive.HAPWithBlockInteractiveTask;
 import com.nosliw.core.application.common.valueport.HAPContainerValuePorts;
-import com.nosliw.data.core.resource.HAPFactoryResourceId;
-import com.nosliw.data.core.resource.HAPResourceId;
+import com.nosliw.core.resource.HAPFactoryResourceId;
+import com.nosliw.core.resource.HAPResourceId;
 
 //contains all information related with service definition
 @HAPEntityWithAttribute

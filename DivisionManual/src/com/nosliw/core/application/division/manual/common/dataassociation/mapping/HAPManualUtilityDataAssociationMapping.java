@@ -27,7 +27,7 @@ import com.nosliw.core.application.common.structure.HAPUtilityStructure;
 import com.nosliw.core.application.common.valueport.HAPIdRootElement;
 import com.nosliw.core.application.common.valueport.HAPIdValuePortInBundle;
 import com.nosliw.core.application.valuestructure.HAPDomainValueStructure;
-import com.nosliw.data.core.matcher.HAPMatchers;
+import com.nosliw.core.data.matcher.HAPMatchers;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPManualUtilityDataAssociationMapping {

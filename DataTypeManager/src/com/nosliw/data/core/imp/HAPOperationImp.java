@@ -14,12 +14,12 @@ import com.nosliw.common.strvalue.HAPStringableValue;
 import com.nosliw.common.strvalue.HAPStringableValueEntityWithID;
 import com.nosliw.common.strvalue.HAPStringableValueList;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.data.HAPDataTypeId;
-import com.nosliw.data.core.data.HAPOperation;
-import com.nosliw.data.core.data.HAPOperationOutInfo;
-import com.nosliw.data.core.data.HAPOperationParmInfo;
+import com.nosliw.core.data.HAPDataTypeId;
+import com.nosliw.core.data.HAPOperation;
+import com.nosliw.core.data.HAPOperationOutInfo;
+import com.nosliw.core.data.HAPOperationParmInfo;
 
-@HAPEntityWithAttribute(parent="com.nosliw.data.core.data.HAPOperation")
+@HAPEntityWithAttribute(parent="com.nosliw.core.data.HAPOperation")
 public class HAPOperationImp extends HAPStringableValueEntityWithID implements HAPOperation{
 
 	public static String _VALUEINFO_NAME;

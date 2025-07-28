@@ -6,7 +6,7 @@ import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.data.core.resource.HAPResourceDataImp;
+import com.nosliw.core.resource.HAPResourceDataImp;
 
 @HAPEntityWithAttribute
 public class HAPResourceDataConfigure extends HAPResourceDataImp{

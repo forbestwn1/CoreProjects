@@ -18,9 +18,9 @@ import com.nosliw.core.application.common.valueport.HAPConfigureResolveElementRe
 import com.nosliw.core.application.common.valueport.HAPInfoElementResolve;
 import com.nosliw.core.application.common.valueport.HAPUtilityStructureElementReference;
 import com.nosliw.core.application.common.withvariable.HAPContainerVariableInfo;
-import com.nosliw.data.core.resource.HAPFactoryResourceId;
-import com.nosliw.data.core.resource.HAPResourceId;
-import com.nosliw.data.core.resource.HAPUtilityResource;
+import com.nosliw.core.resource.HAPFactoryResourceId;
+import com.nosliw.core.resource.HAPResourceId;
+import com.nosliw.core.resource.HAPUtilityResource;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPManualUtilityProcessorDataExpression {

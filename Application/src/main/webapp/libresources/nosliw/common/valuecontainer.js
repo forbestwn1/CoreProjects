@@ -53,7 +53,19 @@ var node_createValueContainerSimple = function(categary){
 		
 		setValue : function(name, value){
 			loc_value[name] = value;
-		}
+		},
+		
+		//for debug purpose
+		getAllValueInfoRequest : function(handlers, request){
+			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+			out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
+				return {
+					categary : categary,
+					value : loc_value
+				};			
+			}));
+			return out;
+		},
 		
 	};
 
@@ -78,7 +90,7 @@ var node_createValueContainerList = function(){
 		}));
 		return out;		
 	};
-	
+
 	var loc_out = {
 		
 		addChild : function(child){
@@ -89,8 +101,25 @@ var node_createValueContainerList = function(){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 			out.addRequest(loc_getGetValueRequest(0, categary, name));
 			return out;
-		}
+		},
 		
+		getAllValueInfoRequest : function(handlers, request){
+			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+			
+			var valueInfos = [];
+			_.each(loc_children, function(child, i){
+				out.addRequest(child.getAllValueInfoRequest({
+					success : function(request, valueInfo){
+						valueInfos.push(valueInfo);
+					}
+				}));
+			});
+			
+			out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
+				return valueInfos;
+			}));
+			return out;
+		},
 	};
 
 	return loc_out;	

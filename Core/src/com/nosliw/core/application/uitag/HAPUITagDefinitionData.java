@@ -2,7 +2,7 @@ package com.nosliw.core.application.uitag;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
+import com.nosliw.core.data.criteria.HAPDataTypeCriteria;
 
 public class HAPUITagDefinitionData extends HAPUITagDefinition{
 

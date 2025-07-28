@@ -3,7 +3,7 @@ package com.nosliw.core.application.division.manual.brick.task.script.task;
 import com.nosliw.common.interfac.HAPEntityOrReference;
 import com.nosliw.core.application.brick.task.script.task.HAPBlockTaskTaskScript;
 import com.nosliw.core.application.division.manual.executable.HAPManualBrickImp;
-import com.nosliw.data.core.resource.HAPResourceId;
+import com.nosliw.core.resource.HAPResourceId;
 
 public class HAPManualBlockTaskTaskScript extends HAPManualBrickImp implements HAPBlockTaskTaskScript{
 

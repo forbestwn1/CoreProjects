@@ -14,7 +14,7 @@ import com.nosliw.core.application.division.story.brick.HAPStoryElement;
 import com.nosliw.core.application.division.story.change.HAPStoryChangeResult;
 import com.nosliw.core.application.division.story.change.HAPStoryUtilityChange;
 import com.nosliw.core.application.division.story.design.wizard.servicedriven.HAPStoryUIDataInfo;
-import com.nosliw.data.core.matcher.HAPMatchersCombo;
+import com.nosliw.core.data.matcher.HAPMatchersCombo;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 @HAPEntityWithAttribute

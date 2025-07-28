@@ -64,12 +64,12 @@ import com.nosliw.core.application.division.story.design.wizard.HAPStoryUtilityD
 import com.nosliw.core.application.uitag.HAPManagerUITag;
 import com.nosliw.core.application.uitag.HAPUITagInfo;
 import com.nosliw.core.application.uitag.HAPUITageQueryData;
-import com.nosliw.data.core.data.HAPData;
-import com.nosliw.data.core.data.HAPDataType;
-import com.nosliw.data.core.data.HAPDataTypeId;
-import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
-import com.nosliw.data.core.data.criteria.HAPParserCriteria;
-import com.nosliw.data.core.data.criteria.HAPUtilityCriteria;
+import com.nosliw.core.data.HAPData;
+import com.nosliw.core.data.HAPDataType;
+import com.nosliw.core.data.HAPDataTypeId;
+import com.nosliw.core.data.criteria.HAPDataTypeCriteria;
+import com.nosliw.core.data.criteria.HAPParserCriteria;
+import com.nosliw.core.data.criteria.HAPUtilityCriteria;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPStoryBuilderPageSimple implements HAPStoryBuilderStory{

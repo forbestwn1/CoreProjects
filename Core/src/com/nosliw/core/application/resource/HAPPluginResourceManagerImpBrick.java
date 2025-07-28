@@ -2,9 +2,9 @@ package com.nosliw.core.application.resource;
 
 import com.nosliw.core.application.HAPBundle;
 import com.nosliw.core.application.HAPUtilityBundle;
-import com.nosliw.data.core.resource.HAPPluginResourceManager;
-import com.nosliw.data.core.resource.HAPResourceDataOrWrapper;
-import com.nosliw.data.core.resource.HAPResourceIdSimple;
+import com.nosliw.core.resource.HAPPluginResourceManager;
+import com.nosliw.core.resource.HAPResourceDataOrWrapper;
+import com.nosliw.core.resource.HAPResourceIdSimple;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 

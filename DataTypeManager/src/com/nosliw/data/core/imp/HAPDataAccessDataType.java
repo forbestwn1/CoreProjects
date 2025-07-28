@@ -10,10 +10,10 @@ import com.nosliw.common.strvalue.valueinfo.HAPDBTableInfo;
 import com.nosliw.common.strvalue.valueinfo.HAPDBUtility;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
 import com.nosliw.common.utils.HAPUtilityBasic;
+import com.nosliw.core.data.HAPDataTypeId;
+import com.nosliw.core.data.HAPOperationParmInfo;
+import com.nosliw.core.data.HAPRelationship;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.data.HAPDataTypeId;
-import com.nosliw.data.core.data.HAPOperationParmInfo;
-import com.nosliw.data.core.data.HAPRelationship;
 import com.nosliw.data.core.imp.io.HAPDBSource;
 import com.nosliw.data.core.imp.io.HAPDataAccess;
 
