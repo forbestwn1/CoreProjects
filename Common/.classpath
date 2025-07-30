@@ -33,6 +33,12 @@
 			<attribute name="org.eclipse.jst.component.dependency" value="../"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="libs/spring-core-6.2.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/spring-jcl-6.2.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/spring-beans-6.2.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/spring-context-6.2.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="libs/spring-aop-6.2.0.jar"/>
+	<classpathentry kind="lib" path="libs/spring-expression-6.2.0.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8">
 		<attributes>
 			<attribute name="owner.project.facets" value="java"/>

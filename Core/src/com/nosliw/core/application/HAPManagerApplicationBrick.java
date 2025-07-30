@@ -19,8 +19,8 @@ import com.nosliw.core.application.brick.wrappertask.HAPPluginBrickTaskWrapper;
 import com.nosliw.core.resource.HAPResourceId;
 import com.nosliw.core.resource.HAPResourceIdEmbeded;
 import com.nosliw.core.resource.HAPResourceIdSimple;
+import com.nosliw.core.system.HAPSystemUtility;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
-import com.nosliw.data.core.system.HAPSystemUtility;
 
 public class HAPManagerApplicationBrick {
 

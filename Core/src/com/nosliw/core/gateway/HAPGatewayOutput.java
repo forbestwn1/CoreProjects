@@ -6,10 +6,10 @@ import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
+import com.nosliw.common.script.HAPJSScriptInfo;
+import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.data.core.runtime.js.HAPJSScriptInfo;
-import com.nosliw.common.serialization.HAPManagerSerialize;
 
 @HAPEntityWithAttribute
 public class HAPGatewayOutput extends HAPSerializableImp{
@@ -26,7 +26,9 @@ public class HAPGatewayOutput extends HAPSerializableImp{
 	
 	public HAPGatewayOutput(List<HAPJSScriptInfo> scripts, Object data){
 		this.m_scripts = new ArrayList<HAPJSScriptInfo>();
-		if(scripts!=null)		this.m_scripts.addAll(scripts);
+		if(scripts!=null) {
+			this.m_scripts.addAll(scripts);
+		}
 		this.m_data = data;
 	}
 	

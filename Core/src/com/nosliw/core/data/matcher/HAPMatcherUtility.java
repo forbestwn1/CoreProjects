@@ -6,23 +6,27 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPManagerSerialize;
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.data.HAPDataTypeConverter;
 import com.nosliw.core.data.HAPDataTypeId;
 import com.nosliw.core.data.HAPRelationship;
 import com.nosliw.core.data.HAPRelationshipImp;
 import com.nosliw.core.data.HAPRelationshipPathSegment;
+import com.nosliw.core.data.HAPResourceIdConverter;
 import com.nosliw.core.data.HAPUtilityData;
 import com.nosliw.core.resource.HAPResourceIdSimple;
-import com.nosliw.data.core.runtime.HAPResourceIdConverter;
 
 public class HAPMatcherUtility {
 
 	public static HAPMatchers cascadeMatchers(HAPMatchers matchers1, HAPMatchers matchers2) {
-		if(matchers1==null)   return matchers2;
-		if(matchers2==null)   return matchers1;
+		if(matchers1==null) {
+			return matchers2;
+		}
+		if(matchers2==null) {
+			return matchers1;
+		}
 		 
 		HAPMatchers out = new HAPMatchers();
 		Map<HAPDataTypeId, HAPMatcher> ms1 = matchers1.getMatchers();
@@ -50,7 +54,9 @@ public class HAPMatcherUtility {
 	}
 	
 	public static HAPMatchers reversMatchers(HAPMatchers matchers) {
-		if(matchers==null)  return null;
+		if(matchers==null) {
+			return null;
+		}
 		HAPMatchers out = new HAPMatchers();
 		
 		Map<HAPDataTypeId, HAPMatcher> matcherMap = matchers.getMatchers();

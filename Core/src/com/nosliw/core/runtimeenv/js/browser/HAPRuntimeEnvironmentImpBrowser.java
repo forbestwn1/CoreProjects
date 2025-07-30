@@ -1,38 +1,11 @@
 package com.nosliw.core.runtimeenv.js.browser;
 
-import com.nosliw.common.constant.HAPAttribute;
-import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
-import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.core.application.HAPManagerApplicationBrick;
-import com.nosliw.core.application.common.dataexpression.definition.HAPParserDataExpression;
-import com.nosliw.core.application.division.manual.HAPManualManagerBrick;
-import com.nosliw.core.application.service.HAPGatewayService;
-import com.nosliw.core.application.service.HAPManagerService;
-import com.nosliw.core.application.uitag.HAPManagerUITag;
-import com.nosliw.core.data.HAPDataTypeHelper;
-import com.nosliw.core.data.HAPDataTypeManager;
-import com.nosliw.core.resource.HAPManagerResourceDefinition;
-import com.nosliw.core.resource.dynamic.HAPManagerDynamicResource;
-import com.nosliw.data.core.activity.HAPManagerActivity;
-import com.nosliw.data.core.activity.HAPManagerActivityPlugin;
-import com.nosliw.data.core.codetable.HAPManagerCodeTable;
-import com.nosliw.data.core.cronjob.HAPManagerCronJob;
-import com.nosliw.data.core.imp.HAPDataTypeHelperImp;
-import com.nosliw.data.core.imp.HAPDataTypeManagerImp;
-import com.nosliw.data.core.imp.runtime.js.HAPModuleRuntimeJS;
-import com.nosliw.data.core.imp.runtime.js.resource.HAPManagerResourceJSImp;
-import com.nosliw.data.core.process1.HAPManagerProcess;
-import com.nosliw.data.core.process1.HAPRuntimeProcess;
-import com.nosliw.data.core.runtime.HAPGatewayManager;
-import com.nosliw.data.core.runtime.HAPRuntime;
-import com.nosliw.data.core.runtime.js.HAPRuntimeEnvironmentJS;
-import com.nosliw.data.core.runtime.js.imp.browser.HAPGatewayBrowserLoadLibrary;
-import com.nosliw.data.core.runtime.js.imp.browser.HAPGatewayLoadTestExpression;
-import com.nosliw.data.core.runtime.js.imp.rhino.HAPRuntimeImpRhino;
-import com.nosliw.data.core.task.HAPManagerTask;
-import com.nosliw.data.imp.expression.parser.HAPDataExpressionParserImp;
-import com.nosliw.uiresource.HAPUIResourceManager;
+import org.springframework.stereotype.Component;
 
+import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.core.runtimeenv.HAPRuntimeEnvironmentJS;
+
+@Component
 public class HAPRuntimeEnvironmentImpBrowser extends HAPRuntimeEnvironmentJS{
 
 	@HAPAttribute
@@ -46,7 +19,8 @@ public class HAPRuntimeEnvironmentImpBrowser extends HAPRuntimeEnvironmentJS{
 
 	@HAPAttribute
 	public static final String GATEWAY_UITAG = "uiTag";
-	
+
+/*	
 	private HAPModuleRuntimeJS m_runtimeJSModule;
 	
 	private HAPUIResourceManager m_uiResourceManager;
@@ -145,4 +119,5 @@ public class HAPRuntimeEnvironmentImpBrowser extends HAPRuntimeEnvironmentJS{
 	}
 	
 	public HAPUIResourceManager getUIResourceManager() {   return this.m_uiResourceManager;   }
+*/	
 }

@@ -4,8 +4,8 @@ import java.io.File;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.core.resource.HAPInfoResourceLocation;
+import com.nosliw.core.system.HAPSystemFolderUtility;
 import com.nosliw.data.core.component.HAPPathLocationBase;
-import com.nosliw.data.core.system.HAPSystemFolderUtility;
 
 public class HAPUtilityUITag {
 

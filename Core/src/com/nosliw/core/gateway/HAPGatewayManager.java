@@ -4,10 +4,12 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.json.JSONObject;
+import org.springframework.stereotype.Component;
 
 import com.nosliw.common.exception.HAPServiceData;
-import com.nosliw.data.core.runtime.HAPRuntimeInfo;
+import com.nosliw.core.runtime.HAPRuntimeInfo;
 
+@Component
 public class HAPGatewayManager {
 	private Map<String, HAPGateway> m_gateways;
 	
@@ -45,10 +47,13 @@ public class HAPGatewayManager {
 		HAPServiceData commandResult = null;
 		commandResult = gateway.command(command, parms, runtimeInfo);
 		
-		if(commandResult==null)  return HAPServiceData.createSuccessData();
+		if(commandResult==null) {
+			return HAPServiceData.createSuccessData();
+		}
 		
-		if(commandResult.isFail())  return commandResult;    //if command return fail result, then just return the result
-		else{
+		if(commandResult.isFail()) {
+			return commandResult;    //if command return fail result, then just return the result
+		} else{
 			try{
 				//if command return success, need to process output, and create new ServiceData
 				//for scripts part, load into tuntime

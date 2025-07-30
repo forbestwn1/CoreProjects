@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.serialization.HAPSerializableImp;
-import com.nosliw.data.core.runtime.HAPRuntimeInfo;
+import com.nosliw.core.runtime.HAPRuntimeInfo;
 
 public abstract class HAPResourceDataImp extends HAPSerializableImp implements HAPResourceData, HAPWithResourceDependency{
 

@@ -1,28 +1,33 @@
 package com.nosliw.data.core.imp.runtime.js;
 
+import org.springframework.stereotype.Component;
+
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.data.HAPDataTypeConverter;
+import com.nosliw.core.data.HAPJSHelperId;
 import com.nosliw.core.data.HAPOperationId;
+import com.nosliw.core.data.HAPResourceIdConverter;
+import com.nosliw.core.data.HAPResourceIdJSHelper;
+import com.nosliw.core.data.HAPResourceIdOperation;
+import com.nosliw.core.gateway.HAPJSGatewayId;
+import com.nosliw.core.gateway.HAPResourceIdJSGateway;
 import com.nosliw.core.resource.HAPResourceHelper;
+import com.nosliw.core.resource.imp.js.library.HAPJSLibraryId;
+import com.nosliw.core.resource.imp.js.library.HAPResourceIdJSLibrary;
 import com.nosliw.data.core.imp.HAPDataAccessDataType;
 import com.nosliw.data.core.imp.HAPModuleDataType;
-import com.nosliw.data.core.runtime.HAPResourceIdConverter;
-import com.nosliw.data.core.runtime.HAPResourceIdOperation;
-import com.nosliw.data.core.runtime.js.resource.HAPJSGatewayId;
-import com.nosliw.data.core.runtime.js.resource.HAPJSHelperId;
-import com.nosliw.data.core.runtime.js.resource.HAPJSLibraryId;
-import com.nosliw.data.core.runtime.js.resource.HAPResourceIdJSGateway;
-import com.nosliw.data.core.runtime.js.resource.HAPResourceIdJSHelper;
-import com.nosliw.data.core.runtime.js.resource.HAPResourceIdJSLibrary;
 
+@Component
 public class HAPModuleRuntimeJS {
 
 	private HAPModuleDataType m_dataTypeModule;
 	
 	private HAPDataAccessRuntimeJS m_runtimeJSDataAccess;
 	
-	public HAPModuleRuntimeJS init(HAPValueInfoManager valueInfoManager){
+	public HAPModuleRuntimeJS() {
+		HAPValueInfoManager valueInfoManager = HAPValueInfoManager.getInstance(); 
+		
 		//init data type module
 		m_dataTypeModule = new HAPModuleDataType();
 		m_dataTypeModule.init(valueInfoManager);
@@ -40,8 +45,6 @@ public class HAPModuleRuntimeJS {
 		
 		//data access
 		this.m_runtimeJSDataAccess = new HAPDataAccessRuntimeJS(valueInfoManager, this.m_dataTypeModule.getDataAccess().getDBSource());
-
-		return this;
 	}
 	
 	public HAPDataAccessDataType getDataTypeDataAccess(){  return this.m_dataTypeModule.getDataAccess();  }

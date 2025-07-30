@@ -8,15 +8,15 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.serialization.HAPJsonTypeScript;
-import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPManagerSerialize;
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.strvalue.HAPStringableValueEntityWithID;
 import com.nosliw.core.data.HAPDataTypeId;
 import com.nosliw.core.data.HAPOperation;
+import com.nosliw.core.data.HAPResourceDataJSOperation;
 import com.nosliw.core.resource.HAPResourceDataOrWrapper;
 import com.nosliw.core.resource.HAPResourceDependency;
-import com.nosliw.data.core.runtime.HAPRuntimeInfo;
-import com.nosliw.data.core.runtime.js.resource.HAPResourceDataJSOperation;
+import com.nosliw.core.runtime.HAPRuntimeInfo;
 
 @HAPEntityWithAttribute
 public class HAPResourceDataJSOperationImp extends HAPStringableValueEntityWithID implements HAPResourceDataJSOperation{

@@ -6,9 +6,8 @@ import java.util.Set;
 import org.json.JSONObject;
 
 import com.nosliw.common.exception.HAPServiceData;
-import com.nosliw.data.core.data.HAPData;
-import com.nosliw.data.core.data.HAPUtilityData;
-import com.nosliw.data.core.runtime.HAPRunTaskEventListener;
+import com.nosliw.core.data.HAPData;
+import com.nosliw.core.data.HAPUtilityData;
 
 public abstract class HAPRuntimeTask {
 

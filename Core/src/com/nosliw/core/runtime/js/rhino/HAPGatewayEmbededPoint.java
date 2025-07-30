@@ -10,12 +10,12 @@ import org.mozilla.javascript.json.JsonParser;
 
 import com.google.gson.GsonBuilder;
 import com.nosliw.common.exception.HAPServiceData;
-import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.script.HAPJSScriptInfo;
 import com.nosliw.common.serialization.HAPManagerSerialize;
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.value.HAPUtilityRhinoValue;
 import com.nosliw.core.gateway.HAPGatewayManager;
 import com.nosliw.core.gateway.HAPGatewayOutput;
-import com.nosliw.data.core.runtime.js.HAPJSScriptInfo;
 
 public class HAPGatewayEmbededPoint {
 
@@ -35,9 +35,13 @@ public class HAPGatewayEmbededPoint {
 		HAPServiceData outServiceData = null;
 		try{
 			JSONObject jsonObjParms = null; 
-			if(parmsObj instanceof String)				jsonObjParms = new JSONObject(parmsObj);
-			else if(parmsObj instanceof JSONObject)		jsonObjParms = (JSONObject)parmsObj;
-			else if(parmsObj instanceof NativeObject)	jsonObjParms = (JSONObject)HAPUtilityRhinoValue.toJson(parmsObj);
+			if(parmsObj instanceof String) {
+				jsonObjParms = new JSONObject(parmsObj);
+			} else if(parmsObj instanceof JSONObject) {
+				jsonObjParms = (JSONObject)parmsObj;
+			} else if(parmsObj instanceof NativeObject) {
+				jsonObjParms = (JSONObject)HAPUtilityRhinoValue.toJson(parmsObj);
+			}
 
 			HAPServiceData serviceData = this.m_gatewayMan.executeGateway(gatewayId, command, jsonObjParms, this.m_runtime.getRuntimeInfo());
 			if(serviceData.isSuccess()){
@@ -49,8 +53,9 @@ public class HAPGatewayEmbededPoint {
 				for(HAPJSScriptInfo scriptInfo : scripts){		this.m_runtime.loadScript(scriptInfo);	}
 				
 				outServiceData = HAPServiceData.createSuccessData(output.getData());
+			} else {
+				outServiceData = serviceData;
 			}
-			else  outServiceData = serviceData;
 		}
 		catch(Exception e){
 			System.out.println("*************************Error Info**********************************");

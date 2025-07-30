@@ -4,7 +4,7 @@ import org.json.JSONObject;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPUtilityFile;
-import com.nosliw.data.core.system.HAPSystemFolderUtility;
+import com.nosliw.core.system.HAPSystemFolderUtility;
 
 public class HAPManagerCodeTable {
 

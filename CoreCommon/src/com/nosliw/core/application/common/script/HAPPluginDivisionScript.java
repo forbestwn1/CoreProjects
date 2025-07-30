@@ -11,7 +11,7 @@ import com.nosliw.core.application.HAPIdBrick;
 import com.nosliw.core.application.HAPIdBrickType;
 import com.nosliw.core.application.HAPPluginDivision;
 import com.nosliw.core.application.HAPWrapperBrickRoot;
-import com.nosliw.data.core.system.HAPSystemFolderUtility;
+import com.nosliw.core.system.HAPSystemFolderUtility;
 
 public class HAPPluginDivisionScript implements HAPPluginDivision{
 

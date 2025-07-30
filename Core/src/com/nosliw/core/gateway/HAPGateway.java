@@ -3,7 +3,7 @@ package com.nosliw.core.gateway;
 import org.json.JSONObject;
 
 import com.nosliw.common.exception.HAPServiceData;
-import com.nosliw.data.core.runtime.HAPRuntimeInfo;
+import com.nosliw.core.runtime.HAPRuntimeInfo;
 
 /**
  * Gateway is a java object that will accept command from runtime  

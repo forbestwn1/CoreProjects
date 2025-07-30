@@ -2,7 +2,7 @@ package com.nosliw.core.resource;
 
 import java.util.List;
 
-import com.nosliw.data.core.runtime.HAPRuntimeInfo;
+import com.nosliw.core.runtime.HAPRuntimeInfo;
 
 public interface HAPWithResourceDependency {
 

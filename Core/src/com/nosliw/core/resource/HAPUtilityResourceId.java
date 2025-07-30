@@ -9,8 +9,8 @@ import java.util.List;
 
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
+import com.nosliw.core.system.HAPSystemFolderUtility;
 import com.nosliw.data.core.component.HAPPathLocationBase;
-import com.nosliw.data.core.system.HAPSystemFolderUtility;
 
 public class HAPUtilityResourceId {
 

@@ -3,7 +3,7 @@ package com.nosliw.core.gateway;
 import java.util.List;
 
 import com.nosliw.common.exception.HAPServiceData;
-import com.nosliw.data.core.runtime.js.HAPJSScriptInfo;
+import com.nosliw.common.script.HAPJSScriptInfo;
 
 public abstract class HAPGatewayImp implements HAPGateway{
 

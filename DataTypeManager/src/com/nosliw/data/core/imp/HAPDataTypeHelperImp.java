@@ -9,6 +9,7 @@ import java.util.Set;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.springframework.stereotype.Component;
 
 import com.google.common.collect.Sets;
 import com.nosliw.common.exception.HAPServiceData;
@@ -32,15 +33,18 @@ import com.nosliw.core.data.criteria.HAPDataTypeSubCriteriaGroupImp;
 import com.nosliw.core.data.criteria.HAPParserCriteria;
 import com.nosliw.core.data.matcher.HAPMatcher;
 import com.nosliw.core.data.matcher.HAPMatchers;
+import com.nosliw.core.runtime.HAPRuntime;
+import com.nosliw.data.core.imp.runtime.js.HAPModuleRuntimeJS;
 
+@Component
 public class HAPDataTypeHelperImp implements HAPDataTypeHelper{
 
 	private HAPDataAccessDataType m_dataAccess = null;
 	private HAPRuntime m_runtime;
 	
-	public HAPDataTypeHelperImp(HAPRuntime runtime, HAPDataAccessDataType dataAccess){
+	public HAPDataTypeHelperImp(HAPRuntime runtime, HAPModuleRuntimeJS jsRuntimeModule){
 		this.m_runtime = runtime;
-		this.m_dataAccess = dataAccess;
+		this.m_dataAccess = jsRuntimeModule.getDataTypeDataAccess();
 	}
 	
 	@Override

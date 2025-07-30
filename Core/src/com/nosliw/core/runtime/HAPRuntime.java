@@ -1,14 +1,6 @@
 package com.nosliw.core.runtime;
 
-import java.util.List;
-import java.util.Map;
-
 import com.nosliw.common.exception.HAPServiceData;
-import com.nosliw.data.core.data.HAPData;
-import com.nosliw.data.core.data.HAPDataTypeId;
-import com.nosliw.data.core.data.HAPOperationParm;
-import com.nosliw.data.core.runtime.HAPRuntimeInfo;
-import com.nosliw.data.core.runtime.HAPRuntimeTask;
 
 public interface HAPRuntime {
 
@@ -24,11 +16,11 @@ public interface HAPRuntime {
 
 	//sync request
 	//individual expression execute
-	public HAPServiceData executeExpressionSync(String expressionStr, Map<String, HAPData> parmsData);
+//	public HAPServiceData executeExpressionSync(String expressionStr, Map<String, HAPData> parmsData);
 
 	//sync request
 	//individual data operation execute
-	public HAPServiceData executeDataOperationSync(HAPDataTypeId dataTypeId, String operation, List<HAPOperationParm> parmsData);
+//	public HAPServiceData executeDataOperationSync(HAPDataTypeId dataTypeId, String operation, List<HAPOperationParm> parmsData);
 	
 	void close();
 	

@@ -9,13 +9,13 @@ import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPManagerSerialize;
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPUtilityBasic;
+import com.nosliw.core.application.HAPExecutableImp;
 import com.nosliw.core.data.HAPDataTypeId;
 import com.nosliw.core.data.HAPRelationship;
 import com.nosliw.core.data.HAPRelationshipImp;
-import com.nosliw.data.core.runtime.HAPExecutableImp;
 
 /**
  * Store matcher information (match from one data type to another data type)
@@ -59,11 +59,14 @@ public class HAPMatcher extends HAPExecutableImp{
 	}
 	
 	public double getScore() {
-		if(this.isVoid())   return 1;
-		else {
+		if(this.isVoid()) {
+			return 1;
+		} else {
 			double maxSize = 10;
 			double pathSize = this.m_relationship.getPath().getSegments().size();
-			if(pathSize>=maxSize)  pathSize = maxSize-1;
+			if(pathSize>=maxSize) {
+				pathSize = maxSize-1;
+			}
 			return (maxSize-pathSize)/maxSize;
 		}
 	}
@@ -92,7 +95,9 @@ public class HAPMatcher extends HAPExecutableImp{
 	}
 	
 	public void addSubMatchers(String name, HAPMatchers matcher){
-		if(matcher!=null)	this.m_subMatchers.put(name, matcher);
+		if(matcher!=null) {
+			this.m_subMatchers.put(name, matcher);
+		}
 	}
 
 	@Override
@@ -131,10 +136,18 @@ public class HAPMatcher extends HAPExecutableImp{
 		boolean out = false;
 		if(obj instanceof HAPMatcher) {
 			HAPMatcher matcher  = (HAPMatcher)obj;
-			if(!this.m_reverse!=matcher.m_reverse)  return false;
-			if(!HAPUtilityBasic.isEquals(this.m_dataTypeId, matcher.m_dataTypeId))  return false;
-			if(!HAPUtilityBasic.isEquals(this.m_relationship, matcher.m_relationship))  return false;
-			if(!HAPUtilityBasic.isEqualMaps(this.m_subMatchers, matcher.m_subMatchers))    return false;
+			if(!this.m_reverse!=matcher.m_reverse) {
+				return false;
+			}
+			if(!HAPUtilityBasic.isEquals(this.m_dataTypeId, matcher.m_dataTypeId)) {
+				return false;
+			}
+			if(!HAPUtilityBasic.isEquals(this.m_relationship, matcher.m_relationship)) {
+				return false;
+			}
+			if(!HAPUtilityBasic.isEqualMaps(this.m_subMatchers, matcher.m_subMatchers)) {
+				return false;
+			}
 		}
 		return out;
 	}

@@ -7,9 +7,9 @@ import com.nosliw.core.resource.HAPPluginResourceManager;
 import com.nosliw.core.resource.HAPResourceDependency;
 import com.nosliw.core.resource.HAPResourceId;
 import com.nosliw.core.resource.HAPResourceIdSimple;
+import com.nosliw.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.imp.runtime.js.HAPDataAccessRuntimeJS;
 import com.nosliw.data.core.imp.runtime.js.HAPJSResourceDependency;
-import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
 public abstract class HAPPluginResourceManagerWithDataAccess implements HAPPluginResourceManager{
 

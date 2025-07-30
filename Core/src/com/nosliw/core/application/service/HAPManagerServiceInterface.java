@@ -6,7 +6,7 @@ import org.json.JSONObject;
 
 import com.nosliw.common.utils.HAPUtilityFile;
 import com.nosliw.core.application.brick.service.interfacee.HAPBlockServiceInterface;
-import com.nosliw.data.core.system.HAPSystemFolderUtility;
+import com.nosliw.core.system.HAPSystemFolderUtility;
 
 public class HAPManagerServiceInterface{
 	

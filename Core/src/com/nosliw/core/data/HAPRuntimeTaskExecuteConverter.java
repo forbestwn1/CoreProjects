@@ -2,9 +2,8 @@ package com.nosliw.core.data;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
+import com.nosliw.core.data.matcher.HAPMatchers;
 import com.nosliw.core.runtime.HAPRuntimeTask;
-import com.nosliw.data.core.data.HAPData;
-import com.nosliw.data.core.matcher.HAPMatchers;
 
 @HAPEntityWithAttribute
 public abstract class HAPRuntimeTaskExecuteConverter extends HAPRuntimeTask{

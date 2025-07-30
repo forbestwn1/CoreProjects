@@ -7,9 +7,9 @@ import com.nosliw.core.resource.HAPResourceId;
 import com.nosliw.core.resource.HAPResourceIdSimple;
 import com.nosliw.core.resource.HAPResourceManagerImp;
 import com.nosliw.core.resource.HAPUtilityResource;
+import com.nosliw.core.system.HAPSystemFolderUtility;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.HAPResourceDataFactory;
-import com.nosliw.data.core.system.HAPSystemFolderUtility;
 
 public class HAPResourceManagerUIModuleDecoration extends HAPResourceManagerImp{
 

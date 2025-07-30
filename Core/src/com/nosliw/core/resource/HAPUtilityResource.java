@@ -9,11 +9,11 @@ import com.nosliw.common.interfac.HAPEntityOrReference;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.HAPBrick;
 import com.nosliw.core.application.resource.HAPResourceDataBrick;
+import com.nosliw.core.system.HAPSystemUtility;
 import com.nosliw.data.core.common.HAPWithEntityElement;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.runtime.js.HAPUtilityRuntimeJS;
-import com.nosliw.data.core.system.HAPSystemUtility;
 
 public class HAPUtilityResource {
 

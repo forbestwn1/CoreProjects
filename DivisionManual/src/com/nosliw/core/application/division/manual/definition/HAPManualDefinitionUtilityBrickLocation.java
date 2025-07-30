@@ -16,8 +16,8 @@ import com.nosliw.common.utils.HAPUtilityFile;
 import com.nosliw.core.application.HAPIdBrick;
 import com.nosliw.core.application.HAPIdBrickType;
 import com.nosliw.core.application.HAPUtilityBrickId;
+import com.nosliw.core.system.HAPSystemFolderUtility;
 import com.nosliw.data.core.component.HAPPathLocationBase;
-import com.nosliw.data.core.system.HAPSystemFolderUtility;
 
 public class HAPManualDefinitionUtilityBrickLocation {
 

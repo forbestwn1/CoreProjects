@@ -4,24 +4,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.nosliw.common.exception.HAPServiceData;
+import com.nosliw.common.script.HAPJSScriptInfo;
+import com.nosliw.core.resource.HAPResourceDependency;
+import com.nosliw.core.resource.HAPResourceInfo;
+import com.nosliw.core.runtime.HAPRunTaskEventListener;
 import com.nosliw.core.runtime.HAPRuntime;
 import com.nosliw.core.runtime.HAPRuntimeTask;
+import com.nosliw.core.runtime.js.rhino.task.HAPRuntimeTaskLoadResourcesRhino;
 import com.nosliw.core.runtimeenv.HAPRuntimeEnvironment;
-import com.nosliw.data.core.resource.HAPResourceDependency;
-import com.nosliw.data.core.resource.HAPResourceInfo;
-import com.nosliw.data.core.runtime.HAPRunTaskEventListener;
-import com.nosliw.data.core.runtime.js.HAPJSScriptInfo;
-import com.nosliw.data.core.runtime.js.imp.rhino.task.HAPRuntimeTaskLoadResourcesRhino;
 
 public abstract class HAPRuntimeTaskRhino extends HAPRuntimeTask{
 
 	private String m_taskType;
 	
-	private HAPRuntimeEnvironment m_runtTimeEnv;
-	
 	public HAPRuntimeTaskRhino(String taskType, HAPRuntimeEnvironment runtTimeEnv) {
 		this.m_taskType = taskType;
-		this.m_runtTimeEnv = runtTimeEnv;
 	}
 	
 	@Override
@@ -52,7 +49,7 @@ public abstract class HAPRuntimeTaskRhino extends HAPRuntimeTask{
 							//after resource loaded, execute expression
 							try{
 								HAPJSScriptInfo scriptInfo = buildRuntimeScript();
-								getRuntime().loadTaskScript(scriptInfo, getTask().getTaskId());
+								rhinoRuntime.loadTaskScript(scriptInfo, getTask().getTaskId());
 							}
 							catch(Exception e){
 								getTask().finish(HAPServiceData.createFailureData(e, ""));
@@ -82,10 +79,6 @@ public abstract class HAPRuntimeTaskRhino extends HAPRuntimeTask{
 	@Override
 	public String getTaskType(){    return this.m_taskType;     }
 
-	protected HAPRuntimeImpRhino getRuntime() {    return (HAPRuntimeImpRhino)this.m_runtTimeEnv.getRuntime();     }
-	
-	protected HAPRuntimeEnvironment getRuntimeEnv() {   return this.m_runtTimeEnv;    }
-	
 	protected HAPRuntimeTask getTask() {   return this;   }
 
 	abstract protected List<HAPResourceDependency> getResourceDependency();

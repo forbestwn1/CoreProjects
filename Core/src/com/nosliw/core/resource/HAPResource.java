@@ -7,12 +7,12 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPInfo;
 import com.nosliw.common.info.HAPInfoImpSimple;
-import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPJsonTypeScript;
+import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.serialization.HAPManagerSerialize;
-import com.nosliw.data.core.runtime.js.HAPResourceDataJSValue;
+import com.nosliw.common.serialization.HAPUtilityJson;
+import com.nosliw.core.resource.imp.js.HAPResourceDataJSValue;
 
 /**
  * This interface represent a resource 
@@ -77,8 +77,11 @@ public class HAPResource extends HAPSerializableImp{
 		Map<String, String> jsonMap = new LinkedHashMap<String, String>();
 		Map<String, Class<?>> typeJsonMap = new LinkedHashMap<String, Class<?>>();
 		jsonMap.put(ID, HAPManagerSerialize.getInstance().toStringValue(this.m_id, HAPSerializationFormat.JSON));
-		if(this.m_resourceData instanceof HAPResourceDataJSValue)  jsonMap.put(RESOURCEDATA, ((HAPResourceDataJSValue)this.m_resourceData).getValue());
-		else jsonMap.put(RESOURCEDATA, this.m_resourceData.toString());
+		if(this.m_resourceData instanceof HAPResourceDataJSValue) {
+			jsonMap.put(RESOURCEDATA, ((HAPResourceDataJSValue)this.m_resourceData).getValue());
+		} else {
+			jsonMap.put(RESOURCEDATA, this.m_resourceData.toString());
+		}
 		typeJsonMap.put(RESOURCEDATA, HAPJsonTypeScript.class);
 		jsonMap.put(INFO, HAPManagerSerialize.getInstance().toStringValue(this.m_info, HAPSerializationFormat.JSON));
 		return HAPUtilityJson.buildMapJson(jsonMap, typeJsonMap);

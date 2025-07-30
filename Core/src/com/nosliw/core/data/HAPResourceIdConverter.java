@@ -1,10 +1,9 @@
 package com.nosliw.core.data;
 
-import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPManagerSerialize;
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.data.HAPDataTypeConverter;
-import com.nosliw.data.core.resource.HAPResourceIdSimple;
+import com.nosliw.core.resource.HAPResourceIdSimple;
 
 public class HAPResourceIdConverter extends HAPResourceIdSimple{
 

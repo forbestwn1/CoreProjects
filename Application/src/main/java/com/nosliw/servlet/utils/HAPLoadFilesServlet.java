@@ -18,7 +18,7 @@ import org.json.JSONObject;
 
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.utils.HAPUtilityFile;
-import com.nosliw.data.core.system.HAPSystemUtility;
+import com.nosliw.core.system.HAPSystemUtility;
 import com.nosliw.servlet.HAPBaseServlet;
 import com.nosliw.servlet.HAPRequestInfo;
 

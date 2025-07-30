@@ -1,16 +1,15 @@
 package com.nosliw.core.data;
 
-import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPManagerSerialize;
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.data.HAPDataTypeId;
-import com.nosliw.data.core.resource.HAPResourceIdSimple;
+import com.nosliw.core.resource.HAPResourceIdSimple;
 
 public class HAPResourceIdDataType extends HAPResourceIdSimple{
 
 	private HAPDataTypeId m_dataTypeId;
 	
-	public HAPResourceIdDataType(){    super(HAPConstantShared.RUNTIME_RESOURCE_TYPE_DATATYPE);    }
+	public HAPResourceIdDataType(){    super(HAPConstantShared.RUNTIME_RESOURCE_TYPE_DATATYPE, "1.0.0");    }
 	
 	public HAPResourceIdDataType(HAPResourceIdSimple resourceId){
 		this();

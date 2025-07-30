@@ -8,10 +8,10 @@ import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.serialization.HAPJsonTypeScript;
 import com.nosliw.common.strvalue.HAPStringableValueEntityWithID;
 import com.nosliw.core.data.HAPDataTypeId;
+import com.nosliw.core.data.HAPResourceDataJSConverter;
 import com.nosliw.core.resource.HAPResourceDataOrWrapper;
 import com.nosliw.core.resource.HAPResourceDependency;
-import com.nosliw.data.core.runtime.HAPRuntimeInfo;
-import com.nosliw.data.core.runtime.js.resource.HAPResourceDataJSConverter;
+import com.nosliw.core.runtime.HAPRuntimeInfo;
 
 public class HAPResourceDataJSConverterImp extends HAPStringableValueEntityWithID implements HAPResourceDataJSConverter{
 

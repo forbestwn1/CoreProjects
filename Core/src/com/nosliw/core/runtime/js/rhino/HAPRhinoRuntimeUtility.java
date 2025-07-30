@@ -19,11 +19,11 @@ import com.nosliw.common.interpolate.HAPStringTemplateUtil;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPUtilityFile;
 import com.nosliw.common.value.HAPUtilityRhinoValue;
+import com.nosliw.core.resource.HAPFactoryResourceId;
+import com.nosliw.core.resource.HAPResourceId;
+import com.nosliw.core.resource.HAPResourceInfo;
 import com.nosliw.core.runtime.HAPRuntime;
-import com.nosliw.data.core.resource.HAPResourceId;
-import com.nosliw.data.core.resource.HAPFactoryResourceId;
-import com.nosliw.data.core.resource.HAPResourceInfo;
-import com.nosliw.data.core.system.HAPSystemFolderUtility;
+import com.nosliw.core.system.HAPSystemFolderUtility;
 
 public class HAPRhinoRuntimeUtility {
 

@@ -9,16 +9,16 @@ import java.util.Set;
 
 import org.json.JSONObject;
 
-import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPManagerSerialize;
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPUtilityBasic;
+import com.nosliw.core.application.HAPExecutableImp;
 import com.nosliw.core.data.HAPDataTypeId;
 import com.nosliw.core.data.HAPRelationship;
 import com.nosliw.core.resource.HAPManagerResource;
 import com.nosliw.core.resource.HAPResourceDependency;
 import com.nosliw.core.resource.HAPResourceId;
-import com.nosliw.data.core.runtime.HAPExecutableImp;
-import com.nosliw.data.core.runtime.HAPRuntimeInfo;
+import com.nosliw.core.runtime.HAPRuntimeInfo;
 
 public class HAPMatchers extends HAPExecutableImp{
 
@@ -37,7 +37,9 @@ public class HAPMatchers extends HAPExecutableImp{
 	}
 	
 	public double getScore() {
-		if(this.m_matchers.isEmpty())  return 0;
+		if(this.m_matchers.isEmpty()) {
+			return 0;
+		}
 		double sum = 0;
 		for(HAPMatcher matcher : this.m_matchers.values()) {
 			sum = sum + matcher.getScore();
@@ -112,7 +114,9 @@ public class HAPMatchers extends HAPExecutableImp{
 		boolean out = false;
 		if(obj instanceof HAPMatchers) {
 			HAPMatchers matchers = (HAPMatchers)obj;
-			if(!HAPUtilityBasic.isEqualMaps(this.m_matchers, matchers.m_matchers))  return false;
+			if(!HAPUtilityBasic.isEqualMaps(this.m_matchers, matchers.m_matchers)) {
+				return false;
+			}
 			out = true;
 		}
 		

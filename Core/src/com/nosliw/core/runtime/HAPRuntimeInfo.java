@@ -74,4 +74,9 @@ public class HAPRuntimeInfo extends HAPSerializableImp{
 			return false;
 		}
 	}
+	
+	@Override
+	public String toString() {
+		return this.buildLiterate();
+	}
 }

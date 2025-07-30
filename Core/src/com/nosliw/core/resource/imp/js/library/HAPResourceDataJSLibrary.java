@@ -10,8 +10,8 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
-import com.nosliw.data.core.resource.HAPResourceDataImp;
-import com.nosliw.data.core.resource.HAPResourceDataOrWrapper;
+import com.nosliw.core.resource.HAPResourceDataImp;
+import com.nosliw.core.resource.HAPResourceDataOrWrapper;
 
 @HAPEntityWithAttribute
 public class HAPResourceDataJSLibrary extends HAPResourceDataImp{

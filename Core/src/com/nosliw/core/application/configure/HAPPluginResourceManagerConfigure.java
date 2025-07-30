@@ -9,8 +9,8 @@ import com.nosliw.common.utils.HAPUtilityFile;
 import com.nosliw.core.resource.HAPPluginResourceManager;
 import com.nosliw.core.resource.HAPResourceDataOrWrapper;
 import com.nosliw.core.resource.HAPResourceIdSimple;
+import com.nosliw.core.system.HAPSystemFolderUtility;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
-import com.nosliw.data.core.system.HAPSystemFolderUtility;
 
 public class HAPPluginResourceManagerConfigure implements HAPPluginResourceManager{
 

@@ -3,11 +3,11 @@ package com.nosliw.core.application.common.script;
 import java.io.File;
 
 import com.nosliw.common.utils.HAPUtilityFile;
+import com.nosliw.core.system.HAPSystemFolderUtility;
 import com.nosliw.data.core.resource.HAPPluginResourceManager;
 import com.nosliw.data.core.resource.HAPResourceDataOrWrapper;
 import com.nosliw.data.core.resource.HAPResourceIdSimple;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
-import com.nosliw.data.core.system.HAPSystemFolderUtility;
 
 public class HAPPluginResourceManagerScript implements HAPPluginResourceManager{
 

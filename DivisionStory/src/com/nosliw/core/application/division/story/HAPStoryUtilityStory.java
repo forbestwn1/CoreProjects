@@ -20,7 +20,7 @@ import com.nosliw.core.application.division.story.brick.connection.HAPStoryConne
 import com.nosliw.core.application.division.story.brick.node.HAPStoryNodeVariable;
 import com.nosliw.core.application.division.story.change.HAPStoryRequestChangeWrapper;
 import com.nosliw.core.resource.HAPResourceDefinition1;
-import com.nosliw.data.core.system.HAPSystemFolderUtility;
+import com.nosliw.core.system.HAPSystemFolderUtility;
 
 public class HAPStoryUtilityStory {
 
