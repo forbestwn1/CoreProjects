@@ -9,8 +9,10 @@ import com.nosliw.core.runtime.HAPRuntimeInfo;
  * Gateway is a java object that will accept command from runtime  
  *
  */
-public interface HAPGateway {
-
+public interface HAPGateway{
+	
+	String getName();
+	
 	/**
 	 * execute command
 	 * @param command command name

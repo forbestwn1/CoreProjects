@@ -7,14 +7,14 @@ import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.exception.HAPServiceData;
+import com.nosliw.common.script.HAPJSScriptInfo;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.core.gateway.HAPGatewayImp;
 import com.nosliw.core.gateway.HAPGatewayManager;
 import com.nosliw.core.gateway.HAPGatewayOutput;
 import com.nosliw.core.resource.HAPGatewayResource;
-import com.nosliw.data.core.runtime.HAPRuntimeInfo;
-import com.nosliw.data.core.runtime.js.HAPJSScriptInfo;
-import com.nosliw.data.core.runtime.js.HAPRuntimeEnvironmentJS;
+import com.nosliw.core.runtime.HAPRuntimeInfo;
 
 @HAPEntityWithAttribute
 public class HAPGatewayBrowserLoadLibrary extends HAPGatewayImp{
@@ -34,8 +34,10 @@ public class HAPGatewayBrowserLoadLibrary extends HAPGatewayImp{
 		
 		switch(command){
 		case COMMAND_LOADLIBRARY:
-			HAPServiceData serviceData = this.m_gatewayManager.executeGateway(HAPRuntimeEnvironmentJS.GATEWAY_RESOURCE, HAPGatewayResource.COMMAND_DISCOVERANDLOADRESOURCES, parms, runtimeInfo);
-			if(serviceData.isFail())   return serviceData;
+			HAPServiceData serviceData = this.m_gatewayManager.executeGateway(HAPConstantShared.GATEWAY_RESOURCE, HAPGatewayResource.COMMAND_DISCOVERANDLOADRESOURCES, parms, runtimeInfo);
+			if(serviceData.isFail()) {
+				return serviceData;
+			}
 			
 			String version = parms.optString(COMMAND_LOADLIBRARY_VERSION);  //append version information for lib file
 			List<String> fileNames = new ArrayList<String>();

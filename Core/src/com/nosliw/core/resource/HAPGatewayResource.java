@@ -7,23 +7,19 @@ import java.util.Map;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.springframework.stereotype.Component;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.exception.HAPServiceData;
+import com.nosliw.common.script.HAPJSScriptInfo;
 import com.nosliw.common.serialization.HAPUtilitySerialize;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.gateway.HAPGatewayImp;
-import com.nosliw.data.core.resource.HAPLoadResourceResponse;
-import com.nosliw.data.core.resource.HAPResource;
-import com.nosliw.data.core.resource.HAPResourceId;
-import com.nosliw.data.core.resource.HAPFactoryResourceId;
-import com.nosliw.data.core.resource.HAPResourceInfo;
-import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
-import com.nosliw.data.core.runtime.HAPRuntimeInfo;
-import com.nosliw.data.core.runtime.js.HAPJSScriptInfo;
-import com.nosliw.data.core.runtime.js.HAPUtilityRuntimeJSScript;
+import com.nosliw.core.runtime.HAPRuntimeInfo;
 
 @HAPEntityWithAttribute
+@Component
 public class HAPGatewayResource extends HAPGatewayImp{
 
 	@HAPAttribute
@@ -41,11 +37,14 @@ public class HAPGatewayResource extends HAPGatewayImp{
 	@HAPAttribute
 	final public static String COMMAND_LOADRESOURCES_RESOURCEINFOS = "resourceInfos";
 	
-	private HAPRuntimeEnvironment m_runtimeEnviroment;
+	private HAPManagerResource m_resourceManager;
 	
-	public HAPGatewayResource(HAPRuntimeEnvironment runtimeEnviroment){
-		this.m_runtimeEnviroment = runtimeEnviroment;
+	public HAPGatewayResource(HAPManagerResource resourceManager){
+		this.m_resourceManager = resourceManager;
 	}
+	
+	@Override
+	public String getName() {   return HAPConstantShared.GATEWAY_RESOURCE;  }
 	
 	@Override
 	public HAPServiceData command(String command, JSONObject parms, HAPRuntimeInfo runtimeInfo) {
@@ -105,8 +104,9 @@ public class HAPGatewayResource extends HAPGatewayImp{
 		List<HAPResourceId> resourceIds = HAPFactoryResourceId.newInstanceList(resourceJsonArray); 
 
 		serviceData = this.discoverResources(resourceIds, runtimeInfo);
-		if(serviceData.isFail())   return serviceData;
-		else{
+		if(serviceData.isFail()) {
+			return serviceData;
+		} else{
 			List<HAPResourceInfo> resourceInfos = (List<HAPResourceInfo>)this.getSuccessData(serviceData);
 			serviceData = this.loadResources(resourceInfos, runtimeInfo);
 		}
@@ -114,7 +114,7 @@ public class HAPGatewayResource extends HAPGatewayImp{
 	}
 	
 	private HAPServiceData discoverResources(List<HAPResourceId> resourceIds, HAPRuntimeInfo runtimeInfo){
-		List<HAPResourceInfo> resourceInfos = this.m_runtimeEnviroment.getResourceManager().discoverResources(resourceIds, runtimeInfo);
+		List<HAPResourceInfo> resourceInfos = m_resourceManager.discoverResources(resourceIds, runtimeInfo);
 		return this.createSuccessWithObject(resourceInfos);
 	}
 	
@@ -131,7 +131,7 @@ public class HAPGatewayResource extends HAPGatewayImp{
 		}
 
 		//Retrieve resources
-		HAPLoadResourceResponse loadResourceResponse = this.m_runtimeEnviroment.getResourceManager().getResources(resourceIds, runtimeInfo);
+		HAPLoadResourceResponse loadResourceResponse = m_resourceManager.getResources(resourceIds, runtimeInfo);
 
 		List<HAPResourceId> failedResourceIds = loadResourceResponse.getFailedResourcesId();
 		if(failedResourceIds.size()==0){
@@ -140,7 +140,7 @@ public class HAPGatewayResource extends HAPGatewayImp{
 			List<HAPJSScriptInfo> scriptsInfo = new ArrayList<HAPJSScriptInfo>();
 			for(HAPResource resource : loadResourceResponse.getLoadedResources()){
 				HAPResourceInfo resourceInfo = resourcesInfo.get(resource.getId());
-				scriptsInfo.addAll(HAPUtilityRuntimeJSScript.buildScriptForResource(resourceInfo, resource));
+				scriptsInfo.addAll(HAPUtilityRuntimeScriptResource.buildScriptForResource(resourceInfo, resource));
 			}
 			serviceData = this.createSuccessWithScripts(scriptsInfo); 
 		}
@@ -155,5 +155,5 @@ public class HAPGatewayResource extends HAPGatewayImp{
 		}
 		return serviceData;
 	}
-	
+
 }

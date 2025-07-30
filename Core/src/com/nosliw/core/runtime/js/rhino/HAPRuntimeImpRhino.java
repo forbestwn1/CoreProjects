@@ -13,7 +13,6 @@ import org.mozilla.javascript.NativeObject;
 import org.mozilla.javascript.Scriptable;
 import org.mozilla.javascript.tools.debugger.Main;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
 import com.google.common.util.concurrent.SettableFuture;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
@@ -35,12 +34,12 @@ import com.nosliw.core.resource.imp.js.library.HAPJSLibraryId;
 import com.nosliw.core.runtime.HAPRunTaskEventListener;
 import com.nosliw.core.runtime.HAPRuntime;
 import com.nosliw.core.runtime.HAPRuntimeInfo;
+import com.nosliw.core.runtime.HAPRuntimeManager;
 import com.nosliw.core.runtime.HAPRuntimeTask;
 import com.nosliw.core.runtime.HAPRuntimeWithScript;
 import com.nosliw.core.runtimeenv.HAPRuntimeEnvironmentJS;
 
 @HAPEntityWithAttribute
-@Component("javascript;rhino")
 public class HAPRuntimeImpRhino implements HAPRuntimeWithScript{
 
 	//info used to library resource that do not need to add to resource manager
@@ -70,7 +69,7 @@ public class HAPRuntimeImpRhino implements HAPRuntimeWithScript{
 	}
 
 	@Override
-	public HAPRuntimeInfo getRuntimeInfo() {		return new HAPRuntimeInfo(HAPConstantShared.RUNTIME_LANGUAGE_JS, HAPConstantShared.RUNTIME_ENVIRONMENT_RHINO);	}
+	public HAPRuntimeInfo getRuntimeInfo() {		return HAPRuntimeManager.RUNTIME_JS_RHION;	}
 
 	/**
 	 * embed gateway point into rhino env which provide different gateway by name. 
@@ -281,7 +280,7 @@ public class HAPRuntimeImpRhino implements HAPRuntimeWithScript{
 			Map<String, String> jsonMap = new LinkedHashMap<String, String>();
 			
 			jsonMap.put(HAPGatewayResource.COMMAND_LOADRESOURCES_RESOURCEINFOS, HAPManagerSerialize.getInstance().toStringValue(resourceInfos, HAPSerializationFormat.JSON));
-			HAPServiceData serviceData = this.m_gatewayManager.executeGateway(HAPRuntimeEnvironmentJS.GATEWAY_RESOURCE, HAPGatewayResource.COMMAND_LOADRESOURCES, new JSONObject(HAPUtilityJson.buildMapJson(jsonMap)), this.getRuntimeInfo());
+			HAPServiceData serviceData = this.m_gatewayManager.executeGateway(HAPConstantShared.GATEWAY_RESOURCE, HAPGatewayResource.COMMAND_LOADRESOURCES, new JSONObject(HAPUtilityJson.buildMapJson(jsonMap)), this.getRuntimeInfo());
 
 			HAPGatewayOutput output = (HAPGatewayOutput)serviceData.getData();
 			List<HAPJSScriptInfo> scripts = output.getScripts();

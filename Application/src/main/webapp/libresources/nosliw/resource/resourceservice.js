@@ -74,7 +74,7 @@ var node_createResourceService = function(resourceManager){
 	//load resources for runtime
 	var loc_getLoadResourcesRequest = function(resourceInfos, handlers, requester_parent){
 		//gateway request
-		var gatewayId = node_COMMONATRIBUTECONSTANT.RUNTIME_GATEWAY_RESOURCE;
+		var gatewayId = node_COMMONCONSTANT.GATEWAY_RESOURCE;
 		var command = node_COMMONATRIBUTECONSTANT.GATEWAYRESOURCE_COMMAND_LOADRESOURCES;
 		var parms = {};
 		parms[node_COMMONATRIBUTECONSTANT.GATEWAYRESOURCE_COMMAND_LOADRESOURCES_RESOURCEINFOS] = resourceInfos;
@@ -216,7 +216,7 @@ var node_createResourceService = function(resourceManager){
 			resourceIds = loc_validateResourceId(resourceIds);
 			
 //			//gateway request
-//			var gatewayId = node_COMMONATRIBUTECONSTANT.RUNTIME_GATEWAY_RESOURCE;
+//			var gatewayId = node_COMMONCONSTANT.GATEWAY_RESOURCE;
 //			var command = node_COMMONATRIBUTECONSTANT.GATEWAYRESOURCE_COMMAND_DISCOVERRESOURCES;
 //			var parms = {};
 //			parms[node_COMMONATRIBUTECONSTANT.GATEWAYRESOURCE_COMMAND_DISCOVERRESOURCES_RESOURCEIDS] = resourceIds;
@@ -232,7 +232,7 @@ var node_createResourceService = function(resourceManager){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("DiscoverResources", {"resourcesId":resourceIds}), handlers, loc_out.getRequestInfo(requester_parent));
 
 			//gateway request
-			var gatewayId = node_COMMONATRIBUTECONSTANT.RUNTIME_GATEWAY_RESOURCE;
+			var gatewayId = node_COMMONCONSTANT.GATEWAY_RESOURCE;
 			var command = node_COMMONATRIBUTECONSTANT.GATEWAYRESOURCE_COMMAND_DISCOVERRESOURCES;
 			var parms = {};
 			parms[node_COMMONATRIBUTECONSTANT.GATEWAYRESOURCE_COMMAND_DISCOVERRESOURCES_RESOURCEIDS] = resourceIds;

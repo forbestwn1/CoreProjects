@@ -34,6 +34,8 @@ import com.nosliw.core.data.criteria.HAPParserCriteria;
 import com.nosliw.core.data.matcher.HAPMatcher;
 import com.nosliw.core.data.matcher.HAPMatchers;
 import com.nosliw.core.runtime.HAPRuntime;
+import com.nosliw.core.runtime.HAPRuntimeManager;
+import com.nosliw.core.runtime.HAPUtilityExecuteTask;
 import com.nosliw.data.core.imp.runtime.js.HAPModuleRuntimeJS;
 
 @Component
@@ -42,8 +44,8 @@ public class HAPDataTypeHelperImp implements HAPDataTypeHelper{
 	private HAPDataAccessDataType m_dataAccess = null;
 	private HAPRuntime m_runtime;
 	
-	public HAPDataTypeHelperImp(HAPRuntime runtime, HAPModuleRuntimeJS jsRuntimeModule){
-		this.m_runtime = runtime;
+	public HAPDataTypeHelperImp(HAPRuntimeManager runtimeMan, HAPModuleRuntimeJS jsRuntimeModule){
+		this.m_runtime = runtimeMan.getDefaultRuntime();
 		this.m_dataAccess = jsRuntimeModule.getDataTypeDataAccess();
 	}
 	
@@ -488,7 +490,7 @@ public class HAPDataTypeHelperImp implements HAPDataTypeHelper{
 		if(hasChild){
 			List<HAPOperationParm> parmsDataGetChildrenNames = new ArrayList<HAPOperationParm>();
 			parmsDataGetChildrenNames.add(new HAPOperationParm(data));
-			HAPServiceData serviceDataChildNames = this.m_runtime.executeDataOperationSync(data.getDataTypeId(), HAPConstantShared.DATAOPERATION_COMPLEX_GETCHILDRENNAMES, parmsDataGetChildrenNames);
+			HAPServiceData serviceDataChildNames = HAPUtilityExecuteTask.executeDataOperationSync(data.getDataTypeId(), HAPConstantShared.DATAOPERATION_COMPLEX_GETCHILDRENNAMES, parmsDataGetChildrenNames, this.m_runtime);
 			HAPData getChildrenNamesResultData = (HAPData)serviceDataChildNames.getData();
 			try {
 				JSONArray getChildrenNamesResultJsonArray = new JSONArray(getChildrenNamesResultData.getValue().toString());
@@ -501,7 +503,7 @@ public class HAPDataTypeHelperImp implements HAPDataTypeHelper{
 					List<HAPOperationParm> parmsDataGetChildData = new ArrayList<HAPOperationParm>();
 					parmsDataGetChildData.add(new HAPOperationParm(data));
 					parmsDataGetChildData.add(new HAPOperationParm("name", HAPUtilityData.buildDataWrapperFromJson(childNameDataJson)));
-					HAPServiceData serviceDataChildData = this.m_runtime.executeDataOperationSync(data.getDataTypeId(), HAPConstantShared.DATAOPERATION_COMPLEX_GETCHILDDATA, parmsDataGetChildData);
+					HAPServiceData serviceDataChildData = HAPUtilityExecuteTask.executeDataOperationSync(data.getDataTypeId(), HAPConstantShared.DATAOPERATION_COMPLEX_GETCHILDDATA, parmsDataGetChildData, this.m_runtime);
 					HAPData getChildDataResultData = (HAPData)serviceDataChildData.getData();
 					group.addSubCriteria(childName, this.getDataTypeCriteriaByData(getChildDataResultData));
 				}

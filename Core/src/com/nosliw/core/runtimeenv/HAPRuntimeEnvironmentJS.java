@@ -12,8 +12,8 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 	@HAPAttribute
 	public static final String GATEWAY_CODETABLE = "codeTable";
 
-	@HAPAttribute
-	public static final String GATEWAY_RESOURCE = "resources";
+//	@HAPAttribute
+//	public static final String GATEWAY_RESOURCE = "resources";
 
 	@HAPAttribute
 	public static final String GATEWAY_PACKAGE = "package";

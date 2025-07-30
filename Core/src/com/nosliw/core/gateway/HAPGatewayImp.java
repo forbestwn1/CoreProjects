@@ -6,7 +6,6 @@ import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.script.HAPJSScriptInfo;
 
 public abstract class HAPGatewayImp implements HAPGateway{
-
 	
 	protected HAPServiceData createSuccessWithScripts(List<HAPJSScriptInfo> scripts){
 		return HAPServiceData.createSuccessData(new HAPGatewayOutput(scripts, null));

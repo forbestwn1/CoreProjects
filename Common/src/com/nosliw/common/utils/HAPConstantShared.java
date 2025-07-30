@@ -663,6 +663,7 @@ public class HAPConstantShared {
 
 
 		public static final String GATEWAY_OPTIONS = "options";
+		public static final String GATEWAY_RESOURCE = "resource";
 
 
 

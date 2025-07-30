@@ -18,8 +18,8 @@ import com.nosliw.common.utils.HAPUtilityFile;
 
 public class HAPJSConstantValidator {
 
-	private static String PATH_APPUI = "C:/Users/ewaniwa/Desktop/Mywork/CoreProjects/AppUI/app/www/js";
-	private static String PATH_JS = "C:/Users/ewaniwa/Desktop/MyWork/CoreProjects/Application/WebContent/libresources/nosliw";
+	private static String PATH_APPUI = "C:/Mywork/CoreProjects/AppUI/app/www/js";
+	private static String PATH_JS = "C:/MyWork/CoreProjects/Application/WebContent/libresources/nosliw";
 	private static String PATH_JS_CONSTANT = PATH_JS+"/constant";
 	private static String FILE_CONSTANTS = PATH_JS_CONSTANT+"/constant.js";
 	private static String FILE_COMMONCONSTANTS = PATH_JS_CONSTANT+"/COMMONCONSTANT.js";

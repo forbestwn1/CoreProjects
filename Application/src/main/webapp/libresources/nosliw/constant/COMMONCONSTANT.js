@@ -444,6 +444,7 @@ var COMMONCONSTANT=
   "MINIAPP_DATAOWNER_APP": "app",
   "MINIAPP_DATAOWNER_GROUP": "group",
   "GATEWAY_OPTIONS": "options",
+  "GATEWAY_RESOURCE": "resource",
   "NOSLIW_RESERVE_ATTRIBUTE": "nosliwattribute_",
   "NOSLIW_RESERVE_ATTRIBUTE_PLACEHOLDER": "nosliwattribute_placeholder",
   "NOSLIW_NAME_PREFIX": "nosliw_",
