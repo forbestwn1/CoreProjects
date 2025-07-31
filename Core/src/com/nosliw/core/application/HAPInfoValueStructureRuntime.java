@@ -1,4 +1,4 @@
-package com.nosliw.core.application.valuestructure;
+package com.nosliw.core.application;
 
 import java.util.Map;
 

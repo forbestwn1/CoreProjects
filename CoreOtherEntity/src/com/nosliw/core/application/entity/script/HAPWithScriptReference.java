@@ -1,8 +1,8 @@
-package com.nosliw.core.application.common.script;
+package com.nosliw.core.application.entity.script;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.data.core.resource.HAPResourceId;
+import com.nosliw.core.resource.HAPResourceId;
 
 @HAPEntityWithAttribute
 public interface HAPWithScriptReference {

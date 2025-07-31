@@ -16,14 +16,10 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.common.dynamic.HAPInfoDynamicTask;
-import com.nosliw.core.application.resource.HAPResourceDataBrick;
-import com.nosliw.core.application.valuestructure.HAPDomainValueStructure;
-import com.nosliw.core.resource.HAPManagerResource;
 import com.nosliw.core.resource.HAPResourceDependency;
 import com.nosliw.core.resource.HAPResourceIdSimple;
-import com.nosliw.core.resource.HAPUtilityResource;
 import com.nosliw.core.resource.HAPWithResourceDependency;
-import com.nosliw.data.core.runtime.HAPRuntimeInfo;
+import com.nosliw.core.runtime.HAPRuntimeInfo;
 
 @HAPEntityWithAttribute
 public class HAPBundle extends HAPSerializableImp implements HAPWithResourceDependency{
@@ -70,37 +66,8 @@ public class HAPBundle extends HAPSerializableImp implements HAPWithResourceDepe
 		this.addExportResourceInfo(defaultExport);
 	}
 	
-	public void addExportResourceInfo(HAPInfoExportResource exportResourceInfo) {
-		this.m_exportResourceInfos.add(exportResourceInfo);
-	}
-	
-	public HAPResourceDataBrick getExportResourceData(String name, HAPManagerResource resourceMan, HAPRuntimeInfo runtimeInfo) {
-		if(name==null) {
-			name = HAPConstantShared.NAME_DEFAULT;
-		}
-		HAPInfoExportResource exportInfo = null;
-		for(HAPInfoExportResource ei : this.m_exportResourceInfos) {
-			if(name.equals(ei.getName())) {
-				exportInfo = ei;
-				break;
-			}
-		}
-		
-		HAPResourceDataBrick out = null;
-		HAPResultBrickDescentValue brickResult = HAPUtilityBrick.getDescdentBrickResult(this, exportInfo.getPathFromRoot(), HAPConstantShared.NAME_ROOTBRICK_MAIN);
-		if(brickResult.getBrick()!=null) {
-			Map<String, HAPBrick> suportBricks = new LinkedHashMap<String, HAPBrick>();
-			for(String n : this.m_branchBricks.keySet()) {
-				suportBricks.put(n, this.m_branchBricks.get(n).getBrick());
-			}
-			
-			out = new HAPResourceDataBrick(brickResult.getBrick(), suportBricks, this.m_valueStructureDomain);
-		}
-		else {
-			out = (HAPResourceDataBrick)HAPUtilityResource.getResource(brickResult.getResourceId(), resourceMan, runtimeInfo).getResourceData();
-		}
-		return out;
-	}
+	public void addExportResourceInfo(HAPInfoExportResource exportResourceInfo) {		this.m_exportResourceInfos.add(exportResourceInfo);	}
+	public List<HAPInfoExportResource> getExportResourceInfos(){    return this.m_exportResourceInfos;    }
 	
 	public HAPDomainValueStructure getValueStructureDomain() {	return this.m_valueStructureDomain;	}
 	

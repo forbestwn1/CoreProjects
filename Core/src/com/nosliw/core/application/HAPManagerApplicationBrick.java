@@ -9,19 +9,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.springframework.stereotype.Component;
+
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
-import com.nosliw.core.application.brick.dataexpression.library.HAPPluginBrickDataExpressionLibrary;
-import com.nosliw.core.application.brick.scriptexpression.library.HAPPluginBrickScriptExpressionLibrary;
-import com.nosliw.core.application.brick.service.interfacee.HAPPluginBrickServiceInterface;
-import com.nosliw.core.application.brick.service.profile.HAPPluginBrickServiceProfile;
-import com.nosliw.core.application.brick.wrappertask.HAPPluginBrickTaskWrapper;
 import com.nosliw.core.resource.HAPResourceId;
 import com.nosliw.core.resource.HAPResourceIdEmbeded;
 import com.nosliw.core.resource.HAPResourceIdSimple;
 import com.nosliw.core.system.HAPSystemUtility;
-import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
+@Component
 public class HAPManagerApplicationBrick {
 
 	private Map<String, HAPPluginDivision> m_divisionPlugin;
@@ -33,13 +30,15 @@ public class HAPManagerApplicationBrick {
 	
 	private Map<String, Map<String, HAPPluginBrick>> m_brickPlugins;
 
-	private HAPRuntimeEnvironment m_runtimeEnv;
-	
-	public HAPManagerApplicationBrick(HAPRuntimeEnvironment runtimeEnv) {
-		this.m_divisionPlugin = new LinkedHashMap<String, HAPPluginDivision>();
+	public HAPManagerApplicationBrick(List<HAPPluginDivision> divisionPlugins) {
 		this.m_divisionByBrickType = new LinkedHashMap<HAPIdBrickType, String>();
 		this.m_brickPlugins = new LinkedHashMap<String, Map<String, HAPPluginBrick>>();
-		this.m_runtimeEnv = runtimeEnv;
+		
+		this.m_divisionPlugin = new LinkedHashMap<String, HAPPluginDivision>();
+		for(HAPPluginDivision divisionPlugin : divisionPlugins) {
+			this.m_divisionPlugin.put(divisionPlugin.getName(), divisionPlugin);
+		}
+		
 		this.init();
 	}
 	

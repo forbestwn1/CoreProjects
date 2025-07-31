@@ -1,4 +1,4 @@
-package com.nosliw.core.application.resource;
+package com.nosliw.core.application;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -9,12 +9,10 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
-import com.nosliw.core.application.HAPBrick;
-import com.nosliw.core.application.valuestructure.HAPDomainValueStructure;
 import com.nosliw.core.resource.HAPResourceDataImp;
 import com.nosliw.core.resource.HAPResourceDataOrWrapper;
 import com.nosliw.core.resource.HAPResourceDependency;
-import com.nosliw.data.core.runtime.HAPRuntimeInfo;
+import com.nosliw.core.runtime.HAPRuntimeInfo;
 
 @HAPEntityWithAttribute
 public class HAPResourceDataBrick extends HAPResourceDataImp {

@@ -1,9 +1,12 @@
-package com.nosliw.core.application.common.script;
+package com.nosliw.core.application.entity.script;
 
 import java.io.File;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.springframework.stereotype.Component;
+
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityFile;
 import com.nosliw.core.application.HAPBundle;
 import com.nosliw.core.application.HAPEnumBrickType;
@@ -13,11 +16,15 @@ import com.nosliw.core.application.HAPPluginDivision;
 import com.nosliw.core.application.HAPWrapperBrickRoot;
 import com.nosliw.core.system.HAPSystemFolderUtility;
 
+@Component
 public class HAPPluginDivisionScript implements HAPPluginDivision{
 
 	public HAPPluginDivisionScript() {
 	}
 	
+	@Override
+	public String getName() {  return HAPConstantShared.BRICK_DIVISION_SCRIPT;  }
+
 	@Override
 	public HAPBundle getBundle(HAPIdBrick brickId) {
 		HAPIdBrickType brickTypeId = brickId.getBrickTypeId();
@@ -40,5 +47,4 @@ public class HAPPluginDivisionScript implements HAPPluginDivision{
 		out.add(HAPEnumBrickType.DECORATIONSCRIPT_100);
 		return out;
 	}
-
 }

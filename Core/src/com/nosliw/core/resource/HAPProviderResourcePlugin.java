@@ -4,6 +4,6 @@ import java.util.Map;
 
 public interface HAPProviderResourcePlugin {
 
-	public Map<HAPIdResourceType, HAPPluginResourceManager> getResourceManagerPlugins();
+	Map<HAPIdResourceType, HAPPluginResourceManager> getResourceManagerPlugins();
 	
 }

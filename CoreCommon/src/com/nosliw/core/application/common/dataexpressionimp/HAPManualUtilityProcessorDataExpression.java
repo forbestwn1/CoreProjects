@@ -3,6 +3,7 @@ package com.nosliw.core.application.common.dataexpressionimp;
 import java.util.Map;
 
 import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.core.application.HAPResourceDataBrick;
 import com.nosliw.core.application.brick.dataexpression.library.HAPBlockDataExpressionElementInLibrary;
 import com.nosliw.core.application.common.constant.HAPDefinitionConstant;
 import com.nosliw.core.application.common.dataexpression.HAPOperand;
@@ -19,7 +20,6 @@ import com.nosliw.core.application.common.valueport.HAPConfigureResolveElementRe
 import com.nosliw.core.application.common.valueport.HAPInfoElementResolve;
 import com.nosliw.core.application.common.valueport.HAPUtilityStructureElementReference;
 import com.nosliw.core.application.common.withvariable.HAPContainerVariableInfo;
-import com.nosliw.core.application.resource.HAPResourceDataBrick;
 import com.nosliw.data.core.data.HAPData;
 import com.nosliw.data.core.resource.HAPFactoryResourceId;
 import com.nosliw.data.core.resource.HAPResourceId;

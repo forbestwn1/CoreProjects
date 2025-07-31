@@ -8,12 +8,10 @@ import com.google.common.collect.Lists;
 import com.nosliw.common.interfac.HAPEntityOrReference;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.HAPBrick;
-import com.nosliw.core.application.resource.HAPResourceDataBrick;
+import com.nosliw.core.application.HAPResourceDataBrick;
+import com.nosliw.core.runtime.HAPRuntimeInfo;
+import com.nosliw.core.runtimeenv.HAPRuntimeEnvironment;
 import com.nosliw.core.system.HAPSystemUtility;
-import com.nosliw.data.core.common.HAPWithEntityElement;
-import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
-import com.nosliw.data.core.runtime.HAPRuntimeInfo;
-import com.nosliw.data.core.runtime.js.HAPUtilityRuntimeJS;
 
 public class HAPUtilityResource {
 

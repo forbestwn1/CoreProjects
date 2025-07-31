@@ -1,11 +1,11 @@
-package com.nosliw.core.application.common.script;
+package com.nosliw.core.application.entity.script;
 
 import java.util.Map;
 
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPJsonTypeScript;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.data.core.resource.HAPResourceDataImp;
+import com.nosliw.core.resource.HAPResourceDataImp;
 
 @HAPEntityWithAttribute
 public class HAPResourceDataScript extends HAPResourceDataImp implements HAPWithScript{

@@ -1,4 +1,4 @@
-package com.nosliw.core.resource.imp.js.library;
+package com.nosliw.core.application.entity.jslibrary;
 
 import java.io.File;
 import java.net.URI;

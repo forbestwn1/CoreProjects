@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.json.JSONObject;
+import org.springframework.stereotype.Component;
 
 import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.serialization.HAPSerializationFormat;
@@ -99,8 +100,9 @@ import com.nosliw.core.application.division.manual.definition.HAPManualDefinitio
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionWrapperValueReferenceResource;
 import com.nosliw.core.application.division.manual.executable.HAPInfoBrickType;
 import com.nosliw.core.application.division.manual.executable.HAPManualBrick;
-import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
+import com.nosliw.core.runtimeenv.HAPRuntimeEnvironment;
 
+@Component
 public class HAPManualManagerBrick implements HAPPluginDivision, HAPManagerWithVariablePlugin{
 
 	private Map<String, HAPManualDefinitionPluginParserBrick> m_brickParserPlugin;
@@ -123,6 +125,9 @@ public class HAPManualManagerBrick implements HAPPluginDivision, HAPManagerWithV
 		this.m_withVariableProcessorPlugin = new LinkedHashMap<String, HAPPluginProcessorEntityWithVariable>();
 		init();
 	}
+	
+	@Override
+	public String getName() {   return HAPConstantShared.BRICK_DIVISION_MANUAL;   }
 	
 	@Override
 	public Set<HAPIdBrickType> getBrickTypes() {   return null;   }
