@@ -1,9 +1,9 @@
 package com.nosliw.core.application.division.manual.brick.task.flow;
 
-import com.nosliw.core.application.brick.task.flow.HAPBlockTaskFlowActivity;
-import com.nosliw.core.application.brick.task.flow.HAPBlockTaskFlowActivityTask;
-import com.nosliw.core.application.brick.task.flow.HAPTaskFlowNext;
 import com.nosliw.core.application.division.manual.executable.HAPManualBrickWithEntityInfo;
+import com.nosliw.core.xxx.application1.brick.task.flow.HAPBlockTaskFlowActivity;
+import com.nosliw.core.xxx.application1.brick.task.flow.HAPBlockTaskFlowActivityTask;
+import com.nosliw.core.xxx.application1.brick.task.flow.HAPTaskFlowNext;
 
 public class HAPManualBlockTaskFlowActivity extends HAPManualBrickWithEntityInfo implements HAPBlockTaskFlowActivity{
 

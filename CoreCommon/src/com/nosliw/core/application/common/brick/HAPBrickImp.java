@@ -18,9 +18,9 @@ import com.nosliw.core.application.HAPWrapperValueOfBrick;
 import com.nosliw.core.application.HAPWrapperValueOfDynamic;
 import com.nosliw.core.application.HAPWrapperValueOfReferenceResource;
 import com.nosliw.core.application.HAPWrapperValueOfValue;
-import com.nosliw.data.core.resource.HAPResourceDependency;
-import com.nosliw.data.core.resource.HAPResourceId;
-import com.nosliw.data.core.runtime.HAPRuntimeInfo;
+import com.nosliw.core.resource.HAPResourceDependency;
+import com.nosliw.core.resource.HAPResourceId;
+import com.nosliw.core.runtime.HAPRuntimeInfo;
 
 public abstract class HAPBrickImp extends HAPSerializableImp implements HAPBrick{
 

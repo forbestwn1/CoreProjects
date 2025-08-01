@@ -13,10 +13,9 @@ import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.utils.HAPUtilityFile;
-import com.nosliw.core.application.valuestructure.HAPDomainValueStructure;
 import com.nosliw.core.resource.HAPResourceIdSimple;
+import com.nosliw.core.runtimeenv.HAPRuntimeEnvironment;
 import com.nosliw.core.system.HAPSystemFolderUtility;
-import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPUtilityExport {
 

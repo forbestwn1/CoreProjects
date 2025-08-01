@@ -8,9 +8,9 @@ import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.strvalue.HAPStringableValueEntity;
 import com.nosliw.core.application.common.dataexpression.HAPOperand;
-import com.nosliw.core.application.common.dataexpression.HAPWrapperOperand;
 import com.nosliw.core.data.HAPData;
 import com.nosliw.core.data.criteria.HAPDataTypeCriteriaWrapperLiterate;
+import com.nosliw.core.xxx.application1.common.dataexpression.HAPWrapperOperand;
 
 public class HAPExpressionDefinitionImpStr{ 
 /*

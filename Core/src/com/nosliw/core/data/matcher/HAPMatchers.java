@@ -12,13 +12,13 @@ import org.json.JSONObject;
 import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPUtilityBasic;
-import com.nosliw.core.application.HAPExecutableImp;
 import com.nosliw.core.data.HAPDataTypeId;
 import com.nosliw.core.data.HAPRelationship;
 import com.nosliw.core.resource.HAPManagerResource;
 import com.nosliw.core.resource.HAPResourceDependency;
 import com.nosliw.core.resource.HAPResourceId;
 import com.nosliw.core.runtime.HAPRuntimeInfo;
+import com.nosliw.core.xxx.application1.HAPExecutableImp;
 
 public class HAPMatchers extends HAPExecutableImp{
 

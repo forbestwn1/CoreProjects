@@ -1,9 +1,9 @@
 package com.nosliw.core.application.division.manual.brick.task.flow;
 
-import com.nosliw.core.application.HAPAddressValue;
-import com.nosliw.core.application.HAPEnumBrickType;
 import com.nosliw.core.application.HAPValueOfDynamic;
-import com.nosliw.core.application.brick.task.flow.HAPBlockTaskFlowActivityDynamic;
+import com.nosliw.core.xxx.application1.HAPAddressValue;
+import com.nosliw.core.xxx.application1.brick.HAPEnumBrickType;
+import com.nosliw.core.xxx.application1.brick.task.flow.HAPBlockTaskFlowActivityDynamic;
 
 public class HAPManualDefinitionBlockTaskFlowActivityDynamic extends HAPManualDefinitionBlockTaskFlowActivity{
 

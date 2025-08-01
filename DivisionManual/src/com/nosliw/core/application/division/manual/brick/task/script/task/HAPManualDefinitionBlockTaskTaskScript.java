@@ -1,11 +1,11 @@
 package com.nosliw.core.application.division.manual.brick.task.script.task;
 
 import com.nosliw.common.interfac.HAPEntityOrReference;
-import com.nosliw.core.application.HAPEnumBrickType;
-import com.nosliw.core.application.brick.task.script.task.HAPBlockTaskTaskScript;
 import com.nosliw.core.application.division.manual.common.task.HAPManualDefinitionWithTaskInterfaceInteractive;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrick;
 import com.nosliw.core.resource.HAPResourceId;
+import com.nosliw.core.xxx.application1.brick.HAPEnumBrickType;
+import com.nosliw.core.xxx.application1.brick.task.script.task.HAPBlockTaskTaskScript;
 
 public class HAPManualDefinitionBlockTaskTaskScript extends HAPManualDefinitionBrick implements HAPManualDefinitionWithTaskInterfaceInteractive{
 

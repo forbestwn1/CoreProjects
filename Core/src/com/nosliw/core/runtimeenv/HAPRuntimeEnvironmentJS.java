@@ -15,8 +15,8 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 //	@HAPAttribute
 //	public static final String GATEWAY_RESOURCE = "resources";
 
-	@HAPAttribute
-	public static final String GATEWAY_PACKAGE = "package";
+//	@HAPAttribute
+//	public static final String GATEWAY_PACKAGE = "package";
 
 	@HAPAttribute
 	public static final String GATEWAY_RESOURCEDEFINITION = "resourceDefinition";

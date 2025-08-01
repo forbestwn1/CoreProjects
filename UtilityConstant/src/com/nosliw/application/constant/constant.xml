@@ -747,6 +747,7 @@
 			<definition name="GATEWAY_OPTIONS" value="options"/>
 
 			<definition name="GATEWAY_RESOURCE" value="resource"/>
+			<definition name="GATEWAY_PACKAGE" value="package"/>
 
 			<definition type="space"/>
 			<definition name="NOSLIW_RESERVE_ATTRIBUTE" value="nosliwattribute_"/>

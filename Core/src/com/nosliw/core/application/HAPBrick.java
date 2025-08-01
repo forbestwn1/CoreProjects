@@ -6,7 +6,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.interfac.HAPEntityOrReference;
 import com.nosliw.common.serialization.HAPSerializable;
-import com.nosliw.core.application.common.valueport.HAPWithBothsideValuePort;
+import com.nosliw.core.application.valueport.HAPWithBothsideValuePort;
 import com.nosliw.core.resource.HAPWithResourceDependency;
 
 @HAPEntityWithAttribute

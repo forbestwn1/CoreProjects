@@ -24,10 +24,10 @@ import com.nosliw.core.application.common.structure.HAPPathElementMappingVariabl
 import com.nosliw.core.application.common.structure.HAPProcessorStructureElement;
 import com.nosliw.core.application.common.structure.HAPStructureImp;
 import com.nosliw.core.application.common.structure.HAPUtilityStructure;
-import com.nosliw.core.application.common.valueport.HAPIdRootElement;
-import com.nosliw.core.application.common.valueport.HAPIdValuePortInBundle;
-import com.nosliw.core.application.valuestructure.HAPDomainValueStructure;
+import com.nosliw.core.application.valueport.HAPIdRootElement;
+import com.nosliw.core.application.valueport.HAPIdValuePortInBundle;
 import com.nosliw.core.data.matcher.HAPMatchers;
+import com.nosliw.core.xxx.application1.valuestructure.HAPDomainValueStructure;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPManualUtilityDataAssociationMapping {

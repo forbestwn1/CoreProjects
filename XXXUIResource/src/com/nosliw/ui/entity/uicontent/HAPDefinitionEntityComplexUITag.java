@@ -3,8 +3,8 @@ package com.nosliw.ui.entity.uicontent;
 import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
-import com.nosliw.core.application.division.manual.HAPManualBrick;
 import com.nosliw.core.resource.HAPResourceId;
+import com.nosliw.core.xxx.application1.division.manual.HAPManualBrick;
 import com.nosliw.data.core.domain.entity.HAPConfigureParentRelationComplex;
 import com.nosliw.ui.entity.uitag.HAPUITagAttributeDefinition;
 

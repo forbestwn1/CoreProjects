@@ -12,10 +12,10 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPUtilityBasic;
-import com.nosliw.core.application.HAPExecutableImp;
 import com.nosliw.core.data.HAPDataTypeId;
 import com.nosliw.core.data.HAPRelationship;
 import com.nosliw.core.data.HAPRelationshipImp;
+import com.nosliw.core.xxx.application1.HAPExecutableImp;
 
 /**
  * Store matcher information (match from one data type to another data type)

@@ -6,9 +6,9 @@ import java.util.List;
 import com.nosliw.common.path.HAPPath;
 import com.nosliw.core.application.HAPAttributeInBrick;
 import com.nosliw.core.application.HAPBrick;
-import com.nosliw.core.application.HAPEnumBrickType;
 import com.nosliw.core.application.HAPInfoExportResource;
 import com.nosliw.core.application.HAPPluginBrick;
+import com.nosliw.core.application.brick.HAPEnumBrickType;
 import com.nosliw.core.application.brick.container.HAPBrickContainer;
 import com.nosliw.core.application.brick.wrappertask.HAPBlockTaskWrapper;
 

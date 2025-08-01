@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.core.application.service.HAPManagerServiceDefinition;
+import com.nosliw.core.xxx.application1.service.HAPManagerServiceDefinition;
 import com.nosliw.data.core.component.HAPNameMapping;
 import com.nosliw.data.core.service.use.HAPWithServiceUse;
 import com.nosliw.data.core.structure.temp.HAPUtilityContext;

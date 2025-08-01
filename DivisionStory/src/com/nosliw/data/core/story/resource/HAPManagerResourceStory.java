@@ -1,6 +1,6 @@
 package com.nosliw.data.core.story.resource;
 
-import com.nosliw.core.resource.HAPManagerResourceDefinition;
+import com.nosliw.core.xxx.resource.HAPManagerResourceDefinition;
 
 public class HAPManagerResourceStory {
 

@@ -26,8 +26,6 @@ import com.nosliw.core.application.common.structure.HAPProcessorStructureElement
 import com.nosliw.core.application.common.structure.HAPRootInStructure;
 import com.nosliw.core.application.common.structure.HAPUtilityStructure;
 import com.nosliw.core.application.common.structure.reference.HAPUtilityProcessRelativeElement;
-import com.nosliw.core.application.common.valueport.HAPIdValuePortInBundle;
-import com.nosliw.core.application.common.valueport.HAPUtilityValuePort;
 import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualDefinitionBrickValueContext;
 import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualDefinitionBrickWrapperValueStructure;
 import com.nosliw.core.application.division.manual.common.valuecontext.HAPManualInfoValueStructure;
@@ -44,8 +42,10 @@ import com.nosliw.core.application.division.manual.executable.HAPHandlerDownward
 import com.nosliw.core.application.division.manual.executable.HAPManualBrick;
 import com.nosliw.core.application.division.manual.executable.HAPManualUtilityBrickTraverse;
 import com.nosliw.core.application.division.manual.executable.HAPTreeNodeBrick;
-import com.nosliw.core.application.valuestructure.HAPDomainValueStructure;
-import com.nosliw.core.application.valuestructure.HAPInfoValueStructureRuntime;
+import com.nosliw.core.application.valueport.HAPIdValuePortInBundle;
+import com.nosliw.core.application.valueport.HAPUtilityValuePort;
+import com.nosliw.core.xxx.application1.valuestructure.HAPDomainValueStructure;
+import com.nosliw.core.xxx.application1.valuestructure.HAPInfoValueStructureRuntime;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPManualUtilityValueContextProcessor {

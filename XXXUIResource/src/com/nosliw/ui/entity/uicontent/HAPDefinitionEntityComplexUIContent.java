@@ -4,8 +4,8 @@ import java.util.List;
 
 import org.apache.commons.lang.StringEscapeUtils;
 
-import com.nosliw.core.application.division.manual.HAPManualBrick;
-import com.nosliw.core.application.division.manual.HAPManualBrickComplex;
+import com.nosliw.core.xxx.application1.division.manual.HAPManualBrick;
+import com.nosliw.core.xxx.application1.division.manual.HAPManualBrickComplex;
 import com.nosliw.data.core.domain.HAPContextParser;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.entity.HAPConfigureParentRelationComplex;

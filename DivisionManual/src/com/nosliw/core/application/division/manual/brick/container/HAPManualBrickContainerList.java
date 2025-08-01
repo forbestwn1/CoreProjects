@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.nosliw.core.application.HAPAttributeInBrick;
-import com.nosliw.core.application.brick.container.HAPBrickContainerList;
+import com.nosliw.core.xxx.application1.brick.container.HAPBrickContainerList;
 
 public class HAPManualBrickContainerList extends HAPManualBrickContainer implements HAPBrickContainerList{
 

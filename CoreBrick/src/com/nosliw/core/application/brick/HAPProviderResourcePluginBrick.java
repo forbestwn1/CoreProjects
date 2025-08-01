@@ -3,11 +3,9 @@ package com.nosliw.core.application.brick;
 import org.springframework.stereotype.Component;
 
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.core.application.HAPEnumBrickType;
 import com.nosliw.core.application.HAPManagerApplicationBrick;
 import com.nosliw.core.application.HAPPluginResourceManagerImpBrick;
 import com.nosliw.core.application.HAPUtilityBrickId;
-import com.nosliw.core.application.common.script.HAPPluginResourceManagerScript;
 import com.nosliw.core.application.configure.HAPPluginResourceManagerConfigure;
 import com.nosliw.core.resource.HAPFactoryResourceTypeId;
 import com.nosliw.core.resource.HAPManagerResource;

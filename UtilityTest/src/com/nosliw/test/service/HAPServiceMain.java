@@ -3,11 +3,11 @@ package com.nosliw.test.service;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import com.nosliw.core.application.service.HAPQueryService;
-import com.nosliw.core.application.service.HAPResultInteractive;
 import com.nosliw.core.data.HAPData;
 import com.nosliw.core.data.HAPUtilityData;
 import com.nosliw.core.runtimeenv.js.rhino.HAPRuntimeEnvironmentImpRhino;
+import com.nosliw.core.xxx.application1.service.HAPQueryService;
+import com.nosliw.core.xxx.application1.service.HAPResultInteractive;
 
 public class HAPServiceMain {
 

@@ -12,9 +12,9 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
 import com.nosliw.core.application.common.structure.HAPElementStructureLeafData;
 import com.nosliw.core.application.common.structure.HAPRootInStructure;
-import com.nosliw.core.application.common.valueport.HAPGroupValuePorts;
-import com.nosliw.core.application.common.valueport.HAPValuePort;
-import com.nosliw.core.application.valuestructure.HAPDomainValueStructure;
+import com.nosliw.core.application.valueport.HAPGroupValuePorts;
+import com.nosliw.core.application.valueport.HAPValuePort;
+import com.nosliw.core.xxx.application1.valuestructure.HAPDomainValueStructure;
 import com.nosliw.data.core.data.HAPData;
 
 public class HAPUtilityInteractiveValuePort {

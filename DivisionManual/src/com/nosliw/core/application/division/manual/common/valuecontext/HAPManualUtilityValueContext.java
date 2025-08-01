@@ -9,16 +9,16 @@ import java.util.List;
 import java.util.Set;
 
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.core.application.HAPValueContext;
-import com.nosliw.core.application.HAPWithValueContext;
 import com.nosliw.core.application.common.structure.HAPElementStructure;
 import com.nosliw.core.application.common.structure.HAPRootStructure;
 import com.nosliw.core.application.common.structure.HAPUtilityStructure;
-import com.nosliw.core.application.common.valueport.HAPIdElement;
-import com.nosliw.core.application.common.valueport.HAPIdRootElement;
-import com.nosliw.core.application.common.valueport.HAPIdValuePortInBrick;
-import com.nosliw.core.application.common.valueport.HAPValueStructureInValuePort11111;
-import com.nosliw.core.application.valuestructure.HAPDomainValueStructure;
+import com.nosliw.core.application.valueport.HAPIdElement;
+import com.nosliw.core.application.valueport.HAPIdRootElement;
+import com.nosliw.core.application.valueport.HAPIdValuePortInBrick;
+import com.nosliw.core.application.valueport.HAPValueStructureInValuePort11111;
+import com.nosliw.core.xxx.application1.HAPValueContext;
+import com.nosliw.core.xxx.application1.HAPWithValueContext;
+import com.nosliw.core.xxx.application1.valuestructure.HAPDomainValueStructure;
 
 public class HAPManualUtilityValueContext {
 

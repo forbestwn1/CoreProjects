@@ -11,9 +11,6 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPUtilityFile;
 import com.nosliw.core.application.HAPUtilityBrick;
-import com.nosliw.core.application.brick.interactive.interfacee.task.HAPBlockInteractiveInterfaceTask;
-import com.nosliw.core.application.brick.service.profile.HAPBlockServiceProfile;
-import com.nosliw.core.application.brick.service.profile.HAPInfoServiceStatic;
 import com.nosliw.core.application.common.interactive.HAPInteractive;
 import com.nosliw.core.application.common.interactive.HAPInteractiveResultTask;
 import com.nosliw.core.application.common.interactive.HAPInteractiveTask;
@@ -70,6 +67,9 @@ import com.nosliw.core.data.HAPDataTypeId;
 import com.nosliw.core.data.criteria.HAPDataTypeCriteria;
 import com.nosliw.core.data.criteria.HAPParserCriteria;
 import com.nosliw.core.data.criteria.HAPUtilityCriteria;
+import com.nosliw.core.xxx.application1.brick.interactive.interfacee.task.HAPBlockInteractiveInterfaceTask;
+import com.nosliw.core.xxx.application1.brick.service.profile.HAPBlockServiceProfile;
+import com.nosliw.core.xxx.application1.brick.service.profile.HAPInfoServiceStatic;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPStoryBuilderPageSimple implements HAPStoryBuilderStory{

@@ -3,11 +3,11 @@ package com.nosliw.service.test.basic;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import com.nosliw.core.application.service.HAPExecutableService;
-import com.nosliw.core.application.service.HAPProviderService;
-import com.nosliw.core.application.service.HAPResultInteractive;
-import com.nosliw.core.application.service.HAPUtilityService;
 import com.nosliw.core.data.HAPData;
+import com.nosliw.core.xxx.application1.service.HAPExecutableService;
+import com.nosliw.core.xxx.application1.service.HAPProviderService;
+import com.nosliw.core.xxx.application1.service.HAPResultInteractive;
+import com.nosliw.core.xxx.application1.service.HAPUtilityService;
 
 public class HAPServiceImp implements HAPExecutableService, HAPProviderService{
 

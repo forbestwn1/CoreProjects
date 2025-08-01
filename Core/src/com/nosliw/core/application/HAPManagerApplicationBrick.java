@@ -30,16 +30,20 @@ public class HAPManagerApplicationBrick {
 	
 	private Map<String, Map<String, HAPPluginBrick>> m_brickPlugins;
 
-	public HAPManagerApplicationBrick(List<HAPPluginDivision> divisionPlugins) {
+	public HAPManagerApplicationBrick(List<HAPPluginDivision> divisionPlugins, List<HAPProviderPluginBrick> brickPluginProviders) {
 		this.m_divisionByBrickType = new LinkedHashMap<HAPIdBrickType, String>();
 		this.m_brickPlugins = new LinkedHashMap<String, Map<String, HAPPluginBrick>>();
+		
+		for(HAPProviderPluginBrick pluginProvider : brickPluginProviders) {
+			for(HAPPluginBrick brickPlugin : pluginProvider.getBrickPlugins()) {
+				this.registerBrickPlugin(brickPlugin);
+			}
+		}
 		
 		this.m_divisionPlugin = new LinkedHashMap<String, HAPPluginDivision>();
 		for(HAPPluginDivision divisionPlugin : divisionPlugins) {
 			this.m_divisionPlugin.put(divisionPlugin.getName(), divisionPlugin);
 		}
-		
-		this.init();
 	}
 	
 	public List<HAPIdBrickType> getAllVersions(String brickType){
@@ -154,66 +158,6 @@ public class HAPManagerApplicationBrick {
 	private HAPPluginBrick getBrickPlugin(HAPIdBrickType brickTypeId) {		return this.m_brickPlugins.get(brickTypeId.getBrickType()).get(brickTypeId.getVersion());	}
 
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	private void init() {
-
-		this.registerBrickPlugin(new HAPPluginBrick(HAPEnumBrickType.MODULE_100));
-
-		this.registerBrickPlugin(new HAPPluginBrick(HAPEnumBrickType.TEST_COMPLEX_1_100));
-		this.registerBrickPlugin(new HAPPluginBrick(HAPEnumBrickType.TEST_COMPLEX_SCRIPT_100));
-		this.registerBrickPlugin(new HAPPluginBrick(HAPEnumBrickType.TEST_COMPLEX_TASK_100));
-
-		this.registerBrickPlugin(new HAPPluginBrickTaskWrapper());
-		this.registerBrickPlugin(new HAPPluginBrick(HAPEnumBrickType.WRAPPERBRICK_100));
-
-		this.registerBrickPlugin(new HAPPluginBrick(HAPEnumBrickType.TASK_TASK_FLOW_100));
-		this.registerBrickPlugin(new HAPPluginBrick(HAPEnumBrickType.TASK_TASK_ACTIVITYTASK_100));
-
-		this.registerBrickPlugin(new HAPPluginBrick(HAPEnumBrickType.TASK_TASK_SCRIPT_100));
-		this.registerBrickPlugin(new HAPPluginBrick(HAPEnumBrickType.TASK_EXPRESSION_SCRIPT_100));
-
-		this.registerBrickPlugin(new HAPPluginBrick(HAPEnumBrickType.SERVICEPROVIDER_100));
-		this.registerBrickPlugin(new HAPPluginBrickServiceProfile());
-		this.registerBrickPlugin(new HAPPluginBrickServiceInterface());
-
-		this.registerBrickPlugin(new HAPPluginBrick(HAPEnumBrickType.INTERACTIVETASKINTERFACE_100));
-		this.registerBrickPlugin(new HAPPluginBrick(HAPEnumBrickType.INTERACTIVEEXPRESSIONINTERFACE_100));
-
-		this.registerBrickPlugin(new HAPPluginBrickDataExpressionLibrary());
-		this.registerBrickPlugin(new HAPPluginBrick(HAPEnumBrickType.DATAEXPRESSIONLIBELEMENT_100));
-
-		this.registerBrickPlugin(new HAPPluginBrick(HAPEnumBrickType.DATAEXPRESSIONGROUP_100));
-
-		this.registerBrickPlugin(new HAPPluginBrickScriptExpressionLibrary());
-		this.registerBrickPlugin(new HAPPluginBrick(HAPEnumBrickType.SCRIPTEXPRESSIONLIBELEMENT_100));
-
-		this.registerBrickPlugin(new HAPPluginBrick(HAPEnumBrickType.SCRIPTEXPRESSIONGROUP_100));
-
-		
-		this.registerBrickPlugin(new HAPPluginBrick(HAPEnumBrickType.CONTAINER_100));
-		this.registerBrickPlugin(new HAPPluginBrick(HAPEnumBrickType.CONTAINERLIST_100));
-		
-		
-		this.registerBrickPlugin(new HAPPluginBrick(HAPEnumBrickType.DATAASSOCIATION_100));
-		this.registerBrickPlugin(new HAPPluginBrick(HAPEnumBrickType.DATAASSOCIATIONFORTASK_100));
-		this.registerBrickPlugin(new HAPPluginBrick(HAPEnumBrickType.DATAASSOCIATIONFOREXPRESSION_100));
-		
-		this.registerBrickPlugin(new HAPPluginBrick(HAPEnumBrickType.DECORATIONSCRIPT_100));
-		
-		this.registerBrickPlugin(new HAPPluginBrick(HAPEnumBrickType.UICONTENT_100));
-		this.registerBrickPlugin(new HAPPluginBrick(HAPEnumBrickType.UIPAGE_100));
-		this.registerBrickPlugin(new HAPPluginBrick(HAPEnumBrickType.UICUSTOMERTAGDEBUGGER_100));
-	}
-
-
 	private void buildDependencyGroup(HAPResourceId complexEntityResourceId, Set<HAPResourceId> dependency) {
 		if(!dependency.contains(complexEntityResourceId)) {
 			dependency.add(complexEntityResourceId);

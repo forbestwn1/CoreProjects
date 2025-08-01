@@ -3,9 +3,9 @@ package com.nosliw.ui.entity.uitag;
 import java.util.Map;
 
 import com.nosliw.common.info.HAPEntityInfo;
-import com.nosliw.core.application.division.manual.HAPManualBrick;
-import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualBrickValueContext;
 import com.nosliw.core.resource.HAPResourceId;
+import com.nosliw.core.xxx.application1.division.manual.HAPManualBrick;
+import com.nosliw.core.xxx.application1.division.manual.brick.valuestructure.HAPManualBrickValueContext;
 import com.nosliw.data.core.common.HAPWithValueContext;
 import com.nosliw.data.core.domain.HAPContextParser;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;

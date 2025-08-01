@@ -3,8 +3,8 @@ package com.nosliw.core.application.common.structure;
 import org.json.JSONObject;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.core.application.common.valueport.HAPReferenceElement;
 import com.nosliw.core.application.common.variable.HAPVariableDataInfo;
+import com.nosliw.core.application.valueport.HAPReferenceElement;
 
 public class HAPParserStructure {
 

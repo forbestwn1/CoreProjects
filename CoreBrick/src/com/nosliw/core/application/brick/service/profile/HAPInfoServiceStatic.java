@@ -13,7 +13,7 @@ import com.nosliw.common.info.HAPEntityInfoWritableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.core.application.brick.service.interfacee.HAPBlockServiceInterface;
-import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
+import com.nosliw.core.runtimeenv.HAPRuntimeEnvironment;
 
 //static information for a service. readable, query for service
 //information needed during configuration time

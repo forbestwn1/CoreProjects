@@ -11,19 +11,10 @@ import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.HAPBundle;
-import com.nosliw.core.application.HAPEnumBrickType;
 import com.nosliw.core.application.HAPIdBrickInBundle;
 import com.nosliw.core.application.HAPUtilityBrick;
-import com.nosliw.core.application.HAPUtilityBrickPath;
 import com.nosliw.core.application.HAPUtilityBundle;
-import com.nosliw.core.application.brick.test.complex.script.HAPBlockTestComplexScript;
-import com.nosliw.core.application.brick.test.complex.script.HAPTestTaskTrigguer;
 import com.nosliw.core.application.common.task.HAPInfoTrigguerTask;
-import com.nosliw.core.application.common.valueport.HAPConfigureResolveElementReference;
-import com.nosliw.core.application.common.valueport.HAPReferenceElement;
-import com.nosliw.core.application.common.valueport.HAPResultReferenceResolve;
-import com.nosliw.core.application.common.valueport.HAPUtilityStructureElementReference;
-import com.nosliw.core.application.common.valueport.HAPUtilityValuePort;
 import com.nosliw.core.application.division.manual.HAPManualContextProcessBrick;
 import com.nosliw.core.application.division.manual.HAPManualManagerBrick;
 import com.nosliw.core.application.division.manual.HAPManualPluginProcessorBlockComplex;
@@ -31,6 +22,15 @@ import com.nosliw.core.application.division.manual.brick.wrappertask.HAPManualBl
 import com.nosliw.core.application.division.manual.common.task.HAPManualUtilityTask;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrick;
 import com.nosliw.core.application.division.manual.executable.HAPManualBrick;
+import com.nosliw.core.application.valueport.HAPConfigureResolveElementReference;
+import com.nosliw.core.application.valueport.HAPReferenceElement;
+import com.nosliw.core.application.valueport.HAPResultReferenceResolve;
+import com.nosliw.core.application.valueport.HAPUtilityStructureElementReference;
+import com.nosliw.core.application.valueport.HAPUtilityValuePort;
+import com.nosliw.core.xxx.application1.brick.HAPEnumBrickType;
+import com.nosliw.core.xxx.application1.brick.HAPUtilityBrickPath;
+import com.nosliw.core.xxx.application1.brick.test.complex.script.HAPBlockTestComplexScript;
+import com.nosliw.core.xxx.application1.brick.test.complex.script.HAPTestTaskTrigguer;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPManualPluginProcessorBlockComplexTestComplexScript extends HAPManualPluginProcessorBlockComplex{

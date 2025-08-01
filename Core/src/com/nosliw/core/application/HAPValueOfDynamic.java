@@ -6,8 +6,8 @@ import org.json.JSONObject;
 
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.core.application.common.valueport.HAPContainerValuePorts;
-import com.nosliw.core.application.common.valueport.HAPWithExternalValuePort;
+import com.nosliw.core.application.valueport.HAPContainerValuePorts;
+import com.nosliw.core.application.valueport.HAPWithExternalValuePort;
 
 public class HAPValueOfDynamic extends HAPSerializableImp implements HAPWithExternalValuePort{
 

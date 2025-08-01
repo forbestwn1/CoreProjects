@@ -13,8 +13,8 @@ import com.nosliw.core.data.HAPResourceIdOperation;
 import com.nosliw.core.gateway.HAPJSGatewayId;
 import com.nosliw.core.gateway.HAPResourceIdJSGateway;
 import com.nosliw.core.resource.HAPResourceHelper;
-import com.nosliw.core.resource.imp.js.library.HAPJSLibraryId;
-import com.nosliw.core.resource.imp.js.library.HAPResourceIdJSLibrary;
+import com.nosliw.core.xxx.resource.imp.js.library.HAPJSLibraryId;
+import com.nosliw.core.xxx.resource.imp.js.library.HAPResourceIdJSLibrary;
 import com.nosliw.data.core.imp.HAPDataAccessDataType;
 import com.nosliw.data.core.imp.HAPModuleDataType;
 

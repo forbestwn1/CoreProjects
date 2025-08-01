@@ -14,7 +14,6 @@ import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityFile;
 import com.nosliw.core.application.HAPBundle;
-import com.nosliw.core.application.HAPEnumBrickType;
 import com.nosliw.core.application.HAPIdBrick;
 import com.nosliw.core.application.HAPIdBrickType;
 import com.nosliw.core.application.HAPManagerApplicationBrick;
@@ -101,6 +100,7 @@ import com.nosliw.core.application.division.manual.definition.HAPManualDefinitio
 import com.nosliw.core.application.division.manual.executable.HAPInfoBrickType;
 import com.nosliw.core.application.division.manual.executable.HAPManualBrick;
 import com.nosliw.core.runtimeenv.HAPRuntimeEnvironment;
+import com.nosliw.core.xxx.application1.brick.HAPEnumBrickType;
 
 @Component
 public class HAPManualManagerBrick implements HAPPluginDivision, HAPManagerWithVariablePlugin{

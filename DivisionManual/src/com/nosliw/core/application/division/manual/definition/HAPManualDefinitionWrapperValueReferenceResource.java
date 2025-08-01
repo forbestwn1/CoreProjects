@@ -6,7 +6,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.core.application.common.dynamic.HAPInputDynamicTask;
+import com.nosliw.core.application.dynamic.HAPInputDynamicTask;
 import com.nosliw.core.resource.HAPResourceId;
 
 public class HAPManualDefinitionWrapperValueReferenceResource extends HAPManualDefinitionWrapperValue{

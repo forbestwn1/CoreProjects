@@ -7,11 +7,11 @@ import org.jsoup.nodes.Attributes;
 import org.jsoup.nodes.Element;
 
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualBrickValueContext;
-import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualBrickValueStructure;
-import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualBrickWrapperValueStructure;
 import com.nosliw.core.resource.HAPResourceIdSimple;
 import com.nosliw.core.runtimeenv.js.browser.HAPRuntimeEnvironmentImpBrowser;
+import com.nosliw.core.xxx.application1.division.manual.brick.valuestructure.HAPManualBrickValueContext;
+import com.nosliw.core.xxx.application1.division.manual.brick.valuestructure.HAPManualBrickValueStructure;
+import com.nosliw.core.xxx.application1.division.manual.brick.valuestructure.HAPManualBrickWrapperValueStructure;
 import com.nosliw.data.core.domain.HAPContextParser;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.HAPInfoEntityInDomainDefinition;

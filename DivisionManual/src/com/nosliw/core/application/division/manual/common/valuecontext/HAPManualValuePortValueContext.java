@@ -1,9 +1,9 @@
 package com.nosliw.core.application.division.manual.common.valuecontext;
 
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.core.application.common.valueport.HAPValuePort;
 import com.nosliw.core.application.division.manual.executable.HAPManualBrick;
-import com.nosliw.core.application.valuestructure.HAPDomainValueStructure;
+import com.nosliw.core.application.valueport.HAPValuePort;
+import com.nosliw.core.xxx.application1.valuestructure.HAPDomainValueStructure;
 
 public class HAPManualValuePortValueContext extends HAPValuePort{
 

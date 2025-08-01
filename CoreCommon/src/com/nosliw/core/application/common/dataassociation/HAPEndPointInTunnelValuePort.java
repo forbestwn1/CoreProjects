@@ -6,7 +6,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.core.application.common.valueport.HAPIdValuePortInBundle;
+import com.nosliw.core.application.valueport.HAPIdValuePortInBundle;
 
 @HAPEntityWithAttribute
 public class HAPEndPointInTunnelValuePort extends HAPEndpointInTunnel{

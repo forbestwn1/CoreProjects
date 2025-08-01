@@ -73,6 +73,6 @@ public class HAPInfoResourceIdNormalize extends HAPEntityInfoImp{
 
 	@Override
 	public int hashCode() {
-		return (this.m_rootResourceId.buildLiterate()+this.m_path.getPath()).hashCode();
+		return (this.m_rootResourceId.toStringValue(HAPSerializationFormat.LITERATE)+this.m_path.getPath()).hashCode();
 	}	
 }

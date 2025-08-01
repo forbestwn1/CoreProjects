@@ -1,8 +1,8 @@
 package com.nosliw.core.application.division.manual.brick.scriptexpression.group;
 
-import com.nosliw.core.application.brick.scriptexpression.group.HAPBlockScriptExpressionGroup;
 import com.nosliw.core.application.common.scriptexpression.HAPContainerScriptExpression;
 import com.nosliw.core.application.division.manual.executable.HAPManualBrickImp;
+import com.nosliw.core.xxx.application1.brick.scriptexpression.group.HAPBlockScriptExpressionGroup;
 
 public class HAPManualBlockScriptExpressionGroup extends HAPManualBrickImp implements HAPBlockScriptExpressionGroup{
 

@@ -3,9 +3,9 @@ package com.nosliw.core.application.division.manual.brick.service.provider;
 import org.json.JSONObject;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.core.application.HAPEnumBrickType;
-import com.nosliw.core.application.brick.service.provider.HAPKeyService;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrick;
+import com.nosliw.core.xxx.application1.brick.HAPEnumBrickType;
+import com.nosliw.core.xxx.application1.brick.service.provider.HAPKeyService;
 
 public class HAPManualDefinitionBlockSimpleServiceProvider extends HAPManualDefinitionBrick{
 

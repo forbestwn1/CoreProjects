@@ -2,7 +2,7 @@ package com.nosliw.core.application.brick.scriptexpression.library;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.core.application.common.valueport.HAPContainerValuePorts;
+import com.nosliw.core.application.valueport.HAPContainerValuePorts;
 
 @HAPEntityWithAttribute
 public class HAPBlockScriptExpressionElementInLibrary extends HAPManualBrickWithEntityInfoSimple{

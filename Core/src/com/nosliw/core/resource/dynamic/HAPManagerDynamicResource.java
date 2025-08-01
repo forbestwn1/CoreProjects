@@ -4,7 +4,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
-import com.nosliw.core.resource.HAPResourceDefinition1;
+import com.nosliw.core.xxx.resource.HAPResourceDefinition1;
 
 public class HAPManagerDynamicResource {
 

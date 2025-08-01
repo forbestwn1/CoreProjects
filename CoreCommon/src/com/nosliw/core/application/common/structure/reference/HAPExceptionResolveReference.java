@@ -1,6 +1,6 @@
 package com.nosliw.core.application.common.structure.reference;
 
-import com.nosliw.core.application.common.valueport.HAPResultReferenceResolve;
+import com.nosliw.core.application.valueport.HAPResultReferenceResolve;
 
 public class HAPExceptionResolveReference extends Exception{
 

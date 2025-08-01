@@ -1,6 +1,6 @@
 package com.nosliw.ui.entity.uicontent;
 
-import com.nosliw.core.application.division.manual.HAPManualBrick;
+import com.nosliw.core.xxx.application1.division.manual.HAPManualBrick;
 
 public class HAPDefinitionEntityComplexUIPage extends HAPDefinitionEntityComplexWithUIContent{
 

@@ -11,11 +11,11 @@ import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.core.application.common.dataexpression.HAPExpressionData;
 import com.nosliw.core.application.common.interactive.HAPInteractiveExpression;
 import com.nosliw.core.application.common.interactive.HAPWithInteractiveExpression;
-import com.nosliw.data.core.matcher.HAPMatchers;
-import com.nosliw.data.core.resource.HAPManagerResource;
-import com.nosliw.data.core.resource.HAPResourceDependency;
-import com.nosliw.data.core.runtime.HAPExecutableImp;
-import com.nosliw.data.core.runtime.HAPRuntimeInfo;
+import com.nosliw.core.data.matcher.HAPMatchers;
+import com.nosliw.core.resource.HAPManagerResource;
+import com.nosliw.core.resource.HAPResourceDependency;
+import com.nosliw.core.runtime.HAPRuntimeInfo;
+import com.nosliw.core.xxx.application1.HAPExecutableImp;
 
 @HAPEntityWithAttribute
 public class HAPElementInLibraryDataExpression extends HAPExecutableImp implements HAPWithInteractiveExpression{

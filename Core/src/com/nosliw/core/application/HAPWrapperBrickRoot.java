@@ -8,7 +8,7 @@ import com.nosliw.common.info.HAPEntityInfoImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.core.resource.HAPResourceDependency;
 import com.nosliw.core.resource.HAPWithResourceDependency;
-import com.nosliw.data.core.runtime.HAPRuntimeInfo;
+import com.nosliw.core.runtime.HAPRuntimeInfo;
 
 @HAPEntityWithAttribute
 public class HAPWrapperBrickRoot extends HAPEntityInfoImp implements HAPWithBrick, HAPWithResourceDependency{

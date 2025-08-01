@@ -8,13 +8,14 @@ import java.util.Set;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
+import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.core.resource.HAPResourceId;
 
 //a package is all information for a resource runtime, it include resource id and all resource bundles required
 @HAPEntityWithAttribute
-public class HAPApplicationPackage extends HAPExecutableImp{
+public class HAPApplicationPackage extends HAPSerializableImp{
 
 	@HAPAttribute
 	public static final String MAINRESOURCEID = "mainResourceId";

@@ -1,8 +1,8 @@
 package com.nosliw.core.application.division.manual.common.task;
 
-import com.nosliw.core.application.common.interactive1.HAPBrickInteractive;
-import com.nosliw.core.application.division.manual.HAPPluginProcessorBrickDefinitionSimpleImp;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrick;
+import com.nosliw.core.xxx.application1.common.interactive1.HAPBrickInteractive;
+import com.nosliw.core.xxx.application1.division.manual.HAPPluginProcessorBrickDefinitionSimpleImp;
 import com.nosliw.data.core.domain.entity.HAPContextProcessor;
 import com.nosliw.data.core.domain.entity.HAPExecutableEntity;
 

@@ -7,13 +7,13 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.common.interactive.HAPRequestParmInInteractive;
 import com.nosliw.core.application.common.structure.HAPElementStructureLeafData;
 import com.nosliw.core.application.common.structure.HAPRootStructure;
-import com.nosliw.core.application.common.valueport.HAPConfigureResolveElementReference;
-import com.nosliw.core.application.common.valueport.HAPIdValuePortInBrick;
-import com.nosliw.core.application.common.valueport.HAPInfoValuePort;
-import com.nosliw.core.application.common.valueport.HAPInfoValueStructureReference;
-import com.nosliw.core.application.common.valueport.HAPReferenceValueStructure;
-import com.nosliw.core.application.common.valueport.HAPValuePortImp;
-import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualBrickValueStructure;
+import com.nosliw.core.application.valueport.HAPConfigureResolveElementReference;
+import com.nosliw.core.application.valueport.HAPIdValuePortInBrick;
+import com.nosliw.core.application.valueport.HAPInfoValuePort;
+import com.nosliw.core.application.valueport.HAPInfoValueStructureReference;
+import com.nosliw.core.application.valueport.HAPReferenceValueStructure;
+import com.nosliw.core.application.valueport.HAPValuePortImp;
+import com.nosliw.core.xxx.application1.division.manual.brick.valuestructure.HAPManualBrickValueStructure;
 
 public class HAPValuePortInteractiveRequest extends HAPValuePortImp{
 

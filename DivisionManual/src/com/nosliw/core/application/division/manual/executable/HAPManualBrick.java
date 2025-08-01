@@ -8,12 +8,12 @@ import com.nosliw.core.application.HAPIdBrickType;
 import com.nosliw.core.application.HAPManagerApplicationBrick;
 import com.nosliw.core.application.HAPWrapperValue;
 import com.nosliw.core.application.common.brick.HAPBrickImp;
-import com.nosliw.core.application.common.valueport.HAPContainerValuePorts;
-import com.nosliw.core.application.common.valueport.HAPGroupValuePorts;
-import com.nosliw.core.application.common.valueport.HAPValuePort;
 import com.nosliw.core.application.common.withvariable.HAPContainerVariableInfo;
 import com.nosliw.core.application.division.manual.HAPManualManagerBrick;
 import com.nosliw.core.application.division.manual.common.valuecontext.HAPManualValueContext;
+import com.nosliw.core.application.valueport.HAPContainerValuePorts;
+import com.nosliw.core.application.valueport.HAPGroupValuePorts;
+import com.nosliw.core.application.valueport.HAPValuePort;
 import com.nosliw.core.resource.HAPManagerResource;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 

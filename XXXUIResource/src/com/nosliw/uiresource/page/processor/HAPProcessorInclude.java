@@ -8,7 +8,7 @@ import org.json.JSONObject;
 
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
-import com.nosliw.core.resource.HAPManagerResourceDefinition;
+import com.nosliw.core.xxx.resource.HAPManagerResourceDefinition;
 import com.nosliw.data.core.domain.entity.attachment.HAPAttachment;
 import com.nosliw.data.core.domain.entity.attachment1.HAPUtilityAttachment;
 import com.nosliw.uiresource.HAPUIResourceManager;

@@ -19,7 +19,7 @@ import com.nosliw.common.serialization.HAPJsonTypeScript;
 import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityFile;
-import com.nosliw.core.resource.HAPParserResourceEntity;
+import com.nosliw.core.xxx.resource.HAPParserResourceEntity;
 import com.nosliw.common.utils.HAPGeneratorId;
 import com.nosliw.common.utils.HAPSegmentParser;
 import com.nosliw.data.core.component.HAPParserEntityComponent;

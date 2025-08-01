@@ -5,9 +5,9 @@ import java.util.List;
 
 import com.nosliw.common.path.HAPPath;
 import com.nosliw.core.application.HAPBrick;
-import com.nosliw.core.application.HAPEnumBrickType;
 import com.nosliw.core.application.HAPInfoExportResource;
 import com.nosliw.core.application.HAPPluginBrick;
+import com.nosliw.core.application.brick.HAPEnumBrickType;
 import com.nosliw.core.application.common.interactive.HAPWithBlockInteractiveTask;
 
 public class HAPPluginBrickServiceProfile extends HAPPluginBrick{

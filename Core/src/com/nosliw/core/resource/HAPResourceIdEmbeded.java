@@ -44,10 +44,6 @@ public class HAPResourceIdEmbeded  extends HAPResourceId{
 	@Override
 	public String getCoreIdLiterate() {
 		return HAPUtilityNamingConversion.cascadeLevel3(this.m_path, this.m_parentId.toStringValue(HAPSerializationFormat.LITERATE));
-		
-//		Map<String, String> jsonMap = new LinkedHashMap<String, String>();
-//		this.buildCoreJsonMap(jsonMap, null);
-//		return HAPJsonUtility.buildMapJson(jsonMap);
 	}
 
 	@Override
@@ -55,9 +51,6 @@ public class HAPResourceIdEmbeded  extends HAPResourceId{
 		String[] idSegs = HAPUtilityNamingConversion.parseTwoPartLevel3(idLiterate);
 		this.m_path = idSegs[0];
 		this.m_parentId = (HAPResourceIdSimple)HAPFactoryResourceId.newInstance(idSegs[1]);
-		
-//		JSONObject jsonObj = new JSONObject(idLiterate);
-//		this.buildCoreIdByJSON(jsonObj);
 	}
 
 	@Override

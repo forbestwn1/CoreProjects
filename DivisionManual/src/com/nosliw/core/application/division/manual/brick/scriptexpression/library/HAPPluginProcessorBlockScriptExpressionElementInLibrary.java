@@ -5,28 +5,28 @@ import java.util.List;
 import org.apache.commons.lang3.tuple.Pair;
 
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.core.application.HAPEnumBrickType;
-import com.nosliw.core.application.brick.scriptexpression.library.HAPBlockScriptExpressionElementInLibrary;
-import com.nosliw.core.application.brick.scriptexpression.library.HAPElementInLibraryScriptExpression;
 import com.nosliw.core.application.common.dataexpression.HAPItemInContainerDataExpression;
 import com.nosliw.core.application.common.dataexpressionimp.HAPUtilityExpressionProcessor;
 import com.nosliw.core.application.common.interactive.HAPInteractiveExpression;
 import com.nosliw.core.application.common.scriptexpression.HAPExpressionScript;
 import com.nosliw.core.application.common.scriptexpression.HAPManualUtilityScriptExpressionParser;
-import com.nosliw.core.application.common.scriptexpression.HAPSegmentScriptExpression;
-import com.nosliw.core.application.common.scriptexpression.HAPSegmentScriptExpressionScriptComplex;
-import com.nosliw.core.application.common.scriptexpression.HAPSegmentScriptExpressionScriptScriptSimple;
-import com.nosliw.core.application.common.scriptexpression.HAPVariableInScript;
-import com.nosliw.core.application.common.valueport.HAPConfigureResolveElementReference;
-import com.nosliw.core.application.common.valueport.HAPIdElement;
-import com.nosliw.core.application.common.valueport.HAPUtilityStructureElementReference;
-import com.nosliw.core.application.common.valueport.HAPWithInternalValuePort;
 import com.nosliw.core.application.common.withvariable.HAPContainerVariableInfo;
 import com.nosliw.core.application.division.manual.HAPManualContextProcessBrick;
 import com.nosliw.core.application.division.manual.HAPManualPluginProcessorBlockSimple;
-import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrickBlockSimple;
 import com.nosliw.core.application.division.manual.executable.HAPManualBrick;
+import com.nosliw.core.application.valueport.HAPConfigureResolveElementReference;
+import com.nosliw.core.application.valueport.HAPIdElement;
+import com.nosliw.core.application.valueport.HAPUtilityStructureElementReference;
+import com.nosliw.core.application.valueport.HAPWithInternalValuePort;
 import com.nosliw.core.data.matcher.HAPMatchers;
+import com.nosliw.core.xxx.application1.brick.HAPEnumBrickType;
+import com.nosliw.core.xxx.application1.brick.scriptexpression.library.HAPBlockScriptExpressionElementInLibrary;
+import com.nosliw.core.xxx.application1.brick.scriptexpression.library.HAPElementInLibraryScriptExpression;
+import com.nosliw.core.xxx.application1.common.scriptexpression.HAPSegmentScriptExpression;
+import com.nosliw.core.xxx.application1.common.scriptexpression.HAPSegmentScriptExpressionScriptComplex;
+import com.nosliw.core.xxx.application1.common.scriptexpression.HAPSegmentScriptExpressionScriptScriptSimple;
+import com.nosliw.core.xxx.application1.common.scriptexpression.HAPVariableInScript;
+import com.nosliw.core.xxx.application1.division.manual.definition.HAPManualDefinitionBrickBlockSimple;
 
 public class HAPPluginProcessorBlockScriptExpressionElementInLibrary extends HAPManualPluginProcessorBlockSimple{
 

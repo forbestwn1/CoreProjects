@@ -7,16 +7,16 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.common.structure.HAPElementStructure;
 import com.nosliw.core.application.common.structure.HAPRootInStructure;
 import com.nosliw.core.application.common.structure.HAPStructureImp;
-import com.nosliw.core.application.common.valueport.HAPConfigureResolveElementReference;
-import com.nosliw.core.application.common.valueport.HAPIdElement;
-import com.nosliw.core.application.common.valueport.HAPReferenceValueStructure;
-import com.nosliw.core.application.common.valueport.HAPResultReferenceResolve;
-import com.nosliw.core.application.common.valueport.HAPRootStructureInValuePort;
-import com.nosliw.core.application.common.valueport.HAPValuePort;
-import com.nosliw.core.application.common.valueport.HAPValueStructureInValuePort11111;
 import com.nosliw.core.application.division.manual.executable.HAPManualBrick;
-import com.nosliw.core.application.valuestructure.HAPDomainValueStructure;
-import com.nosliw.core.application.valuestructure.HAPInfoValueStructureRuntime;
+import com.nosliw.core.application.valueport.HAPConfigureResolveElementReference;
+import com.nosliw.core.application.valueport.HAPIdElement;
+import com.nosliw.core.application.valueport.HAPReferenceValueStructure;
+import com.nosliw.core.application.valueport.HAPResultReferenceResolve;
+import com.nosliw.core.application.valueport.HAPRootStructureInValuePort;
+import com.nosliw.core.application.valueport.HAPValuePort;
+import com.nosliw.core.application.valueport.HAPValueStructureInValuePort11111;
+import com.nosliw.core.xxx.application1.valuestructure.HAPDomainValueStructure;
+import com.nosliw.core.xxx.application1.valuestructure.HAPInfoValueStructureRuntime;
 
 public class HAPManualValuePortValueContext2 extends HAPValuePort{
 

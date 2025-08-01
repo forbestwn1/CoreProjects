@@ -5,10 +5,10 @@ import com.nosliw.common.interfac.HAPEntityOrReference;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.core.application.HAPIdBrickType;
-import com.nosliw.core.application.brick.container.HAPBrickContainer;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionAttributeInBrick;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrick;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionWrapperValueBrick;
+import com.nosliw.core.xxx.application1.brick.container.HAPBrickContainer;
 
 public class HAPManualDefinitionBrickContainerBase extends HAPManualDefinitionBrick{
 

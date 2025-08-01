@@ -5,9 +5,9 @@ import java.util.Set;
 
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.common.structure.HAPRequirementContextProcessor;
-import com.nosliw.core.application.service.HAPManagerServiceDefinition;
 import com.nosliw.core.data.HAPDataTypeHelper;
-import com.nosliw.core.resource.HAPManagerResourceDefinition;
+import com.nosliw.core.xxx.application1.service.HAPManagerServiceDefinition;
+import com.nosliw.core.xxx.resource.HAPManagerResourceDefinition;
 import com.nosliw.data.core.domain.entity.expression.data1.HAPManagerExpression;
 import com.nosliw.data.core.runtime.HAPRuntime;
 

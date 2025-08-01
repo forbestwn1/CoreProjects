@@ -3,9 +3,9 @@ package com.nosliw.data.core.datasource.task;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import com.nosliw.core.application.common.dataexpression.HAPWrapperOperand;
 import com.nosliw.core.data.matcher.HAPMatchers;
 import com.nosliw.core.datasource.HAPDataSourceManager;
+import com.nosliw.core.xxx.application1.common.dataexpression.HAPWrapperOperand;
 import com.nosliw.data.core.HAPData;
 import com.nosliw.data.core.runtime.HAPRuntime;
 import com.nosliw.data.core.runtime.js.rhino.HAPRhinoRuntimeUtility;

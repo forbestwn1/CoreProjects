@@ -3,11 +3,11 @@ package com.nosliw.core.application.division.manual.brick.ui.uicontent;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import com.nosliw.core.application.HAPEnumBrickType;
-import com.nosliw.core.application.brick.ui.uicontent.HAPBlockComplexUICustomerTagDebugger;
 import com.nosliw.core.application.common.constant.HAPDefinitionConstant;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrickWithEntityInfo;
 import com.nosliw.core.application.uitag.HAPUITagDefinition;
+import com.nosliw.core.xxx.application1.brick.HAPEnumBrickType;
+import com.nosliw.core.xxx.application1.brick.ui.uicontent.HAPBlockComplexUICustomerTagDebugger;
 
 public class HAPManualDefinitionBlockComplexUICustomerTagDebugger extends HAPManualDefinitionBrickWithEntityInfo{
 

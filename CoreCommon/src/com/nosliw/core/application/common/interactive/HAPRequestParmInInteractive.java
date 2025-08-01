@@ -3,7 +3,7 @@ package com.nosliw.core.application.common.interactive;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.core.application.common.variable.HAPVariableDataInfo;
 import com.nosliw.core.application.common.variable.HAPVariableDefinition;
-import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
+import com.nosliw.core.data.criteria.HAPDataTypeCriteria;
 
 /**
  * This is variable info for expression 

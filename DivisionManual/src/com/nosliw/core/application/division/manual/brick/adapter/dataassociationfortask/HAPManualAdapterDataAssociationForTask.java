@@ -1,8 +1,8 @@
 package com.nosliw.core.application.division.manual.brick.adapter.dataassociationfortask;
 
-import com.nosliw.core.application.brick.adapter.dataassociationfortask.HAPAdapterDataAssociationForTask;
 import com.nosliw.core.application.common.dataassociation.HAPDataAssociationForTask;
 import com.nosliw.core.application.division.manual.executable.HAPManualBrickImp;
+import com.nosliw.core.xxx.application1.brick.adapter.dataassociationfortask.HAPAdapterDataAssociationForTask;
 
 public class HAPManualAdapterDataAssociationForTask extends HAPManualBrickImp implements HAPAdapterDataAssociationForTask{
 

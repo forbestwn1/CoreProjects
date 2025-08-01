@@ -4,10 +4,10 @@ import java.util.Map;
 import java.util.Set;
 
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.core.application.common.valueport.HAPIdRootElement;
-import com.nosliw.core.application.common.valueport.HAPIdElement;
-import com.nosliw.core.application.division.manual.HAPPluginProcessorBrickDefinitionComplexImp;
-import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualBrickValueStructure;
+import com.nosliw.core.application.valueport.HAPIdElement;
+import com.nosliw.core.application.valueport.HAPIdRootElement;
+import com.nosliw.core.xxx.application1.division.manual.HAPPluginProcessorBrickDefinitionComplexImp;
+import com.nosliw.core.xxx.application1.division.manual.brick.valuestructure.HAPManualBrickValueStructure;
 import com.nosliw.data.core.domain.HAPDomainValueStructure;
 import com.nosliw.data.core.domain.entity.HAPContextProcessor;
 import com.nosliw.data.core.domain.entity.HAPExecutableEntityComplex;

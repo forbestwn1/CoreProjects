@@ -30,7 +30,7 @@ import com.nosliw.core.resource.HAPGatewayResource;
 import com.nosliw.core.resource.HAPResourceHelper;
 import com.nosliw.core.resource.HAPResourceIdSimple;
 import com.nosliw.core.resource.HAPResourceInfo;
-import com.nosliw.core.resource.imp.js.library.HAPJSLibraryId;
+import com.nosliw.core.resource.imp.jslibrary.HAPJSLibraryId;
 import com.nosliw.core.runtime.HAPRunTaskEventListener;
 import com.nosliw.core.runtime.HAPRuntime;
 import com.nosliw.core.runtime.HAPRuntimeInfo;

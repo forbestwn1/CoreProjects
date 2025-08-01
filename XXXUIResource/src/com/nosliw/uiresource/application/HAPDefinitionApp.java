@@ -9,7 +9,7 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPUtilityBasic;
-import com.nosliw.core.resource.HAPResourceDefinition1;
+import com.nosliw.core.xxx.resource.HAPResourceDefinition1;
 import com.nosliw.data.core.component.HAPInfoChildResource;
 import com.nosliw.data.core.domain.complexentity.HAPDefinitionEntityContainer;
 import com.nosliw.data.core.domain.complexentity.HAPElementInContainerEntityDefinition;

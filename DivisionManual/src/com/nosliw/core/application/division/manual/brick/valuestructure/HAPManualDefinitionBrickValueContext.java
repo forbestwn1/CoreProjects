@@ -3,7 +3,6 @@ package com.nosliw.core.application.division.manual.brick.valuestructure;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.nosliw.core.application.HAPEnumBrickType;
 import com.nosliw.core.application.common.structure.HAPValueContextDefinition;
 import com.nosliw.core.application.common.structure.HAPWrapperValueStructure;
 import com.nosliw.core.application.division.manual.HAPManualEnumBrickType;
@@ -11,6 +10,7 @@ import com.nosliw.core.application.division.manual.brick.container.HAPManualDefi
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionAttributeInBrick;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrick;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionWrapperValueBrick;
+import com.nosliw.core.xxx.application1.brick.HAPEnumBrickType;
 
 public class HAPManualDefinitionBrickValueContext extends HAPManualDefinitionBrick implements HAPValueContextDefinition{
 

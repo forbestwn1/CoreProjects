@@ -19,8 +19,8 @@ import com.nosliw.core.application.division.story.brick.HAPStoryNode;
 import com.nosliw.core.application.division.story.brick.connection.HAPStoryConnectionContain;
 import com.nosliw.core.application.division.story.brick.node.HAPStoryNodeVariable;
 import com.nosliw.core.application.division.story.change.HAPStoryRequestChangeWrapper;
-import com.nosliw.core.resource.HAPResourceDefinition1;
 import com.nosliw.core.system.HAPSystemFolderUtility;
+import com.nosliw.core.xxx.resource.HAPResourceDefinition1;
 
 public class HAPStoryUtilityStory {
 

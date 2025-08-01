@@ -1,9 +1,9 @@
 package com.nosliw.core.application.division.manual.brick.test.complex.testcomplex1;
 
-import com.nosliw.core.application.HAPEnumBrickType;
 import com.nosliw.core.application.division.manual.HAPManualManagerBrick;
 import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualDefinitionBrickValueContext;
-import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrickBlockComplex;
+import com.nosliw.core.xxx.application1.brick.HAPEnumBrickType;
+import com.nosliw.core.xxx.application1.division.manual.definition.HAPManualDefinitionBrickBlockComplex;
 import com.nosliw.data.core.domain.HAPContextParser;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.HAPUtilityEntityDefinitionComplex;

@@ -9,17 +9,17 @@ import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.serialization.HAPUtilityJson;
+import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.serialization.HAPManagerSerialize;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.utils.HAPUtilityBasic;
-import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
-import com.nosliw.data.core.data.criteria.HAPParserCriteria;
-import com.nosliw.data.core.data.criteria.HAPUtilityCriteria;
-import com.nosliw.data.core.matcher.HAPMatchers;
-import com.nosliw.data.core.matcher.HAPMatchersCombo;
-import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
+import com.nosliw.core.data.criteria.HAPDataTypeCriteria;
+import com.nosliw.core.data.criteria.HAPParserCriteria;
+import com.nosliw.core.data.criteria.HAPUtilityCriteria;
+import com.nosliw.core.data.matcher.HAPMatchers;
+import com.nosliw.core.data.matcher.HAPMatchersCombo;
+import com.nosliw.core.runtimeenv.HAPRuntimeEnvironment;
 
 @HAPEntityWithAttribute
 public class HAPVariableDataInfo extends HAPSerializableImp{
@@ -61,7 +61,9 @@ public class HAPVariableDataInfo extends HAPSerializableImp{
 	public void setCriteria(HAPDataTypeCriteria criteria) {    this.m_criteria = criteria;     }
 	
 	public List<HAPDataRule> getRules(){   return this.m_rules;   }
-	public void addRule(HAPDataRule rule) {   if(rule!=null) this.m_rules.add(rule);    }
+	public void addRule(HAPDataRule rule) {   if(rule!=null) {
+		this.m_rules.add(rule);
+	}    }
 	
 	public HAPMatchersCombo getRuleMatchers() {    return this.m_ruleMatchers;    }
 	public void setRuleMatchers(HAPMatchers matchers, HAPDataTypeCriteria ruleCriteria) {
@@ -78,7 +80,9 @@ public class HAPVariableDataInfo extends HAPSerializableImp{
 	
 	public void process(HAPRuntimeEnvironment runtimeEnv) {
 		HAPDataTypeCriteria ruleCriteria = this.m_ruleCriteria;
-		if(ruleCriteria==null)  ruleCriteria = this.m_criteria;
+		if(ruleCriteria==null) {
+			ruleCriteria = this.m_criteria;
+		}
 		for(HAPDataRule rule : this.m_rules) {
 			rule.process(ruleCriteria, runtimeEnv);
 		}
@@ -102,10 +106,16 @@ public class HAPVariableDataInfo extends HAPSerializableImp{
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		if(this.getCriteria()!=null)	jsonMap.put(CRITERIA, HAPManagerSerialize.getInstance().toStringValue(this.getCriteria(), HAPSerializationFormat.LITERATE));
+		if(this.getCriteria()!=null) {
+			jsonMap.put(CRITERIA, HAPManagerSerialize.getInstance().toStringValue(this.getCriteria(), HAPSerializationFormat.LITERATE));
+		}
 		jsonMap.put(RULE, HAPUtilityJson.buildJson(m_rules, HAPSerializationFormat.JSON));
-		if(this.m_ruleMatchers!=null) jsonMap.put(RULEMATCHERS, this.m_ruleMatchers.toStringValue(HAPSerializationFormat.JSON));
-		if(this.getRuleCriteria()!=null)	jsonMap.put(RULECRITERIA, HAPManagerSerialize.getInstance().toStringValue(this.getRuleCriteria(), HAPSerializationFormat.LITERATE));
+		if(this.m_ruleMatchers!=null) {
+			jsonMap.put(RULEMATCHERS, this.m_ruleMatchers.toStringValue(HAPSerializationFormat.JSON));
+		}
+		if(this.getRuleCriteria()!=null) {
+			jsonMap.put(RULECRITERIA, HAPManagerSerialize.getInstance().toStringValue(this.getRuleCriteria(), HAPSerializationFormat.LITERATE));
+		}
 	}
 	
 	@Override
@@ -131,7 +141,9 @@ public class HAPVariableDataInfo extends HAPSerializableImp{
 			}
 
 			String ruleCriteriaStr = (String)jsonValue.opt(RULECRITERIA);
-			if(ruleCriteriaStr!=null)	this.m_ruleCriteria = HAPParserCriteria.getInstance().parseCriteria(ruleCriteriaStr);
+			if(ruleCriteriaStr!=null) {
+				this.m_ruleCriteria = HAPParserCriteria.getInstance().parseCriteria(ruleCriteriaStr);
+			}
 		}
 		return true;
 	}
@@ -140,8 +152,12 @@ public class HAPVariableDataInfo extends HAPSerializableImp{
 		HAPVariableDataInfo out = new HAPVariableDataInfo();
 		out.m_criteria = HAPUtilityCriteria.cloneDataTypeCriteria(this.m_criteria);
 		out.m_rules.addAll(this.m_rules);
-		if(this.m_ruleMatchers!=null) out.m_ruleMatchers = this.m_ruleMatchers.cloneMatchers();
-		if(this.m_ruleCriteria!=null)  out.m_ruleCriteria = HAPUtilityCriteria.cloneDataTypeCriteria(this.m_ruleCriteria);
+		if(this.m_ruleMatchers!=null) {
+			out.m_ruleMatchers = this.m_ruleMatchers.cloneMatchers();
+		}
+		if(this.m_ruleCriteria!=null) {
+			out.m_ruleCriteria = HAPUtilityCriteria.cloneDataTypeCriteria(this.m_ruleCriteria);
+		}
 		return out;
 	}
 	

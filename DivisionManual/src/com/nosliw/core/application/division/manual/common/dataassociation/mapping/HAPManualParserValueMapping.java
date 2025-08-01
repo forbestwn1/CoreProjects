@@ -10,8 +10,8 @@ import org.json.JSONObject;
 import com.nosliw.common.info.HAPUtilityEntityInfo;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.core.application.common.structure.HAPParserStructure;
-import com.nosliw.core.application.common.valueport.HAPReferenceElement;
-import com.nosliw.core.application.common.valueport.HAPReferenceRootElement;
+import com.nosliw.core.application.valueport.HAPReferenceElement;
+import com.nosliw.core.application.valueport.HAPReferenceRootElement;
 
 public class HAPManualParserValueMapping {
 

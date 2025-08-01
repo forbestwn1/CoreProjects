@@ -16,7 +16,7 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPUtilityFile;
 import com.nosliw.core.resource.imp.js.HAPResourceDataJSValue;
-import com.nosliw.core.resource.imp.js.library.HAPResourceDataJSLibrary;
+import com.nosliw.core.resource.imp.jslibrary.HAPResourceDataJSLibrary;
 import com.nosliw.core.runtime.js.rhino.HAPRuntimeImpRhino;
 import com.nosliw.core.runtime.js.rhino.task.HAPUtilityRuntimeJSScript;
 import com.nosliw.core.system.HAPSystemFolderUtility;

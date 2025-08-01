@@ -1,9 +1,9 @@
 package com.nosliw.core.application.division.manual.brick.scriptexpression.group;
 
-import com.nosliw.core.application.HAPEnumBrickType;
-import com.nosliw.core.application.brick.dataexpression.group.HAPBlockDataExpressionGroup;
 import com.nosliw.core.application.common.scriptexpression.HAPDefinitionContainerScriptExpression;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrick;
+import com.nosliw.core.xxx.application1.brick.HAPEnumBrickType;
+import com.nosliw.core.xxx.application1.brick.dataexpression.group.HAPBlockDataExpressionGroup;
 
 public class HAPManualDefinitionBlockScriptExpressionGroup extends HAPManualDefinitionBrick{
 

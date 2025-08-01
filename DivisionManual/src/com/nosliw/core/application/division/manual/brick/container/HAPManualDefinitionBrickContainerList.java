@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.nosliw.common.interfac.HAPEntityOrReference;
-import com.nosliw.core.application.HAPEnumBrickType;
-import com.nosliw.core.application.brick.container.HAPBrickContainerList;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionAttributeInBrick;
+import com.nosliw.core.xxx.application1.brick.HAPEnumBrickType;
+import com.nosliw.core.xxx.application1.brick.container.HAPBrickContainerList;
 
 public class HAPManualDefinitionBrickContainerList extends HAPManualDefinitionBrickContainerBase{
 

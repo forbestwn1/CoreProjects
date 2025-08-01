@@ -7,7 +7,7 @@ import com.nosliw.core.application.HAPAttributeInBrick;
 import com.nosliw.core.application.HAPIdBrickType;
 import com.nosliw.core.application.HAPWrapperValueOfValue;
 import com.nosliw.core.application.common.brick.HAPBrickImp;
-import com.nosliw.core.application.common.valueport.HAPContainerValuePorts;
+import com.nosliw.core.application.valueport.HAPContainerValuePorts;
 import com.nosliw.core.resource.HAPResourceDependency;
 import com.nosliw.core.runtime.HAPRuntimeInfo;
 

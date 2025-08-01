@@ -64,7 +64,7 @@ var node_createPackageCore = function(parm, configure){
 			var gatewayParm = {};
 			gatewayParm[node_COMMONATRIBUTECONSTANT.GATEWAYPACKAGE_COMMAND_LOADEXECUTABLEPACKAGE_RESOURCEID] = loc_resourceId;
 			out.addRequest(nosliw.runtime.getGatewayService().getExecuteGatewayCommandRequest(
-					node_COMMONATRIBUTECONSTANT.RUNTIME_GATEWAY_PACKAGE, 
+					node_COMMONCONSTANT.GATEWAY_PACKAGE, 
 					node_COMMONATRIBUTECONSTANT.GATEWAYPACKAGE_COMMAND_LOADEXECUTABLEPACKAGE, 
 					gatewayParm,
 					{

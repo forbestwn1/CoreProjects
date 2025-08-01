@@ -12,7 +12,7 @@ import com.nosliw.core.application.division.story.brick.HAPStoryNodeImp;
 import com.nosliw.core.application.division.story.change.HAPStoryChangeItemPatch;
 import com.nosliw.core.application.division.story.change.HAPStoryChangeResult;
 import com.nosliw.core.application.division.story.change.HAPStoryUtilityChange;
-import com.nosliw.core.application.service.HAPServiceProfile;
+import com.nosliw.core.xxx.application1.service.HAPServiceProfile;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 @HAPEntityWithAttribute

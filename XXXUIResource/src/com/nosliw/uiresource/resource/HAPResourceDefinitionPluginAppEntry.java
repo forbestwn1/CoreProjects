@@ -1,10 +1,10 @@
 package com.nosliw.uiresource.resource;
 
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.core.resource.HAPManagerResourceDefinition;
-import com.nosliw.core.resource.HAPPluginResourceDefinition;
-import com.nosliw.core.resource.HAPResourceDefinition1;
 import com.nosliw.core.resource.HAPResourceIdSimple;
+import com.nosliw.core.xxx.resource.HAPManagerResourceDefinition;
+import com.nosliw.core.xxx.resource.HAPPluginResourceDefinition;
+import com.nosliw.core.xxx.resource.HAPResourceDefinition1;
 import com.nosliw.uiresource.application.HAPDefinitionApp;
 import com.nosliw.uiresource.application.HAPDefinitionAppEntry;
 

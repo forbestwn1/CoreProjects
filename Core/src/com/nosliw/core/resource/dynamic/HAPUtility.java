@@ -5,8 +5,8 @@ import java.util.Set;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPUtilityFile;
-import com.nosliw.core.resource.HAPResourceDefinition1;
 import com.nosliw.core.system.HAPSystemFolderUtility;
+import com.nosliw.core.xxx.resource.HAPResourceDefinition1;
 
 public class HAPUtility {
 

@@ -10,11 +10,11 @@ import com.nosliw.common.info.HAPEntityInfoWritableImp;
 import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPUtilityBasic;
-import com.nosliw.core.application.common.valueport.HAPReferenceElement;
-import com.nosliw.data.core.data.HAPData;
-import com.nosliw.data.core.data.HAPUtilityData;
-import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
-import com.nosliw.data.core.data.criteria.HAPParserCriteria;
+import com.nosliw.core.application.valueport.HAPReferenceElement;
+import com.nosliw.core.data.HAPData;
+import com.nosliw.core.data.HAPUtilityData;
+import com.nosliw.core.data.criteria.HAPDataTypeCriteria;
+import com.nosliw.core.data.criteria.HAPParserCriteria;
 
 /**
  * This is variable info for expression 

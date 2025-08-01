@@ -8,9 +8,9 @@ import org.json.JSONObject;
 
 import com.nosliw.common.info.HAPEntityInfoImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.core.application.brick.dataexpression.library.HAPElementInLibraryDataExpression;
 import com.nosliw.core.application.common.interactive.HAPInteractive;
 import com.nosliw.core.application.common.interactive.HAPRequestParmInInteractive;
+import com.nosliw.core.xxx.application1.brick.dataexpression.library.HAPElementInLibraryDataExpression;
 import com.nosliw.core.application.common.interactive.HAPInteractiveResultExpression;
 
 public class HAPManualScriptExpressionLibraryElement extends HAPEntityInfoImp implements HAPInteractive{

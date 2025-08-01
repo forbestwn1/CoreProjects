@@ -1,7 +1,7 @@
 package com.nosliw.core.application.common.structure.reference;
 
 import com.nosliw.common.info.HAPInfoImpSimple;
-import com.nosliw.core.application.common.valueport.HAPConfigureResolveElementReference;
+import com.nosliw.core.application.valueport.HAPConfigureResolveElementReference;
 
 public class HAPConfigureProcessorRelative extends HAPInfoImpSimple{
 	

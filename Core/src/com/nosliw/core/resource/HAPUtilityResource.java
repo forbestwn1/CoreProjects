@@ -5,12 +5,9 @@ import java.util.Map;
 import java.util.Set;
 
 import com.google.common.collect.Lists;
-import com.nosliw.common.interfac.HAPEntityOrReference;
-import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.HAPBrick;
 import com.nosliw.core.application.HAPResourceDataBrick;
 import com.nosliw.core.runtime.HAPRuntimeInfo;
-import com.nosliw.core.runtimeenv.HAPRuntimeEnvironment;
 import com.nosliw.core.system.HAPSystemUtility;
 
 public class HAPUtilityResource {
@@ -57,50 +54,5 @@ public class HAPUtilityResource {
 		}
 		return loadResourceByFile.contains(resourceType);
 	}
-	
-
-	public static HAPResourceDefinition1 solidateResource(HAPEntityOrReference entityOrReference, HAPRuntimeEnvironment runtimeEnv) {
-		HAPResourceDefinition1 out = null;
-		if(entityOrReference.getEntityOrReferenceType().equals(HAPConstantShared.REFERENCE)) {
-			out = runtimeEnv.getResourceDefinitionManager().getLocalResourceDefinition((HAPResourceId)entityOrReference);
-		}
-		else {
-			out = (HAPResourceDefinition1)entityOrReference;
-		}
-		return out;
-	}
-	
-	public static Object getImpliedEntity(HAPResourceId resourceId, Object container, HAPManagerResourceDefinition resourceDefMan) {
-		Object out = null;
-		if(resourceId.getStructure().equals(HAPConstantShared.RESOURCEID_TYPE_SIMPLE) && HAPUtilityResourceId.isLocalReference(resourceId)) {
-			//for reference local, get it from container
-			String id = ((HAPResourceIdSimple)resourceId).getId();
-			if(container instanceof HAPDefinitionEntityContainer) {
-				out = ((HAPDefinitionEntityContainer)container).getElementResourceDefinition(id);
-			}
-			else if(container instanceof HAPWithEntityElement) {
-				out = ((HAPWithEntityElement)container).getEntityElement(id);
-			}
-			else if(container instanceof Map) {
-				out = ((Map)container).get(id);
-			}
-		}
-		else {
-			out = resourceDefMan.getLocalResourceDefinition(resourceId);
-		}
-		return out;
-	}	
-
-	public static HAPResourceDefinition1 getImpliedResourceDefinition(HAPResourceId resourceId, HAPDefinitionEntityContainer container, HAPManagerResourceDefinition resourceDefMan) {
-		HAPResourceDefinition1 resourceDef = null;
-		if(resourceId.getStructure().equals(HAPConstantShared.RESOURCEID_TYPE_SIMPLE) && HAPUtilityResourceId.isLocalReference(resourceId)) {
-			//for reference local, get it from container
-			resourceDef = container.getElementResourceDefinition(((HAPResourceIdSimple)resourceId).getId());
-		}
-		else {
-			resourceDef = resourceDefMan.getLocalResourceDefinition(resourceId);
-		}
-		return resourceDef;
-	}	
 	
 }

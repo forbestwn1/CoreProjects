@@ -12,7 +12,7 @@ import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.core.resource.HAPResourceDependency;
 import com.nosliw.core.resource.HAPResourceId;
 import com.nosliw.core.resource.HAPWithResourceDependency;
-import com.nosliw.data.core.runtime.HAPRuntimeInfo;
+import com.nosliw.core.runtime.HAPRuntimeInfo;
 
 @HAPEntityWithAttribute
 public class HAPAttributeInBrick extends HAPEntityInfoImp implements HAPWithResourceDependency{

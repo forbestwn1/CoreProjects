@@ -1,16 +1,10 @@
 package com.nosliw.core.resource;
 
-import java.io.File;
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
-import com.nosliw.core.system.HAPSystemFolderUtility;
-import com.nosliw.data.core.component.HAPPathLocationBase;
 
 public class HAPUtilityResourceId {
 
@@ -72,7 +66,19 @@ public class HAPUtilityResourceId {
 		return false;
 	}
 	
+	public static List<HAPResourceDependency> buildResourceDependentFromResourceId(List<HAPResourceIdSimple> ids){
+		List<HAPResourceDependency> out = new ArrayList<HAPResourceDependency>();
+		for(HAPResourceIdSimple id : ids) {
+			out.add(new HAPResourceDependency(id));
+		}
+		return out;
+	}
 
+
+	
+	
+	
+/*	
 	public static HAPInfoResourceLocation getResourceLocationInfo(HAPResourceIdSimple resourceId) {
 		String localFile = isFileBased(resourceId);
 		if(localFile!=null) {
@@ -86,16 +92,6 @@ public class HAPUtilityResourceId {
 		}
 	}
 
-	public static List<HAPResourceDependency> buildResourceDependentFromResourceId(List<HAPResourceIdSimple> ids){
-		List<HAPResourceDependency> out = new ArrayList<HAPResourceDependency>();
-		for(HAPResourceIdSimple id : ids) {
-			out.add(new HAPResourceDependency(id));
-		}
-		return out;
-	}
-
-
-	
 	private static final String FILEBASERESOURCE_STARTER = "file_";
 	public static HAPResourceIdSimple createFileBaseResourceId(String resourceType, String fileName) {
 		try {
@@ -117,5 +113,5 @@ public class HAPUtilityResourceId {
 		}
 		return null;
 	}
-
+*/
 }

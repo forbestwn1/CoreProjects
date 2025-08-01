@@ -13,7 +13,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.core.application.common.structure.HAPElementStructure;
 import com.nosliw.core.application.common.structure.HAPElementStructureUnknown;
-import com.nosliw.core.application.common.valueport.HAPIdRootElement;
+import com.nosliw.core.application.valueport.HAPIdRootElement;
 import com.nosliw.data.core.dataassociation.HAPExecutableDataAssociationImp;
 import com.nosliw.data.core.dataassociation.mapping.HAPDefinitionDataAssociationMapping;
 import com.nosliw.data.core.dataassociation.mapping.HAPItemValueMapping;

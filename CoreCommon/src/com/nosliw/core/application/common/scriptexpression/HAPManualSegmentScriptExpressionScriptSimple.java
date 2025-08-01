@@ -11,7 +11,7 @@ import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.core.application.division.manual.common.scriptexpression.HAPManualVariableInScript;
+import com.nosliw.core.xxx.application1.division.manual.common.scriptexpression.HAPManualVariableInScript;
 import com.nosliw.data.core.script.expression1.imp.expression.HAPConstantInScript;
 import com.nosliw.data.core.script.expression1.imp.expression.HAPVariableInScript;
 

@@ -11,10 +11,8 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityNosliw;
-import com.nosliw.core.application.HAPEnumBrickType;
 import com.nosliw.core.application.HAPIdBrickType;
 import com.nosliw.core.application.HAPValueOfDynamic;
-import com.nosliw.core.application.brick.wrappertask.HAPBlockTaskWrapper;
 import com.nosliw.core.application.common.constant.HAPDefinitionConstant;
 import com.nosliw.core.application.common.constant.HAPWithConstantDefinition;
 import com.nosliw.core.application.common.parentrelation.HAPManualDefinitionBrickRelationValueContext;
@@ -29,6 +27,8 @@ import com.nosliw.core.application.division.manual.brick.wrappertask.HAPManualDe
 import com.nosliw.core.application.division.manual.common.attachment.HAPManualDefinitionAttachment;
 import com.nosliw.core.application.division.manual.common.task.HAPManualUtilityTask;
 import com.nosliw.core.resource.HAPResourceId;
+import com.nosliw.core.xxx.application1.brick.HAPEnumBrickType;
+import com.nosliw.core.xxx.application1.brick.wrappertask.HAPBlockTaskWrapper;
 
 public abstract class HAPManualDefinitionBrick extends HAPSerializableImp implements HAPEntityOrReference, HAPWithConstantDefinition, HAPWithScriptExpressionConstantMaster{
 

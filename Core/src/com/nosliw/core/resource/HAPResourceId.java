@@ -7,6 +7,7 @@ import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
+import com.nosliw.common.interfac.HAPEntityOrReference;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
@@ -14,7 +15,7 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityBasic;
 
 @HAPEntityWithAttribute
-public abstract class HAPResourceId extends HAPSerializableImp implements HAPResourceDefinitionOrId{
+public abstract class HAPResourceId extends HAPSerializableImp implements HAPEntityOrReference{
 
 	@HAPAttribute
 	public static String RESOURCETYPEID = "resourceTypeId";

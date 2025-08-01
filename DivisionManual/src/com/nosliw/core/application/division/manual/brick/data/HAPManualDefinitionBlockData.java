@@ -1,9 +1,9 @@
 package com.nosliw.core.application.division.manual.brick.data;
 
-import com.nosliw.core.application.HAPEnumBrickType;
-import com.nosliw.core.application.brick.data.HAPBlockData;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrick;
 import com.nosliw.core.data.HAPData;
+import com.nosliw.core.xxx.application1.brick.HAPEnumBrickType;
+import com.nosliw.core.xxx.application1.brick.data.HAPBlockData;
 
 public class HAPManualDefinitionBlockData extends HAPManualDefinitionBrick{
 

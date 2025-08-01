@@ -3,9 +3,9 @@ package com.nosliw.data.core.imp.cronjob;
 import java.util.List;
 import java.util.Map;
 
-import com.nosliw.core.application.common.structure.data.HAPContextDataGroup;
 import com.nosliw.core.data.HAPData;
 import com.nosliw.core.resource.HAPResourceId;
+import com.nosliw.core.xxx.application1.common.structure.data.HAPContextDataGroup;
 import com.nosliw.data.core.activity.HAPManagerActivityPlugin;
 import com.nosliw.data.core.cronjob.HAPExecutableCronJob;
 import com.nosliw.data.core.cronjob.HAPInstancePollSchedule;

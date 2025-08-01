@@ -13,7 +13,7 @@ import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.common.constant.HAPDefinitionConstant;
-import com.nosliw.core.application.common.dataexpressionimp.HAPInterfaceProcessOperand;
+import com.nosliw.core.xxx.application1.common.dataexpressionimp.HAPInterfaceProcessOperand;
 import com.nosliw.data.core.data.HAPUtilityData;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.domain.entity.expression.data1.HAPDefinitionExpressionData;

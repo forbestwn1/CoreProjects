@@ -2,11 +2,11 @@ package com.nosliw.core.application.division.manual.brick.task.flow;
 
 import org.json.JSONObject;
 
-import com.nosliw.core.application.HAPEnumBrickType;
-import com.nosliw.core.application.brick.task.flow.HAPBlockTaskFlowActivityTask;
 import com.nosliw.core.application.division.manual.HAPManualManagerBrick;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrick;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionContextParse;
+import com.nosliw.core.xxx.application1.brick.HAPEnumBrickType;
+import com.nosliw.core.xxx.application1.brick.task.flow.HAPBlockTaskFlowActivityTask;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPManualPluginParserBlockTaskFlowActivityTask extends HAPManualPluginParserBlockTaskFlowActivity{
