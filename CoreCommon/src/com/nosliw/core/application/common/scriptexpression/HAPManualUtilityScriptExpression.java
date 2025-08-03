@@ -13,7 +13,7 @@ import com.nosliw.core.application.common.dataexpressionimp.HAPManualUtilityProc
 import com.nosliw.core.application.common.withvariable.HAPContainerVariableInfo;
 import com.nosliw.core.application.common.withvariable.HAPManagerWithVariablePlugin;
 import com.nosliw.core.application.common.withvariable.HAPUtilityWithVarible;
-import com.nosliw.core.application.valueport.HAPConfigureResolveElementReference;
+import com.nosliw.core.xxx.application.valueport.HAPConfigureResolveElementReference;
 
 public class HAPManualUtilityScriptExpression {
 

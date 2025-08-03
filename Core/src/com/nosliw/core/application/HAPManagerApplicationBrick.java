@@ -42,7 +42,7 @@ public class HAPManagerApplicationBrick {
 		
 		this.m_divisionPlugin = new LinkedHashMap<String, HAPPluginDivision>();
 		for(HAPPluginDivision divisionPlugin : divisionPlugins) {
-			this.m_divisionPlugin.put(divisionPlugin.getName(), divisionPlugin);
+			this.m_divisionPlugin.put(divisionPlugin.getDivisionName(), divisionPlugin);
 		}
 	}
 	

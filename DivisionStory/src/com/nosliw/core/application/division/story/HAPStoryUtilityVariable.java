@@ -37,7 +37,7 @@ import com.nosliw.core.application.division.story.brick.HAPStoryInfoVariable;
 import com.nosliw.core.application.division.story.brick.HAPStoryNode;
 import com.nosliw.core.application.division.story.brick.node.HAPStoryNodeVariable;
 import com.nosliw.core.application.division.story.change.HAPStoryRequestChangeWrapper;
-import com.nosliw.core.application.valueport.HAPResultReferenceResolve;
+import com.nosliw.core.xxx.application.valueport.HAPResultReferenceResolve;
 import com.nosliw.data.core.runtime.HAPInfoRuntimeTaskTaskScriptExpressionConstantGroup;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.runtime.js.imp.rhino.task.HAPRuntimeTaskExecuteRhinoScriptExpressionConstantGroup;

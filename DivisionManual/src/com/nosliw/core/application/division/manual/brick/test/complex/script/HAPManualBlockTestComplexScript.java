@@ -5,9 +5,9 @@ import java.util.List;
 import java.util.Map;
 
 import com.nosliw.core.application.division.manual.executable.HAPManualBrickImp;
-import com.nosliw.core.application.valueport.HAPReferenceElement;
-import com.nosliw.core.application.valueport.HAPResultReferenceResolve;
 import com.nosliw.core.resource.HAPResourceId;
+import com.nosliw.core.xxx.application.valueport.HAPReferenceElement;
+import com.nosliw.core.xxx.application.valueport.HAPResultReferenceResolve;
 import com.nosliw.core.xxx.application1.brick.test.complex.script.HAPBlockTestComplexScript;
 import com.nosliw.core.xxx.application1.brick.test.complex.script.HAPExecutableVariableExpected;
 import com.nosliw.core.xxx.application1.brick.test.complex.script.HAPInfoAttachmentResolve;

@@ -3,7 +3,7 @@ package com.nosliw.core.application.common.dataexpression;
 import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
-import com.nosliw.core.application.valueport.HAPIdElement;
+import com.nosliw.core.xxx.application.valueport.HAPIdElement;
 import com.nosliw.data.core.matcher.HAPMatchers;
 import com.nosliw.data.core.resource.HAPResourceId;
 

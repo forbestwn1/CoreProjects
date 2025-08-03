@@ -22,6 +22,7 @@ import com.nosliw.core.application.brick.HAPEnumBrickType;
 import com.nosliw.core.application.brick.interactive.interfacee.task.HAPBlockInteractiveInterfaceTask;
 import com.nosliw.core.application.brick.service.profile.HAPBlockServiceProfile;
 import com.nosliw.core.application.common.interactive.HAPRequestParmInInteractive;
+import com.nosliw.core.application.common.interactive.HAPResultInteractiveTask;
 import com.nosliw.core.data.HAPData;
 
 //service manager, it is used for runtime purpose
@@ -41,7 +42,8 @@ public class HAPManagerService implements HAPPluginDivision{
 	
 	private HAPManagerApplicationBrick m_brickManager;
 	
-	public HAPManagerService(HAPManagerApplicationBrick brickManager){
+	public HAPManagerService(HAPManagerServiceInterface serviceInterfaceMan, HAPManagerApplicationBrick brickManager){
+		this.m_serviceInterfaceMan = serviceInterfaceMan;
 		this.m_brickManager = brickManager;
 //		this.m_servicesInfo = new LinkedHashMap<String, HAPInfoService>();
 		this.m_serviceInstances = new LinkedHashMap<String, HAPInstanceService>();
@@ -49,14 +51,7 @@ public class HAPManagerService implements HAPPluginDivision{
 	}
 	
 	@Override
-	public String getName() {   return HAPConstantShared.BRICK_DIVISION_SERVICE;   }
-	
-	public HAPManagerServiceInterface getServiceInterfaceManager() { 
-		if(this.m_serviceInterfaceMan==null) {
-			this.m_serviceInterfaceMan = new HAPManagerServiceInterface(); 
-		}
-		return this.m_serviceInterfaceMan;     
-	}
+	public String getDivisionName() {   return HAPConstantShared.BRICK_DIVISION_SERVICE;   }
 	
 	@Override
 	public Set<HAPIdBrickType> getBrickTypes() {  
@@ -82,6 +77,7 @@ public class HAPManagerService implements HAPPluginDivision{
 		return null;
 	}
 
+	public HAPManagerServiceInterface getServiceInterfaceManager() { 	return this.m_serviceInterfaceMan;	}
 	
 	public void registerServiceInfo(HAPInfoService serviceInfo){	this.getAllServicesInfo().put(serviceInfo.getServiceProfileInfo().getId(), serviceInfo);	}
 	
@@ -146,7 +142,7 @@ public class HAPManagerService implements HAPPluginDivision{
 	public void registerServiceFactory(String name, HAPFactoryService serviceFactory){		this.m_serviceFactorys.put(name, serviceFactory);	}
 	
 	//service query is used to find service provider
-	public HAPResultInteractive execute(HAPQueryService serviceQuery, Map<String, HAPData> parms){
+	public HAPResultInteractiveTask execute(HAPQueryService serviceQuery, Map<String, HAPData> parms){
 		//get service instance according to serviceId
 		HAPInstanceService serviceInstance = this.m_serviceInstances.get(serviceQuery.getServiceId());
 		if(serviceInstance==null){
@@ -174,7 +170,7 @@ public class HAPManagerService implements HAPPluginDivision{
 		}
 		
 		//execute service instance
-		HAPResultInteractive out = null;
+		HAPResultInteractiveTask out = null;
 		if(serviceInstance!=null) {
 			Map<String, HAPData> serviceParms = new LinkedHashMap<String, HAPData>();
 			

@@ -9,7 +9,6 @@ import com.nosliw.core.application.brick.HAPEnumBrickType;
 import com.nosliw.core.application.brick.interactive.interfacee.task.HAPBlockInteractiveInterfaceTask;
 import com.nosliw.core.application.brick.service.interfacee.HAPBlockServiceInterface;
 import com.nosliw.core.application.common.brick.HAPBrickImpWithEntityInfo;
-import com.nosliw.core.application.valueport.HAPContainerValuePorts;
 
 //static information for a service. readable, query for service
 //information needed during configuration time
@@ -41,10 +40,4 @@ public class HAPBlockServiceInterfaceImp extends HAPBrickImpWithEntityInfo imple
 	@Override
 	public HAPDisplayResourceNode getDisplayResource() {   return (HAPDisplayResourceNode)this.getAttributeValueOfValue(DISPLAY);     }
 
-	@Override
-	public HAPContainerValuePorts getInternalValuePorts() {   return null;  }
-
-	@Override
-	public HAPContainerValuePorts getExternalValuePorts() {   return null;  }
-	
 }

@@ -13,10 +13,10 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.core.application.common.withvariable.HAPContainerVariableInfo;
 import com.nosliw.core.application.common.withvariable.HAPPluginProcessorEntityWithVariable;
-import com.nosliw.core.application.valueport.HAPConfigureResolveElementReference;
 import com.nosliw.core.data.criteria.HAPDataTypeCriteria;
 import com.nosliw.core.data.criteria.HAPDataTypeCriteriaAny;
 import com.nosliw.core.data.matcher.HAPMatchers;
+import com.nosliw.core.xxx.application.valueport.HAPConfigureResolveElementReference;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPPluginProcessorEntityWithVariableDataExpression implements HAPPluginProcessorEntityWithVariable{

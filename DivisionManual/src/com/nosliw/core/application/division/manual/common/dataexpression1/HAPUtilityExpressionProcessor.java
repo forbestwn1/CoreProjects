@@ -23,12 +23,6 @@ import com.nosliw.core.application.common.dataexpression1.HAPWrapperOperand;
 import com.nosliw.core.application.common.structure.HAPElementStructure;
 import com.nosliw.core.application.common.structure.HAPElementStructureLeafData;
 import com.nosliw.core.application.common.withvariable.HAPContainerVariableInfo;
-import com.nosliw.core.application.valueport.HAPConfigureResolveElementReference;
-import com.nosliw.core.application.valueport.HAPIdElement;
-import com.nosliw.core.application.valueport.HAPInfoElementResolve;
-import com.nosliw.core.application.valueport.HAPUtilityStructureElementReference;
-import com.nosliw.core.application.valueport.HAPUtilityValuePort;
-import com.nosliw.core.application.valueport.HAPValuePort1111;
 import com.nosliw.core.application.valueport.HAPWithInternalValuePort;
 import com.nosliw.core.data.HAPData;
 import com.nosliw.core.data.criteria.HAPDataTypeCriteria;
@@ -37,6 +31,12 @@ import com.nosliw.core.data.matcher.HAPMatchers;
 import com.nosliw.core.resource.HAPFactoryResourceId;
 import com.nosliw.core.resource.HAPResourceId;
 import com.nosliw.core.resource.HAPUtilityResource;
+import com.nosliw.core.xxx.application.valueport.HAPConfigureResolveElementReference;
+import com.nosliw.core.xxx.application.valueport.HAPIdElement;
+import com.nosliw.core.xxx.application.valueport.HAPInfoElementResolve;
+import com.nosliw.core.xxx.application.valueport.HAPUtilityStructureElementReference;
+import com.nosliw.core.xxx.application.valueport.HAPUtilityValuePort;
+import com.nosliw.core.xxx.application.valueport.HAPValuePort1111;
 import com.nosliw.core.xxx.application1.brick.dataexpression.library.HAPBlockDataExpressionElementInLibrary;
 import com.nosliw.data.core.domain.entity.HAPContextProcessor;
 import com.nosliw.data.core.domain.entity.HAPExecutableEntityComplex;
@@ -198,7 +198,7 @@ public class HAPUtilityExpressionProcessor {
 				if(opType.equals(HAPConstantShared.EXPRESSION_OPERAND_CONSTANT)){
 					HAPOperandConstant constantOperand = (HAPOperandConstant)operand.getOperand();
 					if(constantOperand.getData()==null) {
-						HAPData constantData = containerComplexEntity.getConstantData(constantOperand.getName());
+						HAPData constantData = containerComplexEntity.getConstantData(constantOperand.getDivisionName());
 						constantOperand.setData(constantData);
 					}
 				}

@@ -3,11 +3,13 @@ package com.nosliw.core.application.entity.service;
 import java.io.File;
 
 import org.json.JSONObject;
+import org.springframework.stereotype.Component;
 
 import com.nosliw.common.utils.HAPUtilityFile;
 import com.nosliw.core.application.brick.service.interfacee.HAPBlockServiceInterface;
 import com.nosliw.core.system.HAPSystemFolderUtility;
 
+@Component
 public class HAPManagerServiceInterface{
 	
 	public HAPManagerServiceInterface() {

@@ -4,7 +4,7 @@ import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.core.application.valueport.HAPVariableInfo;
+import com.nosliw.core.xxx.application.valueport.HAPVariableInfo;
 
 @HAPEntityWithAttribute
 public interface HAPWithVariable {

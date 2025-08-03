@@ -4,17 +4,21 @@ import java.util.List;
 import java.util.Map;
 
 import org.json.JSONObject;
+import org.springframework.stereotype.Component;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.core.application.common.interactive.HAPResultInteractiveTask;
 import com.nosliw.core.data.HAPData;
 import com.nosliw.core.data.HAPUtilityData;
-import com.nosliw.data.core.runtime.HAPRuntimeInfo;
-import com.nosliw.data.core.runtime.js.HAPGatewayImp;
+import com.nosliw.core.gateway.HAPGatewayImp;
+import com.nosliw.core.runtime.HAPRuntimeInfo;
 
 @HAPEntityWithAttribute
+@Component
 public class HAPGatewayService extends HAPGatewayImp{
 
 	@HAPAttribute
@@ -39,6 +43,9 @@ public class HAPGatewayService extends HAPGatewayImp{
 	}
 	
 	@Override
+	public String getName() {   return HAPConstantShared.GATEWAY_SERVICE;  }
+	
+	@Override
 	public HAPServiceData command(String command, JSONObject parms, HAPRuntimeInfo runtimeInfo) throws Exception {
 		HAPServiceData out = null;
 		switch(command){
@@ -48,7 +55,7 @@ public class HAPGatewayService extends HAPGatewayImp{
 			serviceQuery.buildObject(parms.optJSONObject(COMMAND_REQUEST_QUERY), HAPSerializationFormat.JSON);
 			JSONObject parmsJson = parms.optJSONObject(COMMAND_REQUEST_PARMS);
 			Map<String, HAPData> dataSourceParms = HAPUtilityData.buildDataWrapperMapFromJson(parmsJson);
-			HAPResultInteractive serviceResult = this.m_serviceManager.execute(serviceQuery, dataSourceParms);
+			HAPResultInteractiveTask serviceResult = this.m_serviceManager.execute(serviceQuery, dataSourceParms);
 			out = this.createSuccessWithObject(serviceResult);
 			break;
 		}
@@ -63,4 +70,5 @@ public class HAPGatewayService extends HAPGatewayImp{
 		}
 		return out;
 	}
+
 }

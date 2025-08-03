@@ -6,8 +6,8 @@ import java.util.Map;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.core.application.HAPBrick;
-import com.nosliw.core.application.valueport.HAPReferenceElement;
-import com.nosliw.core.application.valueport.HAPResultReferenceResolve;
+import com.nosliw.core.xxx.application.valueport.HAPReferenceElement;
+import com.nosliw.core.xxx.application.valueport.HAPResultReferenceResolve;
 import com.nosliw.data.core.resource.HAPResourceId;
 
 @HAPEntityWithAttribute

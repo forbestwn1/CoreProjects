@@ -16,7 +16,7 @@ import com.nosliw.core.application.common.scriptexpression.HAPExpressionScript;
 import com.nosliw.core.application.common.withvariable.HAPContainerVariableInfo;
 import com.nosliw.core.application.common.withvariable.HAPWithVariable;
 import com.nosliw.core.application.valueport.HAPGroupValuePorts;
-import com.nosliw.core.application.valueport.HAPWithValuePortGroup;
+import com.nosliw.core.xxx.application.valueport.HAPWithValuePortGroup;
 import com.nosliw.data.core.matcher.HAPMatchers;
 import com.nosliw.data.core.resource.HAPManagerResource;
 import com.nosliw.data.core.resource.HAPResourceDependency;

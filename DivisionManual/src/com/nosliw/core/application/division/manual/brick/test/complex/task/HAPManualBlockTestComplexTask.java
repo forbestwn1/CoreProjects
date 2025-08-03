@@ -4,8 +4,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.nosliw.core.application.division.manual.executable.HAPManualBrickImp;
-import com.nosliw.core.application.valueport.HAPIdElement;
-import com.nosliw.core.application.valueport.HAPResultReferenceResolve;
+import com.nosliw.core.xxx.application.valueport.HAPIdElement;
+import com.nosliw.core.xxx.application.valueport.HAPResultReferenceResolve;
 import com.nosliw.core.xxx.application1.brick.interactive.interfacee.expression.HAPBlockInteractiveInterfaceExpression;
 import com.nosliw.core.xxx.application1.brick.interactive.interfacee.task.HAPBlockInteractiveInterfaceTask;
 import com.nosliw.core.xxx.application1.brick.test.complex.task.HAPBlockTestComplexTask;

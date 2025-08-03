@@ -15,7 +15,7 @@ import com.nosliw.core.application.common.withvariable.HAPContainerVariableInfo;
 import com.nosliw.core.application.common.withvariable.HAPManagerWithVariablePlugin;
 import com.nosliw.core.application.common.withvariable.HAPPluginProcessorEntityWithVariable;
 import com.nosliw.core.application.common.withvariable.HAPUtilityWithVarible;
-import com.nosliw.core.application.valueport.HAPConfigureResolveElementReference;
+import com.nosliw.core.xxx.application.valueport.HAPConfigureResolveElementReference;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.matcher.HAPMatchers;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;

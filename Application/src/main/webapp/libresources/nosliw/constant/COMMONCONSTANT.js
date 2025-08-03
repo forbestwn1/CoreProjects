@@ -446,6 +446,7 @@ var COMMONCONSTANT=
   "GATEWAY_OPTIONS": "options",
   "GATEWAY_RESOURCE": "resource",
   "GATEWAY_PACKAGE": "package",
+  "GATEWAY_SERVICE": "service",
   "NOSLIW_RESERVE_ATTRIBUTE": "nosliwattribute_",
   "NOSLIW_RESERVE_ATTRIBUTE_PLACEHOLDER": "nosliwattribute_placeholder",
   "NOSLIW_NAME_PREFIX": "nosliw_",

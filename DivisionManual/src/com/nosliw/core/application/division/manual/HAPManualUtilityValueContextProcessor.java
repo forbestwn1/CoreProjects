@@ -42,8 +42,8 @@ import com.nosliw.core.application.division.manual.executable.HAPHandlerDownward
 import com.nosliw.core.application.division.manual.executable.HAPManualBrick;
 import com.nosliw.core.application.division.manual.executable.HAPManualUtilityBrickTraverse;
 import com.nosliw.core.application.division.manual.executable.HAPTreeNodeBrick;
-import com.nosliw.core.application.valueport.HAPIdValuePortInBundle;
-import com.nosliw.core.application.valueport.HAPUtilityValuePort;
+import com.nosliw.core.xxx.application.valueport.HAPIdValuePortInBundle;
+import com.nosliw.core.xxx.application.valueport.HAPUtilityValuePort;
 import com.nosliw.core.xxx.application1.valuestructure.HAPDomainValueStructure;
 import com.nosliw.core.xxx.application1.valuestructure.HAPInfoValueStructureRuntime;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;

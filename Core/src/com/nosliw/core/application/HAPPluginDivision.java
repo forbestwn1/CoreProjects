@@ -4,7 +4,7 @@ import java.util.Set;
 
 public interface HAPPluginDivision {
 
-	String getName();
+	String getDivisionName();
 	
 	HAPBundle getBundle(HAPIdBrick brickId);
 

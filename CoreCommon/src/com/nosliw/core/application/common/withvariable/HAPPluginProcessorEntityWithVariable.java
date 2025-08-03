@@ -5,7 +5,7 @@ import java.util.Set;
 
 import org.apache.commons.lang3.tuple.Pair;
 
-import com.nosliw.core.application.valueport.HAPConfigureResolveElementReference;
+import com.nosliw.core.xxx.application.valueport.HAPConfigureResolveElementReference;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.matcher.HAPMatchers;
 

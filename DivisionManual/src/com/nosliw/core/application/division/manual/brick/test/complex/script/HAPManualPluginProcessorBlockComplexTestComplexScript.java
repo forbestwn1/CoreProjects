@@ -22,11 +22,11 @@ import com.nosliw.core.application.division.manual.brick.wrappertask.HAPManualBl
 import com.nosliw.core.application.division.manual.common.task.HAPManualUtilityTask;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrick;
 import com.nosliw.core.application.division.manual.executable.HAPManualBrick;
-import com.nosliw.core.application.valueport.HAPConfigureResolveElementReference;
-import com.nosliw.core.application.valueport.HAPReferenceElement;
-import com.nosliw.core.application.valueport.HAPResultReferenceResolve;
-import com.nosliw.core.application.valueport.HAPUtilityStructureElementReference;
-import com.nosliw.core.application.valueport.HAPUtilityValuePort;
+import com.nosliw.core.xxx.application.valueport.HAPConfigureResolveElementReference;
+import com.nosliw.core.xxx.application.valueport.HAPReferenceElement;
+import com.nosliw.core.xxx.application.valueport.HAPResultReferenceResolve;
+import com.nosliw.core.xxx.application.valueport.HAPUtilityStructureElementReference;
+import com.nosliw.core.xxx.application.valueport.HAPUtilityValuePort;
 import com.nosliw.core.xxx.application1.brick.HAPEnumBrickType;
 import com.nosliw.core.xxx.application1.brick.HAPUtilityBrickPath;
 import com.nosliw.core.xxx.application1.brick.test.complex.script.HAPBlockTestComplexScript;

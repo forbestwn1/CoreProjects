@@ -121,7 +121,7 @@ public class HAPManualBrickImp extends HAPManualBrick{
 				}
 				
 				adapterWrapper.buildEntityInfoByJson(adapterObj);
-				if(adapterWrapper.getName()==null) {
+				if(adapterWrapper.getDivisionName()==null) {
 					adapterWrapper.setName(HAPConstantShared.NAME_DEFAULT);
 				}
 				out.add(adapterWrapper);

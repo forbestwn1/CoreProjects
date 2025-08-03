@@ -94,7 +94,7 @@ public class HAPManualValueContext extends HAPSerializableImp implements HAPValu
 			part.addValueStructure(wrapper);
 			
 			//build id by name
-			String name = valueStructureDomain.getValueStructureRuntimeInfo(wrapper.getValueStructureRuntimeId()).getName();
+			String name = valueStructureDomain.getValueStructureRuntimeInfo(wrapper.getValueStructureRuntimeId()).getDivisionName();
 			if(name!=null) {
 				this.m_valueStructureRuntimeIdByName.put(name, wrapper.getValueStructureRuntimeId());
 				this.m_valueStructureRuntimeNameById.put(wrapper.getValueStructureRuntimeId(), name);

@@ -4,7 +4,7 @@ import java.util.Set;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.core.application.valueport.HAPUtilityStructureElementReference;
+import com.nosliw.core.xxx.application.valueport.HAPUtilityStructureElementReference;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPProcessorElementVariableInheritance {

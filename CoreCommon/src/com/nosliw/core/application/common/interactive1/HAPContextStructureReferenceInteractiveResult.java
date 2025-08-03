@@ -9,8 +9,8 @@ import com.nosliw.core.application.common.interactive.HAPResultElementInInteract
 import com.nosliw.core.application.common.structure.HAPElementStructureLeafData;
 import com.nosliw.core.application.common.structure.HAPRootStructure;
 import com.nosliw.core.application.common.structure.reference.HAPContextStructureReference;
-import com.nosliw.core.application.valueport.HAPInfoValueStructureReference;
-import com.nosliw.core.application.valueport.HAPReferenceValueStructure;
+import com.nosliw.core.xxx.application.valueport.HAPInfoValueStructureReference;
+import com.nosliw.core.xxx.application.valueport.HAPReferenceValueStructure;
 import com.nosliw.core.xxx.application1.division.manual.brick.valuestructure.HAPManualBrickValueStructure;
 
 public class HAPContextStructureReferenceInteractiveResult implements HAPContextStructureReference{

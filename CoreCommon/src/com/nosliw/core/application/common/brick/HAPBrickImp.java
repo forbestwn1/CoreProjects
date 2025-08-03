@@ -18,6 +18,7 @@ import com.nosliw.core.application.HAPWrapperValueOfBrick;
 import com.nosliw.core.application.HAPWrapperValueOfDynamic;
 import com.nosliw.core.application.HAPWrapperValueOfReferenceResource;
 import com.nosliw.core.application.HAPWrapperValueOfValue;
+import com.nosliw.core.application.valueport.HAPContainerValuePorts;
 import com.nosliw.core.resource.HAPResourceDependency;
 import com.nosliw.core.resource.HAPResourceId;
 import com.nosliw.core.runtime.HAPRuntimeInfo;
@@ -127,6 +128,12 @@ public abstract class HAPBrickImp extends HAPSerializableImp implements HAPBrick
 		}
 		return out;
 	}
+	
+	@Override
+	public HAPContainerValuePorts getInternalValuePorts() {  		return null;	}
+
+	@Override
+	public HAPContainerValuePorts getExternalValuePorts() {		return null;	}
 	
 	@Override
 	protected void buildJSJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){

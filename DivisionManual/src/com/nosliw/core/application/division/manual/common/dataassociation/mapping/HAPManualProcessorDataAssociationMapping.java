@@ -25,14 +25,14 @@ import com.nosliw.core.application.common.structure.HAPProcessorStructureElement
 import com.nosliw.core.application.common.structure.HAPUtilityStructure;
 import com.nosliw.core.application.common.structure.reference.HAPConfigureProcessorRelative;
 import com.nosliw.core.application.common.structure.reference.HAPUtilityProcessRelativeElement;
-import com.nosliw.core.application.valueport.HAPIdRootElement;
-import com.nosliw.core.application.valueport.HAPIdValuePortInBundle;
-import com.nosliw.core.application.valueport.HAPReferenceElement;
-import com.nosliw.core.application.valueport.HAPReferenceRootElement;
-import com.nosliw.core.application.valueport.HAPResultReferenceResolve;
-import com.nosliw.core.application.valueport.HAPUtilityStructureElementReference;
-import com.nosliw.core.application.valueport.HAPUtilityValuePort;
 import com.nosliw.core.resource.HAPManagerResource;
+import com.nosliw.core.xxx.application.valueport.HAPIdRootElement;
+import com.nosliw.core.xxx.application.valueport.HAPIdValuePortInBundle;
+import com.nosliw.core.xxx.application.valueport.HAPReferenceElement;
+import com.nosliw.core.xxx.application.valueport.HAPReferenceRootElement;
+import com.nosliw.core.xxx.application.valueport.HAPResultReferenceResolve;
+import com.nosliw.core.xxx.application.valueport.HAPUtilityStructureElementReference;
+import com.nosliw.core.xxx.application.valueport.HAPUtilityValuePort;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 

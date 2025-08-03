@@ -46,7 +46,7 @@ import com.nosliw.core.application.division.manual.executable.HAPTreeNodeBrick;
 import com.nosliw.core.application.dynamic.HAPRefDynamicTask;
 import com.nosliw.core.application.dynamic.HAPRefDynamicTaskSingle;
 import com.nosliw.core.application.dynamic.HAPUtilityInfoDynamic;
-import com.nosliw.core.application.valueport.HAPUtilityValuePortVariable;
+import com.nosliw.core.xxx.application.valueport.HAPUtilityValuePortVariable;
 import com.nosliw.core.xxx.application1.brick.HAPUtilityBrickPath;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
