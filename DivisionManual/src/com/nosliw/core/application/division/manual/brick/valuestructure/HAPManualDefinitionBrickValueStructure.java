@@ -5,7 +5,7 @@ import java.util.Map;
 import com.nosliw.core.application.common.structure.HAPRootInStructure;
 import com.nosliw.core.application.common.structure.HAPValueStructure;
 import com.nosliw.core.application.common.structure.HAPValueStructureImp;
-import com.nosliw.core.application.division.manual.HAPManualEnumBrickType;
+import com.nosliw.core.application.division.manua.HAPManualEnumBrickType;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrick;
 
 public class HAPManualDefinitionBrickValueStructure extends HAPManualDefinitionBrick implements HAPValueStructure{

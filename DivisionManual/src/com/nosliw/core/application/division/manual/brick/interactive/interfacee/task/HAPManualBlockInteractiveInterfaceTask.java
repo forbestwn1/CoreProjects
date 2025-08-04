@@ -1,7 +1,7 @@
 package com.nosliw.core.application.division.manual.brick.interactive.interfacee.task;
 
 import com.nosliw.core.application.common.interactive.HAPInteractiveTask;
-import com.nosliw.core.application.division.manual.executable.HAPManualBrickImp;
+import com.nosliw.core.application.division.manual.HAPManualBrickImp;
 import com.nosliw.core.xxx.application1.brick.interactive.interfacee.task.HAPBlockInteractiveInterfaceTask;
 
 public class HAPManualBlockInteractiveInterfaceTask extends HAPManualBrickImp implements HAPBlockInteractiveInterfaceTask{

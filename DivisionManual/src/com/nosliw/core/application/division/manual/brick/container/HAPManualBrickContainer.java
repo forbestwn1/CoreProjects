@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.nosliw.common.utils.HAPUtilityNosliw;
 import com.nosliw.core.application.HAPAttributeInBrick;
-import com.nosliw.core.application.division.manual.executable.HAPManualBrickWithEntityInfo;
+import com.nosliw.core.application.division.manual.HAPManualBrickWithEntityInfo;
 import com.nosliw.core.xxx.application1.brick.container.HAPBrickContainer;
 
 public class HAPManualBrickContainer extends HAPManualBrickWithEntityInfo implements HAPBrickContainer{

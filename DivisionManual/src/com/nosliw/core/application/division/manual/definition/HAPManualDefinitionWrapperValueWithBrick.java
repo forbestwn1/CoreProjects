@@ -4,7 +4,7 @@ import java.util.Map;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.core.application.HAPIdBrickType;
-import com.nosliw.core.application.division.manual.HAPManualWithBrick;
+import com.nosliw.core.application.division.manua.HAPManualWithBrick;
 
 public class HAPManualDefinitionWrapperValueWithBrick extends HAPManualDefinitionWrapperValue implements HAPManualWithBrick{
 

@@ -4,8 +4,8 @@ import java.util.List;
 
 import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.core.application.division.manual.HAPManualManagerBrick;
-import com.nosliw.core.application.division.manual.HAPManualUtilityBrick;
+import com.nosliw.core.application.division.manua.HAPManualManagerBrick;
+import com.nosliw.core.application.division.manua.HAPManualUtilityBrick;
 
 public class HAPManualDefinitionUtilityBrickTraverse {
 

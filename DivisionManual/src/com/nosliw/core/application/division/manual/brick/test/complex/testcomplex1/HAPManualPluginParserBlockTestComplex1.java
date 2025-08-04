@@ -1,6 +1,6 @@
 package com.nosliw.core.application.division.manual.brick.test.complex.testcomplex1;
 
-import com.nosliw.core.application.division.manual.HAPManualManagerBrick;
+import com.nosliw.core.application.division.manua.HAPManualManagerBrick;
 import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualDefinitionBrickValueContext;
 import com.nosliw.core.xxx.application1.brick.HAPEnumBrickType;
 import com.nosliw.core.xxx.application1.division.manual.definition.HAPManualDefinitionBrickBlockComplex;

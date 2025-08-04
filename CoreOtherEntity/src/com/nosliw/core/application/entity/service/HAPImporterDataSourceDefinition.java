@@ -12,7 +12,6 @@ import com.nosliw.common.info.HAPUtilityEntityInfo;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPUtilityFile;
 import com.nosliw.core.application.HAPManagerApplicationBrick;
-import com.nosliw.core.xxx.application.entity.service.HAPProviderService;
 
 public class HAPImporterDataSourceDefinition {
 

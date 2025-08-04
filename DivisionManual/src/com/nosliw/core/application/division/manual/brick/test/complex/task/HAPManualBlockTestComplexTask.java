@@ -3,7 +3,7 @@ package com.nosliw.core.application.division.manual.brick.test.complex.task;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import com.nosliw.core.application.division.manual.executable.HAPManualBrickImp;
+import com.nosliw.core.application.division.manual.HAPManualBrickImp;
 import com.nosliw.core.xxx.application.valueport.HAPIdElement;
 import com.nosliw.core.xxx.application.valueport.HAPResultReferenceResolve;
 import com.nosliw.core.xxx.application1.brick.interactive.interfacee.expression.HAPBlockInteractiveInterfaceExpression;

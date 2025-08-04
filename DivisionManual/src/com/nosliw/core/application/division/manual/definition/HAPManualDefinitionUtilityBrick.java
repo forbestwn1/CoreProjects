@@ -13,13 +13,13 @@ import com.nosliw.core.application.HAPUtilityBrick;
 import com.nosliw.core.application.HAPUtilityBrickId;
 import com.nosliw.core.application.HAPUtilityBundle;
 import com.nosliw.core.application.common.parentrelation.HAPManualDefinitionBrickRelation;
-import com.nosliw.core.application.division.manual.HAPManualManagerBrick;
-import com.nosliw.core.application.division.manual.HAPManualUtilityBrick;
-import com.nosliw.core.application.division.manual.HAPManualWithBrick;
-import com.nosliw.core.application.division.manual.HAPManualWrapperBrickRoot;
-import com.nosliw.core.application.division.manual.executable.HAPInfoTreeNode;
-import com.nosliw.core.application.division.manual.executable.HAPManualBrick;
-import com.nosliw.core.application.division.manual.executable.HAPTreeNodeBrick;
+import com.nosliw.core.application.division.m.HAPManualBrick;
+import com.nosliw.core.application.division.manua.HAPManualManagerBrick;
+import com.nosliw.core.application.division.manua.HAPManualUtilityBrick;
+import com.nosliw.core.application.division.manua.HAPManualWithBrick;
+import com.nosliw.core.application.division.manua.HAPManualWrapperBrickRoot;
+import com.nosliw.core.application.division.manual.HAPInfoTreeNode;
+import com.nosliw.core.application.division.manual.HAPTreeNodeBrick;
 
 public class HAPManualDefinitionUtilityBrick {
 

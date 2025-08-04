@@ -7,7 +7,7 @@ import org.json.JSONObject;
 
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.core.application.common.scriptexpression.HAPDefinitionScriptExpression;
-import com.nosliw.core.application.division.manual.HAPManualUtilityScriptExpressionConstant;
+import com.nosliw.core.application.division.manua.HAPManualUtilityScriptExpressionConstant;
 import com.nosliw.core.runtimeenv.js.rhino.HAPRuntimeEnvironmentImpRhino;
 
 public class HAPScriptExpressionConstantTest {

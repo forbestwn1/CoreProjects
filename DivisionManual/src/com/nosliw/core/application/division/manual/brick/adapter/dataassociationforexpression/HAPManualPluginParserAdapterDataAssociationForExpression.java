@@ -3,7 +3,7 @@ package com.nosliw.core.application.division.manual.brick.adapter.dataassociatio
 import org.json.JSONObject;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.core.application.division.manual.HAPManualManagerBrick;
+import com.nosliw.core.application.division.manua.HAPManualManagerBrick;
 import com.nosliw.core.application.division.manual.common.dataassociation.HAPManualDataAssociationForExpression;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrick;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionContextParse;

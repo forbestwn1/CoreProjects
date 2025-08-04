@@ -13,12 +13,12 @@ import com.nosliw.core.application.common.dataexpressionimp.HAPPluginProcessorEn
 import com.nosliw.core.application.common.interactive.HAPInteractiveExpression;
 import com.nosliw.core.application.common.withvariable.HAPContainerVariableInfo;
 import com.nosliw.core.application.common.withvariable.HAPUtilityWithVarible;
-import com.nosliw.core.application.division.manual.HAPManualContextProcessBrick;
-import com.nosliw.core.application.division.manual.HAPManualManagerBrick;
-import com.nosliw.core.application.division.manual.HAPManualPluginProcessorBlockComplex;
+import com.nosliw.core.application.division.m.HAPManualBrick;
+import com.nosliw.core.application.division.manua.HAPManualContextProcessBrick;
+import com.nosliw.core.application.division.manua.HAPManualManagerBrick;
+import com.nosliw.core.application.division.manua.HAPManualPluginProcessorBlockComplex;
 import com.nosliw.core.application.division.manual.common.task.HAPManualUtilityTask;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrick;
-import com.nosliw.core.application.division.manual.executable.HAPManualBrick;
 import com.nosliw.core.data.criteria.HAPDataTypeCriteria;
 import com.nosliw.core.data.matcher.HAPMatchers;
 import com.nosliw.core.xxx.application.valueport.HAPUtilityValuePortVariable;

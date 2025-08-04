@@ -3,7 +3,7 @@ package com.nosliw.core.application.division.manual.brick.adapter.dataassociatio
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import com.nosliw.core.application.division.manual.HAPManualManagerBrick;
+import com.nosliw.core.application.division.manua.HAPManualManagerBrick;
 import com.nosliw.core.application.division.manual.common.dataassociation.HAPManualDataAssociation;
 import com.nosliw.core.application.division.manual.common.dataassociation.HAPManualParserDataAssociation;
 import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrick;

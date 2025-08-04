@@ -19,7 +19,7 @@ import com.nosliw.core.application.common.parentrelation.HAPManualDefinitionBric
 import com.nosliw.core.application.common.scriptexpression.HAPDefinitionContainerScriptExpression;
 import com.nosliw.core.application.common.scriptexpression.HAPWithScriptExpressionConstantMaster;
 import com.nosliw.core.application.common.structure.HAPWrapperValueStructure;
-import com.nosliw.core.application.division.manual.HAPManualManagerBrick;
+import com.nosliw.core.application.division.manua.HAPManualManagerBrick;
 import com.nosliw.core.application.division.manual.brick.data.HAPManualDefinitionBlockData;
 import com.nosliw.core.application.division.manual.brick.value.HAPManualDefinitionBlockValue;
 import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualDefinitionBrickValueContext;

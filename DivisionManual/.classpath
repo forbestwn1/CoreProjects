@@ -12,5 +12,8 @@
 	<classpathentry exported="true" kind="lib" path="libs/jsoup-1.8.3.jar"/>
 	<classpathentry exported="true" kind="lib" path="libs/commons-lang-2.6.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/DataTypeManager"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/CoreBrick"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/CoreCommon"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/CoreOtherEntity"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

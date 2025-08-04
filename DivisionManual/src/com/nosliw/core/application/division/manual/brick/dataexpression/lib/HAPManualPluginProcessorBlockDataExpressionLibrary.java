@@ -1,7 +1,7 @@
 package com.nosliw.core.application.division.manual.brick.dataexpression.lib;
 
-import com.nosliw.core.application.division.manual.HAPManualManagerBrick;
-import com.nosliw.core.application.division.manual.HAPManualPluginProcessorBlockComplex;
+import com.nosliw.core.application.division.manua.HAPManualManagerBrick;
+import com.nosliw.core.application.division.manua.HAPManualPluginProcessorBlockComplex;
 import com.nosliw.core.xxx.application1.brick.HAPEnumBrickType;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
