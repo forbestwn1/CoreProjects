@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import com.nosliw.core.application.division.manual.HAPManualBrickImp;
+import com.nosliw.core.application.division.manual.core.HAPManualBrickImp;
 import com.nosliw.core.resource.HAPResourceId;
 import com.nosliw.core.xxx.application.valueport.HAPReferenceElement;
 import com.nosliw.core.xxx.application.valueport.HAPResultReferenceResolve;

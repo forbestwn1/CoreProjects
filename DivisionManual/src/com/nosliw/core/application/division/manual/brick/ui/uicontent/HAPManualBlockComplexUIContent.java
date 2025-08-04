@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.nosliw.core.application.common.scriptexpression.HAPContainerScriptExpression;
-import com.nosliw.core.application.division.manual.HAPManualBrickImp;
+import com.nosliw.core.application.division.manual.core.HAPManualBrickImp;
 import com.nosliw.core.xxx.application1.brick.ui.uicontent.HAPBlockComplexUIContent;
 import com.nosliw.core.xxx.application1.brick.ui.uicontent.HAPElementEvent;
 import com.nosliw.core.xxx.application1.brick.ui.uicontent.HAPUIEmbededScriptExpressionInAttribute;

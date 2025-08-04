@@ -3,7 +3,7 @@ package com.nosliw.core.application.division.manual.brick.ui.uicontent;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import com.nosliw.core.application.division.manual.HAPManualBrickImp;
+import com.nosliw.core.application.division.manual.core.HAPManualBrickImp;
 import com.nosliw.core.application.uitag.HAPUITagAttributeDefinition;
 import com.nosliw.core.application.uitag.HAPUITagDefinition;
 import com.nosliw.core.resource.HAPResourceId;

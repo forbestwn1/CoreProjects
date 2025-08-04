@@ -5,13 +5,13 @@ import java.util.List;
 import com.nosliw.common.path.HAPPath;
 import com.nosliw.core.application.common.dataassociation.HAPDataAssociationMapping;
 import com.nosliw.core.application.common.dataassociation.HAPTunnel;
-import com.nosliw.core.application.division.m.HAPManualBrick;
-import com.nosliw.core.application.division.manua.HAPManualContextProcessAdapter;
-import com.nosliw.core.application.division.manua.HAPManualManagerBrick;
-import com.nosliw.core.application.division.manua.HAPManualPluginProcessorAdapter;
 import com.nosliw.core.application.division.manual.common.dataassociation.HAPManualDataAssociation;
 import com.nosliw.core.application.division.manual.common.dataassociation.HAPManualProcessorDataAssociation;
-import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrick;
+import com.nosliw.core.application.division.manual.core.HAPManualBrick;
+import com.nosliw.core.application.division.manual.core.HAPManualManagerBrick;
+import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionBrick;
+import com.nosliw.core.application.division.manual.core.process.HAPManualContextProcessAdapter;
+import com.nosliw.core.application.division.manual.core.process.HAPManualPluginProcessorAdapter;
 import com.nosliw.core.xxx.application1.brick.HAPEnumBrickType;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 

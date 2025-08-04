@@ -4,8 +4,8 @@ import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.info.HAPEntityInfoWritableImp;
-import com.nosliw.data.core.data.HAPData;
-import com.nosliw.data.core.data.HAPUtilityData;
+import com.nosliw.core.data.HAPData;
+import com.nosliw.core.data.HAPUtilityData;
 
 public class HAPDefinitionConstant extends HAPEntityInfoWritableImp{
 

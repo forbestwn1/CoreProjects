@@ -4,13 +4,13 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.nosliw.core.application.common.structure.HAPUtilityValueStructureParser;
-import com.nosliw.core.application.division.manua.HAPManualEnumBrickType;
-import com.nosliw.core.application.division.manua.HAPManualManagerBrick;
-import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionAttributeInBrick;
-import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrick;
-import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionContextParse;
-import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionPluginParserBrickImpSimple;
-import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionUtilityParserBrickFormatJson;
+import com.nosliw.core.application.division.manual.core.HAPManualManagerBrick;
+import com.nosliw.core.application.division.manual.core.a.HAPManualEnumBrickType;
+import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionAttributeInBrick;
+import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionBrick;
+import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionContextParse;
+import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionUtilityParserBrickFormatJson;
+import com.nosliw.core.application.division.manual.core.definition1.HAPManualDefinitionPluginParserBrickImpSimple;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPManualPluginParserBrickImpValueContext extends HAPManualDefinitionPluginParserBrickImpSimple{

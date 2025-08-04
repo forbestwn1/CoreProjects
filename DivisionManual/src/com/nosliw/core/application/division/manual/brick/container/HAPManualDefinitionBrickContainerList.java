@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.nosliw.common.interfac.HAPEntityOrReference;
-import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionAttributeInBrick;
+import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionAttributeInBrick;
 import com.nosliw.core.xxx.application1.brick.HAPEnumBrickType;
 import com.nosliw.core.xxx.application1.brick.container.HAPBrickContainerList;
 

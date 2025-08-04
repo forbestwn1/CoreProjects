@@ -7,12 +7,12 @@ import java.util.Set;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
+import com.nosliw.core.application.HAPDomainValueStructure;
 import com.nosliw.core.application.valueport.HAPWithInternalValuePort;
+import com.nosliw.core.data.criteria.HAPInfoCriteria;
 import com.nosliw.core.xxx.application.valueport.HAPConfigureResolveElementReference;
 import com.nosliw.core.xxx.application.valueport.HAPIdElement;
 import com.nosliw.core.xxx.application.valueport.HAPUtilityStructureElementReference;
-import com.nosliw.core.xxx.application1.valuestructure.HAPDomainValueStructure;
-import com.nosliw.data.core.data.criteria.HAPInfoCriteria;
 
 public class HAPContainerVariableInfo extends HAPSerializableImp{
 
@@ -94,6 +94,10 @@ public class HAPContainerVariableInfo extends HAPSerializableImp{
 		out.m_variableIdByName.putAll(this.m_variableIdByName);
 		return out;
 	}
+	
+	
+	
+	
 	
 	
 	

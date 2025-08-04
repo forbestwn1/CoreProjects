@@ -2,8 +2,8 @@ package com.nosliw.core.application.division.manual.brick.valuestructure;
 
 import com.nosliw.core.application.common.structure.HAPValueStructure;
 import com.nosliw.core.application.common.structure.HAPWrapperValueStructure;
-import com.nosliw.core.application.division.manua.HAPManualEnumBrickType;
-import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrickWithEntityInfo;
+import com.nosliw.core.application.division.manual.core.a.HAPManualEnumBrickType;
+import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionBrickWithEntityInfo;
 
 //wrapper for value structure
 //extra info for value structure, group name

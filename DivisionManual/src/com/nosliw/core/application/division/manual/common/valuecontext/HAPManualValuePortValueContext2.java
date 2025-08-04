@@ -7,7 +7,7 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.common.structure.HAPElementStructure;
 import com.nosliw.core.application.common.structure.HAPRootInStructure;
 import com.nosliw.core.application.common.structure.HAPStructureImp;
-import com.nosliw.core.application.division.m.HAPManualBrick;
+import com.nosliw.core.application.division.manual.core.HAPManualBrick;
 import com.nosliw.core.application.valueport.HAPValuePort;
 import com.nosliw.core.xxx.application.valueport.HAPConfigureResolveElementReference;
 import com.nosliw.core.xxx.application.valueport.HAPIdElement;

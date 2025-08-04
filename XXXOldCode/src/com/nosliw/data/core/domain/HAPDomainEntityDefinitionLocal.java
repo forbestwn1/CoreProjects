@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.nosliw.common.interfac.HAPEntityOrReference;
+import com.nosliw.common.location.HAPPathLocationBase;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
@@ -13,7 +14,6 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPGeneratorId;
 import com.nosliw.core.application.division.manual.HAPManualBrick;
 import com.nosliw.core.application.division.manual.common.attachment.HAPReferenceAttachment;
-import com.nosliw.data.core.component.HAPPathLocationBase;
 import com.nosliw.data.core.domain.definition.HAPManagerDomainEntityDefinition;
 import com.nosliw.data.core.domain.definition.HAPUtilityEntityDefinition;
 import com.nosliw.data.core.resource.HAPResourceDefinition;

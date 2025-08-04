@@ -2,6 +2,7 @@ package com.nosliw.data.core.component;
 
 import java.util.Map;
 
+import com.nosliw.common.location.HAPPathLocationBase;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.resource.HAPResourceDefinition1;
 import com.nosliw.core.resource.HAPResourceDefinitionOrId;

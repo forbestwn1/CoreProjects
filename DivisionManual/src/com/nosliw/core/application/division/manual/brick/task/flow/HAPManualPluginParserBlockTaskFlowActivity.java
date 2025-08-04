@@ -4,10 +4,10 @@ import org.json.JSONObject;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.core.application.HAPIdBrickType;
-import com.nosliw.core.application.division.manua.HAPManualManagerBrick;
-import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrick;
-import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionContextParse;
-import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionPluginParserBrickImpComplex;
+import com.nosliw.core.application.division.manual.core.HAPManualManagerBrick;
+import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionBrick;
+import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionContextParse;
+import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionPluginParserBrickImpComplex;
 import com.nosliw.core.xxx.application1.brick.task.flow.HAPBlockTaskFlowActivity;
 import com.nosliw.core.xxx.application1.brick.task.flow.HAPTaskFlowNext;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;

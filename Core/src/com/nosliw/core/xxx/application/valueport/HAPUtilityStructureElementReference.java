@@ -8,14 +8,14 @@ import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.core.application.HAPBundle;
+import com.nosliw.core.application.HAPDomainValueStructure;
 import com.nosliw.core.application.common.structure.HAPStructureImp;
 import com.nosliw.core.application.common.structure.reference.HAPUtilityProcessRelativeElement;
 import com.nosliw.core.application.valueport.HAPValuePort;
 import com.nosliw.core.application.valueport.HAPWithExternalValuePort;
 import com.nosliw.core.application.valueport.HAPWithInternalValuePort;
-import com.nosliw.core.xxx.application1.valuestructure.HAPDomainValueStructure;
-import com.nosliw.data.core.resource.HAPManagerResource;
-import com.nosliw.data.core.runtime.HAPRuntimeInfo;
+import com.nosliw.core.resource.HAPManagerResource;
+import com.nosliw.core.runtime.HAPRuntimeInfo;
 
 public class HAPUtilityStructureElementReference {
 

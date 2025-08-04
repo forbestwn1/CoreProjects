@@ -5,11 +5,11 @@ import java.util.List;
 
 import com.nosliw.core.application.common.structure.HAPValueContextDefinition;
 import com.nosliw.core.application.common.structure.HAPWrapperValueStructure;
-import com.nosliw.core.application.division.manua.HAPManualEnumBrickType;
 import com.nosliw.core.application.division.manual.brick.container.HAPManualDefinitionBrickContainerList;
-import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionAttributeInBrick;
-import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionBrick;
-import com.nosliw.core.application.division.manual.definition.HAPManualDefinitionWrapperValueBrick;
+import com.nosliw.core.application.division.manual.core.a.HAPManualEnumBrickType;
+import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionAttributeInBrick;
+import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionBrick;
+import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionWrapperValueBrick;
 import com.nosliw.core.xxx.application1.brick.HAPEnumBrickType;
 
 public class HAPManualDefinitionBrickValueContext extends HAPManualDefinitionBrick implements HAPValueContextDefinition{
