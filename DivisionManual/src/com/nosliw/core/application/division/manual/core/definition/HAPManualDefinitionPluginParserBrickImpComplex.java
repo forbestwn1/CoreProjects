@@ -3,15 +3,16 @@ package com.nosliw.core.application.division.manual.core.definition;
 import org.json.JSONObject;
 
 import com.nosliw.core.application.HAPIdBrickType;
+import com.nosliw.core.application.HAPManagerApplicationBrick;
+import com.nosliw.core.application.division.manual.core.HAPManualManagerBrick;
 import com.nosliw.core.application.division.manual.core.a.HAPManualEnumBrickType;
 import com.nosliw.core.xxx.application1.HAPWithValueContext;
 
 public class HAPManualDefinitionPluginParserBrickImpComplex extends HAPManualDefinitionPluginParserBrickImp{
 
-	public HAPManualDefinitionPluginParserBrickImpComplex(HAPIdBrickType brickTypeId, Class<? extends HAPManualDefinitionBrick> brickClass) {
-		super(brickTypeId, brickClass);
+	public HAPManualDefinitionPluginParserBrickImpComplex(HAPIdBrickType brickTypeId, Class<? extends HAPManualDefinitionBrick> brickClass, HAPManualManagerBrick manualBrickMan, HAPManagerApplicationBrick brickMan) {
+		super(brickTypeId, brickClass, manualBrickMan, brickMan);
 	}
-
 
 	@Override
 	protected void parseDefinitionContentJson(HAPManualDefinitionBrick brickDefinition, Object jsonValue, HAPManualDefinitionContextParse parseContext) {

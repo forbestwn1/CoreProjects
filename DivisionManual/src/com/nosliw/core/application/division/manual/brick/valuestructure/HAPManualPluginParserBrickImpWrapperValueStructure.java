@@ -3,7 +3,7 @@ package com.nosliw.core.application.division.manual.brick.valuestructure;
 import com.nosliw.core.application.HAPIdBrickType;
 import com.nosliw.core.application.division.manual.core.HAPManualManagerBrick;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionBrick;
-import com.nosliw.core.application.division.manual.core.definition1.HAPManualDefinitionPluginParserBrickImpSimple;
+import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionPluginParserBrickImpSimple;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPManualPluginParserBrickImpWrapperValueStructure extends HAPManualDefinitionPluginParserBrickImpSimple{

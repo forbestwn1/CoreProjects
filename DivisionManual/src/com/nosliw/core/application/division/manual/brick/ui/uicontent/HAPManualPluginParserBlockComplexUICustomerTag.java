@@ -43,7 +43,7 @@ public class HAPManualPluginParserBlockComplexUICustomerTag extends HAPManualDef
 		uiCustomerTag.setUITagDefinition(uiTagDef);
 		
 		//build value context from ui tag definition
-		HAPManualDefinitionBrickValueContext valueContextBrick = HAPUtilityUITag.createValueContextBrickFromUITagDefinition(uiTagDef, this.getManualDivisionEntityManager());
+		HAPManualDefinitionBrickValueContext valueContextBrick = HAPUtilityUITag.createValueContextBrickFromUITagDefinition(uiTagDef, this.getManualDivisionBrickManager());
 		uiCustomerTag.setValueContextBrick(valueContextBrick);
 		
 		//base

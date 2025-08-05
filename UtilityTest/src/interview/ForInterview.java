@@ -6,7 +6,7 @@ public class ForInterview {
 
 		int out = method1(2);
 		System.out.println(out);
-		
+	
 	}
 	
 	public static int method1 (int kk) {
@@ -27,3 +27,39 @@ public class ForInterview {
 
 }
 
+
+select * from Employee_Master e1 inner join Employee_Master e2 on e1.managerId = e2.empId where empId = "a"
+
+
+
+
+class Resource {
+	
+	public static int data;
+	
+}
+
+class producer {
+	
+	public create(int d) {
+		while(true) {
+			syncnized(Resource.class){
+				Resource.data = d;
+				notify();
+			}
+		}
+	}
+}
+
+class consumer {
+
+	public int consume() {
+		while(true) {
+			syncnized(Resource.class){
+				wait();
+				return Resource.data;
+			}
+		}
+	}
+	
+}

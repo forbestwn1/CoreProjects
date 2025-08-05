@@ -9,8 +9,8 @@ import com.nosliw.core.application.division.manual.core.a.HAPManualEnumBrickType
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionAttributeInBrick;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionBrick;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionContextParse;
+import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionPluginParserBrickImpSimple;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionUtilityParserBrickFormatJson;
-import com.nosliw.core.application.division.manual.core.definition1.HAPManualDefinitionPluginParserBrickImpSimple;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPManualPluginParserBrickImpValueContext extends HAPManualDefinitionPluginParserBrickImpSimple{
@@ -43,8 +43,8 @@ public class HAPManualPluginParserBrickImpValueContext extends HAPManualDefiniti
 			valueStructureJsonObj = wrapperObj;
 		}
 
-		HAPManualDefinitionBrickWrapperValueStructure out = (HAPManualDefinitionBrickWrapperValueStructure)this.getManualDivisionEntityManager().newBrickDefinition(HAPManualEnumBrickType.VALUESTRUCTUREWRAPPER_100); 
-		HAPManualDefinitionAttributeInBrick valueStructureAttr = HAPManualDefinitionUtilityParserBrickFormatJson.parseAttribute(HAPManualDefinitionBrickWrapperValueStructure.VALUESTRUCTURE, valueStructureJsonObj, HAPManualEnumBrickType.VALUESTRUCTURE_100, null, parseContext, this.getManualDivisionEntityManager(), this.getBrickManager());
+		HAPManualDefinitionBrickWrapperValueStructure out = (HAPManualDefinitionBrickWrapperValueStructure)this.getManualDivisionBrickManager().newBrickDefinition(HAPManualEnumBrickType.VALUESTRUCTUREWRAPPER_100); 
+		HAPManualDefinitionAttributeInBrick valueStructureAttr = HAPManualDefinitionUtilityParserBrickFormatJson.parseAttribute(HAPManualDefinitionBrickWrapperValueStructure.VALUESTRUCTURE, valueStructureJsonObj, HAPManualEnumBrickType.VALUESTRUCTURE_100, null, parseContext, this.getManualDivisionBrickManager(), this.getBrickManager());
 		out.setAttribute(valueStructureAttr);
 
 		HAPUtilityValueStructureParser.parseValueStructureWrapper(out, wrapperObj);

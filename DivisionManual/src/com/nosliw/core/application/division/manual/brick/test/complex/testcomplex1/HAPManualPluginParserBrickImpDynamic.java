@@ -8,6 +8,7 @@ import com.nosliw.common.info.HAPEntityInfo;
 import com.nosliw.common.info.HAPUtilityEntityInfo;
 import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.core.application.HAPIdBrickType;
+import com.nosliw.core.application.HAPManagerApplicationBrick;
 import com.nosliw.core.application.HAPUtilityBrickId;
 import com.nosliw.core.application.division.manual.core.HAPManualManagerBrick;
 import com.nosliw.core.application.division.manual.core.a.HAPManualEnumBrickType;
@@ -18,16 +19,15 @@ import com.nosliw.core.application.division.manual.core.definition.HAPManualDefi
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionPluginParserBrickImp;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionUtilityBrick;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionUtilityParserAttachment;
+import com.nosliw.core.application.division.manual.core.definition.HAPWithAttachment;
 import com.nosliw.core.xxx.application1.HAPWithValueContext;
-import com.nosliw.data.core.component.HAPWithAttachment;
-import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPManualPluginParserBrickImpDynamic extends HAPManualDefinitionPluginParserBrickImp{
 
 	public final static String PREFIX_IGNORE = "ignore";
 
-	public HAPManualPluginParserBrickImpDynamic(HAPIdBrickType entityTypeId, Class<? extends HAPManualDefinitionBrick> entityClass, HAPManualManagerBrick manualDivisionEntityMan, HAPRuntimeEnvironment runtimeEnv) {
-		super(entityTypeId, entityClass, manualDivisionEntityMan, runtimeEnv);
+	public HAPManualPluginParserBrickImpDynamic(HAPIdBrickType entityTypeId, Class<? extends HAPManualDefinitionBrick> entityClass, HAPManualManagerBrick manualDivisionEntityMan, HAPManagerApplicationBrick brickMan) {
+		super(entityTypeId, entityClass, manualDivisionEntityMan, brickMan);
 	}
 
 	@Override
@@ -43,7 +43,7 @@ public class HAPManualPluginParserBrickImpDynamic extends HAPManualDefinitionPlu
 //				System.out.println(attrName);
 				if(!attrName.startsWith(PREFIX_IGNORE)) {
 					if(attrName.equals(HAPWithAttachment.ATTACHMENT)) {
-						HAPManualDefinitionAttachment attachment = HAPManualDefinitionUtilityParserAttachment.parseAttachmentJson(jsonObj.getJSONObject(HAPWithAttachment.ATTACHMENT), parseContext, getManualDivisionEntityManager()); 
+						HAPManualDefinitionAttachment attachment = HAPManualDefinitionUtilityParserAttachment.parseAttachmentJson(jsonObj.getJSONObject(HAPWithAttachment.ATTACHMENT), parseContext, this.getManualDivisionBrickManager(), this.getBrickManager()); 
 						entityDefinition.setAttachment(attachment);
 					}
 					else if(attrName.equals(HAPWithValueContext.VALUECONTEXT)) {
@@ -91,7 +91,7 @@ public class HAPManualPluginParserBrickImpDynamic extends HAPManualDefinitionPlu
 			}
 		}
 
-		out.isComplex = HAPManualDefinitionUtilityBrick.isBrickComplex(out.entityType, this.getManualDivisionEntityManager()); 
+		out.isComplex = HAPManualDefinitionUtilityBrick.isBrickComplex(out.entityType, this.getManualDivisionBrickManager()); 
 		
 		return out;
 	}

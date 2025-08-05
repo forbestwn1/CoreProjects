@@ -1,7 +1,6 @@
 package com.nosliw.core.application.division.manual.core.definition;
 
 import org.json.JSONObject;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import com.nosliw.common.info.HAPUtilityEntityInfo;
 import com.nosliw.common.serialization.HAPSerializationFormat;
@@ -23,9 +22,11 @@ public class HAPManualDefinitionPluginParserBrickImp implements HAPManualDefinit
 	
 	private HAPIdBrickType m_brickTypeId;
 	
-	public HAPManualDefinitionPluginParserBrickImp(HAPIdBrickType brickTypeId, Class<? extends HAPManualDefinitionBrick> brickClass) {
+	public HAPManualDefinitionPluginParserBrickImp(HAPIdBrickType brickTypeId, Class<? extends HAPManualDefinitionBrick> brickClass, HAPManualManagerBrick manualBrickMan, HAPManagerApplicationBrick brickMan) {
 		this.m_brickTypeId = brickTypeId;
 		this.m_brickClass = brickClass;
+		this.m_manualBrickMan = manualBrickMan;
+		this.m_brickMan = brickMan;
 	}
 	
 	@Override
@@ -38,7 +39,7 @@ public class HAPManualDefinitionPluginParserBrickImp implements HAPManualDefinit
 		HAPManualDefinitionBrick out = null;
 		try {
 			out = this.m_brickClass.newInstance();
-			out.setManualBrickManager(this.getManualDivisionEntityManager());
+			out.setManualBrickManager(this.getManualDivisionBrickManager());
 			out.init();
 		}
 		catch(Exception e) {
@@ -47,12 +48,8 @@ public class HAPManualDefinitionPluginParserBrickImp implements HAPManualDefinit
 		return out;
 	}
 	
-	@Autowired
-	public void setBrickManager(HAPManagerApplicationBrick brickMan) {  this.m_brickMan = brickMan;     }
-	@Autowired
-	public void setManualBrickManager(HAPManualManagerBrick manualBrickMan) {   this.m_manualBrickMan = manualBrickMan;      }
 	protected HAPManagerApplicationBrick getBrickManager() {    return this.m_brickMan;     }
-	protected HAPManualManagerBrick getManualDivisionEntityManager() {    return this.m_manualBrickMan;     }
+	protected HAPManualManagerBrick getManualDivisionBrickManager() {    return this.m_manualBrickMan;     }
 
 	@Override
 	public HAPManualDefinitionBrick parse(Object content, HAPSerializationFormat format, HAPManualDefinitionContextParse parseContext) {
@@ -123,7 +120,7 @@ public class HAPManualDefinitionPluginParserBrickImp implements HAPManualDefinit
 			parseBrickAttributeJson(parentBrick, (JSONObject)obj, attributeName, entityTypeIfNotProvided, adapterTypeId, parserContext);			
 			break;
 		case HTML:
-			HAPManualDefinitionBrick brickDef = this.getManualDivisionEntityManager().parseBrickDefinition(obj, entityTypeIfNotProvided, format, parserContext);
+			HAPManualDefinitionBrick brickDef = HAPManualDefinitionUtilityParserBrick.parseBrickDefinition(obj, entityTypeIfNotProvided, format, parserContext, this.getManualDivisionBrickManager());
 			parentBrick.setAttributeValueWithBrick(attributeName, brickDef);
 			break;
 		case JAVASCRIPT:

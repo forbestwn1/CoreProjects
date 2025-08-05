@@ -25,7 +25,7 @@ public class HAPManualPluginParserBlockComplexUIPage extends HAPManualDefinition
 		try{ 
 			Document doc = Jsoup.parse(content, "UTF-8");
 
-			HAPManualDefinitionBlockComplexUIContent uiContentDef = (HAPManualDefinitionBlockComplexUIContent)this.getManualDivisionEntityManager().parseBrickDefinition(doc.body(), HAPEnumBrickType.UICONTENT_100, HAPSerializationFormat.HTML, parseContext);
+			HAPManualDefinitionBlockComplexUIContent uiContentDef = (HAPManualDefinitionBlockComplexUIContent)this.getManualDivisionBrickManager().parseBrickDefinition(doc.body(), HAPEnumBrickType.UICONTENT_100, HAPSerializationFormat.HTML, parseContext);
 			uiPage.setUIContent(uiContentDef);
 		}
 		catch(Exception e){

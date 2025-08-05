@@ -37,7 +37,7 @@ public class HAPManualPluginParserBlockTaskFlowFlow extends HAPManualDefinitionP
 		for(int i=0; i<activityArray.length(); i++) {
 			JSONObject activityObj = activityArray.getJSONObject(i);
 			if(HAPUtilityEntityInfo.isEnabled(activityObj)) {
-				flowBrick.addActivity((HAPManualDefinitionBlockTaskFlowActivity)HAPManualDefinitionUtilityParserBrickFormatJson.parseBrick(activityObj, HAPEnumBrickType.TASK_TASK_ACTIVITYTASK_100, parseContext, getManualDivisionEntityManager(), getBrickManager()));
+				flowBrick.addActivity((HAPManualDefinitionBlockTaskFlowActivity)HAPManualDefinitionUtilityParserBrickFormatJson.parseBrick(activityObj, HAPEnumBrickType.TASK_TASK_ACTIVITYTASK_100, parseContext, getManualDivisionBrickManager(), getBrickManager()));
 			}
 		}
 	}

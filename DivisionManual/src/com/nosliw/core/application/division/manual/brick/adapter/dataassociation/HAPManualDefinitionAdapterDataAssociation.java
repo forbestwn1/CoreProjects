@@ -3,9 +3,9 @@ package com.nosliw.core.application.division.manual.brick.adapter.dataassociatio
 import java.util.ArrayList;
 import java.util.List;
 
+import com.nosliw.core.application.brick.HAPEnumBrickType;
 import com.nosliw.core.application.division.manual.common.dataassociation.HAPManualDataAssociation;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionBrick;
-import com.nosliw.core.xxx.application1.brick.HAPEnumBrickType;
 
 public class HAPManualDefinitionAdapterDataAssociation extends HAPManualDefinitionBrick{
 

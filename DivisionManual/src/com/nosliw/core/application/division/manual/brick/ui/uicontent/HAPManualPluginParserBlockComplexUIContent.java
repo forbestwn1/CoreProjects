@@ -96,7 +96,7 @@ public class HAPManualPluginParserBlockComplexUIContent extends HAPManualDefinit
 //				parseKeyAttributeOnTag(ele, uiContentId, true, parserContext);
 				parseScriptExpressionInTagAttribute(ele, uiContent, true, parserContext);
 				
-				HAPManualDefinitionBlockComplexUICustomerTag uiCustomerTag = (HAPManualDefinitionBlockComplexUICustomerTag)this.getManualDivisionEntityManager().parseBrickDefinition(ele, HAPEnumBrickType.UICUSTOMERTAG_100, HAPSerializationFormat.HTML, parserContext);
+				HAPManualDefinitionBlockComplexUICustomerTag uiCustomerTag = (HAPManualDefinitionBlockComplexUICustomerTag)this.getManualDivisionBrickManager().parseBrickDefinition(ele, HAPEnumBrickType.UICUSTOMERTAG_100, HAPSerializationFormat.HTML, parserContext);
 				uiCustomerTag.setUIId(uiId);
 				uiContent.addCustomerTag(uiCustomerTag);
 			}

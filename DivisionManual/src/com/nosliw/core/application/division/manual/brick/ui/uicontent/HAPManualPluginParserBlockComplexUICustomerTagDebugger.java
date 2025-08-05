@@ -44,17 +44,17 @@ public class HAPManualPluginParserBlockComplexUICustomerTagDebugger extends HAPM
 		}
 
 		//build value context from tag definition
-		HAPManualDefinitionBrickValueContext valueContextBrick = HAPUtilityUITag.createValueContextBrickFromUITagDefinition(uiTagDef, this.getManualDivisionEntityManager());
+		HAPManualDefinitionBrickValueContext valueContextBrick = HAPUtilityUITag.createValueContextBrickFromUITagDefinition(uiTagDef, this.getManualDivisionBrickManager());
 		debuggerBrickDef.setValueContextBrick(valueContextBrick);
 
 		//child
 		JSONArray childJsonArray = jsonObj.optJSONArray(HAPBlockComplexUICustomerTagDebugger.CONTENT);
 		if(childJsonArray!=null){
-			HAPManualDefinitionBlockComplexUIWrapperContentInCustomerTagDebugger wrapperBlockDef = (HAPManualDefinitionBlockComplexUIWrapperContentInCustomerTagDebugger)this.getManualDivisionEntityManager().newBrickDefinition(HAPEnumBrickType.UIWRAPPERCONTENTCUSTOMERTAGDEBUGGER_100);
+			HAPManualDefinitionBlockComplexUIWrapperContentInCustomerTagDebugger wrapperBlockDef = (HAPManualDefinitionBlockComplexUIWrapperContentInCustomerTagDebugger)this.getManualDivisionBrickManager().newBrickDefinition(HAPEnumBrickType.UIWRAPPERCONTENTCUSTOMERTAGDEBUGGER_100);
 			for(int i=0; i<childJsonArray.length(); i++) {
 				JSONObject elementObj = childJsonArray.getJSONObject(i);
 				if(HAPUtilityEntityInfo.isEnabled(elementObj)) {
-					wrapperBlockDef.addChild((HAPManualDefinitionBlockComplexUICustomerTagDebugger)HAPManualDefinitionUtilityParserBrickFormatJson.parseBrick(elementObj, HAPEnumBrickType.UICUSTOMERTAGDEBUGGER_100, parseContext, getManualDivisionEntityManager(), getBrickManager()));
+					wrapperBlockDef.addChild((HAPManualDefinitionBlockComplexUICustomerTagDebugger)HAPManualDefinitionUtilityParserBrickFormatJson.parseBrick(elementObj, HAPEnumBrickType.UICUSTOMERTAGDEBUGGER_100, parseContext, getManualDivisionBrickManager(), getBrickManager()));
 				}
 			}
 			debuggerBrickDef.setContentWrapper(wrapperBlockDef);

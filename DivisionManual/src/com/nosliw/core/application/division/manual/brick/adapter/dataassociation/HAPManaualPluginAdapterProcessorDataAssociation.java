@@ -3,6 +3,7 @@ package com.nosliw.core.application.division.manual.brick.adapter.dataassociatio
 import java.util.List;
 
 import com.nosliw.common.path.HAPPath;
+import com.nosliw.core.application.brick.HAPEnumBrickType;
 import com.nosliw.core.application.common.dataassociation.HAPDataAssociationMapping;
 import com.nosliw.core.application.common.dataassociation.HAPTunnel;
 import com.nosliw.core.application.division.manual.common.dataassociation.HAPManualDataAssociation;
@@ -12,16 +13,11 @@ import com.nosliw.core.application.division.manual.core.HAPManualManagerBrick;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionBrick;
 import com.nosliw.core.application.division.manual.core.process.HAPManualContextProcessAdapter;
 import com.nosliw.core.application.division.manual.core.process.HAPManualPluginProcessorAdapter;
-import com.nosliw.core.xxx.application1.brick.HAPEnumBrickType;
-import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPManaualPluginAdapterProcessorDataAssociation extends HAPManualPluginProcessorAdapter{
 
-	private HAPRuntimeEnvironment m_runtimeEnv;
-	
-	public HAPManaualPluginAdapterProcessorDataAssociation(HAPRuntimeEnvironment runtimeEnv, HAPManualManagerBrick manualBrickMan) {
-		super(HAPEnumBrickType.DATAASSOCIATION_100, HAPManualAdapterDataAssociation.class, runtimeEnv, manualBrickMan);
-		this.m_runtimeEnv = runtimeEnv;
+	public HAPManaualPluginAdapterProcessorDataAssociation(HAPManualManagerBrick manualBrickMan) {
+		super(HAPEnumBrickType.DATAASSOCIATION_100, HAPManualAdapterDataAssociation.class, manualBrickMan);
 	}
 
 	@Override
@@ -34,7 +30,7 @@ public class HAPManaualPluginAdapterProcessorDataAssociation extends HAPManualPl
 		for(HAPManualDataAssociation da : das) {
 			HAPPath baseBlockPath = processContext.getRootPathForBaseBrick();
 			HAPPath secondBlockPath = this.getSecondBlockPath(processContext);
-			HAPDataAssociationMapping daMappingExe = (HAPDataAssociationMapping)HAPManualProcessorDataAssociation.processDataAssociation(da, baseBlockPath, secondBlockPath, processContext.getCurrentBundle(), processContext.getRootBrickName(), this.m_runtimeEnv);
+			HAPDataAssociationMapping daMappingExe = (HAPDataAssociationMapping)HAPManualProcessorDataAssociation.processDataAssociation(da, baseBlockPath, secondBlockPath, processContext.getCurrentBundle(), processContext.getRootBrickName());
 			for(HAPTunnel tunnel : daMappingExe.getTunnels()) {
 				daExe.addTunnel(tunnel);
 			}

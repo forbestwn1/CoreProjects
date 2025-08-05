@@ -14,11 +14,14 @@ import com.nosliw.core.application.HAPBundle;
 import com.nosliw.core.application.HAPIdBrickInBundle;
 import com.nosliw.core.application.HAPUtilityBrick;
 import com.nosliw.core.application.HAPUtilityBundle;
+import com.nosliw.core.application.brick.HAPEnumBrickType;
+import com.nosliw.core.application.brick.HAPUtilityBrickPath;
+import com.nosliw.core.application.brick.test.complex.script.HAPBlockTestComplexScript;
+import com.nosliw.core.application.brick.test.complex.script.HAPTestTaskTrigguer;
 import com.nosliw.core.application.common.task.HAPInfoTrigguerTask;
 import com.nosliw.core.application.division.manual.brick.wrappertask.HAPManualBlockTaskWrapper;
 import com.nosliw.core.application.division.manual.common.task.HAPManualUtilityTask;
 import com.nosliw.core.application.division.manual.core.HAPManualBrick;
-import com.nosliw.core.application.division.manual.core.HAPManualManagerBrick;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionBrick;
 import com.nosliw.core.application.division.manual.core.process.HAPManualContextProcessBrick;
 import com.nosliw.core.application.division.manual.core.process.HAPManualPluginProcessorBlockComplex;
@@ -27,16 +30,11 @@ import com.nosliw.core.xxx.application.valueport.HAPReferenceElement;
 import com.nosliw.core.xxx.application.valueport.HAPResultReferenceResolve;
 import com.nosliw.core.xxx.application.valueport.HAPUtilityStructureElementReference;
 import com.nosliw.core.xxx.application.valueport.HAPUtilityValuePort;
-import com.nosliw.core.xxx.application1.brick.HAPEnumBrickType;
-import com.nosliw.core.xxx.application1.brick.HAPUtilityBrickPath;
-import com.nosliw.core.xxx.application1.brick.test.complex.script.HAPBlockTestComplexScript;
-import com.nosliw.core.xxx.application1.brick.test.complex.script.HAPTestTaskTrigguer;
-import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPManualPluginProcessorBlockComplexTestComplexScript extends HAPManualPluginProcessorBlockComplex{
 
-	public HAPManualPluginProcessorBlockComplexTestComplexScript(HAPRuntimeEnvironment runtimeEnv, HAPManualManagerBrick manualBrickMan) {
-		super(HAPEnumBrickType.TEST_COMPLEX_SCRIPT_100, HAPManualBlockTestComplexScript.class, runtimeEnv, manualBrickMan);
+	public HAPManualPluginProcessorBlockComplexTestComplexScript() {
+		super(HAPEnumBrickType.TEST_COMPLEX_SCRIPT_100, HAPManualBlockTestComplexScript.class);
 	}
 
 	@Override
