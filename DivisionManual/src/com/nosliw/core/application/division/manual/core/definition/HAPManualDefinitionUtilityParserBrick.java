@@ -5,24 +5,22 @@ import org.json.JSONObject;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.core.application.HAPIdBrickType;
-import com.nosliw.core.application.HAPManagerApplicationBrick;
-import com.nosliw.core.application.division.manual.core.HAPManualManagerBrick;
 
 public class HAPManualDefinitionUtilityParserBrick {
 
-	public static HAPManualDefinitionBrick parseBrickDefinition(Object entityObj, HAPIdBrickType brickTypeId, HAPSerializationFormat format, HAPManualDefinitionContextParse parseContext, HAPManualManagerBrick manualBrickMan) {
-		HAPManualDefinitionPluginParserBrick entityParserPlugin = manualBrickMan.getBrickParsePlugin(brickTypeId);
+	public static HAPManualDefinitionBrick parseBrickDefinition(Object entityObj, HAPIdBrickType brickTypeId, HAPSerializationFormat format, HAPManualDefinitionContextParse parseContext) {
+		HAPManualDefinitionPluginParserBrick entityParserPlugin = parseContext.getManualBrickManager().getBrickParsePlugin(brickTypeId);
 		return entityParserPlugin.parse(entityObj, format, parseContext);
 	}
 
-	public static HAPManualDefinitionWrapperBrickRoot parseBrickDefinitionWrapper(Object entityObj, HAPIdBrickType brickTypeId, HAPSerializationFormat format, HAPManualDefinitionContextParse parseContext, HAPManualManagerBrick manualBrickMan, HAPManagerApplicationBrick brickMan) {
+	public static HAPManualDefinitionWrapperBrickRoot parseBrickDefinitionWrapper(Object entityObj, HAPIdBrickType brickTypeId, HAPSerializationFormat format, HAPManualDefinitionContextParse parseContext) {
 		HAPManualDefinitionWrapperBrickRoot out = null;
 		switch(format) {
 		case JSON:
-			out = HAPManualDefinitionUtilityParserBrickFormatJson.parseRootBrickWrapper((JSONObject)HAPUtilityJson.toJsonObject(entityObj), brickTypeId, parseContext, manualBrickMan, brickMan);
+			out = HAPManualDefinitionUtilityParserBrickFormatJson.parseRootBrickWrapper((JSONObject)HAPUtilityJson.toJsonObject(entityObj), brickTypeId, parseContext);
 			break;
 		case HTML:
-			out = new HAPManualDefinitionWrapperBrickRoot(parseBrickDefinition(entityObj, brickTypeId, HAPSerializationFormat.HTML, parseContext, manualBrickMan));
+			out = new HAPManualDefinitionWrapperBrickRoot(parseBrickDefinition(entityObj, brickTypeId, HAPSerializationFormat.HTML, parseContext));
 			break;
 		case JAVASCRIPT:
 			break;

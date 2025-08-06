@@ -120,7 +120,7 @@ public class HAPManualDefinitionPluginParserBrickImp implements HAPManualDefinit
 			parseBrickAttributeJson(parentBrick, (JSONObject)obj, attributeName, entityTypeIfNotProvided, adapterTypeId, parserContext);			
 			break;
 		case HTML:
-			HAPManualDefinitionBrick brickDef = HAPManualDefinitionUtilityParserBrick.parseBrickDefinition(obj, entityTypeIfNotProvided, format, parserContext, this.getManualDivisionBrickManager());
+			HAPManualDefinitionBrick brickDef = HAPManualDefinitionUtilityParserBrick.parseBrickDefinition(obj, entityTypeIfNotProvided, format, parserContext);
 			parentBrick.setAttributeValueWithBrick(attributeName, brickDef);
 			break;
 		case JAVASCRIPT:
@@ -139,7 +139,7 @@ public class HAPManualDefinitionPluginParserBrickImp implements HAPManualDefinit
 	
 	protected void parseBrickAttributeSelfJson(HAPManualDefinitionBrick parentBrick, JSONObject attrEntityObj, String attributeName, HAPIdBrickType entityTypeIfNotProvided, HAPIdBrickType adapterTypeId, HAPManualDefinitionContextParse parserContext) {
 		if(isAttributeEnabledJson(attrEntityObj)) {
-			HAPManualDefinitionAttributeInBrick attribute = HAPManualDefinitionUtilityParserBrickFormatJson.parseAttribute(attributeName, attrEntityObj, entityTypeIfNotProvided, adapterTypeId, parserContext, this.m_manualBrickMan, this.getBrickManager());
+			HAPManualDefinitionAttributeInBrick attribute = HAPManualDefinitionUtilityParserBrickFormatJson.parseAttribute(attributeName, attrEntityObj, entityTypeIfNotProvided, adapterTypeId, parserContext);
 			parentBrick.setAttribute(attribute);
 		}
 	}

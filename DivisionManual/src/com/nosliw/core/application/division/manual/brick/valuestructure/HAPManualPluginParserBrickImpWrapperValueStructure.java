@@ -1,18 +1,14 @@
 package com.nosliw.core.application.division.manual.brick.valuestructure;
 
-import com.nosliw.core.application.HAPIdBrickType;
+import com.nosliw.core.application.HAPManagerApplicationBrick;
 import com.nosliw.core.application.division.manual.core.HAPManualManagerBrick;
-import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionBrick;
+import com.nosliw.core.application.division.manual.core.a.HAPManualEnumBrickType;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionPluginParserBrickImpSimple;
-import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPManualPluginParserBrickImpWrapperValueStructure extends HAPManualDefinitionPluginParserBrickImpSimple{
 
-	public HAPManualPluginParserBrickImpWrapperValueStructure(HAPIdBrickType brickTypeId,
-			Class<? extends HAPManualDefinitionBrick> brickClass, HAPManualManagerBrick manualDivisionEntityMan,
-			HAPRuntimeEnvironment runtimeEnv) {
-		super(brickTypeId, brickClass, manualDivisionEntityMan, runtimeEnv);
-		// TODO Auto-generated constructor stub
+	public HAPManualPluginParserBrickImpWrapperValueStructure(HAPManualManagerBrick manualDivisionEntityMan, HAPManagerApplicationBrick brickMan) {
+		super(HAPManualEnumBrickType.VALUESTRUCTUREWRAPPER_100, HAPManualDefinitionBrickWrapperValueStructure.class, manualDivisionEntityMan, brickMan);
 	}
 
 }

@@ -132,12 +132,12 @@ public class HAPManualManagerBrick implements HAPPluginDivision, HAPManagerWithV
 	}
 	
 	private HAPWrapperBrickRoot createRootBrick(HAPManualDefinitionInfoBrickLocation entityLocationInfo, HAPManualContextProcessBrick processContext) {
-		HAPManualDefinitionContextParse parseContext = new HAPManualDefinitionContextParse(entityLocationInfo.getBasePath().getPath(), HAPConstantShared.BRICK_DIVISION_MANUAL);
+		HAPManualDefinitionContextParse parseContext = new HAPManualDefinitionContextParse(entityLocationInfo.getBasePath().getPath(), HAPConstantShared.BRICK_DIVISION_MANUAL, this, this.m_brickManager);
 		HAPSerializationFormat format = entityLocationInfo.getFormat();
 		String content = HAPUtilityFile.readFile(entityLocationInfo.getFiile());
 
 		//get definition
-		HAPManualDefinitionWrapperBrickRoot brickDefWrapper = HAPManualDefinitionUtilityParserBrick.parseBrickDefinitionWrapper(content, entityLocationInfo.getBrickTypeId(), format, parseContext, this, this.m_brickManager);
+		HAPManualDefinitionWrapperBrickRoot brickDefWrapper = HAPManualDefinitionUtilityParserBrick.parseBrickDefinitionWrapper(content, entityLocationInfo.getBrickTypeId(), format, parseContext);
 		HAPWrapperBrickRoot out = HAPManualProcessBrick.processRootBrick(brickDefWrapper, processContext, this, m_brickManager);
 		return out;
 	}
@@ -159,7 +159,9 @@ public class HAPManualManagerBrick implements HAPPluginDivision, HAPManagerWithV
 	}
 
 	public HAPManualInfoBrickType getBrickTypeInfo(HAPIdBrickType brickTypeId) {	return this.m_brickTypeInfo.get(brickTypeId.getKey());	}
-	public HAPManualDefinitionBrick newBrickDefinition(HAPIdBrickType brickType) {    return this.getBrickParsePlugin(brickType).newBrick();      }
+	public HAPManualDefinitionBrick newBrickDefinition(HAPIdBrickType brickType) {    
+		return this.getBrickParsePlugin(brickType).newBrick();      
+	}
 	public HAPManualBrick newBrick(HAPIdBrickType brickType, HAPBundle bundle) {    return this.getBrickProcessPlugin(brickType).newInstance(bundle);      }
 	
 	public HAPManualDefinitionPluginParserBrick getBrickParsePlugin(HAPIdBrickType entityTypeId) {   return this.m_brickParserPlugin.get(entityTypeId.getKey());    }
