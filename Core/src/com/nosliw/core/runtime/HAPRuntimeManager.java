@@ -1,9 +1,9 @@
 package com.nosliw.core.runtime;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.nosliw.common.utils.HAPConstantShared;
@@ -13,8 +13,7 @@ public class HAPRuntimeManager {
 
 	public static final HAPRuntimeInfo RUNTIME_JS_RHION = new HAPRuntimeInfo(HAPConstantShared.RUNTIME_LANGUAGE_JS, HAPConstantShared.RUNTIME_ENVIRONMENT_RHINO);
 	
-	@Autowired
-	Map<HAPRuntimeInfo, HAPFactoryRuntime> m_runtimeFactorys;
+	Map<HAPRuntimeInfo, HAPFactoryRuntime> m_runtimeFactorys = new LinkedHashMap<HAPRuntimeInfo, HAPFactoryRuntime>();
 	
 	public HAPRuntimeManager(List<HAPFactoryRuntime> runtimeFactorys) {
 		runtimeFactorys.stream().forEach(r->this.m_runtimeFactorys.put(r.getRuntimeInfo(), r));

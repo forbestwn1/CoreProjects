@@ -1,4 +1,4 @@
-package com.nosliw.core.application.division.manual.core.a;
+package com.nosliw.core.application.division.manual.core.process;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -23,6 +23,7 @@ import com.nosliw.core.application.HAPWrapperValue;
 import com.nosliw.core.application.HAPWrapperValueOfBrick;
 import com.nosliw.core.application.HAPWrapperValueOfDynamic;
 import com.nosliw.core.application.HAPWrapperValueOfReferenceResource;
+import com.nosliw.core.application.brick.HAPUtilityBrickPath;
 import com.nosliw.core.application.common.interactive.HAPInteractiveTask;
 import com.nosliw.core.application.common.parentrelation.HAPManualDefinitionBrickRelationAutoProcess;
 import com.nosliw.core.application.division.manual.common.task.HAPManualUtilityTask;
@@ -30,6 +31,7 @@ import com.nosliw.core.application.division.manual.core.HAPManualAdapter;
 import com.nosliw.core.application.division.manual.core.HAPManualBrick;
 import com.nosliw.core.application.division.manual.core.HAPManualBrickImp;
 import com.nosliw.core.application.division.manual.core.HAPManualManagerBrick;
+import com.nosliw.core.application.division.manual.core.a.HAPManualWithBrick;
 import com.nosliw.core.application.division.manual.core.b.HAPHandlerDownwardImpTreeNode;
 import com.nosliw.core.application.division.manual.core.b.HAPManualAttributeInBrick;
 import com.nosliw.core.application.division.manual.core.b.HAPManualExeUtilityBrick;
@@ -44,16 +46,10 @@ import com.nosliw.core.application.division.manual.core.definition.HAPManualDefi
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionWrapperValueBrick;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionWrapperValueReferenceResource;
 import com.nosliw.core.application.division.manual.core.definition1.HAPManualDefinitionWrapperValueDynamic;
-import com.nosliw.core.application.division.manual.core.process.HAPManualContextProcessAdapter;
-import com.nosliw.core.application.division.manual.core.process.HAPManualContextProcessBrick;
-import com.nosliw.core.application.division.manual.core.process.HAPManualPluginProcessorAdapter;
-import com.nosliw.core.application.division.manual.core.process.HAPManualPluginProcessorBlockComplex;
 import com.nosliw.core.application.dynamic.HAPRefDynamicTask;
 import com.nosliw.core.application.dynamic.HAPRefDynamicTaskSingle;
 import com.nosliw.core.application.dynamic.HAPUtilityInfoDynamic;
 import com.nosliw.core.xxx.application.valueport.HAPUtilityValuePortVariable;
-import com.nosliw.core.xxx.application1.brick.HAPUtilityBrickPath;
-import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPManualUtilityProcessor {
 
@@ -76,7 +72,7 @@ public class HAPManualUtilityProcessor {
 				((HAPManualPluginProcessorBlockComplex)processContext.getManualBrickManager().getBlockProcessPlugin(complexBrick.getBrickType())).postProcessInit(path, processContext);
 			}
 
-		}, processContext.getRuntimeEnv().getBrickManager(), null);
+		}, null);
 	}
 	
 	public static void cleanupEmptyValueStructure(HAPManualContextProcessBrick processContext) {
@@ -97,7 +93,7 @@ public class HAPManualUtilityProcessor {
 			public void postProcessBrickNode(HAPBundle bundle, HAPPath path, Object data) {
 			}
 
-		}, processContext.getRuntimeEnv().getBrickManager(), null);
+		}, processContext.getBrickManager(), null);
 	}
 	
 	public static void processComplexBrickInit(HAPManualContextProcessBrick processContext) {
@@ -116,7 +112,7 @@ public class HAPManualUtilityProcessor {
 				((HAPManualPluginProcessorBlockComplex)processContext.getManualBrickManager().getBlockProcessPlugin(complexBrick.getBrickType())).postProcessInit(path, processContext);
 			}
 
-		}, processContext.getRuntimeEnv().getBrickManager(), null);
+		}, processContext.getBrickManager(), null);
 	}
 	
 	public static void processComplexBrickNormalizeBrickPath(HAPManualContextProcessBrick processContext) {
@@ -135,7 +131,7 @@ public class HAPManualUtilityProcessor {
 				((HAPManualPluginProcessorBlockComplex)processContext.getManualBrickManager().getBlockProcessPlugin(complexBrick.getBrickType())).postNormalizeBrickPath(path, processContext);
 			}
 
-		}, processContext.getRuntimeEnv().getBrickManager(), null);
+		}, processContext.getBrickManager(), null);
 
 		HAPManualUtilityBrickTraverse.traverseTree(processContext, new HAPHandlerDownward() {
 
@@ -171,7 +167,7 @@ public class HAPManualUtilityProcessor {
 			public void postProcessBrickNode(HAPBundle bundle, HAPPath path, Object data) {
 			}
 
-		}, processContext.getRuntimeEnv().getBrickManager(), null);
+		}, processContext.getBrickManager(), null);
 
 	}
 	
@@ -192,7 +188,7 @@ public class HAPManualUtilityProcessor {
 				((HAPManualPluginProcessorBlockComplex)manualBrickMan.getBlockProcessPlugin(complexBrick.getBrickType())).postProcessOtherValuePortBuild(path, processContext);
 			}
 
-		}, processContext.getRuntimeEnv().getBrickManager(), null);
+		}, processContext.getBrickManager(), null);
 	}
 
 	public static void processComplexVariableResolve(HAPManualContextProcessBrick processContext) {
@@ -212,7 +208,7 @@ public class HAPManualUtilityProcessor {
 				((HAPManualPluginProcessorBlockComplex)manualBrickMan.getBlockProcessPlugin(complexBrick.getBrickType())).postProcessVariableResolve(path, processContext);
 			}
 
-		}, processContext.getRuntimeEnv().getBrickManager(), null);
+		}, processContext.getBrickManager(), null);
 	}
 
 	public static void processComplexVariableInfoResolve(HAPManualContextProcessBrick processContext) {
@@ -228,7 +224,7 @@ public class HAPManualUtilityProcessor {
 			@Override
 			public void postProcessBrickNode(HAPBundle bundle, HAPPath path, Object data) {	}
 
-		}, processContext.getRuntimeEnv().getBrickManager(), null);
+		}, processContext.getBrickManager(), null);
 	}
 
 	public static void processComplexValueContextDiscovery(HAPManualContextProcessBrick processContext) {
@@ -248,11 +244,10 @@ public class HAPManualUtilityProcessor {
 				((HAPManualPluginProcessorBlockComplex)manualBrickMan.getBlockProcessPlugin(complexBrick.getBrickType())).postProcessValueContextDiscovery(path, processContext);
 			}
 
-		}, processContext.getRuntimeEnv().getBrickManager(), null);
+		}, processContext.getBrickManager(), null);
 	}
 
 	public static void processComplexValuePortUpdate(HAPManualContextProcessBrick processContext) {
-		HAPManualManagerBrick manualBrickMan = processContext.getManualBrickManager();
 		HAPManualUtilityBrickTraverse.traverseTreeWithLocalBrick(processContext, new HAPHandlerDownward() {
 
 			@Override
@@ -265,7 +260,7 @@ public class HAPManualUtilityProcessor {
 			@Override
 			public void postProcessBrickNode(HAPBundle bundle, HAPPath path, Object data) {	}
 
-		}, processContext.getRuntimeEnv().getBrickManager(), null);
+		}, processContext.getBrickManager(), null);
 	}
 
 	public static void processAdapterInAttribute(HAPManualContextProcessBrick processContext) {
@@ -282,7 +277,7 @@ public class HAPManualUtilityProcessor {
 						HAPManualDefinitionAttributeInBrick attrDef = (HAPManualDefinitionAttributeInBrick)treeNodeDef;
 						HAPManualAttributeInBrick attrExe = (HAPManualAttributeInBrick)treeNode;
 						
-						if(HAPManualDefinitionUtilityBrick.isAdapterAutoProcess(attrDef, processContext.getRuntimeEnv().getBrickManager())) {
+						if(HAPManualDefinitionUtilityBrick.isAdapterAutoProcess(attrDef, processContext.getBrickManager())) {
 							Set<HAPManualDefinitionAdapter> adapterDefs = attrDef.getAdapters();
 							Map<String, HAPManualAdapter> adapterExeByName = new LinkedHashMap<String, HAPManualAdapter>();
 							for(HAPManualAdapter adapter : attrExe.getManualAdapters()) {
@@ -295,7 +290,7 @@ public class HAPManualUtilityProcessor {
 								HAPManualPluginProcessorAdapter adapterProcessPlugin = manualBrickMan.getAdapterProcessPlugin(adapterWrapperDef.getBrick().getBrickTypeId());
 								
 								HAPManualBrick brick = (HAPManualBrick)((HAPWrapperValueOfBrick)adapterExe.getValueWrapper()).getBrick();
-								adapterProcessPlugin.process(brick, adapterWrapperDef.getBrick(), new HAPManualContextProcessAdapter(processContext.getCurrentBundle(), processContext.getRootBrickName(), treeNode.getTreeNodeInfo().getPathFromRoot(), processContext.getRuntimeEnv(), manualBrickMan));
+								adapterProcessPlugin.process(brick, adapterWrapperDef.getBrick(), new HAPManualContextProcessAdapter(processContext.getCurrentBundle(), processContext.getRootBrickName(), treeNode.getTreeNodeInfo().getPathFromRoot(), manualBrickMan, processContext.getBrickManager()));
 							}
 							
 							return true;
@@ -309,11 +304,11 @@ public class HAPManualUtilityProcessor {
 					}
 				}
 			},
-			processContext.getRuntimeEnv().getBrickManager(),
+			processContext.getBrickManager(),
 			processContext);
 	}
 	
-	public static void processBrick(HAPManualContextProcessBrick processContext, HAPManagerApplicationBrick brickMan) {
+	public static void processBrick(HAPManualContextProcessBrick processContext) {
 		HAPManualManagerBrick manualBrickMan = processContext.getManualBrickManager();
 		HAPManualUtilityBrickTraverse.traverseTreeWithLocalBrick(
 				processContext, 
@@ -331,7 +326,7 @@ public class HAPManualUtilityProcessor {
 					else {
 						HAPManualDefinitionAttributeInBrick attrDef = (HAPManualDefinitionAttributeInBrick)treeNodeDef;
 						entityTypeId = ((HAPManualWithBrick)attrDef.getValueWrapper()).getBrickTypeId();
-						process = HAPManualUtilityProcessor.isAttributeAutoProcess(attrDef, brickMan);
+						process = HAPManualUtilityProcessor.isAttributeAutoProcess(attrDef, processContext.getBrickManager());
 					}
 					if(process) {
 						HAPManualPluginProcessorBlockComplex plugin = (HAPManualPluginProcessorBlockComplex)manualBrickMan.getBlockProcessPlugin(entityTypeId);
@@ -355,7 +350,7 @@ public class HAPManualUtilityProcessor {
 					else {
 						HAPManualDefinitionAttributeInBrick attrDef = (HAPManualDefinitionAttributeInBrick)treeNodeDef;
 						entityTypeId = ((HAPManualWithBrick)attrDef.getValueWrapper()).getBrickTypeId();
-						process = HAPManualUtilityProcessor.isAttributeAutoProcess(attrDef, brickMan);
+						process = HAPManualUtilityProcessor.isAttributeAutoProcess(attrDef, processContext.getBrickManager());
 					}
 					if(process) {
 						HAPManualPluginProcessorBlockComplex plugin = (HAPManualPluginProcessorBlockComplex)manualBrickMan.getBlockProcessPlugin(entityTypeId);
@@ -364,7 +359,7 @@ public class HAPManualUtilityProcessor {
 				}
 
 			},
-			brickMan,
+			processContext.getBrickManager(),
 			processContext);
 	}
 
@@ -392,7 +387,7 @@ public class HAPManualUtilityProcessor {
 		return false;
 	}
 
-	public static void initBricks(HAPManualContextProcessBrick processContext, HAPManualManagerBrick manualBrickMan, HAPRuntimeEnvironment runtimeEnv) {
+	public static void initBricks(HAPManualContextProcessBrick processContext, HAPManualManagerBrick manualBrickMan, HAPManagerApplicationBrick brickMan) {
 		HAPUtilityBrickTraverse.traverseTreeWithLocalBrick(processContext.getCurrentBundle(), processContext.getRootBrickName(), new HAPHandlerDownwardImpTreeNode() {
 
 			@Override
@@ -401,24 +396,23 @@ public class HAPManualUtilityProcessor {
 				brick.init();
 				return true;
 			}
-		}, runtimeEnv.getBrickManager(), processContext);
+		}, brickMan, processContext);
 	}
 	
-	public static HAPManualBrick buildExecutableTree(HAPManualDefinitionBrick brickDef, HAPManualContextProcessBrick processContext, HAPManualManagerBrick manualBrickMan) {
-		HAPManualBrick rootBrickExe = HAPManualExeUtilityBrick.newRootBrickInstance(brickDef.getBrickTypeId(), processContext.getRootBrickName(), processContext.getCurrentBundle(), manualBrickMan); 
-		buildExecutableTree(brickDef, rootBrickExe, processContext, manualBrickMan);
+	public static HAPManualBrick buildExecutableTree(HAPManualDefinitionBrick brickDef, HAPManualContextProcessBrick processContext) {
+		HAPManualBrick rootBrickExe = HAPManualExeUtilityBrick.newRootBrickInstance(brickDef.getBrickTypeId(), processContext.getRootBrickName(), processContext.getCurrentBundle(), processContext.getManualBrickManager()); 
+		buildExecutableTree(brickDef, rootBrickExe, processContext);
 		return rootBrickExe;
 	}
 
-	private static void buildExecutableTree(HAPManualDefinitionBrick brickDef, HAPManualBrick brick, HAPManualContextProcessBrick processContext, HAPManualManagerBrick manualBrickMan) {
+	private static void buildExecutableTree(HAPManualDefinitionBrick brickDef, HAPManualBrick brick, HAPManualContextProcessBrick processContext) {
 		HAPBundle bundle = processContext.getCurrentBundle();
-		HAPManagerApplicationBrick brickManager = getBrickManager(processContext);
 		
 		HAPIdBrickType entityTypeId = brickDef.getBrickTypeId();
 
 		List<HAPManualDefinitionAttributeInBrick> attrsDef = brickDef.getAllAttributes();
 		for(HAPManualDefinitionAttributeInBrick attrDef : attrsDef) {
-			if(HAPManualUtilityProcessor.isAttributeAutoProcess(attrDef, brickManager)) {
+			if(HAPManualUtilityProcessor.isAttributeAutoProcess(attrDef, processContext.getBrickManager())) {
 				HAPManualAttributeInBrick attrExe = new HAPManualAttributeInBrick();
 				attrExe.setName(attrDef.getName());
 				brick.setAttribute(attrExe);
@@ -427,9 +421,9 @@ public class HAPManualUtilityProcessor {
 				String attrValueType = attrValueInfo.getValueType();
 				if(attrValueType.equals(HAPConstantShared.EMBEDEDVALUE_TYPE_BRICK)) {
 					HAPManualDefinitionBrick attrBrickDef = ((HAPManualWithBrick)attrValueInfo).getBrick();
-					HAPManualBrick attrBrick = HAPManualExeUtilityBrick.newBrickInstance(attrBrickDef.getBrickTypeId(), processContext.getCurrentBundle(), manualBrickMan);
+					HAPManualBrick attrBrick = HAPManualExeUtilityBrick.newBrickInstance(attrBrickDef.getBrickTypeId(), processContext.getCurrentBundle(), processContext.getManualBrickManager());
 					attrExe.setValueWrapper(new HAPWrapperValueOfBrick(attrBrick));
-					buildExecutableTree(attrBrickDef, attrBrick, processContext, manualBrickMan);
+					buildExecutableTree(attrBrickDef, attrBrick, processContext);
 				}
 				else if(attrValueType.equals(HAPConstantShared.EMBEDEDVALUE_TYPE_RESOURCEREFERENCE)) {
 					//resource reference
@@ -458,9 +452,9 @@ public class HAPManualUtilityProcessor {
 					if(adapterValueType.equals(HAPConstantShared.EMBEDEDVALUE_TYPE_BRICK)) {
 						//brick
 						HAPManualDefinitionWrapperValueBrick adpaterValueDefWrapperBrick = (HAPManualDefinitionWrapperValueBrick)adapterValueWrapper;
-						HAPManualBrick adapterBrick = HAPManualExeUtilityBrick.newRootBrickInstance(adpaterValueDefWrapperBrick.getBrick().getBrickTypeId(), null, processContext.getCurrentBundle(), manualBrickMan);
+						HAPManualBrick adapterBrick = HAPManualExeUtilityBrick.newRootBrickInstance(adpaterValueDefWrapperBrick.getBrick().getBrickTypeId(), null, processContext.getCurrentBundle(), processContext.getManualBrickManager());
 						adapterValueWrapperExe = new HAPWrapperValueOfBrick(adapterBrick);
-						buildExecutableTree(adpaterValueDefWrapperBrick.getBrick(), adapterBrick, processContext, manualBrickMan);
+						buildExecutableTree(adpaterValueDefWrapperBrick.getBrick(), adapterBrick, processContext);
 					}
 					else if(adapterValueType.equals(HAPConstantShared.EMBEDEDVALUE_TYPE_RESOURCEREFERENCE)) {
 						//resource reference
@@ -478,8 +472,4 @@ public class HAPManualUtilityProcessor {
 		}
 	}
 	
-
-	
-	private static HAPManagerApplicationBrick getBrickManager(HAPManualContextProcessBrick processContext) {   return processContext.getRuntimeEnv().getBrickManager(); 	}
-
 }

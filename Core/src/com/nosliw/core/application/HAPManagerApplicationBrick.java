@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.nosliw.common.utils.HAPConstantShared;
@@ -30,17 +31,20 @@ public class HAPManagerApplicationBrick {
 	
 	private Map<String, Map<String, HAPPluginBrick>> m_brickPlugins;
 
-	public HAPManagerApplicationBrick(List<HAPPluginDivision> divisionPlugins, List<HAPProviderPluginBrick> brickPluginProviders) {
+	public HAPManagerApplicationBrick(List<HAPProviderPluginBrick> brickPluginProviders) {
 		this.m_divisionByBrickType = new LinkedHashMap<HAPIdBrickType, String>();
 		this.m_brickPlugins = new LinkedHashMap<String, Map<String, HAPPluginBrick>>();
+		this.m_divisionPlugin = new LinkedHashMap<String, HAPPluginDivision>();
 		
 		for(HAPProviderPluginBrick pluginProvider : brickPluginProviders) {
 			for(HAPPluginBrick brickPlugin : pluginProvider.getBrickPlugins()) {
 				this.registerBrickPlugin(brickPlugin);
 			}
 		}
-		
-		this.m_divisionPlugin = new LinkedHashMap<String, HAPPluginDivision>();
+	}
+	
+	@Autowired
+	private void setDivisionPlugins(List<HAPPluginDivision> divisionPlugins) {
 		for(HAPPluginDivision divisionPlugin : divisionPlugins) {
 			this.m_divisionPlugin.put(divisionPlugin.getDivisionName(), divisionPlugin);
 		}

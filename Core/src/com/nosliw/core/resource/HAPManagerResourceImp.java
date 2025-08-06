@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.nosliw.common.path.HAPPath;
@@ -22,7 +23,11 @@ public class HAPManagerResourceImp implements HAPManagerResource{
 	private Map<HAPResourceId, HAPResource> m_cachedResource = new LinkedHashMap<HAPResourceId, HAPResource>();
 	private Map<HAPResourceId, List<HAPResourceInfo>> m_cachedDependency = new LinkedHashMap<HAPResourceId, List<HAPResourceInfo>>();
 	
-	public HAPManagerResourceImp(List<HAPProviderResourcePlugin> pluginProviders) {
+	public HAPManagerResourceImp() {
+	}
+	
+	@Autowired
+	private void setResourceManagerPluginProviders(List<HAPProviderResourcePlugin> pluginProviders) {
 		for(HAPProviderResourcePlugin pluginProvider : pluginProviders) {
 			Map<HAPIdResourceType, HAPPluginResourceManager> plugins = pluginProvider.getResourceManagerPlugins();
 			for(HAPIdResourceType resourceTypeId : plugins.keySet()) {

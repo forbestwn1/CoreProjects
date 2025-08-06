@@ -44,7 +44,7 @@ public abstract class HAPManualPluginProcessorBlockComplex extends HAPManualPlug
 		if(blockPair.getLeft() instanceof HAPManualDefinitionWithTaskInterfaceInteractive) {
 			HAPEntityOrReference taskInterfaceBrickOrRef = ((HAPManualDefinitionWithTaskInterfaceInteractive)blockPair.getLeft()).getTaskInterface();
 			if(taskInterfaceBrickOrRef!=null) {
-				HAPInteractiveTask taskInterface = getInteractiveTask(taskInterfaceBrickOrRef, processContext.getRuntimeEnv().getBrickManager());
+				HAPInteractiveTask taskInterface = getInteractiveTask(taskInterfaceBrickOrRef, processContext.getBrickManager());
 				HAPManualUtilityTask.buildValuePortGroupForInteractiveTask(blockPair.getRight(), taskInterface, processContext.getCurrentBundle().getValueStructureDomain());
 			}
 		}

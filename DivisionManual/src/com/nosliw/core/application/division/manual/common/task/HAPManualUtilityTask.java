@@ -13,9 +13,12 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
 import com.nosliw.core.application.HAPBrick;
 import com.nosliw.core.application.HAPBundle;
+import com.nosliw.core.application.HAPDomainValueStructure;
 import com.nosliw.core.application.HAPIdBrickType;
 import com.nosliw.core.application.HAPUtilityBrick;
 import com.nosliw.core.application.HAPUtilityBrickValuePort;
+import com.nosliw.core.application.brick.HAPEnumBrickType;
+import com.nosliw.core.application.brick.wrappertask.HAPBlockTaskWrapper;
 import com.nosliw.core.application.common.interactive.HAPInteractiveExpression;
 import com.nosliw.core.application.common.interactive.HAPInteractiveResultExpression;
 import com.nosliw.core.application.common.interactive.HAPInteractiveResultTask;
@@ -35,13 +38,10 @@ import com.nosliw.core.data.HAPData;
 import com.nosliw.core.data.criteria.HAPParserCriteria;
 import com.nosliw.core.data.matcher.HAPMatchers;
 import com.nosliw.core.resource.HAPManagerResource;
+import com.nosliw.core.runtime.HAPRuntimeInfo;
+import com.nosliw.core.runtimeenv.HAPRuntimeEnvironment;
 import com.nosliw.core.xxx.application.valueport.HAPInfoValuePortContainer;
 import com.nosliw.core.xxx.application.valueport.HAPUtilityValuePort;
-import com.nosliw.core.xxx.application1.brick.HAPEnumBrickType;
-import com.nosliw.core.xxx.application1.brick.wrappertask.HAPBlockTaskWrapper;
-import com.nosliw.core.xxx.application1.valuestructure.HAPDomainValueStructure;
-import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
-import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
 public class HAPManualUtilityTask {
 

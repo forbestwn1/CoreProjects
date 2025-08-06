@@ -1,5 +1,6 @@
 package com.nosliw.core.gateway;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -12,7 +13,7 @@ import com.nosliw.core.runtime.HAPRuntimeInfo;
 @Component
 public class HAPGatewayManager {
 	
-	private Map<String, HAPGateway> m_gateways;
+	private Map<String, HAPGateway> m_gateways = new LinkedHashMap<String, HAPGateway>();
 	
 	public HAPGatewayManager(List<HAPGateway> gateways){
 		gateways.stream().forEach(g->this.m_gateways.put(g.getName(), g));

@@ -2,28 +2,30 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
-	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/Common"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
-	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/Core"/>
-	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/DataTypeManager"/>
-	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/UtilityParserExpression"/>
-	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/LibraryDataType"/>
-	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/LibraryDataTypeTest"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-17">
 		<attributes>
+			<attribute name="module" value="true"/>
 			<attribute name="owner.project.facets" value="java"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/Application"/>
 	<classpathentry kind="lib" path="libs/activemq-client-5.15.3.jar"/>
 	<classpathentry kind="lib" path="libs/geronimo-jms_1.1_spec-1.1.1.jar"/>
 	<classpathentry kind="lib" path="libs/geronimo-j2ee-management_1.1_spec-1.0.1.jar"/>
 	<classpathentry kind="lib" path="libs/slf4j-api-1.7.25.jar"/>
 	<classpathentry kind="lib" path="libs/hawtbuf-1.11.jar"/>
 	<classpathentry kind="lib" path="libs/commons-io-2.6.jar"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/MiniApp"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/DivisionManual"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/CoreCommon"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/DivisionStory"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/CoreCommon"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/DivisionManual"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/MiniApp"/>
+	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/Application"/>
+	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/LibraryDataTypeTest"/>
+	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/LibraryDataType"/>
+	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/UtilityParserExpression"/>
+	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/DataTypeManager"/>
+	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/Core"/>
+	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/Common"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/CoreBrick"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

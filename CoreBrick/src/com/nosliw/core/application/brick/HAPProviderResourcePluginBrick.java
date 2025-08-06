@@ -36,7 +36,6 @@ public class HAPProviderResourcePluginBrick extends HAPProviderResourcePluginImp
 		this.registerPlugin(HAPUtilityBrickId.getResourceTypeIdFromBrickTypeId(HAPEnumBrickType.SERVICEINTERFACE_100), new HAPPluginResourceManagerImpBrick(this.m_resourceManager, this.m_brickManager));
 
 		
-		this.registerPlugin(HAPFactoryResourceTypeId.newInstance(HAPConstantShared.RUNTIME_RESOURCE_TYPE_SCRIPT), new HAPPluginResourceManagerScript(HAPConstantShared.RUNTIME_RESOURCE_TYPE_SCRIPT));
 		this.registerPlugin(HAPFactoryResourceTypeId.newInstance(HAPConstantShared.RUNTIME_RESOURCE_TYPE_DECORATION_SCRIPT), new HAPPluginResourceManagerImpBrick(this.m_resourceManager, this.m_brickManager));
 
 		

@@ -23,7 +23,7 @@ public class HAPPluginDivisionScript implements HAPPluginDivision{
 	}
 	
 	@Override
-	public String getName() {  return HAPConstantShared.BRICK_DIVISION_SCRIPT;  }
+	public String getDivisionName() {  return HAPConstantShared.BRICK_DIVISION_SCRIPT;  }
 
 	@Override
 	public HAPBundle getBundle(HAPIdBrick brickId) {

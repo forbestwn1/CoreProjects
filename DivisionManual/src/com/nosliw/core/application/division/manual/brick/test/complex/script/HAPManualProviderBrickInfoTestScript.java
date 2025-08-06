@@ -1,5 +1,7 @@
 package com.nosliw.core.application.division.manual.brick.test.complex.script;
 
+import org.springframework.stereotype.Component;
+
 import com.nosliw.core.application.HAPIdBrickType;
 import com.nosliw.core.application.HAPManagerApplicationBrick;
 import com.nosliw.core.application.brick.HAPEnumBrickType;
@@ -9,6 +11,7 @@ import com.nosliw.core.application.division.manual.core.definition.HAPManualDefi
 import com.nosliw.core.application.division.manual.core.process.HAPManualInfoBrickType;
 import com.nosliw.core.application.division.manual.core.process.HAPManualPluginProcessorBrick;
 
+@Component
 public class HAPManualProviderBrickInfoTestScript extends HAPManualProviderBrickInfoImp{
 
 	public HAPManualProviderBrickInfoTestScript(HAPManualManagerBrick manualBrickMan,

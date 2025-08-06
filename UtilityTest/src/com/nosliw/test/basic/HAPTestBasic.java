@@ -5,6 +5,10 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
+import com.nosliw.core.application.HAPManagerApplicationBrick;
+import com.nosliw.core.application.HAPUtilityBundle;
+import com.nosliw.core.application.brick.HAPEnumBrickType;
+import com.nosliw.core.resource.HAPResourceIdSimple;
 import com.nosliw.core.runtimeenv.HAPRuntimeEnvironment;
 
 public class HAPTestBasic {
@@ -14,6 +18,11 @@ public class HAPTestBasic {
 		ApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
 		HAPRuntimeEnvironment runtimeEnv = context.getBean(HAPRuntimeEnvironment.class);
 		int kkk = 555;
+
+		HAPManagerApplicationBrick brickMan = context.getBean(HAPManagerApplicationBrick.class);
+		
+		HAPUtilityBundle.getBrickBundle(new HAPResourceIdSimple(HAPEnumBrickType.TEST_COMPLEX_1_100.getBrickType(), "1.0.0", "test.basic.minimum"), brickMan);
+		
 		
 	}
 

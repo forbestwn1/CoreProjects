@@ -8,7 +8,7 @@ import java.util.Set;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.core.xxx.application1.valuestructure.HAPDomainValueStructure;
+import com.nosliw.core.application.HAPDomainValueStructure;
 
 public class HAPManualPartInValueContextGroupWithEntity extends HAPManualPartInValueContext{
 

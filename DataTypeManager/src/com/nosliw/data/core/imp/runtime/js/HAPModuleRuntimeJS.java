@@ -13,8 +13,6 @@ import com.nosliw.core.data.HAPResourceIdOperation;
 import com.nosliw.core.gateway.HAPJSGatewayId;
 import com.nosliw.core.gateway.HAPResourceIdJSGateway;
 import com.nosliw.core.resource.HAPResourceHelper;
-import com.nosliw.core.xxx.resource.imp.js.library.HAPJSLibraryId;
-import com.nosliw.core.xxx.resource.imp.js.library.HAPResourceIdJSLibrary;
 import com.nosliw.data.core.imp.HAPDataAccessDataType;
 import com.nosliw.data.core.imp.HAPModuleDataType;
 
@@ -40,7 +38,7 @@ public class HAPModuleRuntimeJS {
 		resourceHelper.registerResourceId(HAPConstantShared.RUNTIME_RESOURCE_TYPE_OPERATION, HAPResourceIdOperation.class, HAPOperationId.class);
 		resourceHelper.registerResourceId(HAPConstantShared.RUNTIME_RESOURCE_TYPE_CONVERTER, HAPResourceIdConverter.class, HAPDataTypeConverter.class);
 		resourceHelper.registerResourceId(HAPConstantShared.RUNTIME_RESOURCE_TYPE_JSHELPER, HAPResourceIdJSHelper.class, HAPJSHelperId.class);
-		resourceHelper.registerResourceId(HAPConstantShared.RUNTIME_RESOURCE_TYPE_JSLIBRARY, HAPResourceIdJSLibrary.class, HAPJSLibraryId.class);
+//		resourceHelper.registerResourceId(HAPConstantShared.RUNTIME_RESOURCE_TYPE_JSLIBRARY, HAPResourceIdJSLibrary.class, HAPJSLibraryId.class);
 		resourceHelper.registerResourceId(HAPConstantShared.RUNTIME_RESOURCE_TYPE_JSGATEWAY, HAPResourceIdJSGateway.class, HAPJSGatewayId.class);
 		
 		//data access

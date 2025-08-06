@@ -122,7 +122,7 @@ public class HAPManualDefinitionUtilityParserBrickFormatJson {
 		{
 			brickObj = jsonObj;    //if no entity node, then using root
 		}
-		return manualDivisionBrickMan.parseBrickDefinition(brickObj, brickTypeId, HAPSerializationFormat.JSON, parseContext);
+		return HAPManualDefinitionUtilityParserBrick.parseBrickDefinition(brickObj, brickTypeId, HAPSerializationFormat.JSON, parseContext, manualDivisionBrickMan);
 	}	
 		
 	//parse entity as attribute value (value may be entity or reference(resource, attachment, local))

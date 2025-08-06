@@ -5,7 +5,7 @@ import java.util.Set;
 
 import com.nosliw.common.info.HAPEntityInfoImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.core.xxx.application1.valuestructure.HAPDomainValueStructure;
+import com.nosliw.core.application.HAPDomainValueStructure;
 
 public abstract class HAPManualPartInValueContext extends HAPEntityInfoImp{
 	

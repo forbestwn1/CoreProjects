@@ -52,7 +52,6 @@ public class HAPManualManagerBrick implements HAPPluginDivision, HAPManagerWithV
 		
 		this.m_brickManager = brickMan;
 		
-		
 		init();
 	}
 	
@@ -85,13 +84,13 @@ public class HAPManualManagerBrick implements HAPPluginDivision, HAPManagerWithV
 		//branch
 		Map<String, HAPManualDefinitionInfoBrickLocation> branchInfos = HAPManualDefinitionUtilityBrickLocation.getBranchBrickLocationInfos(entityLocationInfo.getBasePath().getPath());
 		for(String branchName : branchInfos.keySet()) {
-			HAPManualWrapperBrickRoot rootBrick = (HAPManualWrapperBrickRoot)createRootBrick(branchInfos.get(branchName), new HAPManualContextProcessBrick(out, branchName, this));
+			HAPManualWrapperBrickRoot rootBrick = (HAPManualWrapperBrickRoot)createRootBrick(branchInfos.get(branchName), new HAPManualContextProcessBrick(out, branchName, this, this.m_brickManager));
 			definitions.put(branchName, rootBrick.getDefinition());
 		}
 		
 		//main 
 		{
-			HAPManualWrapperBrickRoot rootBrick = (HAPManualWrapperBrickRoot)createRootBrick(entityLocationInfo, new HAPManualContextProcessBrick(out, HAPConstantShared.NAME_ROOTBRICK_MAIN, this));
+			HAPManualWrapperBrickRoot rootBrick = (HAPManualWrapperBrickRoot)createRootBrick(entityLocationInfo, new HAPManualContextProcessBrick(out, HAPConstantShared.NAME_ROOTBRICK_MAIN, this, this.m_brickManager));
 			definitions.put(HAPConstantShared.NAME_ROOTBRICK_MAIN, rootBrick.getDefinition());
 		}
 		
@@ -139,7 +138,7 @@ public class HAPManualManagerBrick implements HAPPluginDivision, HAPManagerWithV
 
 		//get definition
 		HAPManualDefinitionWrapperBrickRoot brickDefWrapper = HAPManualDefinitionUtilityParserBrick.parseBrickDefinitionWrapper(content, entityLocationInfo.getBrickTypeId(), format, parseContext, this, this.m_brickManager);
-		HAPWrapperBrickRoot out = HAPManualProcessBrick.processRootBrick(brickDefWrapper, processContext, m_brickManager);
+		HAPWrapperBrickRoot out = HAPManualProcessBrick.processRootBrick(brickDefWrapper, processContext, this, m_brickManager);
 		return out;
 	}
 

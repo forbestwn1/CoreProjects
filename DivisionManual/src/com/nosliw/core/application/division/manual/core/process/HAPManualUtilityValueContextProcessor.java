@@ -1,4 +1,4 @@
-package com.nosliw.core.application.division.manual.core.a;
+package com.nosliw.core.application.division.manual.core.process;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -15,7 +15,10 @@ import com.nosliw.common.path.HAPUtilityPath;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.HAPBrick;
 import com.nosliw.core.application.HAPBundle;
+import com.nosliw.core.application.HAPDomainValueStructure;
 import com.nosliw.core.application.HAPHandlerDownwardImpAttribute;
+import com.nosliw.core.application.HAPInfoValueStructureRuntime;
+import com.nosliw.core.application.HAPManagerApplicationBrick;
 import com.nosliw.core.application.HAPUtilityBrick;
 import com.nosliw.core.application.common.parentrelation.HAPManualDefinitionBrickRelation;
 import com.nosliw.core.application.common.parentrelation.HAPManualDefinitionBrickRelationValueContext;
@@ -37,6 +40,7 @@ import com.nosliw.core.application.division.manual.common.valuecontext.HAPManual
 import com.nosliw.core.application.division.manual.core.HAPManualBrick;
 import com.nosliw.core.application.division.manual.core.HAPManualManagerBrick;
 import com.nosliw.core.application.division.manual.core.HAPManualWrapperBrickRoot;
+import com.nosliw.core.application.division.manual.core.a.HAPManualUtilityBrick;
 import com.nosliw.core.application.division.manual.core.b.HAPHandlerDownwardImpTreeNode;
 import com.nosliw.core.application.division.manual.core.b.HAPManualUtilityBrickTraverse;
 import com.nosliw.core.application.division.manual.core.b.HAPTreeNodeBrick;
@@ -44,12 +48,9 @@ import com.nosliw.core.application.division.manual.core.definition.HAPManualDefi
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionBrick;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionUtilityBrick;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionWrapperValueBrick;
-import com.nosliw.core.application.division.manual.core.process.HAPManualContextProcessBrick;
+import com.nosliw.core.runtimeenv.HAPRuntimeEnvironment;
 import com.nosliw.core.xxx.application.valueport.HAPIdValuePortInBundle;
 import com.nosliw.core.xxx.application.valueport.HAPUtilityValuePort;
-import com.nosliw.core.xxx.application1.valuestructure.HAPDomainValueStructure;
-import com.nosliw.core.xxx.application1.valuestructure.HAPInfoValueStructureRuntime;
-import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPManualUtilityValueContextProcessor {
 
@@ -358,7 +359,7 @@ public class HAPManualUtilityValueContextProcessor {
 	}
 	
 	//create extension part
-	public static void buildExtensionValueStructure(HAPManualContextProcessBrick processContext, HAPManualManagerBrick manualBrickMan, HAPRuntimeEnvironment runtimeEnv) {
+	public static void buildExtensionValueStructure(HAPManualContextProcessBrick processContext, HAPManualManagerBrick manualBrickMan, HAPManagerApplicationBrick brickMan) {
 		HAPManualUtilityBrickTraverse.traverseTreeWithLocalBrickComplex(processContext, new HAPHandlerDownwardImpTreeNode() {
 
 			@Override
@@ -380,11 +381,11 @@ public class HAPManualUtilityValueContextProcessor {
 
 				return true;
 			}
-		}, runtimeEnv.getBrickManager(), manualBrickMan, processContext);
+		}, brickMan, manualBrickMan, processContext);
 	}
 
 	//build value structure in complex tree and add to value structure domain
-	public static void buildValueContext(HAPManualContextProcessBrick processContext, HAPManualManagerBrick manualBrickMan, HAPRuntimeEnvironment runtimeEnv) {
+	public static void buildValueContext(HAPManualContextProcessBrick processContext, HAPManualManagerBrick manualBrickMan, HAPManagerApplicationBrick brickMan) {
 		HAPManualUtilityBrickTraverse.traverseTreeWithLocalBrickComplex(processContext, new HAPHandlerDownwardImpTreeNode() {
 
 			@Override
@@ -432,7 +433,7 @@ public class HAPManualUtilityValueContextProcessor {
 				}
 				return true;
 			}
-		}, runtimeEnv.getBrickManager(), manualBrickMan, processContext);
+		}, brickMan, manualBrickMan, processContext);
 	}
 
 	

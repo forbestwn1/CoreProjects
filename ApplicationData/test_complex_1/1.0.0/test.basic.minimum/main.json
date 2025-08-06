@@ -1,0 +1,8 @@
+{
+	"info": {
+		"name": "test.common.configure.root",
+		"description": "test.common.configure.root"
+	},
+	"brick": [
+	]
+}

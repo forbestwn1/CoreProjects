@@ -10,8 +10,8 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
+import com.nosliw.core.application.HAPDomainValueStructure;
 import com.nosliw.core.xxx.application1.HAPValueContext;
-import com.nosliw.core.xxx.application1.valuestructure.HAPDomainValueStructure;
 
 public class HAPManualValueContext extends HAPSerializableImp implements HAPValueContext{
 
@@ -94,7 +94,7 @@ public class HAPManualValueContext extends HAPSerializableImp implements HAPValu
 			part.addValueStructure(wrapper);
 			
 			//build id by name
-			String name = valueStructureDomain.getValueStructureRuntimeInfo(wrapper.getValueStructureRuntimeId()).getDivisionName();
+			String name = valueStructureDomain.getValueStructureRuntimeInfo(wrapper.getValueStructureRuntimeId()).getName();
 			if(name!=null) {
 				this.m_valueStructureRuntimeIdByName.put(name, wrapper.getValueStructureRuntimeId());
 				this.m_valueStructureRuntimeNameById.put(wrapper.getValueStructureRuntimeId(), name);

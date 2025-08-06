@@ -1,14 +1,11 @@
 package com.nosliw.core.application.division.manual.core.process;
 
-import java.util.Map;
-
 import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.HAPManagerApplicationBrick;
 import com.nosliw.core.application.HAPWrapperBrickRoot;
+import com.nosliw.core.application.division.manual.core.HAPManualManagerBrick;
 import com.nosliw.core.application.division.manual.core.HAPManualWrapperBrickRoot;
-import com.nosliw.core.application.division.manual.core.a.HAPManualUtilityProcessor;
-import com.nosliw.core.application.division.manual.core.a.HAPManualUtilityValueContextProcessor;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionAttributeInBrick;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionBrick;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionProcessorBrickNodeDownwardWithPath;
@@ -21,7 +18,7 @@ import com.nosliw.core.application.division.manual.core.definition.HAPManualDefi
 
 public class HAPManualProcessBrick {
 
-	public static HAPWrapperBrickRoot processRootBrick(HAPManualDefinitionWrapperBrickRoot brickDefWrapper, HAPManualContextProcessBrick processContext, HAPManagerApplicationBrick brickManager) {
+	public static HAPWrapperBrickRoot processRootBrick(HAPManualDefinitionWrapperBrickRoot brickDefWrapper, HAPManualContextProcessBrick processContext, HAPManualManagerBrick manualBrickMan, HAPManagerApplicationBrick brickManager) {
 		HAPManualDefinitionBrick brickDef = brickDefWrapper.getBrick();
 		
 		//build parent and 
@@ -47,18 +44,18 @@ public class HAPManualProcessBrick {
 		HAPManualDefinitionUtilityAttachment.processAttachment(brickDef, null, processContext);
 
 		//process constant
-		HAPManualUtilityScriptExpressionConstant.discoverScriptExpressionConstantInBrick(brickDef, this);
-		Map<String, Map<String, Object>> scriptExpressionResults = HAPManualUtilityScriptExpressionConstant.calculateScriptExpressionConstants(brickDef, m_runtimeEnv, this);
-		HAPManualUtilityScriptExpressionConstant.solidateScriptExpressionConstantInBrick(brickDef, scriptExpressionResults, this);
+//		HAPManualUtilityScriptExpressionConstant.discoverScriptExpressionConstantInBrick(brickDef, manualBrickMan);
+//		Map<String, Map<String, Object>> scriptExpressionResults = HAPManualUtilityScriptExpressionConstant.calculateScriptExpressionConstants(brickDef, m_runtimeEnv, manualBrickMan);
+//		HAPManualUtilityScriptExpressionConstant.solidateScriptExpressionConstantInBrick(brickDef, scriptExpressionResults, manualBrickMan);
 		
 		//build executable tree
-		HAPManualWrapperBrickRoot out = new HAPManualWrapperBrickRoot(HAPManualUtilityProcessor.buildExecutableTree(brickDef, processContext, this));
+		HAPManualWrapperBrickRoot out = new HAPManualWrapperBrickRoot(HAPManualUtilityProcessor.buildExecutableTree(brickDef, processContext));
 		out.setName(processContext.getRootBrickName());
 		out.setDefinition(brickDefWrapper);
 		processContext.getCurrentBundle().addRootBrickWrapper(out);
 		
 		//brick init
-		HAPManualUtilityProcessor.initBricks(processContext, this, m_runtimeEnv);
+		HAPManualUtilityProcessor.initBricks(processContext, manualBrickMan, brickManager);
 
 		//init
 		HAPManualUtilityProcessor.processComplexBrickInit(processContext);
@@ -69,13 +66,13 @@ public class HAPManualProcessBrick {
 //		HAPManualUtilityValueContextProcessor.processValueContext(out.getBrickWrapper(), processContext, this, this.m_runtimeEnv);
 
 		//build value context in complex block
-		HAPManualUtilityValueContextProcessor.buildValueContext(processContext, this, this.m_runtimeEnv);
+		HAPManualUtilityValueContextProcessor.buildValueContext(processContext, manualBrickMan, brickManager);
 		
 		//build other value port
 		HAPManualUtilityProcessor.processOtherValuePortBuild(processContext);
 		
 		//generate extra value structure for variable extension
-		HAPManualUtilityValueContextProcessor.buildExtensionValueStructure(processContext, this, this.m_runtimeEnv);
+		HAPManualUtilityValueContextProcessor.buildExtensionValueStructure(processContext, manualBrickMan, brickManager);
 		
 		//
 		HAPManualUtilityValueContextProcessor.processInheritageAndRelativeElement(null, processContext);
@@ -94,7 +91,7 @@ public class HAPManualProcessBrick {
 //		HAPManualUtilityProcessor.processComplexValuePortUpdate(processContext);
 		
 		//process entity
-		HAPManualUtilityProcessor.processBrick(processContext, brickManager);
+		HAPManualUtilityProcessor.processBrick(processContext);
 		
 		//process adapter
 		HAPManualUtilityProcessor.processAdapterInAttribute(processContext);
