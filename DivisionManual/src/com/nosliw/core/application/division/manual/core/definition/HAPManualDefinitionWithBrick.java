@@ -1,9 +1,8 @@
-package com.nosliw.core.application.division.manual.core.a;
+package com.nosliw.core.application.division.manual.core.definition;
 
 import com.nosliw.core.application.HAPIdBrickType;
-import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionBrick;
 
-public interface HAPManualWithBrick {
+public interface HAPManualDefinitionWithBrick {
 
 	//entity definition
 	public static final String BRICK = "brick";

@@ -1,4 +1,4 @@
-package com.nosliw.core.application.division.manual.core.a;
+package com.nosliw.core.application.division.manual.core;
 
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -6,8 +6,6 @@ import com.nosliw.common.path.HAPComplexPath;
 import com.nosliw.common.path.HAPPath;
 import com.nosliw.core.application.HAPIdBrickType;
 import com.nosliw.core.application.HAPUtilityBundle;
-import com.nosliw.core.application.division.manual.core.HAPManualManagerBrick;
-import com.nosliw.core.application.division.manual.core.b.HAPInfoTreeNode;
 
 public class HAPManualUtilityBrick {
 

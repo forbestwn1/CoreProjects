@@ -10,8 +10,6 @@ import com.nosliw.core.application.HAPWrapperValue;
 import com.nosliw.core.application.common.brick.HAPBrickImp;
 import com.nosliw.core.application.common.withvariable.HAPContainerVariableInfo;
 import com.nosliw.core.application.division.manual.common.valuecontext.HAPManualValueContext;
-import com.nosliw.core.application.division.manual.core.b.HAPInfoTreeNode;
-import com.nosliw.core.application.division.manual.core.b.HAPManualAttributeInBrick;
 import com.nosliw.core.application.division.manual.core.process.HAPManualInfoBrickType;
 import com.nosliw.core.application.valueport.HAPContainerValuePorts;
 import com.nosliw.core.application.valueport.HAPGroupValuePorts;

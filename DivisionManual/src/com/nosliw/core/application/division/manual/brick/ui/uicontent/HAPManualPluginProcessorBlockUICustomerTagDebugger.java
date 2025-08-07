@@ -9,11 +9,11 @@ import com.nosliw.core.application.division.manual.core.HAPManualBrick;
 import com.nosliw.core.application.division.manual.core.HAPManualManagerBrick;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionBrick;
 import com.nosliw.core.application.division.manual.core.process.HAPManualContextProcessBrick;
-import com.nosliw.core.application.division.manual.core.process.HAPManualPluginProcessorBlockComplex;
+import com.nosliw.core.application.division.manual.core.process.HAPManualPluginProcessorBlockImp;
 import com.nosliw.core.xxx.application1.brick.HAPEnumBrickType;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
-public class HAPManualPluginProcessorBlockUICustomerTagDebugger extends HAPManualPluginProcessorBlockComplex{
+public class HAPManualPluginProcessorBlockUICustomerTagDebugger extends HAPManualPluginProcessorBlockImp{
 
 	public HAPManualPluginProcessorBlockUICustomerTagDebugger(HAPRuntimeEnvironment runtimeEnv, HAPManualManagerBrick manualBrickMan) {
 		super(HAPEnumBrickType.UICUSTOMERTAGDEBUGGER_100, HAPManualBlockComplexUICustomerTagDebugger.class, runtimeEnv, manualBrickMan);

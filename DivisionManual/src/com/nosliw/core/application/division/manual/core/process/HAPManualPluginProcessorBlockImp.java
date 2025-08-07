@@ -19,9 +19,9 @@ import com.nosliw.core.application.division.manual.core.definition.HAPManualDefi
 import com.nosliw.core.resource.HAPResourceId;
 import com.nosliw.core.resource.HAPUtilityResourceId;
 
-public abstract class HAPManualPluginProcessorBlockComplex extends HAPManualPluginProcessorBlock{
+public abstract class HAPManualPluginProcessorBlockImp extends HAPManualPluginProcessorBlock{
 
-	public HAPManualPluginProcessorBlockComplex(HAPIdBrickType brickType, Class<? extends HAPManualBrick> brickClass) {
+	public HAPManualPluginProcessorBlockImp(HAPIdBrickType brickType, Class<? extends HAPManualBrick> brickClass) {
 		super(brickType, brickClass);
 	}
 

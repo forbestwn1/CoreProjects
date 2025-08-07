@@ -3,8 +3,6 @@ package com.nosliw.core.application.division.manual.core;
 import com.nosliw.common.path.HAPPath;
 import com.nosliw.core.application.HAPUtilityBundle;
 import com.nosliw.core.application.HAPWrapperBrickRoot;
-import com.nosliw.core.application.division.manual.core.b.HAPInfoTreeNode;
-import com.nosliw.core.application.division.manual.core.b.HAPTreeNodeBrick;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionWrapperBrickRoot;
 
 public class HAPManualWrapperBrickRoot extends HAPWrapperBrickRoot implements HAPTreeNodeBrick{

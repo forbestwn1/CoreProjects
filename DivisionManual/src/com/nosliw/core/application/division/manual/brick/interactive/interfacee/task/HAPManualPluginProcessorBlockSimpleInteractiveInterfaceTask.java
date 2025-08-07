@@ -7,11 +7,11 @@ import com.nosliw.core.application.division.manual.core.HAPManualBrick;
 import com.nosliw.core.application.division.manual.core.HAPManualManagerBrick;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionBrick;
 import com.nosliw.core.application.division.manual.core.process.HAPManualContextProcessBrick;
-import com.nosliw.core.application.division.manual.core.process.HAPManualPluginProcessorBlockComplex;
+import com.nosliw.core.application.division.manual.core.process.HAPManualPluginProcessorBlockImp;
 import com.nosliw.core.xxx.application1.brick.HAPEnumBrickType;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
-public class HAPManualPluginProcessorBlockSimpleInteractiveInterfaceTask extends HAPManualPluginProcessorBlockComplex{
+public class HAPManualPluginProcessorBlockSimpleInteractiveInterfaceTask extends HAPManualPluginProcessorBlockImp{
 
 	public HAPManualPluginProcessorBlockSimpleInteractiveInterfaceTask(HAPRuntimeEnvironment runtimeEnv, HAPManualManagerBrick manualBrickMan) {
 		super(HAPEnumBrickType.INTERACTIVETASKINTERFACE_100, HAPManualBlockInteractiveInterfaceTask.class, runtimeEnv, manualBrickMan);

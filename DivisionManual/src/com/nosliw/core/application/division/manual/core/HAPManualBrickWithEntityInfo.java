@@ -1,11 +1,10 @@
-package com.nosliw.core.application.division.manual.core.b;
+package com.nosliw.core.application.division.manual.core;
 
 import com.nosliw.common.info.HAPEntityInfo;
 import com.nosliw.common.info.HAPInfo;
 import com.nosliw.common.info.HAPInfoImpSimple;
 import com.nosliw.common.info.HAPUtilityEntityInfo;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.core.application.division.manual.core.HAPManualBrickImp;
 
 public class HAPManualBrickWithEntityInfo extends HAPManualBrickImp implements HAPEntityInfo{
 

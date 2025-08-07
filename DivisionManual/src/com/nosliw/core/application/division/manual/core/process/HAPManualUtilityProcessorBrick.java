@@ -4,13 +4,11 @@ import com.nosliw.common.interfac.HAPTreeNode;
 import com.nosliw.core.application.HAPIdBrickType;
 import com.nosliw.core.application.division.manual.core.HAPManualBrick;
 import com.nosliw.core.application.division.manual.core.HAPManualManagerBrick;
-import com.nosliw.core.application.division.manual.core.a.HAPManualWithBrick;
-import com.nosliw.core.application.division.manual.core.b.HAPHandlerDownwardImpTreeNode;
-import com.nosliw.core.application.division.manual.core.b.HAPManualUtilityBrickTraverse;
-import com.nosliw.core.application.division.manual.core.b.HAPTreeNodeBrick;
+import com.nosliw.core.application.division.manual.core.HAPTreeNodeBrick;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionAttributeInBrick;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionUtilityBrick;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionWrapperBrickRoot;
+import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionWithBrick;
 
 public class HAPManualUtilityProcessorBrick {
 
@@ -31,11 +29,11 @@ public class HAPManualUtilityProcessorBrick {
 					}
 					else {
 						HAPManualDefinitionAttributeInBrick attrDef = (HAPManualDefinitionAttributeInBrick)treeNodeDef;
-						entityTypeId = ((HAPManualWithBrick)attrDef.getValueWrapper()).getBrickTypeId();
+						entityTypeId = ((HAPManualDefinitionWithBrick)attrDef.getValueWrapper()).getBrickTypeId();
 						process = HAPManualUtilityProcess.isAttributeAutoProcess(attrDef, processContext.getBrickManager());
 					}
 					if(process) {
-						HAPManualPluginProcessorBlockComplex plugin = (HAPManualPluginProcessorBlockComplex)manualBrickMan.getBlockProcessPlugin(entityTypeId);
+						HAPManualPluginProcessorBlockImp plugin = (HAPManualPluginProcessorBlockImp)manualBrickMan.getBlockProcessPlugin(entityTypeId);
 						plugin.processBrick(treeNode.getTreeNodeInfo().getPathFromRoot(), processContext);
 						return true;
 					}
@@ -55,11 +53,11 @@ public class HAPManualUtilityProcessorBrick {
 					}
 					else {
 						HAPManualDefinitionAttributeInBrick attrDef = (HAPManualDefinitionAttributeInBrick)treeNodeDef;
-						entityTypeId = ((HAPManualWithBrick)attrDef.getValueWrapper()).getBrickTypeId();
+						entityTypeId = ((HAPManualDefinitionWithBrick)attrDef.getValueWrapper()).getBrickTypeId();
 						process = HAPManualUtilityProcess.isAttributeAutoProcess(attrDef, processContext.getBrickManager());
 					}
 					if(process) {
-						HAPManualPluginProcessorBlockComplex plugin = (HAPManualPluginProcessorBlockComplex)manualBrickMan.getBlockProcessPlugin(entityTypeId);
+						HAPManualPluginProcessorBlockImp plugin = (HAPManualPluginProcessorBlockImp)manualBrickMan.getBlockProcessPlugin(entityTypeId);
 						plugin.postProcessBrick(treeNode.getTreeNodeInfo().getPathFromRoot(), processContext);
 					}
 				}

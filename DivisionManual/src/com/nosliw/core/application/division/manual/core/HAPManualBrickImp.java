@@ -15,7 +15,6 @@ import com.nosliw.core.application.HAPUtilityBrickId;
 import com.nosliw.core.application.HAPWrapperValue;
 import com.nosliw.core.application.HAPWrapperValueOfReferenceResource;
 import com.nosliw.core.application.HAPWrapperValueOfValue;
-import com.nosliw.core.application.division.manual.core.b.HAPManualAttributeInBrick;
 import com.nosliw.core.application.division.manual.core.b.HAPUtilitySerializeJson;
 import com.nosliw.core.resource.HAPFactoryResourceId;
 import com.nosliw.core.resource.HAPResourceId;

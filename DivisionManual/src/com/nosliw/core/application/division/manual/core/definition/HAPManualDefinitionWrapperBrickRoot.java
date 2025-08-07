@@ -7,9 +7,8 @@ import com.nosliw.common.interfac.HAPTreeNode;
 import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.core.application.HAPIdBrickType;
-import com.nosliw.core.application.division.manual.core.a.HAPManualWithBrick;
 
-public class HAPManualDefinitionWrapperBrickRoot extends HAPEntityInfoImp implements HAPManualWithBrick, HAPTreeNode{
+public class HAPManualDefinitionWrapperBrickRoot extends HAPEntityInfoImp implements HAPManualDefinitionWithBrick, HAPTreeNode{
 
 	public static final String INFO = "info";
 

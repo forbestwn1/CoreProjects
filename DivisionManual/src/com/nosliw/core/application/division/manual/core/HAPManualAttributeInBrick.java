@@ -1,4 +1,4 @@
-package com.nosliw.core.application.division.manual.core.b;
+package com.nosliw.core.application.division.manual.core;
 
 import java.util.List;
 
@@ -8,8 +8,6 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.HAPAttributeInBrick;
 import com.nosliw.core.application.HAPWrapperValue;
 import com.nosliw.core.application.HAPWrapperValueOfBrick;
-import com.nosliw.core.application.division.manual.core.HAPManualAdapter;
-import com.nosliw.core.application.division.manual.core.HAPManualBrick;
 import com.nosliw.core.resource.HAPWithResourceDependency;
 
 @HAPEntityWithAttribute

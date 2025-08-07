@@ -28,11 +28,9 @@ import com.nosliw.core.application.division.manual.common.valuecontext.HAPManual
 import com.nosliw.core.application.division.manual.common.valuecontext.HAPManualValueContext;
 import com.nosliw.core.application.division.manual.core.HAPManualBrick;
 import com.nosliw.core.application.division.manual.core.HAPManualManagerBrick;
+import com.nosliw.core.application.division.manual.core.HAPManualUtilityBrick;
 import com.nosliw.core.application.division.manual.core.HAPManualWrapperBrickRoot;
-import com.nosliw.core.application.division.manual.core.a.HAPManualUtilityBrick;
-import com.nosliw.core.application.division.manual.core.b.HAPHandlerDownwardImpTreeNode;
-import com.nosliw.core.application.division.manual.core.b.HAPManualUtilityBrickTraverse;
-import com.nosliw.core.application.division.manual.core.b.HAPTreeNodeBrick;
+import com.nosliw.core.application.division.manual.core.HAPTreeNodeBrick;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionBrick;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionUtilityBrick;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionWrapperValueBrick;

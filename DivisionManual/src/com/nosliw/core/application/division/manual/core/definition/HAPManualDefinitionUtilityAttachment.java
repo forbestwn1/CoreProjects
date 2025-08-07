@@ -5,7 +5,6 @@ import java.util.List;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.common.parentrelation.HAPManualDefinitionBrickRelation;
 import com.nosliw.core.application.common.parentrelation.HAPManualDefinitionBrickRelationAttachment;
-import com.nosliw.core.application.division.manual.core.a.HAPManualWithBrick;
 import com.nosliw.core.application.division.manual.core.process.HAPManualContextProcessBrick;
 
 public class HAPManualDefinitionUtilityAttachment {
@@ -50,7 +49,7 @@ public class HAPManualDefinitionUtilityAttachment {
 			HAPManualDefinitionWrapperValue attrValueInfo = attrDef.getValueWrapper();
 			String attrValueType = attrValueInfo.getValueType();
 			if(attrValueType.equals(HAPConstantShared.EMBEDEDVALUE_TYPE_BRICK)) {
-				HAPManualDefinitionBrick attrBrickDef = ((HAPManualWithBrick)attrValueInfo).getBrick();
+				HAPManualDefinitionBrick attrBrickDef = ((HAPManualDefinitionWithBrick)attrValueInfo).getBrick();
 				HAPManualDefinitionAttachment attrAttachment = attrBrickDef.getAttachment();
 				attrAttachment.mergeWith(parentAttachment, HAPManualDefinitionUtilityAttachment.resolveAttachmentRelation(attrDef, defaultRelation).getMode());
 				

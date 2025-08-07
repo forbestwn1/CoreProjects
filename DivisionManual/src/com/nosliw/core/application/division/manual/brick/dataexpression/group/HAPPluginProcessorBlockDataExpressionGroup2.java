@@ -12,7 +12,7 @@ import com.nosliw.core.application.division.manual.core.HAPManualBrick;
 import com.nosliw.core.application.division.manual.core.HAPManualManagerBrick;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionBrick;
 import com.nosliw.core.application.division.manual.core.process.HAPManualContextProcessBrick;
-import com.nosliw.core.application.division.manual.core.process.HAPManualPluginProcessorBlockComplex;
+import com.nosliw.core.application.division.manual.core.process.HAPManualPluginProcessorBlockImp;
 import com.nosliw.core.xxx.application.valueport.HAPUtilityValuePortVariable;
 import com.nosliw.core.xxx.application1.brick.HAPEnumBrickType;
 import com.nosliw.core.xxx.application1.brick.dataexpression.group.HAPBlockDataExpressionGroup;
@@ -20,7 +20,7 @@ import com.nosliw.core.xxx.application1.brick.dataexpression.group.HAPGroupDataE
 import com.nosliw.core.xxx.application1.brick.dataexpression.group.HAPItemInGroupDataExpression;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
-public class HAPPluginProcessorBlockDataExpressionGroup2 extends HAPManualPluginProcessorBlockComplex{
+public class HAPPluginProcessorBlockDataExpressionGroup2 extends HAPManualPluginProcessorBlockImp{
 
 	public HAPPluginProcessorBlockDataExpressionGroup2(HAPRuntimeEnvironment runtimeEnv, HAPManualManagerBrick manualBrickMan) {
 		super(HAPEnumBrickType.DATAEXPRESSIONGROUP_100, HAPManualBlockDataExpressionGroup.class, runtimeEnv, manualBrickMan);

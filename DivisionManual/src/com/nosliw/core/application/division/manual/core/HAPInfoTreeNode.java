@@ -1,7 +1,6 @@
-package com.nosliw.core.application.division.manual.core.b;
+package com.nosliw.core.application.division.manual.core;
 
 import com.nosliw.common.path.HAPPath;
-import com.nosliw.core.application.division.manual.core.HAPManualBrick;
 
 public class HAPInfoTreeNode {
 

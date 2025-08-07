@@ -13,13 +13,12 @@ import com.nosliw.core.application.HAPUtilityBrick;
 import com.nosliw.core.application.HAPUtilityBrickId;
 import com.nosliw.core.application.HAPUtilityBundle;
 import com.nosliw.core.application.common.parentrelation.HAPManualDefinitionBrickRelation;
+import com.nosliw.core.application.division.manual.core.HAPInfoTreeNode;
 import com.nosliw.core.application.division.manual.core.HAPManualBrick;
 import com.nosliw.core.application.division.manual.core.HAPManualManagerBrick;
+import com.nosliw.core.application.division.manual.core.HAPManualUtilityBrick;
 import com.nosliw.core.application.division.manual.core.HAPManualWrapperBrickRoot;
-import com.nosliw.core.application.division.manual.core.a.HAPManualUtilityBrick;
-import com.nosliw.core.application.division.manual.core.a.HAPManualWithBrick;
-import com.nosliw.core.application.division.manual.core.b.HAPInfoTreeNode;
-import com.nosliw.core.application.division.manual.core.b.HAPTreeNodeBrick;
+import com.nosliw.core.application.division.manual.core.HAPTreeNodeBrick;
 import com.nosliw.core.application.division.manual.core.definition1.HAPManualDefinitionWrapperValueReferenceAttachment;
 import com.nosliw.core.application.division.manual.core.definition1.HAPManualDefinitionWrapperValueReferenceBrick;
 
@@ -108,8 +107,8 @@ public class HAPManualDefinitionUtilityBrick {
 				out = brickManual.getAttribute(attribute);
 			} else {
 				HAPManualDefinitionWrapperValue attrValueInfo = out.getValueWrapper();
-				if(attrValueInfo instanceof HAPManualWithBrick) {
-					out = ((HAPManualWithBrick)attrValueInfo).getBrick().getAttribute(attribute);
+				if(attrValueInfo instanceof HAPManualDefinitionWithBrick) {
+					out = ((HAPManualDefinitionWithBrick)attrValueInfo).getBrick().getAttribute(attribute);
 				}
 				else if(attrValueInfo.getValueType().equals(HAPConstantShared.ENTITYATTRIBUTE_VALUETYPE_RESOURCEID)) {
 					throw new RuntimeException();
@@ -125,8 +124,8 @@ public class HAPManualDefinitionUtilityBrick {
 			out = entityDef;
 		} else {
 			HAPManualDefinitionWrapperValue attrValueInfo = getDescendantAttribute(entityDef, path).getValueWrapper();
-			if(attrValueInfo instanceof HAPManualWithBrick) {
-				out = ((HAPManualWithBrick)attrValueInfo).getBrick();
+			if(attrValueInfo instanceof HAPManualDefinitionWithBrick) {
+				out = ((HAPManualDefinitionWithBrick)attrValueInfo).getBrick();
 			}
 		}
 		return out;

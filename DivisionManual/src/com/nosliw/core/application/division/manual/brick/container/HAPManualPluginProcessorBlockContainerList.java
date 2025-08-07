@@ -7,9 +7,9 @@ import com.nosliw.core.application.brick.HAPEnumBrickType;
 import com.nosliw.core.application.division.manual.core.HAPManualBrick;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionBrick;
 import com.nosliw.core.application.division.manual.core.process.HAPManualContextProcessBrick;
-import com.nosliw.core.application.division.manual.core.process.HAPManualPluginProcessorBlockComplex;
+import com.nosliw.core.application.division.manual.core.process.HAPManualPluginProcessorBlockImp;
 
-public class HAPManualPluginProcessorBlockContainerList extends HAPManualPluginProcessorBlockComplex{
+public class HAPManualPluginProcessorBlockContainerList extends HAPManualPluginProcessorBlockImp{
 
 	public HAPManualPluginProcessorBlockContainerList() {
 		super(HAPEnumBrickType.CONTAINERLIST_100, HAPManualBrickContainerList.class);

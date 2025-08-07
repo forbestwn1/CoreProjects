@@ -14,7 +14,6 @@ import com.nosliw.core.application.HAPWrapperBrickRoot;
 import com.nosliw.core.application.HAPWrapperValueOfReferenceResource;
 import com.nosliw.core.application.brick.HAPUtilityBrickPath;
 import com.nosliw.core.application.division.manual.core.HAPManualWrapperBrickRoot;
-import com.nosliw.core.application.division.manual.core.b.HAPManualUtilityBrickTraverse;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionWrapperBrickRoot;
 import com.nosliw.core.application.dynamic.HAPRefDynamicTask;
 import com.nosliw.core.application.dynamic.HAPRefDynamicTaskSingle;
@@ -52,14 +51,14 @@ public class HAPManualProcessBrick {
 			@Override
 			public boolean processBrickNode(HAPBundle bundle, HAPPath path, Object data) {
 				HAPBrick complexBrick = HAPUtilityBrick.getDescdentBrickLocal(bundle, path);
-				((HAPManualPluginProcessorBlockComplex)processContext.getManualBrickManager().getBlockProcessPlugin(complexBrick.getBrickType())).normalizeBrickPath(path, processContext);
+				((HAPManualPluginProcessorBlockImp)processContext.getManualBrickManager().getBlockProcessPlugin(complexBrick.getBrickType())).normalizeBrickPath(path, processContext);
 				return true;
 			}
 
 			@Override
 			public void postProcessBrickNode(HAPBundle bundle, HAPPath path, Object data) {
 				HAPBrick complexBrick = HAPUtilityBrick.getDescdentBrickLocal(bundle, path);
-				((HAPManualPluginProcessorBlockComplex)processContext.getManualBrickManager().getBlockProcessPlugin(complexBrick.getBrickType())).postNormalizeBrickPath(path, processContext);
+				((HAPManualPluginProcessorBlockImp)processContext.getManualBrickManager().getBlockProcessPlugin(complexBrick.getBrickType())).postNormalizeBrickPath(path, processContext);
 			}
 
 		}, null);

@@ -39,10 +39,8 @@ import com.nosliw.core.application.division.manual.common.valuecontext.HAPManual
 import com.nosliw.core.application.division.manual.common.valuecontext.HAPManualValueContext;
 import com.nosliw.core.application.division.manual.core.HAPManualBrick;
 import com.nosliw.core.application.division.manual.core.HAPManualManagerBrick;
-import com.nosliw.core.application.division.manual.core.a.HAPManualUtilityBrick;
-import com.nosliw.core.application.division.manual.core.b.HAPHandlerDownwardImpTreeNode;
-import com.nosliw.core.application.division.manual.core.b.HAPManualUtilityBrickTraverse;
-import com.nosliw.core.application.division.manual.core.b.HAPTreeNodeBrick;
+import com.nosliw.core.application.division.manual.core.HAPManualUtilityBrick;
+import com.nosliw.core.application.division.manual.core.HAPTreeNodeBrick;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionAttributeInBrick;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionBrick;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionUtilityBrick;
@@ -128,14 +126,14 @@ public class HAPManualUtilityProcessorValuePort {
 			@Override
 			public boolean processBrickNode(HAPBundle bundle, HAPPath path, Object data) {
 				HAPBrick complexBrick = HAPUtilityBrick.getDescdentBrickLocal(bundle, path);
-				((HAPManualPluginProcessorBlockComplex)manualBrickMan.getBlockProcessPlugin(complexBrick.getBrickType())).processOtherValuePortBuild(path, processContext);
+				((HAPManualPluginProcessorBlockImp)manualBrickMan.getBlockProcessPlugin(complexBrick.getBrickType())).processOtherValuePortBuild(path, processContext);
 				return true;
 			}
 
 			@Override
 			public void postProcessBrickNode(HAPBundle bundle, HAPPath path, Object data) {
 				HAPBrick complexBrick = HAPUtilityBrick.getDescdentBrickLocal(bundle, path);
-				((HAPManualPluginProcessorBlockComplex)manualBrickMan.getBlockProcessPlugin(complexBrick.getBrickType())).postProcessOtherValuePortBuild(path, processContext);
+				((HAPManualPluginProcessorBlockImp)manualBrickMan.getBlockProcessPlugin(complexBrick.getBrickType())).postProcessOtherValuePortBuild(path, processContext);
 			}
 
 		}, null);
