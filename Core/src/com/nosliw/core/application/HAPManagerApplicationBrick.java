@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
+import com.nosliw.core.resource.HAPIdResourceType;
 import com.nosliw.core.resource.HAPResourceId;
 import com.nosliw.core.resource.HAPResourceIdEmbeded;
 import com.nosliw.core.resource.HAPResourceIdSimple;
@@ -50,27 +51,6 @@ public class HAPManagerApplicationBrick {
 		}
 	}
 	
-	public List<HAPIdBrickType> getAllVersions(String brickType){
-		List<HAPPluginBrick> brickPlugins = new ArrayList<HAPPluginBrick>(this.m_brickPlugins.get(brickType).values());
-		Collections.sort(brickPlugins, new Comparator<HAPPluginBrick>(){
-			@Override
-			public int compare(HAPPluginBrick arg0, HAPPluginBrick arg1) {
-				return arg0.getBrickType().getVersion().compareTo(arg1.getBrickType().getVersion());
-			}
-		});
-		
-		List<HAPIdBrickType> out = new ArrayList<HAPIdBrickType>();
-		for(HAPPluginBrick brickPlugin : brickPlugins) {
-			out.add(brickPlugin.getBrickType());
-		}
-		
-		return out;
-	}
-	
-	public HAPIdBrickType getLatestVersion(String entityType) {
-		return this.getAllVersions(entityType).get(0);
-	}
-
 	public HAPBundle getBrickBundle(HAPIdBrick brickId) {
 		String division = brickId.getDivision();
 		if(division==null) {
@@ -108,6 +88,29 @@ public class HAPManagerApplicationBrick {
 		return out;
 	}
 	
+
+	
+	public List<HAPIdBrickType> getAllVersions(String brickType){
+		List<HAPPluginBrick> brickPlugins = new ArrayList<HAPPluginBrick>(this.m_brickPlugins.get(brickType).values());
+		Collections.sort(brickPlugins, new Comparator<HAPPluginBrick>(){
+			@Override
+			public int compare(HAPPluginBrick arg0, HAPPluginBrick arg1) {
+				return arg0.getBrickType().getVersion().compareTo(arg1.getBrickType().getVersion());
+			}
+		});
+		
+		List<HAPIdBrickType> out = new ArrayList<HAPIdBrickType>();
+		for(HAPPluginBrick brickPlugin : brickPlugins) {
+			out.add(brickPlugin.getBrickType());
+		}
+		
+		return out;
+	}
+	
+	public HAPIdBrickType getLatestVersion(String entityType) {
+		return this.getAllVersions(entityType).get(0);
+	}
+
 	public void registerDivisionInfo(String division, HAPPluginDivision divisionPlugin) {
 		this.m_divisionPlugin.put(division, divisionPlugin);
 		Set<HAPIdBrickType> brickTypes = divisionPlugin.getBrickTypes();
@@ -118,18 +121,28 @@ public class HAPManagerApplicationBrick {
 		}
 	}
 
+	public HAPIdBrickType getBrickTypeIdFromResourceTypeId(HAPIdResourceType resourceTypeId) {
+		HAPIdBrickType out = null;
+		//whether have brick type match resource type
+		if(m_brickPlugins.get(resourceTypeId.getResourceType())!=null) {
+			out = HAPUtilityBrickId.getBrickTypeIdFromResourceTypeId(resourceTypeId);
+		}
+		return out;
+	}
+
 	//add division information to resource id if missing
 	public HAPResourceId normalizeResourceIdWithDivision(HAPResourceId resourceId, String divisionDefault) {
 		HAPResourceId out = resourceId;
 		String strucuture = resourceId.getStructure();
 		if(HAPConstantShared.RESOURCEID_TYPE_SIMPLE.equals(strucuture)) {
 			HAPResourceIdSimple simpleResourceId = (HAPResourceIdSimple)out;
-			if(m_brickPlugins.get(simpleResourceId.getResourceTypeId().getResourceType())!=null) {
+			HAPIdBrickType brickTypeId = getBrickTypeIdFromResourceTypeId(simpleResourceId.getResourceTypeId());
+			if(brickTypeId!=null) {
 				//for known brick
 				String[] segs = HAPUtilityNamingConversion.parseLevel1(simpleResourceId.getId());
 				if(segs.length<=1) {
 					String id = segs[0];
-					String division = this.m_divisionByBrickType.get(HAPUtilityBrickId.getBrickTypeIdFromResourceTypeId(simpleResourceId.getResourceTypeId()));
+					String division = this.m_divisionByBrickType.get(brickTypeId);
 					if(division==null) {
 						division = divisionDefault;
 					}

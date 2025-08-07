@@ -5,8 +5,8 @@ import org.json.JSONObject;
 
 import com.nosliw.core.application.HAPManagerApplicationBrick;
 import com.nosliw.core.application.common.structure.HAPUtilityValueStructureParser;
+import com.nosliw.core.application.division.manual.core.HAPManualEnumBrickType;
 import com.nosliw.core.application.division.manual.core.HAPManualManagerBrick;
-import com.nosliw.core.application.division.manual.core.a.HAPManualEnumBrickType;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionAttributeInBrick;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionBrick;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionContextParse;

@@ -1,4 +1,4 @@
-package com.nosliw.core.application.division.manual.core.a;
+package com.nosliw.core.application.division.manual.core;
 
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.HAPIdBrickType;

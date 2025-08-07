@@ -1,125 +1,106 @@
 package com.nosliw.core.application.division.manual.core.process;
 
 import com.nosliw.common.path.HAPPath;
+import com.nosliw.common.path.HAPUtilityPath;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.core.application.HAPManagerApplicationBrick;
+import com.nosliw.core.application.HAPAttributeInBrick;
+import com.nosliw.core.application.HAPBrick;
+import com.nosliw.core.application.HAPBundle;
+import com.nosliw.core.application.HAPHandlerDownward;
+import com.nosliw.core.application.HAPIdBrickInBundle;
+import com.nosliw.core.application.HAPUtilityBrick;
+import com.nosliw.core.application.HAPUtilityBundle;
 import com.nosliw.core.application.HAPWrapperBrickRoot;
-import com.nosliw.core.application.division.manual.core.HAPManualManagerBrick;
+import com.nosliw.core.application.HAPWrapperValueOfReferenceResource;
+import com.nosliw.core.application.brick.HAPUtilityBrickPath;
 import com.nosliw.core.application.division.manual.core.HAPManualWrapperBrickRoot;
-import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionAttributeInBrick;
-import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionBrick;
-import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionProcessorBrickNodeDownwardWithPath;
-import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionUtilityAttachment;
-import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionUtilityBrick;
-import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionUtilityBrickTraverse;
+import com.nosliw.core.application.division.manual.core.b.HAPManualUtilityBrickTraverse;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionWrapperBrickRoot;
-import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionWrapperValue;
-import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionWrapperValueReferenceResource;
+import com.nosliw.core.application.dynamic.HAPRefDynamicTask;
+import com.nosliw.core.application.dynamic.HAPRefDynamicTaskSingle;
 
 public class HAPManualProcessBrick {
 
-	public static HAPWrapperBrickRoot processRootBrick(HAPManualDefinitionWrapperBrickRoot brickDefWrapper, HAPManualContextProcessBrick processContext, HAPManualManagerBrick manualBrickMan, HAPManagerApplicationBrick brickManager) {
-		HAPManualDefinitionBrick brickDef = brickDefWrapper.getBrick();
+	public static HAPWrapperBrickRoot processRootBrick(HAPManualDefinitionWrapperBrickRoot rootBrickDefWrapper, HAPManualContextProcessBrick processContext) {
+		//process definition first
+		HAPManualUtilityProcessorPre.process(rootBrickDefWrapper, processContext);
 		
-		//build parent and 
-		
-		
-		//build path from root
-		HAPManualDefinitionUtilityBrickTraverse.traverseBrickTreeLeaves(brickDefWrapper, new HAPManualDefinitionProcessorBrickNodeDownwardWithPath() {
-			@Override
-			public boolean processBrickNode(HAPManualDefinitionBrick rootEntityInfo, HAPPath path, Object data) {
-				if(path!=null&&!path.isEmpty()) {
-					HAPManualDefinitionAttributeInBrick attr = HAPManualDefinitionUtilityBrick.getDescendantAttribute(rootEntityInfo, path);
-					attr.setPathFromRoot(path);
-				}
-				return true;
-			}
-		}, brickDefWrapper);
-		
-
-		//normalize division infor in referred resource id
-		normalizeDivisionInReferredResource(brickDefWrapper, brickManager);
-		
-		//build attachment
-		HAPManualDefinitionUtilityAttachment.processAttachment(brickDef, null, processContext);
-
-		//process constant
-//		HAPManualUtilityScriptExpressionConstant.discoverScriptExpressionConstantInBrick(brickDef, manualBrickMan);
-//		Map<String, Map<String, Object>> scriptExpressionResults = HAPManualUtilityScriptExpressionConstant.calculateScriptExpressionConstants(brickDef, m_runtimeEnv, manualBrickMan);
-//		HAPManualUtilityScriptExpressionConstant.solidateScriptExpressionConstantInBrick(brickDef, scriptExpressionResults, manualBrickMan);
-		
-		//build executable tree
-		HAPManualWrapperBrickRoot out = new HAPManualWrapperBrickRoot(HAPManualUtilityProcessor.buildExecutableTree(brickDef, processContext));
-		out.setName(processContext.getRootBrickName());
-		out.setDefinition(brickDefWrapper);
-		processContext.getCurrentBundle().addRootBrickWrapper(out);
-		
-		//brick init
-		HAPManualUtilityProcessor.initBricks(processContext, manualBrickMan, brickManager);
-
-		//init
-		HAPManualUtilityProcessor.processComplexBrickInit(processContext);
-
-		HAPManualUtilityProcessor.processComplexBrickNormalizeBrickPath(processContext);
-		
-		//complex entity, build value context domain, create extension value structure if needed
-//		HAPManualUtilityValueContextProcessor.processValueContext(out.getBrickWrapper(), processContext, this, this.m_runtimeEnv);
-
-		//build value context in complex block
-		HAPManualUtilityValueContextProcessor.buildValueContext(processContext, manualBrickMan, brickManager);
-		
-		//build other value port
-		HAPManualUtilityProcessor.processOtherValuePortBuild(processContext);
-		
-		//generate extra value structure for variable extension
-		HAPManualUtilityValueContextProcessor.buildExtensionValueStructure(processContext, manualBrickMan, brickManager);
-		
-		//
-		HAPManualUtilityValueContextProcessor.processInheritageAndRelativeElement(null, processContext);
+		//init brick
+		HAPManualWrapperBrickRoot out = HAPManualProcessProcessorInit.process(rootBrickDefWrapper, processContext);
 		
 		
-		//variable resolve (variable extension)-----impact data container
-		HAPManualUtilityProcessor.processComplexVariableResolve(processContext);
-	
-		//build var criteria infor in var info container according to value port def
-		HAPManualUtilityProcessor.processComplexVariableInfoResolve(processContext);
+		processComplexBrickNormalizeBrickPath(processContext);
 		
-		//variable criteria discovery ---- impact data container and value structure in context domain
-		HAPManualUtilityProcessor.processComplexValueContextDiscovery(processContext);
+		//process value port
+		HAPManualUtilityProcessorValuePort.process(processContext);
 		
-		//update value port element according to var info container after discovery
-//		HAPManualUtilityProcessor.processComplexValuePortUpdate(processContext);
-		
-		//process entity
-		HAPManualUtilityProcessor.processBrick(processContext);
+		//process brick
+		HAPManualUtilityProcessorBrick.process(processContext);
 		
 		//process adapter
-		HAPManualUtilityProcessor.processAdapterInAttribute(processContext);
+		HAPManualUtilityProcessorAdapter.processAdapterInAttribute(processContext);
 		
-		HAPManualUtilityProcessor.cleanupEmptyValueStructure(processContext);
+		//post process
+		HAPManualUtilityProcessorPost.process(processContext);
 		
 		return out;
 	}
 	
-	private static void normalizeDivisionInReferredResource(HAPManualDefinitionWrapperBrickRoot brickWrapper, HAPManagerApplicationBrick brickManager) {
-		HAPManualDefinitionUtilityBrickTraverse.traverseBrickTreeLeaves(brickWrapper, new HAPManualDefinitionProcessorBrickNodeDownwardWithPath() {
+	private static void processComplexBrickNormalizeBrickPath(HAPManualContextProcessBrick processContext) {
+		HAPManualUtilityBrickTraverse.traverseTreeWithLocalBrick(processContext, new HAPHandlerDownward() {
 
 			@Override
-			public boolean processBrickNode(HAPManualDefinitionBrick rootBrick, HAPPath path, Object data) {
-				if(path==null||path.isEmpty()) {
+			public boolean processBrickNode(HAPBundle bundle, HAPPath path, Object data) {
+				HAPBrick complexBrick = HAPUtilityBrick.getDescdentBrickLocal(bundle, path);
+				((HAPManualPluginProcessorBlockComplex)processContext.getManualBrickManager().getBlockProcessPlugin(complexBrick.getBrickType())).normalizeBrickPath(path, processContext);
+				return true;
+			}
+
+			@Override
+			public void postProcessBrickNode(HAPBundle bundle, HAPPath path, Object data) {
+				HAPBrick complexBrick = HAPUtilityBrick.getDescdentBrickLocal(bundle, path);
+				((HAPManualPluginProcessorBlockComplex)processContext.getManualBrickManager().getBlockProcessPlugin(complexBrick.getBrickType())).postNormalizeBrickPath(path, processContext);
+			}
+
+		}, null);
+
+		HAPManualUtilityBrickTraverse.traverseTree(processContext, new HAPHandlerDownward() {
+
+			@Override
+			public boolean processBrickNode(HAPBundle bundle, HAPPath path, Object data) {
+				if(path.isEmpty()) {
 					return true;
 				}
 				
-				HAPManualDefinitionAttributeInBrick attr = HAPManualDefinitionUtilityBrick.getDescendantAttribute(rootBrick, path);
-				HAPManualDefinitionWrapperValue valueWrapper = attr.getValueWrapper();
-				if(valueWrapper.getValueType().equals(HAPConstantShared.EMBEDEDVALUE_TYPE_RESOURCEREFERENCE)){
-					HAPManualDefinitionWrapperValueReferenceResource resourceIdValueWrapper = (HAPManualDefinitionWrapperValueReferenceResource)valueWrapper;
-					resourceIdValueWrapper.setResourceId(brickManager.normalizeResourceIdWithDivision(resourceIdValueWrapper.getResourceId(), HAPConstantShared.BRICK_DIVISION_MANUAL));
+				if(HAPUtilityBundle.getBrickFullPathInfo(path).getPath().isEmpty()) {
+					return true;
+				}
+				
+				HAPAttributeInBrick attr = HAPUtilityBrick.getDescendantAttribute(bundle, path);
+				if(attr.getValueWrapper().getValueType().equals(HAPConstantShared.ENTITYATTRIBUTE_VALUETYPE_RESOURCEID)) {
+					HAPWrapperValueOfReferenceResource resourceIdWrapper = (HAPWrapperValueOfReferenceResource)attr.getValueWrapper();
+					for(HAPRefDynamicTask taskRef : resourceIdWrapper.getDynamicTaskInput().getDyanmicTaskReference().values()) {
+						switch(taskRef.getType()) {
+						case HAPConstantShared.DYNAMICTASK_REF_TYPE_SINGLE:
+							HAPRefDynamicTaskSingle simpleDynamicTask = (HAPRefDynamicTaskSingle)taskRef;
+							HAPIdBrickInBundle taskIdRef = simpleDynamicTask.getTaskId();
+							taskIdRef.setIdPath(HAPUtilityBrickPath.normalizeBrickPath(new HAPPath(taskIdRef.getIdPath()), processContext.getRootBrickName(), false, processContext.getCurrentBundle()).toString());
+							taskIdRef.setRelativePath(HAPUtilityPath.fromAbsoluteToRelativePath(taskIdRef.getIdPath(), path.toString()));
+							simpleDynamicTask.setTaskId(taskIdRef);
+							break;
+						}
+					}
 				}
 				return true;
 			}
-			
-		}, HAPConstantShared.BRICK_DIVISION_MANUAL);
-	}
 
+			@Override
+			public void postProcessBrickNode(HAPBundle bundle, HAPPath path, Object data) {
+			}
+
+		}, null);
+
+	}
+	
+	
 }

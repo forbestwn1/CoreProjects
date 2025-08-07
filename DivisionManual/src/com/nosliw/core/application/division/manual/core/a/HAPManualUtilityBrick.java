@@ -21,5 +21,4 @@ public class HAPManualUtilityBrick {
 		return new HAPComplexPath(HAPUtilityBundle.getBranchName(pathPair.getLeft()), pathPair.getRight());
 	}
 	
-	
 }

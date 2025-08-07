@@ -138,7 +138,7 @@ public class HAPManualManagerBrick implements HAPPluginDivision, HAPManagerWithV
 
 		//get definition
 		HAPManualDefinitionWrapperBrickRoot brickDefWrapper = HAPManualDefinitionUtilityParserBrick.parseBrickDefinitionWrapper(content, entityLocationInfo.getBrickTypeId(), format, parseContext);
-		HAPWrapperBrickRoot out = HAPManualProcessBrick.processRootBrick(brickDefWrapper, processContext, this, m_brickManager);
+		HAPWrapperBrickRoot out = HAPManualProcessBrick.processRootBrick(brickDefWrapper, processContext);
 		return out;
 	}
 

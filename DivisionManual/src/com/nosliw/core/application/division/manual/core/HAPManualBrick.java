@@ -87,7 +87,7 @@ public abstract class HAPManualBrick extends HAPBrickImp{
 //	public List<HAPManualPartInValueContext> getValueContextInhertanceDownstream(){
 //		List<HAPManualPartInValueContext> out = new ArrayList<HAPManualPartInValueContext>();
 //		for(HAPManualPartInValueContext part : this.getManualValueContext().getParts()) {
-//			out.add(HAPManualUtilityValueContextProcessor.inheritFromParent(part, HAPManualUtilityValueContext.getInheritableCategaries()));
+//			out.add(HAPManualUtilityValueContextProcessor1.inheritFromParent(part, HAPManualUtilityValueContext.getInheritableCategaries()));
 //		}
 //		return out;
 //	}
