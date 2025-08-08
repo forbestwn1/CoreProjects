@@ -1,4 +1,4 @@
-package com.nosliw.core.application.division.manual.common.dataassociation;
+package com.nosliw.core.application.common.dataassociation.definition;
 
 import java.util.Map;
 
@@ -8,7 +8,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.info.HAPEntityInfoImp;
 import com.nosliw.common.utils.HAPConstantShared;
 
-public abstract class HAPManualDataAssociation extends HAPEntityInfoImp{
+public abstract class HAPDefinitionDataAssociation extends HAPEntityInfoImp{
 
 	@HAPAttribute
 	public static String TYPE = "type";
@@ -22,7 +22,7 @@ public abstract class HAPManualDataAssociation extends HAPEntityInfoImp{
 	
 	private String m_direction;
 
-	public HAPManualDataAssociation(String type) {
+	public HAPDefinitionDataAssociation(String type) {
 		this.m_type = type;
 		this.m_direction = HAPConstantShared.DATAASSOCIATION_DIRECTION_DOWNSTREAM;
 	}
@@ -36,9 +36,9 @@ public abstract class HAPManualDataAssociation extends HAPEntityInfoImp{
 	public void setDirection(String direction) {    this.m_direction = direction;      }
 
 
-	public abstract HAPManualDataAssociation cloneDataAssocation();
+	public abstract HAPDefinitionDataAssociation cloneDataAssocation();
 
-	protected void cloneToDataAssociation(HAPManualDataAssociation dataAssociation) {
+	protected void cloneToDataAssociation(HAPDefinitionDataAssociation dataAssociation) {
 		this.cloneToEntityInfo(dataAssociation);
 		dataAssociation.m_type = this.m_type;
 	}

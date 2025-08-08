@@ -6,11 +6,12 @@ import com.nosliw.common.info.HAPUtilityEntityInfo;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityBasic;
-import com.nosliw.core.application.division.manual.common.dataassociation.mapping.HAPManualDataAssociationMapping;
+import com.nosliw.core.application.common.dataassociation.definition.HAPDefinitionDataAssociation;
+import com.nosliw.core.application.common.dataassociation.definition.HAPDefinitionDataAssociationMapping;
 
 public class HAPManualParserDataAssociation {
 
-	public static HAPManualDataAssociation buildDefinitionByJson(JSONObject asJson){
+	public static HAPDefinitionDataAssociation buildDefinitionByJson(JSONObject asJson){
 		if(asJson==null) {
 			return null;
 		}
@@ -19,7 +20,7 @@ public class HAPManualParserDataAssociation {
 			return null;
 		}
 		
-		String type = (String)asJson.opt(HAPManualDataAssociation.TYPE);
+		String type = (String)asJson.opt(HAPDefinitionDataAssociation.TYPE);
 		if(HAPUtilityBasic.isStringEmpty(type)) {
 			type = HAPConstantShared.DATAASSOCIATION_TYPE_MAPPING;
 		}
@@ -27,7 +28,7 @@ public class HAPManualParserDataAssociation {
 		switch(type) {
 		case HAPConstantShared.DATAASSOCIATION_TYPE_MAPPING:
 		{
-			HAPManualDataAssociationMapping out = new HAPManualDataAssociationMapping();
+			HAPDefinitionDataAssociationMapping out = new HAPDefinitionDataAssociationMapping();
 			out.buildObject(asJson, HAPSerializationFormat.JSON);
 			return out;
 		}

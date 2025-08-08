@@ -1,6 +1,7 @@
 package com.nosliw.core.xxx.application.valueport;
 
 import com.nosliw.core.application.common.structure.HAPElementStructure;
+import com.nosliw.core.application.valueport.HAPIdElement;
 
 public class HAPInfoElementResolve {
 

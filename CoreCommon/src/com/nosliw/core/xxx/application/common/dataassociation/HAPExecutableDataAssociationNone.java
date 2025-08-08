@@ -1,4 +1,4 @@
-package com.nosliw.core.application.common.dataassociation;
+package com.nosliw.core.xxx.application.common.dataassociation;
 
 import java.util.Map;
 

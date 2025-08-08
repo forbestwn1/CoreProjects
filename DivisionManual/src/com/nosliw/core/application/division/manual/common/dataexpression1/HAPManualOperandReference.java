@@ -13,12 +13,12 @@ import com.nosliw.core.application.common.dataexpression.HAPOperand;
 import com.nosliw.core.application.common.dataexpression.HAPOperandReference;
 import com.nosliw.core.application.common.dataexpression.definition.HAPDefinitionOperandReference;
 import com.nosliw.core.application.common.withvariable.HAPContainerVariableInfo;
+import com.nosliw.core.application.valueport.HAPIdElement;
 import com.nosliw.core.data.HAPDataTypeHelper;
 import com.nosliw.core.data.criteria.HAPDataTypeCriteria;
 import com.nosliw.core.data.criteria.HAPUtilityCriteria;
 import com.nosliw.core.data.matcher.HAPMatchers;
 import com.nosliw.core.resource.HAPResourceId;
-import com.nosliw.core.xxx.application.valueport.HAPIdElement;
 
 public class HAPManualOperandReference extends HAPManualOperand implements HAPOperandReference{
 

@@ -6,7 +6,7 @@ import com.nosliw.common.path.HAPPath;
 import com.nosliw.core.application.brick.HAPEnumBrickType;
 import com.nosliw.core.application.common.dataassociation.HAPDataAssociationMapping;
 import com.nosliw.core.application.common.dataassociation.HAPTunnel;
-import com.nosliw.core.application.division.manual.common.dataassociation.HAPManualDataAssociation;
+import com.nosliw.core.application.common.dataassociation.definition.HAPDefinitionDataAssociation;
 import com.nosliw.core.application.division.manual.common.dataassociation.HAPManualProcessorDataAssociation;
 import com.nosliw.core.application.division.manual.core.HAPManualBrick;
 import com.nosliw.core.application.division.manual.core.HAPManualManagerBrick;
@@ -26,8 +26,8 @@ public class HAPManaualPluginAdapterProcessorDataAssociation extends HAPManualPl
 		HAPManualAdapterDataAssociation daAdapterExe = (HAPManualAdapterDataAssociation)adapterExe;
 		HAPDataAssociationMapping daExe = new HAPDataAssociationMapping();
 		daAdapterExe.setDataAssciation(daExe);
-		List<HAPManualDataAssociation> das = daAdapterDef.getDataAssociation();
-		for(HAPManualDataAssociation da : das) {
+		List<HAPDefinitionDataAssociation> das = daAdapterDef.getDataAssociation();
+		for(HAPDefinitionDataAssociation da : das) {
 			HAPPath baseBlockPath = processContext.getRootPathForBaseBrick();
 			HAPPath secondBlockPath = this.getSecondBlockPath(processContext);
 			HAPDataAssociationMapping daMappingExe = (HAPDataAssociationMapping)HAPManualProcessorDataAssociation.processDataAssociation(da, baseBlockPath, secondBlockPath, processContext.getCurrentBundle(), processContext.getRootBrickName());

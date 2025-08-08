@@ -8,12 +8,9 @@ import java.util.Set;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPManagerSerialize;
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.resource.HAPResourceDependency;
-import com.nosliw.data.core.resource.HAPManagerResource;
-import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
 @HAPEntityWithAttribute
 public class HAPDataAssociationMapping extends HAPDataAssociation{
@@ -49,10 +46,4 @@ public class HAPDataAssociationMapping extends HAPDataAssociation{
 		return true;  
 	}
 	
-	@Override
-	protected void buildResourceDependency(List<HAPResourceDependency> dependency, HAPRuntimeInfo runtimeInfo, HAPManagerResource resourceManager) {
-		for(HAPTunnel mappingPath : this.m_tunnel) {
-			dependency.addAll(mappingPath.getResourceDependency(runtimeInfo, resourceManager));
-		}
-	}
 }

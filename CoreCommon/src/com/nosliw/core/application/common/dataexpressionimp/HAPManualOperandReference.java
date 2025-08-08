@@ -13,7 +13,7 @@ import com.nosliw.core.application.common.dataexpression.HAPOperand;
 import com.nosliw.core.application.common.dataexpression.HAPOperandReference;
 import com.nosliw.core.application.common.dataexpression.definition.HAPDefinitionOperandReference;
 import com.nosliw.core.application.common.withvariable.HAPContainerVariableInfo;
-import com.nosliw.core.xxx.application.valueport.HAPIdElement;
+import com.nosliw.core.application.valueport.HAPIdElement;
 import com.nosliw.data.core.data.HAPDataTypeHelper;
 import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
 import com.nosliw.data.core.data.criteria.HAPUtilityCriteria;

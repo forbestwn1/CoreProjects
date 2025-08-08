@@ -1,4 +1,4 @@
-package com.nosliw.core.application.division.manual.common.dataassociation.mapping;
+package com.nosliw.core.application.common.dataassociation.definition;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -10,36 +10,35 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.core.application.division.manual.common.dataassociation.HAPManualDataAssociation;
 
-public class HAPManualDataAssociationMapping extends HAPManualDataAssociation{
+public class HAPDefinitionDataAssociationMapping extends HAPDefinitionDataAssociation{
 
 	@HAPAttribute
 	public static final String MAPPING = "mapping";
 
-	private List<HAPManualItemValueMapping> m_items;
+	private List<HAPDefinitionMappingItemValue> m_items;
 
-	public HAPManualDataAssociationMapping() {
+	public HAPDefinitionDataAssociationMapping() {
 		super(HAPConstantShared.DATAASSOCIATION_TYPE_MAPPING);
-		this.m_items = new LinkedList<HAPManualItemValueMapping>();
+		this.m_items = new LinkedList<HAPDefinitionMappingItemValue>();
 	}
  
-	public void addItem(HAPManualItemValueMapping item) { 	this.m_items.add(item); 	}
+	public void addItem(HAPDefinitionMappingItemValue item) { 	this.m_items.add(item); 	}
 	
-	public List<HAPManualItemValueMapping> getItems(){   return this.m_items;    }
+	public List<HAPDefinitionMappingItemValue> getItems(){   return this.m_items;    }
 
 	public boolean isEmpty() {   return this.getItems().isEmpty();   }
 
 	@Override
-	public HAPManualDataAssociationMapping cloneDataAssocation() {
-		HAPManualDataAssociationMapping out = new HAPManualDataAssociationMapping();
+	public HAPDefinitionDataAssociationMapping cloneDataAssocation() {
+		HAPDefinitionDataAssociationMapping out = new HAPDefinitionDataAssociationMapping();
 		this.cloneToDataAssociation(out);
 		return out;
 	}
 	
-	protected void cloneToDataAssociation(HAPManualDataAssociationMapping dataAssociation) {
+	protected void cloneToDataAssociation(HAPDefinitionDataAssociationMapping dataAssociation) {
 		super.cloneToDataAssociation(dataAssociation);
-		for(HAPManualItemValueMapping item : this.m_items) {
+		for(HAPDefinitionMappingItemValue item : this.m_items) {
 			dataAssociation.addItem(item.cloneValueMappingItem());
 		}
 	}
@@ -62,7 +61,7 @@ public class HAPManualDataAssociationMapping extends HAPManualDataAssociation{
 				mappingObj = jsonObj;
 			}
 			
-			List<HAPManualItemValueMapping> items = HAPManualParserValueMapping.parses(mappingObj);
+			List<HAPDefinitionMappingItemValue> items = HAPDefinitionParserMapping.parses(mappingObj);
 			this.m_items.addAll(items);
 			return true;  
 		}

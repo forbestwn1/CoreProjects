@@ -1,12 +1,16 @@
-package com.nosliw.core.application;
+package com.nosliw.core.application.valueport;
 
 import org.apache.commons.lang3.tuple.Pair;
 
 import com.nosliw.common.path.HAPPath;
+import com.nosliw.core.application.HAPBrick;
+import com.nosliw.core.application.HAPBundle;
+import com.nosliw.core.application.HAPResourceDataBrick;
+import com.nosliw.core.application.HAPResultBrickDescentValue;
+import com.nosliw.core.application.HAPUtilityBrick;
 import com.nosliw.core.resource.HAPManagerResource;
 import com.nosliw.core.resource.HAPUtilityResource;
 import com.nosliw.core.runtime.HAPRuntimeInfo;
-import com.nosliw.core.xxx.application.valueport.HAPInfoValuePortContainer;
 
 public class HAPUtilityBrickValuePort {
 

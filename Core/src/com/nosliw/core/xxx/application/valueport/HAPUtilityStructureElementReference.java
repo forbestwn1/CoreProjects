@@ -12,6 +12,8 @@ import com.nosliw.core.application.HAPDomainValueStructure;
 import com.nosliw.core.application.common.structure.HAPStructureImp;
 import com.nosliw.core.application.common.structure.reference.HAPConfigureResolveElementReference;
 import com.nosliw.core.application.common.structure.reference.HAPUtilityProcessRelativeElementInBundle;
+import com.nosliw.core.application.valueport.HAPIdElement;
+import com.nosliw.core.application.valueport.HAPIdRootElement;
 import com.nosliw.core.application.valueport.HAPIdValuePortInBundle;
 import com.nosliw.core.application.valueport.HAPResultReferenceResolve;
 import com.nosliw.core.application.valueport.HAPValuePort;

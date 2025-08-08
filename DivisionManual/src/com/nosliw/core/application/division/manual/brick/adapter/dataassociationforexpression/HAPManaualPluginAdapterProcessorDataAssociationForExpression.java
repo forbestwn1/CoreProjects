@@ -2,7 +2,6 @@ package com.nosliw.core.application.division.manual.brick.adapter.dataassociatio
 
 import com.nosliw.common.path.HAPPath;
 import com.nosliw.core.application.common.dataassociation.HAPDataAssociation;
-import com.nosliw.core.application.common.dataassociation.HAPDataAssociationForExpression;
 import com.nosliw.core.application.division.manual.common.dataassociation.HAPManualDataAssociationForExpression;
 import com.nosliw.core.application.division.manual.common.dataassociation.HAPManualProcessorDataAssociation;
 import com.nosliw.core.application.division.manual.core.HAPManualBrick;
@@ -10,6 +9,7 @@ import com.nosliw.core.application.division.manual.core.HAPManualManagerBrick;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionBrick;
 import com.nosliw.core.application.division.manual.core.process.HAPManualContextProcessAdapter;
 import com.nosliw.core.application.division.manual.core.process.HAPManualPluginProcessorAdapter;
+import com.nosliw.core.xxx.application.common.dataassociation.HAPDataAssociationForExpression;
 import com.nosliw.core.xxx.application1.brick.HAPEnumBrickType;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 

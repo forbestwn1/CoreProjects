@@ -11,9 +11,9 @@ import com.nosliw.core.application.common.structure.reference.HAPConfigureResolv
 import com.nosliw.core.application.division.manual.common.valuecontext.HAPManualValueContext;
 import com.nosliw.core.application.division.manual.common.valuecontext.HAPManualWrapperStructure;
 import com.nosliw.core.application.division.manual.core.HAPManualBrick;
+import com.nosliw.core.application.valueport.HAPIdElement;
 import com.nosliw.core.application.valueport.HAPResultReferenceResolve;
 import com.nosliw.core.application.valueport.HAPValuePort;
-import com.nosliw.core.xxx.application.valueport.HAPIdElement;
 import com.nosliw.core.xxx.application.valueport.HAPReferenceValueStructure;
 import com.nosliw.core.xxx.application.valueport.HAPRootStructureInValuePort;
 import com.nosliw.core.xxx.application.valueport.HAPValueStructureInValuePort11111;

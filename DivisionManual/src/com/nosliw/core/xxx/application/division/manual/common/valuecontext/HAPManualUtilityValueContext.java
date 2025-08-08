@@ -15,11 +15,11 @@ import com.nosliw.core.application.division.manual.common.valuecontext.HAPManual
 import com.nosliw.core.application.division.manual.common.valuecontext.HAPManualPartInValueContextGroupWithEntity;
 import com.nosliw.core.application.division.manual.common.valuecontext.HAPManualPartInValueContextSimple;
 import com.nosliw.core.application.division.manual.common.valuecontext.HAPManualWrapperStructure;
+import com.nosliw.core.application.valueport.HAPIdElement;
+import com.nosliw.core.application.valueport.HAPIdRootElement;
 import com.nosliw.core.application.valueport.HAPIdValuePortInBrick;
 import com.nosliw.core.xxx.application.common.structure.HAPRootStructure;
 import com.nosliw.core.xxx.application.common.structure.HAPUtilityStructure;
-import com.nosliw.core.xxx.application.valueport.HAPIdElement;
-import com.nosliw.core.xxx.application.valueport.HAPIdRootElement;
 import com.nosliw.core.xxx.application.valueport.HAPValueStructureInValuePort11111;
 import com.nosliw.core.xxx.application1.HAPValueContext;
 import com.nosliw.core.xxx.application1.HAPWithValueContext;

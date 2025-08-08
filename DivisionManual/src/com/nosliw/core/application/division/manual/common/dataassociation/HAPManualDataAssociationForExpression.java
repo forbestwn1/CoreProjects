@@ -8,6 +8,7 @@ import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.core.application.common.dataassociation.definition.HAPDefinitionDataAssociation;
 
 public class HAPManualDataAssociationForExpression extends HAPSerializableImp{
 
@@ -15,19 +16,19 @@ public class HAPManualDataAssociationForExpression extends HAPSerializableImp{
 
 	public static String IN = "in";
 
-	private HAPManualDataAssociation m_inDataAssociation;
+	private HAPDefinitionDataAssociation m_inDataAssociation;
 	
 	//data association from process to external
-	private HAPManualDataAssociation m_outDataAssociation;
+	private HAPDefinitionDataAssociation m_outDataAssociation;
 
 	public HAPManualDataAssociationForExpression() {
 	}
 
-	public HAPManualDataAssociation getInDataAssociation() {   return this.m_inDataAssociation;   }
-	public void setInDataAssociation(HAPManualDataAssociation inDataAssociation) {    this.m_inDataAssociation = inDataAssociation;    }
+	public HAPDefinitionDataAssociation getInDataAssociation() {   return this.m_inDataAssociation;   }
+	public void setInDataAssociation(HAPDefinitionDataAssociation inDataAssociation) {    this.m_inDataAssociation = inDataAssociation;    }
 	
-	public HAPManualDataAssociation getOutDataAssociation(){    return this.m_outDataAssociation;     }
-	public void setOutDataAssociation(HAPManualDataAssociation outDataAssociation) {   this.m_outDataAssociation = outDataAssociation;  }   
+	public HAPDefinitionDataAssociation getOutDataAssociation(){    return this.m_outDataAssociation;     }
+	public void setOutDataAssociation(HAPDefinitionDataAssociation outDataAssociation) {   this.m_outDataAssociation = outDataAssociation;  }   
 	
 	@Override
 	protected boolean buildObjectByJson(Object json){  

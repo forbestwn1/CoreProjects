@@ -1,4 +1,4 @@
-package com.nosliw.core.application.common.dataassociation;
+package com.nosliw.core.xxx.application.common.dataassociation;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -11,9 +11,10 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPManagerSerialize;
+import com.nosliw.core.application.common.dataassociation.HAPTunnel;
 import com.nosliw.core.application.common.structure.HAPElementStructure;
+import com.nosliw.core.application.valueport.HAPIdRootElement;
 import com.nosliw.core.xxx.application.common.structure.HAPElementStructureUnknown;
-import com.nosliw.core.xxx.application.valueport.HAPIdRootElement;
 import com.nosliw.data.core.dataassociation.HAPExecutableDataAssociationImp;
 import com.nosliw.data.core.dataassociation.mapping.HAPDefinitionDataAssociationMapping;
 import com.nosliw.data.core.dataassociation.mapping.HAPItemValueMapping;

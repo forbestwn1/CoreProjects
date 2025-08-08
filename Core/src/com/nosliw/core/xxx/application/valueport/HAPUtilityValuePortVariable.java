@@ -8,6 +8,7 @@ import com.nosliw.core.application.HAPDomainValueStructure;
 import com.nosliw.core.application.common.structure.HAPElementStructure;
 import com.nosliw.core.application.common.structure.HAPElementStructureLeafData;
 import com.nosliw.core.application.common.withvariable.HAPContainerVariableInfo;
+import com.nosliw.core.application.valueport.HAPIdElement;
 import com.nosliw.core.data.criteria.HAPInfoCriteria;
 
 public class HAPUtilityValuePortVariable {

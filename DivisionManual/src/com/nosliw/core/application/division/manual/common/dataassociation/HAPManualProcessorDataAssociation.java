@@ -4,13 +4,14 @@ import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.HAPBundle;
 import com.nosliw.core.application.common.dataassociation.HAPDataAssociation;
-import com.nosliw.core.application.division.manual.common.dataassociation.mapping.HAPManualDataAssociationMapping;
-import com.nosliw.core.application.division.manual.common.dataassociation.mapping.HAPManualProcessorDataAssociationMapping;
+import com.nosliw.core.application.common.dataassociation.definition.HAPDefinitionDataAssociation;
+import com.nosliw.core.application.common.dataassociation.definition.HAPDefinitionDataAssociationMapping;
+import com.nosliw.core.application.common.dataassociation.definition.HAPDefinitionProcessorMappingDataAssociation;
 
 public class HAPManualProcessorDataAssociation {
 
 	public static HAPDataAssociation processDataAssociation(
-			HAPManualDataAssociation daDef,
+			HAPDefinitionDataAssociation daDef,
 			HAPPath baseBlockPath, 
 			HAPPath secondBlockPath,
 			HAPBundle currentBundle, 
@@ -19,7 +20,7 @@ public class HAPManualProcessorDataAssociation {
 		HAPDataAssociation out = null;
 		String daType = daDef.getType();
 		if(daType.equals(HAPConstantShared.DATAASSOCIATION_TYPE_MAPPING)) {
-			out = HAPManualProcessorDataAssociationMapping.processValueMapping((HAPManualDataAssociationMapping)daDef, baseBlockPath, secondBlockPath, currentBundle, rootBrickName, runtimeEnv);
+			out = HAPDefinitionProcessorMappingDataAssociation.processValueMapping((HAPDefinitionDataAssociationMapping)daDef, baseBlockPath, secondBlockPath, currentBundle, rootBrickName, runtimeEnv);
 		}
 		
 		return out;

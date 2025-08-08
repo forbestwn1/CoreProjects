@@ -1,8 +1,9 @@
-package com.nosliw.core.application.common.dataassociation;
+package com.nosliw.core.xxx.application.common.dataassociation;
 
 import java.util.List;
 
 import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.core.application.common.dataassociation.HAPEndpointInTunnel;
 
 public class HAPEndPointInTunnelRuntime extends HAPEndpointInTunnel{
 

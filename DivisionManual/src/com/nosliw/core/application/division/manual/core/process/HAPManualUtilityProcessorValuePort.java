@@ -47,7 +47,7 @@ import com.nosliw.core.application.division.manual.core.definition.HAPManualDefi
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionUtilityBrick;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionWrapperValueBrick;
 import com.nosliw.core.application.valueport.HAPIdValuePortInBundle;
-import com.nosliw.core.xxx.application.valueport.HAPUtilityValuePort;
+import com.nosliw.core.application.valueport.HAPUtilityValuePort;
 
 public class HAPManualUtilityProcessorValuePort {
 

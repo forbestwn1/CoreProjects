@@ -1,4 +1,4 @@
-package com.nosliw.core.application.division.manual.common.dataassociation.mapping;
+package com.nosliw.core.application.common.dataassociation.definition;
 
 import java.util.Map;
 
@@ -11,7 +11,7 @@ import com.nosliw.core.application.common.structure.HAPElementStructure;
 import com.nosliw.core.xxx.application.valueport.HAPReferenceRootElement;
 
 @HAPEntityWithAttribute
-public class HAPManualItemValueMapping extends HAPEntityInfoWritableImp{
+public class HAPDefinitionMappingItemValue extends HAPEntityInfoWritableImp{
 
 	@HAPAttribute
 	public static final String DEFINITION = "definition";
@@ -24,9 +24,9 @@ public class HAPManualItemValueMapping extends HAPEntityInfoWritableImp{
 
 	private HAPReferenceRootElement m_target;
 	
-	public HAPManualItemValueMapping() {}
+	public HAPDefinitionMappingItemValue() {}
 	
-	public HAPManualItemValueMapping(HAPElementStructure definition, HAPReferenceRootElement target) {
+	public HAPDefinitionMappingItemValue(HAPElementStructure definition, HAPReferenceRootElement target) {
 		this.m_definition = definition;
 		this.m_target = target;
 	}
@@ -46,8 +46,8 @@ public class HAPManualItemValueMapping extends HAPEntityInfoWritableImp{
 		jsonMap.put(TARGET, HAPManagerSerialize.getInstance().toStringValue(this.m_target, HAPSerializationFormat.JSON));
 	}
 	
-	public HAPManualItemValueMapping cloneValueMappingItem() {
-		HAPManualItemValueMapping out = new HAPManualItemValueMapping();
+	public HAPDefinitionMappingItemValue cloneValueMappingItem() {
+		HAPDefinitionMappingItemValue out = new HAPDefinitionMappingItemValue();
 		this.cloneToEntityInfo(out);
 		if(this.m_definition!=null) {
 			out.m_definition = this.m_definition.cloneStructureElement();

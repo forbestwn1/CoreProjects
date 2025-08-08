@@ -7,7 +7,7 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
-import com.nosliw.data.core.matcher.HAPMatchers;
+import com.nosliw.core.data.matcher.HAPMatchers;
 
 @HAPEntityWithAttribute
 public class HAPTunnel extends HAPSerializableImp{

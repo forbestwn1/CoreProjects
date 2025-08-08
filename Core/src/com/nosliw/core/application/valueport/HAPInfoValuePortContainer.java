@@ -1,9 +1,8 @@
-package com.nosliw.core.xxx.application.valueport;
+package com.nosliw.core.application.valueport;
 
 import org.apache.commons.lang3.tuple.Pair;
 
 import com.nosliw.core.application.HAPDomainValueStructure;
-import com.nosliw.core.application.valueport.HAPContainerValuePorts;
 
 public class HAPInfoValuePortContainer {
 
