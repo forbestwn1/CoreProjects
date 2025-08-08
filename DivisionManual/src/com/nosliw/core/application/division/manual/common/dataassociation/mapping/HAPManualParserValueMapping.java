@@ -9,7 +9,7 @@ import org.json.JSONObject;
 
 import com.nosliw.common.info.HAPUtilityEntityInfo;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.core.application.common.structure22.HAPUtilityParserElement;
+import com.nosliw.core.application.common.structure.HAPUtilityParserElement;
 import com.nosliw.core.xxx.application.valueport.HAPReferenceElement;
 import com.nosliw.core.xxx.application.valueport.HAPReferenceRootElement;
 

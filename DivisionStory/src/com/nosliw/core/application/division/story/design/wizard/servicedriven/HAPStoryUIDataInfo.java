@@ -9,9 +9,9 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.path.HAPComplexPath;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.core.application.common.structure.HAPReferenceRootInStrucutre;
-import com.nosliw.core.application.common.structure.HAPUtilityStructureReference;
 import com.nosliw.core.application.common.variable.HAPVariableDataInfo;
+import com.nosliw.core.xxx.application.common.structure.HAPReferenceRootInStrucutre;
+import com.nosliw.core.xxx.application.common.structure.HAPUtilityStructureReference;
 
 @HAPEntityWithAttribute
 public class HAPStoryUIDataInfo extends HAPSerializableImp{

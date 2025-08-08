@@ -9,8 +9,8 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfoImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.core.application.HAPIdBrickInBundle;
-import com.nosliw.core.application.common.structure22.HAPElementStructure;
-import com.nosliw.core.application.common.structure22.HAPUtilityParserElement;
+import com.nosliw.core.application.common.structure.HAPElementStructure;
+import com.nosliw.core.application.common.structure.HAPUtilityParserElement;
 
 @HAPEntityWithAttribute
 public class HAPInfoTrigguerTask extends HAPEntityInfoImp{

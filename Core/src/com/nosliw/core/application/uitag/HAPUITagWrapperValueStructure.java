@@ -1,8 +1,8 @@
 package com.nosliw.core.application.uitag;
 
 import com.nosliw.common.info.HAPEntityInfoImp;
-import com.nosliw.core.application.common.structure22.HAPValueStructure;
-import com.nosliw.core.application.common.structure22.HAPWrapperValueStructureDefinition;
+import com.nosliw.core.application.common.structure.HAPValueStructure;
+import com.nosliw.core.application.common.structure.HAPWrapperValueStructureDefinition;
 
 public class HAPUITagWrapperValueStructure extends HAPEntityInfoImp implements HAPWrapperValueStructureDefinition{
 

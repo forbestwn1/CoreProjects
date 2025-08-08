@@ -4,7 +4,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.nosliw.core.application.HAPManagerApplicationBrick;
-import com.nosliw.core.application.common.structure22.HAPUtilityParserStructure;
+import com.nosliw.core.application.common.structure.HAPUtilityParserStructure;
 import com.nosliw.core.application.division.manual.core.HAPManualEnumBrickType;
 import com.nosliw.core.application.division.manual.core.HAPManualManagerBrick;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionAttributeInBrick;

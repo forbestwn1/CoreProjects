@@ -16,16 +16,14 @@ import com.nosliw.core.application.HAPDomainValueStructure;
 import com.nosliw.core.application.HAPHandlerDownwardImpAttribute;
 import com.nosliw.core.application.HAPInfoValueStructureRuntime;
 import com.nosliw.core.application.common.parentrelation.HAPManualDefinitionBrickRelationValueContext;
-import com.nosliw.core.application.common.structure.HAPUtilityStructure;
-import com.nosliw.core.application.common.structure22.HAPElementStructure;
-import com.nosliw.core.application.common.structure22.HAPElementStructureLeafRelative;
-import com.nosliw.core.application.common.structure22.HAPInfoElement;
-import com.nosliw.core.application.common.structure22.HAPProcessorStructureElement;
-import com.nosliw.core.application.common.structure22.HAPRootInStructure;
-import com.nosliw.core.application.common.structure222.reference.HAPUtilityProcessRelativeElementInBundle;
-import com.nosliw.core.application.division.manual.common.valuecontext.HAPManualUtilityValueContext;
-import com.nosliw.core.application.division.manual.common.valuecontext22.HAPManualPartInValueContext;
-import com.nosliw.core.application.division.manual.common.valuecontext22.HAPManualValueContext;
+import com.nosliw.core.application.common.structure.HAPElementStructure;
+import com.nosliw.core.application.common.structure.HAPElementStructureLeafRelative;
+import com.nosliw.core.application.common.structure.HAPInfoElement;
+import com.nosliw.core.application.common.structure.HAPProcessorStructureElement;
+import com.nosliw.core.application.common.structure.HAPRootInStructure;
+import com.nosliw.core.application.common.structure.reference.HAPUtilityProcessRelativeElementInBundle;
+import com.nosliw.core.application.division.manual.common.valuecontext.HAPManualPartInValueContext;
+import com.nosliw.core.application.division.manual.common.valuecontext.HAPManualValueContext;
 import com.nosliw.core.application.division.manual.core.HAPManualBrick;
 import com.nosliw.core.application.division.manual.core.HAPManualManagerBrick;
 import com.nosliw.core.application.division.manual.core.HAPManualUtilityBrick;
@@ -36,6 +34,8 @@ import com.nosliw.core.application.division.manual.core.definition.HAPManualDefi
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionWrapperValueBrick;
 import com.nosliw.core.application.valueport.HAPIdValuePortInBundle;
 import com.nosliw.core.runtimeenv.HAPRuntimeEnvironment;
+import com.nosliw.core.xxx.application.common.structure.HAPUtilityStructure;
+import com.nosliw.core.xxx.application.division.manual.common.valuecontext.HAPManualUtilityValueContext;
 import com.nosliw.core.xxx.application.valueport.HAPUtilityValuePort;
 
 public class HAPManualUtilityValueContextProcessor1 {

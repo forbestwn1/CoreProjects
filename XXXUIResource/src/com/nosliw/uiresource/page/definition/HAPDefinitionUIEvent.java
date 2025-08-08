@@ -8,7 +8,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfoWritableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.core.application.common.structure.HAPRootStructure;
+import com.nosliw.core.xxx.application.common.structure.HAPRootStructure;
 import com.nosliw.data.core.valuestructure1.HAPParserValueStructure;
 import com.nosliw.data.core.valuestructure1.HAPValueStructureDefinitionFlat;
 

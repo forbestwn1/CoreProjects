@@ -1,8 +1,8 @@
 package com.nosliw.core.application.division.manual.brick.valuestructure;
 
-import com.nosliw.core.application.common.structure22.HAPInfoStructureInWrapper;
-import com.nosliw.core.application.common.structure22.HAPValueStructure;
-import com.nosliw.core.application.common.structure22.HAPWrapperValueStructureDefinition;
+import com.nosliw.core.application.common.structure.HAPInfoStructureInWrapper;
+import com.nosliw.core.application.common.structure.HAPValueStructure;
+import com.nosliw.core.application.common.structure.HAPWrapperValueStructureDefinition;
 import com.nosliw.core.application.division.manual.core.HAPManualEnumBrickType;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionBrickWithEntityInfo;
 

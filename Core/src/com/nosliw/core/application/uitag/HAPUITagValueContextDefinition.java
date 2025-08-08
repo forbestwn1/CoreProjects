@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.Map;
 
 import com.nosliw.common.serialization.HAPSerializableImp;
-import com.nosliw.core.application.common.structure.HAPValueContextDefinition;
-import com.nosliw.core.application.common.structure22.HAPWrapperValueStructureDefinition;
+import com.nosliw.core.application.common.structure.HAPWrapperValueStructureDefinition;
+import com.nosliw.core.xxx.application.common.structure.HAPValueContextDefinition;
 
 public class HAPUITagValueContextDefinition extends HAPSerializableImp implements HAPValueContextDefinition{
 

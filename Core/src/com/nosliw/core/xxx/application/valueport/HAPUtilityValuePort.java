@@ -10,10 +10,9 @@ import com.nosliw.core.application.HAPDomainValueStructure;
 import com.nosliw.core.application.HAPIdBrickInBundle;
 import com.nosliw.core.application.HAPUtilityBrickValuePort;
 import com.nosliw.core.application.brick.HAPUtilityBrickPath;
-import com.nosliw.core.application.common.structure.HAPUtilityStructure;
-import com.nosliw.core.application.common.structure22.HAPElementStructure;
-import com.nosliw.core.application.common.structure22.HAPRootInStructure;
-import com.nosliw.core.application.common.structure22.HAPStructureImp;
+import com.nosliw.core.application.common.structure.HAPElementStructure;
+import com.nosliw.core.application.common.structure.HAPRootInStructure;
+import com.nosliw.core.application.common.structure.HAPStructureImp;
 import com.nosliw.core.application.valueport.HAPContainerValuePorts;
 import com.nosliw.core.application.valueport.HAPGroupValuePorts;
 import com.nosliw.core.application.valueport.HAPIdValuePortInBrick;
@@ -24,6 +23,7 @@ import com.nosliw.core.application.valueport.HAPWithExternalValuePort;
 import com.nosliw.core.application.valueport.HAPWithInternalValuePort;
 import com.nosliw.core.resource.HAPManagerResource;
 import com.nosliw.core.runtime.HAPRuntimeInfo;
+import com.nosliw.core.xxx.application.common.structure.HAPUtilityStructure;
 
 public class HAPUtilityValuePort {
 

@@ -5,10 +5,10 @@ import java.util.List;
 
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.common.interactive.HAPRequestParmInInteractive;
-import com.nosliw.core.application.common.structure.HAPRootStructure;
-import com.nosliw.core.application.common.structure22.HAPElementStructureLeafData;
-import com.nosliw.core.application.common.structure222.reference.HAPConfigureResolveElementReference;
+import com.nosliw.core.application.common.structure.HAPElementStructureLeafData;
+import com.nosliw.core.application.common.structure.reference.HAPConfigureResolveElementReference;
 import com.nosliw.core.application.valueport.HAPIdValuePortInBrick;
+import com.nosliw.core.xxx.application.common.structure.HAPRootStructure;
 import com.nosliw.core.xxx.application.valueport.HAPInfoValuePort;
 import com.nosliw.core.xxx.application.valueport.HAPInfoValueStructureReference;
 import com.nosliw.core.xxx.application.valueport.HAPReferenceValueStructure;

@@ -10,8 +10,8 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
-import com.nosliw.core.application.common.structure22.HAPElementStructureLeafData;
-import com.nosliw.core.application.common.structure22.HAPRootInStructure;
+import com.nosliw.core.application.common.structure.HAPElementStructureLeafData;
+import com.nosliw.core.application.common.structure.HAPRootInStructure;
 import com.nosliw.core.application.valueport.HAPGroupValuePorts;
 import com.nosliw.core.application.valueport.HAPValuePort;
 import com.nosliw.core.xxx.application1.valuestructure.HAPDomainValueStructure;

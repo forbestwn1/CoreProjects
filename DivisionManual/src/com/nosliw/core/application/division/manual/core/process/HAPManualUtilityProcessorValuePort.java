@@ -22,21 +22,22 @@ import com.nosliw.core.application.HAPInfoValueStructureRuntime;
 import com.nosliw.core.application.HAPUtilityBrick;
 import com.nosliw.core.application.common.parentrelation.HAPManualDefinitionBrickRelation;
 import com.nosliw.core.application.common.parentrelation.HAPManualDefinitionBrickRelationValueContext;
-import com.nosliw.core.application.common.structure22.HAPElementStructure;
-import com.nosliw.core.application.common.structure22.HAPElementStructureLeafRelative;
-import com.nosliw.core.application.common.structure22.HAPInfoElement;
-import com.nosliw.core.application.common.structure22.HAPProcessorStructureElement;
-import com.nosliw.core.application.common.structure22.HAPRootInStructure;
-import com.nosliw.core.application.common.structure22.HAPUtilityElement;
-import com.nosliw.core.application.common.structure222.reference.HAPUtilityProcessRelativeElementInBundle;
+import com.nosliw.core.application.common.structure.HAPElementStructure;
+import com.nosliw.core.application.common.structure.HAPElementStructureLeafRelative;
+import com.nosliw.core.application.common.structure.HAPInfoElement;
+import com.nosliw.core.application.common.structure.HAPProcessorStructureElement;
+import com.nosliw.core.application.common.structure.HAPRootInStructure;
+import com.nosliw.core.application.common.structure.HAPUtilityElement;
+import com.nosliw.core.application.common.structure.HAPUtilityStructure;
+import com.nosliw.core.application.common.structure.reference.HAPUtilityProcessRelativeElementInBundle;
 import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualDefinitionBrickValueContext;
 import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualDefinitionBrickWrapperValueStructure;
-import com.nosliw.core.application.division.manual.common.valuecontext22.HAPManualPartInValueContext;
-import com.nosliw.core.application.division.manual.common.valuecontext22.HAPManualPartInValueContextGroupWithEntity;
-import com.nosliw.core.application.division.manual.common.valuecontext22.HAPManualPartInValueContextSimple;
-import com.nosliw.core.application.division.manual.common.valuecontext22.HAPManualUtilityValueContext;
-import com.nosliw.core.application.division.manual.common.valuecontext22.HAPManualValueContext;
-import com.nosliw.core.application.division.manual.common.valuecontext22.HAPManualWrapperStructure;
+import com.nosliw.core.application.division.manual.common.valuecontext.HAPManualPartInValueContext;
+import com.nosliw.core.application.division.manual.common.valuecontext.HAPManualPartInValueContextGroupWithEntity;
+import com.nosliw.core.application.division.manual.common.valuecontext.HAPManualPartInValueContextSimple;
+import com.nosliw.core.application.division.manual.common.valuecontext.HAPManualUtilityValueContext;
+import com.nosliw.core.application.division.manual.common.valuecontext.HAPManualValueContext;
+import com.nosliw.core.application.division.manual.common.valuecontext.HAPManualWrapperStructure;
 import com.nosliw.core.application.division.manual.core.HAPManualBrick;
 import com.nosliw.core.application.division.manual.core.HAPManualManagerBrick;
 import com.nosliw.core.application.division.manual.core.HAPManualUtilityBrick;
@@ -274,7 +275,7 @@ public class HAPManualUtilityProcessorValuePort {
 			//for complex brick, 
 			List<HAPManualPartInValueContext> out = new ArrayList<HAPManualPartInValueContext>();
 			for(HAPManualPartInValueContext part : brick.getManualValueContext().getParts()) {
-				out.add(inheritFromParent(part, HAPManualUtilityValueContext.getInheritableCategaries()));
+				out.add(inheritFromParent(part, HAPUtilityStructure.getInheritableCategaries()));
 			}
 			return out;
 		}

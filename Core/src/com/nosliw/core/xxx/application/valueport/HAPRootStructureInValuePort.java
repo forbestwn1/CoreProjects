@@ -4,7 +4,7 @@ import java.util.Map;
 
 import com.nosliw.common.info.HAPEntityInfoWritableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.core.application.common.structure22.HAPElementStructure;
+import com.nosliw.core.application.common.structure.HAPElementStructure;
 
 public class HAPRootStructureInValuePort extends HAPEntityInfoWritableImp{
 
