@@ -7,6 +7,9 @@ import com.nosliw.core.application.common.dataassociation.HAPDataAssociation;
 import com.nosliw.core.application.common.dataassociation.definition.HAPDefinitionDataAssociation;
 import com.nosliw.core.application.common.dataassociation.definition.HAPDefinitionDataAssociationMapping;
 import com.nosliw.core.application.common.dataassociation.definition.HAPDefinitionProcessorMappingDataAssociation;
+import com.nosliw.core.data.HAPDataTypeHelper;
+import com.nosliw.core.resource.HAPManagerResource;
+import com.nosliw.core.runtime.HAPRuntimeInfo;
 
 public class HAPManualProcessorDataAssociation {
 
@@ -15,12 +18,16 @@ public class HAPManualProcessorDataAssociation {
 			HAPPath baseBlockPath, 
 			HAPPath secondBlockPath,
 			HAPBundle currentBundle, 
-			String rootBrickName) {
+			String rootBrickName,
+			HAPDataTypeHelper dataTypeHelper,
+			HAPManagerResource resourceMan,
+			HAPRuntimeInfo runtimeInfo) 
+	{
 		
 		HAPDataAssociation out = null;
 		String daType = daDef.getType();
 		if(daType.equals(HAPConstantShared.DATAASSOCIATION_TYPE_MAPPING)) {
-			out = HAPDefinitionProcessorMappingDataAssociation.processValueMapping((HAPDefinitionDataAssociationMapping)daDef, baseBlockPath, secondBlockPath, currentBundle, rootBrickName, runtimeEnv);
+			out = HAPDefinitionProcessorMappingDataAssociation.processValueMapping((HAPDefinitionDataAssociationMapping)daDef, baseBlockPath, secondBlockPath, currentBundle, rootBrickName, dataTypeHelper, resourceMan, runtimeInfo);
 		}
 		
 		return out;

@@ -21,9 +21,9 @@ import com.nosliw.core.application.common.structure.HAPInfoElement;
 import com.nosliw.core.application.common.structure.HAPProcessorStructureElement;
 import com.nosliw.core.application.common.structure.HAPStructure;
 import com.nosliw.core.application.common.structure.HAPUtilityElement;
+import com.nosliw.core.application.valueport.HAPReferenceElement;
 import com.nosliw.core.data.matcher.HAPMatchers;
 import com.nosliw.core.runtimeenv.HAPRuntimeEnvironment;
-import com.nosliw.core.xxx.application.valueport.HAPReferenceElement;
 
 public class HAPUtilityStructure {
 

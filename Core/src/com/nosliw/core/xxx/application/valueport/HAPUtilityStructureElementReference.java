@@ -1,20 +1,14 @@
 package com.nosliw.core.xxx.application.valueport;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.nosliw.common.path.HAPComplexPath;
-import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.core.application.HAPBundle;
 import com.nosliw.core.application.HAPDomainValueStructure;
-import com.nosliw.core.application.common.structure.HAPStructureImp;
 import com.nosliw.core.application.common.structure.reference.HAPConfigureResolveElementReference;
-import com.nosliw.core.application.common.structure.reference.HAPUtilityProcessRelativeElementInBundle;
 import com.nosliw.core.application.valueport.HAPIdElement;
 import com.nosliw.core.application.valueport.HAPIdRootElement;
 import com.nosliw.core.application.valueport.HAPIdValuePortInBundle;
+import com.nosliw.core.application.valueport.HAPReferenceElement;
 import com.nosliw.core.application.valueport.HAPResultReferenceResolve;
 import com.nosliw.core.application.valueport.HAPValuePort;
 import com.nosliw.core.application.valueport.HAPWithExternalValuePort;
@@ -48,11 +42,6 @@ public class HAPUtilityStructureElementReference {
 		return ref;
 	}
 	
-
-	public static HAPIdRootElement resolveRootReferenceInBundle(HAPReferenceRootElement rootEleCriteria, HAPConfigureResolveElementReference resolveConfigure, HAPBundle bundle, HAPManagerResource resourceMan, HAPRuntimeInfo runtimeInfo){
-		HAPResultReferenceResolve resolve = analyzeElementReferenceInBundle(new HAPReferenceElement(rootEleCriteria), resolveConfigure, bundle, resourceMan, runtimeInfo);
-		return new HAPIdRootElement(rootEleCriteria.getValuePortId(), resolve.structureId, rootEleCriteria.getRootName());
-	}
 
 
 /*	
@@ -104,15 +93,6 @@ public class HAPUtilityStructureElementReference {
 		return new HAPIdElement(rootEleId, new HAPComplexPath(refResolve.elementPath).getPathStr());
 	}
 	
-	public static HAPResultReferenceResolve analyzeElementReferenceInBundle(HAPReferenceElement reference, HAPConfigureResolveElementReference resolveConfigure, HAPBundle bundle, HAPManagerResource resourceMan, HAPRuntimeInfo runtimeInfo) {
-		HAPInfoValuePort valuePortInfo = HAPUtilityValuePort.getValuePortInBundle(reference.getValuePortId(), bundle, resourceMan, runtimeInfo);
-		HAPResultReferenceResolve resolve = analyzeElementReferenceValuePort(reference, valuePortInfo.getValuePort(), resolveConfigure, valuePortInfo.getValueStructureDomain());
-		if(resolve!=null) {
-			resolve.brickId = reference.getValuePortId().getBrickId();
-		}
-		return resolve;
-	}
-
 	public static HAPResultReferenceResolve analyzeElementReferenceInternal(HAPReferenceElement reference, HAPWithInternalValuePort withValuePort, HAPConfigureResolveElementReference resolveConfigure, HAPDomainValueStructure valueStructureDomain) {
 		HAPValuePort valuePort = HAPUtilityValuePort.getValuePortInternal(reference.getValuePortId(), withValuePort);
 		return analyzeElementReferenceValuePort(reference, valuePort, resolveConfigure, valueStructureDomain);
@@ -123,129 +103,7 @@ public class HAPUtilityStructureElementReference {
 		return analyzeElementReferenceValuePort(reference, valuePort, resolveConfigure, valueStructureDomain);
 	}
 
-	public static HAPResultReferenceResolve analyzeElementReferenceValuePort(HAPReferenceElement reference, HAPValuePort valuePort, HAPConfigureResolveElementReference resolveConfigure, HAPDomainValueStructure valueStructureDomain) {
-		HAPResultReferenceResolve resolve  = resolveReference(reference, valuePort, resolveConfigure, valueStructureDomain);
-		if(resolve!=null) {
-			resolve.valueStructureDomain = valueStructureDomain;
-			resolve.valuePortId = reference.getValuePortId().getValuePortId();
-			resolve.valuePortSide = reference.getValuePortId().getValuePortSide();
-			resolve.elementPath = reference.getElementPath();
-		}
-		return resolve;
-	}
-	
-	private static HAPResultReferenceResolve resolveReference(HAPReferenceElement elementReference, HAPValuePort valuePort, HAPConfigureResolveElementReference configure, HAPDomainValueStructure valueStructureDomain) {
-		List<HAPInfoValueStructureReference> candiateValueStructures = new ArrayList<HAPInfoValueStructureReference>(); 
-		List<String> candiateIds = discoverCandidateValueStructure(elementReference.getValueStructureReference(), valuePort, configure, valueStructureDomain);
-		for(String valueStructureId : candiateIds) {
-			candiateValueStructures.add(new HAPInfoValueStructureReference(valueStructureId, valueStructureDomain.getStructureDefinitionByRuntimeId(valueStructureId)));
-		}
-		HAPResultReferenceResolve out = analyzeElementReference(elementReference.getElementPath(), candiateValueStructures, configure);
-		
-		if(out==null) {
-			//extension
-			if(configure==null||configure.isExtension()) {
-//				String valueStructureForExtensionId = this.discoverCandidateValueStructure(configure==null?null:configure.getValueStructureForExtension(), configure).get(0);
-//				out = extendValueStructure(valueStructureForExtensionId, elementReference.getElementPath(), new HAPElementStructureUnknown(), configure);
-			}
-			else {
-				throw new RuntimeException();
-			}
-		}
-		
-		return out;
-	}
-	
-	private static List<String> discoverCandidateValueStructure(HAPReferenceValueStructure valueStructureCriteria, HAPValuePort valuePort, HAPConfigureResolveElementReference configure, HAPDomainValueStructure valueStructureDomain) {
-		List<String> out = new ArrayList<String>();
-		
-		for(String valueStructureId : valuePort.getValueStructureIds()) {
-			boolean isValid = true;
 
-			HAPStructureImp valueStructureDefInfo = valueStructureDomain.getStructureDefinitionByRuntimeId(valueStructureId);
-
-			//check runtime id
-			if(isValid) {
-				String valueStructueDefId = valueStructureCriteria==null? null : valueStructureCriteria.getId();
-				if(valueStructueDefId!=null) {
-					if(!valueStructueDefId.equals(valueStructureId)){
-						isValid = false;
-					}
-				}
-			}
-			
-			//check group type
-//			if(isValid) {
-//				if(m_groupTypes!=null&&!m_groupTypes.isEmpty()) {
-//					if(!m_groupTypes.contains(wraper.getGroupType())) {
-//						isValid = false;
-//					}
-//				}
-//			}
-
-			//check name
-//			if(isValid) {
-//				String valueStructureName = valueStructureCriteria==null? null : valueStructureCriteria.getName();
-//				if(valueStructureName!=null) {
-//					if(!valueStructureDefInfo.getExtraInfo().getName().equals(valueStructureName)){
-//						isValid = false;
-//					}
-//				}
-//			}
-			
-			if(isValid) {
-				String id = valueStructureId;
-				out.add(id);
-			}
-		}
-		return out;
-	}
-	
-	
-	//find best resolved element from structure 
-	private static HAPResultReferenceResolve analyzeElementReference(String elementPath, List<HAPInfoValueStructureReference> targetStructures, HAPConfigureResolveElementReference resolveConfigure){
-		if(targetStructures==null) {
-			return null;
-		}
-
-		if(resolveConfigure==null) {
-			resolveConfigure = new HAPConfigureResolveElementReference();
-		}
-		
-		List<HAPResultReferenceResolve> resolveCandidates = new ArrayList<HAPResultReferenceResolve>();
-		for(HAPInfoValueStructureReference valueStructureInfo : targetStructures) {
-			HAPResultReferenceResolve resolved = HAPUtilityProcessRelativeElementInBundle.analyzeElementReference(elementPath, valueStructureInfo.getStructureDefinition(), resolveConfigure);
-			if(resolved!=null) {
-				resolved.structureId = valueStructureInfo.getValueStructureId();
-				resolveCandidates.add(resolved);
-				if(HAPConstant.RESOLVEPARENTMODE_FIRST.equals(resolveConfigure.searchMode)) {
-					break;
-				}
-			}
-		}
-		
-		//find best resolve from candidate
-		//remaining path is shortest
-		HAPResultReferenceResolve out = null;
-		int length = 99999;
-		for(HAPResultReferenceResolve candidate : resolveCandidates) {
-			HAPPath remainingPath = candidate.elementInfoSolid.remainPath;
-			if(remainingPath.isEmpty()) {
-				//all path solved
-				out = candidate;
-				break;
-			}
-			else {
-				//some remaining path unsolved, find the shortest one 
-				if(remainingPath.getLength()<length) {
-					length = remainingPath.getLength();
-					out = candidate;
-				}
-			}
-		}
-		return out;
-	}
-	
 	
 /*	
 	

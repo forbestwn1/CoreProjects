@@ -3,6 +3,7 @@ package com.nosliw.core.application.valueport;
 import org.apache.commons.lang3.tuple.Pair;
 
 import com.nosliw.common.path.HAPPath;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.HAPBrick;
 import com.nosliw.core.application.HAPBundle;
 import com.nosliw.core.application.HAPResourceDataBrick;
@@ -31,6 +32,18 @@ public class HAPUtilityBrickValuePort {
 			
 		}
 		return null;
+	}
+
+	public static HAPInfoValuePort getValuePortInBundle(HAPIdValuePortInBundle valuePortRef, HAPBundle bundle, HAPManagerResource resourceMan, HAPRuntimeInfo runtimeInfo) {
+		HAPInfoValuePortContainer valuePortContainerInfo = HAPUtilityBrickValuePort.getDescdentValuePortContainerInfo(bundle, null, new HAPPath(valuePortRef.getBrickId().getIdPath()), resourceMan, runtimeInfo);
+		HAPContainerValuePorts valuePortContainer;
+		if(HAPConstantShared.VALUEPORTGROUP_SIDE_INTERNAL.equals(valuePortRef.getValuePortSide())) {
+			valuePortContainer = valuePortContainerInfo.getValuePortContainerPair().getLeft();
+		}
+		else {
+			valuePortContainer = valuePortContainerInfo.getValuePortContainerPair().getRight();
+		}
+		return new HAPInfoValuePort(valuePortContainer.getValuePort(valuePortRef.getValuePortId()), valuePortContainerInfo.getValueStructureDomain());
 	}
 	
 }

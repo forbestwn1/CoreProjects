@@ -1,4 +1,4 @@
-package com.nosliw.core.xxx.application.valueport;
+package com.nosliw.core.application.valueport;
 
 import java.util.Map;
 
@@ -7,7 +7,6 @@ import org.json.JSONObject;
 import com.nosliw.common.path.HAPComplexPath;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPUtilityBasic;
-import com.nosliw.core.application.valueport.HAPIdValuePortInBundle;
 
 //criteria for reference
 public class HAPReferenceElement extends HAPReferenceRootElement{

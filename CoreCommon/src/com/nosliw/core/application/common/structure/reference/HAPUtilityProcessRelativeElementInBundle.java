@@ -14,6 +14,7 @@ import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.HAPBundle;
+import com.nosliw.core.application.HAPUtilityResolveElementInBundle;
 import com.nosliw.core.application.common.structure.HAPElementStructure;
 import com.nosliw.core.application.common.structure.HAPElementStructureLeafData;
 import com.nosliw.core.application.common.structure.HAPElementStructureLeafRelative;
@@ -29,6 +30,7 @@ import com.nosliw.core.application.common.structure.HAPUtilityElement;
 import com.nosliw.core.application.common.variable.HAPDataRule;
 import com.nosliw.core.application.common.variable.HAPVariableDataInfo;
 import com.nosliw.core.application.valueport.HAPIdValuePortInBundle;
+import com.nosliw.core.application.valueport.HAPReferenceElement;
 import com.nosliw.core.application.valueport.HAPResultReferenceResolve;
 import com.nosliw.core.data.HAPDataTypeHelper;
 import com.nosliw.core.data.matcher.HAPMatcherUtility;
@@ -36,8 +38,6 @@ import com.nosliw.core.data.matcher.HAPMatchers;
 import com.nosliw.core.resource.HAPManagerResource;
 import com.nosliw.core.runtime.HAPRuntimeInfo;
 import com.nosliw.core.runtimeenv.HAPRuntimeEnvironment;
-import com.nosliw.core.xxx.application.valueport.HAPReferenceElement;
-import com.nosliw.core.xxx.application.valueport.HAPUtilityStructureElementReference;
 
 public class HAPUtilityProcessRelativeElementInBundle {
 
@@ -98,7 +98,7 @@ public class HAPUtilityProcessRelativeElementInBundle {
 		
 		HAPReferenceElement pathReference = defStructureElementRelative.getReference();
 //		HAPResultReferenceResolve resolveInfo = HAPUtilityProcessRelativeElementInBundle.analyzeElementReference(pathReference, relativeEleProcessConfigure==null?null:relativeEleProcessConfigure.getResolveStructureElementReferenceConfigure(), processContext);
-		HAPResultReferenceResolve resolveInfo = HAPUtilityStructureElementReference.analyzeElementReferenceInBundle(pathReference, null, bundle, resourceMan, runtimeInfo);
+		HAPResultReferenceResolve resolveInfo = HAPUtilityResolveElementInBundle.analyzeElementReferenceInBundle(pathReference, null, bundle, resourceMan, runtimeInfo);
 		
 		if(resolveInfo==null) {
 			errors.add(HAPServiceData.createFailureData(defStructureElementRelative, HAPConstant.ERROR_PROCESSCONTEXT_NOREFFEREDNODE));

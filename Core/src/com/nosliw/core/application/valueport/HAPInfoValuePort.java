@@ -1,7 +1,6 @@
-package com.nosliw.core.xxx.application.valueport;
+package com.nosliw.core.application.valueport;
 
-import com.nosliw.core.application.valueport.HAPValuePort;
-import com.nosliw.core.xxx.application1.valuestructure.HAPDomainValueStructure;
+import com.nosliw.core.application.HAPDomainValueStructure;
 
 public class HAPInfoValuePort {
 

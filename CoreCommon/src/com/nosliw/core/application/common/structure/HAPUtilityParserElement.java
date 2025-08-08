@@ -5,10 +5,10 @@ import org.json.JSONObject;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.core.application.common.structure.reference.HAPInfoRelativeResolve;
 import com.nosliw.core.application.common.variable.HAPVariableDataInfo;
+import com.nosliw.core.application.valueport.HAPReferenceElement;
 import com.nosliw.core.xxx.application.common.structure.HAPElementStructureLeafConstantReference;
 import com.nosliw.core.xxx.application.common.structure.HAPElementStructureLeafProvide;
 import com.nosliw.core.xxx.application.common.structure.HAPElementStructureLeafRuntime;
-import com.nosliw.core.xxx.application.valueport.HAPReferenceElement;
 
 public class HAPUtilityParserElement {
 

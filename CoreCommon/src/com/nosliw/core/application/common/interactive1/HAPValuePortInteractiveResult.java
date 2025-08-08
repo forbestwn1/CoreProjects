@@ -8,10 +8,10 @@ import com.nosliw.core.application.common.interactive.HAPInteractiveResultTask;
 import com.nosliw.core.application.common.interactive.HAPResultElementInInteractiveTask;
 import com.nosliw.core.application.common.structure.HAPElementStructureLeafData;
 import com.nosliw.core.application.valueport.HAPIdValuePortInBrick;
+import com.nosliw.core.application.valueport.HAPInfoValuePort;
+import com.nosliw.core.application.valueport.HAPReferenceValueStructure;
 import com.nosliw.core.xxx.application.common.structure.HAPRootStructure;
-import com.nosliw.core.xxx.application.valueport.HAPInfoValuePort;
 import com.nosliw.core.xxx.application.valueport.HAPInfoValueStructureReference;
-import com.nosliw.core.xxx.application.valueport.HAPReferenceValueStructure;
 import com.nosliw.core.xxx.application.valueport.HAPValuePortImp;
 import com.nosliw.core.xxx.application1.division.manual.brick.valuestructure.HAPManualBrickValueStructure;
 

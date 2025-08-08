@@ -4,7 +4,7 @@ import java.util.Set;
 
 import com.nosliw.common.info.HAPInfoImpSimple;
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.core.xxx.application.valueport.HAPReferenceValueStructure;
+import com.nosliw.core.application.valueport.HAPReferenceValueStructure;
 
 //configure for resolve 
 public class HAPConfigureResolveElementReference extends HAPInfoImpSimple{

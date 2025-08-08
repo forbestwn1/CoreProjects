@@ -13,6 +13,7 @@ import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.HAPBundle;
+import com.nosliw.core.application.HAPUtilityResolveElementInBundle;
 import com.nosliw.core.application.common.dataassociation.HAPDataAssociationMapping;
 import com.nosliw.core.application.common.dataassociation.HAPTunnel;
 import com.nosliw.core.application.common.structure.HAPElementStructure;
@@ -27,14 +28,13 @@ import com.nosliw.core.application.common.structure.reference.HAPInfoRelativeRes
 import com.nosliw.core.application.common.structure.reference.HAPUtilityResolveReference;
 import com.nosliw.core.application.valueport.HAPIdRootElement;
 import com.nosliw.core.application.valueport.HAPIdValuePortInBundle;
+import com.nosliw.core.application.valueport.HAPReferenceElement;
+import com.nosliw.core.application.valueport.HAPReferenceRootElement;
 import com.nosliw.core.application.valueport.HAPResultReferenceResolve;
 import com.nosliw.core.application.valueport.HAPUtilityValuePort;
 import com.nosliw.core.data.HAPDataTypeHelper;
 import com.nosliw.core.resource.HAPManagerResource;
 import com.nosliw.core.runtime.HAPRuntimeInfo;
-import com.nosliw.core.xxx.application.valueport.HAPReferenceElement;
-import com.nosliw.core.xxx.application.valueport.HAPReferenceRootElement;
-import com.nosliw.core.xxx.application.valueport.HAPUtilityStructureElementReference;
 
 public class HAPDefinitionProcessorMappingDataAssociation {
 
@@ -44,8 +44,8 @@ public class HAPDefinitionProcessorMappingDataAssociation {
 			HAPPath secondBlockPath,
 			HAPBundle currentBundle, 
 			String rootBrickName,
-			HAPManagerResource resourceMan,
 			HAPDataTypeHelper dataTypeHelper,
+			HAPManagerResource resourceMan,
 			HAPRuntimeInfo runtimeInfo) 
 	{
 		HAPDataAssociationMapping out = new HAPDataAssociationMapping();
@@ -58,7 +58,7 @@ public class HAPDefinitionProcessorMappingDataAssociation {
 			
 			//process out reference (root name)
 			HAPReferenceRootElement targetRef = mappingItem.getTarget();
-			HAPIdRootElement targetRootEleId = HAPUtilityStructureElementReference.resolveRootReferenceInBundle(targetRef, null, currentBundle, resourceMan, runtimeInfo);
+			HAPIdRootElement targetRootEleId = HAPUtilityResolveElementInBundle.resolveRootReferenceInBundle(targetRef, null, currentBundle, resourceMan, runtimeInfo);
 			 
 			//process in reference (relative elements)
 			HAPElementStructure processedItem = processElementStructure(mappingItem.getDefinition(), new HAPConfigureProcessorRelative(), baseBlockPath, null, null, currentBundle, resourceMan, runtimeInfo);
@@ -85,7 +85,7 @@ public class HAPDefinitionProcessorMappingDataAssociation {
 				HAPReferenceElement pathReference = defStructureElementRelative.getReference();
 //				pathReference.setValuePortId(HAPUtilityBrickValuePort.normalizeInBundleValuePortId(pathReference.getValuePortId(), HAPConstantShared.IO_DIRECTION_OUT, baseBlockPath, currentBundle, resourceMan, runtimeInfo));
 				
-				HAPResultReferenceResolve resolveInfo = HAPUtilityStructureElementReference.analyzeElementReferenceInBundle(pathReference, relativeEleProcessConfigure.getResolveStructureElementReferenceConfigure(), currentBundle, resourceMan, runtimeInfo);
+				HAPResultReferenceResolve resolveInfo = HAPUtilityResolveElementInBundle.analyzeElementReferenceInBundle(pathReference, relativeEleProcessConfigure.getResolveStructureElementReferenceConfigure(), currentBundle, resourceMan, runtimeInfo);
 				
 				if(resolveInfo==null) {
 					errors.add(HAPServiceData.createFailureData(defStructureElement, HAPConstant.ERROR_PROCESSCONTEXT_NOREFFEREDNODE));

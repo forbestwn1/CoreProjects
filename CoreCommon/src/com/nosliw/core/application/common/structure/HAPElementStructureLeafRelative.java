@@ -7,7 +7,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.core.application.common.structure.reference.HAPInfoRelativeResolve;
-import com.nosliw.core.xxx.application.valueport.HAPReferenceElement;
+import com.nosliw.core.application.valueport.HAPReferenceElement;
 
 //a element refer to another element (on another tree or same tree)
 //it can be use in define value structure by reference to another element

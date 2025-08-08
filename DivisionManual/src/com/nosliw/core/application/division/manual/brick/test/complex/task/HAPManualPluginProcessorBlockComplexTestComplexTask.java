@@ -22,7 +22,7 @@ import com.nosliw.core.application.division.manual.core.process.HAPManualPluginP
 import com.nosliw.core.application.valueport.HAPIdElement;
 import com.nosliw.core.application.valueport.HAPIdValuePortInBrick;
 import com.nosliw.core.application.valueport.HAPIdValuePortInBundle;
-import com.nosliw.core.xxx.application.valueport.HAPReferenceElement;
+import com.nosliw.core.application.valueport.HAPReferenceElement;
 import com.nosliw.core.xxx.application.valueport.HAPUtilityStructureElementReference;
 import com.nosliw.core.xxx.application.valueport.HAPUtilityValuePort;
 import com.nosliw.core.xxx.application1.brick.HAPEnumBrickType;

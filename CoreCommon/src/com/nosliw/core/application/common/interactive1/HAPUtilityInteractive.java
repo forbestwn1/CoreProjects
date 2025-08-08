@@ -12,8 +12,8 @@ import com.nosliw.core.application.common.structure.HAPElementStructureLeafConst
 import com.nosliw.core.application.common.structure.HAPElementStructureLeafData;
 import com.nosliw.core.application.common.structure.HAPElementStructureLeafRelative;
 import com.nosliw.core.application.common.variable.HAPVariableDefinition;
+import com.nosliw.core.application.valueport.HAPReferenceElement;
 import com.nosliw.core.application.valueport.HAPResultReferenceResolve;
-import com.nosliw.core.xxx.application.valueport.HAPReferenceElement;
 import com.nosliw.core.xxx.application.valueport.HAPUtilityStructureElementReference;
 import com.nosliw.core.xxx.application1.brick.interactive.interfacee.task.HAPDefinitionInteractive;
 import com.nosliw.core.xxx.application1.division.manual.brick.adapter.dataassociationfortask.HAPDefinitionGroupDataAssociationForTask;

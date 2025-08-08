@@ -10,6 +10,9 @@ import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.core.application.common.structure.HAPElementStructure;
 import com.nosliw.core.application.common.structure.HAPUtilityElement;
 import com.nosliw.core.application.common.structure.reference.HAPConfigureResolveElementReference;
+import com.nosliw.core.application.valueport.HAPInfoValuePort;
+import com.nosliw.core.application.valueport.HAPReferenceElement;
+import com.nosliw.core.application.valueport.HAPReferenceValueStructure;
 import com.nosliw.core.application.valueport.HAPResultReferenceResolve;
 import com.nosliw.core.xxx.application.common.structure.HAPElementStructureUnknown;
 

@@ -26,8 +26,8 @@ import com.nosliw.core.application.division.manual.core.HAPManualBrick;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionBrick;
 import com.nosliw.core.application.division.manual.core.process.HAPManualContextProcessBrick;
 import com.nosliw.core.application.division.manual.core.process.HAPManualPluginProcessorBlockImp;
+import com.nosliw.core.application.valueport.HAPReferenceElement;
 import com.nosliw.core.application.valueport.HAPResultReferenceResolve;
-import com.nosliw.core.xxx.application.valueport.HAPReferenceElement;
 import com.nosliw.core.xxx.application.valueport.HAPUtilityStructureElementReference;
 import com.nosliw.core.xxx.application.valueport.HAPUtilityValuePort;
 
