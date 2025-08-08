@@ -9,8 +9,8 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfoImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.core.application.HAPIdBrickInBundle;
-import com.nosliw.core.application.common.structure.HAPElementStructure;
-import com.nosliw.core.application.common.structure.HAPParserStructure;
+import com.nosliw.core.application.common.structure22.HAPElementStructure;
+import com.nosliw.core.application.common.structure22.HAPUtilityParserElement;
 
 @HAPEntityWithAttribute
 public class HAPInfoTrigguerTask extends HAPEntityInfoImp{
@@ -52,7 +52,7 @@ public class HAPInfoTrigguerTask extends HAPEntityInfoImp{
 		
 		this.m_trigguerType = (String)jsonObj.opt(TRIGGUERTYPE);
 		
-		this.m_dataDefinition = HAPParserStructure.parseStructureElement(jsonObj.optJSONObject(DATADEFINITION));
+		this.m_dataDefinition = HAPUtilityParserElement.parseStructureElement(jsonObj.optJSONObject(DATADEFINITION));
 		
 		this.m_handlerId = new HAPIdBrickInBundle();
 		this.m_handlerId.buildObject(jsonObj.opt(HANDLERID), HAPSerializationFormat.JSON);

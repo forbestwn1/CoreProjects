@@ -10,13 +10,13 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityFile;
 import com.nosliw.core.application.common.parentrelation.HAPManualDefinitionBrickRelation;
-import com.nosliw.core.application.common.structure.HAPElementStructureLeafData;
-import com.nosliw.core.application.common.structure.HAPElementStructureLeafRelativeForValue;
-import com.nosliw.core.application.common.structure.HAPRootInStructure;
-import com.nosliw.core.application.common.structure.HAPUtilityValueStructureParser;
-import com.nosliw.core.application.common.structure.HAPValueStructure;
-import com.nosliw.core.application.common.structure.HAPValueStructureImp;
-import com.nosliw.core.application.common.structure.HAPWrapperValueStructure;
+import com.nosliw.core.application.common.structure22.HAPElementStructureLeafData;
+import com.nosliw.core.application.common.structure22.HAPElementStructureLeafRelativeForValue;
+import com.nosliw.core.application.common.structure22.HAPRootInStructure;
+import com.nosliw.core.application.common.structure22.HAPUtilityParserStructure;
+import com.nosliw.core.application.common.structure22.HAPValueStructure;
+import com.nosliw.core.application.common.structure22.HAPValueStructureImp;
+import com.nosliw.core.application.common.structure22.HAPWrapperValueStructureDefinition;
 import com.nosliw.core.resource.HAPFactoryResourceId;
 import com.nosliw.core.resource.HAPResourceId;
 import com.nosliw.core.xxx.application1.HAPWithValueContext;
@@ -48,7 +48,7 @@ public class HAPUtilityUITagDefinitionParser {
 
 		//parse data type criteria
 		if(HAPConstantShared.UITAG_TYPE_DATA.equals(uiTagType)) {
-			for(HAPWrapperValueStructure wrapper : valueContext.getValueStructures()) {
+			for(HAPWrapperValueStructureDefinition wrapper : valueContext.getValueStructures()) {
 				HAPValueStructure vs = wrapper.getValueStructure();
 				Map<String, HAPRootInStructure> roots = vs.getRoots();
 				for(String rootName : roots.keySet()) {
@@ -189,10 +189,10 @@ public class HAPUtilityUITagDefinitionParser {
 			
 			HAPUITagWrapperValueStructure valueStructureWrapper = new HAPUITagWrapperValueStructure();
 			
-			HAPUtilityValueStructureParser.parseValueStructureWrapper(valueStructureWrapper, valueStructureWrapperObj);
+			HAPUtilityParserStructure.parseValueStructureWrapper(valueStructureWrapper, valueStructureWrapperObj);
 			
 			HAPValueStructure valueStructure = new HAPValueStructureImp();
-			HAPUtilityValueStructureParser.parseValueStructureJson(valueStructureWrapperObj.getJSONObject(HAPWrapperValueStructure.VALUESTRUCTURE), valueStructure);
+			HAPUtilityParserStructure.parseValueStructureJson(valueStructureWrapperObj.getJSONObject(HAPWrapperValueStructureDefinition.VALUESTRUCTURE), valueStructure);
 			valueStructureWrapper.setValueStructure(valueStructure);
 			
 			valueContext.getValueStructures().add(valueStructureWrapper);

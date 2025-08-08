@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.core.application.division.manual.common.valuecontext22.HAPManualInfoPartInValueContext;
+import com.nosliw.core.application.division.manual.common.valuecontext22.HAPManualPartInValueContext;
 
 public class HAPManualPartInValueContextGroupWithReference extends HAPManualPartInValueContext{
 

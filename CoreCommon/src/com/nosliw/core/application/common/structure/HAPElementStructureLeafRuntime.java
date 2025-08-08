@@ -8,6 +8,7 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.core.application.common.dataassociation.HAPInfoElementRuntime;
+import com.nosliw.core.application.common.structure22.HAPElementStructure;
 
 @HAPEntityWithAttribute
 public class HAPElementStructureLeafRuntime extends HAPElementStructure{

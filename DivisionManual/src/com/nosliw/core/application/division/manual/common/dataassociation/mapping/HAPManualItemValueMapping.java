@@ -7,7 +7,7 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfoWritableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPManagerSerialize;
-import com.nosliw.core.application.common.structure.HAPElementStructure;
+import com.nosliw.core.application.common.structure22.HAPElementStructure;
 import com.nosliw.core.xxx.application.valueport.HAPReferenceRootElement;
 
 @HAPEntityWithAttribute

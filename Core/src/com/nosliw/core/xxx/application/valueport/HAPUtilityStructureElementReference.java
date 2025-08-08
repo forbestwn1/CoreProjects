@@ -9,8 +9,11 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.core.application.HAPBundle;
 import com.nosliw.core.application.HAPDomainValueStructure;
-import com.nosliw.core.application.common.structure.HAPStructureImp;
-import com.nosliw.core.application.common.structure.reference.HAPUtilityProcessRelativeElement;
+import com.nosliw.core.application.common.structure22.HAPStructureImp;
+import com.nosliw.core.application.common.structure222.reference.HAPConfigureResolveElementReference;
+import com.nosliw.core.application.common.structure222.reference.HAPUtilityProcessRelativeElementInBundle;
+import com.nosliw.core.application.valueport.HAPIdValuePortInBundle;
+import com.nosliw.core.application.valueport.HAPResultReferenceResolve;
 import com.nosliw.core.application.valueport.HAPValuePort;
 import com.nosliw.core.application.valueport.HAPWithExternalValuePort;
 import com.nosliw.core.application.valueport.HAPWithInternalValuePort;
@@ -209,7 +212,7 @@ public class HAPUtilityStructureElementReference {
 		
 		List<HAPResultReferenceResolve> resolveCandidates = new ArrayList<HAPResultReferenceResolve>();
 		for(HAPInfoValueStructureReference valueStructureInfo : targetStructures) {
-			HAPResultReferenceResolve resolved = HAPUtilityProcessRelativeElement.analyzeElementReference(elementPath, valueStructureInfo.getStructureDefinition(), resolveConfigure);
+			HAPResultReferenceResolve resolved = HAPUtilityProcessRelativeElementInBundle.analyzeElementReference(elementPath, valueStructureInfo.getStructureDefinition(), resolveConfigure);
 			if(resolved!=null) {
 				resolved.structureId = valueStructureInfo.getValueStructureId();
 				resolveCandidates.add(resolved);

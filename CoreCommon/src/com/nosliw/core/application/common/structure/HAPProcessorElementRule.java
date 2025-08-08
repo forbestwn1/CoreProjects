@@ -3,6 +3,10 @@ package com.nosliw.core.application.common.structure;
 import org.apache.commons.lang3.tuple.Pair;
 
 import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.core.application.common.structure22.HAPElementStructure;
+import com.nosliw.core.application.common.structure22.HAPElementStructureLeafData;
+import com.nosliw.core.application.common.structure22.HAPInfoElement;
+import com.nosliw.core.application.common.structure22.HAPProcessorStructureElement;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPProcessorElementRule {

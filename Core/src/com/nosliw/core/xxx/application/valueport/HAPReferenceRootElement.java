@@ -10,6 +10,7 @@ import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPUtilityBasic;
+import com.nosliw.core.application.valueport.HAPIdValuePortInBundle;
 
 @HAPEntityWithAttribute
 public class HAPReferenceRootElement extends HAPSerializableImp{

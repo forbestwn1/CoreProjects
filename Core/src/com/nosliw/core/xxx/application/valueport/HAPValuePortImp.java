@@ -7,9 +7,11 @@ import java.util.Set;
 import com.nosliw.common.path.HAPComplexPath;
 import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.utils.HAPConstant;
-import com.nosliw.core.application.common.structure.HAPElementStructure;
 import com.nosliw.core.application.common.structure.HAPElementStructureUnknown;
 import com.nosliw.core.application.common.structure.HAPUtilityStructure;
+import com.nosliw.core.application.common.structure22.HAPElementStructure;
+import com.nosliw.core.application.common.structure222.reference.HAPConfigureResolveElementReference;
+import com.nosliw.core.application.valueport.HAPResultReferenceResolve;
 
 public abstract class HAPValuePortImp implements HAPValuePort1111{
 

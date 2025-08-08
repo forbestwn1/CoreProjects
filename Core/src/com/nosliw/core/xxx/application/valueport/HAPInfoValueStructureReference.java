@@ -1,6 +1,6 @@
 package com.nosliw.core.xxx.application.valueport;
 
-import com.nosliw.core.application.common.structure.HAPStructureImp;
+import com.nosliw.core.application.common.structure22.HAPStructureImp;
 
 public class HAPInfoValueStructureReference {
 

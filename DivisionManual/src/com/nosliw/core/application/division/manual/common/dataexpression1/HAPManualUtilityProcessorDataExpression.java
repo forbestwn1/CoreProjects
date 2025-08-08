@@ -11,13 +11,13 @@ import com.nosliw.core.application.common.dataexpression.definition.HAPDefinitio
 import com.nosliw.core.application.common.dataexpression.definition.HAPDefinitionOperandOperation;
 import com.nosliw.core.application.common.dataexpression.definition.HAPDefinitionOperandReference;
 import com.nosliw.core.application.common.dataexpression.definition.HAPDefinitionOperandVariable;
-import com.nosliw.core.application.common.structure.HAPElementStructure;
-import com.nosliw.core.application.common.structure.HAPElementStructureLeafData;
+import com.nosliw.core.application.common.structure22.HAPElementStructure;
+import com.nosliw.core.application.common.structure22.HAPElementStructureLeafData;
+import com.nosliw.core.application.common.structure222.reference.HAPConfigureResolveElementReference;
 import com.nosliw.core.application.common.withvariable.HAPContainerVariableInfo;
 import com.nosliw.core.resource.HAPFactoryResourceId;
 import com.nosliw.core.resource.HAPResourceId;
 import com.nosliw.core.resource.HAPUtilityResource;
-import com.nosliw.core.xxx.application.valueport.HAPConfigureResolveElementReference;
 import com.nosliw.core.xxx.application.valueport.HAPInfoElementResolve;
 import com.nosliw.core.xxx.application.valueport.HAPUtilityStructureElementReference;
 import com.nosliw.core.xxx.application1.brick.dataexpression.library.HAPBlockDataExpressionElementInLibrary;

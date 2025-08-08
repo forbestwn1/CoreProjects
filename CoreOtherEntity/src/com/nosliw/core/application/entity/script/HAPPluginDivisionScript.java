@@ -14,6 +14,7 @@ import com.nosliw.core.application.HAPIdBrickType;
 import com.nosliw.core.application.HAPPluginDivision;
 import com.nosliw.core.application.HAPWrapperBrickRoot;
 import com.nosliw.core.application.brick.HAPEnumBrickType;
+import com.nosliw.core.runtime.HAPRuntimeInfo;
 import com.nosliw.core.system.HAPSystemFolderUtility;
 
 @Component
@@ -26,7 +27,7 @@ public class HAPPluginDivisionScript implements HAPPluginDivision{
 	public String getDivisionName() {  return HAPConstantShared.BRICK_DIVISION_SCRIPT;  }
 
 	@Override
-	public HAPBundle getBundle(HAPIdBrick brickId) {
+	public HAPBundle getBundle(HAPIdBrick brickId, HAPRuntimeInfo runtimeInfo) {
 		HAPIdBrickType brickTypeId = brickId.getBrickTypeId();
 		
 		String scriptFileName = HAPSystemFolderUtility.getManualBrickBaseFolder() + brickTypeId.getBrickType() + "/" + brickId.getId() + ".js";

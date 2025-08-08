@@ -19,27 +19,27 @@ import com.nosliw.core.application.common.scriptexpression.HAPDefinitionScriptEx
 import com.nosliw.core.application.common.scriptexpression.HAPDefinitionScriptExpressionItemInContainer;
 import com.nosliw.core.application.common.scriptexpression.HAPManualExpressionScript;
 import com.nosliw.core.application.common.scriptexpression.HAPUtilityScriptExpressionConstant;
-import com.nosliw.core.application.common.structure.HAPElementStructure;
-import com.nosliw.core.application.common.structure.HAPElementStructureLeafData;
-import com.nosliw.core.application.common.structure.HAPElementStructureLeafRelativeForDefinition;
-import com.nosliw.core.application.common.structure.HAPElementStructureLeafRelativeForValue;
-import com.nosliw.core.application.common.structure.HAPInfoElement;
 import com.nosliw.core.application.common.structure.HAPInfoRelativeResolve;
-import com.nosliw.core.application.common.structure.HAPProcessorStructureElement;
-import com.nosliw.core.application.common.structure.HAPRootInStructure;
-import com.nosliw.core.application.common.structure.HAPUtilityStructure;
 import com.nosliw.core.application.common.structure.HAPUtilityStructureWithScriptExpression;
-import com.nosliw.core.application.common.structure.HAPValueStructure;
-import com.nosliw.core.application.common.structure.HAPValueStructureImp;
-import com.nosliw.core.application.common.structure.reference.HAPUtilityProcessRelativeElement;
+import com.nosliw.core.application.common.structure22.HAPElementStructure;
+import com.nosliw.core.application.common.structure22.HAPElementStructureLeafData;
+import com.nosliw.core.application.common.structure22.HAPElementStructureLeafRelativeForDefinition;
+import com.nosliw.core.application.common.structure22.HAPElementStructureLeafRelativeForValue;
+import com.nosliw.core.application.common.structure22.HAPInfoElement;
+import com.nosliw.core.application.common.structure22.HAPProcessorStructureElement;
+import com.nosliw.core.application.common.structure22.HAPRootInStructure;
+import com.nosliw.core.application.common.structure22.HAPUtilityElement;
+import com.nosliw.core.application.common.structure22.HAPValueStructure;
+import com.nosliw.core.application.common.structure22.HAPValueStructureImp;
+import com.nosliw.core.application.common.structure222.reference.HAPUtilityProcessRelativeElementInBundle;
 import com.nosliw.core.application.common.variable.HAPVariableDataInfo;
 import com.nosliw.core.application.division.story.brick.HAPStoryInfoVariable;
 import com.nosliw.core.application.division.story.brick.HAPStoryNode;
 import com.nosliw.core.application.division.story.brick.node.HAPStoryNodeVariable;
 import com.nosliw.core.application.division.story.change.HAPStoryRequestChangeWrapper;
-import com.nosliw.core.xxx.application.valueport.HAPResultReferenceResolve;
+import com.nosliw.core.application.valueport.HAPResultReferenceResolve;
+import com.nosliw.core.runtimeenv.HAPRuntimeEnvironment;
 import com.nosliw.data.core.runtime.HAPInfoRuntimeTaskTaskScriptExpressionConstantGroup;
-import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 import com.nosliw.data.core.runtime.js.imp.rhino.task.HAPRuntimeTaskExecuteRhinoScriptExpressionConstantGroup;
 
 public class HAPStoryUtilityVariable {
@@ -89,7 +89,7 @@ public class HAPStoryUtilityVariable {
 		//resolve relative
 		Map<String, HAPRootInStructure> roots = valueStructure.getRoots();
 		for(String rootName : roots.keySet()) {
-			HAPUtilityStructure.traverseElement(roots.get(rootName).getDefinition(), null, new HAPProcessorStructureElement() {
+			HAPUtilityElement.traverseElement(roots.get(rootName).getDefinition(), null, new HAPProcessorStructureElement() {
 
 				@Override
 				public Pair<Boolean, HAPElementStructure> process(HAPInfoElement eleInfo, Object value) {
@@ -97,14 +97,14 @@ public class HAPStoryUtilityVariable {
 					String eleType = ele.getType();
 					if(eleType.equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_RELATIVE_FOR_VALUE)) {
 						HAPElementStructureLeafRelativeForValue forValueEle = (HAPElementStructureLeafRelativeForValue)ele;
-						HAPResultReferenceResolve resolveInfo = HAPUtilityProcessRelativeElement.analyzeElementReference(forValueEle.getReference().getElementPath(), valueStructureFromParent, null);
-						resolveInfo.finalElement = HAPUtilityProcessRelativeElement.resolveFinalElement(resolveInfo.elementInfoSolid, false);
+						HAPResultReferenceResolve resolveInfo = HAPUtilityProcessRelativeElementInBundle.analyzeElementReference(forValueEle.getReference().getElementPath(), valueStructureFromParent, null);
+						resolveInfo.finalElement = HAPUtilityProcessRelativeElementInBundle.resolveFinalElement(resolveInfo.elementInfoSolid, false);
 						forValueEle.setResolvedInfo(new HAPInfoRelativeResolve(resolveInfo.structureId, new HAPComplexPath(resolveInfo.rootName, resolveInfo.elementInfoSolid.solvedPath), resolveInfo.elementInfoSolid.remainPath, resolveInfo.finalElement));
 					}
 					else if(eleType.equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_RELATIVE_FOR_DEFINITION)) {
 						HAPElementStructureLeafRelativeForDefinition relativeEle = (HAPElementStructureLeafRelativeForDefinition)ele;
-						HAPResultReferenceResolve resolveInfo = HAPUtilityProcessRelativeElement.analyzeElementReference(relativeEle.getReference().getElementPath(), valueStructureFromParent, null);
-						resolveInfo.finalElement = HAPUtilityProcessRelativeElement.resolveFinalElement(resolveInfo.elementInfoSolid, false);
+						HAPResultReferenceResolve resolveInfo = HAPUtilityProcessRelativeElementInBundle.analyzeElementReference(relativeEle.getReference().getElementPath(), valueStructureFromParent, null);
+						resolveInfo.finalElement = HAPUtilityProcessRelativeElementInBundle.resolveFinalElement(resolveInfo.elementInfoSolid, false);
 						relativeEle.setResolvedInfo(new HAPInfoRelativeResolve(resolveInfo.structureId, new HAPComplexPath(resolveInfo.rootName, resolveInfo.elementInfoSolid.solvedPath), resolveInfo.elementInfoSolid.remainPath, resolveInfo.finalElement));
 					}
 					

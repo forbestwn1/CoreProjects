@@ -10,7 +10,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import com.nosliw.common.exception.HAPErrorUtility;
 import com.nosliw.common.path.HAPComplexPath;
 import com.nosliw.common.utils.HAPUtilityBasic;
-import com.nosliw.core.xxx.application.valueport.HAPResultReferenceResolve;
+import com.nosliw.core.application.valueport.HAPResultReferenceResolve;
 import com.nosliw.core.xxx.application.valueport.HAPUtilityStructureElementReference;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.data.core.valuestructure1.HAPTreeNodeValueStructure;

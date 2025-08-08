@@ -6,7 +6,7 @@ import com.nosliw.core.application.common.scriptexpression.HAPDefinitionContaine
 import com.nosliw.core.application.common.scriptexpression.HAPManualUtilityScriptExpressionParser;
 import com.nosliw.core.application.common.scriptexpression.HAPUtilityScriptExpressionConstant;
 import com.nosliw.core.application.common.structure.HAPUtilityStructureWithScriptExpression;
-import com.nosliw.core.application.common.structure.HAPValueStructure;
+import com.nosliw.core.application.common.structure22.HAPValueStructure;
 import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualDefinitionBrickValueContext;
 import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualDefinitionBrickWrapperValueStructure;
 

@@ -9,6 +9,9 @@ import com.nosliw.common.info.HAPEntityInfoWritableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityBasic;
+import com.nosliw.core.application.common.structure22.HAPElementStructure;
+import com.nosliw.core.application.common.structure22.HAPElementStructureLeafConstant;
+import com.nosliw.core.application.common.structure22.HAPElementStructureLeafRelative;
 
 @HAPEntityWithAttribute
 public class HAPRootStructure extends HAPEntityInfoWritableImp{

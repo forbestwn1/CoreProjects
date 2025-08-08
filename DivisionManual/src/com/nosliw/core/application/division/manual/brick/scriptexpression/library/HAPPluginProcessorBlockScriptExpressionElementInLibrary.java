@@ -10,13 +10,13 @@ import com.nosliw.core.application.common.dataexpressionimp.HAPUtilityExpression
 import com.nosliw.core.application.common.interactive.HAPInteractiveExpression;
 import com.nosliw.core.application.common.scriptexpression.HAPExpressionScript;
 import com.nosliw.core.application.common.scriptexpression.HAPManualUtilityScriptExpressionParser;
+import com.nosliw.core.application.common.structure222.reference.HAPConfigureResolveElementReference;
 import com.nosliw.core.application.common.withvariable.HAPContainerVariableInfo;
 import com.nosliw.core.application.division.manual.core.HAPManualBrick;
 import com.nosliw.core.application.division.manual.core.a.HAPManualPluginProcessorBlockSimple;
 import com.nosliw.core.application.division.manual.core.process.HAPManualContextProcessBrick;
 import com.nosliw.core.application.valueport.HAPWithInternalValuePort;
 import com.nosliw.core.data.matcher.HAPMatchers;
-import com.nosliw.core.xxx.application.valueport.HAPConfigureResolveElementReference;
 import com.nosliw.core.xxx.application.valueport.HAPIdElement;
 import com.nosliw.core.xxx.application.valueport.HAPUtilityStructureElementReference;
 import com.nosliw.core.xxx.application1.brick.HAPEnumBrickType;

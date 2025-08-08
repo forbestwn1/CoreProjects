@@ -18,6 +18,7 @@ import com.nosliw.core.application.brick.HAPEnumBrickType;
 import com.nosliw.core.application.brick.HAPUtilityBrickPath;
 import com.nosliw.core.application.brick.test.complex.script.HAPBlockTestComplexScript;
 import com.nosliw.core.application.brick.test.complex.script.HAPTestTaskTrigguer;
+import com.nosliw.core.application.common.structure222.reference.HAPConfigureResolveElementReference;
 import com.nosliw.core.application.common.task.HAPInfoTrigguerTask;
 import com.nosliw.core.application.division.manual.brick.wrappertask.HAPManualBlockTaskWrapper;
 import com.nosliw.core.application.division.manual.common.task.HAPManualUtilityTask;
@@ -25,9 +26,8 @@ import com.nosliw.core.application.division.manual.core.HAPManualBrick;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionBrick;
 import com.nosliw.core.application.division.manual.core.process.HAPManualContextProcessBrick;
 import com.nosliw.core.application.division.manual.core.process.HAPManualPluginProcessorBlockImp;
-import com.nosliw.core.xxx.application.valueport.HAPConfigureResolveElementReference;
+import com.nosliw.core.application.valueport.HAPResultReferenceResolve;
 import com.nosliw.core.xxx.application.valueport.HAPReferenceElement;
-import com.nosliw.core.xxx.application.valueport.HAPResultReferenceResolve;
 import com.nosliw.core.xxx.application.valueport.HAPUtilityStructureElementReference;
 import com.nosliw.core.xxx.application.valueport.HAPUtilityValuePort;
 
@@ -207,7 +207,7 @@ public class HAPManualPluginProcessorBlockComplexTestComplexScript extends HAPMa
 				HAPReferenceElement ref = new HAPReferenceElement();
 				ref.buildObject(varJsonArray.get(i), HAPSerializationFormat.JSON);
 				
-				HAPResultReferenceResolve resolve = HAPUtilityProcessRelativeElement.resolveElementReference(ref, new HAPConfigureResolveElementReference(), processContext);
+				HAPResultReferenceResolve resolve = HAPUtilityProcessRelativeElementInBundle.resolveElementReference(ref, new HAPConfigureResolveElementReference(), processContext);
 				if(resolve!=null) {
 					resolvedVars.add(resolve);
 				} else {

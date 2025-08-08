@@ -16,16 +16,16 @@ import com.nosliw.core.application.HAPDomainValueStructure;
 import com.nosliw.core.application.HAPHandlerDownwardImpAttribute;
 import com.nosliw.core.application.HAPInfoValueStructureRuntime;
 import com.nosliw.core.application.common.parentrelation.HAPManualDefinitionBrickRelationValueContext;
-import com.nosliw.core.application.common.structure.HAPElementStructure;
-import com.nosliw.core.application.common.structure.HAPElementStructureLeafRelative;
-import com.nosliw.core.application.common.structure.HAPInfoElement;
-import com.nosliw.core.application.common.structure.HAPProcessorStructureElement;
-import com.nosliw.core.application.common.structure.HAPRootInStructure;
 import com.nosliw.core.application.common.structure.HAPUtilityStructure;
-import com.nosliw.core.application.common.structure.reference.HAPUtilityProcessRelativeElement;
-import com.nosliw.core.application.division.manual.common.valuecontext.HAPManualPartInValueContext;
+import com.nosliw.core.application.common.structure22.HAPElementStructure;
+import com.nosliw.core.application.common.structure22.HAPElementStructureLeafRelative;
+import com.nosliw.core.application.common.structure22.HAPInfoElement;
+import com.nosliw.core.application.common.structure22.HAPProcessorStructureElement;
+import com.nosliw.core.application.common.structure22.HAPRootInStructure;
+import com.nosliw.core.application.common.structure222.reference.HAPUtilityProcessRelativeElementInBundle;
 import com.nosliw.core.application.division.manual.common.valuecontext.HAPManualUtilityValueContext;
-import com.nosliw.core.application.division.manual.common.valuecontext.HAPManualValueContext;
+import com.nosliw.core.application.division.manual.common.valuecontext22.HAPManualPartInValueContext;
+import com.nosliw.core.application.division.manual.common.valuecontext22.HAPManualValueContext;
 import com.nosliw.core.application.division.manual.core.HAPManualBrick;
 import com.nosliw.core.application.division.manual.core.HAPManualManagerBrick;
 import com.nosliw.core.application.division.manual.core.HAPManualUtilityBrick;
@@ -34,8 +34,8 @@ import com.nosliw.core.application.division.manual.core.HAPTreeNodeBrick;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionBrick;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionUtilityBrick;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionWrapperValueBrick;
+import com.nosliw.core.application.valueport.HAPIdValuePortInBundle;
 import com.nosliw.core.runtimeenv.HAPRuntimeEnvironment;
-import com.nosliw.core.xxx.application.valueport.HAPIdValuePortInBundle;
 import com.nosliw.core.xxx.application.valueport.HAPUtilityValuePort;
 
 public class HAPManualUtilityValueContextProcessor1 {
@@ -76,7 +76,7 @@ public class HAPManualUtilityValueContextProcessor1 {
 				
 					List<HAPServiceData> errors = new ArrayList<HAPServiceData>();
 					Set<HAPIdValuePortInBundle> dependency = new HashSet<HAPIdValuePortInBundle>();
-					HAPUtilityProcessRelativeElement.processRelativeInStructure(valueStructureDomain.getStructureDefinitionByRuntimeId(valueStructureId), null, dependency, errors, bundle, processContext.getRuntimeEnv());
+					HAPUtilityProcessRelativeElementInBundle.processRelativeInStructure(valueStructureDomain.getStructureDefinitionByRuntimeId(valueStructureId), null, dependency, errors, bundle, processContext.getRuntimeEnv());
 				}
 				return true;
 			}
@@ -204,11 +204,11 @@ public class HAPManualUtilityValueContextProcessor1 {
 				//process relative
 				List<HAPManualInfoValueStructureSorting> valueStructureInfos = HAPManualUtilityValueContext.getAllValueStructures(valueContext);
 				for(HAPManualInfoValueStructureSorting valueStructureInfo : valueStructureInfos) {
-					HAPManualInfoValueStructure valueStructureWrapper = valueStructureInfo.getValueStructureBlock();
+					HAPManualWrapperStructure valueStructureWrapper = valueStructureInfo.getValueStructureBlock();
 					HAPManualDefinitionBrickValueStructure valueStructure = valueStructureDomain.getValueStructureDefinitionByRuntimeId(valueStructureWrapper.getValueStructureRuntimeId());
 					List<HAPServiceData> errors = new ArrayList<HAPServiceData>();
 					Set<HAPIdValuePortInBundle> dependency = new HashSet<HAPIdValuePortInBundle>();
-					HAPUtilityProcessRelativeElement.processRelativeInStructure(valueStructure, valueStructureConfig==null?null:valueStructureConfig.getRelativeProcessorConfigure(), dependency, errors, processContext);
+					HAPUtilityProcessRelativeElementInBundle.processRelativeInStructure(valueStructure, valueStructureConfig==null?null:valueStructureConfig.getRelativeProcessorConfigure(), dependency, errors, processContext);
 				}
 
 				//inheritance
@@ -246,7 +246,7 @@ public class HAPManualUtilityValueContextProcessor1 {
 				//process relative
 				List<HAPManualInfoValueStructureSorting> valueStructureInfos = HAPManualUtilityValueContext.getAllValueStructures(valueContext);
 				for(HAPManualInfoValueStructureSorting valueStructureInfo : valueStructureInfos) {
-					HAPManualInfoValueStructure valueStructureWrapper = valueStructureInfo.getValueStructureBlock();
+					HAPManualWrapperStructure valueStructureWrapper = valueStructureInfo.getValueStructureBlock();
 					HAPManualDefinitionBrickValueStructure valueStructure = valueStructureDomain.getValueStructureDefinitionByRuntimeId(valueStructureWrapper.getValueStructureRuntimeId());
 					HAPUtilityValueStructure.traverseElement(valueStructure, new HAPProcessorStructureElement() {
 
@@ -293,7 +293,7 @@ public class HAPManualUtilityValueContextProcessor1 {
 					
 					List<HAPServiceData> errors = new ArrayList<HAPServiceData>();
 					Set<HAPIdValuePortInBundle> dependency = new HashSet<HAPIdValuePortInBundle>();
-					HAPUtilityProcessRelativeElement.processRelativeInStructure(valueStructure, valueStructureConfig==null?null:valueStructureConfig.getRelativeProcessorConfigure(), dependency, errors, processContext);
+					HAPUtilityProcessRelativeElementInBundle.processRelativeInStructure(valueStructure, valueStructureConfig==null?null:valueStructureConfig.getRelativeProcessorConfigure(), dependency, errors, processContext);
 				}
 
 				//inheritance
@@ -304,10 +304,10 @@ public class HAPManualUtilityValueContextProcessor1 {
 	
 
 	private static void createExtensionPart(HAPValueContext valueContextExe, HAPDomainValueStructure valueStructureDomain) {
-		List<HAPManualInfoValueStructure> wrappers = new ArrayList<HAPManualInfoValueStructure>();
+		List<HAPManualWrapperStructure> wrappers = new ArrayList<HAPManualWrapperStructure>();
 		for(String groupType : HAPUtilityValueStructure.getAllCategaries()) {
 			String valueStructureExeId = valueStructureDomain.newValueStructure();
-			HAPManualInfoValueStructure valueStructureWrapperExe = new HAPManualInfoValueStructure(valueStructureExeId);
+			HAPManualWrapperStructure valueStructureWrapperExe = new HAPManualWrapperStructure(valueStructureExeId);
 			valueStructureWrapperExe.setGroupType(groupType);
 			wrappers.add(valueStructureWrapperExe);
 		}

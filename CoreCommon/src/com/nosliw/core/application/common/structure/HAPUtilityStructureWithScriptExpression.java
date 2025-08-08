@@ -7,6 +7,12 @@ import org.apache.commons.lang3.tuple.Pair;
 import com.nosliw.core.application.common.scriptexpression.HAPDefinitionContainerScriptExpression;
 import com.nosliw.core.application.common.scriptexpression.HAPManualUtilityScriptExpressionParser;
 import com.nosliw.core.application.common.scriptexpression.HAPUtilityScriptExpressionConstant;
+import com.nosliw.core.application.common.structure22.HAPElementStructure;
+import com.nosliw.core.application.common.structure22.HAPElementStructureLeafRelative;
+import com.nosliw.core.application.common.structure22.HAPInfoElement;
+import com.nosliw.core.application.common.structure22.HAPProcessorStructureElement;
+import com.nosliw.core.application.common.structure22.HAPRootInStructure;
+import com.nosliw.core.application.common.structure22.HAPValueStructure;
 
 public class HAPUtilityStructureWithScriptExpression {
 

@@ -15,26 +15,26 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.HAPBundle;
 import com.nosliw.core.application.common.dataassociation.HAPDataAssociationMapping;
 import com.nosliw.core.application.common.dataassociation.HAPTunnel;
-import com.nosliw.core.application.common.structure.HAPElementStructure;
-import com.nosliw.core.application.common.structure.HAPElementStructureLeafRelative;
-import com.nosliw.core.application.common.structure.HAPElementStructureLeafRelativeForMapping;
-import com.nosliw.core.application.common.structure.HAPElementStructureNode;
-import com.nosliw.core.application.common.structure.HAPInfoElement;
 import com.nosliw.core.application.common.structure.HAPInfoRelativeResolve;
-import com.nosliw.core.application.common.structure.HAPProcessorStructureElement;
-import com.nosliw.core.application.common.structure.HAPUtilityStructure;
 import com.nosliw.core.application.common.structure.reference.HAPConfigureProcessorRelative;
-import com.nosliw.core.application.common.structure.reference.HAPUtilityProcessRelativeElement;
+import com.nosliw.core.application.common.structure22.HAPElementStructure;
+import com.nosliw.core.application.common.structure22.HAPElementStructureLeafRelative;
+import com.nosliw.core.application.common.structure22.HAPElementStructureLeafRelativeForMapping;
+import com.nosliw.core.application.common.structure22.HAPElementStructureNode;
+import com.nosliw.core.application.common.structure22.HAPInfoElement;
+import com.nosliw.core.application.common.structure22.HAPProcessorStructureElement;
+import com.nosliw.core.application.common.structure22.HAPUtilityElement;
+import com.nosliw.core.application.common.structure222.reference.HAPUtilityProcessRelativeElementInBundle;
+import com.nosliw.core.application.valueport.HAPIdValuePortInBundle;
+import com.nosliw.core.application.valueport.HAPResultReferenceResolve;
 import com.nosliw.core.resource.HAPManagerResource;
+import com.nosliw.core.runtime.HAPRuntimeInfo;
+import com.nosliw.core.runtimeenv.HAPRuntimeEnvironment;
 import com.nosliw.core.xxx.application.valueport.HAPIdRootElement;
-import com.nosliw.core.xxx.application.valueport.HAPIdValuePortInBundle;
 import com.nosliw.core.xxx.application.valueport.HAPReferenceElement;
 import com.nosliw.core.xxx.application.valueport.HAPReferenceRootElement;
-import com.nosliw.core.xxx.application.valueport.HAPResultReferenceResolve;
 import com.nosliw.core.xxx.application.valueport.HAPUtilityStructureElementReference;
 import com.nosliw.core.xxx.application.valueport.HAPUtilityValuePort;
-import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
-import com.nosliw.data.core.runtime.HAPRuntimeInfo;
 
 public class HAPManualProcessorDataAssociationMapping {
 
@@ -92,7 +92,7 @@ public class HAPManualProcessorDataAssociationMapping {
 					}
 				}
 				else {
-					resolveInfo.finalElement = HAPUtilityProcessRelativeElement.resolveFinalElement(resolveInfo.elementInfoSolid, false);
+					resolveInfo.finalElement = HAPUtilityProcessRelativeElementInBundle.resolveFinalElement(resolveInfo.elementInfoSolid, false);
 				}
 				relativeStructureElement.setResolvedInfo(new HAPInfoRelativeResolve(resolveInfo.structureId, new HAPComplexPath(resolveInfo.rootName, resolveInfo.elementInfoSolid.solvedPath), resolveInfo.elementInfoSolid.remainPath, resolveInfo.finalElement));
 			}
@@ -118,7 +118,7 @@ public class HAPManualProcessorDataAssociationMapping {
 
 		HAPUtilityValuePort.normalizeValuePortRelativeBrickPath(targetRef.getValuePortId(), baseBlockPath);
 		
-		HAPUtilityStructure.traverseElement(mappingItem.getDefinition(), null, new HAPProcessorStructureElement() {
+		HAPUtilityElement.traverseElement(mappingItem.getDefinition(), null, new HAPProcessorStructureElement() {
 
 			@Override
 			public Pair<Boolean, HAPElementStructure> process(HAPInfoElement eleInfo, Object value) {
@@ -152,7 +152,7 @@ public class HAPManualProcessorDataAssociationMapping {
 		
 		normalizeRootReference(targetRef, HAPConstantShared.IO_DIRECTION_IN, out, baseBlockPath, brickRootNameIfNotProvided, currentBundle, resourceMan, runtimeInfo);
 		
-		HAPUtilityStructure.traverseElement(mappingItem.getDefinition(), null, new HAPProcessorStructureElement() {
+		HAPUtilityElement.traverseElement(mappingItem.getDefinition(), null, new HAPProcessorStructureElement() {
 
 			@Override
 			public Pair<Boolean, HAPElementStructure> process(HAPInfoElement eleInfo, Object value) {

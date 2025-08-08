@@ -2,9 +2,9 @@ package com.nosliw.core.application.division.manual.brick.valuestructure;
 
 import java.util.Map;
 
-import com.nosliw.core.application.common.structure.HAPRootInStructure;
-import com.nosliw.core.application.common.structure.HAPValueStructure;
-import com.nosliw.core.application.common.structure.HAPValueStructureImp;
+import com.nosliw.core.application.common.structure22.HAPRootInStructure;
+import com.nosliw.core.application.common.structure22.HAPValueStructure;
+import com.nosliw.core.application.common.structure22.HAPValueStructureImp;
 import com.nosliw.core.application.division.manual.core.HAPManualEnumBrickType;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionBrick;
 

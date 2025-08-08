@@ -10,6 +10,8 @@ import com.nosliw.common.path.HAPComplexPath;
 import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.core.application.common.structure22.HAPElementStructure;
+import com.nosliw.core.application.common.structure22.HAPUtilityParserElement;
 
 @HAPEntityWithAttribute
 public class HAPInfoRelativeResolve extends HAPSerializableImp{
@@ -58,7 +60,7 @@ public class HAPInfoRelativeResolve extends HAPSerializableImp{
 		this.m_structureId = (String)jsonObj.opt(STRUCTUREID);
 		this.m_path = HAPComplexPath.newInstance(jsonObj.opt(PATH));
 		this.m_remainPath = new HAPPath(jsonObj.optString(REMAINPATH));
-		this.m_solidElement = HAPParserStructure.parseStructureElement(jsonObj.optJSONObject(SOLIDELEMENT));
+		this.m_solidElement = HAPUtilityParserElement.parseStructureElement(jsonObj.optJSONObject(SOLIDELEMENT));
 		return false;  
 	}
 

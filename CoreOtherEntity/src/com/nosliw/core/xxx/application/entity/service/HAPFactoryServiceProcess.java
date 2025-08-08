@@ -13,7 +13,7 @@ import com.nosliw.core.application.brick.service.profile.HAPInfoServiceStatic;
 import com.nosliw.core.application.common.interactive.HAPInteractiveResultTask;
 import com.nosliw.core.application.common.interactive.HAPResultElementInInteractiveTask;
 import com.nosliw.core.application.common.interactive.HAPResultInteractiveTask;
-import com.nosliw.core.application.common.structure.HAPElementStructureLeafData;
+import com.nosliw.core.application.common.structure22.HAPElementStructureLeafData;
 import com.nosliw.core.application.common.variable.HAPVariableDataInfo;
 import com.nosliw.core.application.common.variable.HAPVariableDefinition;
 import com.nosliw.core.application.entity.service.HAPExecutableService;

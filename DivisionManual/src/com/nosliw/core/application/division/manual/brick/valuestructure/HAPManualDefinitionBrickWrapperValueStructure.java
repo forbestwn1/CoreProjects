@@ -1,13 +1,14 @@
 package com.nosliw.core.application.division.manual.brick.valuestructure;
 
-import com.nosliw.core.application.common.structure.HAPValueStructure;
-import com.nosliw.core.application.common.structure.HAPWrapperValueStructure;
+import com.nosliw.core.application.common.structure22.HAPInfoStructureInWrapper;
+import com.nosliw.core.application.common.structure22.HAPValueStructure;
+import com.nosliw.core.application.common.structure22.HAPWrapperValueStructureDefinition;
 import com.nosliw.core.application.division.manual.core.HAPManualEnumBrickType;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionBrickWithEntityInfo;
 
 //wrapper for value structure
 //extra info for value structure, group name
-public class HAPManualDefinitionBrickWrapperValueStructure extends HAPManualDefinitionBrickWithEntityInfo implements HAPWrapperValueStructure{
+public class HAPManualDefinitionBrickWrapperValueStructure extends HAPManualDefinitionBrickWithEntityInfo implements HAPWrapperValueStructureDefinition{
 
 	public HAPManualDefinitionBrickWrapperValueStructure() {
 		super(HAPManualEnumBrickType.VALUESTRUCTUREWRAPPER_100);
@@ -27,23 +28,19 @@ public class HAPManualDefinitionBrickWrapperValueStructure extends HAPManualDefi
 	@Override
 	public void setValueStructure(HAPValueStructure valueStructure) {   this.getValueStructureBlock().setValue(valueStructure);  }
 
+	
 	@Override
-	public String getGroupType() {   return (String)this.getAttributeValueOfValue(GROUPTYPE);    }
-	@Override
-	public void setGroupType(String groupType) {    this.setAttributeValueWithValue(GROUPTYPE, groupType);     }
+	public HAPInfoStructureInWrapper getStructureInfo() {    return (HAPInfoStructureInWrapper)this.getAttributeValueOfValue(VALUESTRUCTUREINFO);    }
 
 	@Override
-	public String getInheritMode() {   return (String)this.getAttributeValueOfValue(INHERITMODE);  }
-
-	@Override
-	public void setInheritMode(String mode) {    this.setAttributeValueWithValue(INHERITMODE, mode);  }
-
-
+	public void setStructureInfo(HAPInfoStructureInWrapper info) {   this.setAttributeValueWithValue(VALUESTRUCTUREINFO, info);   }
+	
 	@Override
 	public Object cloneValue() {	return this.cloneValueStructureWrapper();	}
 
 	public HAPManualDefinitionBrickWrapperValueStructure cloneValueStructureWrapper() {
 		HAPManualDefinitionBrickWrapperValueStructure out = new HAPManualDefinitionBrickWrapperValueStructure();
+		
 		
 		out.m_name = this.m_name;
 		out.m_groupType = this.m_groupType;

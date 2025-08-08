@@ -24,6 +24,7 @@ import com.nosliw.core.application.brick.service.profile.HAPBlockServiceProfile;
 import com.nosliw.core.application.common.interactive.HAPRequestParmInInteractive;
 import com.nosliw.core.application.common.interactive.HAPResultInteractiveTask;
 import com.nosliw.core.data.HAPData;
+import com.nosliw.core.runtime.HAPRuntimeInfo;
 
 //service manager, it is used for runtime purpose
 @HAPEntityWithAttribute
@@ -62,7 +63,7 @@ public class HAPManagerService implements HAPPluginDivision{
 	}
 
 	@Override
-	public HAPBundle getBundle(HAPIdBrick brickId) {
+	public HAPBundle getBundle(HAPIdBrick brickId, HAPRuntimeInfo runtimeInfo) {
 		HAPIdBrickType brickTypeId = brickId.getBrickTypeId();
 		if(brickTypeId.equals(HAPEnumBrickType.SERVICEPROFILE_100)) {
 			HAPBundle bundle = new HAPBundle();

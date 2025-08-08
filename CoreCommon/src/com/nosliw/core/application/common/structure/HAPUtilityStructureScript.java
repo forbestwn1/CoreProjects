@@ -3,6 +3,10 @@ package com.nosliw.core.application.common.structure;
 import org.json.JSONObject;
 
 import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.core.application.common.structure22.HAPElementStructure;
+import com.nosliw.core.application.common.structure22.HAPElementStructureLeafConstant;
+import com.nosliw.core.application.common.structure22.HAPElementStructureLeafRelative;
+import com.nosliw.core.application.common.structure22.HAPElementStructureNode;
 import com.nosliw.data.core.structure.temp.HAPUtilityContextInfo;
 import com.nosliw.data.core.valuestructure1.HAPExecutableValueStructure;
 

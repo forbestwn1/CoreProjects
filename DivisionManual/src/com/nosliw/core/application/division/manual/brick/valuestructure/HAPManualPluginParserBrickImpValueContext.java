@@ -4,7 +4,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.nosliw.core.application.HAPManagerApplicationBrick;
-import com.nosliw.core.application.common.structure.HAPUtilityValueStructureParser;
+import com.nosliw.core.application.common.structure22.HAPUtilityParserStructure;
 import com.nosliw.core.application.division.manual.core.HAPManualEnumBrickType;
 import com.nosliw.core.application.division.manual.core.HAPManualManagerBrick;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionAttributeInBrick;
@@ -47,7 +47,7 @@ public class HAPManualPluginParserBrickImpValueContext extends HAPManualDefiniti
 		HAPManualDefinitionAttributeInBrick valueStructureAttr = HAPManualDefinitionUtilityParserBrickFormatJson.parseAttribute(HAPManualDefinitionBrickWrapperValueStructure.VALUESTRUCTURE, valueStructureJsonObj, HAPManualEnumBrickType.VALUESTRUCTURE_100, null, parseContext);
 		out.setAttribute(valueStructureAttr);
 
-		HAPUtilityValueStructureParser.parseValueStructureWrapper(out, wrapperObj);
+		HAPUtilityParserStructure.parseValueStructureWrapper(out, wrapperObj);
 
 		return out;
 	}

@@ -12,6 +12,7 @@ import com.nosliw.core.application.common.interactive.HAPInteractiveResultTask;
 import com.nosliw.core.application.common.interactive.HAPInteractiveTask;
 import com.nosliw.core.application.common.interactive.HAPRequestParmInInteractive;
 import com.nosliw.core.application.common.interactive.HAPResultElementInInteractiveTask;
+import com.nosliw.core.application.common.structure222.reference.HAPConfigureResolveElementReference;
 import com.nosliw.core.application.division.manual.common.task.HAPManualUtilityTask;
 import com.nosliw.core.application.division.manual.core.HAPManualBrick;
 import com.nosliw.core.application.division.manual.core.HAPManualManagerBrick;
@@ -19,9 +20,8 @@ import com.nosliw.core.application.division.manual.core.definition.HAPManualDefi
 import com.nosliw.core.application.division.manual.core.process.HAPManualContextProcessBrick;
 import com.nosliw.core.application.division.manual.core.process.HAPManualPluginProcessorBlockImp;
 import com.nosliw.core.application.valueport.HAPIdValuePortInBrick;
-import com.nosliw.core.xxx.application.valueport.HAPConfigureResolveElementReference;
+import com.nosliw.core.application.valueport.HAPIdValuePortInBundle;
 import com.nosliw.core.xxx.application.valueport.HAPIdElement;
-import com.nosliw.core.xxx.application.valueport.HAPIdValuePortInBundle;
 import com.nosliw.core.xxx.application.valueport.HAPReferenceElement;
 import com.nosliw.core.xxx.application.valueport.HAPUtilityStructureElementReference;
 import com.nosliw.core.xxx.application.valueport.HAPUtilityValuePort;

@@ -20,7 +20,7 @@ import com.nosliw.core.application.common.constant.HAPWithConstantDefinition;
 import com.nosliw.core.application.common.parentrelation.HAPManualDefinitionBrickRelationValueContext;
 import com.nosliw.core.application.common.scriptexpression.HAPDefinitionContainerScriptExpression;
 import com.nosliw.core.application.common.scriptexpression.HAPWithScriptExpressionConstantMaster;
-import com.nosliw.core.application.common.structure.HAPWrapperValueStructure;
+import com.nosliw.core.application.common.structure22.HAPWrapperValueStructureDefinition;
 import com.nosliw.core.application.division.manual.brick.data.HAPManualDefinitionBlockData;
 import com.nosliw.core.application.division.manual.brick.value.HAPManualDefinitionBlockValue;
 import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualDefinitionBrickValueContext;
@@ -73,7 +73,7 @@ public abstract class HAPManualDefinitionBrick extends HAPSerializableImp implem
 		if(this.getValueContextBrick()==null) {
 			return true;
 		}
-		List<HAPWrapperValueStructure> valueStructures = this.getValueContextBrick().getValueStructures();
+		List<HAPWrapperValueStructureDefinition> valueStructures = this.getValueContextBrick().getValueStructures();
 		return valueStructures==null||valueStructures.isEmpty();
 	}
 	

@@ -6,8 +6,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.core.application.common.dataexpression.definition.HAPParserDataExpression;
-import com.nosliw.data.core.domain.HAPContextParser;
-import com.nosliw.data.core.domain.HAPIdEntityInDomain;
+import com.nosliw.core.application.common.structure22.HAPElementStructure;
 
 public class HAPElementStructureLeafConstantReference extends HAPElementStructure{
 
@@ -47,12 +46,16 @@ public class HAPElementStructureLeafConstantReference extends HAPElementStructur
 
 	@Override
 	public boolean equals(Object obj) {
-		if(!super.equals(obj))  return false;
+		if(!super.equals(obj)) {
+			return false;
+		}
 
 		boolean out = false;
 		if(obj instanceof HAPElementStructureLeafConstantReference) {
 			HAPElementStructureLeafConstantReference ele = (HAPElementStructureLeafConstantReference)obj;
-			if(!HAPUtilityBasic.isEquals(this.getConstantName(), ele.getConstantName()))  return false;
+			if(!HAPUtilityBasic.isEquals(this.getConstantName(), ele.getConstantName())) {
+				return false;
+			}
 			out = true;
 		}
 		return out;

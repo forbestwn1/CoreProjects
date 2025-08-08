@@ -5,7 +5,7 @@ import java.util.Map;
 
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.common.constant.HAPDefinitionConstant;
-import com.nosliw.core.application.common.structure.HAPWrapperValueStructure;
+import com.nosliw.core.application.common.structure22.HAPWrapperValueStructureDefinition;
 import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualDefinitionBrickValueContext;
 import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualDefinitionBrickValueStructure;
 import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualDefinitionBrickWrapperValueStructure;
@@ -18,7 +18,7 @@ public class HAPUtilityUITag {
 
 	public static HAPManualDefinitionBrickValueContext createValueContextBrickFromUITagDefinition(HAPUITagDefinition uiTagDef, HAPManualManagerBrick manualDivisionEntityMan) {
 		HAPManualDefinitionBrickValueContext valueContextBrick = (HAPManualDefinitionBrickValueContext)manualDivisionEntityMan.newBrickDefinition(HAPManualEnumBrickType.VALUECONTEXT_100);
-		for(HAPWrapperValueStructure uiTagDefValueStructure : uiTagDef.getValueContext().getValueStructures()) {
+		for(HAPWrapperValueStructureDefinition uiTagDefValueStructure : uiTagDef.getValueContext().getValueStructures()) {
 			HAPManualDefinitionBrickWrapperValueStructure manualWrapperBrickValueStrucutre = (HAPManualDefinitionBrickWrapperValueStructure)manualDivisionEntityMan.newBrickDefinition(HAPManualEnumBrickType.VALUESTRUCTUREWRAPPER_100);
 
 			HAPManualDefinitionBrickValueStructure manualBrickValueStrucutre = (HAPManualDefinitionBrickValueStructure)manualDivisionEntityMan.newBrickDefinition(HAPManualEnumBrickType.VALUESTRUCTURE_100);

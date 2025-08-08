@@ -2,6 +2,8 @@ package com.nosliw.core.application.common.structure;
 
 import java.util.List;
 
+import com.nosliw.core.application.common.structure222.reference.HAPPathElementMapping;
+
 public class HAPPathElementMappingProvideToVariable extends HAPPathElementMapping{
 
 	private List<HAPPathElementMapping> m_providerMappingPaths;

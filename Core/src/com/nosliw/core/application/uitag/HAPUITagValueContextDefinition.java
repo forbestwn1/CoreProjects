@@ -6,20 +6,20 @@ import java.util.Map;
 
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.core.application.common.structure.HAPValueContextDefinition;
-import com.nosliw.core.application.common.structure.HAPWrapperValueStructure;
+import com.nosliw.core.application.common.structure22.HAPWrapperValueStructureDefinition;
 
 public class HAPUITagValueContextDefinition extends HAPSerializableImp implements HAPValueContextDefinition{
 
 	
 	
-	private List<HAPWrapperValueStructure> m_valueStructures;
+	private List<HAPWrapperValueStructureDefinition> m_valueStructures;
 	
 	public HAPUITagValueContextDefinition() {
-		this.m_valueStructures = new ArrayList<HAPWrapperValueStructure>();
+		this.m_valueStructures = new ArrayList<HAPWrapperValueStructureDefinition>();
 	}
 	
 	@Override
-	public List<HAPWrapperValueStructure> getValueStructures() {   return this.m_valueStructures;  }
+	public List<HAPWrapperValueStructureDefinition> getValueStructures() {   return this.m_valueStructures;  }
 
 	
 	@Override

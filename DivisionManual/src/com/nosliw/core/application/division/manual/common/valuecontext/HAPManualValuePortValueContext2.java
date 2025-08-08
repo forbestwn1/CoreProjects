@@ -4,15 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.core.application.common.structure.HAPElementStructure;
-import com.nosliw.core.application.common.structure.HAPRootInStructure;
-import com.nosliw.core.application.common.structure.HAPStructureImp;
+import com.nosliw.core.application.common.structure22.HAPElementStructure;
+import com.nosliw.core.application.common.structure22.HAPRootInStructure;
+import com.nosliw.core.application.common.structure22.HAPStructureImp;
+import com.nosliw.core.application.common.structure222.reference.HAPConfigureResolveElementReference;
+import com.nosliw.core.application.division.manual.common.valuecontext22.HAPManualValueContext;
+import com.nosliw.core.application.division.manual.common.valuecontext22.HAPManualWrapperStructure;
 import com.nosliw.core.application.division.manual.core.HAPManualBrick;
+import com.nosliw.core.application.valueport.HAPResultReferenceResolve;
 import com.nosliw.core.application.valueport.HAPValuePort;
-import com.nosliw.core.xxx.application.valueport.HAPConfigureResolveElementReference;
 import com.nosliw.core.xxx.application.valueport.HAPIdElement;
 import com.nosliw.core.xxx.application.valueport.HAPReferenceValueStructure;
-import com.nosliw.core.xxx.application.valueport.HAPResultReferenceResolve;
 import com.nosliw.core.xxx.application.valueport.HAPRootStructureInValuePort;
 import com.nosliw.core.xxx.application.valueport.HAPValueStructureInValuePort11111;
 import com.nosliw.core.xxx.application1.valuestructure.HAPDomainValueStructure;
@@ -35,7 +37,7 @@ public class HAPManualValuePortValueContext2 extends HAPValuePort{
 		
 		List<HAPManualInfoValueStructureSorting> valueStructureInfos = HAPManualUtilityValueContext.getAllValueStructuresSorted(m_valueContext);
 		for(HAPManualInfoValueStructureSorting valueStructureInfo : valueStructureInfos) {
-			HAPManualInfoValueStructure wraper = valueStructureInfo.getValueStructure();
+			HAPManualWrapperStructure wraper = valueStructureInfo.getValueStructure();
 			boolean isValid = true;
 
 			HAPStructureImp valueStructureDefInfo = m_valueStructureDomain.getStructureDefinitionByRuntimeId(wraper.getValueStructureRuntimeId());
