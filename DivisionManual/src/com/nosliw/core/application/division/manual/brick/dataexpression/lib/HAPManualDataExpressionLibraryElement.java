@@ -6,11 +6,11 @@ import org.json.JSONObject;
 
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.core.application.brick.dataexpression.library.HAPElementInLibraryDataExpression;
 import com.nosliw.core.application.common.dataexpression.definition.HAPDefinitionDataExpression;
 import com.nosliw.core.application.common.interactive.HAPInteractiveExpression;
 import com.nosliw.core.application.common.interactive.HAPInteractiveResultExpression;
 import com.nosliw.core.application.common.interactive.HAPRequestParmInInteractive;
-import com.nosliw.core.xxx.application1.brick.dataexpression.library.HAPElementInLibraryDataExpression;
 
 public class HAPManualDataExpressionLibraryElement extends HAPSerializableImp{
 

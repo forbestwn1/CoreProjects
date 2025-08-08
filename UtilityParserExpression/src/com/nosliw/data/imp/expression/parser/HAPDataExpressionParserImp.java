@@ -5,6 +5,8 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.stereotype.Component;
+
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.core.application.common.dataexpression.definition.HAPDefinitionDataExpression;
@@ -23,6 +25,7 @@ import com.nosliw.data.imp.expression.parser.generated.SimpleNode;
  * This is utility class to parse a expression as a string
  * The result of parsing is operand structure 
  */
+@Component
 public class HAPDataExpressionParserImp implements HAPParserDataExpression{
 	
 	public HAPDataExpressionParserImp(){

@@ -6,6 +6,10 @@ import java.util.Map;
 import org.apache.commons.lang3.tuple.Pair;
 
 import com.nosliw.common.path.HAPPath;
+import com.nosliw.core.application.HAPDomainValueStructure;
+import com.nosliw.core.application.brick.HAPEnumBrickType;
+import com.nosliw.core.application.brick.dataexpression.library.HAPBlockDataExpressionElementInLibrary;
+import com.nosliw.core.application.brick.dataexpression.library.HAPElementInLibraryDataExpression;
 import com.nosliw.core.application.common.dataexpressionimp.HAPManualExpressionData;
 import com.nosliw.core.application.common.dataexpressionimp.HAPManualUtilityProcessorDataExpression;
 import com.nosliw.core.application.common.dataexpressionimp.HAPManualWrapperOperand;
@@ -15,23 +19,17 @@ import com.nosliw.core.application.common.withvariable.HAPContainerVariableInfo;
 import com.nosliw.core.application.common.withvariable.HAPUtilityWithVarible;
 import com.nosliw.core.application.division.manual.common.task.HAPManualUtilityTask;
 import com.nosliw.core.application.division.manual.core.HAPManualBrick;
-import com.nosliw.core.application.division.manual.core.HAPManualManagerBrick;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionBrick;
 import com.nosliw.core.application.division.manual.core.process.HAPManualContextProcessBrick;
 import com.nosliw.core.application.division.manual.core.process.HAPManualPluginProcessorBlockImp;
 import com.nosliw.core.data.criteria.HAPDataTypeCriteria;
 import com.nosliw.core.data.matcher.HAPMatchers;
 import com.nosliw.core.xxx.application.valueport.HAPUtilityValuePortVariable;
-import com.nosliw.core.xxx.application1.brick.HAPEnumBrickType;
-import com.nosliw.core.xxx.application1.brick.dataexpression.library.HAPBlockDataExpressionElementInLibrary;
-import com.nosliw.core.xxx.application1.brick.dataexpression.library.HAPElementInLibraryDataExpression;
-import com.nosliw.core.xxx.application1.valuestructure.HAPDomainValueStructure;
-import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPManualPluginProcessorBlockDataExpressionElementInLibrary extends HAPManualPluginProcessorBlockImp{
 
-	public HAPManualPluginProcessorBlockDataExpressionElementInLibrary(HAPRuntimeEnvironment runtimeEnv, HAPManualManagerBrick manualBrickMan) {
-		super(HAPEnumBrickType.DATAEXPRESSIONLIBELEMENT_100, HAPManualBlockDataExpressionElementInLibrary.class, runtimeEnv, manualBrickMan);
+	public HAPManualPluginProcessorBlockDataExpressionElementInLibrary() {
+		super(HAPEnumBrickType.DATAEXPRESSIONLIBELEMENT_100, HAPManualBlockDataExpressionElementInLibrary.class);
 	}
 
 	@Override

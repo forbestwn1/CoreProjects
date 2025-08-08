@@ -13,12 +13,12 @@ import com.nosliw.core.application.common.interactive.HAPWithInteractiveExpressi
 import com.nosliw.core.application.common.withvariable.HAPContainerVariableInfo;
 import com.nosliw.core.application.common.withvariable.HAPWithVariable;
 import com.nosliw.core.application.valueport.HAPGroupValuePorts;
+import com.nosliw.core.data.matcher.HAPMatchers;
+import com.nosliw.core.resource.HAPManagerResource;
+import com.nosliw.core.resource.HAPResourceDependency;
+import com.nosliw.core.runtime.HAPRuntimeInfo;
 import com.nosliw.core.xxx.application.valueport.HAPWithValuePortGroup;
-import com.nosliw.data.core.matcher.HAPMatchers;
-import com.nosliw.data.core.resource.HAPManagerResource;
-import com.nosliw.data.core.resource.HAPResourceDependency;
-import com.nosliw.data.core.runtime.HAPExecutableImpEntityInfo;
-import com.nosliw.data.core.runtime.HAPRuntimeInfo;
+import com.nosliw.core.xxx.application1.HAPExecutableImpEntityInfo;
 
 @HAPEntityWithAttribute
 public class HAPElementInLibraryDataExpression extends HAPExecutableImpEntityInfo implements HAPWithInteractiveExpression, HAPWithVariable, HAPWithValuePortGroup{

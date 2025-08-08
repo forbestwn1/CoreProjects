@@ -1,8 +1,8 @@
 package com.nosliw.core.application.division.manual.brick.dataexpression.lib;
 
+import com.nosliw.core.application.brick.dataexpression.library.HAPBlockDataExpressionElementInLibrary;
+import com.nosliw.core.application.brick.dataexpression.library.HAPElementInLibraryDataExpression;
 import com.nosliw.core.application.division.manual.core.HAPManualBrickWithEntityInfo;
-import com.nosliw.core.xxx.application1.brick.dataexpression.library.HAPBlockDataExpressionElementInLibrary;
-import com.nosliw.core.xxx.application1.brick.dataexpression.library.HAPElementInLibraryDataExpression;
 
 public class HAPManualBlockDataExpressionElementInLibrary extends HAPManualBrickWithEntityInfo implements HAPBlockDataExpressionElementInLibrary{
 
