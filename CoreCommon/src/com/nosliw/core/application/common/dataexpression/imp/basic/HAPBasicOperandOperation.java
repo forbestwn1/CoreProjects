@@ -1,4 +1,4 @@
-package com.nosliw.core.application.common.dataexpressionimp;
+package com.nosliw.core.application.common.dataexpression.imp.basic;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -14,33 +14,33 @@ import com.nosliw.core.application.common.dataexpression.HAPOperand;
 import com.nosliw.core.application.common.dataexpression.HAPOperandOperation;
 import com.nosliw.core.application.common.dataexpression.definition.HAPDefinitionOperandOperation;
 import com.nosliw.core.application.common.withvariable.HAPContainerVariableInfo;
-import com.nosliw.data.core.data.HAPData;
-import com.nosliw.data.core.data.HAPDataTypeHelper;
-import com.nosliw.data.core.data.HAPDataTypeId;
-import com.nosliw.data.core.data.HAPDataTypeOperation;
-import com.nosliw.data.core.data.HAPDataWrapper;
-import com.nosliw.data.core.data.HAPOperationOutInfo;
-import com.nosliw.data.core.data.HAPOperationParmInfo;
-import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
-import com.nosliw.data.core.data.criteria.HAPDataTypeCriteriaId;
-import com.nosliw.data.core.data.criteria.HAPUtilityCriteria;
-import com.nosliw.data.core.matcher.HAPMatchers;
+import com.nosliw.core.data.HAPData;
+import com.nosliw.core.data.HAPDataTypeHelper;
+import com.nosliw.core.data.HAPDataTypeId;
+import com.nosliw.core.data.HAPDataTypeOperation;
+import com.nosliw.core.data.HAPDataWrapper;
+import com.nosliw.core.data.HAPOperationOutInfo;
+import com.nosliw.core.data.HAPOperationParmInfo;
+import com.nosliw.core.data.criteria.HAPDataTypeCriteria;
+import com.nosliw.core.data.criteria.HAPDataTypeCriteriaId;
+import com.nosliw.core.data.criteria.HAPUtilityCriteria;
+import com.nosliw.core.data.matcher.HAPMatchers;
 
-public class HAPManualOperandOperation extends HAPManualOperand implements HAPOperandOperation{
+public class HAPBasicOperandOperation extends HAPBasicOperand implements HAPOperandOperation{
 
 	private HAPDataTypeId m_dataTypeId;
 	
 	private String m_operation; 
 	
-	private HAPManualWrapperOperand m_base;
+	private HAPBasicWrapperOperand m_base;
 	
-	private Map<String, HAPManualWrapperOperand> m_parms;
+	private Map<String, HAPBasicWrapperOperand> m_parms;
 	
 	private Map<String, HAPMatchers> m_parmsMatchers;
 	
-	public HAPManualOperandOperation(HAPDefinitionOperandOperation operandDefinition) {
+	public HAPBasicOperandOperation(HAPDefinitionOperandOperation operandDefinition) {
 		super(HAPConstantShared.EXPRESSION_OPERAND_OPERATION, operandDefinition);
-		this.m_parms = new LinkedHashMap<String, HAPManualWrapperOperand>(); 
+		this.m_parms = new LinkedHashMap<String, HAPBasicWrapperOperand>(); 
 		this.m_parmsMatchers = new LinkedHashMap<String, HAPMatchers>();
 		this.m_dataTypeId = operandDefinition.getDataTypeId();
 		this.m_operation = operandDefinition.getOperaion();
@@ -48,7 +48,7 @@ public class HAPManualOperandOperation extends HAPManualOperand implements HAPOp
 
 	@Override
 	public HAPOperand getBase() {   return this.m_base.getOperand();  }
-	public void setBase(HAPManualOperand base) {   this.m_base = new HAPManualWrapperOperand(base);      }
+	public void setBase(HAPBasicOperand base) {   this.m_base = new HAPBasicWrapperOperand(base);      }
 
 	@Override
 	public Map<String, HAPOperand> getParms() {
@@ -58,8 +58,8 @@ public class HAPManualOperandOperation extends HAPManualOperand implements HAPOp
 		}
 		return out;
 	}
-	public void setParm(String name, HAPManualOperand parm) {
-		this.m_parms.put(name, new HAPManualWrapperOperand(parm));
+	public void setParm(String name, HAPBasicOperand parm) {
+		this.m_parms.put(name, new HAPBasicWrapperOperand(parm));
 	}
 
 	@Override
@@ -72,8 +72,8 @@ public class HAPManualOperandOperation extends HAPManualOperand implements HAPOp
 	public Map<String, HAPMatchers> getParmMatchers() {   return this.m_parmsMatchers;   }
 
 	@Override
-	public List<HAPManualWrapperOperand> getChildren(){   
-		List<HAPManualWrapperOperand> out = new ArrayList<HAPManualWrapperOperand>();
+	public List<HAPBasicWrapperOperand> getChildren(){   
+		List<HAPBasicWrapperOperand> out = new ArrayList<HAPBasicWrapperOperand>();
 		if(this.m_base!=null) {
 			out.add(this.m_base);
 		}
@@ -120,7 +120,7 @@ public class HAPManualOperandOperation extends HAPManualOperand implements HAPOp
 			
 			List<HAPOperationParmInfo> parmsInfo = dataTypeOperation.getOperationInfo().getParmsInfo();
 			for(HAPOperationParmInfo parmInfo : parmsInfo){
-				HAPManualWrapperOperand parmOperandWrapper = this.m_parms.get(parmInfo.getName());
+				HAPBasicWrapperOperand parmOperandWrapper = this.m_parms.get(parmInfo.getName());
 				if(parmOperandWrapper==null && this.m_base!=null && parmInfo.getIsBase()){
 					//if parm does not exist, then try to use base
 					parmOperandWrapper = this.createOperandWrapper(this.m_base.getOperand());
@@ -157,7 +157,7 @@ public class HAPManualOperandOperation extends HAPManualOperand implements HAPOp
 		else{
 			//if we don't have operation data type 
 			for(String parm: this.m_parms.keySet()){
-				HAPManualOperand parmDataType = this.m_parms.get(parm).getOperand();
+				HAPBasicOperand parmDataType = this.m_parms.get(parm).getOperand();
 				parmDataType.discover(variablesInfo, null, context, dataTypeHelper);
 			}
 			this.setOutputCriteria(null);

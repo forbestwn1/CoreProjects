@@ -1,14 +1,14 @@
-package com.nosliw.core.xxx.application.valueport;
+package com.nosliw.core.application.valueport;
 
 import java.util.Map;
 
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.core.application.HAPDomainValueStructure;
+import com.nosliw.core.application.HAPUtilityValueStructureDomain;
 import com.nosliw.core.application.common.structure.HAPElementStructure;
 import com.nosliw.core.application.common.structure.HAPElementStructureLeafData;
 import com.nosliw.core.application.common.withvariable.HAPContainerVariableInfo;
-import com.nosliw.core.application.valueport.HAPIdElement;
 import com.nosliw.core.data.criteria.HAPInfoCriteria;
 
 public class HAPUtilityValuePortVariable {
@@ -18,7 +18,7 @@ public class HAPUtilityValuePortVariable {
 		for(String key : variables.keySet()) {
 			HAPIdElement varId = variables.get(key);
 			HAPInfoCriteria varCriteriaInfo = varInfoContainer.getVaraibleCriteriaInfo(key);
-			HAPElementStructure structureEle = HAPUtilityValuePort.getInternalElement(varId, valueStructureDomain);
+			HAPElementStructure structureEle = HAPUtilityValueStructureDomain.getInternalElement(varId, valueStructureDomain);
 			String eleType = structureEle.getType();
 			if(eleType.equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_DATA)) {
 				HAPElementStructureLeafData dataEle = (HAPElementStructureLeafData)structureEle;
@@ -37,7 +37,7 @@ public class HAPUtilityValuePortVariable {
 		Map<String, HAPIdElement> variables = varInfoContainer.getVariables();
 		for(String key : variables.keySet()) {
 			HAPInfoCriteria varCriteriaInfo = varInfoContainer.getVaraibleCriteriaInfo(key);
-			HAPElementStructure structureEle = HAPUtilityValuePort.getInternalElement(variables.get(key), valueStructureDomain); 
+			HAPElementStructure structureEle = HAPUtilityValueStructureDomain.getInternalElement(variables.get(key), valueStructureDomain); 
 			String eleType = structureEle.getType();
 			if(eleType.equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_DATA)) {
 				HAPElementStructureLeafData dataEle = (HAPElementStructureLeafData)structureEle;

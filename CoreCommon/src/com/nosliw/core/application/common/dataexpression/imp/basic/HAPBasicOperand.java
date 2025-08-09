@@ -1,4 +1,4 @@
-package com.nosliw.core.application.common.dataexpressionimp;
+package com.nosliw.core.application.common.dataexpression.imp.basic;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +13,7 @@ import com.nosliw.core.data.HAPDataTypeHelper;
 import com.nosliw.core.data.criteria.HAPDataTypeCriteria;
 import com.nosliw.core.data.matcher.HAPMatchers;
 
-public abstract class HAPManualOperand extends HAPSerializableImp implements HAPOperand{
+public abstract class HAPBasicOperand extends HAPSerializableImp implements HAPOperand{
 
 	private String m_type;
 	
@@ -21,7 +21,7 @@ public abstract class HAPManualOperand extends HAPSerializableImp implements HAP
 	
 	private HAPDefinitionOperand m_operandDefinition;
 	
-	public HAPManualOperand(String type, HAPDefinitionOperand operandDefinition) {
+	public HAPBasicOperand(String type, HAPDefinitionOperand operandDefinition) {
 		this.m_type = type;
 		this.m_operandDefinition = operandDefinition;
 	}
@@ -35,7 +35,7 @@ public abstract class HAPManualOperand extends HAPSerializableImp implements HAP
 	public HAPDataTypeCriteria getOutputCriteria() {   return this.m_outputCriteria;  }
 	public void setOutputCriteria(HAPDataTypeCriteria dataTypeCriteria){  this.m_outputCriteria = dataTypeCriteria; }
 
-	public List<HAPManualWrapperOperand> getChildren(){   return new ArrayList<HAPManualWrapperOperand>();      }
+	public List<HAPBasicWrapperOperand> getChildren(){   return new ArrayList<HAPBasicWrapperOperand>();      }
 	
 	/**
 	 * Try best to process operand in order to discovery
@@ -52,8 +52,8 @@ public abstract class HAPManualOperand extends HAPSerializableImp implements HAP
 			HAPDataTypeHelper dataTypeHelper);
 
 
-	protected HAPManualWrapperOperand createOperandWrapper(HAPManualOperand operand){
-		return new HAPManualWrapperOperand(operand);
+	protected HAPBasicWrapperOperand createOperandWrapper(HAPBasicOperand operand){
+		return new HAPBasicWrapperOperand(operand);
 	}
 	
 	@Override

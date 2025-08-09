@@ -3,8 +3,8 @@ package com.nosliw.core.application.common.dataexpression;
 import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
-import com.nosliw.data.core.data.HAPDataTypeId;
-import com.nosliw.data.core.matcher.HAPMatchers;
+import com.nosliw.core.data.HAPDataTypeId;
+import com.nosliw.core.data.matcher.HAPMatchers;
 
 public interface HAPOperandOperation extends HAPOperand{
 

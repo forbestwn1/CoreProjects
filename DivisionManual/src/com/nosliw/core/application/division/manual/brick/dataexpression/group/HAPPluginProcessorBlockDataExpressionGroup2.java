@@ -4,16 +4,16 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import com.nosliw.common.path.HAPPath;
 import com.nosliw.core.application.common.dataexpression.HAPItemInContainerDataExpression;
-import com.nosliw.core.application.common.dataexpressionimp.HAPManualExpressionData;
-import com.nosliw.core.application.common.dataexpressionimp.HAPManualUtilityProcessorDataExpression;
-import com.nosliw.core.application.common.dataexpressionimp.HAPUtilityExpressionProcessor;
+import com.nosliw.core.application.common.dataexpression.imp.basic.HAPBasicExpressionData;
+import com.nosliw.core.application.common.dataexpression.imp.basic.HAPBasicUtilityProcessorDataExpression;
+import com.nosliw.core.application.common.dataexpression.imp.basic.HAPUtilityExpressionProcessor;
 import com.nosliw.core.application.common.withvariable.HAPContainerVariableInfo;
 import com.nosliw.core.application.division.manual.core.HAPManualBrick;
 import com.nosliw.core.application.division.manual.core.HAPManualManagerBrick;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionBrick;
 import com.nosliw.core.application.division.manual.core.process.HAPManualContextProcessBrick;
 import com.nosliw.core.application.division.manual.core.process.HAPManualPluginProcessorBlockImp;
-import com.nosliw.core.xxx.application.valueport.HAPUtilityValuePortVariable;
+import com.nosliw.core.application.valueport.HAPUtilityValuePortVariable;
 import com.nosliw.core.xxx.application1.brick.HAPEnumBrickType;
 import com.nosliw.core.xxx.application1.brick.dataexpression.group.HAPBlockDataExpressionGroup;
 import com.nosliw.core.xxx.application1.brick.dataexpression.group.HAPGroupDataExpression;
@@ -35,7 +35,7 @@ public class HAPPluginProcessorBlockDataExpressionGroup2 extends HAPManualPlugin
 		for(HAPManualDefinitionDataExpressionItemInContainer itemDef : groupDef.getItems()) {
 			HAPItemInGroupDataExpression itemExe = new HAPItemInGroupDataExpression();
 			itemDef.cloneToEntityInfo(itemExe);
-			itemExe.setDataExpression(HAPManualUtilityProcessorDataExpression.buildManualDataExpression(itemDef.getExpression()));
+			itemExe.setDataExpression(HAPBasicUtilityProcessorDataExpression.buildBasicDataExpression(itemDef.getExpression()));
 			groupExe.addDataExpression(itemExe);
 		}
 	}
@@ -51,7 +51,7 @@ public class HAPPluginProcessorBlockDataExpressionGroup2 extends HAPManualPlugin
 
 		//resolve variable name, build var info container
 		for(HAPItemInGroupDataExpression itemExe : groupExe.getItems()) {
-			HAPManualUtilityProcessorDataExpression.resolveVariable((HAPManualExpressionData)itemExe.getDataExpressionContainer(), varInfoContainer, null);
+			HAPBasicUtilityProcessorDataExpression.resolveVariable((HAPBasicExpressionData)itemExe.getDataExpressionContainer(), varInfoContainer, null);
 		}
 		
 		//build var criteria infor in var info container according to value port def

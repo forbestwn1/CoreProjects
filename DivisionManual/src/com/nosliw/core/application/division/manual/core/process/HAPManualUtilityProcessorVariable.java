@@ -7,7 +7,7 @@ import com.nosliw.core.application.HAPHandlerDownward;
 import com.nosliw.core.application.HAPUtilityBrick;
 import com.nosliw.core.application.division.manual.core.HAPManualBrick;
 import com.nosliw.core.application.division.manual.core.HAPManualManagerBrick;
-import com.nosliw.core.xxx.application.valueport.HAPUtilityValuePortVariable;
+import com.nosliw.core.application.valueport.HAPUtilityValuePortVariable;
 
 public class HAPManualUtilityProcessorVariable {
 

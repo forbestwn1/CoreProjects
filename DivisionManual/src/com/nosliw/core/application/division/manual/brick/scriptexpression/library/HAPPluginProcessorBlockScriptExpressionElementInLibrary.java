@@ -6,7 +6,7 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.common.dataexpression.HAPItemInContainerDataExpression;
-import com.nosliw.core.application.common.dataexpressionimp.HAPUtilityExpressionProcessor;
+import com.nosliw.core.application.common.dataexpression.imp.basic.HAPUtilityExpressionProcessor;
 import com.nosliw.core.application.common.interactive.HAPInteractiveExpression;
 import com.nosliw.core.application.common.scriptexpression.HAPExpressionScript;
 import com.nosliw.core.application.common.scriptexpression.HAPManualUtilityScriptExpressionParser;

@@ -3,7 +3,7 @@ package com.nosliw.core.application.common.dataexpression;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializable;
-import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
+import com.nosliw.core.data.criteria.HAPDataTypeCriteria;
 
 @HAPEntityWithAttribute
 public interface HAPOperand extends HAPSerializable{

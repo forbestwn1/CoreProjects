@@ -5,11 +5,11 @@ import java.util.List;
 import java.util.Map;
 
 import com.nosliw.common.utils.HAPProcessTracker;
-import com.nosliw.core.application.common.dataexpressionimp.HAPManualExpressionData;
-import com.nosliw.core.application.common.dataexpressionimp.HAPManualOperand;
-import com.nosliw.core.application.common.dataexpressionimp.HAPManualUtilityOperand;
-import com.nosliw.core.application.common.dataexpressionimp.HAPManualUtilityProcessorDataExpression;
-import com.nosliw.core.application.common.dataexpressionimp.HAPManualWrapperOperand;
+import com.nosliw.core.application.common.dataexpression.imp.basic.HAPBasicExpressionData;
+import com.nosliw.core.application.common.dataexpression.imp.basic.HAPBasicUtilityOperand;
+import com.nosliw.core.application.common.dataexpression.imp.basic.HAPBasicUtilityProcessorDataExpression;
+import com.nosliw.core.application.common.dataexpression.imp.basic.HAPBasicWrapperOperand;
+import com.nosliw.core.application.common.dataexpression.imp.basic.HAPBasicOperand;
 import com.nosliw.core.application.common.interactive.HAPInteractiveExpression;
 import com.nosliw.core.application.common.withvariable.HAPContainerVariableInfo;
 import com.nosliw.core.application.division.manual.core.HAPManualBrick;
@@ -17,9 +17,9 @@ import com.nosliw.core.application.division.manual.core.HAPManualManagerBrick;
 import com.nosliw.core.application.division.manual.core.a.HAPManualPluginProcessorBlockSimple;
 import com.nosliw.core.application.division.manual.core.process.HAPManualContextProcessBrick;
 import com.nosliw.core.application.valueport.HAPIdElement;
+import com.nosliw.core.application.valueport.HAPUtilityValuePortVariable;
 import com.nosliw.core.data.criteria.HAPDataTypeCriteria;
 import com.nosliw.core.data.matcher.HAPMatchers;
-import com.nosliw.core.xxx.application.valueport.HAPUtilityValuePortVariable;
 import com.nosliw.core.xxx.application.valueport.HAPVariableInfo;
 import com.nosliw.core.xxx.application1.brick.HAPEnumBrickType;
 import com.nosliw.core.xxx.application1.brick.dataexpression.library.HAPBlockDataExpressionElementInLibrary;
@@ -41,17 +41,17 @@ public class HAPManualPluginProcessorBlockDataExpressionElementInLibrary2 extend
 		def.cloneToEntityInfo(exe);
 		
 		//build expression in executable
-		exe.setExpression(new HAPManualExpressionData(HAPManualUtilityProcessorDataExpression.buildManualOperand(def.getExpression().getOperand())));
-		HAPManualExpressionData dataExpression = (HAPManualExpressionData)exe.getExpression();
+		exe.setExpression(new HAPBasicExpressionData(HAPBasicUtilityProcessorDataExpression.buildBasicOperand(def.getExpression().getOperand())));
+		HAPBasicExpressionData dataExpression = (HAPBasicExpressionData)exe.getExpression();
 		
 		//interactive request
 		exe.setExpressionInteractive(new HAPInteractiveExpression(def.getRequestParms(), def.getResult()));
 		
-		HAPManualWrapperOperand operandWrapper = dataExpression.getOperandWrapper();
+		HAPBasicWrapperOperand operandWrapper = dataExpression.getOperandWrapper();
 		
 		//resolve variable name, build var info container
 		HAPContainerVariableInfo varInfoContainer = new HAPContainerVariableInfo(blockExe);
-		HAPManualUtilityProcessorDataExpression.resolveVariable(dataExpression, varInfoContainer, null);
+		HAPBasicUtilityProcessorDataExpression.resolveVariable(dataExpression, varInfoContainer, null);
 		
 		Map<String, HAPIdElement> varInfos = varInfoContainer.getVariables();
 		for(String key : varInfos.keySet()) {
@@ -62,15 +62,15 @@ public class HAPManualPluginProcessorBlockDataExpressionElementInLibrary2 extend
 		HAPUtilityValuePortVariable.buildVariableInfo(varInfoContainer, blockExe);
 
 		//process reference operand
-		HAPManualUtilityProcessorDataExpression.resolveReferenceVariableMapping(dataExpression, processContext.getRuntimeEnv());
+		HAPBasicUtilityProcessorDataExpression.resolveReferenceVariableMapping(dataExpression, processContext.getRuntimeEnv());
 
 		//discover
-		List<HAPManualOperand> operands = new ArrayList<HAPManualOperand>();
+		List<HAPBasicOperand> operands = new ArrayList<HAPBasicOperand>();
 		operands.add(operandWrapper.getOperand());
 		List<HAPDataTypeCriteria> expectOutputs = new ArrayList<HAPDataTypeCriteria>();
 		expectOutputs.add(exe.getExpressionInterface().getResult().getDataCriteria());
 		List<HAPMatchers> matchers = new ArrayList<HAPMatchers>();
-		varInfoContainer = HAPManualUtilityOperand.discover(
+		varInfoContainer = HAPBasicUtilityOperand.discover(
 				operands,
 				expectOutputs,
 				varInfoContainer,

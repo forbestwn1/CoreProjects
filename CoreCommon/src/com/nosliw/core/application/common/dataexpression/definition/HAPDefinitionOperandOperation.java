@@ -9,8 +9,8 @@ import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityBasic;
-import com.nosliw.data.core.data.HAPDataTypeId;
-import com.nosliw.data.core.data.HAPOperationId;
+import com.nosliw.core.data.HAPDataTypeId;
+import com.nosliw.core.data.HAPOperationId;
 
 public class HAPDefinitionOperandOperation extends HAPDefinitionOperand{
 

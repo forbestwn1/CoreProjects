@@ -1,4 +1,4 @@
-package com.nosliw.core.application.common.dataexpressionimp;
+package com.nosliw.core.application.common.dataexpression.imp.basic;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -14,26 +14,26 @@ import com.nosliw.core.application.common.dataexpression.HAPOperandReference;
 import com.nosliw.core.application.common.dataexpression.definition.HAPDefinitionOperandReference;
 import com.nosliw.core.application.common.withvariable.HAPContainerVariableInfo;
 import com.nosliw.core.application.valueport.HAPIdElement;
-import com.nosliw.data.core.data.HAPDataTypeHelper;
-import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
-import com.nosliw.data.core.data.criteria.HAPUtilityCriteria;
-import com.nosliw.data.core.matcher.HAPMatchers;
-import com.nosliw.data.core.resource.HAPResourceId;
+import com.nosliw.core.data.HAPDataTypeHelper;
+import com.nosliw.core.data.criteria.HAPDataTypeCriteria;
+import com.nosliw.core.data.criteria.HAPUtilityCriteria;
+import com.nosliw.core.data.matcher.HAPMatchers;
+import com.nosliw.core.resource.HAPResourceId;
 
-public class HAPManualOperandReference extends HAPManualOperand implements HAPOperandReference{
+public class HAPBasicOperandReference extends HAPBasicOperand implements HAPOperandReference{
 
 	private HAPResourceId m_referedDataExpressionLibElementResourceId;
 	
-	private Map<String, HAPManualWrapperOperand> m_variableMapping;
+	private Map<String, HAPBasicWrapperOperand> m_variableMapping;
 
 	private Map<String, HAPIdElement> m_resolvedVariable;
 	private Map<String, HAPDataTypeCriteria> m_resolvedVariableCriteria;
 
 	private Map<String, HAPMatchers> m_matchers;
 
-	public HAPManualOperandReference(HAPDefinitionOperandReference operandDefinition) {
+	public HAPBasicOperandReference(HAPDefinitionOperandReference operandDefinition) {
 		super(HAPConstantShared.EXPRESSION_OPERAND_REFERENCE, operandDefinition);
-		this.m_variableMapping = new LinkedHashMap<String, HAPManualWrapperOperand>();
+		this.m_variableMapping = new LinkedHashMap<String, HAPBasicWrapperOperand>();
 		this.m_resolvedVariable = new LinkedHashMap<String, HAPIdElement>();
 		this.m_resolvedVariableCriteria = new LinkedHashMap<String, HAPDataTypeCriteria>();
 		this.m_matchers = new LinkedHashMap<String, HAPMatchers>();
@@ -51,7 +51,7 @@ public class HAPManualOperandReference extends HAPManualOperand implements HAPOp
 		}
 		return out;
 	}
-	public void addMapping(String varName, HAPManualOperand operand) {	this.m_variableMapping.put(varName, this.createOperandWrapper(operand));	}
+	public void addMapping(String varName, HAPBasicOperand operand) {	this.m_variableMapping.put(varName, this.createOperandWrapper(operand));	}
 
 	public void addResolvedVariable(String varName, HAPIdElement varId, HAPDataTypeCriteria varCriteria) {	
 		this.m_resolvedVariable.put(varName, varId);	
@@ -64,8 +64,8 @@ public class HAPManualOperandReference extends HAPManualOperand implements HAPOp
 	public Map<String, HAPIdElement> getResolvedVariable(){   return this.m_resolvedVariable;     }
 	
 	@Override
-	public List<HAPManualWrapperOperand> getChildren(){   
-		List<HAPManualWrapperOperand> out = new ArrayList<HAPManualWrapperOperand>();
+	public List<HAPBasicWrapperOperand> getChildren(){   
+		List<HAPBasicWrapperOperand> out = new ArrayList<HAPBasicWrapperOperand>();
 		for(String name : this.m_variableMapping.keySet()) {
 			out.add(this.m_variableMapping.get(name));
 		}

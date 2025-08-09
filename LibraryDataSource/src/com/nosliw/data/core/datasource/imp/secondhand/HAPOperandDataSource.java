@@ -27,7 +27,7 @@ import com.nosliw.data.core.runtime.js.resource.HAPResourceIdJSGateway;
 
 public class HAPOperandDataSource{
 /*
-	extends HAPOperandImp{
+	extends HAPBasicOperand{
 
 	@HAPAttribute
 	public static final String DATASOURCE_NAME = "dataSource_name";

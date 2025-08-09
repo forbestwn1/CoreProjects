@@ -1,4 +1,4 @@
-package com.nosliw.core.application.common.dataexpressionimp;
+package com.nosliw.core.application.common.dataexpression.imp.basic;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,22 +26,18 @@ import com.nosliw.core.application.common.structure.reference.HAPConfigureResolv
 import com.nosliw.core.application.common.withvariable.HAPContainerVariableInfo;
 import com.nosliw.core.application.valueport.HAPIdElement;
 import com.nosliw.core.application.valueport.HAPWithInternalValuePort;
+import com.nosliw.core.data.HAPData;
+import com.nosliw.core.data.criteria.HAPDataTypeCriteria;
+import com.nosliw.core.data.criteria.HAPInfoCriteria;
+import com.nosliw.core.data.matcher.HAPMatchers;
+import com.nosliw.core.resource.HAPFactoryResourceId;
+import com.nosliw.core.resource.HAPResourceId;
+import com.nosliw.core.resource.HAPUtilityResource;
+import com.nosliw.core.runtimeenv.HAPRuntimeEnvironment;
 import com.nosliw.core.xxx.application.valueport.HAPInfoElementResolve;
 import com.nosliw.core.xxx.application.valueport.HAPUtilityStructureElementReference;
 import com.nosliw.core.xxx.application.valueport.HAPUtilityValuePort;
 import com.nosliw.core.xxx.application.valueport.HAPValuePort1111;
-import com.nosliw.core.xxx.application1.brick.dataexpression.library.HAPBlockDataExpressionElementInLibrary;
-import com.nosliw.data.core.data.HAPData;
-import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
-import com.nosliw.data.core.data.criteria.HAPInfoCriteria;
-import com.nosliw.data.core.domain.entity.HAPContextProcessor;
-import com.nosliw.data.core.domain.entity.HAPExecutableEntityComplex;
-import com.nosliw.data.core.domain.entity.expression.data1.HAPExecutableEntityExpressionData;
-import com.nosliw.data.core.matcher.HAPMatchers;
-import com.nosliw.data.core.resource.HAPFactoryResourceId;
-import com.nosliw.data.core.resource.HAPResourceId;
-import com.nosliw.data.core.resource.HAPUtilityResource;
-import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPUtilityExpressionProcessor {
 
@@ -91,7 +87,7 @@ public class HAPUtilityExpressionProcessor {
 
 	
 	public static void resolveVariableName(HAPExpressionData expressionExe, HAPWithInternalValuePort withInternalValuePort, HAPContainerVariableInfo varInfos, HAPConfigureResolveElementReference resolveConfigure) {
-		HAPUtilityOperand.processAllOperand(expressionExe.getOperand(), null, new HAPManualHandlerOperand(){
+		HAPUtilityOperand.processAllOperand(expressionExe.getOperand(), null, new HAPBasicHandlerOperand(){
 			@Override
 			public boolean processOperand(HAPWrapperOperand operand, Object data) {
 				String opType = operand.getOperand().getType();
@@ -111,7 +107,7 @@ public class HAPUtilityExpressionProcessor {
 
 	public static void resolveReferenceVariableMapping(HAPExpressionData expressionExe, HAPRuntimeEnvironment runtimEnv) {
 		HAPWrapperOperand operand = expressionExe.getOperand();
-		HAPUtilityOperand.processAllOperand(operand, null, new HAPManualHandlerOperand(){
+		HAPUtilityOperand.processAllOperand(operand, null, new HAPBasicHandlerOperand(){
 			@Override
 			public boolean processOperand(HAPWrapperOperand operand, Object data) {
 				String opType = operand.getOperand().getType();
@@ -191,7 +187,7 @@ public class HAPUtilityExpressionProcessor {
 	
 	
 	public static void processConstant(HAPExecutableEntityComplex containerComplexEntity, HAPExecutableExpressionData1 expressionExe, HAPContextProcessor processContext) {
-		HAPUtilityOperand.processAllOperand(expressionExe.getOperand(), null, new HAPManualHandlerOperand(){
+		HAPUtilityOperand.processAllOperand(expressionExe.getOperand(), null, new HAPBasicHandlerOperand(){
 			@Override
 			public boolean processOperand(HAPWrapperOperand operand, Object data) {
 				String opType = operand.getOperand().getType();

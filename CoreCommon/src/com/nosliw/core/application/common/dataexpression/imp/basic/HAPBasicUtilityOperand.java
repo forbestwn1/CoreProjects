@@ -1,21 +1,21 @@
-package com.nosliw.core.application.common.dataexpressionimp;
+package com.nosliw.core.application.common.dataexpression.imp.basic;
 
 import java.util.List;
 
 import com.nosliw.common.utils.HAPProcessTracker;
 import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.core.application.common.withvariable.HAPContainerVariableInfo;
-import com.nosliw.data.core.data.HAPDataTypeHelper;
-import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
-import com.nosliw.data.core.data.criteria.HAPDataTypeCriteriaAny;
-import com.nosliw.data.core.matcher.HAPMatchers;
+import com.nosliw.core.data.HAPDataTypeHelper;
+import com.nosliw.core.data.criteria.HAPDataTypeCriteria;
+import com.nosliw.core.data.criteria.HAPDataTypeCriteriaAny;
+import com.nosliw.core.data.matcher.HAPMatchers;
 
-public class HAPManualUtilityOperand {
+public class HAPBasicUtilityOperand {
 
-	static public void traverseAllOperand(HAPManualWrapperOperand operandWrapper, HAPManualHandlerOperand task, Object data){
+	static public void traverseAllOperand(HAPBasicWrapperOperand operandWrapper, HAPBasicHandlerOperand task, Object data){
 		if(task.processOperand(operandWrapper, data)){
-			List<HAPManualWrapperOperand> children = operandWrapper.getOperand().getChildren();
-			for(HAPManualWrapperOperand child : children){
+			List<HAPBasicWrapperOperand> children = operandWrapper.getOperand().getChildren();
+			for(HAPBasicWrapperOperand child : children){
 				traverseAllOperand(child, task, data);
 			}
 			task.postPross(operandWrapper, data);
@@ -23,7 +23,7 @@ public class HAPManualUtilityOperand {
 	}
 	
 	static public HAPContainerVariableInfo discover(
-			List<HAPManualOperand> operands, 
+			List<HAPBasicOperand> operands, 
 			List<HAPDataTypeCriteria> expectOutputs,
 			HAPContainerVariableInfo inVariablesInfo, 
 			List<HAPMatchers> matchers,

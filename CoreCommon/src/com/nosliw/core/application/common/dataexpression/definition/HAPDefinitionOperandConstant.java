@@ -1,7 +1,7 @@
 package com.nosliw.core.application.common.dataexpression.definition;
 
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.data.core.data.HAPData;
+import com.nosliw.core.data.HAPData;
 
 public class HAPDefinitionOperandConstant extends HAPDefinitionOperand{
 

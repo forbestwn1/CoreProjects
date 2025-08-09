@@ -1,4 +1,4 @@
-package com.nosliw.core.application.common.dataexpressionimp;
+package com.nosliw.core.application.common.dataexpression.imp.basic;
 
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
@@ -7,19 +7,19 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
  * Wrapper of operand 
  * It is introduced so that we can replace operand with another one without knowing its parent during expression processing
  */
-public class HAPManualWrapperOperand extends HAPSerializableImp{
+public class HAPBasicWrapperOperand extends HAPSerializableImp{
 
-	private HAPManualOperand m_operand;
+	private HAPBasicOperand m_operand;
 	
-	public HAPManualWrapperOperand(HAPManualOperand operand){
+	public HAPBasicWrapperOperand(HAPBasicOperand operand){
 		this.m_operand = operand;
 	}
 	
-	public HAPManualWrapperOperand(){}
+	public HAPBasicWrapperOperand(){}
 	
-	public HAPManualOperand getOperand(){		return this.m_operand;	}
+	public HAPBasicOperand getOperand(){		return this.m_operand;	}
 	
-	public void setOperand(HAPManualOperand operand){	this.m_operand = operand;	}
+	public void setOperand(HAPBasicOperand operand){	this.m_operand = operand;	}
 
 	public String getOperandType() {   return this.getOperand().getType();     }
 	
@@ -35,7 +35,7 @@ public class HAPManualWrapperOperand extends HAPSerializableImp{
 	
 	public boolean isEmpty(){ return this.m_operand==null;  }
 	
-	public HAPManualWrapperOperand cloneWrapper(){
-		return new HAPManualWrapperOperand(this.getOperand().cloneOperand());
+	public HAPBasicWrapperOperand cloneWrapper(){
+		return new HAPBasicWrapperOperand(this.getOperand().cloneOperand());
 	}
 }

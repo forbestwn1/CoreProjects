@@ -8,20 +8,24 @@ import org.apache.commons.lang3.tuple.Pair;
 import com.nosliw.core.application.common.structure.reference.HAPConfigureResolveElementReference;
 import com.nosliw.core.data.criteria.HAPDataTypeCriteria;
 import com.nosliw.core.data.matcher.HAPMatchers;
+import com.nosliw.core.runtime.HAPRuntimeInfo;
 import com.nosliw.core.xxx.application.valueport.HAPVariableInfo;
 
 public class HAPUtilityWithVarible {
 
-	public static void resolveVariable(HAPWithVariable withVariableEntity, HAPContainerVariableInfo varInfoContainer, HAPConfigureResolveElementReference resolveConfigure, HAPManagerWithVariablePlugin withVariableMan) {
-		withVariableMan.getWithVariableEntityProcessPlugin(withVariableEntity.getWithVariableEntityType()).resolveVariable(withVariableEntity, varInfoContainer, resolveConfigure);
+	public static void resolveVariable(HAPWithVariable withVariableEntity, HAPContainerVariableInfo varInfoContainer, HAPConfigureResolveElementReference resolveConfigure, HAPManagerWithVariablePlugin withVariableMan, HAPRuntimeInfo runtimeInfo) {
+		HAPPluginProcessorEntityWithVariable plugin = withVariableMan.getWithVariableEntityProcessPlugin(withVariableEntity.getWithVariableEntityType());
+		plugin.resolveVariable(withVariableEntity, varInfoContainer, resolveConfigure, runtimeInfo);
 	}
 	
 	public static Pair<HAPContainerVariableInfo, Map<String, HAPMatchers>>  discoverVariableCriteria(HAPWithVariable withVariableEntity, Map<String, HAPDataTypeCriteria> expections, HAPContainerVariableInfo varInfoContainer, HAPManagerWithVariablePlugin withVariableMan){
-		return withVariableMan.getWithVariableEntityProcessPlugin(withVariableEntity.getWithVariableEntityType()).discoverVariableCriteria(withVariableEntity, expections, varInfoContainer);
+		HAPPluginProcessorEntityWithVariable plugin = withVariableMan.getWithVariableEntityProcessPlugin(withVariableEntity.getWithVariableEntityType());
+		return plugin.discoverVariableCriteria(withVariableEntity, expections, varInfoContainer);
 	}
 
 	public static Set<String> getVariableKeys(HAPWithVariable withVariableEntity, HAPManagerWithVariablePlugin withVariableMan){
-		return withVariableMan.getWithVariableEntityProcessPlugin(withVariableEntity.getWithVariableEntityType()).getVariableKeys(withVariableEntity);
+		HAPPluginProcessorEntityWithVariable plugin = withVariableMan.getWithVariableEntityProcessPlugin(withVariableEntity.getWithVariableEntityType());
+		return plugin.getVariableKeys(withVariableEntity);
 	}
 
 	public static void buildVariableInfoInEntity(HAPWithVariable withVariableEntity, HAPContainerVariableInfo varInfoContainer, HAPManagerWithVariablePlugin withVariableMan) {

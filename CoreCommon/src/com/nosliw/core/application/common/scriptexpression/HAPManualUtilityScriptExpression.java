@@ -8,8 +8,8 @@ import com.nosliw.core.application.common.constant.HAPDefinitionConstant;
 import com.nosliw.core.application.common.dataexpression.HAPContainerDataExpression;
 import com.nosliw.core.application.common.dataexpression.HAPItemInContainerDataExpression;
 import com.nosliw.core.application.common.dataexpression.definition.HAPParserDataExpression;
-import com.nosliw.core.application.common.dataexpressionimp.HAPManualExpressionData;
-import com.nosliw.core.application.common.dataexpressionimp.HAPManualUtilityProcessorDataExpression;
+import com.nosliw.core.application.common.dataexpression.imp.basic.HAPBasicExpressionData;
+import com.nosliw.core.application.common.dataexpression.imp.basic.HAPBasicUtilityProcessorDataExpression;
 import com.nosliw.core.application.common.structure.reference.HAPConfigureResolveElementReference;
 import com.nosliw.core.application.common.withvariable.HAPContainerVariableInfo;
 import com.nosliw.core.application.common.withvariable.HAPManagerWithVariablePlugin;
@@ -40,7 +40,7 @@ public class HAPManualUtilityScriptExpression {
 		//data expression
 		HAPContainerDataExpression dataExpressions = scriptExpression.getDataExpressionContainer();
 		for(HAPItemInContainerDataExpression item : dataExpressions.getItems()) {
-			HAPManualUtilityProcessorDataExpression.processConstant((HAPManualExpressionData)item.getDataExpression(), constantsDef);
+			HAPBasicUtilityProcessorDataExpression.processConstant((HAPBasicExpressionData)item.getDataExpression(), constantsDef);
 		}
 	}
 	
