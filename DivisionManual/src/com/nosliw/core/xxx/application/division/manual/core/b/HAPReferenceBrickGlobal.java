@@ -1,4 +1,4 @@
-package com.nosliw.core.application.division.manual.core.b;
+package com.nosliw.core.xxx.application.division.manual.core.b;
 
 import com.nosliw.core.application.HAPBundle;
 

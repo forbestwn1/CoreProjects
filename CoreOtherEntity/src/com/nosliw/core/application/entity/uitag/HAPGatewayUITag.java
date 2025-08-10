@@ -1,16 +1,18 @@
-package com.nosliw.core.application.uitag;
+package com.nosliw.core.application.entity.uitag;
 
 import org.json.JSONObject;
+import org.springframework.stereotype.Component;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.exception.HAPServiceData;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.data.criteria.HAPUtilityCriteria;
-import com.nosliw.data.core.runtime.HAPRuntimeInfo;
-import com.nosliw.data.core.runtime.js.HAPGatewayImp;
-import com.nosliw.ui.tag.HAPManagerUITag;
+import com.nosliw.core.gateway.HAPGatewayImp;
+import com.nosliw.core.runtime.HAPRuntimeInfo;
 
 @HAPEntityWithAttribute
+@Component
 public class HAPGatewayUITag extends HAPGatewayImp{
 
 	@HAPAttribute
@@ -29,6 +31,9 @@ public class HAPGatewayUITag extends HAPGatewayImp{
 		this.m_uiTagMan = uiTagMan;
 	}
 	
+	@Override
+	public String getName() {   return HAPConstantShared.GATEWAY_UITAG;    }
+
 	@Override
 	public HAPServiceData command(String command, JSONObject parms, HAPRuntimeInfo runtimeInfo) {
 		HAPServiceData out = null;

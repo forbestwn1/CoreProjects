@@ -1,4 +1,4 @@
-package com.nosliw.core.application.division.manual.core.a;
+package com.nosliw.core.xxx.application.division.manual.core.a;
 
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionPluginParserBrick;
 import com.nosliw.core.application.division.manual.core.process.HAPManualPluginProcessorAdapter;

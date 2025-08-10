@@ -749,6 +749,7 @@
 			<definition name="GATEWAY_RESOURCE" value="resource"/>
 			<definition name="GATEWAY_PACKAGE" value="package"/>
 			<definition name="GATEWAY_SERVICE" value="service"/>
+			<definition name="GATEWAY_UITAG" value="uiTag"/>
 
 			<definition type="space"/>
 			<definition name="NOSLIW_RESERVE_ATTRIBUTE" value="nosliwattribute_"/>

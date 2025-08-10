@@ -1,9 +1,9 @@
 package com.nosliw.core.application.division.manual.brick.ui.uicontent;
 
 import com.nosliw.core.application.HAPIdBrickType;
+import com.nosliw.core.application.brick.ui.uicontent.HAPWithUIContent;
+import com.nosliw.core.application.brick.ui.uicontent.HAPWithUIId;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionBrick;
-import com.nosliw.core.xxx.application1.brick.ui.uicontent.HAPWithUIContent;
-import com.nosliw.core.xxx.application1.brick.ui.uicontent.HAPWithUIId;
 
 public class HAPManualDefinitionBlockComplxWithUIContent extends HAPManualDefinitionBrick implements HAPWithUIId{
 

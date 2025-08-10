@@ -4,21 +4,21 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.nosliw.common.info.HAPUtilityEntityInfo;
+import com.nosliw.core.application.HAPManagerApplicationBrick;
+import com.nosliw.core.application.brick.HAPEnumBrickType;
+import com.nosliw.core.application.brick.ui.uicontent.HAPBlockComplexUICustomerTagDebugger;
 import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualDefinitionBrickValueContext;
 import com.nosliw.core.application.division.manual.core.HAPManualManagerBrick;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionBrick;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionContextParse;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionPluginParserBrickImpComplex;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionUtilityParserBrickFormatJson;
-import com.nosliw.core.application.uitag.HAPUITagDefinition;
-import com.nosliw.core.xxx.application1.brick.HAPEnumBrickType;
-import com.nosliw.core.xxx.application1.brick.ui.uicontent.HAPBlockComplexUICustomerTagDebugger;
-import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
+import com.nosliw.core.application.entity.uitag.HAPUITagDefinition;
 
 public class HAPManualPluginParserBlockComplexUICustomerTagDebugger extends HAPManualDefinitionPluginParserBrickImpComplex{
 
-	public HAPManualPluginParserBlockComplexUICustomerTagDebugger(HAPManualManagerBrick manualDivisionEntityMan, HAPRuntimeEnvironment runtimeEnv) {
-		super(HAPEnumBrickType.UICUSTOMERTAGDEBUGGER_100, HAPManualDefinitionBlockComplexUICustomerTagDebugger.class, manualDivisionEntityMan, runtimeEnv);
+	public HAPManualPluginParserBlockComplexUICustomerTagDebugger(HAPManualManagerBrick manualDivisionEntityMan, HAPManagerApplicationBrick brickMan) {
+		super(HAPEnumBrickType.UICUSTOMERTAGDEBUGGER_100, HAPManualDefinitionBlockComplexUICustomerTagDebugger.class, manualDivisionEntityMan, brickMan);
 	}
 
 	@Override

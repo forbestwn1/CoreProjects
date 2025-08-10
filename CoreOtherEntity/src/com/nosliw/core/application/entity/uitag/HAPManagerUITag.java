@@ -1,4 +1,4 @@
-package com.nosliw.core.application.uitag;
+package com.nosliw.core.application.entity.uitag;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -9,23 +9,25 @@ import java.util.List;
 import java.util.Map;
 
 import org.json.JSONObject;
+import org.springframework.stereotype.Component;
 
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityFile;
+import com.nosliw.core.data.HAPDataTypeHelper;
 import com.nosliw.core.data.criteria.HAPDataTypeCriteria;
 import com.nosliw.core.data.matcher.HAPMatchers;
 import com.nosliw.core.system.HAPSystemFolderUtility;
-import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
+@Component
 public class HAPManagerUITag{
 
-	private HAPRuntimeEnvironment m_runtimeEnv;
-	
 	private Map<String, HAPUITagDefinitionData> m_dataTagDefs;
 	private Map<String, HAPUITagDefinition> m_otherTagDefs;
+
+	private HAPDataTypeHelper m_dataTypeHelper;
 	
-	public HAPManagerUITag(HAPRuntimeEnvironment runtimeEnv) {
-		this.m_runtimeEnv = runtimeEnv;
+	public HAPManagerUITag(HAPDataTypeHelper dataTypeHelper) {
+		this.m_dataTypeHelper = dataTypeHelper;
 	}
 	
 	public HAPUITagDefinition getUITagDefinition(String tagId, String version) {
@@ -82,7 +84,7 @@ public class HAPManagerUITag{
 		for(String name : this.m_dataTagDefs.keySet()) {
 			HAPUITagDefinitionData uiTagDef = this.m_dataTagDefs.get(name);
 			HAPDataTypeCriteria tagDataTypeCriteria = uiTagDef.getDataTypeCriteria();
-			HAPMatchers matchers = this.m_runtimeEnv.getDataTypeHelper().convertable(queryDataTypeCriteria, tagDataTypeCriteria);
+			HAPMatchers matchers = this.m_dataTypeHelper.convertable(queryDataTypeCriteria, tagDataTypeCriteria);
 			if(matchers!=null) {
 				double score = matchers.getScore();
 				if(score>0) {

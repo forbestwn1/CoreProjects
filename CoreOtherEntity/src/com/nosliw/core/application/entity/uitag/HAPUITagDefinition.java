@@ -1,4 +1,4 @@
-package com.nosliw.core.application.uitag;
+package com.nosliw.core.application.entity.uitag;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;

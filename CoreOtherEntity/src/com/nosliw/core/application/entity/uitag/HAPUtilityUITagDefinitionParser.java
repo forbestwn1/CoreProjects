@@ -1,4 +1,4 @@
-package com.nosliw.core.application.uitag;
+package com.nosliw.core.application.entity.uitag;
 
 import java.io.File;
 import java.util.Map;

@@ -5,19 +5,17 @@ import java.util.Map;
 import org.apache.commons.lang3.tuple.Pair;
 
 import com.nosliw.common.path.HAPPath;
+import com.nosliw.core.application.brick.HAPEnumBrickType;
 import com.nosliw.core.application.division.manual.core.HAPManualBrick;
-import com.nosliw.core.application.division.manual.core.HAPManualManagerBrick;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionBrick;
 import com.nosliw.core.application.division.manual.core.process.HAPManualContextProcessBrick;
 import com.nosliw.core.application.division.manual.core.process.HAPManualPluginProcessorBlockImp;
-import com.nosliw.core.application.uitag.HAPUITagAttributeDefinition;
-import com.nosliw.core.xxx.application1.brick.HAPEnumBrickType;
-import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
+import com.nosliw.core.application.entity.uitag.HAPUITagAttributeDefinition;
 
 public class HAPManualPluginProcessorBlockUICustomerTag extends HAPManualPluginProcessorBlockImp{
 
-	public HAPManualPluginProcessorBlockUICustomerTag(HAPRuntimeEnvironment runtimeEnv, HAPManualManagerBrick manualBrickMan) {
-		super(HAPEnumBrickType.UICUSTOMERTAG_100, HAPManualBlockComplexUICustomerTag.class, runtimeEnv, manualBrickMan);
+	public HAPManualPluginProcessorBlockUICustomerTag() {
+		super(HAPEnumBrickType.UICUSTOMERTAG_100, HAPManualBlockComplexUICustomerTag.class);
 	}
 
 	@Override

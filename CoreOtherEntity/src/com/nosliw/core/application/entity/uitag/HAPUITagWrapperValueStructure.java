@@ -1,4 +1,4 @@
-package com.nosliw.core.application.uitag;
+package com.nosliw.core.application.entity.uitag;
 
 import com.nosliw.common.info.HAPEntityInfoImp;
 import com.nosliw.core.application.common.structure.HAPValueStructure;

@@ -11,8 +11,8 @@ import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManua
 import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualDefinitionBrickWrapperValueStructure;
 import com.nosliw.core.application.division.manual.core.HAPManualEnumBrickType;
 import com.nosliw.core.application.division.manual.core.HAPManualManagerBrick;
-import com.nosliw.core.application.uitag.HAPUITagAttributeDefinition;
-import com.nosliw.core.application.uitag.HAPUITagDefinition;
+import com.nosliw.core.application.entity.uitag.HAPUITagAttributeDefinition;
+import com.nosliw.core.application.entity.uitag.HAPUITagDefinition;
 
 public class HAPUtilityUITag {
 

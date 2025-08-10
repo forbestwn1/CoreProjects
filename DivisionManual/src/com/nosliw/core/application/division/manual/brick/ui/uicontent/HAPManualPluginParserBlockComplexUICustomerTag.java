@@ -8,22 +8,22 @@ import org.jsoup.nodes.Element;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.core.application.HAPManagerApplicationBrick;
+import com.nosliw.core.application.brick.HAPEnumBrickType;
+import com.nosliw.core.application.brick.ui.uicontent.HAPWithUIContent;
 import com.nosliw.core.application.common.parentrelation.HAPManualDefinitionBrickRelation;
 import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualDefinitionBrickValueContext;
 import com.nosliw.core.application.division.manual.core.HAPManualManagerBrick;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionBrick;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionContextParse;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionPluginParserBrickImpComplex;
-import com.nosliw.core.application.uitag.HAPUITagAttributeDefinition;
-import com.nosliw.core.application.uitag.HAPUITagDefinition;
-import com.nosliw.core.xxx.application1.brick.HAPEnumBrickType;
-import com.nosliw.core.xxx.application1.brick.ui.uicontent.HAPWithUIContent;
-import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
+import com.nosliw.core.application.entity.uitag.HAPUITagAttributeDefinition;
+import com.nosliw.core.application.entity.uitag.HAPUITagDefinition;
 
 public class HAPManualPluginParserBlockComplexUICustomerTag extends HAPManualDefinitionPluginParserBrickImpComplex{
 
-	public HAPManualPluginParserBlockComplexUICustomerTag(HAPManualManagerBrick manualDivisionEntityMan, HAPRuntimeEnvironment runtimeEnv) {
-		super(HAPEnumBrickType.UICUSTOMERTAG_100, HAPManualDefinitionBlockComplexUICustomerTag.class, manualDivisionEntityMan, runtimeEnv);
+	public HAPManualPluginParserBlockComplexUICustomerTag(HAPManualManagerBrick manualDivisionEntityMan, HAPManagerApplicationBrick brickMan) {
+		super(HAPEnumBrickType.UICUSTOMERTAG_100, HAPManualDefinitionBlockComplexUICustomerTag.class, manualDivisionEntityMan, brickMan);
 	}
 
 	@Override

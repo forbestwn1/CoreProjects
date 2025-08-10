@@ -4,17 +4,17 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.core.application.HAPManagerApplicationBrick;
+import com.nosliw.core.application.brick.HAPEnumBrickType;
 import com.nosliw.core.application.division.manual.core.HAPManualManagerBrick;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionBrick;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionContextParse;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionPluginParserBrickImpComplex;
-import com.nosliw.core.xxx.application1.brick.HAPEnumBrickType;
-import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPManualPluginParserBlockComplexUIPage extends HAPManualDefinitionPluginParserBrickImpComplex{
 
-	public HAPManualPluginParserBlockComplexUIPage(HAPManualManagerBrick manualDivisionEntityMan, HAPRuntimeEnvironment runtimeEnv) {
-		super(HAPEnumBrickType.UIPAGE_100, HAPManualDefinitionBlockComplexUIPage.class, manualDivisionEntityMan, runtimeEnv);
+	public HAPManualPluginParserBlockComplexUIPage(HAPManualManagerBrick manualDivisionEntityMan, HAPManagerApplicationBrick brickMan) {
+		super(HAPEnumBrickType.UIPAGE_100, HAPManualDefinitionBlockComplexUIPage.class, manualDivisionEntityMan, brickMan);
 	}
 
 	@Override

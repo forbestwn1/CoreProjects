@@ -3,21 +3,19 @@ package com.nosliw.core.application.division.manual.brick.ui.uicontent;
 import org.apache.commons.lang3.tuple.Pair;
 
 import com.nosliw.common.path.HAPPath;
+import com.nosliw.core.application.brick.HAPEnumBrickType;
 import com.nosliw.core.application.common.scriptexpression.HAPManualUtilityScriptExpression;
 import com.nosliw.core.application.common.withvariable.HAPContainerVariableInfo;
 import com.nosliw.core.application.division.manual.core.HAPManualBrick;
-import com.nosliw.core.application.division.manual.core.HAPManualManagerBrick;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionBrick;
 import com.nosliw.core.application.division.manual.core.process.HAPManualContextProcessBrick;
 import com.nosliw.core.application.division.manual.core.process.HAPManualPluginProcessorBlockImp;
 import com.nosliw.core.application.valueport.HAPUtilityValuePortVariable;
-import com.nosliw.core.xxx.application1.brick.HAPEnumBrickType;
-import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPManualPluginProcessorBlockUIContent extends HAPManualPluginProcessorBlockImp{
 
-	public HAPManualPluginProcessorBlockUIContent(HAPRuntimeEnvironment runtimeEnv, HAPManualManagerBrick manualBrickMan) {
-		super(HAPEnumBrickType.UICONTENT_100, HAPManualBlockComplexUIContent.class, runtimeEnv, manualBrickMan);
+	public HAPManualPluginProcessorBlockUIContent() {
+		super(HAPEnumBrickType.UICONTENT_100, HAPManualBlockComplexUIContent.class);
 	}
 
 	@Override
