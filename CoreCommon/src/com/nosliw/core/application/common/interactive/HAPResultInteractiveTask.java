@@ -7,12 +7,13 @@ import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
+import com.nosliw.common.serialization.HAPSerializableImp;
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.core.data.HAPData;
 import com.nosliw.core.data.HAPUtilityData;
-import com.nosliw.common.serialization.HAPSerializableImp;
-import com.nosliw.common.serialization.HAPSerializationFormat;
 
+//execute result
 @HAPEntityWithAttribute
 public class HAPResultInteractiveTask extends HAPSerializableImp{
 

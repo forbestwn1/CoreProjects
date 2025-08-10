@@ -10,8 +10,8 @@ import com.nosliw.core.application.HAPManagerApplicationBrick;
 import com.nosliw.core.application.HAPUtilityBrick;
 import com.nosliw.core.application.brick.interactive.interfacee.task.HAPBlockInteractiveInterfaceTask;
 import com.nosliw.core.application.common.interactive.HAPInteractiveTask;
+import com.nosliw.core.application.common.interactive.HAPWithBlockInteractiveTask;
 import com.nosliw.core.application.division.manual.brick.interactive.interfacee.task.HAPManualDefinitionBlockInteractiveInterfaceTask;
-import com.nosliw.core.application.division.manual.common.task.HAPManualDefinitionWithTaskInterfaceInteractive;
 import com.nosliw.core.application.division.manual.common.task.HAPManualUtilityTask;
 import com.nosliw.core.application.division.manual.core.HAPManualBrick;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionBrick;
@@ -41,8 +41,8 @@ public abstract class HAPManualPluginProcessorBlockImp extends HAPManualPluginPr
 //			}
 //		}
 		
-		if(blockPair.getLeft() instanceof HAPManualDefinitionWithTaskInterfaceInteractive) {
-			HAPEntityOrReference taskInterfaceBrickOrRef = ((HAPManualDefinitionWithTaskInterfaceInteractive)blockPair.getLeft()).getTaskInterface();
+		if(blockPair.getLeft() instanceof HAPWithBlockInteractiveTask) {
+			HAPEntityOrReference taskInterfaceBrickOrRef = ((HAPWithBlockInteractiveTask)blockPair.getLeft()).getTaskInterface();
 			if(taskInterfaceBrickOrRef!=null) {
 				HAPInteractiveTask taskInterface = getInteractiveTask(taskInterfaceBrickOrRef, processContext.getBrickManager());
 				HAPManualUtilityTask.buildValuePortGroupForInteractiveTask(blockPair.getRight(), taskInterface, processContext.getCurrentBundle().getValueStructureDomain());

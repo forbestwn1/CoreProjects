@@ -1,4 +1,4 @@
-package com.nosliw.core.application.division.manual.common.dataexpression1;
+package com.nosliw.core.xxx.application.division.manual.common.dataexpression1;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +35,7 @@ import com.nosliw.core.resource.HAPResourceId;
 import com.nosliw.core.resource.HAPUtilityResource;
 import com.nosliw.core.xxx.application.valueport.HAPInfoElementResolve;
 import com.nosliw.core.xxx.application.valueport.HAPUtilityStructureElementReference;
-import com.nosliw.core.xxx.application.valueport.HAPUtilityValuePort;
+import com.nosliw.core.xxx.application.valueport.HAPUtilityValuePort1;
 import com.nosliw.core.xxx.application.valueport.HAPValuePort1111;
 import com.nosliw.core.xxx.application1.brick.dataexpression.library.HAPBlockDataExpressionElementInLibrary;
 import com.nosliw.data.core.domain.entity.HAPContextProcessor;
@@ -145,7 +145,7 @@ public class HAPUtilityExpressionProcessor {
 		for(HAPIdElement varId : variables.keySet()) {
 			HAPInfoCriteria varCriteriaInfo = variables.get(varId);
 			
-			HAPElementStructure structureEle = HAPUtilityValuePort.getInternalElement(varId, withInternalValuePort); 
+			HAPElementStructure structureEle = HAPUtilityValuePort1.getInternalElement(varId, withInternalValuePort); 
 			String eleType = structureEle.getType();
 			if(eleType.equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_DATA)) {
 				HAPElementStructureLeafData dataEle = (HAPElementStructureLeafData)structureEle;
@@ -161,14 +161,14 @@ public class HAPUtilityExpressionProcessor {
 		for(HAPIdElement varId : variables.keySet()) {
 			HAPInfoCriteria varCriteriaInfo = variables.get(varId);
 
-			HAPElementStructure structureEle = HAPUtilityValuePort.getInternalElement(varId, withInternalValuePort);
+			HAPElementStructure structureEle = HAPUtilityValuePort1.getInternalElement(varId, withInternalValuePort);
 			String eleType = structureEle.getType();
 			if(eleType.equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_DATA)) {
 				HAPElementStructureLeafData dataEle = (HAPElementStructureLeafData)structureEle;
 //				if(dataEle.getStatus().equals(HAPConstantShared.EXPRESSION_VARIABLE_STATUS_OPEN)) 
 				{
 					if(!HAPUtilityBasic.isEquals(dataEle.getCriteria(), varCriteriaInfo.getCriteria())){
-						HAPValuePort1111 valuePort = HAPUtilityValuePort.getInternalValuePort(varId, withInternalValuePort);
+						HAPValuePort1111 valuePort = HAPUtilityValuePort1.getInternalValuePort(varId, withInternalValuePort);
 						dataEle.setCriteria(varCriteriaInfo.getCriteria());
 						valuePort.updateElement(varId, dataEle);
 //						valueStructureDomain.setIsDirty(true);

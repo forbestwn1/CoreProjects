@@ -28,8 +28,8 @@ import com.nosliw.core.application.division.manual.core.process.HAPManualContext
 import com.nosliw.core.application.division.manual.core.process.HAPManualPluginProcessorBlockImp;
 import com.nosliw.core.application.valueport.HAPReferenceElement;
 import com.nosliw.core.application.valueport.HAPResultReferenceResolve;
+import com.nosliw.core.application.valueport.HAPUtilityValuePort;
 import com.nosliw.core.xxx.application.valueport.HAPUtilityStructureElementReference;
-import com.nosliw.core.xxx.application.valueport.HAPUtilityValuePort;
 
 public class HAPManualPluginProcessorBlockComplexTestComplexScript extends HAPManualPluginProcessorBlockImp{
 
@@ -70,9 +70,9 @@ public class HAPManualPluginProcessorBlockComplexTestComplexScript extends HAPMa
 				HAPManualUtilityTask.buildValuePortGroupForInteractiveTaskEventHandler(taskWrapperBrick, trigguerInfo.getEventDataDefinition(), bundle.getValueStructureDomain());
 			}
 			else if(trigguerType.equals(HAPConstantShared.TASK_TRIGGUER_DATAVALIDATION)) {
-				HAPManualUtilityTask.buildValuePortGroupForInteractiveTaskDataValidation(bundle, new HAPPath(handlerIdInBundle.getIdPath()), processContext.getRootBrickName(), trigguerInfo.getEventDataDefinition(), bundle.getValueStructureDomain(), processContext.getRuntimeEnv());
+				HAPManualUtilityTask.buildValuePortGroupForInteractiveTaskDataValidation(bundle, new HAPPath(handlerIdInBundle.getIdPath()), processContext.getRootBrickName(), trigguerInfo.getEventDataDefinition(), bundle.getValueStructureDomain());
 			}
-			trigguerInfo.setExternalValuePortGroupName(HAPManualUtilityTask.getExternalValuePortGroupNameOfInteractiveTask(bundle, new HAPPath(handlerIdInBundle.getIdPath()), processContext.getRootBrickName(), processContext.getRuntimeEnv().getResourceManager(), processContext.getRuntimeEnv().getRuntime().getRuntimeInfo()));
+			trigguerInfo.setExternalValuePortGroupName(HAPManualUtilityTask.getExternalValuePortGroupNameOfInteractiveTask(bundle, new HAPPath(handlerIdInBundle.getIdPath()), processContext.getRootBrickName(), processContext.getResourceManager(), processContext.getRuntimeInfo()));
 			
 			executableBlock.getTaskTrigguers().add(taskTrigguer);
 		}

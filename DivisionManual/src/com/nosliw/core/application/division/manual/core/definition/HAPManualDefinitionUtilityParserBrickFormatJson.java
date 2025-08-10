@@ -16,12 +16,12 @@ import com.nosliw.core.application.HAPIdBrickType;
 import com.nosliw.core.application.HAPUtilityBrickId;
 import com.nosliw.core.application.HAPValueOfDynamic;
 import com.nosliw.core.application.common.parentrelation.HAPManualDefinitionBrickRelation;
-import com.nosliw.core.application.division.manual.core.definition1.HAPManualDefinitionWrapperValueDynamic;
-import com.nosliw.core.application.division.manual.core.definition1.HAPManualDefinitionWrapperValueReferenceAttachment;
-import com.nosliw.core.application.division.manual.core.definition1.HAPManualDefinitionWrapperValueReferenceBrick;
 import com.nosliw.core.application.dynamic.HAPInputDynamicTask;
 import com.nosliw.core.resource.HAPFactoryResourceId;
 import com.nosliw.core.resource.HAPResourceId;
+import com.nosliw.core.xxx.application.division.manual.core.definition1.HAPManualDefinitionWrapperValueDynamic;
+import com.nosliw.core.xxx.application.division.manual.core.definition1.HAPManualDefinitionWrapperValueReferenceAttachment;
+import com.nosliw.core.xxx.application.division.manual.core.definition1.HAPManualDefinitionWrapperValueReferenceBrick;
 
 public class HAPManualDefinitionUtilityParserBrickFormatJson {
 

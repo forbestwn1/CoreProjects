@@ -33,9 +33,9 @@ import com.nosliw.core.application.division.manual.core.definition.HAPManualDefi
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionWrapperValue;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionWrapperValueBrick;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionWrapperValueReferenceResource;
-import com.nosliw.core.application.division.manual.core.definition1.HAPManualDefinitionWrapperValueDynamic;
 import com.nosliw.core.application.dynamic.HAPRefDynamicTask;
 import com.nosliw.core.application.dynamic.HAPUtilityInfoDynamic;
+import com.nosliw.core.xxx.application.division.manual.core.definition1.HAPManualDefinitionWrapperValueDynamic;
 
 public class HAPManualProcessProcessorInit {
 

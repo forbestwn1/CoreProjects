@@ -22,9 +22,9 @@ import com.nosliw.core.application.division.manual.core.definition.HAPManualDefi
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionProcessorBrickNodeDownwardWithPath;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionUtilityBrick;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionUtilityBrickTraverse;
-import com.nosliw.core.application.division.manual.core.definition1.HAPManualDefinitionProcessorBrickNodeDownwardWithBrick;
 import com.nosliw.core.runtimeenv.HAPRuntimeEnvironment;
 import com.nosliw.core.runtimeenv.js.rhino.HAPRuntimeEnvironmentImpRhino;
+import com.nosliw.core.xxx.application.division.manual.core.definition1.HAPManualDefinitionProcessorBrickNodeDownwardWithBrick;
 
 public class HAPManualUtilityScriptExpressionConstant {
 

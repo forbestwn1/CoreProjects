@@ -7,13 +7,13 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfoWritableImp;
-import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPManagerSerialize;
-import com.nosliw.data.core.data.HAPData;
-import com.nosliw.data.core.data.HAPUtilityData;
-import com.nosliw.data.core.data.criteria.HAPDataTypeCriteria;
-import com.nosliw.data.core.data.criteria.HAPParserCriteria;
-import com.nosliw.data.core.data.criteria.HAPUtilityCriteria;
+import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.core.data.HAPData;
+import com.nosliw.core.data.HAPUtilityData;
+import com.nosliw.core.data.criteria.HAPDataTypeCriteria;
+import com.nosliw.core.data.criteria.HAPParserCriteria;
+import com.nosliw.core.data.criteria.HAPUtilityCriteria;
 
 @HAPEntityWithAttribute
 public class HAPResultElementInInteractiveTask extends HAPEntityInfoWritableImp{
@@ -43,8 +43,12 @@ public class HAPResultElementInInteractiveTask extends HAPEntityInfoWritableImp{
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		if(this.getCriteria()!=null)	jsonMap.put(CRITERIA, HAPManagerSerialize.getInstance().toStringValue(this.getCriteria(), HAPSerializationFormat.LITERATE));
-		if(this.m_constantData!=null)  jsonMap.put(DATA, this.m_constantData.toStringValue(HAPSerializationFormat.JSON));
+		if(this.getCriteria()!=null) {
+			jsonMap.put(CRITERIA, HAPManagerSerialize.getInstance().toStringValue(this.getCriteria(), HAPSerializationFormat.LITERATE));
+		}
+		if(this.m_constantData!=null) {
+			jsonMap.put(DATA, this.m_constantData.toStringValue(HAPSerializationFormat.JSON));
+		}
 	}
 	
 	@Override
@@ -57,7 +61,9 @@ public class HAPResultElementInInteractiveTask extends HAPEntityInfoWritableImp{
 			this.buildEntityInfoByJson(jsonValue);
 			this.m_criteria = HAPParserCriteria.getInstance().parseCriteria((String)jsonValue.opt(CRITERIA));
 			Object dataObj = jsonValue.opt(DATA);
-			if(dataObj!=null) 		HAPUtilityData.buildDataWrapperFromObject(dataObj);
+			if(dataObj!=null) {
+				HAPUtilityData.buildDataWrapperFromObject(dataObj);
+			}
 		}
 		return true;
 	}
@@ -66,7 +72,9 @@ public class HAPResultElementInInteractiveTask extends HAPEntityInfoWritableImp{
 		HAPResultElementInInteractiveTask out = new HAPResultElementInInteractiveTask();
 		this.cloneToEntityInfo(out);
 		out.m_criteria = HAPUtilityCriteria.cloneDataTypeCriteria(this.m_criteria);
-		if(this.m_constantData!=null) out.m_constantData = this.m_constantData.cloneData();
+		if(this.m_constantData!=null) {
+			out.m_constantData = this.m_constantData.cloneData();
+		}
 		return out;
 	}
 	

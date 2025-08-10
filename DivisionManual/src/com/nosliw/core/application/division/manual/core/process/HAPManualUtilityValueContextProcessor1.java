@@ -36,7 +36,7 @@ import com.nosliw.core.application.valueport.HAPIdValuePortInBundle;
 import com.nosliw.core.runtimeenv.HAPRuntimeEnvironment;
 import com.nosliw.core.xxx.application.common.structure.HAPUtilityStructure;
 import com.nosliw.core.xxx.application.division.manual.common.valuecontext.HAPManualUtilityValueContext;
-import com.nosliw.core.xxx.application.valueport.HAPUtilityValuePort;
+import com.nosliw.core.xxx.application.valueport.HAPUtilityValuePort1;
 
 public class HAPManualUtilityValueContextProcessor1 {
 
@@ -106,7 +106,7 @@ public class HAPManualUtilityValueContextProcessor1 {
 								if(eleInfo.getElement() instanceof HAPElementStructureLeafRelative) {
 									HAPElementStructureLeafRelative relativeEle = (HAPElementStructureLeafRelative)eleInfo.getElement();
 									HAPPath defaultParentValueContextPath = findDefaultParentValueContext(treeNode.getTreeNodeInfo().getPathFromRoot(), processContext);
-									HAPIdValuePortInBundle normalizedValuePortId = HAPUtilityValuePort.normalizeInBundleValuePortId(relativeEle.getReference().getValuePortId(), HAPConstantShared.VALUEPORTGROUP_SIDE_INTERNAL, valueStructureRuntimeInfo.getIODirection(), defaultParentValueContextPath, defaultParentValueContextPath, processContext.getRootBrickName(), processContext.getCurrentBundle(), processContext.getRuntimeEnv().getResourceManager(), processContext.getRuntimeEnv().getRuntime().getRuntimeInfo());
+									HAPIdValuePortInBundle normalizedValuePortId = HAPUtilityValuePort1.normalizeInBundleValuePortId(relativeEle.getReference().getValuePortId(), HAPConstantShared.VALUEPORTGROUP_SIDE_INTERNAL, valueStructureRuntimeInfo.getIODirection(), defaultParentValueContextPath, defaultParentValueContextPath, processContext.getRootBrickName(), processContext.getCurrentBundle(), processContext.getRuntimeEnv().getResourceManager(), processContext.getRuntimeEnv().getRuntime().getRuntimeInfo());
 									relativeEle.getReference().setValuePortId(normalizedValuePortId);
 									return Pair.of(false, null);
 								}

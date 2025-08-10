@@ -31,14 +31,14 @@ public class HAPUtilityStructureElementReference {
 	private static HAPReferenceElement buildInternalElementReference(String name, String ioDirection, HAPWithInternalValuePort withValuePort) {
 		HAPReferenceElement ref = new HAPReferenceElement();
 		ref.buildObject(name, HAPSerializationFormat.JSON);
-		ref.setValuePortId(HAPUtilityValuePort.normalizeInternalValuePortId(ref.getValuePortId(), ioDirection, withValuePort));
+		ref.setValuePortId(HAPUtilityValuePort1.normalizeInternalValuePortId(ref.getValuePortId(), ioDirection, withValuePort));
 		return ref;
 	}
 	
 	private static HAPReferenceElement buildExternalElementReference(String name, String ioDirection, HAPWithExternalValuePort withValuePort) {
 		HAPReferenceElement ref = new HAPReferenceElement();
 		ref.buildObject(name, HAPSerializationFormat.JSON);
-		ref.setValuePortId(HAPUtilityValuePort.normalizeExternalValuePortId(ref.getValuePortId(), ioDirection, withValuePort));
+		ref.setValuePortId(HAPUtilityValuePort1.normalizeExternalValuePortId(ref.getValuePortId(), ioDirection, withValuePort));
 		return ref;
 	}
 	
@@ -94,12 +94,12 @@ public class HAPUtilityStructureElementReference {
 	}
 	
 	public static HAPResultReferenceResolve analyzeElementReferenceInternal(HAPReferenceElement reference, HAPWithInternalValuePort withValuePort, HAPConfigureResolveElementReference resolveConfigure, HAPDomainValueStructure valueStructureDomain) {
-		HAPValuePort valuePort = HAPUtilityValuePort.getValuePortInternal(reference.getValuePortId(), withValuePort);
+		HAPValuePort valuePort = HAPUtilityValuePort1.getValuePortInternal(reference.getValuePortId(), withValuePort);
 		return analyzeElementReferenceValuePort(reference, valuePort, resolveConfigure, valueStructureDomain);
 	}
 
 	public static HAPResultReferenceResolve analyzeElementReferenceExternal(HAPReferenceElement reference, HAPWithExternalValuePort withValuePort, HAPConfigureResolveElementReference resolveConfigure, HAPDomainValueStructure valueStructureDomain) {
-		HAPValuePort valuePort = HAPUtilityValuePort.getValuePortExternal(reference.getValuePortId(), withValuePort);
+		HAPValuePort valuePort = HAPUtilityValuePort1.getValuePortExternal(reference.getValuePortId(), withValuePort);
 		return analyzeElementReferenceValuePort(reference, valuePort, resolveConfigure, valueStructureDomain);
 	}
 

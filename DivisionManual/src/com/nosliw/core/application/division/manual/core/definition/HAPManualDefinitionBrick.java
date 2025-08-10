@@ -27,9 +27,9 @@ import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManua
 import com.nosliw.core.application.division.manual.brick.wrappertask.HAPManualDefinitionBlockTaskWrapper;
 import com.nosliw.core.application.division.manual.common.task.HAPManualUtilityTask;
 import com.nosliw.core.application.division.manual.core.HAPManualManagerBrick;
-import com.nosliw.core.application.division.manual.core.definition1.HAPManualDefinitionUtilityValueContext;
-import com.nosliw.core.application.division.manual.core.definition1.HAPManualDefinitionWrapperValueDynamic;
 import com.nosliw.core.resource.HAPResourceId;
+import com.nosliw.core.xxx.application.division.manual.core.definition1.HAPManualDefinitionUtilityValueContext;
+import com.nosliw.core.xxx.application.division.manual.core.definition1.HAPManualDefinitionWrapperValueDynamic;
 
 public abstract class HAPManualDefinitionBrick extends HAPSerializableImp implements HAPEntityOrReference, HAPWithConstantDefinition, HAPWithScriptExpressionConstantMaster{
 

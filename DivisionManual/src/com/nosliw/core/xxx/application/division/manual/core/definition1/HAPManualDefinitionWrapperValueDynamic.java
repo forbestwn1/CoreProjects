@@ -1,4 +1,4 @@
-package com.nosliw.core.application.division.manual.core.definition1;
+package com.nosliw.core.xxx.application.division.manual.core.definition1;
 
 import java.util.Map;
 

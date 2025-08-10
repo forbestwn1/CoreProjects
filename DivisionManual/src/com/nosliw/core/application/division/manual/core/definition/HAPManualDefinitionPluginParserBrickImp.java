@@ -9,7 +9,7 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.HAPIdBrickType;
 import com.nosliw.core.application.HAPManagerApplicationBrick;
 import com.nosliw.core.application.brick.HAPEnumBrickType;
-import com.nosliw.core.application.division.manual.common.task.HAPManualDefinitionWithTaskInterfaceInteractive;
+import com.nosliw.core.application.common.interactive.HAPWithBlockInteractiveTask;
 import com.nosliw.core.application.division.manual.core.HAPManualManagerBrick;
 
 public class HAPManualDefinitionPluginParserBrickImp implements HAPManualDefinitionPluginParserBrick{
@@ -145,7 +145,7 @@ public class HAPManualDefinitionPluginParserBrickImp implements HAPManualDefinit
 	}
 
 	protected void parseTaskInterfaceAttribute(HAPManualDefinitionBrick parentBrick, JSONObject attrEntityObj, HAPManualDefinitionContextParse parserContext) {
-		this.parseBrickAttributeJson(parentBrick, attrEntityObj, HAPManualDefinitionWithTaskInterfaceInteractive.TASKINTERFACE, HAPEnumBrickType.INTERACTIVETASKINTERFACE_100, null, parserContext);
+		this.parseBrickAttributeJson(parentBrick, attrEntityObj, HAPWithBlockInteractiveTask.TASKINTERFACE, HAPEnumBrickType.INTERACTIVETASKINTERFACE_100, null, parserContext);
 	}
 	
 	
