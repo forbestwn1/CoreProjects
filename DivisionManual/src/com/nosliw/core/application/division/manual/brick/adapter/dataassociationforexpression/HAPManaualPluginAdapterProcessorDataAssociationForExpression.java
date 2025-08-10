@@ -2,14 +2,14 @@ package com.nosliw.core.application.division.manual.brick.adapter.dataassociatio
 
 import com.nosliw.common.path.HAPPath;
 import com.nosliw.core.application.common.dataassociation.HAPDataAssociation;
-import com.nosliw.core.application.division.manual.common.dataassociation.HAPManualDataAssociationForExpression;
-import com.nosliw.core.application.division.manual.common.dataassociation.HAPManualProcessorDataAssociation;
+import com.nosliw.core.application.common.dataassociation.HAPDataAssociationForExpression;
+import com.nosliw.core.application.common.dataassociation.definition.HAPDefinitionDataAssociationForExpression;
+import com.nosliw.core.application.common.dataassociation.definition.HAPDefinitionProcessorDataAssociation;
 import com.nosliw.core.application.division.manual.core.HAPManualBrick;
 import com.nosliw.core.application.division.manual.core.HAPManualManagerBrick;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionBrick;
 import com.nosliw.core.application.division.manual.core.process.HAPManualContextProcessAdapter;
 import com.nosliw.core.application.division.manual.core.process.HAPManualPluginProcessorAdapter;
-import com.nosliw.core.xxx.application.common.dataassociation.HAPDataAssociationForExpression;
 import com.nosliw.core.xxx.application1.brick.HAPEnumBrickType;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
@@ -27,16 +27,16 @@ public class HAPManaualPluginAdapterProcessorDataAssociationForExpression extend
 		HAPManualDefinitionAdapterDataAssociationForExpression daAdapterDef = (HAPManualDefinitionAdapterDataAssociationForExpression)adapterDef;
 		HAPManualAdapterDataAssociationForExpression daAdapterExe = (HAPManualAdapterDataAssociationForExpression)adapterExe;
 		
-		HAPManualDataAssociationForExpression daForExpressionDef = daAdapterDef.getDataAssociation();
+		HAPDefinitionDataAssociationForExpression daForExpressionDef = daAdapterDef.getDataAssociation();
 		
 		HAPDataAssociationForExpression daForExpressionExe = new HAPDataAssociationForExpression(); 
 		
 		HAPPath baseBlockPath = processContext.getRootPathForBaseBrick();
 		HAPPath secondBlockPath = this.getSecondBlockPath(processContext);
-		HAPDataAssociation daForRequest = HAPManualProcessorDataAssociation.processDataAssociation(daForExpressionDef.getInDataAssociation(), baseBlockPath, secondBlockPath, processContext.getCurrentBundle(), processContext.getRootBrickName(), this.m_runtimeEnv);
+		HAPDataAssociation daForRequest = HAPDefinitionProcessorDataAssociation.processDataAssociation(daForExpressionDef.getInDataAssociation(), baseBlockPath, secondBlockPath, processContext.getCurrentBundle(), processContext.getRootBrickName(), this.m_runtimeEnv);
 		daForExpressionExe.setInDataAssociation(daForRequest);
 
-		HAPDataAssociation daForResponse = HAPManualProcessorDataAssociation.processDataAssociation(daForExpressionDef.getOutDataAssociation(), baseBlockPath, secondBlockPath, processContext.getCurrentBundle(), processContext.getRootBrickName(), this.m_runtimeEnv);
+		HAPDataAssociation daForResponse = HAPDefinitionProcessorDataAssociation.processDataAssociation(daForExpressionDef.getOutDataAssociation(), baseBlockPath, secondBlockPath, processContext.getCurrentBundle(), processContext.getRootBrickName(), this.m_runtimeEnv);
 		daForExpressionExe.setOutDataAssociation(daForResponse);
 		
 		daAdapterExe.setDataAssciation(daForExpressionExe);

@@ -1,6 +1,6 @@
 package com.nosliw.core.application.division.manual.brick.adapter.dataassociationforexpression;
 
-import com.nosliw.core.application.division.manual.common.dataassociation.HAPManualDataAssociationForExpression;
+import com.nosliw.core.application.common.dataassociation.definition.HAPDefinitionDataAssociationForExpression;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionBrick;
 import com.nosliw.core.xxx.application1.brick.HAPEnumBrickType;
 
@@ -12,7 +12,7 @@ public class HAPManualDefinitionAdapterDataAssociationForExpression extends HAPM
 		super(HAPEnumBrickType.DATAASSOCIATIONFOREXPRESSION_100);
 	}
 	
-	public void setDataAssciation(HAPManualDataAssociationForExpression dataAssciation) {    this.setAttributeValueWithValue(DEFINITION, dataAssciation);    }
-	public HAPManualDataAssociationForExpression getDataAssociation() {   return (HAPManualDataAssociationForExpression)this.getAttributeValueOfValue(DEFINITION);     }
+	public void setDataAssciation(HAPDefinitionDataAssociationForExpression dataAssciation) {    this.setAttributeValueWithValue(DEFINITION, dataAssciation);    }
+	public HAPDefinitionDataAssociationForExpression getDataAssociation() {   return (HAPDefinitionDataAssociationForExpression)this.getAttributeValueOfValue(DEFINITION);     }
 	
 }

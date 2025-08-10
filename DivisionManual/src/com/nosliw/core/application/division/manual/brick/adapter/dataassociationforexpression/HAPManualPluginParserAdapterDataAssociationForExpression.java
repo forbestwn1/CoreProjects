@@ -3,7 +3,7 @@ package com.nosliw.core.application.division.manual.brick.adapter.dataassociatio
 import org.json.JSONObject;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.core.application.division.manual.common.dataassociation.HAPManualDataAssociationForExpression;
+import com.nosliw.core.application.common.dataassociation.definition.HAPDefinitionDataAssociationForExpression;
 import com.nosliw.core.application.division.manual.core.HAPManualManagerBrick;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionBrick;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionContextParse;
@@ -22,7 +22,7 @@ public class HAPManualPluginParserAdapterDataAssociationForExpression  extends H
 		HAPManualDefinitionAdapterDataAssociationForExpression entity = (HAPManualDefinitionAdapterDataAssociationForExpression)brickManual;
 		
 		JSONObject daJsonObj =  ((JSONObject)jsonValue).optJSONObject(HAPManualDefinitionAdapterDataAssociationForExpression.DEFINITION);
-		HAPManualDataAssociationForExpression dataAssociationForExpression = new HAPManualDataAssociationForExpression();
+		HAPDefinitionDataAssociationForExpression dataAssociationForExpression = new HAPDefinitionDataAssociationForExpression();
 		dataAssociationForExpression.buildObject(daJsonObj, HAPSerializationFormat.JSON);
 		
 		entity.setDataAssciation(dataAssociationForExpression);

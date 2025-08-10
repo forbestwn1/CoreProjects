@@ -1,17 +1,14 @@
-package com.nosliw.core.application.division.manual.common.dataassociation;
+package com.nosliw.core.application.common.dataassociation.definition;
 
 import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.HAPBundle;
 import com.nosliw.core.application.common.dataassociation.HAPDataAssociation;
-import com.nosliw.core.application.common.dataassociation.definition.HAPDefinitionDataAssociation;
-import com.nosliw.core.application.common.dataassociation.definition.HAPDefinitionDataAssociationMapping;
-import com.nosliw.core.application.common.dataassociation.definition.HAPDefinitionProcessorMappingDataAssociation;
 import com.nosliw.core.data.HAPDataTypeHelper;
 import com.nosliw.core.resource.HAPManagerResource;
 import com.nosliw.core.runtime.HAPRuntimeInfo;
 
-public class HAPManualProcessorDataAssociation {
+public class HAPDefinitionProcessorDataAssociation {
 
 	public static HAPDataAssociation processDataAssociation(
 			HAPDefinitionDataAssociation daDef,

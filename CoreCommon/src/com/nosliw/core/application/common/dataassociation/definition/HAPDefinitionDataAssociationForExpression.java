@@ -1,4 +1,4 @@
-package com.nosliw.core.application.division.manual.common.dataassociation;
+package com.nosliw.core.application.common.dataassociation.definition;
 
 import java.util.Map;
 
@@ -8,9 +8,8 @@ import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.core.application.common.dataassociation.definition.HAPDefinitionDataAssociation;
 
-public class HAPManualDataAssociationForExpression extends HAPSerializableImp{
+public class HAPDefinitionDataAssociationForExpression extends HAPSerializableImp{
 
 	public static String OUT = "out";
 
@@ -21,7 +20,7 @@ public class HAPManualDataAssociationForExpression extends HAPSerializableImp{
 	//data association from process to external
 	private HAPDefinitionDataAssociation m_outDataAssociation;
 
-	public HAPManualDataAssociationForExpression() {
+	public HAPDefinitionDataAssociationForExpression() {
 	}
 
 	public HAPDefinitionDataAssociation getInDataAssociation() {   return this.m_inDataAssociation;   }
@@ -39,13 +38,13 @@ public class HAPManualDataAssociationForExpression extends HAPSerializableImp{
 	private void buildMapping(JSONObject jsonObj) {
 		JSONObject inputMappingJson = jsonObj.optJSONObject(IN);
 		if(inputMappingJson!=null) {
-			this.m_inDataAssociation = HAPManualParserDataAssociation.buildDefinitionByJson(inputMappingJson);
+			this.m_inDataAssociation = HAPDefinitionParserDataAssociation.buildDefinitionByJson(inputMappingJson);
 			this.m_inDataAssociation.setDirection(HAPConstantShared.DATAASSOCIATION_DIRECTION_DOWNSTREAM);
 		}
 
 		JSONObject outputMappingJson = jsonObj.optJSONObject(OUT);
 		if(outputMappingJson!=null) {
-			this.m_outDataAssociation = HAPManualParserDataAssociation.buildDefinitionByJson(outputMappingJson);
+			this.m_outDataAssociation = HAPDefinitionParserDataAssociation.buildDefinitionByJson(outputMappingJson);
 			this.m_outDataAssociation.setDirection(HAPConstantShared.DATAASSOCIATION_DIRECTION_UPSTREAM);
 		}
 	}
@@ -56,7 +55,7 @@ public class HAPManualDataAssociationForExpression extends HAPSerializableImp{
 		jsonMap.put(IN, HAPUtilityJson.buildJson(this.m_inDataAssociation, HAPSerializationFormat.JSON));
 	}
 
-	protected void cloneToTaskDataMappingDefinition(HAPManualDataAssociationForExpression def) {
+	protected void cloneToTaskDataMappingDefinition(HAPDefinitionDataAssociationForExpression def) {
 		if(this.m_inDataAssociation!=null) {
 			def.m_inDataAssociation = this.m_inDataAssociation.cloneDataAssocation();
 		}
@@ -66,8 +65,8 @@ public class HAPManualDataAssociationForExpression extends HAPSerializableImp{
 	}
 	
 	@Override
-	public HAPManualDataAssociationForExpression clone(){
-		HAPManualDataAssociationForExpression out = new HAPManualDataAssociationForExpression();
+	public HAPDefinitionDataAssociationForExpression clone(){
+		HAPDefinitionDataAssociationForExpression out = new HAPDefinitionDataAssociationForExpression();
 		this.cloneToTaskDataMappingDefinition(out);
 		return out;
 	}

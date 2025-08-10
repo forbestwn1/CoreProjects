@@ -6,7 +6,7 @@ import org.json.JSONObject;
 import com.nosliw.core.application.HAPManagerApplicationBrick;
 import com.nosliw.core.application.brick.HAPEnumBrickType;
 import com.nosliw.core.application.common.dataassociation.definition.HAPDefinitionDataAssociation;
-import com.nosliw.core.application.division.manual.common.dataassociation.HAPManualParserDataAssociation;
+import com.nosliw.core.application.common.dataassociation.definition.HAPDefinitionParserDataAssociation;
 import com.nosliw.core.application.division.manual.core.HAPManualManagerBrick;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionBrick;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionContextParse;
@@ -24,13 +24,13 @@ public class HAPManualPluginParserAdapterDataAssociation  extends HAPManualDefin
 		
 		Object daObj =  ((JSONObject)jsonValue).opt(HAPManualDefinitionAdapterDataAssociation.DEFINITION);
 		if(daObj instanceof JSONObject) {
-			HAPDefinitionDataAssociation da = HAPManualParserDataAssociation.buildDefinitionByJson((JSONObject)daObj);
+			HAPDefinitionDataAssociation da = HAPDefinitionParserDataAssociation.buildDefinitionByJson((JSONObject)daObj);
 			entity.addDataAssciation(da);
 		}
 		else if(daObj instanceof JSONArray) {
 			JSONArray daArray = (JSONArray)daObj;
 			for(int i=0; i<daArray.length(); i++) {
-				HAPDefinitionDataAssociation da = HAPManualParserDataAssociation.buildDefinitionByJson(daArray.getJSONObject(i));
+				HAPDefinitionDataAssociation da = HAPDefinitionParserDataAssociation.buildDefinitionByJson(daArray.getJSONObject(i));
 				entity.addDataAssciation(da);
 			}
 		}

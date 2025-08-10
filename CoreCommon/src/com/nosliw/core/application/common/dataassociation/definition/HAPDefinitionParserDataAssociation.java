@@ -1,4 +1,4 @@
-package com.nosliw.core.application.division.manual.common.dataassociation;
+package com.nosliw.core.application.common.dataassociation.definition;
 
 import org.json.JSONObject;
 
@@ -6,10 +6,8 @@ import com.nosliw.common.info.HAPUtilityEntityInfo;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityBasic;
-import com.nosliw.core.application.common.dataassociation.definition.HAPDefinitionDataAssociation;
-import com.nosliw.core.application.common.dataassociation.definition.HAPDefinitionDataAssociationMapping;
 
-public class HAPManualParserDataAssociation {
+public class HAPDefinitionParserDataAssociation {
 
 	public static HAPDefinitionDataAssociation buildDefinitionByJson(JSONObject asJson){
 		if(asJson==null) {
@@ -34,13 +32,13 @@ public class HAPManualParserDataAssociation {
 		}
 		case HAPConstantShared.DATAASSOCIATION_TYPE_MIRROR:
 		{
-			HAPManualDataAssociationMirror out = new HAPManualDataAssociationMirror();
+			HAPDefinitionDataAssociationMirror out = new HAPDefinitionDataAssociationMirror();
 			out.buildObject(asJson, HAPSerializationFormat.JSON);
 			return out;
 		}
 		case HAPConstantShared.DATAASSOCIATION_TYPE_NONE:
 		{
-			HAPManualDataAssociationNone out = new HAPManualDataAssociationNone();
+			HAPDefinitionDataAssociationNone out = new HAPDefinitionDataAssociationNone();
 			out.buildObject(asJson, HAPSerializationFormat.JSON);
 			return out;
 		}
