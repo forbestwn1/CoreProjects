@@ -3,6 +3,7 @@ package com.nosliw.core.application.division.manual.brick.adapter.dataassociatio
 import java.util.Map;
 
 import com.nosliw.common.path.HAPPath;
+import com.nosliw.core.application.brick.HAPEnumBrickType;
 import com.nosliw.core.application.common.dataassociation.HAPDataAssociation;
 import com.nosliw.core.application.common.dataassociation.HAPDataAssociationForTask;
 import com.nosliw.core.application.common.dataassociation.definition.HAPDefinitionDataAssociation;
@@ -13,16 +14,11 @@ import com.nosliw.core.application.division.manual.core.HAPManualManagerBrick;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionBrick;
 import com.nosliw.core.application.division.manual.core.process.HAPManualContextProcessAdapter;
 import com.nosliw.core.application.division.manual.core.process.HAPManualPluginProcessorAdapter;
-import com.nosliw.core.xxx.application1.brick.HAPEnumBrickType;
-import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPManaualPluginAdapterProcessorDataAssociationForTask extends HAPManualPluginProcessorAdapter{
 
-	private HAPRuntimeEnvironment m_runtimeEnv;
-	
-	public HAPManaualPluginAdapterProcessorDataAssociationForTask(HAPRuntimeEnvironment runtimeEnv, HAPManualManagerBrick manualBrickMan) {
-		super(HAPEnumBrickType.DATAASSOCIATIONFORTASK_100, HAPManualAdapterDataAssociationForTask.class, runtimeEnv, manualBrickMan);
-		this.m_runtimeEnv = runtimeEnv;
+	public HAPManaualPluginAdapterProcessorDataAssociationForTask(HAPManualManagerBrick manualBrickMan) {
+		super(HAPEnumBrickType.DATAASSOCIATIONFORTASK_100, HAPManualAdapterDataAssociationForTask.class, manualBrickMan);
 	}
 
 	@Override
@@ -39,13 +35,13 @@ public class HAPManaualPluginAdapterProcessorDataAssociationForTask extends HAPM
 		
 		HAPDefinitionDataAssociation inDA = daForTaskDef.getInDataAssociation();
 		if(inDA!=null) {
-			HAPDataAssociation daForRequest = HAPDefinitionProcessorDataAssociation.processDataAssociation(inDA, baseBlockPath, secondBlockPath, processContext.getCurrentBundle(), processContext.getRootBrickName(), this.m_runtimeEnv);
+			HAPDataAssociation daForRequest = HAPDefinitionProcessorDataAssociation.processDataAssociation(inDA, baseBlockPath, secondBlockPath, processContext.getCurrentBundle(), processContext.getRootBrickName(), processContext.getDataTypeHelper(), processContext.getResourceManager(), processContext.getRuntimeInfo());
 			daForTaskExe.setInDataAssociation(daForRequest);
 		}
 		
 		Map<String, HAPDefinitionDataAssociation> outDaDefs = daForTaskDef.getOutDataAssociations();
 		for(Object key : outDaDefs.keySet()) {
-			HAPDataAssociation daForResponse = HAPDefinitionProcessorDataAssociation.processDataAssociation(daForTaskDef.getOutDataAssociations().get(key), baseBlockPath, secondBlockPath, processContext.getCurrentBundle(), processContext.getRootBrickName(), this.m_runtimeEnv);
+			HAPDataAssociation daForResponse = HAPDefinitionProcessorDataAssociation.processDataAssociation(daForTaskDef.getOutDataAssociations().get(key), baseBlockPath, secondBlockPath, processContext.getCurrentBundle(), processContext.getRootBrickName(), processContext.getDataTypeHelper(), processContext.getResourceManager(), processContext.getRuntimeInfo());
 			daForTaskExe.addOutDataAssociation((String)key, daForResponse);
 		}
 		

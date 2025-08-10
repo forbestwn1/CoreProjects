@@ -36,7 +36,7 @@ public class HAPManagerUITag{
 		}
 		String fileName = getUITagFolder(tagId, version) + "definition.json";
 		JSONObject jsonObj = new JSONObject(HAPUtilityFile.readFile(new File(fileName)));
-		return HAPUtilityUITagDefinitionParser.parseUITagDefinition(jsonObj, tagId, version);
+		return HAPUITagUtilityDefinitionParser.parseUITagDefinition(jsonObj, tagId, version);
 	}
 	
 	public HAPUITagInfo getDefaultUITagData(HAPUITageQueryData query) {

@@ -10,6 +10,10 @@ import com.nosliw.core.application.common.dataexpression.HAPItemInContainerDataE
 import com.nosliw.core.application.common.dataexpression.definition.HAPParserDataExpression;
 import com.nosliw.core.application.common.dataexpression.imp.basic.HAPBasicExpressionData;
 import com.nosliw.core.application.common.dataexpression.imp.basic.HAPBasicUtilityProcessorDataExpression;
+import com.nosliw.core.application.common.scriptexpressio.HAPContainerScriptExpression;
+import com.nosliw.core.application.common.scriptexpressio.HAPItemInContainerScriptExpression;
+import com.nosliw.core.application.common.scriptexpressio.definition.HAPDefinitionContainerScriptExpression;
+import com.nosliw.core.application.common.scriptexpressio.definition.HAPDefinitionScriptExpressionItemInContainer;
 import com.nosliw.core.application.common.structure.reference.HAPConfigureResolveElementReference;
 import com.nosliw.core.application.common.withvariable.HAPContainerVariableInfo;
 import com.nosliw.core.application.common.withvariable.HAPManagerWithVariablePlugin;

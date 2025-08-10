@@ -2,7 +2,7 @@ package com.nosliw.core.xxx.application.division.manual.core.definition1;
 
 import java.util.Map;
 
-import com.nosliw.core.application.common.scriptexpression.HAPDefinitionContainerScriptExpression;
+import com.nosliw.core.application.common.scriptexpressio.definition.HAPDefinitionContainerScriptExpression;
 import com.nosliw.core.application.common.scriptexpression.HAPManualUtilityScriptExpressionParser;
 import com.nosliw.core.application.common.scriptexpression.HAPUtilityScriptExpressionConstant;
 import com.nosliw.core.application.common.structure.HAPValueStructure;

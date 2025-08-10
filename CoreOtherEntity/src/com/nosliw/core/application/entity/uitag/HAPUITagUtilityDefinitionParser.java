@@ -21,7 +21,7 @@ import com.nosliw.core.resource.HAPFactoryResourceId;
 import com.nosliw.core.resource.HAPResourceId;
 import com.nosliw.core.xxx.application1.HAPWithValueContext;
 
-public class HAPUtilityUITagDefinitionParser {
+public class HAPUITagUtilityDefinitionParser {
 
 	static public HAPUITagDefinition parseUITagDefinition(File file, String tagName, String tagVersion) {
 		JSONObject jsonObj = new JSONObject(HAPUtilityFile.readFile(file));

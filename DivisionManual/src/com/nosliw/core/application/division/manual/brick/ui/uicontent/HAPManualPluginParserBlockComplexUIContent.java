@@ -20,13 +20,14 @@ import com.nosliw.core.application.brick.HAPEnumBrickType;
 import com.nosliw.core.application.brick.ui.uicontent.HAPElementEvent;
 import com.nosliw.core.application.brick.ui.uicontent.HAPUIEmbededScriptExpressionInAttribute;
 import com.nosliw.core.application.brick.ui.uicontent.HAPUIEmbededScriptExpressionInContent;
-import com.nosliw.core.application.common.scriptexpression.HAPDefinitionContainerScriptExpression;
+import com.nosliw.core.application.common.scriptexpressio.definition.HAPDefinitionContainerScriptExpression;
 import com.nosliw.core.application.common.scriptexpression.HAPManualUtilityScriptExpressionParser;
 import com.nosliw.core.application.division.manual.core.HAPManualEnumBrickType;
 import com.nosliw.core.application.division.manual.core.HAPManualManagerBrick;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionBrick;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionContextParse;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionPluginParserBrickImp;
+import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionUtilityParserBrick;
 import com.nosliw.core.application.division.manual.core.definition.HAPWithAttachment;
 import com.nosliw.core.xxx.application1.HAPWithValueContext;
 
@@ -96,7 +97,7 @@ public class HAPManualPluginParserBlockComplexUIContent extends HAPManualDefinit
 //				parseKeyAttributeOnTag(ele, uiContentId, true, parserContext);
 				parseScriptExpressionInTagAttribute(ele, uiContent, true, parserContext);
 				
-				HAPManualDefinitionBlockComplexUICustomerTag uiCustomerTag = (HAPManualDefinitionBlockComplexUICustomerTag)this.getManualDivisionBrickManager().parseBrickDefinition(ele, HAPEnumBrickType.UICUSTOMERTAG_100, HAPSerializationFormat.HTML, parserContext);
+				HAPManualDefinitionBlockComplexUICustomerTag uiCustomerTag = (HAPManualDefinitionBlockComplexUICustomerTag)HAPManualDefinitionUtilityParserBrick.parseBrickDefinition(ele, HAPEnumBrickType.UICUSTOMERTAG_100, HAPSerializationFormat.HTML, parserContext);
 				uiCustomerTag.setUIId(uiId);
 				uiContent.addCustomerTag(uiCustomerTag);
 			}

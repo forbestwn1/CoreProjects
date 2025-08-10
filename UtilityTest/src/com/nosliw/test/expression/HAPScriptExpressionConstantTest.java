@@ -6,7 +6,7 @@ import java.util.Map;
 import org.json.JSONObject;
 
 import com.nosliw.common.exception.HAPServiceData;
-import com.nosliw.core.application.common.scriptexpression.HAPDefinitionScriptExpression;
+import com.nosliw.core.application.common.scriptexpressio.definition.HAPDefinitionScriptExpression;
 import com.nosliw.core.application.division.manual.core.process.HAPManualUtilityScriptExpressionConstant;
 import com.nosliw.core.runtimeenv.js.rhino.HAPRuntimeEnvironmentImpRhino;
 

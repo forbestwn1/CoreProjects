@@ -17,13 +17,17 @@ import com.nosliw.core.application.division.manual.core.HAPManualManagerBrick;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionBrick;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionContextParse;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionPluginParserBrickImpComplex;
+import com.nosliw.core.application.entity.uitag.HAPManagerUITag;
 import com.nosliw.core.application.entity.uitag.HAPUITagAttributeDefinition;
 import com.nosliw.core.application.entity.uitag.HAPUITagDefinition;
 
 public class HAPManualPluginParserBlockComplexUICustomerTag extends HAPManualDefinitionPluginParserBrickImpComplex{
 
-	public HAPManualPluginParserBlockComplexUICustomerTag(HAPManualManagerBrick manualDivisionEntityMan, HAPManagerApplicationBrick brickMan) {
+	private HAPManagerUITag m_uiTagMan;
+	
+	public HAPManualPluginParserBlockComplexUICustomerTag(HAPManualManagerBrick manualDivisionEntityMan, HAPManagerApplicationBrick brickMan, HAPManagerUITag uiTagMan) {
 		super(HAPEnumBrickType.UICUSTOMERTAG_100, HAPManualDefinitionBlockComplexUICustomerTag.class, manualDivisionEntityMan, brickMan);
+		this.m_uiTagMan = uiTagMan;
 	}
 
 	@Override
@@ -37,7 +41,7 @@ public class HAPManualPluginParserBlockComplexUICustomerTag extends HAPManualDef
 		//content
 		this.parseBrickAttribute(uiCustomerTag, ele, HAPWithUIContent.UICONTENT, HAPEnumBrickType.UICONTENT_100, null, HAPSerializationFormat.HTML, parseContext);
 		
-		HAPUITagDefinition uiTagDef = this.getRuntimeEnvironment().getUITagManager().getUITagDefinition(customTagName, null);
+		HAPUITagDefinition uiTagDef = this.m_uiTagMan.getUITagDefinition(customTagName, null);
 
 		//tag definition
 		uiCustomerTag.setUITagDefinition(uiTagDef);

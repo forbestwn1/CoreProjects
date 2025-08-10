@@ -10,6 +10,7 @@ import com.nosliw.core.application.division.manual.core.HAPManualManagerBrick;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionBrick;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionContextParse;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionPluginParserBrickImpComplex;
+import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionUtilityParserBrick;
 
 public class HAPManualPluginParserBlockComplexUIPage extends HAPManualDefinitionPluginParserBrickImpComplex{
 
@@ -25,7 +26,7 @@ public class HAPManualPluginParserBlockComplexUIPage extends HAPManualDefinition
 		try{ 
 			Document doc = Jsoup.parse(content, "UTF-8");
 
-			HAPManualDefinitionBlockComplexUIContent uiContentDef = (HAPManualDefinitionBlockComplexUIContent)this.getManualDivisionBrickManager().parseBrickDefinition(doc.body(), HAPEnumBrickType.UICONTENT_100, HAPSerializationFormat.HTML, parseContext);
+			HAPManualDefinitionBlockComplexUIContent uiContentDef = (HAPManualDefinitionBlockComplexUIContent)HAPManualDefinitionUtilityParserBrick.parseBrickDefinition(doc.body(), HAPEnumBrickType.UICONTENT_100, HAPSerializationFormat.HTML, parseContext);
 			uiPage.setUIContent(uiContentDef);
 		}
 		catch(Exception e){

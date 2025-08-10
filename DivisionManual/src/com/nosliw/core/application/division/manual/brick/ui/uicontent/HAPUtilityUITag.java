@@ -24,8 +24,8 @@ public class HAPUtilityUITag {
 			HAPManualDefinitionBrickValueStructure manualBrickValueStrucutre = (HAPManualDefinitionBrickValueStructure)manualDivisionEntityMan.newBrickDefinition(HAPManualEnumBrickType.VALUESTRUCTURE_100);
 			manualBrickValueStrucutre.setValue(uiTagDefValueStructure.getValueStructure());
 			manualWrapperBrickValueStrucutre.setValueStructure(manualBrickValueStrucutre);
-			manualWrapperBrickValueStrucutre.setGroupType(uiTagDefValueStructure.getGroupType());
-			manualWrapperBrickValueStrucutre.setInheritMode(uiTagDefValueStructure.getInheritMode());
+			manualWrapperBrickValueStrucutre.getStructureInfo().setGroupType(uiTagDefValueStructure.getStructureInfo().getGroupType());
+			manualWrapperBrickValueStrucutre.getStructureInfo().setInheritMode(uiTagDefValueStructure.getStructureInfo().getInheritMode());
 			uiTagDefValueStructure.cloneToEntityInfo(manualWrapperBrickValueStrucutre);
 		
 			valueContextBrick.addValueStructure(manualWrapperBrickValueStrucutre);

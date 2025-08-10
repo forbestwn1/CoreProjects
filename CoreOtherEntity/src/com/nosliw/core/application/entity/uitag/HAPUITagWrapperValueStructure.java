@@ -1,6 +1,7 @@
 package com.nosliw.core.application.entity.uitag;
 
 import com.nosliw.common.info.HAPEntityInfoImp;
+import com.nosliw.core.application.common.structure.HAPInfoStructureInWrapper;
 import com.nosliw.core.application.common.structure.HAPValueStructure;
 import com.nosliw.core.application.common.structure.HAPWrapperValueStructureDefinition;
 
@@ -8,10 +9,11 @@ public class HAPUITagWrapperValueStructure extends HAPEntityInfoImp implements H
 
 	private HAPValueStructure m_valueStructure;
 	
-	//group type for value structure (public, private, protected, internal)
-	private String m_groupType;
-
-	private String m_inheritMode;
+	private HAPInfoStructureInWrapper m_valueStructureInfo;
+	
+	public HAPUITagWrapperValueStructure() {
+		this.m_valueStructureInfo = new HAPInfoStructureInWrapper(); 
+	}
 	
 	@Override
 	public HAPValueStructure getValueStructure() {   return  this.m_valueStructure;  } 
@@ -20,15 +22,8 @@ public class HAPUITagWrapperValueStructure extends HAPEntityInfoImp implements H
 	public void setValueStructure(HAPValueStructure valueStructure) {   this.m_valueStructure = valueStructure;  }
 
 	@Override
-	public String getGroupType() {   return this.m_groupType;   }
+	public HAPInfoStructureInWrapper getStructureInfo() {   return this.m_valueStructureInfo;   }
 
 	@Override
-	public void setGroupType(String groupType) {   this.m_groupType = groupType;  }
-
-	@Override
-	public String getInheritMode() {    return this.m_inheritMode;    }
-	
-	@Override
-	public void setInheritMode(String mode) {     this.m_inheritMode = mode;       }
-
+	public void setStructureInfo(HAPInfoStructureInWrapper info) {   this.m_valueStructureInfo = info;   }
 }

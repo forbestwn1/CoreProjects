@@ -5,7 +5,7 @@ import java.util.List;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.core.application.HAPBrick;
-import com.nosliw.core.application.common.scriptexpression.HAPContainerScriptExpression;
+import com.nosliw.core.application.common.scriptexpressio.HAPContainerScriptExpression;
 
 @HAPEntityWithAttribute
 public interface HAPBlockComplexUIContent extends HAPBrick{

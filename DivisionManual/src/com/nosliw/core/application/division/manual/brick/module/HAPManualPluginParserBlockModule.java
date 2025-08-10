@@ -4,14 +4,15 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.core.application.brick.HAPEnumBrickType;
+import com.nosliw.core.application.brick.module.HAPBlockModule;
 import com.nosliw.core.application.division.manual.brick.wrapperbrick.HAPManualDefinitionBrickWrapperBrick;
 import com.nosliw.core.application.division.manual.core.HAPManualManagerBrick;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionBrick;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionContextParse;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionPluginParserBrickImpComplex;
-import com.nosliw.core.xxx.application1.brick.HAPEnumBrickType;
-import com.nosliw.core.xxx.application1.brick.module.HAPBlockModule;
-import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
+import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionUtilityParserBrick;
+import com.nosliw.core.runtimeenv.HAPRuntimeEnvironment;
 
 public class HAPManualPluginParserBlockModule extends HAPManualDefinitionPluginParserBrickImpComplex{
 
@@ -25,14 +26,14 @@ public class HAPManualPluginParserBlockModule extends HAPManualDefinitionPluginP
 		
 		JSONArray brickArrayJson = jsonObj.optJSONArray(HAPBlockModule.BRICK);
 		for(int i=0; i<brickArrayJson.length(); i++) {
-			HAPManualDefinitionBrickWrapperBrick brickEle = (HAPManualDefinitionBrickWrapperBrick)this.getManualDivisionBrickManager().parseBrickDefinition(brickArrayJson.getJSONObject(i), HAPEnumBrickType.WRAPPERBRICK_100, HAPSerializationFormat.JSON, parseContext);
+			HAPManualDefinitionBrickWrapperBrick brickEle = (HAPManualDefinitionBrickWrapperBrick)HAPManualDefinitionUtilityParserBrick.parseBrickDefinition(brickArrayJson.getJSONObject(i), HAPEnumBrickType.WRAPPERBRICK_100, HAPSerializationFormat.JSON, parseContext);
 			moduleBrick.getBricks().addElementWithBrick(brickEle);
 		}
 		
 		JSONArray lifecycleArrayJson = jsonObj.optJSONArray(HAPBlockModule.LIFECYCLE);
 		if(lifecycleArrayJson!=null) {
 			for(int i=0; i<lifecycleArrayJson.length(); i++) {
-				HAPManualDefinitionBrickWrapperBrick lifecycleEle = (HAPManualDefinitionBrickWrapperBrick)this.getManualDivisionBrickManager().parseBrickDefinition(lifecycleArrayJson.getJSONObject(i), HAPEnumBrickType.WRAPPERBRICK_100, HAPSerializationFormat.JSON, parseContext);
+				HAPManualDefinitionBrickWrapperBrick lifecycleEle = (HAPManualDefinitionBrickWrapperBrick)HAPManualDefinitionUtilityParserBrick.parseBrickDefinition(lifecycleArrayJson.getJSONObject(i), HAPEnumBrickType.WRAPPERBRICK_100, HAPSerializationFormat.JSON, parseContext);
 				moduleBrick.getLifecycles().addElementWithBrick(lifecycleEle);
 			}
 		}

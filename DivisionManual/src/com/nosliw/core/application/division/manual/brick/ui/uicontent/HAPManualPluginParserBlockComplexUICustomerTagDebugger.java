@@ -13,12 +13,16 @@ import com.nosliw.core.application.division.manual.core.definition.HAPManualDefi
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionContextParse;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionPluginParserBrickImpComplex;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionUtilityParserBrickFormatJson;
+import com.nosliw.core.application.entity.uitag.HAPManagerUITag;
 import com.nosliw.core.application.entity.uitag.HAPUITagDefinition;
 
 public class HAPManualPluginParserBlockComplexUICustomerTagDebugger extends HAPManualDefinitionPluginParserBrickImpComplex{
 
-	public HAPManualPluginParserBlockComplexUICustomerTagDebugger(HAPManualManagerBrick manualDivisionEntityMan, HAPManagerApplicationBrick brickMan) {
+	private HAPManagerUITag m_uiTagMan;
+	
+	public HAPManualPluginParserBlockComplexUICustomerTagDebugger(HAPManualManagerBrick manualDivisionEntityMan, HAPManagerApplicationBrick brickMan, HAPManagerUITag uiTagMan) {
 		super(HAPEnumBrickType.UICUSTOMERTAGDEBUGGER_100, HAPManualDefinitionBlockComplexUICustomerTagDebugger.class, manualDivisionEntityMan, brickMan);
+		this.m_uiTagMan = uiTagMan;
 	}
 
 	@Override
@@ -31,7 +35,7 @@ public class HAPManualPluginParserBlockComplexUICustomerTagDebugger extends HAPM
 		//tag id
 		debuggerBrickDef.setUITagId(jsonObj.getString(HAPBlockComplexUICustomerTagDebugger.UITAGID));
 
-		HAPUITagDefinition uiTagDef = this.getRuntimeEnvironment().getUITagManager().getUITagDefinition(debuggerBrickDef.getUITagId(), null);
+		HAPUITagDefinition uiTagDef = this.m_uiTagMan.getUITagDefinition(debuggerBrickDef.getUITagId(), null);
 
 		//tag definition
 		debuggerBrickDef.setUITagDefinition(uiTagDef);
@@ -54,7 +58,7 @@ public class HAPManualPluginParserBlockComplexUICustomerTagDebugger extends HAPM
 			for(int i=0; i<childJsonArray.length(); i++) {
 				JSONObject elementObj = childJsonArray.getJSONObject(i);
 				if(HAPUtilityEntityInfo.isEnabled(elementObj)) {
-					wrapperBlockDef.addChild((HAPManualDefinitionBlockComplexUICustomerTagDebugger)HAPManualDefinitionUtilityParserBrickFormatJson.parseBrick(elementObj, HAPEnumBrickType.UICUSTOMERTAGDEBUGGER_100, parseContext, getManualDivisionBrickManager(), getBrickManager()));
+					wrapperBlockDef.addChild((HAPManualDefinitionBlockComplexUICustomerTagDebugger)HAPManualDefinitionUtilityParserBrickFormatJson.parseBrick(elementObj, HAPEnumBrickType.UICUSTOMERTAGDEBUGGER_100, parseContext));
 				}
 			}
 			debuggerBrickDef.setContentWrapper(wrapperBlockDef);

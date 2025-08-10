@@ -4,6 +4,7 @@ import java.util.Map;
 
 import com.nosliw.core.application.common.constant.HAPDefinitionConstant;
 import com.nosliw.core.application.common.dataexpression.definition.HAPParserDataExpression;
+import com.nosliw.core.application.common.scriptexpressio.definition.HAPDefinitionScriptExpression;
 
 public class HAPUtilityScriptExpressionConstant {
 

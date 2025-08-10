@@ -10,8 +10,6 @@ import com.nosliw.core.xxx.application.common.structure.HAPValueContextDefinitio
 
 public class HAPUITagValueContextDefinition extends HAPSerializableImp implements HAPValueContextDefinition{
 
-	
-	
 	private List<HAPWrapperValueStructureDefinition> m_valueStructures;
 	
 	public HAPUITagValueContextDefinition() {
@@ -21,7 +19,6 @@ public class HAPUITagValueContextDefinition extends HAPSerializableImp implement
 	@Override
 	public List<HAPWrapperValueStructureDefinition> getValueStructures() {   return this.m_valueStructures;  }
 
-	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		

@@ -10,8 +10,8 @@ import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.common.dataexpression.HAPExpressionData;
 import com.nosliw.core.application.common.dataexpression.HAPOperand;
+import com.nosliw.core.application.common.withvariable.HAPVariableInfo;
 import com.nosliw.core.application.common.withvariable.HAPWithVariable;
-import com.nosliw.core.xxx.application.valueport.HAPVariableInfo;
 
 public class HAPBasicExpressionData extends HAPSerializableImp implements HAPExpressionData{
 

@@ -5,10 +5,10 @@ import org.json.JSONObject;
 
 import com.nosliw.common.info.HAPUtilityEntityInfo;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.core.application.common.scriptexpression.HAPContainerScriptExpression;
-import com.nosliw.core.application.common.scriptexpression.HAPItemInContainerScriptExpression;
-import com.nosliw.core.application.common.scriptexpression.HAPDefinitionScriptExpression;
-import com.nosliw.core.application.common.scriptexpression.HAPDefinitionScriptExpressionItemInContainer;
+import com.nosliw.core.application.common.scriptexpressio.HAPContainerScriptExpression;
+import com.nosliw.core.application.common.scriptexpressio.HAPItemInContainerScriptExpression;
+import com.nosliw.core.application.common.scriptexpressio.definition.HAPDefinitionScriptExpression;
+import com.nosliw.core.application.common.scriptexpressio.definition.HAPDefinitionScriptExpressionItemInContainer;
 import com.nosliw.core.application.division.manual.core.HAPManualManagerBrick;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionBrick;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionContextParse;

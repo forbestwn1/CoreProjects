@@ -4,6 +4,7 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import com.nosliw.common.path.HAPPath;
 import com.nosliw.core.application.brick.HAPEnumBrickType;
+import com.nosliw.core.application.common.dataexpression.definition.HAPParserDataExpression;
 import com.nosliw.core.application.common.scriptexpression.HAPManualUtilityScriptExpression;
 import com.nosliw.core.application.common.withvariable.HAPContainerVariableInfo;
 import com.nosliw.core.application.division.manual.core.HAPManualBrick;
@@ -14,8 +15,11 @@ import com.nosliw.core.application.valueport.HAPUtilityValuePortVariable;
 
 public class HAPManualPluginProcessorBlockUIContent extends HAPManualPluginProcessorBlockImp{
 
-	public HAPManualPluginProcessorBlockUIContent() {
+	private HAPParserDataExpression m_dataExpressionParser;
+	
+	public HAPManualPluginProcessorBlockUIContent(HAPParserDataExpression dataExpressionParser) {
 		super(HAPEnumBrickType.UICONTENT_100, HAPManualBlockComplexUIContent.class);
+		this.m_dataExpressionParser = dataExpressionParser;
 	}
 
 	@Override
@@ -30,7 +34,7 @@ public class HAPManualPluginProcessorBlockUIContent extends HAPManualPluginProce
 		uiContentExe.getScriptExpressionInNormalTagAttribute().addAll(uiContentDef.getScriptExpressionInNormalTagAttribute());
 
 		//build script expression container
-		HAPManualUtilityScriptExpression.fromDefToExeScriptExpressionContainer(uiContentDef.getScriptExpressions(), uiContentExe.getScriptExpressions(), processContext.getRuntimeEnv().getDataExpressionParser());
+		HAPManualUtilityScriptExpression.fromDefToExeScriptExpressionContainer(uiContentDef.getScriptExpressions(), uiContentExe.getScriptExpressions(), this.m_dataExpressionParser);
 
 		//event in normal tag
 //		for(HAPElementEvent event : uiContentDef.getNormalTagEvents()) {

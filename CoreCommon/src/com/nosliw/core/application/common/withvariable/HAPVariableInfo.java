@@ -1,4 +1,4 @@
-package com.nosliw.core.xxx.application.valueport;
+package com.nosliw.core.application.common.withvariable;
 
 import java.util.Map;
 
