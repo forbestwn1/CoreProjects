@@ -11,8 +11,6 @@ import com.nosliw.core.application.brick.HAPEnumBrickType;
 import com.nosliw.core.application.common.interactive.HAPInteractiveExpression;
 import com.nosliw.core.application.common.interactive.HAPInteractiveResultTask;
 import com.nosliw.core.application.common.interactive.HAPInteractiveTask;
-import com.nosliw.core.application.common.interactive.HAPRequestParmInInteractive;
-import com.nosliw.core.application.common.interactive.HAPResultElementInInteractiveTask;
 import com.nosliw.core.application.common.structure.reference.HAPConfigureResolveElementReference;
 import com.nosliw.core.application.division.manual.common.task.HAPManualUtilityTask;
 import com.nosliw.core.application.division.manual.core.HAPManualBrick;
@@ -24,6 +22,8 @@ import com.nosliw.core.application.valueport.HAPIdValuePortInBrick;
 import com.nosliw.core.application.valueport.HAPIdValuePortInBundle;
 import com.nosliw.core.application.valueport.HAPReferenceElement;
 import com.nosliw.core.application.valueport.HAPUtilityValuePort;
+import com.nosliw.core.xxx.application.common.interactive1.HAPRequestParmInInteractive;
+import com.nosliw.core.xxx.application.common.interactive1.HAPResultElementInInteractiveTask;
 import com.nosliw.core.xxx.application.valueport.HAPUtilityStructureElementReference;
 
 public class HAPManualPluginProcessorBlockComplexTestComplexTask extends HAPManualPluginProcessorBlockImp{

@@ -6,20 +6,20 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityBasic;
-import com.nosliw.core.application.common.variable.HAPVariableDataInfo;
+import com.nosliw.core.application.common.datadefinition.HAPDataDefinitionWritable;
 import com.nosliw.core.data.criteria.HAPDataTypeCriteria;
 import com.nosliw.core.data.criteria.HAPInfoCriteria;
 
 public class HAPElementStructureLeafData extends HAPElementStructureLeafVariable{
 
 	@HAPAttribute
-	public static final String CRITERIA  = "criteria";
+	public static final String DATA  = "data";
 
 	@HAPAttribute
 	public static String STATUS = "status";
 
 	//context definition of that node (criteria)
-	private HAPVariableDataInfo m_dataInfo;
+	private HAPDataDefinitionWritable m_dataDefinition;
 	
 	//status of variable, now there are two status
 	//open: the criteria is open to change
@@ -29,7 +29,7 @@ public class HAPElementStructureLeafData extends HAPElementStructureLeafVariable
 	public HAPElementStructureLeafData() {}
 	
 	public HAPElementStructureLeafData(HAPDataTypeCriteria dataTypeCriteria){
-		this.m_dataInfo = new HAPVariableDataInfo(dataTypeCriteria);
+		this.m_dataDefinition = new HAPDataDefinitionWritable(dataTypeCriteria);
 		if(dataTypeCriteria==null) {
 			this.m_status = HAPConstantShared.EXPRESSION_VARIABLE_STATUS_OPEN;
 		} else {
@@ -37,8 +37,8 @@ public class HAPElementStructureLeafData extends HAPElementStructureLeafVariable
 		}
 	}	
 
-	public HAPElementStructureLeafData(HAPVariableDataInfo dataInfo){
-		this.m_dataInfo = dataInfo;
+	public HAPElementStructureLeafData(HAPDataDefinitionWritable dataInfo){
+		this.m_dataDefinition = dataInfo;
 		this.m_status = HAPConstantShared.EXPRESSION_VARIABLE_STATUS_CLOSE;
 	}
 
@@ -48,15 +48,15 @@ public class HAPElementStructureLeafData extends HAPElementStructureLeafVariable
 	@Override
 	public String getType() {	return HAPConstantShared.CONTEXT_ELEMENTTYPE_DATA;	}
 
-	public void setDataInfo(HAPVariableDataInfo criteria){	this.m_dataInfo = criteria;	}
-	public HAPVariableDataInfo getDataInfo() {  return this.m_dataInfo;    } 
+	public void setDataDefinition(HAPDataDefinitionWritable criteria){	this.m_dataDefinition = criteria;	}
+	public HAPDataDefinitionWritable getDataDefinition() {  return this.m_dataDefinition;    } 
 	
-	public HAPDataTypeCriteria getCriteria(){   return this.m_dataInfo==null?null:this.m_dataInfo.getCriteria();  }
+	public HAPDataTypeCriteria getCriteria(){   return this.m_dataDefinition==null?null:this.m_dataDefinition.getCriteria();  }
 	public void setCriteria(HAPDataTypeCriteria criteria) {
-		if(this.m_dataInfo==null) {
-			this.m_dataInfo = new HAPVariableDataInfo();
+		if(this.m_dataDefinition==null) {
+			this.m_dataDefinition = new HAPDataDefinitionWritable();
 		}
-		this.m_dataInfo.setCriteria(criteria);;
+		this.m_dataDefinition.setCriteria(criteria);;
 	}
 	
 	public HAPInfoCriteria getCriteriaInfo() {   return HAPInfoCriteria.buildCriteriaInfo(this.getCriteria(), this.getStatus());      }
@@ -64,8 +64,8 @@ public class HAPElementStructureLeafData extends HAPElementStructureLeafVariable
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		if(this.m_dataInfo!=null) {
-			jsonMap.put(CRITERIA, this.m_dataInfo.toStringValue(HAPSerializationFormat.JSON));
+		if(this.m_dataDefinition!=null) {
+			jsonMap.put(DATA, this.m_dataDefinition.toStringValue(HAPSerializationFormat.JSON));
 		}
 		jsonMap.put(STATUS, this.m_status);
 	}
@@ -81,8 +81,8 @@ public class HAPElementStructureLeafData extends HAPElementStructureLeafVariable
 	public void toStructureElement(HAPElementStructure out) {
 		super.toStructureElement(out);
 		HAPElementStructureLeafData dataEle = (HAPElementStructureLeafData)out;
-		if(this.m_dataInfo!=null) {
-			dataEle.m_dataInfo = this.m_dataInfo.cloneVariableDataInfo();
+		if(this.m_dataDefinition!=null) {
+			dataEle.m_dataDefinition = this.m_dataDefinition.cloneDataDefinitionWritable();
 		}
 		dataEle.m_status = this.m_status;
 	}
@@ -96,7 +96,7 @@ public class HAPElementStructureLeafData extends HAPElementStructureLeafVariable
 		boolean out = false;
 		if(obj instanceof HAPElementStructureLeafData) {
 			HAPElementStructureLeafData ele = (HAPElementStructureLeafData)obj;
-			if(!HAPUtilityBasic.isEquals(this.m_dataInfo, ele.m_dataInfo)) {
+			if(!HAPUtilityBasic.isEquals(this.m_dataDefinition, ele.m_dataDefinition)) {
 				return false;
 			}
 			if(!HAPUtilityBasic.isEquals(this.m_status, ele.m_status)) {

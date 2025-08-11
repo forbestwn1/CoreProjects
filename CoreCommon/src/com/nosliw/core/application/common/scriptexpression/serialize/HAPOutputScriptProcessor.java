@@ -3,7 +3,7 @@ package com.nosliw.core.application.common.scriptexpression.serialize;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.nosliw.core.application.common.scriptexpression.HAPManualSegmentScriptExpression;
+import com.nosliw.core.application.common.scriptexpressio.HAPManualSegmentScriptExpression;
 
 public class HAPOutputScriptProcessor {
 

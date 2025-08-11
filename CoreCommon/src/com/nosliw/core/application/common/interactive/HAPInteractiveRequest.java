@@ -11,6 +11,7 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.core.application.common.datadefinition.HAPDefinitionParm;
 
 @HAPEntityWithAttribute
 public class HAPInteractiveRequest extends HAPSerializableImp{
@@ -18,13 +19,13 @@ public class HAPInteractiveRequest extends HAPSerializableImp{
 	@HAPAttribute
 	public static String PARM = "parm";
 	
-	private List<HAPRequestParmInInteractive> m_requestParms;
+	private List<HAPDefinitionParm> m_requestParms;
 
 	public HAPInteractiveRequest() {
-		this.m_requestParms = new ArrayList<HAPRequestParmInInteractive>();
+		this.m_requestParms = new ArrayList<HAPDefinitionParm>();
 	}
 	
-	public HAPInteractiveRequest(List<HAPRequestParmInInteractive> requestParms) {
+	public HAPInteractiveRequest(List<HAPDefinitionParm> requestParms) {
 		this();
 		this.m_requestParms = requestParms;
 		this.initValuePort();
@@ -33,13 +34,13 @@ public class HAPInteractiveRequest extends HAPSerializableImp{
 	private void initValuePort() {
 	}
 	
-	public List<HAPRequestParmInInteractive> getRequestParms() {   return this.m_requestParms;  }
+	public List<HAPDefinitionParm> getRequestParms() {   return this.m_requestParms;  }
 	
 	@Override
 	protected boolean buildObjectByJson(Object json){
 		JSONArray parmsArray = (JSONArray)json;
 		for(int i=0; i<parmsArray.length(); i++) {
-			HAPRequestParmInInteractive parm = HAPRequestParmInInteractive.buildParmFromObject(parmsArray.get(i));
+			HAPDefinitionParm parm = HAPDefinitionParm.buildParmFromObject(parmsArray.get(i));
 			m_requestParms.add(parm);
 		}
 		this.initValuePort();

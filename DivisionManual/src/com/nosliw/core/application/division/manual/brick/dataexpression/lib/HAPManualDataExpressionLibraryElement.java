@@ -10,7 +10,7 @@ import com.nosliw.core.application.brick.dataexpression.library.HAPElementInLibr
 import com.nosliw.core.application.common.dataexpression.definition.HAPDefinitionDataExpression;
 import com.nosliw.core.application.common.interactive.HAPInteractiveExpression;
 import com.nosliw.core.application.common.interactive.HAPInteractiveResultExpression;
-import com.nosliw.core.application.common.interactive.HAPRequestParmInInteractive;
+import com.nosliw.core.xxx.application.common.interactive1.HAPRequestParmInInteractive;
 
 public class HAPManualDataExpressionLibraryElement extends HAPSerializableImp{
 

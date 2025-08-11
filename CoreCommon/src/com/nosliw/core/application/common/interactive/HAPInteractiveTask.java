@@ -12,6 +12,7 @@ import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
+import com.nosliw.core.application.common.datadefinition.HAPDefinitionParm;
 
 public class HAPInteractiveTask extends HAPSerializableImp implements HAPInteractive{
 
@@ -24,7 +25,7 @@ public class HAPInteractiveTask extends HAPSerializableImp implements HAPInterac
 		this.m_request = new HAPInteractiveRequest();
 	}
 	
-	public List<HAPRequestParmInInteractive> getRequestParms() {   return this.m_request.getRequestParms();  }
+	public List<HAPDefinitionParm> getRequestParms() {   return this.m_request.getRequestParms();  }
 
 	public List<HAPInteractiveResultTask> getResult() {   return this.m_results;  }
 	

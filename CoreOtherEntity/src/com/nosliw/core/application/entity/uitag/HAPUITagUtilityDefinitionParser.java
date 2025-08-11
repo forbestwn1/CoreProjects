@@ -54,7 +54,7 @@ public class HAPUITagUtilityDefinitionParser {
 				for(String rootName : roots.keySet()) {
 					if(HAPConstantShared.NAME_ROOT_TAGDATA.equals(rootName)) {
 						HAPElementStructureLeafRelativeForValue eleStructure = (HAPElementStructureLeafRelativeForValue)roots.get(rootName).getDefinition();
-						((HAPUITagDefinitionData)out).setDataTypeCriteria(((HAPElementStructureLeafData)eleStructure.getDefinition()).getDataInfo().getCriteria());
+						((HAPUITagDefinitionData)out).setDataTypeCriteria(((HAPElementStructureLeafData)eleStructure.getDefinition()).getDataDefinition().getCriteria());
 						break;
 					}
 				}

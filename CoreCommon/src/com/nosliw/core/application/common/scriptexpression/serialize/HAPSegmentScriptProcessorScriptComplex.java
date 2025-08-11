@@ -3,8 +3,8 @@ package com.nosliw.core.application.common.scriptexpression.serialize;
 import java.util.List;
 
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.core.application.common.scriptexpression.HAPManualSegmentScriptExpression;
-import com.nosliw.core.application.common.scriptexpression.HAPManualSegmentScriptExpressionScriptComplex;
+import com.nosliw.core.application.common.scriptexpressio.HAPManualSegmentScriptExpression;
+import com.nosliw.core.application.common.scriptexpressio.HAPManualSegmentScriptExpressionScriptComplex;
 
 public class HAPSegmentScriptProcessorScriptComplex implements HAPSegmentScriptProcessor{
 

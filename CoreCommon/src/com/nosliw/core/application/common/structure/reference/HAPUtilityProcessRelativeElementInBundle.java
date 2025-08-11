@@ -15,6 +15,8 @@ import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.HAPBundle;
 import com.nosliw.core.application.HAPUtilityResolveElementInBundle;
+import com.nosliw.core.application.common.datadefinition.HAPDataDefinitionWritable;
+import com.nosliw.core.application.common.datadefinition.HAPDataRule;
 import com.nosliw.core.application.common.structure.HAPElementStructure;
 import com.nosliw.core.application.common.structure.HAPElementStructureLeafData;
 import com.nosliw.core.application.common.structure.HAPElementStructureLeafRelative;
@@ -27,8 +29,6 @@ import com.nosliw.core.application.common.structure.HAPProcessorStructureElement
 import com.nosliw.core.application.common.structure.HAPRootInStructure;
 import com.nosliw.core.application.common.structure.HAPStructure;
 import com.nosliw.core.application.common.structure.HAPUtilityElement;
-import com.nosliw.core.application.common.variable.HAPDataRule;
-import com.nosliw.core.application.common.variable.HAPVariableDataInfo;
 import com.nosliw.core.application.valueport.HAPIdValuePortInBundle;
 import com.nosliw.core.application.valueport.HAPReferenceElement;
 import com.nosliw.core.application.valueport.HAPResultReferenceResolve;
@@ -169,10 +169,10 @@ public class HAPUtilityProcessRelativeElementInBundle {
 			if(relativeEleProcessConfigure.isInheritRule()) {
 				HAPElementStructure solidParent = resolvedSolidElement.getSolidStructureElement();
 				if(solidParent.getType().equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_DATA)) {
-					HAPVariableDataInfo solidParentDataInfo = ((HAPElementStructureLeafData)solidParent).getDataInfo();
+					HAPDataDefinitionWritable solidParentDataInfo = ((HAPElementStructureLeafData)solidParent).getDataDefinition();
 					HAPMatchers ruleMatchers = HAPMatcherUtility.reversMatchers(HAPMatcherUtility.cascadeMatchers(solidParentDataInfo.getRuleMatchers()==null?null:solidParentDataInfo.getRuleMatchers().getReverseMatchers(), noVoidMatchers.get("")));
 					for(HAPDataRule rule : solidParentDataInfo.getRules()) {
-						HAPVariableDataInfo relativeDataInfo = ((HAPElementStructureLeafData)relativeContextEle).getDataInfo();
+						HAPDataDefinitionWritable relativeDataInfo = ((HAPElementStructureLeafData)relativeContextEle).getDataDefinition();
 						relativeDataInfo.addRule(rule);
 						relativeDataInfo.setRuleMatchers(ruleMatchers, solidParentDataInfo.getRuleCriteria());
 					}

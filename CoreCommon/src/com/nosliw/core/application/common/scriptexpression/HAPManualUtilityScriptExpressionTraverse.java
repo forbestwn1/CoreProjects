@@ -1,5 +1,9 @@
 package com.nosliw.core.application.common.scriptexpression;
 
+import com.nosliw.core.application.common.scriptexpressio.HAPManualExpressionScript;
+import com.nosliw.core.application.common.scriptexpressio.HAPManualProcessorScriptExpressionSegment;
+import com.nosliw.core.application.common.scriptexpressio.HAPManualSegmentScriptExpression;
+
 public class HAPManualUtilityScriptExpressionTraverse {
 
 	public static void traverse(HAPManualExpressionScript scriptExpression, HAPManualProcessorScriptExpressionSegment processor, Object value) {

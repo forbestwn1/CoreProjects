@@ -11,6 +11,11 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.common.dataexpression.HAPExpressionData;
+import com.nosliw.core.application.common.scriptexpressio.HAPManualExpressionScript;
+import com.nosliw.core.application.common.scriptexpressio.HAPManualProcessorScriptExpressionSegment;
+import com.nosliw.core.application.common.scriptexpressio.HAPManualSegmentScriptExpression;
+import com.nosliw.core.application.common.scriptexpressio.HAPManualSegmentScriptExpressionScriptDataExpression;
+import com.nosliw.core.application.common.scriptexpressio.HAPManualSegmentScriptExpressionScriptSimple;
 import com.nosliw.core.application.common.structure.reference.HAPConfigureResolveElementReference;
 import com.nosliw.core.application.common.withvariable.HAPContainerVariableInfo;
 import com.nosliw.core.application.common.withvariable.HAPManagerWithVariablePlugin;

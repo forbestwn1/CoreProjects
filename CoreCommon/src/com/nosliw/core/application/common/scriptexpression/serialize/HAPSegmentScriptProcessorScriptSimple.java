@@ -3,9 +3,9 @@ package com.nosliw.core.application.common.scriptexpression.serialize;
 import java.util.List;
 
 import com.nosliw.common.serialization.HAPUtilityJavaScript;
+import com.nosliw.core.application.common.scriptexpressio.HAPManualSegmentScriptExpression;
+import com.nosliw.core.application.common.scriptexpressio.HAPManualSegmentScriptExpressionScriptSimple;
 import com.nosliw.core.application.common.scriptexpression.HAPManualConstantInScript;
-import com.nosliw.core.application.common.scriptexpression.HAPManualSegmentScriptExpression;
-import com.nosliw.core.application.common.scriptexpression.HAPManualSegmentScriptExpressionScriptSimple;
 import com.nosliw.core.application.common.scriptexpression.HAPManualVariableInScript;
 
 public class HAPSegmentScriptProcessorScriptSimple implements HAPSegmentScriptProcessor{

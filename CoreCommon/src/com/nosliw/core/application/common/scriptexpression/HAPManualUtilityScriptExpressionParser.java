@@ -9,6 +9,11 @@ import com.nosliw.core.application.common.dataexpression.HAPContainerDataExpress
 import com.nosliw.core.application.common.dataexpression.HAPExpressionData;
 import com.nosliw.core.application.common.dataexpression.definition.HAPParserDataExpression;
 import com.nosliw.core.application.common.dataexpression.imp.basic.HAPBasicUtilityProcessorDataExpression;
+import com.nosliw.core.application.common.scriptexpressio.HAPManualExpressionScript;
+import com.nosliw.core.application.common.scriptexpressio.HAPManualSegmentScriptExpressionScriptComplex;
+import com.nosliw.core.application.common.scriptexpressio.HAPManualSegmentScriptExpressionScriptDataExpression;
+import com.nosliw.core.application.common.scriptexpressio.HAPManualSegmentScriptExpressionScriptSimple;
+import com.nosliw.core.application.common.scriptexpressio.HAPManualSegmentScriptExpressionText;
 import com.nosliw.core.xxx.application1.division.manual.common.scriptexpression.HAPManualVariableInScript;
 
 public class HAPManualUtilityScriptExpressionParser {

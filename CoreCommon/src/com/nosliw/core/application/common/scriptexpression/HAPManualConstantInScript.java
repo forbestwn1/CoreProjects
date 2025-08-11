@@ -6,7 +6,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.data.core.runtime.HAPExecutableImp;
+import com.nosliw.core.xxx.application1.HAPExecutableImp;
 
 @HAPEntityWithAttribute
 public class HAPManualConstantInScript extends HAPExecutableImp{

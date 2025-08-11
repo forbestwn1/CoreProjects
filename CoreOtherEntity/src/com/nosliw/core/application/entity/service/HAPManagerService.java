@@ -21,7 +21,7 @@ import com.nosliw.core.application.HAPWrapperBrickRoot;
 import com.nosliw.core.application.brick.HAPEnumBrickType;
 import com.nosliw.core.application.brick.interactive.interfacee.task.HAPBlockInteractiveInterfaceTask;
 import com.nosliw.core.application.brick.service.profile.HAPBlockServiceProfile;
-import com.nosliw.core.application.common.interactive.HAPRequestParmInInteractive;
+import com.nosliw.core.application.common.datadefinition.HAPDefinitionParm;
 import com.nosliw.core.application.common.interactive.HAPResultInteractiveTask;
 import com.nosliw.core.data.HAPData;
 import com.nosliw.core.runtime.HAPRuntimeInfo;
@@ -176,7 +176,7 @@ public class HAPManagerService implements HAPPluginDivision{
 			Map<String, HAPData> serviceParms = new LinkedHashMap<String, HAPData>();
 			
 			HAPBlockInteractiveInterfaceTask serviceInterface = (HAPBlockInteractiveInterfaceTask)HAPUtilityBrick.getBrick(serviceInstance.getDefinition().getTaskInterface(), this.m_brickManager);
-			for(HAPRequestParmInInteractive parm : serviceInterface.getValue().getRequestParms()) {
+			for(HAPDefinitionParm parm : serviceInterface.getValue().getRequestParms()) {
 				String parmName = parm.getId();
 				HAPData parmData = null;
 				if(parms!=null) {
@@ -184,7 +184,7 @@ public class HAPManagerService implements HAPPluginDivision{
 				}
 				if(parmData==null)
 				 {
-					parmData = parm.getDefaultValue();   //not provide, use default 
+					parmData = parm.getDataDefinition().getInitData();   //not provide, use default 
 				}
 				serviceParms.put(parmName, parmData);
 			}

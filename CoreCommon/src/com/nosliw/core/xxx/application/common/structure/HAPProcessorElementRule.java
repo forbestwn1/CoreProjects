@@ -20,7 +20,7 @@ public class HAPProcessorElementRule {
 				public Pair<Boolean, HAPElementStructure> process(HAPInfoElement eleInfo, Object obj) {
 					if(eleInfo.getElement().getType().equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_DATA)) {
 						HAPElementStructureLeafData dataEle = (HAPElementStructureLeafData)eleInfo.getElement();
-						if(dataEle.getDataInfo()!=null)    dataEle.getDataInfo().process(runtimeEnv);  
+						if(dataEle.getDataDefinition()!=null)    dataEle.getDataDefinition().process(runtimeEnv);  
 					}
 					return null;
 				}

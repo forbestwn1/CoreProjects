@@ -3,8 +3,8 @@ package com.nosliw.core.application.common.structure;
 import org.json.JSONObject;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.core.application.common.datadefinition.HAPDataDefinitionWritable;
 import com.nosliw.core.application.common.structure.reference.HAPInfoRelativeResolve;
-import com.nosliw.core.application.common.variable.HAPVariableDataInfo;
 import com.nosliw.core.application.valueport.HAPReferenceElement;
 import com.nosliw.core.xxx.application.common.structure.HAPElementStructureLeafConstantReference;
 import com.nosliw.core.xxx.application.common.structure.HAPElementStructureLeafProvide;
@@ -19,7 +19,7 @@ public class HAPUtilityParserElement {
 		Object linkRefObj = eleDefJson.opt(HAPElementStructureLeafRelativeForValue.LINK);
 		Object mappingRefObj = eleDefJson.opt(HAPElementStructureLeafRelativeForMapping.MAPPING);
 		Object provideObj = eleDefJson.opt(HAPElementStructureLeafProvide.PROVIDE);
-		Object criteriaDef = eleDefJson.opt(HAPElementStructureLeafData.CRITERIA);
+		Object criteriaDef = eleDefJson.opt(HAPElementStructureLeafData.DATA);
 		Object valueJsonObj = eleDefJson.opt(HAPElementStructureLeafConstant.VALUE);
 		JSONObject childrenJsonObj = eleDefJson.optJSONObject(HAPElementStructureNode.CHILD);
 		String constantName = (String)eleDefJson.opt(HAPElementStructureLeafConstantReference.CONSTANT);
@@ -63,9 +63,9 @@ public class HAPUtilityParserElement {
 		}
 		else if(criteriaDef!=null) {
 			//data
-			HAPVariableDataInfo dataInfo = new HAPVariableDataInfo();
-			dataInfo.buildObject(criteriaDef, null);
-			out = new HAPElementStructureLeafData(dataInfo);   
+			HAPDataDefinitionWritable dataDef = new HAPDataDefinitionWritable();
+			dataDef.buildObject(criteriaDef, null);
+			out = new HAPElementStructureLeafData(dataDef);   
 		}
 		else if(childrenJsonObj!=null) {
 			//node

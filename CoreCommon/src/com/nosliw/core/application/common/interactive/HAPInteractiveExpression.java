@@ -10,26 +10,28 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.core.application.common.datadefinition.HAPDefinitionParm;
+import com.nosliw.core.application.common.datadefinition.HAPDefinitionResult;
 
 @HAPEntityWithAttribute
 public class HAPInteractiveExpression extends HAPSerializableImp implements HAPInteractive{
 	
 	private HAPInteractiveRequest m_request;
-	private HAPInteractiveResultExpression m_result;
+	private HAPDefinitionResult m_result;
 
 	public HAPInteractiveExpression() {
 		this.m_request = new HAPInteractiveRequest();
-		this.m_result = new HAPInteractiveResultExpression();
+		this.m_result = new HAPDefinitionResult();
 	}
 	
-	public HAPInteractiveExpression(List<HAPRequestParmInInteractive> requestParms, HAPInteractiveResultExpression result) {
+	public HAPInteractiveExpression(List<HAPDefinitionParm> requestParms, HAPDefinitionResult result) {
 		this.m_request = new HAPInteractiveRequest(requestParms);
 		this.m_result = result;
 	}
 
-	public List<HAPRequestParmInInteractive> getRequestParms() {   return this.m_request.getRequestParms();  }
+	public List<HAPDefinitionParm> getRequestParms() {   return this.m_request.getRequestParms();  }
 
-	public HAPInteractiveResultExpression getResult() {   return this.m_result;  }
+	public HAPDefinitionResult getResult() {   return this.m_result;  }
 	
 	@Override
 	protected boolean buildObjectByJson(Object json){

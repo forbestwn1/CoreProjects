@@ -12,6 +12,10 @@ import com.nosliw.core.application.common.dataexpression.imp.basic.HAPBasicExpre
 import com.nosliw.core.application.common.dataexpression.imp.basic.HAPBasicUtilityProcessorDataExpression;
 import com.nosliw.core.application.common.scriptexpressio.HAPContainerScriptExpression;
 import com.nosliw.core.application.common.scriptexpressio.HAPItemInContainerScriptExpression;
+import com.nosliw.core.application.common.scriptexpressio.HAPManualExpressionScript;
+import com.nosliw.core.application.common.scriptexpressio.HAPManualProcessorScriptExpressionSegment;
+import com.nosliw.core.application.common.scriptexpressio.HAPManualSegmentScriptExpression;
+import com.nosliw.core.application.common.scriptexpressio.HAPManualSegmentScriptExpressionScriptSimple;
 import com.nosliw.core.application.common.scriptexpressio.definition.HAPDefinitionContainerScriptExpression;
 import com.nosliw.core.application.common.scriptexpressio.definition.HAPDefinitionScriptExpressionItemInContainer;
 import com.nosliw.core.application.common.structure.reference.HAPConfigureResolveElementReference;

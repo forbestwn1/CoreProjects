@@ -5,13 +5,13 @@ import java.util.Set;
 import com.nosliw.common.path.HAPComplexPath;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityBasic;
+import com.nosliw.core.application.common.datadefinition.HAPDataDefinitionWritable;
+import com.nosliw.core.application.common.datadefinition.HAPDataRule;
 import com.nosliw.core.application.common.structure.HAPElementStructure;
 import com.nosliw.core.application.common.structure.HAPElementStructureLeafData;
 import com.nosliw.core.application.common.structure.HAPRootInStructure;
 import com.nosliw.core.application.common.structure.HAPStructure;
 import com.nosliw.core.application.common.structure.HAPUtilityElement;
-import com.nosliw.core.application.common.variable.HAPDataRule;
-import com.nosliw.core.application.common.variable.HAPVariableDataInfo;
 import com.nosliw.core.application.valueport.HAPResultDesendantResolve;
 import com.nosliw.core.application.valueport.HAPResultReferenceResolve;
 import com.nosliw.core.data.criteria.HAPDataTypeCriteria;
@@ -63,11 +63,11 @@ public class HAPUtilityResolveReference {
 				HAPElementStructureLeafData dataLeafEle = (HAPElementStructureLeafData)candidateNode;
 				HAPDataTypeCriteria childCriteria = HAPUtilityCriteria.getChildCriteriaByPath(dataLeafEle.getCriteria(), resolveInfo.remainPath.getPath());
 				if(childCriteria!=null) {
-					out = new HAPElementStructureLeafData(new HAPVariableDataInfo(childCriteria)); 
+					out = new HAPElementStructureLeafData(new HAPDataDefinitionWritable(childCriteria)); 
 					
 					//inherit rule from parent
 					if(relativeInheritRule) {
-						HAPVariableDataInfo solidParentDataInfo = ((HAPElementStructureLeafData)candidateNode).getDataInfo();
+						HAPDataDefinitionWritable solidParentDataInfo = ((HAPElementStructureLeafData)candidateNode).getDataDefinition();
 						for(HAPDataRule rule : solidParentDataInfo.getRules()) {
 							String subPath = null;
 							String rulePath = rule.getPath();
@@ -81,7 +81,7 @@ public class HAPUtilityResolveReference {
 							if(subPath!=null) {
 								HAPDataRule newRule = rule.cloneDataRule();
 								newRule.setPath(subPath);
-								((HAPElementStructureLeafData)out).getDataInfo().addRule(newRule);
+								((HAPElementStructureLeafData)out).getDataDefinition().addRule(newRule);
 							}
 						}
 					}
