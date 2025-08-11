@@ -2,7 +2,7 @@ package com.nosliw.core.application.common.dataexpression.definition;
 
 import java.util.List;
 
-import com.nosliw.core.application.common.dataexpression1.HAPInterfaceProcessOperand;
+import com.nosliw.core.xxx.application.common.dataexpression1.HAPInterfaceProcessOperand;
 
 
 public class HAPUtilityOperandDefinition {
