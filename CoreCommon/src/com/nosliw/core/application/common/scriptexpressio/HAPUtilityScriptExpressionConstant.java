@@ -1,10 +1,9 @@
-package com.nosliw.core.application.common.scriptexpression;
+package com.nosliw.core.application.common.scriptexpressio;
 
 import java.util.Map;
 
 import com.nosliw.core.application.common.constant.HAPDefinitionConstant;
 import com.nosliw.core.application.common.dataexpression.definition.HAPParserDataExpression;
-import com.nosliw.core.application.common.scriptexpressio.HAPManualExpressionScript;
 import com.nosliw.core.application.common.scriptexpressio.definition.HAPDefinitionScriptExpression;
 
 public class HAPUtilityScriptExpressionConstant {
@@ -25,11 +24,11 @@ public class HAPUtilityScriptExpressionConstant {
 		return out;
 	}
 	
-	public static HAPManualExpressionScript processScriptExpressionConstant(HAPDefinitionScriptExpression scriptExpressionDef, Map<String, HAPDefinitionConstant> constantsDef, HAPParserDataExpression dataExpressionParser) {
+	public static HAPExpressionScriptImp processScriptExpressionConstant(HAPDefinitionScriptExpression scriptExpressionDef, Map<String, HAPDefinitionConstant> constantsDef, HAPParserDataExpression dataExpressionParser) {
 		
-		HAPManualExpressionScript scriptExpression = HAPManualUtilityScriptExpressionParser.parseDefinitionExpression(scriptExpressionDef.getScriptExpression(), scriptExpressionDef.getScriptExpressionType(), dataExpressionParser);
+		HAPExpressionScriptImp scriptExpression = HAPUtilityScriptExpressionParser.parseDefinitionExpression(scriptExpressionDef.getScriptExpression(), scriptExpressionDef.getScriptExpressionType(), dataExpressionParser);
 
-		HAPManualUtilityScriptExpression.processScriptExpressionConstant(scriptExpression, constantsDef);
+		HAPUtilityScriptExpression.processScriptExpressionConstant(scriptExpression, constantsDef);
 
 		return scriptExpression;
 	}

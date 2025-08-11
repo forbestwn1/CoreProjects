@@ -1,11 +1,11 @@
 package com.nosliw.core.application.common.scriptexpression.serialize;
 
-import com.nosliw.core.application.common.scriptexpressio.HAPManualSegmentScriptExpression;
+import com.nosliw.core.application.common.scriptexpressio.HAPSegmentScriptExpression;
 
 public interface HAPSegmentScriptProcessor {
 
 	HAPOutputScriptProcessor processor(
-		HAPManualSegmentScriptExpression scriptExe,
+		HAPSegmentScriptExpression scriptExe,
 		String funciontParmName,
 		String expressionsDataParmName,
 		String constantsDataParmName,

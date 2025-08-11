@@ -1,13 +1,13 @@
-package com.nosliw.core.application.common.scriptexpression;
+package com.nosliw.core.application.common.scriptexpressio;
 
 import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.data.core.runtime.HAPExecutableImp;
+import com.nosliw.core.xxx.application1.HAPExecutableImp;
 
 @HAPEntityWithAttribute
-public class HAPManualVariableInScript extends HAPExecutableImp{
+public class HAPVariableInScript extends HAPExecutableImp{
 
 	@HAPAttribute
 	public static String VARIABLENAME = "variableName";
@@ -19,11 +19,11 @@ public class HAPManualVariableInScript extends HAPExecutableImp{
 	
 	private String m_variableKey;
 	
-	public HAPManualVariableInScript(String name){
+	public HAPVariableInScript(String name){
 		this.m_variableName = name;
 	}
 	
-	public HAPManualVariableInScript(String name, String varKey){
+	public HAPVariableInScript(String name, String varKey){
 		this.m_variableName = name;
 		this.m_variableKey = varKey;
 	}
@@ -33,8 +33,8 @@ public class HAPManualVariableInScript extends HAPExecutableImp{
 	public String getVariableKey() {    return this.m_variableKey;     }
 	public void setVariableKey(String varKey) {     this.m_variableKey = varKey;      }
 	
-	public HAPManualVariableInScript cloneVariableInScript() {
-		return new HAPManualVariableInScript(this.m_variableName, this.m_variableKey);
+	public HAPVariableInScript cloneVariableInScript() {
+		return new HAPVariableInScript(this.m_variableName, this.m_variableKey);
 	}
 
 	@Override

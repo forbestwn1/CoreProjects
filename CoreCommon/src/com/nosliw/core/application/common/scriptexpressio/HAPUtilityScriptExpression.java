@@ -1,4 +1,4 @@
-package com.nosliw.core.application.common.scriptexpression;
+package com.nosliw.core.application.common.scriptexpressio;
 
 import java.util.Map;
 import java.util.Set;
@@ -10,33 +10,28 @@ import com.nosliw.core.application.common.dataexpression.HAPItemInContainerDataE
 import com.nosliw.core.application.common.dataexpression.definition.HAPParserDataExpression;
 import com.nosliw.core.application.common.dataexpression.imp.basic.HAPBasicExpressionData;
 import com.nosliw.core.application.common.dataexpression.imp.basic.HAPBasicUtilityProcessorDataExpression;
-import com.nosliw.core.application.common.scriptexpressio.HAPContainerScriptExpression;
-import com.nosliw.core.application.common.scriptexpressio.HAPItemInContainerScriptExpression;
-import com.nosliw.core.application.common.scriptexpressio.HAPManualExpressionScript;
-import com.nosliw.core.application.common.scriptexpressio.HAPManualProcessorScriptExpressionSegment;
-import com.nosliw.core.application.common.scriptexpressio.HAPManualSegmentScriptExpression;
-import com.nosliw.core.application.common.scriptexpressio.HAPManualSegmentScriptExpressionScriptSimple;
 import com.nosliw.core.application.common.scriptexpressio.definition.HAPDefinitionContainerScriptExpression;
 import com.nosliw.core.application.common.scriptexpressio.definition.HAPDefinitionScriptExpressionItemInContainer;
 import com.nosliw.core.application.common.structure.reference.HAPConfigureResolveElementReference;
 import com.nosliw.core.application.common.withvariable.HAPContainerVariableInfo;
 import com.nosliw.core.application.common.withvariable.HAPManagerWithVariablePlugin;
 import com.nosliw.core.application.common.withvariable.HAPUtilityWithVarible;
+import com.nosliw.core.runtime.HAPRuntimeInfo;
 
-public class HAPManualUtilityScriptExpression {
+public class HAPUtilityScriptExpression {
 
-	public static void processScriptExpressionConstant(HAPManualExpressionScript scriptExpression, Map<String, HAPDefinitionConstant> constantsDef) {
+	public static void processScriptExpressionConstant(HAPExpressionScriptImp scriptExpression, Map<String, HAPDefinitionConstant> constantsDef) {
 		//script it self
-		HAPManualUtilityScriptExpressionTraverse.traverse(scriptExpression, new HAPManualProcessorScriptExpressionSegment() {
+		HAPUtilityScriptExpressionTraverse.traverse(scriptExpression, new HAPProcessorScriptExpressionSegment() {
 			@Override
-			public boolean process(HAPManualSegmentScriptExpression segment, Object value) {
+			public boolean process(HAPSegmentScriptExpression segment, Object value) {
 				Set<String> varKeys = (Set<String>)value;
 				String segType = segment.getType();
 				if(segType.equals(HAPConstantShared.EXPRESSION_SEG_TYPE_SCRIPTSIMPLE)) {
-					HAPManualSegmentScriptExpressionScriptSimple simpleScriptSeg = (HAPManualSegmentScriptExpressionScriptSimple)segment;
+					HAPSegmentScriptExpressionScriptSimple simpleScriptSeg = (HAPSegmentScriptExpressionScriptSimple)segment;
 					for(Object part : simpleScriptSeg.getParts()) {
-						if(part instanceof HAPManualConstantInScript) {
-							HAPManualConstantInScript constantInScript = (HAPManualConstantInScript)part;
+						if(part instanceof HAPConstantInScript) {
+							HAPConstantInScript constantInScript = (HAPConstantInScript)part;
 							constantInScript.setValue(constantsDef.get(constantInScript.getConstantName()).getValue());
 						}
 					}
@@ -57,17 +52,17 @@ public class HAPManualUtilityScriptExpression {
 			HAPItemInContainerScriptExpression itemExe = new HAPItemInContainerScriptExpression();
 			itemDef.cloneToEntityInfo(itemExe);
 
-			HAPManualExpressionScript scriptExpression = HAPManualUtilityScriptExpressionParser.parseDefinitionExpression(itemDef.getScriptExpression().getScriptExpression(), itemDef.getScriptExpression().getScriptExpressionType(), dataExpressionParser);
+			HAPExpressionScriptImp scriptExpression = HAPUtilityScriptExpressionParser.parseDefinitionExpression(itemDef.getScriptExpression().getScriptExpression(), itemDef.getScriptExpression().getScriptExpressionType(), dataExpressionParser);
 			itemExe.setScriptExpression(scriptExpression);
 			groupExe.addItem(itemExe);
 		}
 	}
 
 	//variable resolve in script expression container
-	public static void processScriptExpressionContainerVariableResolve(HAPContainerScriptExpression groupExe, HAPContainerVariableInfo varInfoContainer, HAPConfigureResolveElementReference resolveConfigure, HAPManagerWithVariablePlugin withVariableMan) {
+	public static void processScriptExpressionContainerVariableResolve(HAPContainerScriptExpression groupExe, HAPContainerVariableInfo varInfoContainer, HAPConfigureResolveElementReference resolveConfigure, HAPManagerWithVariablePlugin withVariableMan, HAPRuntimeInfo runtimeInfo) {
 		for(HAPItemInContainerScriptExpression itemExe : groupExe.getItems()) {
 			//variable resolve
-			HAPUtilityWithVarible.resolveVariable(itemExe.getScriptExpression(), varInfoContainer, resolveConfigure, withVariableMan);
+			HAPUtilityWithVarible.resolveVariable(itemExe.getScriptExpression(), varInfoContainer, resolveConfigure, withVariableMan, runtimeInfo);
 			//build variable info in script expression
 			HAPUtilityWithVarible.buildVariableInfoInEntity(itemExe.getScriptExpression(), varInfoContainer, withVariableMan);
 		}

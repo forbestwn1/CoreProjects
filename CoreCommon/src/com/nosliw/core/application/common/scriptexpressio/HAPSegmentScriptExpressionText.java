@@ -5,14 +5,14 @@ import java.util.Map;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.utils.HAPConstantShared;
 
-public class HAPManualSegmentScriptExpressionText extends HAPManualSegmentScriptExpression{
+public class HAPSegmentScriptExpressionText extends HAPSegmentScriptExpression{
 
 	@HAPAttribute
 	public static String CONTENT = "content";
 
 	private String m_content;
 	
-	public HAPManualSegmentScriptExpressionText(String id, String content) {
+	public HAPSegmentScriptExpressionText(String id, String content) {
 		super(id);
 		this.m_content = content;
 	}

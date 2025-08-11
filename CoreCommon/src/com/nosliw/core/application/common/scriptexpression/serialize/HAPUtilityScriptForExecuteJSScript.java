@@ -6,18 +6,18 @@ import java.util.List;
 import java.util.Map;
 
 import com.nosliw.common.interpolate.HAPStringTemplateUtil;
+import com.nosliw.common.script.HAPJSScriptInfo;
 import com.nosliw.common.serialization.HAPJsonTypeAsItIs;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityFile;
-import com.nosliw.core.application.common.scriptexpressio.HAPManualExpressionScript;
-import com.nosliw.core.application.common.scriptexpressio.HAPManualSegmentScriptExpression;
-import com.nosliw.data.core.data.HAPData;
-import com.nosliw.data.core.runtime.HAPRuntimeTask;
-import com.nosliw.data.core.runtime.js.HAPJSScriptInfo;
-import com.nosliw.data.core.runtime.js.imp.rhino.HAPGatewayRhinoTaskResponse;
-import com.nosliw.data.core.runtime.js.imp.rhino.HAPRuntimeImpRhino;
+import com.nosliw.core.application.common.scriptexpressio.HAPExpressionScriptImp;
+import com.nosliw.core.application.common.scriptexpressio.HAPSegmentScriptExpression;
+import com.nosliw.core.data.HAPData;
+import com.nosliw.core.runtime.HAPRuntimeTask;
+import com.nosliw.core.runtime.js.rhino.HAPGatewayRhinoTaskResponse;
+import com.nosliw.core.runtime.js.rhino.HAPRuntimeImpRhino;
 
 public class HAPUtilityScriptForExecuteJSScript {
 
@@ -35,13 +35,13 @@ public class HAPUtilityScriptForExecuteJSScript {
 		m_processors.put(HAPConstantShared.EXPRESSION_SEG_TYPE_TEXT, new HAPSegmentScriptProcessorText());
 	}
 	
-	public static HAPScriptFunctionInfo buildExpressionFunctionInfo(HAPManualExpressionScript expressionExe) {
-		HAPScriptFunctionInfo out = new HAPScriptFunctionInfo();
+	public static HAPInfoScriptFunction buildExpressionFunctionInfo(HAPExpressionScriptImp expressionExe) {
+		HAPInfoScriptFunction out = new HAPInfoScriptFunction();
 
-		List<HAPManualSegmentScriptExpression> segments = expressionExe.getSegments();
+		List<HAPSegmentScriptExpression> segments = expressionExe.getSegments();
 		for(int i=0; i<segments.size(); i++) {
-			HAPManualSegmentScriptExpression segment = segments.get(i);
-			HAPScriptFunctionInfo segmentScript = buildExpressionSegmentFunctionInfo(segment);
+			HAPSegmentScriptExpression segment = segments.get(i);
+			HAPInfoScriptFunction segmentScript = buildExpressionSegmentFunctionInfo(segment);
 			out.mergeWith(segmentScript);
 		}
 		
@@ -55,10 +55,10 @@ public class HAPUtilityScriptForExecuteJSScript {
 		return out;
 	}
 	
-	public static StringBuffer buildSegmentFunctionScript(List<HAPManualSegmentScriptExpression> segments) {
+	public static StringBuffer buildSegmentFunctionScript(List<HAPSegmentScriptExpression> segments) {
 		StringBuffer funScript = new StringBuffer();
 		for(int i=0; i<segments.size(); i++) {
-			HAPManualSegmentScriptExpression segment = segments.get(i);
+			HAPSegmentScriptExpression segment = segments.get(i);
 			funScript.append(functionsParmName+"[\""+segment.getId()+"\"]("+functionsParmName+", "+expressionsDataParmName+", "+constantsDataParmName+", "+variablesDataParmName+")");
 			if(i<segments.size()-1) {
 				funScript.append("+");
@@ -67,8 +67,8 @@ public class HAPUtilityScriptForExecuteJSScript {
 		return funScript;
 	}
 	
-	private static HAPScriptFunctionInfo buildExpressionSegmentFunctionInfo(HAPManualSegmentScriptExpression expressionSegment) {
-		HAPScriptFunctionInfo out = new HAPScriptFunctionInfo();
+	private static HAPInfoScriptFunction buildExpressionSegmentFunctionInfo(HAPSegmentScriptExpression expressionSegment) {
+		HAPInfoScriptFunction out = new HAPInfoScriptFunction();
 
 		String segmentType = expressionSegment.getType();
 		HAPSegmentScriptProcessor scriptProcessor = m_processors.get(segmentType);
@@ -77,9 +77,9 @@ public class HAPUtilityScriptForExecuteJSScript {
 		String functionStr = HAPUtilityScriptForExecuteJSScript.buildFunction(output.getFunctionBody(), functionsParmName, expressionsDataParmName, constantsDataParmName, variablesDataParmName);
 		out.setMainScript(HAPJSScriptInfo.buildByScript(functionStr, expressionSegment.getId()));
 		 
-		List<HAPManualSegmentScriptExpression> children = output.getScriptChildren();
-		for(HAPManualSegmentScriptExpression childScript : children) {
-			HAPScriptFunctionInfo childScriptFunInfo = buildExpressionSegmentFunctionInfo(childScript);
+		List<HAPSegmentScriptExpression> children = output.getScriptChildren();
+		for(HAPSegmentScriptExpression childScript : children) {
+			HAPInfoScriptFunction childScriptFunInfo = buildExpressionSegmentFunctionInfo(childScript);
 			out.mergeWith(childScriptFunInfo);
 		}
 		
@@ -95,7 +95,7 @@ public class HAPUtilityScriptForExecuteJSScript {
 		templateParms.put("variables", HAPUtilityJson.formatJson(HAPUtilityJson.buildJson(variableValue==null?new LinkedHashMap<String, HAPData>() : variableValue, HAPSerializationFormat.JSON)));
 
 		//build javascript function to execute the script
-		HAPScriptFunctionInfo scriptFunctionInfo = taskInfo.getScriptFunction();
+		HAPInfoScriptFunction scriptFunctionInfo = taskInfo.getScriptFunction();
 		templateParms.put("functionScript", scriptFunctionInfo.getMainScript().getScript());
 
 		//functions

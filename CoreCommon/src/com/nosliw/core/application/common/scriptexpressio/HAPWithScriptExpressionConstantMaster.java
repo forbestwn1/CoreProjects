@@ -1,4 +1,4 @@
-package com.nosliw.core.application.common.scriptexpression;
+package com.nosliw.core.application.common.scriptexpressio;
 
 import java.util.Map;
 

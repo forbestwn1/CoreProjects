@@ -3,15 +3,15 @@ package com.nosliw.core.application.common.scriptexpression.serialize;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.nosliw.data.core.runtime.js.HAPJSScriptInfo;
+import com.nosliw.common.script.HAPJSScriptInfo;
 
-public class HAPScriptFunctionInfo {
+public class HAPInfoScriptFunction {
 
 	private HAPJSScriptInfo m_main;
 	
 	private List<HAPJSScriptInfo> m_children;
 	
-	public HAPScriptFunctionInfo() {
+	public HAPInfoScriptFunction() {
 		this.m_children = new ArrayList<HAPJSScriptInfo>();
 	}
 	
@@ -22,7 +22,7 @@ public class HAPScriptFunctionInfo {
 	public void addChild(HAPJSScriptInfo child) {    this.m_children.add(child);    }
 	public void addChildren(List<HAPJSScriptInfo> children) {    this.m_children.addAll(children);    }
 	
-	public void mergeWith(HAPScriptFunctionInfo info) {
+	public void mergeWith(HAPInfoScriptFunction info) {
 		this.addChild(info.getMainScript());
 		this.addChildren(info.getChildren());
 	}

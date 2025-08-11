@@ -11,16 +11,15 @@ import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.core.application.common.scriptexpression.HAPManualVariableInScript;
 
-public class HAPManualSegmentScriptExpressionScriptSimple extends HAPManualSegmentScriptExpressionScript{
+public class HAPSegmentScriptExpressionScriptSimple extends HAPSegmentScriptExpressionScript{
 
 	@HAPAttribute
 	public static String PART = "part";
 
 	private List<Object> m_parts;
 
-	public HAPManualSegmentScriptExpressionScriptSimple(String id) {
+	public HAPSegmentScriptExpressionScriptSimple(String id) {
 		super(id);
 		this.m_parts = new ArrayList<Object>();
 	}
@@ -35,8 +34,8 @@ public class HAPManualSegmentScriptExpressionScriptSimple extends HAPManualSegme
 	public Set<String> getVariableKeys(){
 		Set<String> out = new HashSet<String>();
 		for(Object part : this.m_parts) {
-			if(part instanceof HAPManualVariableInScript) {
-				out.add(((HAPManualVariableInScript)part).getVariableKey());
+			if(part instanceof HAPVariableInScript) {
+				out.add(((HAPVariableInScript)part).getVariableKey());
 			}
 		}
 		return out;

@@ -11,12 +11,12 @@ import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
 import com.nosliw.core.application.common.constant.HAPDefinitionConstant;
-import com.nosliw.core.application.common.scriptexpressio.HAPManualExpressionScript;
+import com.nosliw.core.application.common.scriptexpressio.HAPExpressionScriptImp;
+import com.nosliw.core.application.common.scriptexpressio.HAPUtilityScriptExpressionConstant;
+import com.nosliw.core.application.common.scriptexpressio.HAPWithScriptExpressionConstantMaster;
 import com.nosliw.core.application.common.scriptexpressio.definition.HAPDefinitionContainerScriptExpression;
 import com.nosliw.core.application.common.scriptexpressio.definition.HAPDefinitionScriptExpression;
 import com.nosliw.core.application.common.scriptexpressio.definition.HAPDefinitionScriptExpressionItemInContainer;
-import com.nosliw.core.application.common.scriptexpression.HAPUtilityScriptExpressionConstant;
-import com.nosliw.core.application.common.scriptexpression.HAPWithScriptExpressionConstantMaster;
 import com.nosliw.core.application.division.manual.core.HAPManualManagerBrick;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionBrick;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionProcessorBrickNodeDownwardWithPath;
@@ -69,7 +69,7 @@ public class HAPManualUtilityScriptExpressionConstant {
 							constants.put(name, constantsDef.get(name).getValue());
 						}
 						
-						HAPManualExpressionScript scriptExpression = HAPUtilityScriptExpressionConstant.processScriptExpressionConstant((HAPDefinitionScriptExpression)item.getValue(), constantsDef, runtTimeEnv.getDataExpressionParser());
+						HAPExpressionScriptImp scriptExpression = HAPUtilityScriptExpressionConstant.processScriptExpressionConstant((HAPDefinitionScriptExpression)item.getValue(), constantsDef, runtTimeEnv.getDataExpressionParser());
 						String itemName = null;
 						if(path==null||path.isEmpty()) {
 							itemName = item.getName();
@@ -135,7 +135,7 @@ public class HAPManualUtilityScriptExpressionConstant {
 			constantsDef.put(name, new HAPDefinitionConstant(name, constants.get(name)));
 		}
 		
-		HAPManualExpressionScript scriptExpression = HAPUtilityScriptExpressionConstant.processScriptExpressionConstant(scriptExpressionDef, constantsDef, runtimeEnvironment.getDataExpressionParser());
+		HAPExpressionScriptImp scriptExpression = HAPUtilityScriptExpressionConstant.processScriptExpressionConstant(scriptExpressionDef, constantsDef, runtimeEnvironment.getDataExpressionParser());
 		
 		HAPInfoRuntimeTaskTaskScriptExpressionConstantGroup taskInfo = new HAPInfoRuntimeTaskTaskScriptExpressionConstantGroup();
 		taskInfo.addScriptExpressionInfo(HAPConstantShared.NAME_DEFAULT, scriptExpression, constants);

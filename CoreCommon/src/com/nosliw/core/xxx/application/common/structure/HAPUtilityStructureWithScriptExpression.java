@@ -4,9 +4,9 @@ import java.util.Map;
 
 import org.apache.commons.lang3.tuple.Pair;
 
+import com.nosliw.core.application.common.scriptexpressio.HAPUtilityScriptExpressionConstant;
+import com.nosliw.core.application.common.scriptexpressio.HAPUtilityScriptExpressionParser;
 import com.nosliw.core.application.common.scriptexpressio.definition.HAPDefinitionContainerScriptExpression;
-import com.nosliw.core.application.common.scriptexpression.HAPManualUtilityScriptExpressionParser;
-import com.nosliw.core.application.common.scriptexpression.HAPUtilityScriptExpressionConstant;
 import com.nosliw.core.application.common.structure.HAPElementStructure;
 import com.nosliw.core.application.common.structure.HAPElementStructureLeafRelative;
 import com.nosliw.core.application.common.structure.HAPInfoElement;
@@ -20,21 +20,21 @@ public class HAPUtilityStructureWithScriptExpression {
 		for(HAPRootInStructure root : valueStructure.getRoots().values()) {
 			//root name
 			String name = root.getName();
-			if(HAPManualUtilityScriptExpressionParser.isScriptExpression(name)) {
+			if(HAPUtilityScriptExpressionParser.isScriptExpression(name)) {
 				String scriptExpressionId = scriptExpressionContainer.addScriptExpression(name);
 				root.setName(HAPUtilityScriptExpressionConstant.makeIdLiterate(scriptExpressionId));
 			}
 			
 			//root id 
 			String id = root.getId();
-			if(HAPManualUtilityScriptExpressionParser.isScriptExpression(id)) {
+			if(HAPUtilityScriptExpressionParser.isScriptExpression(id)) {
 				String scriptExpressionId = scriptExpressionContainer.addScriptExpression(id);
 				root.setId(HAPUtilityScriptExpressionConstant.makeIdLiterate(scriptExpressionId));
 			}
 			
 			//root status
 			String rootStatus = root.getStatus();
-			if(HAPManualUtilityScriptExpressionParser.isScriptExpression(rootStatus)) {
+			if(HAPUtilityScriptExpressionParser.isScriptExpression(rootStatus)) {
 				String scriptExpressionId = scriptExpressionContainer.addScriptExpression(rootStatus);
 				root.setStatus(HAPUtilityScriptExpressionConstant.makeIdLiterate(scriptExpressionId));
 			}
@@ -46,7 +46,7 @@ public class HAPUtilityStructureWithScriptExpression {
 					if(eleInfo.getElement() instanceof HAPElementStructureLeafRelative) {
 						HAPElementStructureLeafRelative relativeEle = (HAPElementStructureLeafRelative)eleInfo.getElement();
 						String relativePath = relativeEle.getReference().getElementPath();
-						if(HAPManualUtilityScriptExpressionParser.isScriptExpression(relativePath)) {
+						if(HAPUtilityScriptExpressionParser.isScriptExpression(relativePath)) {
 							String relativePathId = scriptExpressionContainer.addScriptExpression(relativePath);
 							relativeEle.getReference().setElementPath(HAPUtilityScriptExpressionConstant.makeIdLiterate(relativePathId));
 						}

@@ -15,23 +15,23 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.common.dataexpression.HAPContainerDataExpression;
-import com.nosliw.core.application.common.scriptexpression.serialize.HAPScriptFunctionInfo;
+import com.nosliw.core.application.common.scriptexpression.serialize.HAPInfoScriptFunction;
 import com.nosliw.core.application.common.scriptexpression.serialize.HAPUtilityScriptForExecuteJSScript;
 import com.nosliw.core.application.common.withvariable.HAPWithVariableImp;
 
 @HAPEntityWithAttribute
-public class HAPManualExpressionScript extends HAPWithVariableImp implements HAPExpressionScript{
+public class HAPExpressionScriptImp extends HAPWithVariableImp implements HAPExpressionScript{
 
 	private String m_type;
 	
-	private List<HAPManualSegmentScriptExpression> m_segments;
+	private List<HAPSegmentScriptExpression> m_segments;
 	
 	private Set<String> m_varKeys = new HashSet<String>();
 
 	private HAPContainerDataExpression m_dataExpressionContainer;
 	
-	public HAPManualExpressionScript(String type) {
-		this.m_segments = new ArrayList<HAPManualSegmentScriptExpression>();
+	public HAPExpressionScriptImp(String type) {
+		this.m_segments = new ArrayList<HAPSegmentScriptExpression>();
 		this.m_type = type;
 		this.m_dataExpressionContainer = new HAPContainerDataExpression(); 
 	}
@@ -45,8 +45,8 @@ public class HAPManualExpressionScript extends HAPWithVariableImp implements HAP
 	@Override
 	public HAPContainerDataExpression getDataExpressionContainer() {   return this.m_dataExpressionContainer;  }
 	
-	public void addSegment(HAPManualSegmentScriptExpression segment) {	this.m_segments.add(segment);	}
-	public List<HAPManualSegmentScriptExpression> getSegments(){    return this.m_segments;     }
+	public void addSegment(HAPSegmentScriptExpression segment) {	this.m_segments.add(segment);	}
+	public List<HAPSegmentScriptExpression> getSegments(){    return this.m_segments;     }
 	
 	public Set<String> getVariableKeys(){   return this.m_varKeys;    }
 	public void addVariableKey(String key) {   this.m_varKeys.add(key);    }
@@ -59,7 +59,7 @@ public class HAPManualExpressionScript extends HAPWithVariableImp implements HAP
 //		jsonMap.put(DATAEXPRESSIONIDS, HAPUtilityJson.buildJson(this.m_dataExpressionId, HAPSerializationFormat.JSON));
 //		
 //		List<String> segmentArrayStr = new ArrayList<String>();
-//		for(HAPManualSegmentScriptExpression segment : this.m_segments) {
+//		for(HAPSegmentScriptExpression segment : this.m_segments) {
 //			segmentArrayStr.add(segment.toStringValue(HAPSerializationFormat.JSON));
 //		}
 //		jsonMap.put(SEGMENT, HAPUtilityJson.buildArrayJson(segmentArrayStr.toArray(new String[0])));
@@ -68,7 +68,7 @@ public class HAPManualExpressionScript extends HAPWithVariableImp implements HAP
 	@Override
 	public void buildJSJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap) {
 		super.buildJSJsonMap(jsonMap, typeJsonMap);
-		HAPScriptFunctionInfo scriptFunctionInfo = HAPUtilityScriptForExecuteJSScript.buildExpressionFunctionInfo(this);
+		HAPInfoScriptFunction scriptFunctionInfo = HAPUtilityScriptForExecuteJSScript.buildExpressionFunctionInfo(this);
 		
 		String functionParmValue = "{}";
 		List<HAPJSScriptInfo> childrenFun = scriptFunctionInfo.getChildren();

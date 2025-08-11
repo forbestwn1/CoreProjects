@@ -9,33 +9,33 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.utils.HAPConstantShared;
 
-public class HAPManualSegmentScriptExpressionScriptComplex extends HAPManualSegmentScriptExpressionScript{
+public class HAPSegmentScriptExpressionScriptComplex extends HAPSegmentScriptExpressionScript{
 
 	@HAPAttribute
 	public static String SEGMENT = "segment";
 	
-	private List<HAPManualSegmentScriptExpressionScript> m_children;
+	private List<HAPSegmentScriptExpressionScript> m_children;
 	
-	public HAPManualSegmentScriptExpressionScriptComplex(String id) {
+	public HAPSegmentScriptExpressionScriptComplex(String id) {
 		super(id);
-		this.m_children = new ArrayList<HAPManualSegmentScriptExpressionScript>();
+		this.m_children = new ArrayList<HAPSegmentScriptExpressionScript>();
 	}
 	
 	@Override
 	public String getType() {  return HAPConstantShared.EXPRESSION_SEG_TYPE_SCRIPTCOMPLEX;  }
 	 
 	@Override
-	public List<HAPManualSegmentScriptExpression> getChildren(){     return (List)this.m_children;      }
+	public List<HAPSegmentScriptExpression> getChildren(){     return (List)this.m_children;      }
 	
-	public void addSegmentScriptSimple(HAPManualSegmentScriptExpressionScriptSimple scriptSegment) {	this.m_children.add(scriptSegment);	}
+	public void addSegmentScriptSimple(HAPSegmentScriptExpressionScriptSimple scriptSegment) {	this.m_children.add(scriptSegment);	}
 	
-	public void addSegmentDataExpression(HAPManualSegmentScriptExpressionScriptDataExpression dataSegment) {	this.m_children.add(dataSegment);	}
+	public void addSegmentDataExpression(HAPSegmentScriptExpressionScriptDataExpression dataSegment) {	this.m_children.add(dataSegment);	}
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		List<String> segmentJsonArray = new ArrayList<String>();
-		for(HAPManualSegmentScriptExpression segment : this.m_children) {
+		for(HAPSegmentScriptExpression segment : this.m_children) {
 			segmentJsonArray.add(segment.toStringValue(HAPSerializationFormat.JSON));
 		}
 		jsonMap.put(SEGMENT, HAPUtilityJson.buildArrayJson(segmentJsonArray.toArray(new String[0])));

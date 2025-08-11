@@ -14,11 +14,11 @@ import com.nosliw.common.interfac.HAPEntityOrReference;
 import com.nosliw.common.path.HAPComplexPath;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.common.constant.HAPDefinitionConstant;
-import com.nosliw.core.application.common.scriptexpressio.HAPManualExpressionScript;
+import com.nosliw.core.application.common.scriptexpressio.HAPExpressionScriptImp;
+import com.nosliw.core.application.common.scriptexpressio.HAPUtilityScriptExpressionConstant;
 import com.nosliw.core.application.common.scriptexpressio.definition.HAPDefinitionContainerScriptExpression;
 import com.nosliw.core.application.common.scriptexpressio.definition.HAPDefinitionScriptExpression;
 import com.nosliw.core.application.common.scriptexpressio.definition.HAPDefinitionScriptExpressionItemInContainer;
-import com.nosliw.core.application.common.scriptexpression.HAPUtilityScriptExpressionConstant;
 import com.nosliw.core.application.common.structure.HAPElementStructure;
 import com.nosliw.core.application.common.structure.HAPElementStructureLeafData;
 import com.nosliw.core.application.common.structure.HAPElementStructureLeafRelativeForDefinition;
@@ -61,7 +61,7 @@ public class HAPStoryUtilityVariable {
 				constants.put(name, constantsDef.get(name).getValue());
 			}
 			
-			HAPManualExpressionScript scriptExpression = HAPUtilityScriptExpressionConstant.processScriptExpressionConstant((HAPDefinitionScriptExpression)item.getValue(), constantsDef, runtTimeEnv.getDataExpressionParser());
+			HAPExpressionScriptImp scriptExpression = HAPUtilityScriptExpressionConstant.processScriptExpressionConstant((HAPDefinitionScriptExpression)item.getValue(), constantsDef, runtTimeEnv.getDataExpressionParser());
 			taskInfo.addScriptExpressionInfo(item.getName(), scriptExpression, constants);
 		}
 

@@ -2,9 +2,9 @@ package com.nosliw.core.xxx.application.division.manual.core.definition1;
 
 import java.util.Map;
 
+import com.nosliw.core.application.common.scriptexpressio.HAPUtilityScriptExpressionConstant;
+import com.nosliw.core.application.common.scriptexpressio.HAPUtilityScriptExpressionParser;
 import com.nosliw.core.application.common.scriptexpressio.definition.HAPDefinitionContainerScriptExpression;
-import com.nosliw.core.application.common.scriptexpression.HAPManualUtilityScriptExpressionParser;
-import com.nosliw.core.application.common.scriptexpression.HAPUtilityScriptExpressionConstant;
 import com.nosliw.core.application.common.structure.HAPValueStructure;
 import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualDefinitionBrickValueContext;
 import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualDefinitionBrickWrapperValueStructure;
@@ -19,7 +19,7 @@ public class HAPManualDefinitionUtilityValueContext {
 		for(HAPManualDefinitionBrickWrapperValueStructure valueStructureWrapper : valueContext.getManualValueStructures()) {
 			//value structure status
 			String vsStatus = valueStructureWrapper.getStatus();
-			if(HAPManualUtilityScriptExpressionParser.isScriptExpression(vsStatus)) {
+			if(HAPUtilityScriptExpressionParser.isScriptExpression(vsStatus)) {
 				String scriptExpressionId = scriptExpressionContainer.addScriptExpression(vsStatus);
 				valueStructureWrapper.setStatus(HAPUtilityScriptExpressionConstant.makeIdLiterate(scriptExpressionId));
 			}

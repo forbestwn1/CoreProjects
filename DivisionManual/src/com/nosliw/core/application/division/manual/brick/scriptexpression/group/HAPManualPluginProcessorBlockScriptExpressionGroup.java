@@ -5,10 +5,10 @@ import java.util.Map;
 import org.apache.commons.lang3.tuple.Pair;
 
 import com.nosliw.common.path.HAPPath;
-import com.nosliw.core.application.common.scriptexpression.HAPManualUtilityScriptExpression;
 import com.nosliw.core.application.common.scriptexpressio.HAPContainerScriptExpression;
 import com.nosliw.core.application.common.scriptexpressio.HAPItemInContainerScriptExpression;
-import com.nosliw.core.application.common.scriptexpressio.HAPManualExpressionScript;
+import com.nosliw.core.application.common.scriptexpressio.HAPUtilityScriptExpression;
+import com.nosliw.core.application.common.scriptexpressio.HAPExpressionScriptImp;
 import com.nosliw.core.application.common.scriptexpressio.definition.HAPDefinitionContainerScriptExpression;
 import com.nosliw.core.application.common.withvariable.HAPContainerVariableInfo;
 import com.nosliw.core.application.common.withvariable.HAPUtilityWithVarible;
@@ -34,7 +34,7 @@ public class HAPManualPluginProcessorBlockScriptExpressionGroup extends HAPManua
 		Pair<HAPManualDefinitionBrick, HAPManualBrick> blockPair = this.getBrickPair(pathFromRoot, processContext);
 		HAPDefinitionContainerScriptExpression groupDef = ((HAPManualDefinitionBlockScriptExpressionGroup)blockPair.getLeft()).getValue();
 		HAPContainerScriptExpression groupExe = ((HAPBlockScriptExpressionGroup)blockPair.getRight()).getValue();
-		HAPManualUtilityScriptExpression.fromDefToExeScriptExpressionContainer(groupDef, groupExe, processContext.getRuntimeEnv().getDataExpressionParser());
+		HAPUtilityScriptExpression.fromDefToExeScriptExpressionContainer(groupDef, groupExe, processContext.getRuntimeEnv().getDataExpressionParser());
 	}
 	
 	@Override
@@ -47,7 +47,7 @@ public class HAPManualPluginProcessorBlockScriptExpressionGroup extends HAPManua
 
 		for(HAPItemInContainerScriptExpression itemExe : groupExe.getItems()) {
 			//resolve constant
-			HAPManualUtilityScriptExpression.processScriptExpressionConstant((HAPManualExpressionScript)itemExe.getScriptExpression(), blockPair.getLeft().getConstantDefinitions());
+			HAPUtilityScriptExpression.processScriptExpressionConstant((HAPExpressionScriptImp)itemExe.getScriptExpression(), blockPair.getLeft().getConstantDefinitions());
 			
 			//variable resolve
 			HAPUtilityWithVarible.resolveVariable(itemExe.getScriptExpression(), varInfoContainer, null, getManualBrickManager());

@@ -20,8 +20,8 @@ import com.nosliw.core.application.brick.HAPEnumBrickType;
 import com.nosliw.core.application.brick.ui.uicontent.HAPElementEvent;
 import com.nosliw.core.application.brick.ui.uicontent.HAPUIEmbededScriptExpressionInAttribute;
 import com.nosliw.core.application.brick.ui.uicontent.HAPUIEmbededScriptExpressionInContent;
+import com.nosliw.core.application.common.scriptexpressio.HAPUtilityScriptExpressionParser;
 import com.nosliw.core.application.common.scriptexpressio.definition.HAPDefinitionContainerScriptExpression;
-import com.nosliw.core.application.common.scriptexpression.HAPManualUtilityScriptExpressionParser;
 import com.nosliw.core.application.division.manual.core.HAPManualEnumBrickType;
 import com.nosliw.core.application.division.manual.core.HAPManualManagerBrick;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionBrick;
@@ -166,7 +166,7 @@ public class HAPManualPluginParserBlockComplexUIContent extends HAPManualDefinit
 			String eleAttrKey = eleAttr.getKey();
 			//replace express attribute value with; create ExpressEle object
 			String attrValue = eleAttr.getValue(); 
-			if(!HAPManualUtilityScriptExpressionParser.isText(attrValue)) {
+			if(!HAPUtilityScriptExpressionParser.isText(attrValue)) {
 				String scriptExpressionId = scriptEntityGroupEntity.addScriptExpression(attrValue);
 				HAPUIEmbededScriptExpressionInAttribute eAttr = new HAPUIEmbededScriptExpressionInAttribute(eleAttrKey, uiId, scriptExpressionId);
 				if(isCustomerTag) {
@@ -190,7 +190,7 @@ public class HAPManualPluginParserBlockComplexUIContent extends HAPManualDefinit
 			StringBuffer newText = new StringBuffer();
 			
 			String text = textNode.text();
-			if(HAPManualUtilityScriptExpressionParser.isText(text)) {
+			if(HAPUtilityScriptExpressionParser.isText(text)) {
 				newText.append(text);
 			}
 			else {

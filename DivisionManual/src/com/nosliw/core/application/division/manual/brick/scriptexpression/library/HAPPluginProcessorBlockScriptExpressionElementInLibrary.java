@@ -9,7 +9,7 @@ import com.nosliw.core.application.common.dataexpression.HAPItemInContainerDataE
 import com.nosliw.core.application.common.dataexpression.imp.basic.HAPUtilityExpressionProcessor;
 import com.nosliw.core.application.common.interactive.HAPInteractiveExpression;
 import com.nosliw.core.application.common.scriptexpressio.HAPExpressionScript;
-import com.nosliw.core.application.common.scriptexpression.HAPManualUtilityScriptExpressionParser;
+import com.nosliw.core.application.common.scriptexpressio.HAPUtilityScriptExpressionParser;
 import com.nosliw.core.application.common.structure.reference.HAPConfigureResolveElementReference;
 import com.nosliw.core.application.common.withvariable.HAPContainerVariableInfo;
 import com.nosliw.core.application.division.manual.core.HAPManualBrick;
@@ -46,7 +46,7 @@ public class HAPPluginProcessorBlockScriptExpressionElementInLibrary extends HAP
 		exe.setInteractive(new HAPInteractiveExpression(def.getRequestParms(), def.getResult()));
 		
 		//expression
-		HAPExpressionScript scriptExpression = HAPManualUtilityScriptExpressionParser.parseDefinitionExpression(def.getExpression(), null, exe.getDataExpressions(), processContext.getRuntimeEnv().getDataExpressionParser());
+		HAPExpressionScript scriptExpression = HAPUtilityScriptExpressionParser.parseDefinitionExpression(def.getExpression(), null, exe.getDataExpressions(), processContext.getRuntimeEnv().getDataExpressionParser());
 		exe.setExpression(scriptExpression);
 		
 		//process expression group

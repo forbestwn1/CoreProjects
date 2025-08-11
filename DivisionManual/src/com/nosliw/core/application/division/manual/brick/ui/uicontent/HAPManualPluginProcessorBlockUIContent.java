@@ -5,7 +5,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import com.nosliw.common.path.HAPPath;
 import com.nosliw.core.application.brick.HAPEnumBrickType;
 import com.nosliw.core.application.common.dataexpression.definition.HAPParserDataExpression;
-import com.nosliw.core.application.common.scriptexpression.HAPManualUtilityScriptExpression;
+import com.nosliw.core.application.common.scriptexpressio.HAPUtilityScriptExpression;
 import com.nosliw.core.application.common.withvariable.HAPContainerVariableInfo;
 import com.nosliw.core.application.division.manual.core.HAPManualBrick;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionBrick;
@@ -34,7 +34,7 @@ public class HAPManualPluginProcessorBlockUIContent extends HAPManualPluginProce
 		uiContentExe.getScriptExpressionInNormalTagAttribute().addAll(uiContentDef.getScriptExpressionInNormalTagAttribute());
 
 		//build script expression container
-		HAPManualUtilityScriptExpression.fromDefToExeScriptExpressionContainer(uiContentDef.getScriptExpressions(), uiContentExe.getScriptExpressions(), this.m_dataExpressionParser);
+		HAPUtilityScriptExpression.fromDefToExeScriptExpressionContainer(uiContentDef.getScriptExpressions(), uiContentExe.getScriptExpressions(), this.m_dataExpressionParser);
 
 		//event in normal tag
 //		for(HAPElementEvent event : uiContentDef.getNormalTagEvents()) {
@@ -62,7 +62,7 @@ public class HAPManualPluginProcessorBlockUIContent extends HAPManualPluginProce
 		HAPContainerVariableInfo varInfoContainer = uiContentExe.getVariableInfoContainer();
 
 		//resolve variable name, build var info container, build variable info
-		HAPManualUtilityScriptExpression.processScriptExpressionContainerVariableResolve(uiContentExe.getScriptExpressions(), varInfoContainer, null, getManualBrickManager());
+		HAPUtilityScriptExpression.processScriptExpressionContainerVariableResolve(uiContentExe.getScriptExpressions(), varInfoContainer, null, getManualBrickManager());
 		
 		//build var criteria infor in var info container according to value port def
 		HAPUtilityValuePortVariable.buildVariableInfo(varInfoContainer, processContext.getCurrentBundle().getValueStructureDomain());
