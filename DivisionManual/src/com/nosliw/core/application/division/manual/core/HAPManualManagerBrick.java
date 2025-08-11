@@ -56,6 +56,12 @@ public class HAPManualManagerBrick implements HAPPluginDivision{
 		this.m_dataTypeHelper = dataTypeHelper;
 		this.m_resourceMan = resourceMan;
 		
+		this.m_brickParserPlugin = new LinkedHashMap<String, HAPManualDefinitionPluginParserBrick>();
+		this.m_brickProcessorPlugin = new LinkedHashMap<String, HAPManualPluginProcessorBrick>();
+		this.m_blockProcessorPlugin = new LinkedHashMap<String, HAPManualPluginProcessorBlock>();
+		this.m_adapterProcessorPlugin = new LinkedHashMap<String, HAPManualPluginProcessorAdapter>();
+		this.m_brickTypeInfo = new LinkedHashMap<String, HAPManualInfoBrickType>();
+
 		init();
 	}
 	
@@ -105,32 +111,39 @@ public class HAPManualManagerBrick implements HAPPluginDivision{
 
 	@Autowired
 	private void setBickInfoProviders(List<HAPManualProviderBrickInfo> brickInfoProviders) {
-		this.m_brickParserPlugin = new LinkedHashMap<String, HAPManualDefinitionPluginParserBrick>();
-		this.m_brickProcessorPlugin = new LinkedHashMap<String, HAPManualPluginProcessorBrick>();
-		this.m_blockProcessorPlugin = new LinkedHashMap<String, HAPManualPluginProcessorBlock>();
-		this.m_adapterProcessorPlugin = new LinkedHashMap<String, HAPManualPluginProcessorAdapter>();
-		this.m_brickTypeInfo = new LinkedHashMap<String, HAPManualInfoBrickType>();
-
 		for(HAPManualProviderBrickInfo brickInfoProvider : brickInfoProviders) {
-			HAPIdBrickType brickTypeId = brickInfoProvider.getBrickTypeId();
-			if(brickInfoProvider.getBrickParser()!=null) {
-				this.m_brickParserPlugin.put(brickTypeId.getKey(), brickInfoProvider.getBrickParser());
+			this.addBrickInfoProvider(brickInfoProvider);
+		}
+	}
+	
+	@Autowired
+	private void setBrickInfoProvidersMultiple(List<HAPManualProviderBrickInfoMultiple> providers) {
+		for(HAPManualProviderBrickInfoMultiple providerMultiple : providers) {
+			for(HAPManualProviderBrickInfo brickInfoProvider : providerMultiple.getProviders()) {
+				this.addBrickInfoProvider(brickInfoProvider);
 			}
-			
-			HAPManualPluginProcessorBrick processor = brickInfoProvider.getBrickProcessor();
-			if(processor!=null) {
-				this.m_brickProcessorPlugin.put(brickTypeId.getKey(), processor);
-				if(processor instanceof HAPManualPluginProcessorAdapter) {
-					this.m_adapterProcessorPlugin.put(brickTypeId.getKey(), (HAPManualPluginProcessorAdapter)processor);
-				}
-				else if(processor instanceof HAPManualPluginProcessorBlock) {
-					this.m_blockProcessorPlugin.put(brickTypeId.getKey(), (HAPManualPluginProcessorBlock)processor);
-				}
+		}
+	}
+	
+	private void addBrickInfoProvider(HAPManualProviderBrickInfo brickInfoProvider) {
+		HAPIdBrickType brickTypeId = brickInfoProvider.getBrickTypeId();
+		if(brickInfoProvider.getBrickParser()!=null) {
+			this.m_brickParserPlugin.put(brickTypeId.getKey(), brickInfoProvider.getBrickParser());
+		}
+		
+		HAPManualPluginProcessorBrick processor = brickInfoProvider.getBrickProcessor();
+		if(processor!=null) {
+			this.m_brickProcessorPlugin.put(brickTypeId.getKey(), processor);
+			if(processor instanceof HAPManualPluginProcessorAdapter) {
+				this.m_adapterProcessorPlugin.put(brickTypeId.getKey(), (HAPManualPluginProcessorAdapter)processor);
 			}
-			
-			if(brickInfoProvider.getBrickTypeInfo()!=null) {
-				this.m_brickTypeInfo.put(brickTypeId.getKey(), brickInfoProvider.getBrickTypeInfo());
+			else if(processor instanceof HAPManualPluginProcessorBlock) {
+				this.m_blockProcessorPlugin.put(brickTypeId.getKey(), (HAPManualPluginProcessorBlock)processor);
 			}
+		}
+		
+		if(brickInfoProvider.getBrickTypeInfo()!=null) {
+			this.m_brickTypeInfo.put(brickTypeId.getKey(), brickInfoProvider.getBrickTypeInfo());
 		}
 	}
 	
