@@ -8,10 +8,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.context.ApplicationContext;
+
 import com.nosliw.common.exception.HAPServiceData;
-import com.nosliw.common.serialization.HAPUtilityJson;
-import com.nosliw.core.runtimeenv.js.browser.HAPRuntimeEnvironmentImpBrowser;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.serialization.HAPUtilityJson;
+import com.nosliw.core.gateway.HAPGatewayManager;
+import com.nosliw.core.resource.HAPManagerResource;
 import com.nosliw.servlet.core.HAPInitServlet;
 
 public class HAPBaseServlet  extends HttpServlet{
@@ -50,5 +53,7 @@ public class HAPBaseServlet  extends HttpServlet{
 	        }  
 	 }
 	 
-	 protected HAPRuntimeEnvironmentImpBrowser getRuntimeEnvironment(){		return (HAPRuntimeEnvironmentImpBrowser)this.getServletContext().getAttribute(HAPInitServlet.NAME_RUNTIME_ENVIRONMENT);  }
+	 protected ApplicationContext getAppContext(){		return (ApplicationContext)this.getServletContext().getAttribute(HAPInitServlet.NAME_APP_CONTEXT);  }
+	 protected HAPGatewayManager getGatewayManager() {    return this.getAppContext().getBean(HAPGatewayManager.class);    }
+	 protected HAPManagerResource getResourceManager() {     return this.getAppContext().getBean(HAPManagerResource.class);     }
 }

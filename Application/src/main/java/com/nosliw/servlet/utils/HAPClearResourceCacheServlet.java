@@ -12,6 +12,6 @@ public class HAPClearResourceCacheServlet extends HAPBaseServlet {
 
 	@Override
 	protected void doGet (HttpServletRequest request,	HttpServletResponse response) throws ServletException, IOException {
-		this.getRuntimeEnvironment().getResourceManager().clearCache();
+		this.getResourceManager().clearCache();
 	}
 }

@@ -33,7 +33,7 @@ public class HAPBrowseComplexEntityServlet extends HAPServiceServlet{
 	
 	@Override
 	protected HAPServiceData processServiceRequest(String command, JSONObject parms) throws Exception {
-		HAPRuntimeEnvironmentImpBrowser runtimeEnvironment = (HAPRuntimeEnvironmentImpBrowser)this.getServletContext().getAttribute(HAPInitServlet.NAME_RUNTIME_ENVIRONMENT);
+		HAPRuntimeEnvironmentImpBrowser runtimeEnvironment = (HAPRuntimeEnvironmentImpBrowser)this.getServletContext().getAttribute(HAPInitServlet.NAME_APP_CONTEXT);
 
 		Object outObj = null;
 		if(COMMAND_RESOURCES.equals(command)) {

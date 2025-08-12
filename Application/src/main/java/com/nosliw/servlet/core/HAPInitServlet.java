@@ -3,42 +3,29 @@ package com.nosliw.servlet.core;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 
-import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.core.runtimeenv.js.browser.HAPRuntimeEnvironmentImpBrowser;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+
 import com.nosliw.data.core.imp.io.HAPDBSource;
-//import com.nosliw.miniapp.HAPAppManager;
-import com.nosliw.uiresource.HAPUIResourceManager;
 
 public class HAPInitServlet  extends HttpServlet{
 
 	private static final long serialVersionUID = -703775909733982650L;
 
-	public static final String NAME_RUNTIME_ENVIRONMENT = "RUNTIME_ENVIRONMENT";
+	public static final String NAME_APP_CONTEXT = "APP_CONTEXT";
 	
 	@Override
 	public void init() throws ServletException
 	   {
 			//create runtime
-			HAPRuntimeEnvironmentImpBrowser runtimeEnvironment = new HAPRuntimeEnvironmentImpBrowser();
+			ApplicationContext appContext = new AnnotationConfigApplicationContext(AppConfig.class);
 
-//			HAPExpressionTaskImporter.importTaskDefinitionSuiteFromClassFolder(HAPExpressionTest.class, runtimeEnvironment.getExpressionManager());
-
-//			HAPUIResourceManager uiResourceMan = HAPRuntimeUtility.geHUIResourceManager(runtimeEnvironment);
-			HAPUIResourceManager uiResourceMan = runtimeEnvironment.getUIResourceManager();
-			this.getServletContext().setAttribute("uiResourceManager", uiResourceMan);
-			
-//			HAPManagerResource rootResourceManager = runtimeEnvironment.getResourceManager(); 
-//			rootResourceManager.registerResourceManager(HAPConstantShared.RUNTIME_RESOURCE_TYPE_UIRESOURCE, new HAPResourceManagerUIResource(uiResourceMan, rootResourceManager));
-//			rootResourceManager.registerResourceManager(HAPConstantShared.RUNTIME_RESOURCE_TYPE_UICUSTOMERTAG, new HAPResourceManagerUITag(runtimeEnvironment.getUIResourceManager().getUITagManager(), rootResourceManager));
-//			rootResourceManager.registerResourceManager(HAPConstantShared.RUNTIME_RESOURCE_TYPE_UIMODULE, new HAPResourceManagerUIModule(uiResourceMan, rootResourceManager));
-//			rootResourceManager.registerResourceManager(HAPConstantShared.RUNTIME_RESOURCE_TYPE_UIMODULEDECORATION, new HAPResourceManagerUIModuleDecoration(rootResourceManager));
-//			rootResourceManager.registerResourceManager(HAPConstantShared.RUNTIME_RESOURCE_TYPE_UIAPPENTRY, new HAPResourceManagerUIAppEntry(uiResourceMan, rootResourceManager));
-//			rootResourceManager.registerResourceManager(HAPConstantShared.RUNTIME_RESOURCE_TYPE_UIAPPCONFIGURE, new HAPResourceManagerUIAppConfigure(rootResourceManager));
-
-			runtimeEnvironment.getGatewayManager().registerGateway(HAPConstantShared.GATEWAY_OPTIONS, new HAPGatewayOptions());
+//			runtimeEnvironment.getGatewayManager().registerGateway(HAPConstantShared.GATEWAY_OPTIONS, new HAPGatewayOptions());
 			
 			//set runtime object to context
-			this.getServletContext().setAttribute(NAME_RUNTIME_ENVIRONMENT, runtimeEnvironment);
+			this.getServletContext().setAttribute(NAME_APP_CONTEXT, appContext);
 			
 //			HAPAppManager appManager = new HAPAppManager();
 //			this.getServletContext().setAttribute("minAppMan", appManager);
@@ -50,3 +37,10 @@ public class HAPInitServlet  extends HttpServlet{
 		HAPDBSource.getDefaultDBSource().destroy();
     }
 }
+
+@Configuration
+@ComponentScan(basePackages = "com.nosliw") // Specify the base package to scan
+class AppConfig {
+    // You can define @Bean methods here if needed for explicit bean creation
+}
+

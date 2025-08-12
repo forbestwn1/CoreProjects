@@ -39,7 +39,7 @@ public class HAPGatewayServlet extends HAPServiceServlet{
 		String gatewayId = segs[0];
 		String command = segs[1];
 		
-		out = this.getRuntimeEnvironment().getGatewayManager().executeGateway(gatewayId, command, parms, new HAPRuntimeInfo(HAPConstantShared.RUNTIME_LANGUAGE_JS, HAPConstantShared.RUNTIME_ENVIRONMENT_BROWSER));
+		out = this.getGatewayManager().executeGateway(gatewayId, command, parms, new HAPRuntimeInfo(HAPConstantShared.RUNTIME_LANGUAGE_JS, HAPConstantShared.RUNTIME_ENVIRONMENT_BROWSER));
 		if(out.isSuccess()){
 			HAPGatewayOutput output = (HAPGatewayOutput)out.getData();
 			for(HAPJSScriptInfo scriptInfo : output.getScripts()){

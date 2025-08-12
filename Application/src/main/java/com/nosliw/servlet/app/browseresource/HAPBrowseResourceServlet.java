@@ -1,37 +1,22 @@
 package com.nosliw.servlet.app.browseresource;
 
-import java.io.File;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
 import org.json.JSONObject;
 
 import com.nosliw.common.exception.HAPServiceData;
-import com.nosliw.common.info.HAPInfo;
-import com.nosliw.common.serialization.HAPUtilityJson;
-import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.common.utils.HAPUtilityFile;
-import com.nosliw.core.resource.HAPFactoryResourceId;
-import com.nosliw.core.resource.HAPResourceId;
-import com.nosliw.core.runtimeenv.js.browser.HAPRuntimeEnvironmentImpBrowser;
-import com.nosliw.core.system.HAPSystemFolderUtility;
-import com.nosliw.data.core.component.HAPInfoChildResource;
-import com.nosliw.data.core.component.HAPContainerChildReferenceResource;
 import com.nosliw.servlet.HAPServiceServlet;
 import com.nosliw.uiresource.HAPUIResourceManager;
-import com.nosliw.uiresource.application.HAPDefinitionApp;
-import com.nosliw.uiresource.application.HAPDefinitionAppEntry;
-import com.nosliw.uiresource.module.HAPDefinitionModule;
-import com.nosliw.uiresource.page.definition.HAPDefinitionUIUnitPage;
-import com.nosliw.uiresource.resource.HAPResourceIdUIModule;
-import com.nosliw.uiresource.resource.HAPResourceIdUIResource;
 
 public class HAPBrowseResourceServlet extends HAPServiceServlet{
 
 	private HAPUIResourceManager m_uiResourceMan;
 
+	@Override
+	protected HAPServiceData processServiceRequest(String command, JSONObject parms) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+/*	
 	@Override
 	protected HAPServiceData processServiceRequest(String command, JSONObject parms) {
 		m_uiResourceMan = (HAPUIResourceManager)this.getServletContext().getAttribute("uiResourceManager");
@@ -175,5 +160,5 @@ public class HAPBrowseResourceServlet extends HAPServiceServlet{
 			}
 		}
 	}
-	
+*/	
 }

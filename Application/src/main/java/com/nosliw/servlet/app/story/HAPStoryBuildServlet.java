@@ -58,7 +58,7 @@ public class HAPStoryBuildServlet extends HAPServiceServlet{
 	protected HAPServiceData processServiceRequest(String command, JSONObject parms) throws Exception {
 		HAPServiceData out = null;
 		
-		HAPRuntimeEnvironmentImpBrowser env = (HAPRuntimeEnvironmentImpBrowser)this.getServletContext().getAttribute(HAPInitServlet.NAME_RUNTIME_ENVIRONMENT);
+		HAPRuntimeEnvironmentImpBrowser env = (HAPRuntimeEnvironmentImpBrowser)this.getServletContext().getAttribute(HAPInitServlet.NAME_APP_CONTEXT);
 		
 		HAPStoryManagerStory storyManager = (HAPStoryManagerStory)this.getServletContext().getAttribute(NAME_STORY_MANAGER);
 		if(storyManager==null) {

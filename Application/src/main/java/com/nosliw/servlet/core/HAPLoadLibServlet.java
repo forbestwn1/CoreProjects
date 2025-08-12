@@ -39,7 +39,7 @@ public class HAPLoadLibServlet  extends HAPBaseServlet{
 		HAPServiceData serviceData = null;
 		try {
 			JSONObject parmsJson = new JSONObject(requestInfo.getParms());
-			serviceData = this.getRuntimeEnvironment().getGatewayManager().executeGateway(
+			serviceData = this.getGatewayManager().executeGateway(
 					HAPRuntimeEnvironmentImpBrowser.GATEWAY_LOADLIBRARIES, 
 					HAPGatewayBrowserLoadLibrary.COMMAND_LOADLIBRARY, 
 					parmsJson, 
