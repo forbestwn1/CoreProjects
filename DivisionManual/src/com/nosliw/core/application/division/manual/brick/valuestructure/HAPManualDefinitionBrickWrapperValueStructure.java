@@ -12,6 +12,7 @@ public class HAPManualDefinitionBrickWrapperValueStructure extends HAPManualDefi
 
 	public HAPManualDefinitionBrickWrapperValueStructure() {
 		super(HAPManualEnumBrickType.VALUESTRUCTUREWRAPPER_100);
+		this.setStructureInfo(new HAPInfoStructureInWrapper());
 	}
 
 	public HAPManualDefinitionBrickWrapperValueStructure(HAPManualDefinitionBrickValueStructure valueStructure) {
@@ -33,7 +34,12 @@ public class HAPManualDefinitionBrickWrapperValueStructure extends HAPManualDefi
 	public HAPInfoStructureInWrapper getStructureInfo() {    return (HAPInfoStructureInWrapper)this.getAttributeValueOfValue(VALUESTRUCTUREINFO);    }
 
 	@Override
-	public void setStructureInfo(HAPInfoStructureInWrapper info) {   this.setAttributeValueWithValue(VALUESTRUCTUREINFO, info);   }
+	public void setStructureInfo(HAPInfoStructureInWrapper info) {
+		if(info==null) {
+			info = new HAPInfoStructureInWrapper();
+		}
+		this.setAttributeValueWithValue(VALUESTRUCTUREINFO, info);   
+	}
 	
 	@Override
 	public Object cloneValue() {	return this.cloneValueStructureWrapper();	}

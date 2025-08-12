@@ -29,7 +29,12 @@ public class HAPManualWrapperStructure extends HAPSerializableImp{
 	
 	public HAPInfoStructureInWrapper getStructureInfo() {    return this.m_structureInfo;    }
 
-	public void setStructureInfo(HAPInfoStructureInWrapper info) {   this.m_structureInfo = info;   }
+	public void setStructureInfo(HAPInfoStructureInWrapper info) {
+		if(info==null) {
+			info = new HAPInfoStructureInWrapper();
+		}
+		this.m_structureInfo = info;   
+	}
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
@@ -42,14 +47,11 @@ public class HAPManualWrapperStructure extends HAPSerializableImp{
 	public HAPManualWrapperStructure cloneValueStructureWrapper() {
 		HAPManualWrapperStructure out = new HAPManualWrapperStructure();
 		out.m_structureRuntimeId = this.m_structureRuntimeId;
-		
-		out.m_groupType = this.m_groupType;
-		out.m_inheritMode = this.m_inheritMode;
+		out.m_structureInfo = this.m_structureInfo.cloneValueStructureInfoInWrapper();
 		return out;
 	}
 	
 	public void cloneToChildValueStructureWrapper(HAPManualWrapperStructure valueStructureInfo) {
-		valueStructureInfo.m_groupType = this.m_groupType;
-	}
-	
+		valueStructureInfo.getStructureInfo().setGroupType(valueStructureInfo.getStructureInfo().getGroupType());
+	}	
 }

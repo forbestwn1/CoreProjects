@@ -6,16 +6,16 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.exception.HAPServiceData;
+import com.nosliw.common.script.HAPJSScriptInfo;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityFile;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
+import com.nosliw.core.gateway.HAPGatewayOutput;
 import com.nosliw.core.resource.HAPUtilityResource;
+import com.nosliw.core.runtime.HAPRuntimeInfo;
+import com.nosliw.core.runtimeenv.js.browser.HAPRuntimeBrowserUtility;
 import com.nosliw.core.system.HAPSystemFolderUtility;
 import com.nosliw.core.system.HAPSystemUtility;
-import com.nosliw.data.core.runtime.HAPRuntimeInfo;
-import com.nosliw.data.core.runtime.js.HAPGatewayOutput;
-import com.nosliw.data.core.runtime.js.HAPJSScriptInfo;
-import com.nosliw.data.core.runtime.js.imp.browser.HAPRuntimeBrowserUtility;
 import com.nosliw.servlet.HAPServiceServlet;
 
 /**

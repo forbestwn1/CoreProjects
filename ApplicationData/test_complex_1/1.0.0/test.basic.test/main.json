@@ -1,0 +1,82 @@
+{
+	"info": {
+		"name": "test.common.configure.root",
+		"description": "test.common.configure.root"
+	},
+	"brick": [
+
+		{
+			"info": {
+				"name": "valueContext",
+				"status": "disabled1"
+			},
+			"brick": [
+				{
+					"groupType" : "public",
+					"valueStructure" : {
+						"root": {
+							"parent_public": {
+								"definition":{
+									"data": "test.string;1.0.0"
+								}
+							}
+						},
+						"initValue": {
+							"parent_public": {
+								"dataTypeId": "test.string;1.0.0",
+								"value": "default value of parent_public"
+							}
+						}
+					}
+				}
+			]
+		},
+		
+		{
+			"info": {
+				"name" : "variable-test_complex_script",
+				"status": "disabled1",
+				"description" : ""
+			},
+			"brick":{
+				"script": "complexscript_test_value",
+				"parm" : {
+					"variable1" : ["child_public", "child_public_string", "parent_protected", "parent_private", "parent_internal"],
+					"variable" : ["child_public_string"]
+				},
+				"valueContext" : {
+					"brick": [
+						{
+							"groupType" : "public",
+							"valueStructure" : {
+								"root" : {
+									"child_public": {
+										"definition":{
+											"data": "test.string;1.0.0"
+										}
+									},
+									"child_public_string": {
+										"definition":{
+											"data": "test.string;1.0.0"
+										}
+									}
+								},
+								"initValue": {
+									"child_public": {
+										"dataTypeId": "test.string;1.0.0",
+										"value": "default value of child_public"
+									},
+									"child_public_string": {
+										"dataTypeId": "test.string;1.0.0",
+										"value": "default value of child_public_string"
+									}
+								}
+							}
+						}
+					]
+				}
+			}
+		}
+		
+	]
+}

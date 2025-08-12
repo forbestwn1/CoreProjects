@@ -3,14 +3,96 @@ package com.nosliw.core.application.valueport;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.nosliw.common.path.HAPComplexPath;
 import com.nosliw.common.path.HAPPath;
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
+import com.nosliw.core.application.HAPBundle;
 import com.nosliw.core.application.HAPDomainValueStructure;
 import com.nosliw.core.application.common.structure.HAPStructureImp;
 import com.nosliw.core.application.common.structure.reference.HAPConfigureResolveElementReference;
 import com.nosliw.core.application.common.structure.reference.HAPUtilityResolveReference;
+import com.nosliw.core.resource.HAPManagerResource;
+import com.nosliw.core.runtime.HAPRuntimeInfo;
+import com.nosliw.core.xxx.application.valueport.HAPInfoElementResolve;
 
 public class HAPUtilityResovleElement {
+
+	public static HAPInfoElementResolve resolveNameFromInternal(String name, String ioDirection, HAPWithInternalValuePort withValuePort, HAPConfigureResolveElementReference resolveConfigure, HAPDomainValueStructure valueStructureDomain) {
+		HAPReferenceElement ref = buildInternalElementReference(name, ioDirection, withValuePort); 
+		return resolveElementReferenceInternal(ref, withValuePort, null, valueStructureDomain);
+	}
+	
+	public static HAPInfoElementResolve resolveNameFromExternal(String name, String ioDirection, HAPWithExternalValuePort withValuePort, HAPConfigureResolveElementReference resolveConfigure, HAPDomainValueStructure valueStructureDomain) {
+		HAPReferenceElement ref = buildExternalElementReference(name, ioDirection, withValuePort); 
+		return resolveElementReferenceExternal(ref, withValuePort, null, valueStructureDomain);
+	}
+	
+	private static HAPReferenceElement buildInternalElementReference(String name, String ioDirection, HAPWithInternalValuePort withValuePort) {
+		HAPReferenceElement ref = new HAPReferenceElement();
+		ref.buildObject(name, HAPSerializationFormat.JSON);
+		ref.setValuePortId(HAPUtilityValuePort.normalizeInternalValuePortId(ref.getValuePortId(), ioDirection, withValuePort));
+		return ref;
+	}
+	
+	private static HAPReferenceElement buildExternalElementReference(String name, String ioDirection, HAPWithExternalValuePort withValuePort) {
+		HAPReferenceElement ref = new HAPReferenceElement();
+		ref.buildObject(name, HAPSerializationFormat.JSON);
+		ref.setValuePortId(HAPUtilityValuePort.normalizeExternalValuePortId(ref.getValuePortId(), ioDirection, withValuePort));
+		return ref;
+	}
+	
+	public static HAPInfoElementResolve resolveElementReferenceInternal(HAPReferenceElement reference, HAPWithInternalValuePort withValuePort, HAPConfigureResolveElementReference resolveConfigure, HAPDomainValueStructure valueStructureDomain) {
+		HAPResultReferenceResolve refResolve = analyzeElementReferenceInternal(reference, withValuePort, resolveConfigure, valueStructureDomain);
+		return buildElementInfo(refResolve);
+	}
+	
+	public static HAPInfoElementResolve resolveElementReferenceExternal(HAPReferenceElement reference, HAPWithExternalValuePort withValuePort, HAPConfigureResolveElementReference resolveConfigure, HAPDomainValueStructure valueStructureDomain) {
+		HAPResultReferenceResolve refResolve = analyzeElementReferenceExternal(reference, withValuePort, resolveConfigure, valueStructureDomain);
+		return buildElementInfo(refResolve);
+	}
+	
+	public static HAPInfoElementResolve resolveElementReferenceInBundle(HAPReferenceElement reference, HAPConfigureResolveElementReference resolveConfigure, HAPBundle bundle, HAPManagerResource resourceMan, HAPRuntimeInfo runtimeInfo){
+		HAPResultReferenceResolve refResolve = analyzeElementReferenceInBundle(reference, resolveConfigure, bundle, resourceMan, runtimeInfo);
+		return buildElementInfo(refResolve);
+	}
+
+	public static HAPIdRootElement resolveRootReferenceInBundle(HAPReferenceRootElement rootEleCriteria, HAPConfigureResolveElementReference resolveConfigure, HAPBundle bundle, HAPManagerResource resourceMan, HAPRuntimeInfo runtimeInfo){
+		HAPResultReferenceResolve resolve = analyzeElementReferenceInBundle(new HAPReferenceElement(rootEleCriteria), resolveConfigure, bundle, resourceMan, runtimeInfo);
+		return new HAPIdRootElement(rootEleCriteria.getValuePortId(), resolve.structureId, rootEleCriteria.getRootName());
+	}
+
+	public static HAPResultReferenceResolve analyzeElementReferenceInBundle(HAPReferenceElement reference, HAPConfigureResolveElementReference resolveConfigure, HAPBundle bundle, HAPManagerResource resourceMan, HAPRuntimeInfo runtimeInfo) {
+		HAPInfoValuePort valuePortInfo = HAPUtilityBrickValuePort.getValuePortInBundle(reference.getValuePortId(), bundle, resourceMan, runtimeInfo);
+		HAPResultReferenceResolve resolve = HAPUtilityResovleElement.analyzeElementReferenceValuePort(reference, valuePortInfo.getValuePort(), resolveConfigure, valuePortInfo.getValueStructureDomain());
+		if(resolve!=null) {
+			resolve.brickId = reference.getValuePortId().getBrickId();
+		}
+		return resolve;
+	}
+
+	private static HAPInfoElementResolve buildElementInfo(HAPResultReferenceResolve refResolve) {
+		return new HAPInfoElementResolve(resolveToElementId(refResolve), refResolve.elementInfoSolid.resolvedElement);
+	}
+	
+	private static HAPIdElement resolveToElementId(HAPResultReferenceResolve refResolve) {
+		if(refResolve==null) {
+			return null;
+		}
+		HAPIdRootElement rootEleId = new HAPIdRootElement(new HAPIdValuePortInBundle(refResolve.brickId, refResolve.valuePortSide, refResolve.valuePortId), refResolve.structureId, refResolve.rootName);
+		return new HAPIdElement(rootEleId, new HAPComplexPath(refResolve.elementPath).getPathStr());
+	}
+
+	
+	public static HAPResultReferenceResolve analyzeElementReferenceInternal(HAPReferenceElement reference, HAPWithInternalValuePort withValuePort, HAPConfigureResolveElementReference resolveConfigure, HAPDomainValueStructure valueStructureDomain) {
+		HAPValuePort valuePort = HAPUtilityValuePort.getValuePortInternal(reference.getValuePortId(), withValuePort);
+		return analyzeElementReferenceValuePort(reference, valuePort, resolveConfigure, valueStructureDomain);
+	}
+
+	public static HAPResultReferenceResolve analyzeElementReferenceExternal(HAPReferenceElement reference, HAPWithExternalValuePort withValuePort, HAPConfigureResolveElementReference resolveConfigure, HAPDomainValueStructure valueStructureDomain) {
+		HAPValuePort valuePort = HAPUtilityValuePort.getValuePortExternal(reference.getValuePortId(), withValuePort);
+		return analyzeElementReferenceValuePort(reference, valuePort, resolveConfigure, valueStructureDomain);
+	}
 
 	public static HAPResultReferenceResolve analyzeElementReferenceValuePort(HAPReferenceElement reference, HAPValuePort valuePort, HAPConfigureResolveElementReference resolveConfigure, HAPDomainValueStructure valueStructureDomain) {
 		HAPResultReferenceResolve resolve  = resolveReference(reference, valuePort, resolveConfigure, valueStructureDomain);

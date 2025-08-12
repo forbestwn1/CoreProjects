@@ -4,6 +4,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -11,8 +12,12 @@ public class HAPManagerWithVariablePlugin {
 
 	private Map<String, HAPPluginProcessorEntityWithVariable<? extends HAPWithVariable>> m_withVariableProcessorPlugin;
 	
-	public HAPManagerWithVariablePlugin(List<HAPPluginProcessorEntityWithVariable<? extends HAPWithVariable>> plugins) {
+	public HAPManagerWithVariablePlugin() {
 		this.m_withVariableProcessorPlugin = new LinkedHashMap<String, HAPPluginProcessorEntityWithVariable<? extends HAPWithVariable>>();
+	}
+
+	@Autowired
+	private void setWithVariableProcessPlugins(List<HAPPluginProcessorEntityWithVariable<? extends HAPWithVariable>> plugins) {
 		for(HAPPluginProcessorEntityWithVariable<?> plugin : plugins) {
 			this.m_withVariableProcessorPlugin.put(plugin.getEntityType(), plugin);
 		}

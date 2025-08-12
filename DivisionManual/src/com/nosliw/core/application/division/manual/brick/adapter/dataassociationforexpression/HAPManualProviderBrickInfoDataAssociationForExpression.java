@@ -12,9 +12,9 @@ import com.nosliw.core.application.division.manual.core.process.HAPManualInfoBri
 import com.nosliw.core.application.division.manual.core.process.HAPManualPluginProcessorBrick;
 
 @Component
-public class HAPManualProviderBrickInfoDataAssociationForTask extends HAPManualProviderBrickInfoImp{
+public class HAPManualProviderBrickInfoDataAssociationForExpression extends HAPManualProviderBrickInfoImp{
 
-	public HAPManualProviderBrickInfoDataAssociationForTask(HAPManualManagerBrick manualBrickMan,
+	public HAPManualProviderBrickInfoDataAssociationForExpression(HAPManualManagerBrick manualBrickMan,
 			HAPManagerApplicationBrick brickMan) {
 		super(manualBrickMan, brickMan);
 	}

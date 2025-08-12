@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.lang3.tuple.Pair;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.nosliw.common.utils.HAPConstantShared;
@@ -30,9 +31,13 @@ public class HAPBasicPluginProcessorEntityWithVariableDataExpression implements 
 	private HAPManagerResource m_resourceMan;
 	private HAPDataTypeHelper m_dataTypeHelper;
 	
-	public HAPBasicPluginProcessorEntityWithVariableDataExpression(HAPManagerResource resourceMan, HAPDataTypeHelper dataTypeHelper) {
-		this.m_resourceMan = resourceMan;
+	public HAPBasicPluginProcessorEntityWithVariableDataExpression(HAPDataTypeHelper dataTypeHelper) {
 		this.m_dataTypeHelper = dataTypeHelper;
+	}
+
+	@Autowired
+	private void setResourceManager(HAPManagerResource resourceMan) {
+		this.m_resourceMan = resourceMan;
 	}
 	
 	@Override

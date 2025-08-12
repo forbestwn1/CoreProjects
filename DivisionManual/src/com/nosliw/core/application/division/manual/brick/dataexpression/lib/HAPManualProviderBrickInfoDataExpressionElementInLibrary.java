@@ -23,8 +23,7 @@ public class HAPManualProviderBrickInfoDataExpressionElementInLibrary extends HA
 	public HAPManualProviderBrickInfoDataExpressionElementInLibrary(
 			HAPManualManagerBrick manualBrickMan, 
 			HAPManagerApplicationBrick brickMan, 
-			HAPParserDataExpression dataExpressionParser,
-			HAPManagerWithVariablePlugin withVariableMan) {
+			HAPParserDataExpression dataExpressionParser) {
 		super(manualBrickMan, brickMan);
 		this.m_dataExpressionParser = dataExpressionParser;
 	}

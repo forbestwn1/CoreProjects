@@ -33,22 +33,25 @@ public class HAPManagerApplicationBrick {
 	
 	private Map<String, Map<String, HAPPluginBrick>> m_brickPlugins;
 
-	public HAPManagerApplicationBrick(List<HAPProviderPluginBrick> brickPluginProviders) {
+	public HAPManagerApplicationBrick() {
 		this.m_divisionByBrickType = new LinkedHashMap<HAPIdBrickType, String>();
 		this.m_brickPlugins = new LinkedHashMap<String, Map<String, HAPPluginBrick>>();
 		this.m_divisionPlugin = new LinkedHashMap<String, HAPPluginDivision>();
-		
-		for(HAPProviderPluginBrick pluginProvider : brickPluginProviders) {
-			for(HAPPluginBrick brickPlugin : pluginProvider.getBrickPlugins()) {
-				this.registerBrickPlugin(brickPlugin);
-			}
-		}
 	}
 	
 	@Autowired
 	private void setDivisionPlugins(List<HAPPluginDivision> divisionPlugins) {
 		for(HAPPluginDivision divisionPlugin : divisionPlugins) {
 			this.m_divisionPlugin.put(divisionPlugin.getDivisionName(), divisionPlugin);
+		}
+	}
+	
+	@Autowired
+	private void setBrickPluginProviders(List<HAPProviderPluginBrick> brickPluginProviders) {
+		for(HAPProviderPluginBrick pluginProvider : brickPluginProviders) {
+			for(HAPPluginBrick brickPlugin : pluginProvider.getBrickPlugins()) {
+				this.registerBrickPlugin(brickPlugin);
+			}
 		}
 	}
 	

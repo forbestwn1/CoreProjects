@@ -28,8 +28,8 @@ import com.nosliw.core.application.division.manual.core.process.HAPManualContext
 import com.nosliw.core.application.division.manual.core.process.HAPManualPluginProcessorBlockImp;
 import com.nosliw.core.application.valueport.HAPReferenceElement;
 import com.nosliw.core.application.valueport.HAPResultReferenceResolve;
+import com.nosliw.core.application.valueport.HAPUtilityResovleElement;
 import com.nosliw.core.application.valueport.HAPUtilityValuePort;
-import com.nosliw.core.xxx.application.valueport.HAPUtilityStructureElementReference;
 
 public class HAPManualPluginProcessorBlockComplexTestComplexScript extends HAPManualPluginProcessorBlockImp{
 
@@ -126,7 +126,7 @@ public class HAPManualPluginProcessorBlockComplexTestComplexScript extends HAPMa
 				HAPReferenceElement ref = new HAPReferenceElement();
 				ref.buildObject(varJsonArray.get(i), HAPSerializationFormat.JSON);
 				ref.setValuePortId(HAPUtilityValuePort.normalizeInternalValuePortId(ref.getValuePortId(), HAPConstantShared.IO_DIRECTION_BOTH, executableBlock));
-				HAPResultReferenceResolve resolve  = HAPUtilityStructureElementReference.analyzeElementReferenceInternal(ref, executableBlock, new HAPConfigureResolveElementReference(), processContext.getCurrentBundle().getValueStructureDomain());
+				HAPResultReferenceResolve resolve  = HAPUtilityResovleElement.analyzeElementReferenceInternal(ref, executableBlock, new HAPConfigureResolveElementReference(), processContext.getCurrentBundle().getValueStructureDomain());
 				
 				if(resolve!=null) {
 					resolvedVars.add(resolve);

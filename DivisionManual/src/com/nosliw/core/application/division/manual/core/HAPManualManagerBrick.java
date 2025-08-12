@@ -51,11 +51,7 @@ public class HAPManualManagerBrick implements HAPPluginDivision{
 	
 	private HAPManagerResource m_resourceMan;
 	
-	public HAPManualManagerBrick(HAPManagerApplicationBrick brickMan, HAPDataTypeHelper dataTypeHelper, HAPManagerResource resourceMan) {
-		this.m_brickManager = brickMan;
-		this.m_dataTypeHelper = dataTypeHelper;
-		this.m_resourceMan = resourceMan;
-		
+	public HAPManualManagerBrick() {
 		this.m_brickParserPlugin = new LinkedHashMap<String, HAPManualDefinitionPluginParserBrick>();
 		this.m_brickProcessorPlugin = new LinkedHashMap<String, HAPManualPluginProcessorBrick>();
 		this.m_blockProcessorPlugin = new LinkedHashMap<String, HAPManualPluginProcessorBlock>();
@@ -64,6 +60,15 @@ public class HAPManualManagerBrick implements HAPPluginDivision{
 
 		init();
 	}
+	
+	@Autowired
+	private void setBrickManager(HAPManagerApplicationBrick brickMan) {  this.m_brickManager = brickMan;  }
+	
+	@Autowired
+	private void setDataTypeHelper(HAPDataTypeHelper dataTypeHelper) {   this.m_dataTypeHelper = dataTypeHelper;    }
+	
+	@Autowired
+	private void setResourceManager(HAPManagerResource resourceMan) {    this.m_resourceMan = resourceMan;      }
 	
 	@Override
 	public String getDivisionName() {   return HAPConstantShared.BRICK_DIVISION_MANUAL;   }

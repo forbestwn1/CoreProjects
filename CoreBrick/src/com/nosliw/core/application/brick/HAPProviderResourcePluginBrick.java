@@ -21,7 +21,6 @@ public class HAPProviderResourcePluginBrick extends HAPProviderResourcePluginImp
 		this.m_resourceManager = resourceManager;
 		this.m_brickManager = brickManager;
 
-		
 		this.registerPlugin(HAPUtilityBrickId.getResourceTypeIdFromBrickTypeId(HAPEnumBrickType.TEST_COMPLEX_1_100), new HAPPluginResourceManagerImpBrick(this.m_resourceManager, this.m_brickManager));
 		this.registerPlugin(HAPUtilityBrickId.getResourceTypeIdFromBrickTypeId(HAPEnumBrickType.TEST_COMPLEX_SCRIPT_100), new HAPPluginResourceManagerImpBrick(this.m_resourceManager, this.m_brickManager));
 
@@ -42,7 +41,6 @@ public class HAPProviderResourcePluginBrick extends HAPProviderResourcePluginImp
 		this.registerPlugin(HAPFactoryResourceTypeId.newInstance(HAPConstantShared.RUNTIME_RESOURCE_TYPE_CONFIGURE), new HAPPluginResourceManagerConfigure());
 
 		this.registerPlugin(HAPUtilityBrickId.getResourceTypeIdFromBrickTypeId(HAPEnumBrickType.UIPAGE_100), new HAPPluginResourceManagerImpBrick(this.m_resourceManager, this.m_brickManager));
-
 		
 	}
 

@@ -14,7 +14,6 @@ import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.HAPBundle;
-import com.nosliw.core.application.HAPUtilityResolveElementInBundle;
 import com.nosliw.core.application.common.datadefinition.HAPDataDefinitionWritable;
 import com.nosliw.core.application.common.datadefinition.HAPDataRule;
 import com.nosliw.core.application.common.structure.HAPElementStructure;
@@ -32,6 +31,7 @@ import com.nosliw.core.application.common.structure.HAPUtilityElement;
 import com.nosliw.core.application.valueport.HAPIdValuePortInBundle;
 import com.nosliw.core.application.valueport.HAPReferenceElement;
 import com.nosliw.core.application.valueport.HAPResultReferenceResolve;
+import com.nosliw.core.application.valueport.HAPUtilityResovleElement;
 import com.nosliw.core.data.HAPDataTypeHelper;
 import com.nosliw.core.data.matcher.HAPMatcherUtility;
 import com.nosliw.core.data.matcher.HAPMatchers;
@@ -98,7 +98,7 @@ public class HAPUtilityProcessRelativeElementInBundle {
 		
 		HAPReferenceElement pathReference = defStructureElementRelative.getReference();
 //		HAPResultReferenceResolve resolveInfo = HAPUtilityProcessRelativeElementInBundle.analyzeElementReference(pathReference, relativeEleProcessConfigure==null?null:relativeEleProcessConfigure.getResolveStructureElementReferenceConfigure(), processContext);
-		HAPResultReferenceResolve resolveInfo = HAPUtilityResolveElementInBundle.analyzeElementReferenceInBundle(pathReference, null, bundle, resourceMan, runtimeInfo);
+		HAPResultReferenceResolve resolveInfo = HAPUtilityResovleElement.analyzeElementReferenceInBundle(pathReference, null, bundle, resourceMan, runtimeInfo);
 		
 		if(resolveInfo==null) {
 			errors.add(HAPServiceData.createFailureData(defStructureElementRelative, HAPConstant.ERROR_PROCESSCONTEXT_NOREFFEREDNODE));
