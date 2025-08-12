@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
+	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/Common"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER">
 		<attributes>
 			<attribute name="module" value="true"/>
@@ -19,7 +20,6 @@
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/LibraryDataTypeTest"/>
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/DataTypeManager"/>
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/Core"/>
-	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/Common"/>
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/CoreBrick"/>
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/CoreCommon"/>
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/CoreOtherEntity"/>
