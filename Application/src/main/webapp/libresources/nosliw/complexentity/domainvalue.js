@@ -588,36 +588,6 @@ var loc_createSoftValueStructureWrapper = function(valueStructureRuntimeId, pare
 	return loc_out;
 };
 
-//variable info
-var loc_createVariableInfo = function(name, variableInfo){
-	var loc_name = name;
-	
-	//variable info
-	var loc_variableInfo;
-	
-	//current value for variable
-	var loc_value;
-	
-	var loc_init = function(variableInfo){
-		loc_variableInfo = variableInfo;
-		loc_value = loc_variableInfo[node_COMMONATRIBUTECONSTANT.ROOTSTRUCTURE_DEFAULT];
-	};
-	
-	var loc_out = {
-		
-		getName : function(){   return loc_name;    },
-			
-		getVariableInfo : function(){   return loc_variableInfo;    },
-	
-		getValue : function(){   return loc_value;    },
-		
-		setValue : function(value){  loc_value = value;    },
-	};
-	
-	loc_init(variableInfo);
-	return loc_out;
-};
-
 
 //*******************************************   End Node Definition  ************************************** 	
 //populate dependency node data

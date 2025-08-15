@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="lib" path="libs/spring-aop-6.2.0.jar"/>
+	<classpathentry kind="lib" path="libs/spring-beans-6.2.0.jar"/>
+	<classpathentry kind="lib" path="libs/spring-context-6.2.0.jar"/>
+	<classpathentry kind="lib" path="libs/spring-core-6.2.0.jar"/>
+	<classpathentry kind="lib" path="libs/spring-expression-6.2.0.jar"/>
+	<classpathentry kind="lib" path="libs/spring-jcl-6.2.0.jar"/>
+	<classpathentry kind="lib" path="libs/annotations-api.jar"/>
+	<classpathentry kind="lib" path="libs/catalina.jar"/>
+	<classpathentry kind="lib" path="libs/catalina-ant.jar"/>
+	<classpathentry kind="lib" path="libs/catalina-ha.jar"/>
+	<classpathentry kind="lib" path="libs/catalina-ssi.jar"/>
+	<classpathentry kind="lib" path="libs/catalina-storeconfig.jar"/>
+	<classpathentry kind="lib" path="libs/catalina-tribes.jar"/>
+	<classpathentry kind="lib" path="libs/ecj-4.27.jar"/>
+	<classpathentry kind="lib" path="libs/el-api.jar"/>
+	<classpathentry kind="lib" path="libs/jakartaee-migration-1.0.9-shaded.jar"/>
+	<classpathentry kind="lib" path="libs/jasper.jar"/>
+	<classpathentry kind="lib" path="libs/jasper-el.jar"/>
+	<classpathentry kind="lib" path="libs/jaspic-api.jar"/>
+	<classpathentry kind="lib" path="libs/jsp-api.jar"/>
+	<classpathentry kind="lib" path="libs/servlet-api.jar"/>
+	<classpathentry kind="lib" path="libs/tomcat-api.jar"/>
+	<classpathentry kind="lib" path="libs/tomcat-coyote.jar"/>
+	<classpathentry kind="lib" path="libs/tomcat-coyote-ffm.jar"/>
+	<classpathentry kind="lib" path="libs/tomcat-dbcp.jar"/>
+	<classpathentry kind="lib" path="libs/tomcat-i18n-cs.jar"/>
+	<classpathentry kind="lib" path="libs/tomcat-i18n-de.jar"/>
+	<classpathentry kind="lib" path="libs/tomcat-i18n-es.jar"/>
+	<classpathentry kind="lib" path="libs/tomcat-i18n-fr.jar"/>
+	<classpathentry kind="lib" path="libs/tomcat-i18n-ja.jar"/>
+	<classpathentry kind="lib" path="libs/tomcat-i18n-ko.jar"/>
+	<classpathentry kind="lib" path="libs/tomcat-i18n-pt-BR.jar"/>
+	<classpathentry kind="lib" path="libs/tomcat-i18n-ru.jar"/>
+	<classpathentry kind="lib" path="libs/tomcat-i18n-zh-CN.jar"/>
+	<classpathentry kind="lib" path="libs/tomcat-jdbc.jar"/>
+	<classpathentry kind="lib" path="libs/tomcat-jni.jar"/>
+	<classpathentry kind="lib" path="libs/tomcat-util.jar"/>
+	<classpathentry kind="lib" path="libs/tomcat-util-scan.jar"/>
+	<classpathentry kind="lib" path="libs/tomcat-websocket.jar"/>
+	<classpathentry kind="lib" path="libs/websocket-api.jar"/>
+	<classpathentry kind="lib" path="libs/websocket-client-api.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

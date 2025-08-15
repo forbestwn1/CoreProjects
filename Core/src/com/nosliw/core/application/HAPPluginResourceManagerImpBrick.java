@@ -18,7 +18,7 @@ public class HAPPluginResourceManagerImpBrick implements HAPPluginResourceManage
 
 	@Override
 	public HAPResourceDataOrWrapper getResourceData(HAPResourceIdSimple simpleResourceId, HAPRuntimeInfo runtimeInfo) {
-		HAPBundle bundle = HAPUtilityBundle.getBrickBundle(simpleResourceId, this.m_brickManager); 
+		HAPBundle bundle = HAPUtilityBundle.getBrickBundle(simpleResourceId, this.m_brickManager, runtimeInfo); 
 		return new HAPWrapperResourceDataBrick(bundle, runtimeInfo, this.m_resourceManager);
 	}
 }

@@ -4,10 +4,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.json.JSONObject;
 
 import com.nosliw.common.exception.HAPServiceData;
@@ -17,11 +13,14 @@ import com.nosliw.common.utils.HAPUtilityFile;
 import com.nosliw.core.gateway.HAPGatewayOutput;
 import com.nosliw.core.runtime.HAPRuntimeInfo;
 import com.nosliw.core.runtimeenv.js.browser.HAPGatewayBrowserLoadLibrary;
-import com.nosliw.core.runtimeenv.js.browser.HAPRuntimeEnvironmentImpBrowser;
 import com.nosliw.core.system.HAPSystemFolderUtility;
 import com.nosliw.core.system.HAPSystemUtility;
 import com.nosliw.servlet.HAPBaseServlet;
 import com.nosliw.servlet.HAPRequestInfo;
+
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 public class HAPLoadLibServlet  extends HAPBaseServlet{
 
@@ -40,7 +39,7 @@ public class HAPLoadLibServlet  extends HAPBaseServlet{
 		try {
 			JSONObject parmsJson = new JSONObject(requestInfo.getParms());
 			serviceData = this.getGatewayManager().executeGateway(
-					HAPRuntimeEnvironmentImpBrowser.GATEWAY_LOADLIBRARIES, 
+					HAPConstantShared.GATEWAY_LOADLIBRARIES, 
 					HAPGatewayBrowserLoadLibrary.COMMAND_LOADLIBRARY, 
 					parmsJson, 
 					new HAPRuntimeInfo(HAPConstantShared.RUNTIME_LANGUAGE_JS, HAPConstantShared.RUNTIME_ENVIRONMENT_BROWSER));

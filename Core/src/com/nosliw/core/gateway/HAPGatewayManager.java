@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.nosliw.common.exception.HAPServiceData;
@@ -15,14 +16,13 @@ public class HAPGatewayManager {
 	
 	private Map<String, HAPGateway> m_gateways = new LinkedHashMap<String, HAPGateway>();
 	
-	public HAPGatewayManager(List<HAPGateway> gateways){
+	public HAPGatewayManager(){	}
+	
+	@Autowired
+	private void registerGateways(List<HAPGateway> gateways) {
 		gateways.stream().forEach(g->this.m_gateways.put(g.getName(), g));
 	}
 	
-	public void registerGateway(String name, HAPGateway gateway){
-		this.m_gateways.put(name, gateway);
-	}
-
 	public void unregisterGateway(String name){
 		this.m_gateways.remove(name);
 	}

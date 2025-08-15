@@ -9,12 +9,12 @@
 		<project>MiniApp</project>
 		<project>DivisionManual</project>
 		<project>DivisionStory</project>
-		<project>XXXServiceTest</project>
 		<project>LibraryDataTypeTest</project>
-		<project>XXXUIResource</project>
 		<project>CoreCommon</project>
 		<project>UtilityParserCriteria</project>
 		<project>UtilityParserExpression</project>
+		<project>CoreOtherEntity</project>
+		<project>CoreBrick</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

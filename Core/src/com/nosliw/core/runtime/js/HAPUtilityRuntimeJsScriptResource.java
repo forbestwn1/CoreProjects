@@ -1,4 +1,4 @@
-package com.nosliw.core.resource;
+package com.nosliw.core.runtime.js;
 
 import java.io.File;
 import java.io.InputStream;
@@ -15,13 +15,15 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPUtilityFile;
+import com.nosliw.core.resource.HAPConfigureResource;
+import com.nosliw.core.resource.HAPResource;
+import com.nosliw.core.resource.HAPResourceInfo;
 import com.nosliw.core.resource.imp.js.HAPResourceDataJSValue;
 import com.nosliw.core.resource.imp.jslibrary.HAPResourceDataJSLibrary;
 import com.nosliw.core.runtime.js.rhino.HAPRuntimeImpRhino;
-import com.nosliw.core.runtime.js.rhino.task.HAPUtilityRuntimeJSScript;
 import com.nosliw.core.system.HAPSystemFolderUtility;
 
-public class HAPUtilityRuntimeScriptResource {
+public class HAPUtilityRuntimeJsScriptResource {
 
 	public static List<HAPJSScriptInfo> buildScriptForResource(HAPResourceInfo resourceInfo, HAPResource resource){
 		List<HAPJSScriptInfo> out = new ArrayList<HAPJSScriptInfo>();
@@ -90,7 +92,7 @@ public class HAPUtilityRuntimeScriptResource {
 		}
 		templateParms.put(HAPResourceDataJSValue.VALUE, valueScript);
 
-		InputStream javaTemplateStream = HAPUtilityFile.getInputStreamOnClassPath(HAPUtilityRuntimeJSScript.class, "ImportResource.temp");
+		InputStream javaTemplateStream = HAPUtilityFile.getInputStreamOnClassPath(HAPUtilityRuntimeJsScriptResource.class, "ImportResource.temp");
 		script.append("\n");
 		String resoruceDataScript = HAPStringTemplateUtil.getStringValue(javaTemplateStream, templateParms);
 		script.append(resoruceDataScript);

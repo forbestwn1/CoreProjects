@@ -3,11 +3,6 @@ package com.nosliw.servlet;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.context.ApplicationContext;
 
 import com.nosliw.common.exception.HAPServiceData;
@@ -16,6 +11,11 @@ import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.core.gateway.HAPGatewayManager;
 import com.nosliw.core.resource.HAPManagerResource;
 import com.nosliw.servlet.core.HAPInitServlet;
+
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 public class HAPBaseServlet  extends HttpServlet{
 

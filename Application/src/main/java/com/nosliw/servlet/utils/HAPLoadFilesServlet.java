@@ -9,10 +9,6 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -21,6 +17,10 @@ import com.nosliw.common.utils.HAPUtilityFile;
 import com.nosliw.core.system.HAPSystemUtility;
 import com.nosliw.servlet.HAPBaseServlet;
 import com.nosliw.servlet.HAPRequestInfo;
+
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 public class HAPLoadFilesServlet extends HAPBaseServlet{
 

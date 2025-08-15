@@ -1,9 +1,9 @@
 package com.nosliw.servlet;
 
-import javax.servlet.http.HttpServletRequest;
-
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 @HAPEntityWithAttribute
 public class HAPRequestInfo {

@@ -4,11 +4,10 @@ import org.json.JSONObject;
 
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.servlet.HAPServiceServlet;
-import com.nosliw.uiresource.HAPUIResourceManager;
 
 public class HAPBrowseResourceServlet extends HAPServiceServlet{
 
-	private HAPUIResourceManager m_uiResourceMan;
+//	private HAPUIResourceManager m_uiResourceMan;
 
 	@Override
 	protected HAPServiceData processServiceRequest(String command, JSONObject parms) throws Exception {

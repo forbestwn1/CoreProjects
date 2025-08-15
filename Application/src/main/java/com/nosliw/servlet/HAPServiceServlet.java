@@ -5,20 +5,20 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.exception.HAPServiceData;
-import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.utils.HAPUtilityBasic;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.common.utils.HAPUtilityBasic;
+
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 @HAPEntityWithAttribute
 public abstract class HAPServiceServlet extends HAPBaseServlet{
@@ -88,8 +88,11 @@ public abstract class HAPServiceServlet extends HAPBaseServlet{
 				}
 			}
 			
-			if(success)		out = HAPServiceData.createSuccessData(serviceDatas);
-			else			out = HAPServiceData.createFailureData(serviceDatas, "");
+			if(success) {
+				out = HAPServiceData.createSuccessData(serviceDatas);
+			} else {
+				out = HAPServiceData.createFailureData(serviceDatas, "");
+			}
 		}
 		return out;
 	}

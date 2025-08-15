@@ -448,6 +448,7 @@ var COMMONCONSTANT=
   "GATEWAY_PACKAGE": "package",
   "GATEWAY_SERVICE": "service",
   "GATEWAY_UITAG": "uiTag",
+  "GATEWAY_LOADLIBRARIES": "loadLibraries",
   "NOSLIW_RESERVE_ATTRIBUTE": "nosliwattribute_",
   "NOSLIW_RESERVE_ATTRIBUTE_PLACEHOLDER": "nosliwattribute_placeholder",
   "NOSLIW_NAME_PREFIX": "nosliw_",

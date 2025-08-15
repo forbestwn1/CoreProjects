@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.json.JSONObject;
+import org.springframework.stereotype.Component;
 
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.exception.HAPServiceData;
@@ -17,6 +18,7 @@ import com.nosliw.core.resource.HAPGatewayResource;
 import com.nosliw.core.runtime.HAPRuntimeInfo;
 
 @HAPEntityWithAttribute
+@Component
 public class HAPGatewayBrowserLoadLibrary extends HAPGatewayImp{
 
 	public static final String COMMAND_LOADLIBRARY = "loadLibrary";
@@ -28,6 +30,9 @@ public class HAPGatewayBrowserLoadLibrary extends HAPGatewayImp{
 		this.m_gatewayManager = gatewayManager;
 	}
 	
+	@Override
+	public String getName() {  return HAPConstantShared.GATEWAY_LOADLIBRARIES;   }
+
 	@Override
 	public HAPServiceData command(String command, JSONObject parms, HAPRuntimeInfo runtimeInfo) throws Exception {
 		HAPServiceData out = null;
@@ -56,6 +61,5 @@ public class HAPGatewayBrowserLoadLibrary extends HAPGatewayImp{
 		}
 		return out;
 	}
-
 
 }

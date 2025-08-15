@@ -17,6 +17,7 @@ import com.nosliw.common.serialization.HAPUtilitySerialize;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.gateway.HAPGatewayImp;
 import com.nosliw.core.runtime.HAPRuntimeInfo;
+import com.nosliw.core.runtime.js.HAPUtilityRuntimeJsScriptResource;
 
 @HAPEntityWithAttribute
 @Component
@@ -140,7 +141,7 @@ public class HAPGatewayResource extends HAPGatewayImp{
 			List<HAPJSScriptInfo> scriptsInfo = new ArrayList<HAPJSScriptInfo>();
 			for(HAPResource resource : loadResourceResponse.getLoadedResources()){
 				HAPResourceInfo resourceInfo = resourcesInfo.get(resource.getId());
-				scriptsInfo.addAll(HAPUtilityRuntimeScriptResource.buildScriptForResource(resourceInfo, resource));
+				scriptsInfo.addAll(HAPUtilityRuntimeJsScriptResource.buildScriptForResource(resourceInfo, resource));
 			}
 			serviceData = this.createSuccessWithScripts(scriptsInfo); 
 		}

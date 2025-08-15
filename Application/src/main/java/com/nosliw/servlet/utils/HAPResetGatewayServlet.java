@@ -2,13 +2,13 @@ package com.nosliw.servlet.utils;
 
 import java.io.IOException;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.servlet.HAPBaseServlet;
 import com.nosliw.servlet.core.HAPGatewayServlet;
+
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 public class HAPResetGatewayServlet extends HAPBaseServlet{
 

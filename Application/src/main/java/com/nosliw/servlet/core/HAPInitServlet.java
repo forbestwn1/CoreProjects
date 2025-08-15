@@ -1,14 +1,14 @@
 package com.nosliw.servlet.core;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 import com.nosliw.data.core.imp.io.HAPDBSource;
+
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServlet;
 
 public class HAPInitServlet  extends HttpServlet{
 

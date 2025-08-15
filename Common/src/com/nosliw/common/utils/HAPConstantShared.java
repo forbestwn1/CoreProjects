@@ -667,6 +667,7 @@ public class HAPConstantShared {
 		public static final String GATEWAY_PACKAGE = "package";
 		public static final String GATEWAY_SERVICE = "service";
 		public static final String GATEWAY_UITAG = "uiTag";
+		public static final String GATEWAY_LOADLIBRARIES = "loadLibraries";
 
 
 
