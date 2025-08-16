@@ -14,7 +14,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.utils.HAPUtilityFile;
 import com.nosliw.core.resource.HAPResourceIdSimple;
-import com.nosliw.core.runtimeenv.HAPRuntimeEnvironment;
+import com.nosliw.core.system.HAPSystem;
 import com.nosliw.core.system.HAPSystemFolderUtility;
 
 public class HAPUtilityExport {
@@ -22,7 +22,7 @@ public class HAPUtilityExport {
 	private static final String SESSIONID = "sessionId";
 	
 	public static void exportBundle(HAPResourceIdSimple resourceId, HAPBundle bundle) {
-		exportBundle(resourceId, bundle, HAPRuntimeEnvironment.id);
+		exportBundle(resourceId, bundle, HAPSystem.id);
 	}
 	
 	public static void exportBundle(HAPResourceIdSimple resourceId, HAPBundle bundle, String sessionId) {

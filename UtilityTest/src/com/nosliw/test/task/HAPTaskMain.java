@@ -1,6 +1,6 @@
 package com.nosliw.test.task;
 
-import com.nosliw.core.runtimeenv.js.rhino.HAPRuntimeEnvironmentImpRhino;
+import com.nosliw.core.xxx.runtimeenv.js.rhino.HAPRuntimeEnvironmentImpRhino;
 import com.nosliw.data.core.process1.resource.HAPResourceDefinitionProcessSuite;
 import com.nosliw.data.core.process1.util.HAPImporterProcessSuiteDefinition;
 

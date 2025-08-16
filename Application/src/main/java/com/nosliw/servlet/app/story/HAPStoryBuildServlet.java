@@ -11,8 +11,8 @@ import com.nosliw.core.application.division.story.HAPStoryStory;
 import com.nosliw.core.application.division.story.design.wizard.HAPStoryDesignStory;
 import com.nosliw.core.application.division.story.design.wizard.HAPStoryRequestDesign;
 import com.nosliw.core.application.division.story.design.wizard.servicedriven.HAPStoryBuilderPageSimple;
-import com.nosliw.core.runtimeenv.js.browser.HAPRuntimeEnvironmentImpBrowser;
 import com.nosliw.core.xxx.resource.HAPResourceDefinition1;
+import com.nosliw.core.xxx.runtimeenv.js.browser.HAPRuntimeEnvironmentImpBrowser;
 import com.nosliw.servlet.HAPServiceServlet;
 import com.nosliw.servlet.core.HAPInitServlet;
 

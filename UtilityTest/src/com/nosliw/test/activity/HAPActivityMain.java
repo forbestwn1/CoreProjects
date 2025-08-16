@@ -5,7 +5,7 @@ import java.util.Map;
 
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.core.resource.HAPResourceId;
-import com.nosliw.core.runtimeenv.js.rhino.HAPRuntimeEnvironmentImpRhino;
+import com.nosliw.core.xxx.runtimeenv.js.rhino.HAPRuntimeEnvironmentImpRhino;
 import com.nosliw.data.core.domain.entity.attachment1.HAPUtilityAttachment;
 import com.nosliw.data.core.runtime.HAPInfoRuntimeTaskTask1;
 import com.nosliw.data.core.runtime.js.imp.rhino.task.HAPRuntimeTaskExecuteTaskRhino;

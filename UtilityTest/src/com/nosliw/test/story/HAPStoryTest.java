@@ -8,7 +8,7 @@ import com.nosliw.core.application.division.story.HAPStoryManagerStory;
 import com.nosliw.core.application.division.story.design.wizard.HAPStoryDesignStory;
 import com.nosliw.core.application.division.story.design.wizard.HAPStoryRequestDesign;
 import com.nosliw.core.application.division.story.design.wizard.servicedriven.HAPStoryBuilderPageSimple;
-import com.nosliw.core.runtimeenv.js.browser.HAPRuntimeEnvironmentImpBrowser;
+import com.nosliw.core.xxx.runtimeenv.js.browser.HAPRuntimeEnvironmentImpBrowser;
 
 public class HAPStoryTest {
 

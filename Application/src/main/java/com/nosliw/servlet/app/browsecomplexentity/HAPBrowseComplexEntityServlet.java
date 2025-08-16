@@ -17,8 +17,8 @@ import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityFile;
 import com.nosliw.core.resource.HAPResourceIdSimple;
-import com.nosliw.core.runtimeenv.js.browser.HAPRuntimeEnvironmentImpBrowser;
 import com.nosliw.core.system.HAPSystemFolderUtility;
+import com.nosliw.core.xxx.runtimeenv.js.browser.HAPRuntimeEnvironmentImpBrowser;
 import com.nosliw.servlet.HAPServiceServlet;
 import com.nosliw.servlet.core.HAPInitServlet;
 

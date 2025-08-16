@@ -15,6 +15,7 @@
 		<project>UtilityParserExpression</project>
 		<project>CoreOtherEntity</project>
 		<project>CoreBrick</project>
+		<project>Runtime</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

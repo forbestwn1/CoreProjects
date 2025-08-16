@@ -10,10 +10,10 @@ import com.nosliw.common.script.HAPJSScriptInfo;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityFile;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
+import com.nosliw.core.application.entity.js.library.HAPUtilityJSLibrary;
 import com.nosliw.core.gateway.HAPGatewayOutput;
 import com.nosliw.core.resource.HAPUtilityResource;
 import com.nosliw.core.runtime.HAPRuntimeInfo;
-import com.nosliw.core.runtimeenv.js.browser.HAPRuntimeBrowserUtility;
 import com.nosliw.core.system.HAPSystemFolderUtility;
 import com.nosliw.core.system.HAPSystemUtility;
 import com.nosliw.servlet.HAPServiceServlet;
@@ -49,7 +49,7 @@ public class HAPGatewayServlet extends HAPServiceServlet{
 						String name = "gatewayCommand_"+gatewayId+"_"+command+""+index++;
 						String resourceFile = HAPSystemFolderUtility.getResourceTempFileFolder() + name + ".js";
 						resourceFile = HAPUtilityFile.writeFile(resourceFile, scriptInfo.getScript());
-						scriptInfo.setFile(HAPRuntimeBrowserUtility.getBrowserScriptPath(resourceFile));
+						scriptInfo.setFile(HAPUtilityJSLibrary.getBrowserScriptPath(resourceFile));
 						scriptInfo.setScript(null);
 					}
 					else {
@@ -58,7 +58,7 @@ public class HAPGatewayServlet extends HAPServiceServlet{
 					}
 				}
 				else{
-					scriptInfo.setFile(HAPRuntimeBrowserUtility.getBrowserScriptPath(file));
+					scriptInfo.setFile(HAPUtilityJSLibrary.getBrowserScriptPath(file));
 				}
 			}
 		}

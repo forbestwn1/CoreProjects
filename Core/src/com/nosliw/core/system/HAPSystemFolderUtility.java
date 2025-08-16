@@ -1,7 +1,5 @@
 package com.nosliw.core.system;
 
-import com.nosliw.core.runtimeenv.HAPRuntimeEnvironment;
-
 public class HAPSystemFolderUtility {
 
 	public static String getApplicationLibFolder(){ return HAPSystemUtility.getApplicationResourceLibFolder(); }
@@ -40,11 +38,11 @@ public class HAPSystemFolderUtility {
 	public static String getBundleExportFolder(){  return HAPSystemFolderUtility.getTempFolder()+"bundleexport/";  }
 	public static String getExecutablePackageExportFolder(){  return HAPSystemFolderUtility.getTempFolder()+"executablepackageexport/";  }
 	public static String getScriptExportFolder(){  return HAPSystemFolderUtility.getTempFolder()+"scriptexport/scripts/";  }
-	public static String getCurrentScriptExportFolder(){  return HAPSystemFolderUtility.getScriptExportFolder() + HAPRuntimeEnvironment.id + "/";  }
+	public static String getCurrentScriptExportFolder(){  return HAPSystemFolderUtility.getScriptExportFolder() + HAPSystem.id + "/";  }
 	public static String getTaskLogFolder(){  return HAPSystemFolderUtility.getTempFolder()+"tasklog/";  }
 	public static String getCronJobInstanceFolder(){  return HAPSystemFolderUtility.getTempFolder()+"cronjob/";  }
 	public static String getDynamicResourceExportFolder(){  return HAPSystemFolderUtility.getTempFolder()+"dynamicresourceexport/";  }
-	public static String getCurrentDynamicResourceExportFolder(){  return HAPSystemFolderUtility.getDynamicResourceExportFolder() + HAPRuntimeEnvironment.id + "/";  }
+	public static String getCurrentDynamicResourceExportFolder(){  return HAPSystemFolderUtility.getDynamicResourceExportFolder() + HAPSystem.id + "/";  }
 	
 	public static String getStoryDesignFolder() {	return HAPSystemUtility.getAppDataFolder()+"/storydesign/";}
 

@@ -2,7 +2,7 @@ package com.nosliw.test.uipage;
 
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.resource.HAPResourceIdSimple;
-import com.nosliw.core.runtimeenv.js.browser.HAPRuntimeEnvironmentImpBrowser;
+import com.nosliw.core.xxx.runtimeenv.js.browser.HAPRuntimeEnvironmentImpBrowser;
 import com.nosliw.data.core.domain.HAPExecutablePackage;
 
 public class HAPTestUIDomain {

@@ -9,15 +9,12 @@ import com.nosliw.core.application.HAPManagerApplicationBrick;
 import com.nosliw.core.application.HAPUtilityBundle;
 import com.nosliw.core.application.brick.HAPEnumBrickType;
 import com.nosliw.core.resource.HAPResourceIdSimple;
-import com.nosliw.core.runtimeenv.HAPRuntimeEnvironment;
 
 public class HAPTestBasic {
 
 	public static void main(String[] args) {
 
 		ApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
-		HAPRuntimeEnvironment runtimeEnv = context.getBean(HAPRuntimeEnvironment.class);
-		int kkk = 555;
 
 		HAPManagerApplicationBrick brickMan = context.getBean(HAPManagerApplicationBrick.class);
 		
