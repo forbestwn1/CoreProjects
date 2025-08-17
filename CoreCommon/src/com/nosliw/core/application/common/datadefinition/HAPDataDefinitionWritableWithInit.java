@@ -64,7 +64,7 @@ public class HAPDataDefinitionWritableWithInit extends HAPDataDefinitionWritable
 		}
 	}
 	
-	public HAPDataDefinitionWritable cloneDataDefinitionWritableWithInit() {
+	public HAPDataDefinitionWritableWithInit cloneDataDefinitionWritableWithInit() {
 		HAPDataDefinitionWritableWithInit out = new HAPDataDefinitionWritableWithInit();
 		this.cloneToDataDefinitionWritableWithInit(out);
 		return out;

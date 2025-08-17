@@ -19,12 +19,57 @@
 								"definition":{
 									"data": "test.string;1.0.0"
 								}
+							},
+							"parm1": {
+								"definition":{
+									"data": "test.string;1.0.0"
+								}
+							},
+							"parm2": {
+								"definition":{
+									"data": "test.string;1.0.0"
+								}
+							},
+							"output1": {
+								"definition":{
+									"data": "test.string;1.0.0"
+								}
+							},
+							"integer1": {
+								"definition":{
+									"data": "test.integer;1.0.0"
+								}
+							},
+							"integer2": {
+								"definition":{
+									"data": "test.integer;1.0.0"
+								}
 							}
 						},
 						"initValue": {
 							"parent_public": {
 								"dataTypeId": "test.string;1.0.0",
 								"value": "default value of parent_public"
+							},
+							"parm1": {
+								"dataTypeId": "test.string;1.0.0",
+								"value": "default value of parm1"
+							},
+							"parm2": {
+								"dataTypeId": "test.string;1.0.0",
+								"value": "default value of parm2"
+							},
+							"output1": {
+								"dataTypeId": "test.string;1.0.0",
+								"value": "default value of output1"
+							},
+							"integer1": {
+								"dataTypeId": "test.integer;1.0.0",
+								"value": 5
+							},
+							"integer2": {
+								"dataTypeId": "test.integer;1.0.0",
+								"value": 7
 							}
 						}
 					}

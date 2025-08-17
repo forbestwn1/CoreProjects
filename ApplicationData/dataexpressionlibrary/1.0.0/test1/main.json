@@ -12,31 +12,39 @@
 			"request" : [
 				{
 					"name" : "deparm1",
-					"dataInfo" : "test.string;1.0.0",
-					"defaultValue" : {
-						"dataTypeId": "test.string;1.0.0",
-						"value": "default value of baseVarNormal"
+					"dataDefinition" : {
+						"criteria" : "test.string;1.0.0",
+						"initData" : {
+							"dataTypeId": "test.string;1.0.0",
+							"value": "default value of baseVarNormal"
+						}
 					}
 				},
 				{
 					"name" : "deparm2",
-					"dataInfo" : "test.integer;1.0.0",
-					"defaultValue" : {
-						"dataTypeId": "test.integer;1.0.0",
-						"value": 1
+					"dataDefinition" : {
+						"criteria" : "test.integer;1.0.0",
+						"initData" : {
+							"dataTypeId": "test.integer;1.0.0",
+							"value": 1
+						}
 					}
 				},
 				{
 					"name" : "deparm3",
-					"dataInfo" : "test.integer;1.0.0",
-					"defaultValue" : {
-						"dataTypeId": "test.integer;1.0.0",
-						"value": 6
+					"dataDefinition" : {
+						"criteria" : "test.integer;1.0.0",
+						"initData" : {
+							"dataTypeId": "test.integer;1.0.0",
+							"value": 6
+						}
 					}
 				}
 			],
 			"result" : {
-				"criteria" : "test.string;1.0.0"
+				"dataDefininition" : {
+					"criteria" : "test.string;1.0.0"
+				}
 			},
 			"expression" : "!(test.string)!.subString(base:?(deparm1)?,from:?(deparm2)?,to:?(deparm3)?)"
 		},

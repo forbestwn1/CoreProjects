@@ -1,11 +1,12 @@
 package com.nosliw.core.application.common.datadefinition;
 
+import java.util.Map;
+
 import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.info.HAPEntityInfoImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.core.data.criteria.HAPDataTypeCriteria;
 import com.nosliw.core.xxx.application.common.interactive1.HAPRequestParmInInteractive;
 
 public class HAPDefinitionParm extends HAPEntityInfoImp{
@@ -15,40 +16,12 @@ public class HAPDefinitionParm extends HAPEntityInfoImp{
 	
 	private HAPDataDefinitionWritableWithInit m_dataDefinition;
 	
-	public static HAPDefinitionParm buildUndefinedVariableInfo() {
-		return buildParm(null);
-	}
-	
 	public static HAPDefinitionParm buildParmFromObject(Object def) {
 		HAPDefinitionParm out = new HAPDefinitionParm();
-		if(def instanceof String) {
-			out.buildObject(def, HAPSerializationFormat.LITERATE);
-		}
-		else if(def instanceof JSONObject) {
-			out.buildObject(def, HAPSerializationFormat.JSON);
-		}
+		out.buildObject(def, HAPSerializationFormat.JSON);
 		return out;
 	}
 
-	public static HAPDefinitionParm buildParm(HAPDataTypeCriteria criteria) {
-		return buildParm(null, criteria);
-	}
-
-	public static HAPDefinitionParm buildParm(String name, HAPDataTypeCriteria criteria) {
-		HAPDefinitionParm out = new HAPDefinitionParm();
-		if(criteria!=null) {
-			out.m_dataDefinition.setCriteria(criteria);
-		}
-		else {
-			
-		}
-		
-		if(name!=null) {
-			out.setName(name);
-		}
-		return out;
-	}
-	
 	protected HAPDefinitionParm() {
 		this.m_dataDefinition = new HAPDataDefinitionWritableWithInit();
 	}
@@ -56,6 +29,25 @@ public class HAPDefinitionParm extends HAPEntityInfoImp{
 	public HAPDataDefinitionWritableWithInit getDataDefinition() {
 		return this.m_dataDefinition;
 	}
+	
+	@Override
+	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		super.buildJsonMap(jsonMap, typeJsonMap);
+		jsonMap.put(DATADEFINITION, this.m_dataDefinition.toStringValue(HAPSerializationFormat.JSON));
+	}
+	
+	@Override
+	public boolean buildObject(Object value, HAPSerializationFormat format) {
+		super.buildObject(value, format);
+		JSONObject jsonValue = (JSONObject)value;
+		
+		Object dataDefObj = jsonValue.opt(DATADEFINITION);
+		if(dataDefObj!=null) {
+			this.m_dataDefinition.buildObject(dataDefObj, HAPSerializationFormat.JSON);
+		}
+		return true;
+	}
+	
 	
 	@Override
 	public boolean equals(Object obj){
@@ -67,10 +59,10 @@ public class HAPDefinitionParm extends HAPEntityInfoImp{
 		return out;
 	}
 	
-	@Override
-	public HAPDefinitionParm cloneVariableInfo() {
+	public HAPDefinitionParm cloneParmDefinition() {
 		HAPDefinitionParm out = new HAPDefinitionParm();
-		this.cloneToVariableInfo(out);
+		this.cloneToEntityInfo(out);
+		out.m_dataDefinition = this.m_dataDefinition.cloneDataDefinitionWritableWithInit();
 		return out;
 	}
 	

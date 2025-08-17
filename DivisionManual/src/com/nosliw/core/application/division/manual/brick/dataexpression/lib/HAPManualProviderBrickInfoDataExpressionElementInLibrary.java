@@ -2,6 +2,7 @@ package com.nosliw.core.application.division.manual.brick.dataexpression.lib;
 
 import org.springframework.stereotype.Component;
 
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.HAPIdBrickType;
 import com.nosliw.core.application.HAPManagerApplicationBrick;
 import com.nosliw.core.application.brick.HAPEnumBrickType;
@@ -32,7 +33,7 @@ public class HAPManualProviderBrickInfoDataExpressionElementInLibrary extends HA
 	public HAPIdBrickType getBrickTypeId() {  return HAPEnumBrickType.DATAEXPRESSIONLIBELEMENT_100;   }
 
 	@Override
-	protected HAPManualInfoBrickType newBrickTypeInfo() {   return new HAPManualInfoBrickType(true);  }
+	protected HAPManualInfoBrickType newBrickTypeInfo() {   return new HAPManualInfoBrickType(true, HAPConstantShared.TASK_TYPE_EXPRESSION);  }
 
 	@Override
 	protected HAPManualDefinitionPluginParserBrick newBrickParser() {

@@ -37,7 +37,9 @@ public class HAPDataDefinitionWritable extends HAPDataDefinition{
 
 	private HAPDataTypeCriteria m_ruleCriteria;
 
-	public HAPDataDefinitionWritable() {  }
+	public HAPDataDefinitionWritable() { 
+		this.m_rules = new ArrayList<HAPDataRule>();
+	}
 	
 	public HAPDataDefinitionWritable(HAPDataTypeCriteria criteria) {
 		super(criteria);
@@ -45,9 +47,11 @@ public class HAPDataDefinitionWritable extends HAPDataDefinition{
 	}
 	
 	public List<HAPDataRule> getRules(){   return this.m_rules;   }
-	public void addRule(HAPDataRule rule) {   if(rule!=null) {
-		this.m_rules.add(rule);
-	}    }
+	public void addRule(HAPDataRule rule) {   
+		if(rule!=null) {
+			this.m_rules.add(rule);
+		}    
+	}
 	
 	public HAPMatchersCombo getRuleMatchers() {    return this.m_ruleMatchers;    }
 	public void setRuleMatchers(HAPMatchers matchers, HAPDataTypeCriteria ruleCriteria) {
