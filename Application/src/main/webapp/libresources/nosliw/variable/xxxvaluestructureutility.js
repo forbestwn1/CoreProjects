@@ -238,6 +238,6 @@ nosliw.registerSetNodeDataEvent("variable.data.utility", function(){node_dataUti
 nosliw.registerSetNodeDataEvent("iovalue.aliasUtility", function(){node_aliasUtility = this.getData();});
 
 //Register Node by Name
-packageObj.createChildNode("utility", node_utility); 
+packageObj.createChildNode("utility1111", node_utility); 
 
 })(packageObj);

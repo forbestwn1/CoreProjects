@@ -22,7 +22,6 @@ var packageObj = library;
 	var node_expressionUtility;
 	var node_dataUtility;
 	var node_namingConvensionUtility;
-	var node_valueContextUtility;
 	var node_complexEntityUtility;
 	var node_getApplicationInterface;
 	var node_createValuePortElementInfo;
@@ -558,7 +557,6 @@ nosliw.registerSetNodeDataEvent("request.request.entity.DependentServiceRequestI
 nosliw.registerSetNodeDataEvent("expression.utility", function(){node_expressionUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("expression.dataUtility", function(){node_dataUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("common.namingconvension.namingConvensionUtility", function(){node_namingConvensionUtility = this.getData();});
-nosliw.registerSetNodeDataEvent("complexentity.valueContextUtility", function(){node_valueContextUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("complexentity.complexEntityUtility", function(){node_complexEntityUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("component.getApplicationInterface", function(){node_getApplicationInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("valueport.createValuePortElementInfo", function(){node_createValuePortElementInfo = this.getData();});

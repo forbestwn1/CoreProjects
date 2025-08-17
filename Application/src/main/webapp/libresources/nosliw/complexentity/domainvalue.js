@@ -403,18 +403,6 @@ var loc_createValuePortContainer = function(id, valuePortContainerDef, variableD
 
 
 		
-		prv_getSolidValueStrucute1 : function(valueStructureRuntimeId){
-			var out = loc_valueStructures[valueStructureRuntimeId];
-			if(out!=undefined){
-				if(!out.isSold()){
-					if(loc_parentVariableGroup!=undefined){
-						out = loc_parentVariableGroup.prv_getSolidValueStrucute(valueStructureRuntimeId);
-					}
-				}
-			}
-			return out;
-		},
-
 		getValueStructureRuntimeIdByName : function(valueStructureName){
 			var out;
 			out = valueContextDef[node_COMMONATRIBUTECONSTANT.VALUECONTEXT_VALUESTRUCTURERUNTIMEIDBYNAME][valueStructureName];
@@ -446,10 +434,6 @@ var loc_createValuePortContainer = function(id, valuePortContainerDef, variableD
 		
 			
 		getVariableInfosByValueStructure : function(valueStructureId){   return loc_variablesByValueStructure[valueStructureId];  },
-		
-		getVariableInfo : function(variableId){
-			
-		},
 		
 	};
 	

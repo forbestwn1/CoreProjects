@@ -22,6 +22,7 @@ public class HAPWrapperValueOfReferenceResource extends HAPWrapperValue{
 
 	private HAPResourceId m_resourceId;
 	
+	//for resource need dynamic input
 	private HAPInputDynamicTask m_dynamicInput;
 	
 	public HAPWrapperValueOfReferenceResource(HAPResourceId resourceId) {
