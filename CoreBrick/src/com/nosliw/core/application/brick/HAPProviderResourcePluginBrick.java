@@ -21,6 +21,34 @@ public class HAPProviderResourcePluginBrick extends HAPProviderResourcePluginImp
 
 	private HAPManagerResource m_resourceManager;
 	private HAPManagerApplicationBrick m_brickManager;
+
+/*	
+	public HAPProviderResourcePluginBrick(HAPManagerApplicationBrick brickManager, HAPManagerResource resourceManager) {
+		this.m_brickManager = brickManager;		
+		this.m_resourceManager = resourceManager;	
+
+		this.registerPlugin(HAPUtilityBrickId.getResourceTypeIdFromBrickTypeId(HAPEnumBrickType.TEST_COMPLEX_1_100), new HAPPluginResourceManagerImpBrick(this.m_resourceManager, this.m_brickManager));
+		this.registerPlugin(HAPUtilityBrickId.getResourceTypeIdFromBrickTypeId(HAPEnumBrickType.TEST_COMPLEX_SCRIPT_100), new HAPPluginResourceManagerImpBrick(this.m_resourceManager, this.m_brickManager));
+
+		this.registerPlugin(HAPUtilityBrickId.getResourceTypeIdFromBrickTypeId(HAPEnumBrickType.TASKWRAPPER_100), new HAPPluginResourceManagerImpBrick(this.m_resourceManager, this.m_brickManager));
+		
+		this.registerPlugin(HAPUtilityBrickId.getResourceTypeIdFromBrickTypeId(HAPEnumBrickType.DATAEXPRESSIONLIB_100), new HAPPluginResourceManagerImpBrick(this.m_resourceManager, this.m_brickManager));
+		this.registerPlugin(HAPUtilityBrickId.getResourceTypeIdFromBrickTypeId(HAPEnumBrickType.DATAEXPRESSIONGROUP_100), new HAPPluginResourceManagerImpBrick(this.m_resourceManager, this.m_brickManager));
+
+		this.registerPlugin(HAPUtilityBrickId.getResourceTypeIdFromBrickTypeId(HAPEnumBrickType.SCRIPTEXPRESSIONGROUP_100), new HAPPluginResourceManagerImpBrick(this.m_resourceManager, this.m_brickManager));
+		
+		this.registerPlugin(HAPUtilityBrickId.getResourceTypeIdFromBrickTypeId(HAPEnumBrickType.SERVICEPROFILE_100), new HAPPluginResourceManagerImpBrick(this.m_resourceManager, this.m_brickManager));
+		this.registerPlugin(HAPUtilityBrickId.getResourceTypeIdFromBrickTypeId(HAPEnumBrickType.SERVICEINTERFACE_100), new HAPPluginResourceManagerImpBrick(this.m_resourceManager, this.m_brickManager));
+
+		
+		this.registerPlugin(HAPFactoryResourceTypeId.newInstance(HAPConstantShared.RUNTIME_RESOURCE_TYPE_DECORATION_SCRIPT), new HAPPluginResourceManagerImpBrick(this.m_resourceManager, this.m_brickManager));
+
+		
+		this.registerPlugin(HAPFactoryResourceTypeId.newInstance(HAPConstantShared.RUNTIME_RESOURCE_TYPE_CONFIGURE), new HAPPluginResourceManagerConfigure());
+
+		this.registerPlugin(HAPUtilityBrickId.getResourceTypeIdFromBrickTypeId(HAPEnumBrickType.UIPAGE_100), new HAPPluginResourceManagerImpBrick(this.m_resourceManager, this.m_brickManager));
+	}
+*/
 	
 	public HAPProviderResourcePluginBrick() {
 	}

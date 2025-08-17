@@ -29,7 +29,7 @@ public class HAPManualProviderBrickInfoDataAssociationForExpression extends HAPM
 
 	@Override
 	protected HAPManualPluginProcessorBrick newBrickProcessor() {
-		return new HAPManaualPluginAdapterProcessorDataAssociationForExpression(this.getManualBrickManager());
+		return new HAPManaualPluginAdapterProcessorDataAssociationForExpression();
 	}
 
 	@Override

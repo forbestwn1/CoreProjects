@@ -183,7 +183,7 @@ public class HAPManualManagerBrick implements HAPPluginDivision{
 	public HAPManualDefinitionBrick newBrickDefinition(HAPIdBrickType brickType) {    
 		return this.getBrickParsePlugin(brickType).newBrick();      
 	}
-	public HAPManualBrick newBrick(HAPIdBrickType brickType, HAPBundle bundle) {    return this.getBrickProcessPlugin(brickType).newInstance(bundle);      }
+	public HAPManualBrick newBrick(HAPIdBrickType brickType, HAPBundle bundle) {    return this.getBrickProcessPlugin(brickType).newInstance(bundle, this);      }
 	
 	public HAPManualDefinitionPluginParserBrick getBrickParsePlugin(HAPIdBrickType entityTypeId) {   return this.m_brickParserPlugin.get(entityTypeId.getKey());    }
 	public HAPManualPluginProcessorBrick getBrickProcessPlugin(HAPIdBrickType entityTypeId) {   return this.m_brickProcessorPlugin.get(entityTypeId.getKey());    }

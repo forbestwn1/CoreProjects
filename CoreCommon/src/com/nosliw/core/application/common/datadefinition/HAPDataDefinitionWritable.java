@@ -119,6 +119,7 @@ public class HAPDataDefinitionWritable extends HAPDataDefinition{
 	}
 	
 	protected void cloneToDataDefinitionWritable(HAPDataDefinitionWritable out) {
+		this.cloneToDataDefinition(out);
 		out.m_rules.addAll(this.m_rules);
 		if(this.m_ruleMatchers!=null) {
 			out.m_ruleMatchers = this.m_ruleMatchers.cloneMatchers();
@@ -130,7 +131,6 @@ public class HAPDataDefinitionWritable extends HAPDataDefinition{
 	
 	public HAPDataDefinitionWritable cloneDataDefinitionWritable() {
 		HAPDataDefinitionWritable out = new HAPDataDefinitionWritable();
-		this.cloneToDataDefinition(out);
 		this.cloneToDataDefinitionWritable(out);
 		return out;
 	}

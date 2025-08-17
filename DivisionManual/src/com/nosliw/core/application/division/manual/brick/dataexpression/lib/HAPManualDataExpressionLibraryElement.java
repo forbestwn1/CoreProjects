@@ -7,10 +7,10 @@ import org.json.JSONObject;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.core.application.brick.dataexpression.library.HAPElementInLibraryDataExpression;
+import com.nosliw.core.application.common.datadefinition.HAPDefinitionParm;
+import com.nosliw.core.application.common.datadefinition.HAPDefinitionResult;
 import com.nosliw.core.application.common.dataexpression.definition.HAPDefinitionDataExpression;
 import com.nosliw.core.application.common.interactive.HAPInteractiveExpression;
-import com.nosliw.core.application.common.interactive.HAPInteractiveResultExpression;
-import com.nosliw.core.xxx.application.common.interactive1.HAPRequestParmInInteractive;
 
 public class HAPManualDataExpressionLibraryElement extends HAPSerializableImp{
 
@@ -23,10 +23,10 @@ public class HAPManualDataExpressionLibraryElement extends HAPSerializableImp{
 	public HAPManualDataExpressionLibraryElement() {
 	}
 	
-	public List<HAPRequestParmInInteractive> getRequestParms() {  return this.m_interactiveExpression.getRequestParms();  }
-	public void addRequestParm(HAPRequestParmInInteractive requestParm) {	this.getRequestParms().add(requestParm);	}
+	public List<HAPDefinitionParm> getRequestParms() {  return this.m_interactiveExpression.getRequestParms();  }
+	public void addRequestParm(HAPDefinitionParm requestParm) {	this.getRequestParms().add(requestParm);	}
 	
-	public HAPInteractiveResultExpression getResult() {   return this.m_interactiveExpression.getResult();  } 
+	public HAPDefinitionResult getResult() {   return this.m_interactiveExpression.getResult();  } 
 	
 	public String getExpressionStr() {    return this.m_expressionStr;     }
 	

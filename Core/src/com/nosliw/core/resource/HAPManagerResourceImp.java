@@ -18,7 +18,9 @@ import com.nosliw.core.system.HAPSystemUtility;
 @Component
 public class HAPManagerResourceImp implements HAPManagerResource{
 
-	private Map<String, HAPPluginResourceManager> m_resourceManPlugins = new LinkedHashMap<String, HAPPluginResourceManager>();
+	private List<HAPProviderResourcePlugin> m_pluginProviders = new ArrayList<HAPProviderResourcePlugin>();
+	
+	private Map<String, HAPPluginResourceManager> m_resourceManPlugins;
 
 	private Map<HAPResourceId, HAPResource> m_cachedResource = new LinkedHashMap<HAPResourceId, HAPResource>();
 	private Map<HAPResourceId, List<HAPResourceInfo>> m_cachedDependency = new LinkedHashMap<HAPResourceId, List<HAPResourceInfo>>();
@@ -28,14 +30,23 @@ public class HAPManagerResourceImp implements HAPManagerResource{
 	
 	@Autowired
 	private void setResourceManagerPluginProviders(List<HAPProviderResourcePlugin> pluginProviders) {
-		for(HAPProviderResourcePlugin pluginProvider : pluginProviders) {
-			Map<HAPIdResourceType, HAPPluginResourceManager> plugins = pluginProvider.getResourceManagerPlugins();
-			for(HAPIdResourceType resourceTypeId : plugins.keySet()) {
-				registerResourceManagerPlugin(resourceTypeId, plugins.get(resourceTypeId));
-			}
-		}
+		this.m_pluginProviders = pluginProviders;
 	}
 	
+	private HAPPluginResourceManager getResourceManagerPlugin(HAPIdResourceType resourceType){
+		if(this.m_resourceManPlugins==null) {
+			this.m_resourceManPlugins = new LinkedHashMap<String, HAPPluginResourceManager>();
+			for(HAPProviderResourcePlugin pluginProvider : this.m_pluginProviders) {
+				Map<HAPIdResourceType, HAPPluginResourceManager> plugins = pluginProvider.getResourceManagerPlugins();
+				for(HAPIdResourceType resourceTypeId : plugins.keySet()) {
+					registerResourceManagerPlugin(resourceTypeId, plugins.get(resourceTypeId));
+				}
+			}
+		}
+		
+		return this.m_resourceManPlugins.get(resourceType.getKey());
+	}
+
 	@Override
 	public void registerResourceManagerPlugin(HAPIdResourceType resourceType, HAPPluginResourceManager resourceManPlugin){
 		this.m_resourceManPlugins.put(resourceType.getKey(), resourceManPlugin);
@@ -130,10 +141,6 @@ public class HAPManagerResourceImp implements HAPManagerResource{
 		}
 	}
 	
-	private HAPPluginResourceManager getResourceManagerPlugin(HAPIdResourceType resourceType){
-		return this.m_resourceManPlugins.get(resourceType.getKey());
-	}
-
 //	@Override
 	public HAPLoadResourceResponse getResources1(List<HAPResourceId> resourcesId, HAPRuntimeInfo runtimeInfo) {
 		//sort out resource by type, so that we can do bulk load resources for one type  

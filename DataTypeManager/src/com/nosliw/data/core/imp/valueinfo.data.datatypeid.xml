@@ -1,11 +1,11 @@
 <entity name="data.datatypeid" 
 		description="data type info" 
-		class="com.nosliw.data.core.data.HAPDataTypeId">
+		class="com.nosliw.core.data.HAPDataTypeId">
 
 	<property name="id" dataType="string" description="data type id"/>
 
 	<property name="name" dataType="string" description="data type name"/>
 
-	<property name="version" dataType="object" subDataType="com.nosliw.data.core.data.HAPDataTypeVersion" description=""/>
+	<property name="version" dataType="object" subDataType="com.nosliw.core.data.HAPDataTypeVersion" description=""/>
 
 </entity>

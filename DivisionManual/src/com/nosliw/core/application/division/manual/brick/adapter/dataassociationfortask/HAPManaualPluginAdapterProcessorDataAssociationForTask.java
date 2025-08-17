@@ -10,15 +10,14 @@ import com.nosliw.core.application.common.dataassociation.definition.HAPDefiniti
 import com.nosliw.core.application.common.dataassociation.definition.HAPDefinitionDataAssociationForTask;
 import com.nosliw.core.application.common.dataassociation.definition.HAPDefinitionProcessorDataAssociation;
 import com.nosliw.core.application.division.manual.core.HAPManualBrick;
-import com.nosliw.core.application.division.manual.core.HAPManualManagerBrick;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionBrick;
 import com.nosliw.core.application.division.manual.core.process.HAPManualContextProcessAdapter;
 import com.nosliw.core.application.division.manual.core.process.HAPManualPluginProcessorAdapter;
 
 public class HAPManaualPluginAdapterProcessorDataAssociationForTask extends HAPManualPluginProcessorAdapter{
 
-	public HAPManaualPluginAdapterProcessorDataAssociationForTask(HAPManualManagerBrick manualBrickMan) {
-		super(HAPEnumBrickType.DATAASSOCIATIONFORTASK_100, HAPManualAdapterDataAssociationForTask.class, manualBrickMan);
+	public HAPManaualPluginAdapterProcessorDataAssociationForTask() {
+		super(HAPEnumBrickType.DATAASSOCIATIONFORTASK_100, HAPManualAdapterDataAssociationForTask.class);
 	}
 
 	@Override

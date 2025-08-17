@@ -1,7 +1,10 @@
 package com.nosliw.core.application.common.datadefinition;
 
+import org.json.JSONObject;
+
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.info.HAPEntityInfoImp;
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.core.data.criteria.HAPDataTypeCriteria;
 import com.nosliw.core.xxx.application.common.interactive1.HAPRequestParmInInteractive;
 
@@ -18,7 +21,12 @@ public class HAPDefinitionParm extends HAPEntityInfoImp{
 	
 	public static HAPDefinitionParm buildParmFromObject(Object def) {
 		HAPDefinitionParm out = new HAPDefinitionParm();
-		out.buildObject(def, null);
+		if(def instanceof String) {
+			out.buildObject(def, HAPSerializationFormat.LITERATE);
+		}
+		else if(def instanceof JSONObject) {
+			out.buildObject(def, HAPSerializationFormat.JSON);
+		}
 		return out;
 	}
 

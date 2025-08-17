@@ -7,15 +7,14 @@ import com.nosliw.core.application.common.dataassociation.HAPDataAssociationForE
 import com.nosliw.core.application.common.dataassociation.definition.HAPDefinitionDataAssociationForExpression;
 import com.nosliw.core.application.common.dataassociation.definition.HAPDefinitionProcessorDataAssociation;
 import com.nosliw.core.application.division.manual.core.HAPManualBrick;
-import com.nosliw.core.application.division.manual.core.HAPManualManagerBrick;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionBrick;
 import com.nosliw.core.application.division.manual.core.process.HAPManualContextProcessAdapter;
 import com.nosliw.core.application.division.manual.core.process.HAPManualPluginProcessorAdapter;
 
 public class HAPManaualPluginAdapterProcessorDataAssociationForExpression extends HAPManualPluginProcessorAdapter{
 
-	public HAPManaualPluginAdapterProcessorDataAssociationForExpression(HAPManualManagerBrick manualBrickMan) {
-		super(HAPEnumBrickType.DATAASSOCIATIONFOREXPRESSION_100, HAPManualAdapterDataAssociationForExpression.class, manualBrickMan);
+	public HAPManaualPluginAdapterProcessorDataAssociationForExpression() {
+		super(HAPEnumBrickType.DATAASSOCIATIONFOREXPRESSION_100, HAPManualAdapterDataAssociationForExpression.class);
 	}
 
 	@Override

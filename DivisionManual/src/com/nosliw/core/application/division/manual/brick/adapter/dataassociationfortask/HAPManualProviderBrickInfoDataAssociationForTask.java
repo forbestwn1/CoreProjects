@@ -29,7 +29,7 @@ public class HAPManualProviderBrickInfoDataAssociationForTask extends HAPManualP
 
 	@Override
 	protected HAPManualPluginProcessorBrick newBrickProcessor() {
-		return new HAPManaualPluginAdapterProcessorDataAssociationForTask(this.getManualBrickManager());
+		return new HAPManaualPluginAdapterProcessorDataAssociationForTask();
 	}
 
 	@Override
