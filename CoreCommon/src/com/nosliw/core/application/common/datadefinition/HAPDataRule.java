@@ -6,7 +6,6 @@ import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.info.HAPEntityInfo;
 import com.nosliw.core.data.HAPData;
 import com.nosliw.core.data.criteria.HAPDataTypeCriteria;
-import com.nosliw.core.runtimeenv.HAPRuntimeEnvironment;
 
 @HAPEntityWithAttribute
 public interface HAPDataRule extends HAPEntityInfo{
@@ -24,9 +23,9 @@ public interface HAPDataRule extends HAPEntityInfo{
 	void setPath(String path);
 	
 	//apply the rule and verify if the data is valid
-	HAPServiceData verify(HAPData data, HAPRuntimeEnvironment runtimeEnv);
+	HAPServiceData verify(HAPData data);
 	
-	void process(HAPDataTypeCriteria criteria, HAPRuntimeEnvironment runtimeEnv);
+	void process(HAPDataTypeCriteria criteria);
 
 	HAPDataRule cloneDataRule();
 }

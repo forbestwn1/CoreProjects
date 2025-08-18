@@ -9,7 +9,6 @@ import com.nosliw.core.application.division.story.HAPStoryIdElement;
 import com.nosliw.core.application.division.story.HAPStoryStatus;
 import com.nosliw.core.application.division.story.HAPStoryStory;
 import com.nosliw.core.application.division.story.change.HAPStoryChangeResult;
-import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 @HAPEntityWithAttribute
 public interface HAPStoryElement extends HAPEntityInfo, HAPEntityOrReference{

@@ -8,7 +8,6 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.core.data.HAPData;
-import com.nosliw.core.runtimeenv.HAPRuntimeEnvironment;
 
 @HAPEntityWithAttribute
 public class HAPDataRuleEnumCode extends HAPDataRuleEnum{
@@ -27,7 +26,7 @@ public class HAPDataRuleEnumCode extends HAPDataRuleEnum{
 	public String getEnumCode() {    return this.m_enumCode;    }
 	
 	@Override
-	public HAPServiceData verify(HAPData data, HAPRuntimeEnvironment runtimeEnv) {
+	public HAPServiceData verify(HAPData data) {
 		// TODO Auto-generated method stub
 		return null;
 	}

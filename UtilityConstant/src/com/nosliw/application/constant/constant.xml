@@ -751,6 +751,8 @@
 			<definition name="GATEWAY_SERVICE" value="service"/>
 			<definition name="GATEWAY_UITAG" value="uiTag"/>
 			<definition name="GATEWAY_LOADLIBRARIES" value="loadLibraries"/>
+			<definition name="GATEWAY_ERRORLOG" value="errorLog"/>
+			
 
 			<definition type="space"/>
 			<definition name="NOSLIW_RESERVE_ATTRIBUTE" value="nosliwattribute_"/>

@@ -78,7 +78,7 @@ var node_createErrorManager = function(){
 	
 	var loc_logErrorToServer = function(errorData){
 		//gateway request
-		var gatewayId = node_COMMONATRIBUTECONSTANT.RUNTIME_GATEWAY_ERRORLOG;
+		var gatewayId = node_COMMONCONSTANT.GATEWAY_ERRORLOG;
 		var command = node_COMMONATRIBUTECONSTANT.GATEWAYERRORLOGGER_COMMAND_LOGERRRO;
 		var parms = {};
 		parms[node_COMMONATRIBUTECONSTANT.GATEWAYERRORLOGGER_PARMS_ERROR] = errorData;

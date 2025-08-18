@@ -8,13 +8,13 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="lib" path="libs/commons-io-2.6.jar"/>
 	<classpathentry kind="lib" path="libs/rhino-1.7.9.jar"/>
-	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/Common"/>
-	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/Application"/>
-	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/Core"/>
-	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/CoreBrick"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/Common"/>
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/CoreCommon"/>
-	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/DataTypeManager"/>
-	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/DivisionManual"/>
-	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/DivisionStory"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/Application"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/Core"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/CoreBrick"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/CoreOtherEntity"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/DataTypeManager"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/DivisionManual"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

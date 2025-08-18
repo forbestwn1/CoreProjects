@@ -36,18 +36,26 @@ public class HAPConstantUtility {
 			Class superCs = cs.getSuperclass();
 			if(superCs!=null){
 				out = getBaseName(superCs);
+			}
+			
+			if(out==null) {
 				if(HAPUtilityBasic.isStringEmpty(out)){
 					//if not found, then get from interface
 					Class[] infs = cs.getInterfaces();
 					for(Class inf : infs){
 						out = getBaseName(inf);
-						if(HAPUtilityBasic.isStringNotEmpty(out))  break;
+						if(HAPUtilityBasic.isStringNotEmpty(out)) {
+							break;
+						}
 					}
 				}
 			}
+			
 		}
 		
-		if(out!=null)  out = out.toUpperCase();
+		if(out!=null) {
+			out = out.toUpperCase();
+		}
 		return out;
 	}
 
