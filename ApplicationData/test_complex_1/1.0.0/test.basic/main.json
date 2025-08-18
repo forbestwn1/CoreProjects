@@ -99,6 +99,7 @@
 								"type" : "mapping",
 								"mapping" : [
 									{
+										"status": "disabled",
 										"target" : {
 											"rootName" : "deparm1"
 										},
@@ -109,6 +110,7 @@
 										}
 									},
 									{
+										"status": "disabled",
 										"target" : {
 											"rootName" : "deparm2"
 										},
@@ -140,7 +142,12 @@
 										},
 										"definition" : {
 											"mapping" : {
-												"elementPath": "result"
+												"elementPath": "result",
+												"valuePortId1" : {
+													"valuePortId" : {
+														"group" : "expressionInteractive"
+													}
+												}
 											}
 										}
 									}
@@ -162,7 +169,7 @@
 				"script": "complexscript_test_value",
 				"parm" : {
 					"variable1" : ["child_public", "child_public_string", "parent_protected", "parent_private", "parent_internal"],
-					"variable" : ["child_public_string"]
+					"variable" : ["child_public_string", "parent_public"]
 				},
 				"valueContext" : {
 					"brick": [

@@ -29,7 +29,7 @@ public class HAPUtilityInteractiveTaskValuePort {
 	
 	public static void buildValuePortGroupForInteractiveTaskEventHandler(Pair<HAPContainerValuePorts, HAPContainerValuePorts> valuePortContainerPair, HAPElementStructure eventDataElement, HAPDomainValueStructure valueStructureDomain) {
 		//request
-		Pair<HAPValuePort, HAPValuePort> requestValuePortPair = getOrCreateInteractiveRequestValuePort(valuePortContainerPair);
+		Pair<HAPValuePort, HAPValuePort> requestValuePortPair = getOrCreateTaskInteractiveRequestValuePort(valuePortContainerPair);
 		
 		Set<HAPRootInStructure> roots = new HashSet<HAPRootInStructure>();
 		HAPRootInStructure root = new HAPRootInStructure();
@@ -52,7 +52,7 @@ public class HAPUtilityInteractiveTaskValuePort {
 		
 		//request
 		{
-			Pair<HAPValuePort, HAPValuePort> requestValuePortPair = getOrCreateInteractiveRequestValuePort(valuePortContainerPair);
+			Pair<HAPValuePort, HAPValuePort> requestValuePortPair = getOrCreateTaskInteractiveRequestValuePort(valuePortContainerPair);
 			HAPElementStructure dataEle = HAPUtilityValuePort.getStructureElementInValuePort(dataRootName, requestValuePortPair.getLeft(), valueStructureDomain);
 			if(dataEle==null) {
 				//if data root is not defined, then add it
@@ -90,7 +90,7 @@ public class HAPUtilityInteractiveTaskValuePort {
 
 	public static void buildValuePortGroupForInteractiveTask(Pair<HAPContainerValuePorts, HAPContainerValuePorts> valuePortContainerPair, HAPInteractiveTask taskInteractive, HAPDomainValueStructure valueStructureDomain) {
 		//request
-		Pair<HAPValuePort, HAPValuePort> requestValuePortPair = getOrCreateInteractiveRequestValuePort(valuePortContainerPair);
+		Pair<HAPValuePort, HAPValuePort> requestValuePortPair = getOrCreateTaskInteractiveRequestValuePort(valuePortContainerPair);
 		buildInteractiveRequestValuePort(requestValuePortPair, taskInteractive.getRequestParms(), valueStructureDomain);
 		
 		//result
@@ -102,7 +102,7 @@ public class HAPUtilityInteractiveTaskValuePort {
 
 	public static void buildValuePortGroupForInteractiveExpression(Pair<HAPContainerValuePorts, HAPContainerValuePorts> valuePortContainerPair, HAPInteractiveExpression expressionInteractive, HAPDomainValueStructure valueStructureDomain) {
 		//request
-		Pair<HAPValuePort, HAPValuePort> requestValuePortPair = getOrCreateInteractiveRequestValuePort(valuePortContainerPair);
+		Pair<HAPValuePort, HAPValuePort> requestValuePortPair = getOrCreateExpressionInteractiveRequestValuePort(valuePortContainerPair);
 		buildInteractiveRequestValuePort(requestValuePortPair, expressionInteractive.getRequestParms(), valueStructureDomain);
 		
 		//result
@@ -110,7 +110,7 @@ public class HAPUtilityInteractiveTaskValuePort {
 		buildExpressionInteractiveResultValuePort(resultValuePortPair, expressionInteractive.getResult(), valueStructureDomain);
 	}
 
-	private static Pair<HAPValuePort, HAPValuePort> getOrCreateInteractiveRequestValuePort(Pair<HAPContainerValuePorts, HAPContainerValuePorts> valuePortContainerPair){
+	private static Pair<HAPValuePort, HAPValuePort> getOrCreateTaskInteractiveRequestValuePort(Pair<HAPContainerValuePorts, HAPContainerValuePorts> valuePortContainerPair){
 		return HAPUtilityValuePort.getOrCreateValuePort(
 				valuePortContainerPair, 
 				HAPConstantShared.VALUEPORTGROUP_TYPE_INTERACTIVETASK, 
@@ -128,10 +128,19 @@ public class HAPUtilityInteractiveTaskValuePort {
 				Pair.of(HAPConstantShared.IO_DIRECTION_IN, HAPConstantShared.IO_DIRECTION_OUT));
 	}
 	
+	private static Pair<HAPValuePort, HAPValuePort> getOrCreateExpressionInteractiveRequestValuePort(Pair<HAPContainerValuePorts, HAPContainerValuePorts> valuePortContainerPair){
+		return HAPUtilityValuePort.getOrCreateValuePort(
+				valuePortContainerPair, 
+				HAPConstantShared.VALUEPORTGROUP_TYPE_INTERACTIVEEXPRESSION, 
+				HAPConstantShared.VALUEPORT_TYPE_INTERACTIVE_REQUEST, 
+				HAPConstantShared.VALUEPORT_NAME_INTERACT_REQUEST,
+				Pair.of(HAPConstantShared.IO_DIRECTION_OUT, HAPConstantShared.IO_DIRECTION_IN));
+	}
+	
 	private static Pair<HAPValuePort, HAPValuePort> getOrCreateExpressionInteractiveResultValuePort(Pair<HAPContainerValuePorts, HAPContainerValuePorts> valuePortContainerPair){
 		return HAPUtilityValuePort.getOrCreateValuePort(
 				valuePortContainerPair, 
-				HAPConstantShared.VALUEPORTGROUP_TYPE_INTERACTIVETASK, 
+				HAPConstantShared.VALUEPORTGROUP_TYPE_INTERACTIVEEXPRESSION, 
 				HAPConstantShared.VALUEPORT_TYPE_INTERACTIVE_RESULT, 
 				HAPConstantShared.VALUEPORT_NAME_INTERACT_RESULT,
 				Pair.of(HAPConstantShared.IO_DIRECTION_IN, HAPConstantShared.IO_DIRECTION_OUT));
