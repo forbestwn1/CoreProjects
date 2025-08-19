@@ -17,9 +17,9 @@ var packageObj = library;
 	var node_createServiceRequestInfoSimple;
 	var node_createServiceRequestInfoSequence;
 	var node_ServiceInfo;
-	var node_uiDataOperationServiceUtility;
-	var node_UIDataOperation
-	var node_createUIDataOperationRequest
+	var node_valueInVarOperationServiceUtility;
+	var node_ValueInVarOperation
+	var node_createValueInVarOperationRequest
 	var node_dataUtility;
 
 //*******************************************   Start Node Definition  ************************************** 	
@@ -106,7 +106,7 @@ var packageObj = library;
 				var variables = loc_contextVarGroup.getVariables();
 				_.each(variables, function(variable, varFullName){
 					if(!variable.isEmpty())  hasEmptyVariable = true;
-					var getVarValueRequest = node_createUIDataOperationRequest(undefined, new node_UIDataOperation(variable, node_uiDataOperationServiceUtility.createGetOperationService("")));
+					var getVarValueRequest = node_createValueInVarOperationRequest(undefined, new node_ValueInVarOperation(variable, node_valueInVarOperationServiceUtility.createGetOperationService("")));
 					allVarValuesRequest.addRequest(varFullName, getVarValueRequest);
 				});
 				
@@ -160,10 +160,10 @@ var packageObj = library;
 	nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple", function(){node_createServiceRequestInfoSimple = this.getData();});
 	nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequence", function(){	node_createServiceRequestInfoSequence = this.getData();	});
 	nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();	});
-	nosliw.registerSetNodeDataEvent("variable.uidataoperation.uiDataOperationServiceUtility", function(){node_uiDataOperationServiceUtility = this.getData();});
-	nosliw.registerSetNodeDataEvent("variable.uidataoperation.UIDataOperation", function(){node_UIDataOperation = this.getData();});
-	nosliw.registerSetNodeDataEvent("variable.uidataoperation.createUIDataOperationRequest", function(){node_createUIDataOperationRequest = this.getData();});
-	nosliw.registerSetNodeDataEvent("variable.data.utility", function(){node_dataUtility = this.getData();});
+	nosliw.registerSetNodeDataEvent("variable.valueinvar.operation.valueInVarOperationServiceUtility", function(){node_valueInVarOperationServiceUtility = this.getData();});
+	nosliw.registerSetNodeDataEvent("variable.valueinvar.operation.ValueInVarOperation", function(){node_ValueInVarOperation = this.getData();});
+	nosliw.registerSetNodeDataEvent("variable.valueinvar.operation.createValueInVarOperationRequest", function(){node_createValueInVarOperationRequest = this.getData();});
+	nosliw.registerSetNodeDataEvent("variable.valueinvar.utility", function(){node_dataUtility = this.getData();});
 
 	//Register Node by Name
 	packageObj.createChildNode("createUIResourceScriptExpression", node_createUIResourceScriptExpression); 

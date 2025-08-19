@@ -20,10 +20,10 @@ var packageObj = library;
 	var node_basicUtility;
 	var node_createContextVariableInfo;
 	var node_requestServiceProcessor;
-	var node_createUIDataOperationRequest;
-	var node_UIDataOperation;
-	var node_uiDataOperationServiceUtility;
-	var node_createBatchUIDataOperationRequest;
+	var node_createValueInVarOperationRequest;
+	var node_ValueInVarOperation;
+	var node_valueInVarOperationServiceUtility;
+	var node_createBatchValueInVarOperationRequest;
 	var node_uiResourceViewFactory;
 	var node_createEventObject;
 	var node_contextUtility;
@@ -251,26 +251,26 @@ var node_createUITag1 = function(uiTagResourceObj, id, attributeValues, parentCo
 		//---------------------------------operation request
 		getDataOperationGet : function(target, path){  
 			if (typeof target === 'string' || target instanceof String)   target = loc_getContextRootIdByName(target);
-			return new node_UIDataOperation(target, node_uiDataOperationServiceUtility.createGetOperationService(path)); 
+			return new node_ValueInVarOperation(target, node_valueInVarOperationServiceUtility.createGetOperationService(path)); 
 		},
-		getDataOperationRequestGet : function(target, path, handler, request){	return node_createUIDataOperationRequest(loc_context, this.getDataOperationGet(target, path), handler, request);	},
+		getDataOperationRequestGet : function(target, path, handler, request){	return node_createValueInVarOperationRequest(loc_context, this.getDataOperationGet(target, path), handler, request);	},
 		executeDataOperationRequestGet : function(target, path, handler, request){			
 			return this.processRequest(this.getDataOperationRequestGet(target, path, handler, request));		
 		},
 
 		getDataOperationSet : function(target, path, value){  
 			if (typeof target === 'string' || target instanceof String)   target = loc_getContextRootIdByName(target);
-			return new node_UIDataOperation(target, node_uiDataOperationServiceUtility.createSetOperationService(path, value)); 
+			return new node_ValueInVarOperation(target, node_valueInVarOperationServiceUtility.createSetOperationService(path, value)); 
 		},
-		getDataOperationRequestSet : function(target, path, value, handler, request){	return node_createUIDataOperationRequest(loc_context, this.getDataOperationSet(target, path, value), handler, request);	},
+		getDataOperationRequestSet : function(target, path, value, handler, request){	return node_createValueInVarOperationRequest(loc_context, this.getDataOperationSet(target, path, value), handler, request);	},
 		executeDataOperationRequestSet : function(target, path, value, handler, request){	return this.processRequest(this.getDataOperationRequestSet(target, path, value, handler, request));	},
 
 		createHandleEachElementProcessor : function(name, path){  return this.getContext().createHandleEachElementProcessor(loc_getContextRootIdByName(name), path);  },
 		
 		getBatchDataOperationRequest : function(operations, handlers, request){
-			var requestInfo = node_createBatchUIDataOperationRequest(loc_context, handlers, request);
+			var requestInfo = node_createBatchValueInVarOperationRequest(loc_context, handlers, request);
 			_.each(operations, function(operation, i){
-				requestInfo.addUIDataOperation(operation);						
+				requestInfo.addValueInVarOperation(operation);						
 			});
 			return requestInfo;
 		},
@@ -451,7 +451,7 @@ nosliw.registerSetNodeDataEvent("variable.context.createContext", function(){nod
 nosliw.registerSetNodeDataEvent("variable.context.createContextElementInfo", function(){node_createContextElementInfo = this.getData();});
 nosliw.registerSetNodeDataEvent("variable.context.createContextElement", function(){node_createContextElement = this.getData();});
 nosliw.registerSetNodeDataEvent("variable.context.createExtendedContext", function(){node_createExtendedContext = this.getData();});
-nosliw.registerSetNodeDataEvent("variable.data.utility", function(){node_dataUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("variable.valueinvar.utility", function(){node_dataUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("uipage.utility", function(){node_uiResourceUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("uipage.createEmbededScriptExpressionInContent", function(){node_createEmbededScriptExpressionInContent = this.getData();});
 nosliw.registerSetNodeDataEvent("uipage.createEmbededScriptExpressionInAttribute", function(){node_createEmbededScriptExpressionInAttribute = this.getData();});
@@ -459,10 +459,10 @@ nosliw.registerSetNodeDataEvent("common.lifecycle.getLifecycleInterface", functi
 nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("variable.context.createContextVariableInfo", function(){node_createContextVariableInfo = this.getData();});
 nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
-nosliw.registerSetNodeDataEvent("variable.uidataoperation.createUIDataOperationRequest", function(){node_createUIDataOperationRequest = this.getData();});
-nosliw.registerSetNodeDataEvent("variable.uidataoperation.UIDataOperation", function(){node_UIDataOperation = this.getData();});
-nosliw.registerSetNodeDataEvent("variable.uidataoperation.uiDataOperationServiceUtility", function(){node_uiDataOperationServiceUtility = this.getData();});
-nosliw.registerSetNodeDataEvent("variable.uidataoperation.createBatchUIDataOperationRequest", function(){node_createBatchUIDataOperationRequest  = this.getData();});
+nosliw.registerSetNodeDataEvent("variable.valueinvar.operation.createValueInVarOperationRequest", function(){node_createValueInVarOperationRequest = this.getData();});
+nosliw.registerSetNodeDataEvent("variable.valueinvar.operation.ValueInVarOperation", function(){node_ValueInVarOperation = this.getData();});
+nosliw.registerSetNodeDataEvent("variable.valueinvar.operation.valueInVarOperationServiceUtility", function(){node_valueInVarOperationServiceUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("variable.valueinvar.operation.createBatchValueInVarOperationRequest", function(){node_createBatchValueInVarOperationRequest  = this.getData();});
 nosliw.registerSetNodeDataEvent("uipage.uiResourceViewFactory", function(){node_uiResourceViewFactory = this.getData();});
 nosliw.registerSetNodeDataEvent("uinode.uiNodeViewFactory", function(){node_uiNodeViewFactory = this.getData();});
 nosliw.registerSetNodeDataEvent("common.event.createEventObject", function(){node_createEventObject = this.getData();});

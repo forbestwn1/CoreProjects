@@ -17,7 +17,6 @@ var packageObj = library.getChildPackage();
 	var node_storyUIUtility;
 	var node_designUtility;
 	var node_CONSTANT;
-	var node_createData;
 	var node_createContextElementInfo;
 	var node_createContext;
 //*******************************************   Start Node Definition  ************************************** 	
@@ -157,7 +156,6 @@ nosliw.registerSetNodeDataEvent("application.instance.story.storyUIUtility", fun
 nosliw.registerSetNodeDataEvent("application.instance.story.designUtility", function(){node_designUtility = this.getData();});
 
 nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = this.getData();});
-nosliw.registerSetNodeDataEvent("variable.data.entity.createData", function(){node_createData = this.getData();});
 nosliw.registerSetNodeDataEvent("variable.context.createContextElementInfo", function(){node_createContextElementInfo = this.getData();});
 nosliw.registerSetNodeDataEvent("variable.context.createContext", function(){node_createContext = this.getData();});
 

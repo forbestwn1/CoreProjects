@@ -1,5 +1,5 @@
 //get/create package
-var packageObj = library.getChildPackage("wrapper.object");    
+var packageObj = library.getChildPackage("valueinvar");    
 
 (function(packageObj){
 //get used node
@@ -109,7 +109,7 @@ nosliw.registerSetNodeDataEvent("common.objectwithtype.makeObjectWithType", func
 nosliw.registerSetNodeDataEvent("common.objectwithtype.getObjectType", function(){node_getObjectType = this.getData();});
 nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("common.namingconvension.namingConvensionUtility", function(){node_namingConvensionUtility = this.getData();});
-nosliw.registerSetNodeDataEvent("variable.data.utility", function(){node_dataUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("variable.valueinvar.utility", function(){node_dataUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("variable.wrapper.wrapperFactory", function(){node_wrapperFactory = this.getData();});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple", function(){node_createServiceRequestInfoSimple = this.getData();});
 nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();	});

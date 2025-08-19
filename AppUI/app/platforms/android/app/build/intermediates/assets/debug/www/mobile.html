@@ -133,7 +133,7 @@
 	
 	var createSetting = function(id, settingName){
 		var node_COMMONATRIBUTECONSTANT = nosliw.getNodeData("constant.COMMONATRIBUTECONSTANT");
-		var node_dataUtility = nosliw.getNodeData("variable.data.utility");
+		var node_dataUtility = nosliw.getNodeData("variable.valueinvar.utility");
 		var node_CONSTANT = nosliw.getNodeData("constant.CONSTANT");
 		var node_COMMONCONSTANT = nosliw.getNodeData("constant.COMMONCONSTANT");
 		var node_createServiceRequestInfoSequence = nosliw.getNodeData("request.request.createServiceRequestInfoSequence");
@@ -224,7 +224,7 @@
 
 	var showAppResult = function(parentView, uiModuleInstance, appData){
 		var node_COMMONATRIBUTECONSTANT = nosliw.getNodeData("constant.COMMONATRIBUTECONSTANT");
-		var node_dataUtility = nosliw.getNodeData("variable.data.utility");
+		var node_dataUtility = nosliw.getNodeData("variable.valueinvar.utility");
 		var node_CONSTANT = nosliw.getNodeData("constant.CONSTANT");
 		var node_COMMONCONSTANT = nosliw.getNodeData("constant.COMMONCONSTANT");
 
@@ -245,7 +245,7 @@ uiResourceView.executeDataOperationRequestSet("result", appData, node_CONSTANT.D
 	
 	var showSettingRequest = function(userId, appId, parentView, uiModuleInstance, appData, miniAppEntry){
 		var node_COMMONATRIBUTECONSTANT = nosliw.getNodeData("constant.COMMONATRIBUTECONSTANT");
-		var node_dataUtility = nosliw.getNodeData("variable.data.utility");
+		var node_dataUtility = nosliw.getNodeData("variable.valueinvar.utility");
 		var node_CONSTANT = nosliw.getNodeData("constant.CONSTANT");
 		var node_COMMONCONSTANT = nosliw.getNodeData("constant.COMMONCONSTANT");
 		var node_createServiceRequestInfoSet = nosliw.getNodeData("request.request.createServiceRequestInfoSet");
@@ -383,7 +383,7 @@ uiResourceView.executeDataOperationRequestSet("result", appData, node_CONSTANT.D
 							}
 							else{
 								var node_COMMONATRIBUTECONSTANT = nosliw.getNodeData("constant.COMMONATRIBUTECONSTANT");
-								var node_dataUtility = nosliw.getNodeData("variable.data.utility");
+								var node_dataUtility = nosliw.getNodeData("variable.valueinvar.utility");
 								var node_CONSTANT = nosliw.getNodeData("constant.CONSTANT");
 								var node_COMMONCONSTANT = nosliw.getNodeData("constant.COMMONCONSTANT");
 								var node_createServiceRequestInfoSequence = nosliw.getNodeData("request.request.createServiceRequestInfoSequence");
@@ -420,9 +420,9 @@ uiResourceView.executeDataOperationRequestSet("result", appData, node_CONSTANT.D
 	var getDataFromUIResourceViewRequest = function(uiResourceView, handlers, requestInfo){
 		var node_createServiceRequestInfoSequence = nosliw.getNodeData("request.request.createServiceRequestInfoSequence");
 		var node_createServiceRequestInfoSet = nosliw.getNodeData("request.request.createServiceRequestInfoSet");
-		var node_createUIDataOperationRequest = nosliw.getNodeData("variable.uidataoperation.createUIDataOperationRequest");
-		var node_UIDataOperation = nosliw.getNodeData("variable.uidataoperation.UIDataOperation");
-		var node_uiDataOperationServiceUtility = nosliw.getNodeData("variable.uidataoperation.uiDataOperationServiceUtility");
+		var node_createValueInVarOperationRequest = nosliw.getNodeData("variable.valueinvar.operation.createValueInVarOperationRequest");
+		var node_ValueInVarOperation = nosliw.getNodeData("variable.valueinvar.operation.ValueInVarOperation");
+		var node_valueInVarOperationServiceUtility = nosliw.getNodeData("variable.valueinvar.operation.valueInVarOperationServiceUtility");
 
 		var setRequest = node_createServiceRequestInfoSet({}, {
 			success : function(requestInfo, result){
@@ -435,7 +435,7 @@ uiResourceView.executeDataOperationRequestSet("result", appData, node_CONSTANT.D
 			}
 		}, requestInfo);
 		_.each(uiResourceView.getContext().getElementsName(), function(eleName, index){
-			setRequest.addRequest(eleName, node_createUIDataOperationRequest(uiResourceView.getContext(), new node_UIDataOperation(eleName, node_uiDataOperationServiceUtility.createGetOperationService())));
+			setRequest.addRequest(eleName, node_createValueInVarOperationRequest(uiResourceView.getContext(), new node_ValueInVarOperation(eleName, node_valueInVarOperationServiceUtility.createGetOperationService())));
 		});
 
 		var outRequest = node_createServiceRequestInfoSequence({}, handlers, requestInfo);

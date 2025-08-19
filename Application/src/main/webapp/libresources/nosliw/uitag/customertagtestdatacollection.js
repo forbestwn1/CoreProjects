@@ -30,7 +30,7 @@ var node_createUICustomerTagTestDataCollection = function(envObj){
 			}
 			else if(event=="EACHELEMENTCONTAINER_EVENT_NEWELEMENT"){
 				var req = node_createServiceRequestInfoSequence(undefined, {}, requestInfo);
-				req.addRequest(eventData.indexVar.getDataOperationRequest(node_uiDataOperationServiceUtility.createGetOperationService(""), {
+				req.addRequest(eventData.indexVar.getDataOperationRequest(node_valueInVarOperationServiceUtility.createGetOperationService(""), {
 					success : function(request, data){
 						return loc_getAddEleRequest(eventData.elementVar, eventData.indexVar, data.value.getValue());
 					}
@@ -38,7 +38,7 @@ var node_createUICustomerTagTestDataCollection = function(envObj){
 				node_requestServiceProcessor.processRequest(req);
 			}
 			else if(event=="EACHELEMENTCONTAINER_EVENT_DELETEELEMENT"){
-				eventData.executeDataOperationRequest(node_uiDataOperationServiceUtility.createGetOperationService(""), {
+				eventData.executeDataOperationRequest(node_valueInVarOperationServiceUtility.createGetOperationService(""), {
 					success : function(request, data){
 						loc_out.prv_deleteEle(node_dataUtility.getValueOfData(data), request);
 					}

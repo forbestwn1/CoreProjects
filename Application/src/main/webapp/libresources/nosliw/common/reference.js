@@ -1,5 +1,5 @@
 //get/create package
-var packageObj = library.getChildPackage("entity");    
+var packageObj = library.getChildPackage("reference");    
 
 (function(packageObj){
 //get used node

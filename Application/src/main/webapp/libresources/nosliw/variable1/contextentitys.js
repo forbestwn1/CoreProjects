@@ -185,7 +185,7 @@ nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = 
 nosliw.registerSetNodeDataEvent("constant.COMMONCONSTANT", function(){node_COMMONCONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("common.objectwithtype.makeObjectWithType", function(){node_makeObjectWithType = this.getData();});
 nosliw.registerSetNodeDataEvent("common.objectwithtype.getObjectType", function(){node_getObjectType = this.getData();});
-nosliw.registerSetNodeDataEvent("variable.variable.createVariableWrapper", function(){node_createVariableWrapper = this.getData();});
+nosliw.registerSetNodeDataEvent("variable.wrapper.createVariableWrapper", function(){node_createVariableWrapper = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createContextVariableInfo", node_createContextVariableInfo); 

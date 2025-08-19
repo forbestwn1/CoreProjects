@@ -16,10 +16,10 @@ var packageObj = library;
 	var node_dataUtility;
 	var node_createContext;
 	var node_createContextVariableInfo;
-	var node_createUIDataOperationRequest;
+	var node_createValueInVarOperationRequest;
 	var createServiceRequestInfoSet;
-	var node_UIDataOperation;
-	var node_uiDataOperationServiceUtility;
+	var node_ValueInVarOperation;
+	var node_valueInVarOperationServiceUtility;
 	var node_requestUtility;
 
 //*******************************************   Start Node Definition  ************************************** 	
@@ -42,7 +42,7 @@ var node_utilityUIError = function(){
 			
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 			_.each(affectedContexts, function(context){
-				out.addRequest(node_createUIDataOperationRequest(context, new node_UIDataOperation(node_COMMONCONSTANT.UIRESOURCE_CONTEXTELEMENT_NAME_UIVALIDATIONERROR, node_uiDataOperationServiceUtility.createSetOperationService("", {}))));
+				out.addRequest(node_createValueInVarOperationRequest(context, new node_ValueInVarOperation(node_COMMONCONSTANT.UIRESOURCE_CONTEXTELEMENT_NAME_UIVALIDATIONERROR, node_valueInVarOperationServiceUtility.createSetOperationService("", {}))));
 			});
 			
 			return out;
@@ -53,7 +53,7 @@ var node_utilityUIError = function(){
 			out.addRequest(uiTag.getValidateDataRequest({
 				success : function(request, message){
 					if(message!=undefined&&message.length!=0){
-						return node_createUIDataOperationRequest(uiTag.getParentContext(), new node_UIDataOperation(node_COMMONCONSTANT.UIRESOURCE_CONTEXTELEMENT_NAME_UIVALIDATIONERROR, node_uiDataOperationServiceUtility.createSetOperationService(uiTag.getId(), message)), {
+						return node_createValueInVarOperationRequest(uiTag.getParentContext(), new node_ValueInVarOperation(node_COMMONCONSTANT.UIRESOURCE_CONTEXTELEMENT_NAME_UIVALIDATIONERROR, node_valueInVarOperationServiceUtility.createSetOperationService(uiTag.getId(), message)), {
 							success : function(){
 								return message;
 							}
@@ -107,13 +107,13 @@ nosliw.registerSetNodeDataEvent("request.buildServiceProvider", function(){node_
 nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();});
 nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
 nosliw.registerSetNodeDataEvent("variable.context.createContextElementInfo", function(){node_createContextElementInfo = this.getData();});
-nosliw.registerSetNodeDataEvent("variable.data.utility", function(){node_dataUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("variable.valueinvar.utility", function(){node_dataUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("variable.context.createContext", function(){node_createContext = this.getData();});
 nosliw.registerSetNodeDataEvent("variable.context.createContextVariableInfo", function(){node_createContextVariableInfo = this.getData();});
-nosliw.registerSetNodeDataEvent("variable.uidataoperation.createUIDataOperationRequest", function(){node_createUIDataOperationRequest = this.getData();});
+nosliw.registerSetNodeDataEvent("variable.valueinvar.operation.createValueInVarOperationRequest", function(){node_createValueInVarOperationRequest = this.getData();});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSet", function(){	node_createServiceRequestInfoSet = this.getData();	});
-nosliw.registerSetNodeDataEvent("variable.uidataoperation.UIDataOperation", function(){node_UIDataOperation = this.getData();});
-nosliw.registerSetNodeDataEvent("variable.uidataoperation.uiDataOperationServiceUtility", function(){node_uiDataOperationServiceUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("variable.valueinvar.operation.ValueInVarOperation", function(){node_ValueInVarOperation = this.getData();});
+nosliw.registerSetNodeDataEvent("variable.valueinvar.operation.valueInVarOperationServiceUtility", function(){node_valueInVarOperationServiceUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("request.utility", function(){node_requestUtility = this.getData();});
 
 //Register Node by Name

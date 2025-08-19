@@ -83,7 +83,7 @@
 			
 			createContextForDemo : function(id, parentContext, request) {
 				var node_CONSTANT = nosliw.getNodeData("constant.CONSTANT");
-				var node_createData = nosliw.getNodeData("variable.data.entity.createData");
+				var node_createData = nosliw.getNodeData("variable.valueinvar.entity..createData");
 				var node_createContextElementInfo = nosliw.getNodeData("variable.context.createContextElementInfo");
 				var node_createContext = nosliw.getNodeData("variable.context.createContext");
 				var data = node_createData([1, 2], node_CONSTANT.WRAPPER_TYPE_OBJECT);

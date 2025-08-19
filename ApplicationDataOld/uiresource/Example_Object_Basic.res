@@ -63,16 +63,16 @@
 					var node_createContextVariable = nosliw.getNodeData("variable.context.createContextVariable");
 					var node_CONSTANT = nosliw.getNodeData("constant.CONSTANT");
 					var node_requestServiceProcessor = nosliw.getNodeData("request.requestServiceProcessor");
-					var node_createBatchUIDataOperationRequest = nosliw.getNodeData("variable.uidataoperation.createBatchUIDataOperationRequest");
-					var node_UIDataOperation = nosliw.getNodeData("variable.uidataoperation.UIDataOperation");
-					var node_uiDataOperationServiceUtility = nosliw.getNodeData("variable.uidataoperation.uiDataOperationServiceUtility");
+					var node_createBatchValueInVarOperationRequest = nosliw.getNodeData("variable.valueinvar.operation.createBatchValueInVarOperationRequest");
+					var node_ValueInVarOperation = nosliw.getNodeData("variable.valueinvar.operation.ValueInVarOperation");
+					var node_valueInVarOperationServiceUtility = nosliw.getNodeData("variable.valueinvar.operation.valueInVarOperationServiceUtility");
 					var node_createContextVariable = nosliw.getNodeData("variable.context.createContextVariable");
 					var node_createServiceRequestInfoSequence = nosliw.getNodeData("request.request.createServiceRequestInfoSequence");
 
 					
-							var opRequest = node_createBatchUIDataOperationRequest(this.getContext());
-							var uiDataOperation = new node_UIDataOperation("ele", node_uiDataOperationServiceUtility.createDeleteOperationService(""));
-							opRequest.addUIDataOperation(uiDataOperation);
+							var opRequest = node_createBatchValueInVarOperationRequest(this.getContext());
+							var uiDataOperation = new node_ValueInVarOperation("ele", node_valueInVarOperationServiceUtility.createDeleteOperationService(""));
+							opRequest.addValueInVarOperation(uiDataOperation);
 					node_requestServiceProcessor.processRequest(opRequest, false);
 					
 /*					
@@ -82,13 +82,13 @@
 						}
 					});
 					var that = this;
-					requestInfo.addRequest(this.getContext().getDataOperationRequest("index", node_uiDataOperationServiceUtility.createGetOperationService(), {
+					requestInfo.addRequest(this.getContext().getDataOperationRequest("index", node_valueInVarOperationServiceUtility.createGetOperationService(), {
 						success : function(request, data){
 							var elePath = data.value;
 						
-							var opRequest = node_createBatchUIDataOperationRequest(that.getContext());
-							var uiDataOperation = new node_UIDataOperation("ele", node_uiDataOperationServiceUtility.createDeleteOperationService(""));
-							opRequest.addUIDataOperation(uiDataOperation);
+							var opRequest = node_createBatchValueInVarOperationRequest(that.getContext());
+							var uiDataOperation = new node_ValueInVarOperation("ele", node_valueInVarOperationServiceUtility.createDeleteOperationService(""));
+							opRequest.addValueInVarOperation(uiDataOperation);
 							return opRequest;
 						}
 					}));
@@ -112,9 +112,9 @@
 			var node_createContextVariable = nosliw.getNodeData("variable.context.createContextVariable");
 			var node_CONSTANT = nosliw.getNodeData("constant.CONSTANT");
 			var node_requestServiceProcessor = nosliw.getNodeData("request.requestServiceProcessor");
-			var node_createBatchUIDataOperationRequest = nosliw.getNodeData("variable.uidataoperation.createBatchUIDataOperationRequest");
-			var node_UIDataOperation = nosliw.getNodeData("variable.uidataoperation.UIDataOperation");
-			var node_uiDataOperationServiceUtility = nosliw.getNodeData("variable.uidataoperation.uiDataOperationServiceUtility");
+			var node_createBatchValueInVarOperationRequest = nosliw.getNodeData("variable.valueinvar.operation.createBatchValueInVarOperationRequest");
+			var node_ValueInVarOperation = nosliw.getNodeData("variable.valueinvar.operation.ValueInVarOperation");
+			var node_valueInVarOperationServiceUtility = nosliw.getNodeData("variable.valueinvar.operation.valueInVarOperationServiceUtility");
 			var node_createContextVariableInfo = nosliw.getNodeData("variable.context.createContextVariableInfo");
 			
 			var eleData = {
@@ -122,9 +122,9 @@
 				value: "This is my world 33333!"
 			};
 
-			var requestInfo = node_createBatchUIDataOperationRequest(this.getContext());
-			var uiDataOperation = new node_UIDataOperation(node_createContextVariableInfo("business.a.cc"), node_uiDataOperationServiceUtility.createAddElementOperationService("", eleData, 1));
-			requestInfo.addUIDataOperation(uiDataOperation);						
+			var requestInfo = node_createBatchValueInVarOperationRequest(this.getContext());
+			var uiDataOperation = new node_ValueInVarOperation(node_createContextVariableInfo("business.a.cc"), node_valueInVarOperationServiceUtility.createAddElementOperationService("", eleData, 1));
+			requestInfo.addValueInVarOperation(uiDataOperation);						
 			node_requestServiceProcessor.processRequest(requestInfo, false);
 		},
 		

@@ -52,9 +52,9 @@
 			var node_createContextVariable = nosliw.getNodeData("variable.context.createContextVariable");
 			var node_CONSTANT = nosliw.getNodeData("constant.CONSTANT");
 			var node_requestServiceProcessor = nosliw.getNodeData("request.requestServiceProcessor");
-			var node_createBatchUIDataOperationRequest = nosliw.getNodeData("variable.uidataoperation.createBatchUIDataOperationRequest");
-			var node_UIDataOperation = nosliw.getNodeData("variable.uidataoperation.UIDataOperation");
-			var node_uiDataOperationServiceUtility = nosliw.getNodeData("variable.uidataoperation.uiDataOperationServiceUtility");
+			var node_createBatchValueInVarOperationRequest = nosliw.getNodeData("variable.valueinvar.operation.createBatchValueInVarOperationRequest");
+			var node_ValueInVarOperation = nosliw.getNodeData("variable.valueinvar.operation.ValueInVarOperation");
+			var node_valueInVarOperationServiceUtility = nosliw.getNodeData("variable.valueinvar.operation.valueInVarOperationServiceUtility");
 			var node_createContextVariableInfo = nosliw.getNodeData("variable.context.createContextVariableInfo");
 			
 			var eleData = {
@@ -62,9 +62,9 @@
 				value: "This is my world 33333!"
 			};
 
-			var requestInfo = node_createBatchUIDataOperationRequest(this.getContext());
-			var uiDataOperation = new node_UIDataOperation(node_createContextVariableInfo("school"), node_uiDataOperationServiceUtility.createAddElementOperationService("", eleData, 2));
-			requestInfo.addUIDataOperation(uiDataOperation);						
+			var requestInfo = node_createBatchValueInVarOperationRequest(this.getContext());
+			var uiDataOperation = new node_ValueInVarOperation(node_createContextVariableInfo("school"), node_valueInVarOperationServiceUtility.createAddElementOperationService("", eleData, 2));
+			requestInfo.addValueInVarOperation(uiDataOperation);						
 			node_requestServiceProcessor.processRequest(requestInfo, false);
 		},
 	}

@@ -12,7 +12,7 @@ var packageObj = library;
 	var node_createServiceRequestInfoSimple;
 	var node_ServiceInfo;
 	var node_createHandleEachElementProcessor;
-	var node_uiDataOperationServiceUtility;
+	var node_valueInVarOperationServiceUtility;
 	var node_requestServiceProcessor;
 	var node_namingConvensionUtility;
 	var node_createContextVariable;
@@ -144,7 +144,7 @@ var node_createUITagOnBaseArray = function(env, uiTagDef){
 					}
 					else if(event=="EACHELEMENTCONTAINER_EVENT_NEWELEMENT"){
 						var req = node_createServiceRequestInfoSequence(undefined, {}, requestInfo);
-						req.addRequest(eventData.indexVar.getDataOperationRequest(node_uiDataOperationServiceUtility.createGetOperationService(""), {
+						req.addRequest(eventData.indexVar.getDataOperationRequest(node_valueInVarOperationServiceUtility.createGetOperationService(""), {
 							success : function(request, data){
 								return loc_getAddEleRequest(eventData.elementVar, eventData.indexVar, data.value.getValue());
 							}
@@ -152,7 +152,7 @@ var node_createUITagOnBaseArray = function(env, uiTagDef){
 						node_requestServiceProcessor.processRequest(req);
 					}
 					else if(event=="EACHELEMENTCONTAINER_EVENT_DELETEELEMENT"){
-						eventData.executeDataOperationRequest(node_uiDataOperationServiceUtility.createGetOperationService(""), {
+						eventData.executeDataOperationRequest(node_valueInVarOperationServiceUtility.createGetOperationService(""), {
 							success : function(request, data){
 								loc_out.prv_deleteEle(node_dataUtility.getValueOfData(data), request);
 							}
@@ -168,7 +168,7 @@ var node_createUITagOnBaseArray = function(env, uiTagDef){
 				loc_handleEachElementProcessor.destroy(request);
 			},
 			createContextForDemo : function(id, parentContext, matchersByName, request){
-				var node_createData = nosliw.getNodeData("variable.data.entity.createData");
+				var node_createValueInVar = nosliw.getNodeData("variable.valueinvar.entity..createValueInVar");
 				var node_createContextElementInfo = nosliw.getNodeData("variable.context.createContextElementInfo");
 				var node_createContext = nosliw.getNodeData("variable.context.createContext");
 				
@@ -187,7 +187,7 @@ var node_createUITagOnBaseArray = function(env, uiTagDef){
 					dataVarEleInfo = node_createContextElementInfo("internal_data", dataVarPar, undefined, undefined, info);
 				}
 				else{
-					var data = node_createData(loc_coreObj.getDataForDemo(), node_CONSTANT.WRAPPER_TYPE_APPDATA);
+					var data = node_createValueInVar(loc_coreObj.getDataForDemo(), node_CONSTANT.WRAPPER_TYPE_APPDATA);
 					dataVarEleInfo = node_createContextElementInfo("internal_data", data);
 				}
 				
@@ -216,11 +216,11 @@ nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequenc
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple", function(){	node_createServiceRequestInfoSimple = this.getData();	});
 nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();	});
 nosliw.registerSetNodeDataEvent("variable.orderedcontainer.createHandleEachElementProcessor", function(){node_createHandleEachElementProcessor = this.getData();});
-nosliw.registerSetNodeDataEvent("variable.uidataoperation.uiDataOperationServiceUtility", function(){node_uiDataOperationServiceUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("variable.valueinvar.operation.valueInVarOperationServiceUtility", function(){node_valueInVarOperationServiceUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
 nosliw.registerSetNodeDataEvent("common.namingconvension.namingConvensionUtility", function(){node_namingConvensionUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("variable.context.createContextVariable", function(){node_createContextVariable = this.getData();});
-nosliw.registerSetNodeDataEvent("variable.data.utility", function(){node_dataUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("variable.valueinvar.utility", function(){node_dataUtility = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createUITagOnBaseArray", node_createUITagOnBaseArray); 

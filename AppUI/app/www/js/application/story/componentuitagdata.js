@@ -17,12 +17,12 @@ var packageObj = library.getChildPackage();
 	var node_storyUIUtility;
 	var node_designUtility;
 	var node_CONSTANT;
-	var node_createData;
+	var node_createValueInVar;
 	var node_createContextElementInfo;
 	var node_createContext;
-	var node_createUIDataOperationRequest;
-	var node_UIDataOperation;
-	var node_uiDataOperationServiceUtility;
+	var node_createValueInVarOperationRequest;
+	var node_ValueInVarOperation;
+	var node_valueInVarOperationServiceUtility;
 
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -42,7 +42,7 @@ var node_createComponentUITagData = function(){
 
 			that.context = undefined;
 			if(that.dynamicdata=='true'){
-				var data = node_createData(that.tagData, node_CONSTANT.WRAPPER_TYPE_APPDATA);
+				var data = node_createValueInVar(that.tagData, node_CONSTANT.WRAPPER_TYPE_APPDATA);
 				var dataVarEleInfo = node_createContextElementInfo("data", data);
 				var elementInfosArray = [dataVarEleInfo];
 				that.context = node_createContext("id", elementInfosArray, request);
@@ -50,7 +50,7 @@ var node_createComponentUITagData = function(){
 				that.context.getContextElement("data").registerDataChangeEventListener(undefined, function(event, eventData, request){
 					if(that.requestFromDataUpdate[request.getId()]==undefined){
 						//data change from tag ui
-						var getDataRequest = node_createUIDataOperationRequest(that.context, new node_UIDataOperation("data", node_uiDataOperationServiceUtility.createGetOperationService("")), {
+						var getDataRequest = node_createValueInVarOperationRequest(that.context, new node_ValueInVarOperation("data", node_valueInVarOperationServiceUtility.createGetOperationService("")), {
 							success : function(request, uiData){
 								that.tagData = uiData==undefined?undefined:uiData.value;
 								that.$emit("dataChange", {data:that.tagData,request:request});
@@ -120,13 +120,13 @@ nosliw.registerSetNodeDataEvent("application.instance.story.storyUIUtility", fun
 nosliw.registerSetNodeDataEvent("application.instance.story.designUtility", function(){node_designUtility = this.getData();});
 
 nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = this.getData();});
-nosliw.registerSetNodeDataEvent("variable.data.entity.createData", function(){node_createData = this.getData();});
+nosliw.registerSetNodeDataEvent("variable.valueinvar.entity..createValueInVar", function(){node_createValueInVar = this.getData();});
 nosliw.registerSetNodeDataEvent("variable.context.createContextElementInfo", function(){node_createContextElementInfo = this.getData();});
 nosliw.registerSetNodeDataEvent("variable.context.createContext", function(){node_createContext = this.getData();});
 
-nosliw.registerSetNodeDataEvent("variable.uidataoperation.createUIDataOperationRequest", function(){node_createUIDataOperationRequest = this.getData();});
-nosliw.registerSetNodeDataEvent("variable.uidataoperation.UIDataOperation", function(){node_UIDataOperation = this.getData();});
-nosliw.registerSetNodeDataEvent("variable.uidataoperation.uiDataOperationServiceUtility", function(){node_uiDataOperationServiceUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("variable.valueinvar.operation.createValueInVarOperationRequest", function(){node_createValueInVarOperationRequest = this.getData();});
+nosliw.registerSetNodeDataEvent("variable.valueinvar.operation.ValueInVarOperation", function(){node_ValueInVarOperation = this.getData();});
+nosliw.registerSetNodeDataEvent("variable.valueinvar.operation.valueInVarOperationServiceUtility", function(){node_valueInVarOperationServiceUtility = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createComponentUITagData", node_createComponentUITagData); 

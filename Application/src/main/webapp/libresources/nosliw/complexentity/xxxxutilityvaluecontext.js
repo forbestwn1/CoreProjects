@@ -15,9 +15,9 @@ var packageObj = library;
 	var node_createConfigure;
 	var node_complexEntityUtility;
 	var node_getEntityObjectInterface;
-	var node_createUIDataOperationRequest;
-	var node_UIDataOperation;
-	var node_uiDataOperationServiceUtility;
+	var node_createValueInVarOperationRequest;
+	var node_ValueInVarOperation;
+	var node_valueInVarOperationServiceUtility;
 	var node_createValueStructureVariableInfo;
 
 //*******************************************   Start Node Definition  ************************************** 	
@@ -37,7 +37,7 @@ var node_valueContextUtility = {
 		var valueStructure = valueContext.getValueStructure(valueStrcutureRuntimeId);
 	
 		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-		out.addRequest(node_createUIDataOperationRequest(valueStructure, new node_UIDataOperation(node_createValueStructureVariableInfo(rootName), node_uiDataOperationServiceUtility.createGetOperationService(elePath)), {
+		out.addRequest(node_createValueInVarOperationRequest(valueStructure, new node_ValueInVarOperation(node_createValueStructureVariableInfo(rootName), node_valueInVarOperationServiceUtility.createGetOperationService(elePath)), {
 			success : function(request, result){
 				return result.value;
 			}
@@ -50,7 +50,7 @@ var node_valueContextUtility = {
 		var valueStructure = valueContext.getValueStructure(valueStrcutureRuntimeId);
 	
 		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-		out.addRequest(node_createUIDataOperationRequest(valueStructure, new node_UIDataOperation(node_createValueStructureVariableInfo(rootName), node_uiDataOperationServiceUtility.createSetOperationService(elePath, value)), {
+		out.addRequest(node_createValueInVarOperationRequest(valueStructure, new node_ValueInVarOperation(node_createValueStructureVariableInfo(rootName), node_valueInVarOperationServiceUtility.createSetOperationService(elePath, value)), {
 			success : function(request, result){
 				return result;
 			}
@@ -74,9 +74,9 @@ nosliw.registerSetNodeDataEvent("resource.utility", function(){node_resourceUtil
 nosliw.registerSetNodeDataEvent("component.createConfigure", function(){node_createConfigure = this.getData();});
 nosliw.registerSetNodeDataEvent("complexentity.complexEntityUtility", function(){node_complexEntityUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("complexentity.getEntityObjectInterface", function(){node_getEntityObjectInterface = this.getData();});
-nosliw.registerSetNodeDataEvent("variable.uidataoperation.createUIDataOperationRequest", function(){node_createUIDataOperationRequest = this.getData();});
-nosliw.registerSetNodeDataEvent("variable.uidataoperation.UIDataOperation", function(){node_UIDataOperation = this.getData();});
-nosliw.registerSetNodeDataEvent("variable.uidataoperation.uiDataOperationServiceUtility", function(){node_uiDataOperationServiceUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("variable.valueinvar.operation.createValueInVarOperationRequest", function(){node_createValueInVarOperationRequest = this.getData();});
+nosliw.registerSetNodeDataEvent("variable.valueinvar.operation.ValueInVarOperation", function(){node_ValueInVarOperation = this.getData();});
+nosliw.registerSetNodeDataEvent("variable.valueinvar.operation.valueInVarOperationServiceUtility", function(){node_valueInVarOperationServiceUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("variable.valuestructure.createValueStructureVariableInfo", function(){node_createValueStructureVariableInfo = this.getData();});
 
 //Register Node by Name

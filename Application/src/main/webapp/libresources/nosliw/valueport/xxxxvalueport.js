@@ -13,7 +13,7 @@ var packageObj = library.getChildPackage();
 	var node_buildInterface;
 	var node_getEntityObjectInterface;
 	var node_getInterface;
-	var node_uiDataOperationServiceUtility;
+	var node_valueInVarOperationServiceUtility;
 //*******************************************   Start Node Definition  ************************************** 	
 
 var node_createValuePort = function(valuePortContainerId, varDomain, valuePortGroup, valuePortName){
@@ -38,7 +38,7 @@ var node_createValuePortValueContext = function(valueContextId, varDomain){
 		
 		getValueRequest : function(elementId, handlers, request){        
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("setValuesRequest", {}), handlers, request);
-			out.addRequest(loc_valueContext.getValueStructure(elementId.getValueStructureId()).getDataOperationRequest(elementId.getRootName(), node_uiDataOperationServiceUtility.createGetOperationService(elementId.getElementPath()), {
+			out.addRequest(loc_valueContext.getValueStructure(elementId.getValueStructureId()).getDataOperationRequest(elementId.getRootName(), node_valueInVarOperationServiceUtility.createGetOperationService(elementId.getElementPath()), {
 				success: function(request, dataValue){
 					return dataValue.value;
 				}
@@ -47,14 +47,14 @@ var node_createValuePortValueContext = function(valueContextId, varDomain){
 		},
 
 		setValueRequest : function(elementId, value, handlers, request){        
-			return loc_valueContext.getValueStructure(elementId.getValueStructureId()).getDataOperationRequest(elementId.getRootName(), node_uiDataOperationServiceUtility.createSetOperationService(elementId.getElementPath(), value), handlers, request);
+			return loc_valueContext.getValueStructure(elementId.getValueStructureId()).getDataOperationRequest(elementId.getRootName(), node_valueInVarOperationServiceUtility.createSetOperationService(elementId.getElementPath(), value), handlers, request);
 		},
 		
 		setValuesRequest : function(setValueInfos, handlers, request){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("setValuesRequest", {}), handlers, request);
 			_.each(setValueInfos, function(setValueInfo, i){
 				var elementId = setValueInfo.elementId;
-				out.addRequest(loc_valueContext.getValueStructure(elementId.getValueStructureId()).getDataOperationRequest(elementId.getRootName(), node_uiDataOperationServiceUtility.createSetOperationService(elementId.getElementPath(), setValueInfo.value)));
+				out.addRequest(loc_valueContext.getValueStructure(elementId.getValueStructureId()).getDataOperationRequest(elementId.getRootName(), node_valueInVarOperationServiceUtility.createSetOperationService(elementId.getElementPath(), setValueInfo.value)));
 			});
 			return out;			
 		},
@@ -126,7 +126,7 @@ nosliw.registerSetNodeDataEvent("common.embeded.getEmbededEntityInterface", func
 nosliw.registerSetNodeDataEvent("common.interface.buildInterface", function(){node_buildInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("complexentity.getEntityObjectInterface", function(){node_getEntityObjectInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("common.interface.getInterface", function(){node_getInterface = this.getData();});
-nosliw.registerSetNodeDataEvent("variable.uidataoperation.uiDataOperationServiceUtility", function(){node_uiDataOperationServiceUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("variable.valueinvar.operation.valueInVarOperationServiceUtility", function(){node_valueInVarOperationServiceUtility = this.getData();});
 
 //Register Node by Name
 //packageObj.createChildNode("createValuePortValueContext", node_createValuePortValueContext); 

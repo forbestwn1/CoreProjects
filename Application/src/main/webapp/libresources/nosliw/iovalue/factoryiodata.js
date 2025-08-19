@@ -13,8 +13,8 @@ var packageObj = library;
 	var node_createIODataSet;
 	var node_createDynamicIOData;
 	var node_getEntityObjectInterface;
-	var node_createUIDataOperationRequest;
-	var node_UIDataOperation;
+	var node_createValueInVarOperationRequest;
+	var node_ValueInVarOperation;
 	var node_createValueStructureVariableInfo;
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -52,7 +52,7 @@ var node_ioDataFactory = function(){
 					dataOpService.parms.path = elePath;
 					var valueStructure = valueContext.getValueStructure(valueStrcutureRuntimeId);
 				
-					out.addRequest(node_createUIDataOperationRequest(valueStructure, new node_UIDataOperation(node_createValueStructureVariableInfo(rootName), dataOpService), {
+					out.addRequest(node_createValueInVarOperationRequest(valueStructure, new node_ValueInVarOperation(node_createValueStructureVariableInfo(rootName), dataOpService), {
 						success : function(request, result){
 							if(dataOpService.command==node_CONSTANT.WRAPPER_OPERATION_GET){
 								return result.value;
@@ -87,8 +87,8 @@ nosliw.registerSetNodeDataEvent("common.objectwithtype.getObjectType", function(
 nosliw.registerSetNodeDataEvent("iovalue.entity.createIODataSet", function(){node_createIODataSet = this.getData();});
 nosliw.registerSetNodeDataEvent("iovalue.entity.createDynamicData", function(){node_createDynamicIOData = this.getData();});
 nosliw.registerSetNodeDataEvent("complexentity.getEntityObjectInterface", function(){node_getEntityObjectInterface = this.getData();});
-nosliw.registerSetNodeDataEvent("variable.uidataoperation.createUIDataOperationRequest", function(){node_createUIDataOperationRequest = this.getData();});
-nosliw.registerSetNodeDataEvent("variable.uidataoperation.UIDataOperation", function(){node_UIDataOperation = this.getData();});
+nosliw.registerSetNodeDataEvent("variable.valueinvar.operation.createValueInVarOperationRequest", function(){node_createValueInVarOperationRequest = this.getData();});
+nosliw.registerSetNodeDataEvent("variable.valueinvar.operation.ValueInVarOperation", function(){node_ValueInVarOperation = this.getData();});
 nosliw.registerSetNodeDataEvent("variable.valuestructure.createValueStructureVariableInfo", function(){node_createValueStructureVariableInfo = this.getData();});
 
 //Register Node by Name

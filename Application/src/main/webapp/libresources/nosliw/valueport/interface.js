@@ -12,7 +12,7 @@ var packageObj = library.getChildPackage();
 	var node_buildInterface;
 	var node_getEntityObjectInterface;
 	var node_getInterface;
-	var node_uiDataOperationServiceUtility;
+	var node_valueInVarOperationServiceUtility;
 	var node_createValuePortValueContext;
 	var node_createValuePort;
 	var node_makeObjectWithType;
@@ -119,7 +119,7 @@ nosliw.registerSetNodeDataEvent("common.embeded.getEmbededEntityInterface", func
 nosliw.registerSetNodeDataEvent("common.interface.buildInterface", function(){node_buildInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("complexentity.getEntityObjectInterface", function(){node_getEntityObjectInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("common.interface.getInterface", function(){node_getInterface = this.getData();});
-nosliw.registerSetNodeDataEvent("variable.uidataoperation.uiDataOperationServiceUtility", function(){node_uiDataOperationServiceUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("variable.valueinvar.operation.valueInVarOperationServiceUtility", function(){node_valueInVarOperationServiceUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("valueport.createValuePortValueContext", function(){node_createValuePortValueContext = this.getData();});
 nosliw.registerSetNodeDataEvent("valueport.createValuePort", function(){node_createValuePort = this.getData();});
 nosliw.registerSetNodeDataEvent("common.objectwithtype.makeObjectWithType", function(){node_makeObjectWithType = this.getData();});

@@ -11,7 +11,7 @@ var packageObj = library;
 	var node_createServiceRequestInfoSet;
 	var node_ServiceInfo;
 	var node_objectOperationUtility;
-	var node_uiDataOperationServiceUtility;
+	var node_valueInVarOperationServiceUtility;
 	var node_namingConvensionUtility;
 	var node_getEntityTreeNodeInterface;
 	var node_getWithValuePortInterface;
@@ -156,7 +156,7 @@ var node_getExecuteMappingDataAssociationRequest1 = function(inputIODataSet, ass
 				var toItemPath = mappingPath[node_COMMONATRIBUTECONSTANT.PATHVALUEMAPPING_TOITEMPATH];
 
 				var value = getDataSet.getResult(i+"");
-				var dataOperationService = node_uiDataOperationServiceUtility.createSetOperationService(node_namingConvensionUtility.cascadePath(toValueStructureId, toItemPath), value);
+				var dataOperationService = node_valueInVarOperationServiceUtility.createSetOperationService(node_namingConvensionUtility.cascadePath(toValueStructureId, toItemPath), value);
 				setDataSetRequest.addRequest(outputIODataSet.getDataOperationRequest(toDomainName, dataOperationService));
 			});
 			return setDataSetRequest;
@@ -187,7 +187,7 @@ var node_getExecuteMappingDataAssociationRequest1 = function(inputIODataSet, ass
 		}
 		else if(fromProvideName!=undefined){
 			//from provide
-			var dataOperationService = node_uiDataOperationServiceUtility.createGetOperationService(node_namingConvensionUtility.cascadePath(fromProvideName, fromProvidePath));
+			var dataOperationService = node_valueInVarOperationServiceUtility.createGetOperationService(node_namingConvensionUtility.cascadePath(fromProvideName, fromProvidePath));
 			mappingRequest.addRequest(inputIODataSet.getDataOperationRequest(node_COMMONCONSTANT.IODATASET_PROVIDE, dataOperationService, {
 				success : function(request, value){
 					if(matchers==undefined)   return value;
@@ -199,7 +199,7 @@ var node_getExecuteMappingDataAssociationRequest1 = function(inputIODataSet, ass
 		}
 		else{
 			//from variable
-			var dataOperationService = node_uiDataOperationServiceUtility.createGetOperationService(node_namingConvensionUtility.cascadePath(fromValueStructureId, fromItemPath));
+			var dataOperationService = node_valueInVarOperationServiceUtility.createGetOperationService(node_namingConvensionUtility.cascadePath(fromValueStructureId, fromItemPath));
 			mappingRequest.addRequest(inputIODataSet.getDataOperationRequest(fromDomainName, dataOperationService, {
 				success : function(request, value){
 					if(matchers==undefined)   return value;
@@ -229,7 +229,7 @@ nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequenc
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSet", function(){node_createServiceRequestInfoSet = this.getData();});
 nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();	});
 nosliw.registerSetNodeDataEvent("common.utility.objectOperationUtility", function(){node_objectOperationUtility = this.getData();	});
-nosliw.registerSetNodeDataEvent("variable.uidataoperation.uiDataOperationServiceUtility", function(){node_uiDataOperationServiceUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("variable.valueinvar.operation.valueInVarOperationServiceUtility", function(){node_valueInVarOperationServiceUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("common.namingconvension.namingConvensionUtility", function(){node_namingConvensionUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("complexentity.getEntityTreeNodeInterface", function(){node_getEntityTreeNodeInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("valueport.getWithValuePortInterface", function(){node_getWithValuePortInterface = this.getData();});

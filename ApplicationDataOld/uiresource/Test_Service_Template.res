@@ -28,8 +28,8 @@
 
 			var node_CONSTANT = nosliw.getNodeData("constant.CONSTANT");
 			var node_requestServiceProcessor = nosliw.getNodeData("request.requestServiceProcessor");
-			var node_createBatchUIDataOperationRequest = nosliw.getNodeData("variable.uidataoperation.createBatchUIDataOperationRequest");
-			var node_UIDataOperation = nosliw.getNodeData("variable.uidataoperation.UIDataOperation");
+			var node_createBatchValueInVarOperationRequest = nosliw.getNodeData("variable.valueinvar.operation.createBatchValueInVarOperationRequest");
+			var node_ValueInVarOperation = nosliw.getNodeData("variable.valueinvar.operation.ValueInVarOperation");
 			
 			var requestInfo = env.getServiceRequest("service1", {
 				success : function(request){

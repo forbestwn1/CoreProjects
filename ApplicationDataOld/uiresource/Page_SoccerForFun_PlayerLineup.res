@@ -51,9 +51,9 @@
 			var node_createContextVariable = nosliw.getNodeData("variable.context.createContextVariable");
 			var node_CONSTANT = nosliw.getNodeData("constant.CONSTANT");
 			var node_requestServiceProcessor = nosliw.getNodeData("request.requestServiceProcessor");
-			var node_createBatchUIDataOperationRequest = nosliw.getNodeData("variable.uidataoperation.createBatchUIDataOperationRequest");
-			var node_UIDataOperation = nosliw.getNodeData("variable.uidataoperation.UIDataOperation");
-			var node_uiDataOperationServiceUtility = nosliw.getNodeData("variable.uidataoperation.uiDataOperationServiceUtility");
+			var node_createBatchValueInVarOperationRequest = nosliw.getNodeData("variable.valueinvar.operation.createBatchValueInVarOperationRequest");
+			var node_ValueInVarOperation = nosliw.getNodeData("variable.valueinvar.operation.ValueInVarOperation");
+			var node_valueInVarOperationServiceUtility = nosliw.getNodeData("variable.valueinvar.operation.valueInVarOperationServiceUtility");
 			var node_createContextVariableInfo = nosliw.getNodeData("variable.context.createContextVariableInfo");
 			
 			var requestInfo = env.getServiceRequest("lineupService", {

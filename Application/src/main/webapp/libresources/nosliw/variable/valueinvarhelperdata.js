@@ -1,5 +1,5 @@
 //get/create package
-var packageObj = library.getChildPackage("wrapper.appdata");    
+var packageObj = library.getChildPackage("valueinvar");    
 
 (function(packageObj){
 //get used node
@@ -17,7 +17,7 @@ var node_namingConvensionUtility;
 var node_appDataWrapperUtility;	
 var node_createServiceRequestInfoSequence;
 var node_ServiceInfo;
-var node_uiDataOperationServiceUtility;
+var node_valueInVarOperationServiceUtility;
 var node_requestServiceProcessor;
 var node_OperationParm;
 var node_parseSegment;
@@ -156,12 +156,12 @@ nosliw.registerSetNodeDataEvent("common.objectwithtype.makeObjectWithType", func
 nosliw.registerSetNodeDataEvent("common.objectwithtype.getObjectType", function(){node_getObjectType = this.getData();});
 nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("common.namingconvension.namingConvensionUtility", function(){node_namingConvensionUtility = this.getData();});
-nosliw.registerSetNodeDataEvent("variable.data.utility", function(){node_dataUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("variable.valueinvar.utility", function(){node_dataUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("variable.wrapper.wrapperFactory", function(){node_wrapperFactory = this.getData();});
 nosliw.registerSetNodeDataEvent("variable.wrapper.appdata.utility", function(){node_appDataWrapperUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequence", function(){	node_createServiceRequestInfoSequence = this.getData();	});
 nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();	});
-nosliw.registerSetNodeDataEvent("variable.uidataoperation.uiDataOperationServiceUtility", function(){node_uiDataOperationServiceUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("variable.valueinvar.operation.valueInVarOperationServiceUtility", function(){node_valueInVarOperationServiceUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
 nosliw.registerSetNodeDataEvent("expression.entity.OperationParm", function(){node_OperationParm = this.getData();});
 nosliw.registerSetNodeDataEvent("common.segmentparser.parseSegment", function(){node_parseSegment = this.getData();});

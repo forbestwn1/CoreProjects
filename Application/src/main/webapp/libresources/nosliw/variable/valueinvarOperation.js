@@ -1,5 +1,5 @@
 //get/create package
-var packageObj = library.getChildPackage("uidataoperation");    
+var packageObj = library.getChildPackage("valueinvar.operation");    
 
 (function(packageObj){
 //get used node
@@ -19,7 +19,7 @@ var loc_createValueStructureDataOperationRequest = function(valueStructure, valu
 
 //create request for data operation
 //operationBase:  where store variable, valueStructure or valueContext 
-var node_createUIDataOperationRequest = function(operationBase, uiDataOperation, handlers, requester_parent){
+var node_createValueInVarOperationRequest = function(operationBase, uiDataOperation, handlers, requester_parent){
 	var target = uiDataOperation.target;
 	var targetType = node_getObjectType(target);
 	var operationService = uiDataOperation.operationService;
@@ -54,7 +54,7 @@ var node_createUIDataOperationRequest = function(operationBase, uiDataOperation,
  * It contains a set of data operation service, so that this request is a batch of data operation as a whole
  * 
  */
-var node_createBatchUIDataOperationRequest = function(valueContext, handlers, requester_parent){
+var node_createBatchValueInVarOperationRequest = function(valueContext, handlers, requester_parent){
 
 	//all the child requests service  
 	var loc_uiDataOperations = [];
@@ -64,10 +64,10 @@ var node_createBatchUIDataOperationRequest = function(valueContext, handlers, re
 	
 	var loc_index = 0;
 	
-	var loc_out = node_createServiceRequestInfoSet(new node_ServiceInfo("BatchUIDataOperation", {}), handlers, requester_parent);
+	var loc_out = node_createServiceRequestInfoSet(new node_ServiceInfo("BatchValueInVarOperation", {}), handlers, requester_parent);
 	
-	loc_out.addUIDataOperation = function(uiDataOperation){
-		this.addRequest(loc_index+"", node_createUIDataOperationRequest(loc_valueContext, uiDataOperation));
+	loc_out.addValueInVarOperation = function(uiDataOperation){
+		this.addRequest(loc_index+"", node_createValueInVarOperationRequest(loc_valueContext, uiDataOperation));
 		loc_index++;
 
 		//for debugging purpose
@@ -83,14 +83,14 @@ var node_createBatchUIDataOperationRequest = function(valueContext, handlers, re
 //operate on targe
 //   target : variable, wrapper, context variable
 //   operationService : service for operation
-var node_UIDataOperation = function(targetInfo, operationService){
+var node_ValueInVarOperation = function(targetInfo, operationService){
 	this.target = targetInfo;
 	this.operationService = operationService;
 };
 
 
 //utility method to build data operation service
-var node_uiDataOperationServiceUtility = function(){
+var node_valueInVarOperationServiceUtility = function(){
 
 	var loc_createServiceInfo = function(command, parms){
 		var out = new node_ServiceInfo(command, parms);
@@ -188,14 +188,14 @@ nosliw.registerSetNodeDataEvent("common.objectwithtype.getObjectType", function(
 nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();	});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSet", function(){node_createServiceRequestInfoSet = this.getData();});
 nosliw.registerSetNodeDataEvent("common.namingconvension.namingConvensionUtility", function(){node_namingConvensionUtility = this.getData();});
-nosliw.registerSetNodeDataEvent("variable.data.utility", function(){node_dataUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("variable.valueinvar.utility", function(){node_dataUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("valueport.createValuePortElementInfo", function(){node_createValuePortElementInfo = this.getData();});
 
 
 //Register Node by Name
-packageObj.createChildNode("createUIDataOperationRequest", node_createUIDataOperationRequest); 
-packageObj.createChildNode("createBatchUIDataOperationRequest", node_createBatchUIDataOperationRequest); 
-packageObj.createChildNode("UIDataOperation", node_UIDataOperation); 
-packageObj.createChildNode("uiDataOperationServiceUtility", node_uiDataOperationServiceUtility); 
+packageObj.createChildNode("createValueInVarOperationRequest", node_createValueInVarOperationRequest); 
+packageObj.createChildNode("createBatchValueInVarOperationRequest", node_createBatchValueInVarOperationRequest); 
+packageObj.createChildNode("ValueInVarOperation", node_ValueInVarOperation); 
+packageObj.createChildNode("valueInVarOperationServiceUtility", node_valueInVarOperationServiceUtility); 
 
 })(packageObj);

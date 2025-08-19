@@ -16,7 +16,7 @@ var node_dataUtility;
 var node_wrapperFactory;
 var node_namingConvensionUtility;
 var node_createServiceRequestInfoSequence;
-var node_uiDataOperationServiceUtility;
+var node_valueInVarOperationServiceUtility;
 var node_createServiceRequestInfoSimple;
 var node_ServiceInfo;
 var node_createServiceRequestInfoSet;
@@ -220,7 +220,7 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType){
 					else if(event==node_CONSTANT.WRAPPER_EVENT_DELETEELEMENT){
 						var elePath = loc_getAdapterPathFromEventElementPath(eventData);
 						//transform to delete event, delete event is internal only, means it would not inform to user, use inform child 
-						events.internal.push(loc_triggerForwardEvent(node_CONSTANT.WRAPPER_EVENT_DELETE, node_uiDataOperationServiceUtility.createDeleteOperationService(elePath), requestInfo));
+						events.internal.push(loc_triggerForwardEvent(node_CONSTANT.WRAPPER_EVENT_DELETE, node_valueInVarOperationServiceUtility.createDeleteOperationService(elePath), requestInfo));
 						
 						eventData.id = elePath;   //kkkk
 						//store data operation event
@@ -315,7 +315,7 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType){
 				//data is dirty, then calculate data, sync data
 				out = node_createServiceRequestInfoSequence(operationService, handlers, requester_parent);
 				//get parent data first
-				var calParentDataRequest = loc_out.prv_relativeWrapperInfo.parent.getDataOperationRequest(node_uiDataOperationServiceUtility.createGetOperationService(), {
+				var calParentDataRequest = loc_out.prv_relativeWrapperInfo.parent.getDataOperationRequest(node_valueInVarOperationServiceUtility.createGetOperationService(), {
 					success : function(request, parentData){
 						//calculate current value from parent
 						//path from parent to calculate child value
@@ -635,17 +635,17 @@ nosliw.registerSetNodeDataEvent("common.objectwithtype.makeObjectWithType", func
 nosliw.registerSetNodeDataEvent("common.objectwithtype.getObjectType", function(){node_getObjectType = this.getData();});
 nosliw.registerSetNodeDataEvent("common.objectwithid.makeObjectWithId", function(){node_makeObjectWithId = this.getData();});
 nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();});
-nosliw.registerSetNodeDataEvent("variable.data.utility", function(){node_dataUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("variable.valueinvar.utility", function(){node_dataUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("variable.wrapper.wrapperFactory", function(){node_wrapperFactory = this.getData();});
 nosliw.registerSetNodeDataEvent("common.namingconvension.namingConvensionUtility", function(){node_namingConvensionUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequence", function(){	node_createServiceRequestInfoSequence = this.getData();	});
-nosliw.registerSetNodeDataEvent("variable.uidataoperation.uiDataOperationServiceUtility", function(){node_uiDataOperationServiceUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("variable.valueinvar.operation.valueInVarOperationServiceUtility", function(){node_valueInVarOperationServiceUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple", function(){node_createServiceRequestInfoSimple = this.getData();});
 nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();	});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSet", function(){node_createServiceRequestInfoSet = this.getData();});
 nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
 nosliw.registerSetNodeDataEvent("variable.wrapper.createWrapperOrderedContainer", function(){node_createWrapperOrderedContainer = this.getData();});
-nosliw.registerSetNodeDataEvent("variable.entity.RelativeEntityInfo", function(){node_RelativeEntityInfo = this.getData();});
+nosliw.registerSetNodeDataEvent("common.reference.RelativeEntityInfo", function(){node_RelativeEntityInfo = this.getData();});
 
 
 //Register Node by Name

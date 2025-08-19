@@ -16,7 +16,7 @@
 		var node_requestProcessor = nosliw.getNodeData("request.requestServiceProcessor");
 		var node_createContextVariablesGroup = nosliw.getNodeData("variable.context.createContextVariablesGroup");
 		var node_createContextVariableInfo = nosliw.getNodeData("variable.context.createContextVariableInfo");
-		var node_dataUtility = nosliw.getNodeData("variable.data.utility");
+		var node_dataUtility = nosliw.getNodeData("variable.valueinvar.utility");
 
 		var loc_env = env;
 	

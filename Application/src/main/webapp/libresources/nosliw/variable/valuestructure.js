@@ -23,9 +23,9 @@ var node_createVariableWrapper;
 var node_getHandleEachElementRequest;
 var node_createServiceRequestInfoSequence;
 var node_createServiceRequestInfoSet;
-var node_createUIDataOperationRequest;
-var node_uiDataOperationServiceUtility;
-var node_UIDataOperation;
+var node_createValueInVarOperationRequest;
+var node_valueInVarOperationServiceUtility;
+var node_ValueInVarOperation;
 var node_createRequestEventGroupHandler;
 var node_createEmptyValue;
 
@@ -279,7 +279,7 @@ var node_createValueStructure = function(id, elementInfosArray, request){
 			_.each(loc_out.getElementsName(), function(name, index){
 				var value = values[name];
 				if(value!=undefined){
-					var dataOpRequest = node_createUIDataOperationRequest(that, new node_UIDataOperation(name, node_uiDataOperationServiceUtility.createSetOperationService("", value)));
+					var dataOpRequest = node_createValueInVarOperationRequest(that, new node_ValueInVarOperation(name, node_valueInVarOperationServiceUtility.createSetOperationService("", value)));
 					setRequest.addRequest(name, dataOpRequest);
 				}
 			});
@@ -412,15 +412,15 @@ nosliw.registerSetNodeDataEvent("common.lifecycle.makeObjectWithLifecycle", func
 nosliw.registerSetNodeDataEvent("common.lifecycle.getLifecycleInterface", function(){node_getLifecycleInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("common.namingconvension.namingConvensionUtility", function(){node_namingConvensionUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();	});
-nosliw.registerSetNodeDataEvent("variable.data.utility", function(){node_dataUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("variable.valueinvar.utility", function(){node_dataUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple", function(){node_createServiceRequestInfoSimple = this.getData();});
-nosliw.registerSetNodeDataEvent("variable.variable.createVariableWrapper", function(){node_createVariableWrapper = this.getData();});
+nosliw.registerSetNodeDataEvent("variable.wrapper.createVariableWrapper", function(){node_createVariableWrapper = this.getData();});
 nosliw.registerSetNodeDataEvent("variable.orderedcontainer.createHandleEachElementProcessor", function(){node_createHandleEachElementProcessor = this.getData();});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequence", function(){	node_createServiceRequestInfoSequence = this.getData();	});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSet", function(){node_createServiceRequestInfoSet = this.getData();});
-nosliw.registerSetNodeDataEvent("variable.uidataoperation.createUIDataOperationRequest", function(){node_createUIDataOperationRequest = this.getData();});
-nosliw.registerSetNodeDataEvent("variable.uidataoperation.uiDataOperationServiceUtility", function(){node_uiDataOperationServiceUtility = this.getData();});
-nosliw.registerSetNodeDataEvent("variable.uidataoperation.UIDataOperation", function(){node_UIDataOperation = this.getData();});
+nosliw.registerSetNodeDataEvent("variable.valueinvar.operation.createValueInVarOperationRequest", function(){node_createValueInVarOperationRequest = this.getData();});
+nosliw.registerSetNodeDataEvent("variable.valueinvar.operation.valueInVarOperationServiceUtility", function(){node_valueInVarOperationServiceUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("variable.valueinvar.operation.ValueInVarOperation", function(){node_ValueInVarOperation = this.getData();});
 nosliw.registerSetNodeDataEvent("request.event.createRequestEventGroupHandler", function(){node_createRequestEventGroupHandler = this.getData();});
 nosliw.registerSetNodeDataEvent("common.empty.createEmptyValue", function(){node_createEmptyValue = this.getData();});
 

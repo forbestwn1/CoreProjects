@@ -23,7 +23,7 @@ var node_OrderedContainerElementInfo;
 var node_createVariableWrapper;
 var node_createOrderedContainersInfo;
 var node_createOrderVariableContainer;
-var node_uiDataOperationServiceUtility;
+var node_valueInVarOperationServiceUtility;
 var node_dataUtility;
 var node_requestServiceProcessor;
 var node_createServiceRequestInfoSimple;
@@ -312,7 +312,7 @@ var node_newVariable = function(data1, data2, adapterInfo, requestInfo){
 					}
 				}
 				//set new value
-				return wrapper.getDataOperationRequest(node_uiDataOperationServiceUtility.createSetOperationService("", wrapperValue), handlers, requestInfo);
+				return wrapper.getDataOperationRequest(node_valueInVarOperationServiceUtility.createSetOperationService("", wrapperValue), handlers, requestInfo);
 			},
 
 			prv_getRelativeVariableInfo : function(){  return loc_relativeVariableInfo;   },
@@ -439,7 +439,7 @@ var node_newVariable = function(data1, data2, adapterInfo, requestInfo){
 			},
 			
 			getGetValueRequest : function(handlers, request){
-				return this.getDataOperationRequest(node_uiDataOperationServiceUtility.createGetOperationService(), handlers, request);				
+				return this.getDataOperationRequest(node_valueInVarOperationServiceUtility.createGetOperationService(), handlers, request);				
 			},
 			
 			executeDataOperationRequest : function(operationService, handlers, request){
@@ -493,16 +493,16 @@ nosliw.registerSetNodeDataEvent("variable.wrapper.wrapperFactory", function(){no
 nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("common.event.createEventObject", function(){node_createEventObject = this.getData();});
 nosliw.registerSetNodeDataEvent("request.utility", function(){node_requestUtility = this.getData();});
-nosliw.registerSetNodeDataEvent("variable.entity.RelativeEntityInfo", function(){node_RelativeEntityInfo = this.getData();});
+nosliw.registerSetNodeDataEvent("common.reference.RelativeEntityInfo", function(){node_RelativeEntityInfo = this.getData();});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequence", function(){	node_createServiceRequestInfoSequence = this.getData();	});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSet", function(){node_createServiceRequestInfoSet = this.getData();});
-nosliw.registerSetNodeDataEvent("variable.data.utility", function(){node_dataUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("variable.valueinvar.utility", function(){node_dataUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("variable.variable.OrderedContainerElementInfo", function(){node_OrderedContainerElementInfo = this.getData();});
-nosliw.registerSetNodeDataEvent("variable.variable.createVariableWrapper", function(){node_createVariableWrapper = this.getData();});
+nosliw.registerSetNodeDataEvent("variable.wrapper.createVariableWrapper", function(){node_createVariableWrapper = this.getData();});
 nosliw.registerSetNodeDataEvent("variable.variable.createOrderedContainersInfo", function(){node_createOrderedContainersInfo = this.getData();});
 nosliw.registerSetNodeDataEvent("variable.variable.createOrderVariableContainer", function(){node_createOrderVariableContainer = this.getData();});
 nosliw.registerSetNodeDataEvent("variable.variable.utility", function(){node_variableUtility = this.getData();});
-nosliw.registerSetNodeDataEvent("variable.uidataoperation.uiDataOperationServiceUtility", function(){node_uiDataOperationServiceUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("variable.valueinvar.operation.valueInVarOperationServiceUtility", function(){node_valueInVarOperationServiceUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple", function(){node_createServiceRequestInfoSimple = this.getData();});
 

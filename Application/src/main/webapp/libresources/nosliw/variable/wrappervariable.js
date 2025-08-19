@@ -1,5 +1,5 @@
 //get/create package
-var packageObj = library.getChildPackage("variable");    
+var packageObj = library.getChildPackage("wrapper");    
 
 (function(packageObj){
 //get used node
@@ -16,7 +16,7 @@ var node_wrapperFactory;
 var node_basicUtility;
 var node_createEventObject;
 var node_createServiceRequestInfoSequence;
-var node_uiDataOperationServiceUtility;
+var node_valueInVarOperationServiceUtility;
 var node_getHandleEachElementRequest;
 var node_requestServiceProcessor;
 
@@ -135,7 +135,7 @@ nosliw.registerSetNodeDataEvent("variable.wrapper.wrapperFactory", function(){no
 nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("common.event.createEventObject", function(){node_createEventObject = this.getData();});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequence", function(){	node_createServiceRequestInfoSequence = this.getData();	});
-nosliw.registerSetNodeDataEvent("variable.uidataoperation.uiDataOperationServiceUtility", function(){node_uiDataOperationServiceUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("variable.valueinvar.operation.valueInVarOperationServiceUtility", function(){node_valueInVarOperationServiceUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("variable.orderedcontainer.getHandleEachElementRequest", function(){node_getHandleEachElementRequest = this.getData();});
 nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
 

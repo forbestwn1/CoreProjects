@@ -19,7 +19,7 @@ var packageObj = library;
 	var node_createValuePortElementInfo;
 	var node_createEmptyValue;
 	var node_ServiceInfo;
-	var node_uiDataOperationServiceUtility;
+	var node_valueInVarOperationServiceUtility;
 
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -477,7 +477,7 @@ var loc_createValuePort = function(valuePortContainer, valuePortGroup, valuePort
 		
 		getValueRequest : function(elementId, handlers, request){        
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("setValuesRequest", {}), handlers, request);
-			out.addRequest(loc_getValueStructure(loc_getValueStructureId(elementId)).getDataOperationRequest(elementId.getRootName(), node_uiDataOperationServiceUtility.createGetOperationService(elementId.getElementPath()), {
+			out.addRequest(loc_getValueStructure(loc_getValueStructureId(elementId)).getDataOperationRequest(elementId.getRootName(), node_valueInVarOperationServiceUtility.createGetOperationService(elementId.getElementPath()), {
 				success: function(request, dataValue){
 					var kkkk = elementId;
 					return dataValue==undefined?undefined:dataValue.value;
@@ -489,7 +489,7 @@ var loc_createValuePort = function(valuePortContainer, valuePortGroup, valuePort
 		setValueRequest : function(elementId, value, handlers, request){
 			var valueStructure = loc_getValueStructure(loc_getValueStructureId(elementId));
 			if(valueStructure!=undefined){
-				return valueStructure.getDataOperationRequest(elementId.getRootName(), node_uiDataOperationServiceUtility.createSetOperationService(elementId.getElementPath(), value), handlers, request);
+				return valueStructure.getDataOperationRequest(elementId.getRootName(), node_valueInVarOperationServiceUtility.createSetOperationService(elementId.getElementPath(), value), handlers, request);
 			}        
 		},
 		
@@ -499,7 +499,7 @@ var loc_createValuePort = function(valuePortContainer, valuePortGroup, valuePort
 				var elementId = setValueInfo.elementId;
 				out.addRequest(loc_out.setValueRequest(elementId, setValueInfo.value));
 				
-//				out.addRequest(loc_getValueStructure(loc_getValueStructureId(elementId)).getDataOperationRequest(elementId.getRootName(), node_uiDataOperationServiceUtility.createSetOperationService(elementId.getElementPath(), setValueInfo.value)));
+//				out.addRequest(loc_getValueStructure(loc_getValueStructureId(elementId)).getDataOperationRequest(elementId.getRootName(), node_valueInVarOperationServiceUtility.createSetOperationService(elementId.getElementPath(), setValueInfo.value)));
 			});
 			return out;			
 		},
@@ -586,12 +586,12 @@ nosliw.registerSetNodeDataEvent("variable.variable.createVariableManager", funct
 nosliw.registerSetNodeDataEvent("variable.valuestructure.createValueStructure", function(){node_createValueStructure = this.getData();});
 nosliw.registerSetNodeDataEvent("variable.valuestructure.createValueStructureVariableInfo", function(){node_createValueStructureVariableInfo = this.getData();});
 nosliw.registerSetNodeDataEvent("variable.valuestructure.createValueStructureElementInfo", function(){node_createValueStructureElementInfo = this.getData();});
-nosliw.registerSetNodeDataEvent("variable.data.utility", function(){node_dataUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("variable.valueinvar.utility", function(){node_dataUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("complexentity.complexEntityUtility", function(){  node_complexEntityUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("valueport.createValuePortElementInfo", function(){node_createValuePortElementInfo = this.getData();});
 nosliw.registerSetNodeDataEvent("common.empty.createEmptyValue", function(){node_createEmptyValue = this.getData();});
 nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();	});
-nosliw.registerSetNodeDataEvent("variable.uidataoperation.uiDataOperationServiceUtility", function(){node_uiDataOperationServiceUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("variable.valueinvar.operation.valueInVarOperationServiceUtility", function(){node_valueInVarOperationServiceUtility = this.getData();});
 
 
 //Register Node by Name

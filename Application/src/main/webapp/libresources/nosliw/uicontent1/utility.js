@@ -160,15 +160,15 @@ var node_utility = function(){
 					getUIValidationRequest1 : function(uiTags, handlers, request){
 						var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("CreateUIViewWithId", {}), handlers, requestInfo);
 
-						var clearErrorRequest = node_createBatchUIDataOperationRequest(that.getContext());
-						clearErrorRequest.addUIDataOperation(new node_UIDataOperation(node_COMMONCONSTANT.UIRESOURCE_CONTEXTELEMENT_NAME_UIVALIDATIONERROR, node_uiDataOperationServiceUtility.createSetOperationService("", {})));
+						var clearErrorRequest = node_createBatchValueInVarOperationRequest(that.getContext());
+						clearErrorRequest.addValueInVarOperation(new node_ValueInVarOperation(node_COMMONCONSTANT.UIRESOURCE_CONTEXTELEMENT_NAME_UIVALIDATIONERROR, node_valueInVarOperationServiceUtility.createSetOperationService("", {})));
 						out.addRequest(clearErrorRequest);
 
 						var allSetRequest = node_createServiceRequestInfoSet(undefined, {
 							success : function(requestInfo, validationsResult){
 								var results = validationsResult.getResults();
 								var allMessages = {};
-								var opsRequest = node_createBatchUIDataOperationRequest(that.getContext(), {
+								var opsRequest = node_createBatchValueInVarOperationRequest(that.getContext(), {
 									success : function(request){
 										return allMessages;
 									}
@@ -176,7 +176,7 @@ var node_utility = function(){
 								_.each(results, function(message, uiTagId){
 									if(message!=undefined){
 										allMessages[uiTagId] = message;
-										opsRequest.addUIDataOperation(new node_UIDataOperation(node_COMMONCONSTANT.UIRESOURCE_CONTEXTELEMENT_NAME_UIVALIDATIONERROR, node_uiDataOperationServiceUtility.createSetOperationService(uiTagId, message)));
+										opsRequest.addValueInVarOperation(new node_ValueInVarOperation(node_COMMONCONSTANT.UIRESOURCE_CONTEXTELEMENT_NAME_UIVALIDATIONERROR, node_valueInVarOperationServiceUtility.createSetOperationService(uiTagId, message)));
 									}
 								});
 								if(!opsRequest.isEmpty())	return opsRequest;
@@ -187,7 +187,7 @@ var node_utility = function(){
 						_.each(uiTags, function(uiTag, i){
 							var uiTagDataValidationRequest = node_createServiceRequestInfoSequence();
 							var varName = uiTag.getAttribute("data");
-							uiTagDataValidationRequest.addRequest(node_createUIDataOperationRequest(loc_context, this.getDataOperationGet(varName, ""), {
+							uiTagDataValidationRequest.addRequest(node_createValueInVarOperationRequest(loc_context, this.getDataOperationGet(varName, ""), {
 								success : function(request, uiData){
 									var dataEleDef = node_contextUtility.getContextElementDefinitionFromFlatContext(loc_uiResource[node_COMMONATRIBUTECONSTANT.UITAGDEFINITION_FLATCONTEXT], varName);
 									var rules = dataEleDef[node_COMMONATRIBUTECONSTANT.CONTEXTDEFINITIONROOT_DEFINITION]
@@ -246,7 +246,7 @@ nosliw.registerSetNodeDataEvent("request.buildServiceProvider", function(){node_
 nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();});
 nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
 nosliw.registerSetNodeDataEvent("variable.context.createContextElementInfo", function(){node_createContextElementInfo = this.getData();});
-nosliw.registerSetNodeDataEvent("variable.data.utility", function(){node_dataUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("variable.valueinvar.utility", function(){node_dataUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("common.objectwithtype.getObjectType", function(){node_getObjectType = this.getData();});
 nosliw.registerSetNodeDataEvent("complexentity.complexEntityUtility", function(){node_complexEntityUtility = this.getData();});

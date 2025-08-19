@@ -421,7 +421,7 @@ nosliw.registerSetNodeDataEvent("variable.variable.createVariableManager", funct
 nosliw.registerSetNodeDataEvent("variable.valuestructure.createValueStructure", function(){node_createValueStructure = this.getData();});
 nosliw.registerSetNodeDataEvent("variable.valuestructure.createValueStructureVariableInfo", function(){node_createValueStructureVariableInfo = this.getData();});
 nosliw.registerSetNodeDataEvent("variable.valuestructure.createValueStructureElementInfo", function(){node_createValueStructureElementInfo = this.getData();});
-nosliw.registerSetNodeDataEvent("variable.data.utility", function(){node_dataUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("variable.valueinvar.utility", function(){node_dataUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("complexentity.complexEntityUtility", function(){  node_complexEntityUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("valueport.createValuePortElementInfo", function(){node_createValuePortElementInfo = this.getData();});
 nosliw.registerSetNodeDataEvent("common.empty.createEmptyValue", function(){node_createEmptyValue = this.getData();});

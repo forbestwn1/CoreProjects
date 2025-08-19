@@ -19,7 +19,6 @@ var packageObj = library.getChildPackage();
 	var node_requestServiceProcessor;
 	var node_dataRuleUtility;
 	var node_CONSTANT;
-	var node_createData;
 	var node_createContextElementInfo;
 	var node_createContext;
 	
@@ -124,7 +123,6 @@ nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){no
 nosliw.registerSetNodeDataEvent("data.dataRuleUtility", function(){node_dataRuleUtility = this.getData();	});
 
 nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = this.getData();});
-nosliw.registerSetNodeDataEvent("variable.data.entity.createData", function(){node_createData = this.getData();});
 nosliw.registerSetNodeDataEvent("variable.context.createContextElementInfo", function(){node_createContextElementInfo = this.getData();});
 nosliw.registerSetNodeDataEvent("variable.context.createContext", function(){node_createContext = this.getData();});
 

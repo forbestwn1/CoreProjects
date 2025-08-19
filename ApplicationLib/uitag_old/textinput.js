@@ -111,7 +111,7 @@
 			
 			createContextForDemo : function(id, parentContext, request) {
 				var node_CONSTANT = nosliw.getNodeData("constant.CONSTANT");
-				var node_createData = nosliw.getNodeData("variable.data.entity.createData");
+				var node_createValueInVar = nosliw.getNodeData("variable.valueinvar.entity..createValueInVar");
 				var node_createContextElementInfo = nosliw.getNodeData("variable.context.createContextElementInfo");
 				var node_createContext = nosliw.getNodeData("variable.context.createContext");
 				
@@ -122,7 +122,7 @@
 					dataVarEleInfo = node_createContextElementInfo("internal_data", dataVarPar);
 				}
 				else{
-					var data = node_createData({value:"Hello World", dataTypeId:"test.string;1.0.0"}, node_CONSTANT.WRAPPER_TYPE_APPDATA);
+					var data = node_createValueInVar({value:"Hello World", dataTypeId:"test.string;1.0.0"}, node_CONSTANT.WRAPPER_TYPE_APPDATA);
 					dataVarEleInfo = node_createContextElementInfo("internal_data", data);
 				}
 				

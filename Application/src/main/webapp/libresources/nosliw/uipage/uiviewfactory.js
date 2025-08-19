@@ -24,10 +24,10 @@ var packageObj = library;
 	var node_basicUtility;
 	var node_createUITag;
 	var node_createEventObject;
-	var node_createUIDataOperationRequest;
+	var node_createValueInVarOperationRequest;
 	var node_requestServiceProcessor;
-	var node_uiDataOperationServiceUtility;
-	var node_UIDataOperation;
+	var node_valueInVarOperationServiceUtility;
+	var node_ValueInVarOperation;
 	var node_contextUtility;
 	var node_IOTaskResult;
 	var node_taskUtility;
@@ -36,7 +36,7 @@ var packageObj = library;
 	var node_IOTaskInfo;
 	var node_createViewContainer;
 	var node_UICommonUtility;
-	var node_createBatchUIDataOperationRequest;
+	var node_createBatchValueInVarOperationRequest;
 	var node_namingConvensionUtility;
 	var node_dataRuleUtility;
 	var node_requestUtility;
@@ -685,8 +685,8 @@ var loc_createUIView = function(uiResource, uiBody, attributes, id, parent, cont
 		
 		destroy : function(requestInfo){  node_getLifecycleInterface(loc_out).destroy(requestInfo);  },
 		
-		getDataOperationSet : function(target, path, value, dataTypeInfo){  return new node_UIDataOperation(target, node_uiDataOperationServiceUtility.createSetOperationService(path, value, dataTypeInfo)); },
-		getDataOperationRequestSet : function(target, value, dataTypeInfo, handlers, request){	return node_createUIDataOperationRequest(loc_context, this.getDataOperationSet(target, undefined, value, dataTypeInfo), handlers, request);	},
+		getDataOperationSet : function(target, path, value, dataTypeInfo){  return new node_ValueInVarOperation(target, node_valueInVarOperationServiceUtility.createSetOperationService(path, value, dataTypeInfo)); },
+		getDataOperationRequestSet : function(target, value, dataTypeInfo, handlers, request){	return node_createValueInVarOperationRequest(loc_context, this.getDataOperationSet(target, undefined, value, dataTypeInfo), handlers, request);	},
 		executeDataOperationRequestSet : function(target, value, dataTypeInfo, handlers, request){	return node_requestServiceProcessor.processRequest(this.getDataOperationRequestSet(target, value, dataTypeInfo, handlers, request));	},
 	
 		getDefaultOperationRequestSet : function(value, dataTypeInfo, handlers, request){	return this.getDataOperationRequestSet(this.getContext().getElementsName()[0], value, dataTypeInfo, handlers, request);	},
@@ -727,7 +727,7 @@ nosliw.registerSetNodeDataEvent("common.lifecycle.makeObjectWithLifecycle", func
 nosliw.registerSetNodeDataEvent("common.objectwithtype.makeObjectWithType", function(){node_makeObjectWithType = this.getData();});
 nosliw.registerSetNodeDataEvent("variable.context.createContext", function(){node_createContext = this.getData();});
 nosliw.registerSetNodeDataEvent("variable.context.createContextElementInfo", function(){node_createContextElementInfo = this.getData();});
-nosliw.registerSetNodeDataEvent("variable.data.utility", function(){node_dataUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("variable.valueinvar.utility", function(){node_dataUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("uipage.utility", function(){node_uiResourceUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("uipage.utilityUIError", function(){node_utilityUIError = this.getData();});
 nosliw.registerSetNodeDataEvent("uipage.createEmbededScriptExpressionInContent", function(){node_createEmbededScriptExpressionInContent = this.getData();});
@@ -737,10 +737,10 @@ nosliw.registerSetNodeDataEvent("common.lifecycle.getLifecycleInterface", functi
 nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("uitag.createUITag", function(){node_createUITag = this.getData();});
 nosliw.registerSetNodeDataEvent("common.event.createEventObject", function(){node_createEventObject = this.getData();});
-nosliw.registerSetNodeDataEvent("variable.uidataoperation.createUIDataOperationRequest", function(){node_createUIDataOperationRequest = this.getData();});
+nosliw.registerSetNodeDataEvent("variable.valueinvar.operation.createValueInVarOperationRequest", function(){node_createValueInVarOperationRequest = this.getData();});
 nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
-nosliw.registerSetNodeDataEvent("variable.uidataoperation.uiDataOperationServiceUtility", function(){node_uiDataOperationServiceUtility = this.getData();});
-nosliw.registerSetNodeDataEvent("variable.uidataoperation.UIDataOperation", function(){node_UIDataOperation = this.getData();});
+nosliw.registerSetNodeDataEvent("variable.valueinvar.operation.valueInVarOperationServiceUtility", function(){node_valueInVarOperationServiceUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("variable.valueinvar.operation.ValueInVarOperation", function(){node_ValueInVarOperation = this.getData();});
 nosliw.registerSetNodeDataEvent("variable.context.utility", function(){node_contextUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("iovalue.entity.IOTaskResult", function(){node_IOTaskResult = this.getData();});
 nosliw.registerSetNodeDataEvent("iovalue.entity.createDynamicData", function(){node_createDynamicIOData = this.getData();});
@@ -749,7 +749,7 @@ nosliw.registerSetNodeDataEvent("iovalue.entity.IOTaskInfo", function(){node_IOT
 nosliw.registerSetNodeDataEvent("iovalue.taskUtility", function(){node_taskUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("uicommon.createViewContainer", function(){node_createViewContainer = this.getData();});
 nosliw.registerSetNodeDataEvent("uicommon.utility", function(){node_UICommonUtility = this.getData();});
-nosliw.registerSetNodeDataEvent("variable.uidataoperation.createBatchUIDataOperationRequest", function(){node_createBatchUIDataOperationRequest  = this.getData();});
+nosliw.registerSetNodeDataEvent("variable.valueinvar.operation.createBatchValueInVarOperationRequest", function(){node_createBatchValueInVarOperationRequest  = this.getData();});
 nosliw.registerSetNodeDataEvent("common.namingconvension.namingConvensionUtility", function(){node_namingConvensionUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("data.dataRuleUtility", function(){node_dataRuleUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("request.utility", function(){node_requestUtility = this.getData();});

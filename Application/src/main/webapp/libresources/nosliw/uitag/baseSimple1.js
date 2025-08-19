@@ -211,7 +211,7 @@ var node_createUITagOnBaseSimple = function(env, uiTagDef){
 			loc_coreObj.destroy();
 		},
 		createContextForDemo : function(id, parentContext, matchersByName, request){
-			var node_createData = nosliw.getNodeData("variable.data.entity.createData");
+			var node_createValueInVar = nosliw.getNodeData("variable.valueinvar.entity..createValueInVar");
 			var node_createContextElementInfo = nosliw.getNodeData("variable.context.createContextElementInfo");
 			var node_createContext = nosliw.getNodeData("variable.context.createContext");
 			
@@ -230,7 +230,7 @@ var node_createUITagOnBaseSimple = function(env, uiTagDef){
 				dataVarEleInfo = node_createContextElementInfo("internal_data", dataVarPar, undefined, undefined, info);
 			}
 			else{
-				var data = node_createData(loc_coreObj.getDataForDemo(), node_CONSTANT.WRAPPER_TYPE_APPDATA);
+				var data = node_createValueInVar(loc_coreObj.getDataForDemo(), node_CONSTANT.WRAPPER_TYPE_APPDATA);
 				dataVarEleInfo = node_createContextElementInfo("internal_data", data);
 			}
 			

@@ -14,7 +14,7 @@ var node_createContextVariableInfo;
 var node_createServiceRequestInfoSequence;
 var node_ServiceInfo;
 var node_createServiceRequestInfoSet;
-var node_uiDataOperationServiceUtility;
+var node_valueInVarOperationServiceUtility;
 var node_dataUtility;
 var node_aliasUtility;
 
@@ -60,10 +60,10 @@ var node_utility = function(){
 				}
 			});
 			_.each(contextItems, function(ele, eleName){
-				setRequest.addRequest(eleName, ele.variable.getDataOperationRequest(node_uiDataOperationServiceUtility.createGetOperationService()));
+				setRequest.addRequest(eleName, ele.variable.getDataOperationRequest(node_valueInVarOperationServiceUtility.createGetOperationService()));
 //				var eleNameInfo = loc_out.parseContextElementName(eleName);
 //				if(eleNameInfo.categary==undefined){
-//					setRequest.addRequest(eleName, ele.variable.getDataOperationRequest(node_uiDataOperationServiceUtility.createGetOperationService()));
+//					setRequest.addRequest(eleName, ele.variable.getDataOperationRequest(node_valueInVarOperationServiceUtility.createGetOperationService()));
 //				}
 			});
 			outRequest.addRequest(setRequest);
@@ -90,7 +90,7 @@ var node_utility = function(){
 					if(validVariable[variable.prv_id]==undefined){
 						validVariable[variable.prv_id] = variable;
 						//only base element
-						calContextValue.addRequest(eleName, contextItem.variable.getDataOperationRequest(node_uiDataOperationServiceUtility.createGetOperationService()));
+						calContextValue.addRequest(eleName, contextItem.variable.getDataOperationRequest(node_valueInVarOperationServiceUtility.createGetOperationService()));
 					}
 				}
 			});
@@ -123,7 +123,7 @@ var node_utility = function(){
 				var eleNameInfo = loc_out.parseContextElementName(eleName);
 				if(eleNameInfo.categary!=undefined){
 					//only those with category info
-					calContextValue.addRequest(eleName, contextItem.variable.getDataOperationRequest(node_uiDataOperationServiceUtility.createGetOperationService()));
+					calContextValue.addRequest(eleName, contextItem.variable.getDataOperationRequest(node_valueInVarOperationServiceUtility.createGetOperationService()));
 				}
 			});
 			
@@ -388,8 +388,8 @@ nosliw.registerSetNodeDataEvent("variable.context.createContextVariableInfo", fu
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequence", function(){	node_createServiceRequestInfoSequence = this.getData();	});
 nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSet", function(){node_createServiceRequestInfoSet = this.getData();});
-nosliw.registerSetNodeDataEvent("variable.uidataoperation.uiDataOperationServiceUtility", function(){node_uiDataOperationServiceUtility = this.getData();});
-nosliw.registerSetNodeDataEvent("variable.data.utility", function(){node_dataUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("variable.valueinvar.operation.valueInVarOperationServiceUtility", function(){node_valueInVarOperationServiceUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("variable.valueinvar.utility", function(){node_dataUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("iovalue.aliasUtility", function(){node_aliasUtility = this.getData();});
 
 //Register Node by Name

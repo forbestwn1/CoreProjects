@@ -16,7 +16,7 @@ var node_wrapperFactory;
 var node_basicUtility;
 var node_createEventObject;
 var node_createServiceRequestInfoSequence;
-var node_uiDataOperationServiceUtility;
+var node_valueInVarOperationServiceUtility;
 var node_createServiceRequestInfoSet;
 var node_createVariableWrapper;
 var node_requestServiceProcessor;
@@ -160,7 +160,7 @@ var node_createHandleEachElementProcessor = function(baseVariable, path){
 				//build container related object (order child info, container variable)
 				var containerVariable = loc_buildContainerVarWrapper();
 				//get container value first
-				out.addRequest(containerVariable.getDataOperationRequest(node_uiDataOperationServiceUtility.createGetOperationService(loc_path), {
+				out.addRequest(containerVariable.getDataOperationRequest(node_valueInVarOperationServiceUtility.createGetOperationService(loc_path), {
 					success : function(request, data){
 						if(data==undefined)  return;
 						
@@ -283,7 +283,7 @@ var node_createContainerOrderInfo = function(){
 	
 	var loc_trigueIndexChange = function(startIndex, requestInfo){
 		for(var i=startIndex; i<loc_out.prv_elementsInfo.length; i++){
-			loc_out.prv_elementsInfo[i].indexVariable.executeDataOperationRequest(node_uiDataOperationServiceUtility.createGetOperationService(""), {
+			loc_out.prv_elementsInfo[i].indexVariable.executeDataOperationRequest(node_valueInVarOperationServiceUtility.createGetOperationService(""), {
 				success : function(request, data){
 					data.value.trigueEvent(request);
 				}
@@ -418,12 +418,12 @@ nosliw.registerSetNodeDataEvent("variable.wrapper.wrapperFactory", function(){no
 nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("common.event.createEventObject", function(){node_createEventObject = this.getData();});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequence", function(){	node_createServiceRequestInfoSequence = this.getData();	});
-nosliw.registerSetNodeDataEvent("variable.uidataoperation.uiDataOperationServiceUtility", function(){node_uiDataOperationServiceUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("variable.valueinvar.operation.valueInVarOperationServiceUtility", function(){node_valueInVarOperationServiceUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSet", function(){node_createServiceRequestInfoSet = this.getData();});
-nosliw.registerSetNodeDataEvent("variable.variable.createVariableWrapper", function(){node_createVariableWrapper = this.getData();});
+nosliw.registerSetNodeDataEvent("variable.wrapper.createVariableWrapper", function(){node_createVariableWrapper = this.getData();});
 nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
 nosliw.registerSetNodeDataEvent("variable.wrapper.wrapperFactory", function(){node_wrapperFactory = this.getData();});
-nosliw.registerSetNodeDataEvent("variable.data.utility", function(){node_dataUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("variable.valueinvar.utility", function(){node_dataUtility = this.getData();});
 
 //Register Node by Name
 

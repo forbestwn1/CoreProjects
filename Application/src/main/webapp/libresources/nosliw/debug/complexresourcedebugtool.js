@@ -223,7 +223,7 @@ nosliw.registerSetNodeDataEvent("complexentity.complexEntityUtility", function()
 
 nosliw.registerSetNodeDataEvent("variable.context.createContextVariablesGroup", function(){  node_createContextVariablesGroup = this.getData();});
 nosliw.registerSetNodeDataEvent("variable.context.createContextVariableInfo", function(){  node_createContextVariableInfo = this.getData();});
-nosliw.registerSetNodeDataEvent("variable.data.utility", function(){  node_dataUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("variable.valueinvar.utility", function(){  node_dataUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("common.setting.createConfigures", function(){node_createConfigures = this.getData();});
 
 

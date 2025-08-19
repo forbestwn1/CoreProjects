@@ -27,12 +27,12 @@
 				
 					var node_CONSTANT = nosliw.getNodeData("constant.CONSTANT");
 					var node_requestServiceProcessor = nosliw.getNodeData("request.requestServiceProcessor");
-					var node_createUIDataOperationRequest = nosliw.getNodeData("variable.uidataoperation.createUIDataOperationRequest");
-					var node_UIDataOperation = nosliw.getNodeData("variable.uidataoperation.UIDataOperation");
-					var node_uiDataOperationServiceUtility = nosliw.getNodeData("variable.uidataoperation.uiDataOperationServiceUtility");
+					var node_createValueInVarOperationRequest = nosliw.getNodeData("variable.valueinvar.operation.createValueInVarOperationRequest");
+					var node_ValueInVarOperation = nosliw.getNodeData("variable.valueinvar.operation.ValueInVarOperation");
+					var node_valueInVarOperationServiceUtility = nosliw.getNodeData("variable.valueinvar.operation.valueInVarOperationServiceUtility");
 
-					var uiDataOperation = new node_UIDataOperation("ele", node_uiDataOperationServiceUtility.createGetOperationService(""));
-					var opRequest = node_createUIDataOperationRequest(env.context, uiDataOperation, {
+					var uiDataOperation = new node_ValueInVarOperation("ele", node_valueInVarOperationServiceUtility.createGetOperationService(""));
+					var opRequest = node_createValueInVarOperationRequest(env.context, uiDataOperation, {
 						success : function(request, data){
 							env.trigueEvent("selectSchool", data);
 						}
@@ -54,8 +54,8 @@
 
 			var node_CONSTANT = nosliw.getNodeData("constant.CONSTANT");
 			var node_requestServiceProcessor = nosliw.getNodeData("request.requestServiceProcessor");
-			var node_createBatchUIDataOperationRequest = nosliw.getNodeData("variable.uidataoperation.createBatchUIDataOperationRequest");
-			var node_UIDataOperation = nosliw.getNodeData("variable.uidataoperation.UIDataOperation");
+			var node_createBatchValueInVarOperationRequest = nosliw.getNodeData("variable.valueinvar.operation.createBatchValueInVarOperationRequest");
+			var node_ValueInVarOperation = nosliw.getNodeData("variable.valueinvar.operation.ValueInVarOperation");
 			
 			var requestInfo = env.getServiceRequest("getSchoolData", {
 				success : function(request){

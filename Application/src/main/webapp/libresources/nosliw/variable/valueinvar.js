@@ -1,5 +1,5 @@
 //get/create package
-var packageObj = library.getChildPackage("data.entity");    
+var packageObj = library.getChildPackage("valueinvar.entity");    
 
 (function(packageObj){
 //get used node
@@ -9,7 +9,7 @@ var node_CONSTANT;
 /*
  * data is a combination of value + dataType
  */
-var node_createData = function(value, dataTypeInfo){
+var node_createValueInVar = function(value, dataTypeInfo){
 	var loc_out = {
 		value : value,
 		dataTypeInfo : dataTypeInfo,
@@ -28,6 +28,6 @@ nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = 
 
 
 //Register Node by Name
-packageObj.createChildNode("createData", node_createData); 
+packageObj.createChildNode("createValueInVar", node_createValueInVar); 
 
 })(packageObj);

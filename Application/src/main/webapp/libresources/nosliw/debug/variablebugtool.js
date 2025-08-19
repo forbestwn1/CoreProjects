@@ -17,7 +17,7 @@ var packageObj = library.getChildPackage();
 	var node_getStateMachineDefinition;
 	var node_getEntityObjectInterface;
 	var node_complexEntityUtility;
-	var node_uiDataOperationServiceUtility;
+	var node_valueInVarOperationServiceUtility;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -34,7 +34,7 @@ var loc_createComponentVariableInspection = function(){
 				var that = this;
 				var varInfo = nosliw.runtime.getVariableManager().getVariableInfo(that.variableId);
 				if(varInfo!=undefined){
-					var request = varInfo.variable.getDataOperationRequest(node_uiDataOperationServiceUtility.createGetOperationService(), {
+					var request = varInfo.variable.getDataOperationRequest(node_valueInVarOperationServiceUtility.createGetOperationService(), {
 						success : function(request, data){
 							that.variableValue = JSON.stringify(data.value, null, 4);
 						}
@@ -122,8 +122,8 @@ nosliw.registerSetNodeDataEvent("complexentity.complexEntityUtility", function()
 
 nosliw.registerSetNodeDataEvent("variable.context.createContextVariablesGroup", function(){  node_createContextVariablesGroup = this.getData();});
 nosliw.registerSetNodeDataEvent("variable.context.createContextVariableInfo", function(){  node_createContextVariableInfo = this.getData();});
-nosliw.registerSetNodeDataEvent("variable.data.utility", function(){  node_dataUtility = this.getData();});
-nosliw.registerSetNodeDataEvent("variable.uidataoperation.uiDataOperationServiceUtility", function(){node_uiDataOperationServiceUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("variable.valueinvar.utility", function(){  node_dataUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("variable.valueinvar.operation.valueInVarOperationServiceUtility", function(){node_valueInVarOperationServiceUtility = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createVariableDebugView", node_createVariableDebugView); 

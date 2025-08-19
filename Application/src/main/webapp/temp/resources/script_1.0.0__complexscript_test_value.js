@@ -12,7 +12,7 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 	var node_createServiceRequestInfoSimple = nosliw.getNodeData("request.request.createServiceRequestInfoSimple");
 	var node_COMMONATRIBUTECONSTANT = nosliw.getNodeData("constant.COMMONATRIBUTECONSTANT");
 	var node_CONSTANT = nosliw.getNodeData("constant.CONSTANT");
-	var node_uiDataOperationServiceUtility = nosliw.getNodeData("variable.uidataoperation.uiDataOperationServiceUtility");
+	var node_valueInVarOperationServiceUtility = nosliw.getNodeData("variable.valueinvar.operation.valueInVarOperationServiceUtility");
 	var node_basicUtility = nosliw.getNodeData("common.utility.basicUtility");
 	var node_createValuePortElementInfo = nosliw.getNodeData("valueport.createValuePortElementInfo");
 
@@ -98,7 +98,7 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 	};
 
 	var loc_updateDataDisplay = function(varInfo){
-		varInfo.variable.executeDataOperationRequest(node_uiDataOperationServiceUtility.createGetOperationService(), {
+		varInfo.variable.executeDataOperationRequest(node_valueInVarOperationServiceUtility.createGetOperationService(), {
 			success : function(request, data){
 				var value;
 				if(data!=undefined&&data.value!=undefined){
@@ -134,7 +134,7 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 				};
 			}
 		
-			varInfo.variable.executeDataOperationRequest(node_uiDataOperationServiceUtility.createSetOperationService("", value));
+			varInfo.variable.executeDataOperationRequest(node_valueInVarOperationServiceUtility.createSetOperationService("", value));
 		});					
 
 		varInfo.displayView = $('<span/>');

@@ -61,8 +61,8 @@
 
 		var node_namingConvensionUtility = nosliw.getNodeData("common.namingconvension.namingConvensionUtility");
 		var node_createContextVariable = nosliw.getNodeData("variable.context.createContextVariable");
-		var node_uiDataOperationServiceUtility  = nosliw.getNodeData("variable.uidataoperation.uiDataOperationServiceUtility");
-		var node_dataUtility = nosliw.getNodeData("variable.data.utility");
+		var node_valueInVarOperationServiceUtility  = nosliw.getNodeData("variable.valueinvar.operation.valueInVarOperationServiceUtility");
+		var node_dataUtility = nosliw.getNodeData("variable.valueinvar.utility");
 		var node_createServiceRequestInfoSequence = nosliw.getNodeData("request.request.createServiceRequestInfoSequence");
 		var node_createServiceRequestInfoSimple = nosliw.getNodeData("request.request.createServiceRequestInfoSimple");
 		var node_requestServiceProcessor = nosliw.getNodeData("request.requestServiceProcessor");
@@ -152,7 +152,7 @@
 			
 			createContextForDemo : function(id, parentContext, request) {
 				var node_CONSTANT = nosliw.getNodeData("constant.CONSTANT");
-				var node_createData = nosliw.getNodeData("variable.data.entity.createData");
+				var node_createData = nosliw.getNodeData("variable.valueinvar.entity..createData");
 				var node_createContextElementInfo = nosliw.getNodeData("variable.context.createContextElementInfo");
 				var node_createContext = nosliw.getNodeData("variable.context.createContext");
 				var data = node_createData([1, 2], node_CONSTANT.WRAPPER_TYPE_OBJECT);
@@ -168,7 +168,7 @@
 					}
 					else if(event=="EACHELEMENTCONTAINER_EVENT_NEWELEMENT"){
 						var req = node_createServiceRequestInfoSequence(undefined, {}, requestInfo);
-						req.addRequest(eventData.indexVar.getDataOperationRequest(node_uiDataOperationServiceUtility.createGetOperationService(""), {
+						req.addRequest(eventData.indexVar.getDataOperationRequest(node_valueInVarOperationServiceUtility.createGetOperationService(""), {
 							success : function(request, data){
 								return loc_getAddEleRequest(eventData.elementVar, eventData.indexVar, data.value.getValue());
 							}
@@ -176,7 +176,7 @@
 						node_requestServiceProcessor.processRequest(req);
 					}
 					else if(event=="EACHELEMENTCONTAINER_EVENT_DELETEELEMENT"){
-						eventData.executeDataOperationRequest(node_uiDataOperationServiceUtility.createGetOperationService(""), {
+						eventData.executeDataOperationRequest(node_valueInVarOperationServiceUtility.createGetOperationService(""), {
 							success : function(request, data){
 								loc_out.prv_deleteEle(node_dataUtility.getValueOfData(data), request);
 							}

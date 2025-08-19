@@ -1,12 +1,12 @@
 //get/create package
-var packageObj = library.getChildPackage("data");    
+var packageObj = library.getChildPackage("valueinvar");    
 
 (function(packageObj){
 //get used node
 var node_getObjectType;
 var node_makeObjectWithType;
 var node_CONSTANT;	
-var node_createData;
+var node_createValueInVar;
 var node_namingConvensionUtility;
 var node_basicUtility;
 //*******************************************   Start Node Definition  ************************************** 	
@@ -120,17 +120,17 @@ var node_utility = function(){
 		},
 		
 		createDataOfAppData : function(appData){
-			var out = node_createData(appData, node_CONSTANT.DATA_TYPE_APPDATA);
+			var out = node_createValueInVar(appData, node_CONSTANT.DATA_TYPE_APPDATA);
 			return out;
 		},
 		
 		createDataOfObject : function(obj){
-			var out = node_createData(obj, node_CONSTANT.DATA_TYPE_OBJECT);
+			var out = node_createValueInVar(obj, node_CONSTANT.DATA_TYPE_OBJECT);
 			return out;
 		},
 		
 		createDataOfDynamic : function(obj){
-			var out = node_createData(obj, node_CONSTANT.DATA_TYPE_DYNAMIC);
+			var out = node_createValueInVar(obj, node_CONSTANT.DATA_TYPE_DYNAMIC);
 			return out;
 		},
 	
@@ -153,16 +153,16 @@ var node_utility = function(){
 		createDataByValue : function(value, dataTypeInfo){
 			var out;
 			if(dataTypeInfo!=undefined){
-				out = node_createData(value, dataTypeInfo);
+				out = node_createValueInVar(value, dataTypeInfo);
 			}
 			else{
-				out = node_createData(value, node_CONSTANT.DATA_TYPE_OBJECT);
+				out = node_createValueInVar(value, node_CONSTANT.DATA_TYPE_OBJECT);
 			}
 			return out;
 		},
 		
 		createEmptyData : function(){
-			return node_createData("");
+			return node_createValueInVar("");
 		},
 		
 		isEmptyData : function(data){
@@ -189,7 +189,7 @@ var node_utility = function(){
 nosliw.registerSetNodeDataEvent("common.objectwithtype.getObjectType", function(){node_getObjectType = this.getData();});
 nosliw.registerSetNodeDataEvent("common.objectwithtype.makeObjectWithType", function(){node_makeObjectWithType = this.getData();});
 nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = this.getData();});
-nosliw.registerSetNodeDataEvent("variable.data.entity.createData", function(){node_createData = this.getData();});
+nosliw.registerSetNodeDataEvent("variable.valueinvar.entity..createValueInVar", function(){node_createValueInVar = this.getData();});
 nosliw.registerSetNodeDataEvent("common.namingconvension.namingConvensionUtility", function(){node_namingConvensionUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();});
 

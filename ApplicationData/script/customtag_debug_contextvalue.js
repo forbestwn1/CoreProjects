@@ -4,7 +4,7 @@ function(env){
 	var node_requestProcessor = nosliw.getNodeData("request.requestServiceProcessor");
 	var node_createVariablesGroup = nosliw.getNodeData("variable.createVariablesGroup");
 	var node_createValuePortElementInfo = nosliw.getNodeData("valueport.createValuePortElementInfo");
-	var node_dataUtility = nosliw.getNodeData("variable.data.utility");
+	var node_dataUtility = nosliw.getNodeData("variable.valueinvar.utility");
 
 	var loc_env = env;
 

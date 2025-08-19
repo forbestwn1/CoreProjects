@@ -16,7 +16,7 @@ var packageObj = library.getChildPackage("test");
 
 	var node_createUICustomerTagViewVariable = function(env){
 
-		var node_dataUtility = nosliw.getNodeData("variable.data.utility");
+		var node_dataUtility = nosliw.getNodeData("variable.valueinvar.utility");
 
 		var loc_view;
 		var loc_viewInput;
