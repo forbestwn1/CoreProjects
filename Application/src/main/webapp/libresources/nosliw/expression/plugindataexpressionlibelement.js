@@ -17,8 +17,6 @@ var packageObj = library;
 	var node_makeObjectWithApplicationInterface;
     var node_createTaskContainerInterface;
 	var node_createTaskInterface;
-	var node_createDataExpressionElementInLibrary;
-	var node_createInteractiveExpressionValuePortsGroup;
 	var node_interactiveUtility;
 	var node_getEntityObjectInterface;
 	
@@ -105,8 +103,6 @@ nosliw.registerSetNodeDataEvent("expression.utility", function(){node_expression
 nosliw.registerSetNodeDataEvent("component.makeObjectWithApplicationInterface", function(){node_makeObjectWithApplicationInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("task.createTaskContainerInterface", function(){	node_createTaskContainerInterface = this.getData();	});
 nosliw.registerSetNodeDataEvent("task.createTaskInterface", function(){	node_createTaskInterface = this.getData();	});
-nosliw.registerSetNodeDataEvent("expression.createDataExpressionElementInLibrary", function(){node_createDataExpressionElementInLibrary = this.getData();});
-nosliw.registerSetNodeDataEvent("task.createInteractiveExpressionValuePortsGroup", function(){	node_createInteractiveExpressionValuePortsGroup = this.getData();	});
 nosliw.registerSetNodeDataEvent("task.interactiveUtility", function(){	node_interactiveUtility = this.getData();	});
 nosliw.registerSetNodeDataEvent("complexentity.getEntityObjectInterface", function(){node_getEntityObjectInterface = this.getData();});
 

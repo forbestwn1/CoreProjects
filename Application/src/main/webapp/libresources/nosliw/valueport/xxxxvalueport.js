@@ -131,6 +131,6 @@ nosliw.registerSetNodeDataEvent("variable.uidataoperation.uiDataOperationService
 //Register Node by Name
 //packageObj.createChildNode("createValuePortValueContext", node_createValuePortValueContext); 
 //packageObj.createChildNode("createValuePortValueFlat", node_createValuePortValueFlat); 
-packageObj.createChildNode("createValuePort", node_createValuePort); 
+packageObj.createChildNode("xxxxcreateValuePort", node_createValuePort); 
 
 })(packageObj);

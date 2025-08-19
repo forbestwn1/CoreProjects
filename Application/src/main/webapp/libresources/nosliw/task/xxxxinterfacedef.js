@@ -39,7 +39,7 @@ var node_createTaskLifecycleInterface = function(rawInterfaceObj){
 //populate dependency node data
 
 //Register Node by Name
-packageObj.createChildNode("createTaskImpInterface", node_createTaskImpInterface); 
-packageObj.createChildNode("createTaskLifecycleInterface", node_createTaskLifecycleInterface); 
+packageObj.createChildNode("xxxxcreateTaskImpInterface", node_createTaskImpInterface); 
+packageObj.createChildNode("xxxxcreateTaskLifecycleInterface", node_createTaskLifecycleInterface); 
 
 })(packageObj);

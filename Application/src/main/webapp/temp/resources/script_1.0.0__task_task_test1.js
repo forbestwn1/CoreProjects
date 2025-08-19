@@ -23,23 +23,21 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 	var node_utilityNamedVariable = nosliw.getNodeData("valueport.utilityNamedVariable");
 	var node_makeObjectWithApplicationInterface = nosliw.getNodeData("component.makeObjectWithApplicationInterface");
 	var node_interactiveUtility = nosliw.getNodeData("task.interactiveUtility");
-
-	var loc_valueContext;
+	var node_createTaskCore = nosliw.getNodeData("task.createTaskCore");
 
 	var loc_envInterface = {};
 	
-	var loc_taskContext;
-
-	var loc_facadeTaskFactory = {
+	var loc_taskCore;
+	
+	var loc_facadeTaskCore = {
 		//return a task
-		createTask : function(taskContext){
-			loc_taskContext = taskContext;
-			return loc_out;
+		getTaskCore : function(){
+			return loc_taskCore;
 		},
 	};
 
 	var loc_init = function(complexEntityDef, valueContextId, bundleCore, configure){
-		
+		loc_taskCore = node_createTaskCore(loc_out, loc_out);
 	};
 
 	var loc_out = {
@@ -52,17 +50,10 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 		updateView : function(view){
 		},
 
-		getTaskInitRequest : function(handlers, request){
-			if(loc_taskContext!=undefined){
-				return loc_taskContext.getInitTaskRequest(loc_out, handlers, request);
-			}
-		},
-
 		getTaskExecuteRequest : function(handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 			var valuePortContainer = node_getEntityObjectInterface(loc_out).getInternalValuePortContainer();
 			var withValuePort = loc_envInterface[node_CONSTANT.INTERFACE_WITHVALUEPORT];
-			
 			
 			out.addRequest(node_interactiveUtility.getTaskRequestValuesFromValuePort(valuePortContainer, {
 				success : function(request, requestValues){
@@ -117,12 +108,10 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 			return out;
 		},
 		
-		getTaskResult : function(){   return loc_taskResult;    }
-		
 	};
 	
 	loc_init(complexEntityDef, valueContextId, bundleCore, configure);
-	loc_out = node_makeObjectWithApplicationInterface(loc_out, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_TASKFACTORY, loc_facadeTaskFactory);
+	loc_out = node_makeObjectWithApplicationInterface(loc_out, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_TASK, loc_facadeTaskCore);
 	return loc_out;
 }
 

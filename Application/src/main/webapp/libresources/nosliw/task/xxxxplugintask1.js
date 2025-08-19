@@ -169,6 +169,6 @@ nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){no
 nosliw.registerSetNodeDataEvent("complexentity.complexEntityUtility", function(){node_complexEntityUtility = this.getData();});
 
 //Register Node by Name
-packageObj.createChildNode("createTaskPlugin1", node_createTaskPlugin); 
+packageObj.createChildNode("xxxxcreateTaskPlugin1", node_createTaskPlugin); 
 
 })(packageObj);

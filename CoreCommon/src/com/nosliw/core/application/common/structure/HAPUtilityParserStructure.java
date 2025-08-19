@@ -27,6 +27,7 @@ public class HAPUtilityParserStructure {
 		if(inheritMode!=null) {
 			structureInfo.setInheritMode(inheritMode);
 		}
+		valueStructureWrapper.setStructureInfo(structureInfo);
 	}
 	
 	static public void parseValueStructureJson(JSONObject structureJson, HAPValueStructure valueStructure) {

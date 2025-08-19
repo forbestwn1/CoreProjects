@@ -18,7 +18,6 @@ var packageObj = library;
 	var node_createTaskInterface;
 	var node_makeObjectWithApplicationInterface;
 	var node_createValuePortValueFlat;
-	var node_createInteractiveValuePortsTask;
 	var node_interactiveUtility;
 	var node_getEntityObjectInterface;
 	
@@ -150,7 +149,6 @@ nosliw.registerSetNodeDataEvent("iovalue.entity.createIODataSet", function(){nod
 nosliw.registerSetNodeDataEvent("task.createTaskInterface", function(){	node_createTaskInterface = this.getData();	});
 nosliw.registerSetNodeDataEvent("component.makeObjectWithApplicationInterface", function(){node_makeObjectWithApplicationInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("valueport.createValuePortValueFlat", function(){	node_createValuePortValueFlat = this.getData();	});
-nosliw.registerSetNodeDataEvent("task.createInteractiveValuePortsTask", function(){	node_createInteractiveValuePortsTask = this.getData();	});
 nosliw.registerSetNodeDataEvent("task.interactiveUtility", function(){	node_interactiveUtility = this.getData();	});
 nosliw.registerSetNodeDataEvent("complexentity.getEntityObjectInterface", function(){node_getEntityObjectInterface = this.getData();});
 

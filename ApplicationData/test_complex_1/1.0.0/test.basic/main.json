@@ -79,8 +79,110 @@
 		
 		{
 			"info": {
-				"name" : "dataexpressionremote-dataexpressionlibelement",
+				"name" : "test1-taskTaskScript",
 				"status": "disabled1",
+				"description" : ""
+			},
+			"relation": [
+				{
+					"type" : "valueContext",
+					"mode" : "runtime"
+				}
+			],
+			"resourceId1":"taskTaskScript|1.0.0|@task=taskWrapper|1.0.0|test0",  
+			"brick":{
+				"scriptResourceId": "task_task_test1",
+				"taskInterface" : {
+					"request" : [
+						{
+							"name" : "task_request_string1",
+							"dataDefinition" : {
+								"criteria" : "test.string;1.0.0",
+								"initData" : {
+									"dataTypeId": "test.string;1.0.0",
+									"value": "default value of request string1"
+								}
+							}
+						}
+					],
+					"result" : {
+						"success": {
+							"output": [
+								{
+									"name" : "task_result_success_string1",
+									"dataDefininition" : {
+										"criteria" : "test.string;1.0.0"
+									}
+								}
+							]
+						}
+					}
+				}
+			},
+			"adapter": [
+				{
+					"name" : "taskAdapter",
+					"status": "disabled",
+					"brickTypeId" : {
+						"brickType": "dataAssociationForTask",
+						"version": "1.0.0"
+					},
+					"brick" : {
+						"definition" : {
+							"in" : {
+								"type" : "mapping",
+								"mapping" : [
+									{
+										"status": "disabled1",
+										"target" : {
+											"rootName" : "task_request_string1",
+											"ioDirection" : "IN",
+											"valuePortId" : {
+												"valuePortId" : {
+													"group" : "taskInteractive"
+												}
+											}
+										},
+										"definition" : {
+											"mapping" : {
+												"elementPath": "parm1"
+											}
+										}
+									}
+								]
+							},
+							"out" : {
+								"success" : {
+									"type" : "mapping",
+									"mapping" : [
+										{
+											"target" : {
+												"rootName" : "output1"
+											},
+											"definition" : {
+												"mapping" : {
+													"elementPath": "task_result_success_string1",
+													"valuePortId" : {
+														"valuePortId" : {
+															"group" : "taskInteractive"
+														}
+													}
+												}
+											}
+										}
+									]
+								}
+							}
+						}
+					}
+				}
+			]
+		},
+
+		{
+			"info": {
+				"name" : "dataexpressionremote-dataexpressionlibelement",
+				"status": "disabled",
 				"description" : ""
 			},
 			"isTask" : true,
@@ -99,7 +201,7 @@
 								"type" : "mapping",
 								"mapping" : [
 									{
-										"status": "disabled",
+										"status": "disabled1",
 										"target" : {
 											"rootName" : "deparm1"
 										},
@@ -110,7 +212,7 @@
 										}
 									},
 									{
-										"status": "disabled",
+										"status": "disabled1",
 										"target" : {
 											"rootName" : "deparm2"
 										},
@@ -121,7 +223,7 @@
 										}
 									},
 									{
-										"status": "disabled",
+										"status": "disabled1",
 										"target" : {
 											"rootName" : "deparm3"
 										},
@@ -165,6 +267,12 @@
 				"status": "disabled",
 				"description" : ""
 			},
+			"relation": [
+				{
+					"type" : "valueContext",
+					"mode" : "runtime"
+				}
+			],
 			"brick":{
 				"script": "complexscript_test_value",
 				"parm" : {
