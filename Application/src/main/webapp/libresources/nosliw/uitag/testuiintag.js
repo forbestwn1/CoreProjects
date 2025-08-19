@@ -76,7 +76,7 @@ var node_createTagUITest = function(varName, variable, dataType, dataChangeHandl
 					
 					var variationPoints = {
 						afterValueContext: function(complexEntityDef, valueContextId, bundleCore, coreConfigure){
-							var valueContext = bundleCore.getVariableDomain().getValueContext(valueContextId);
+							var valueContext = bundleCore.getValuePortDomain().getValueContext(valueContextId);
 							valueContext.populateVariable(loc_envObj.getAttributeValue("arrayelement"), elementVar);
 							valueContext.populateVariable(loc_envObj.getAttributeValue("arrayindex"), indexVar);
 						}

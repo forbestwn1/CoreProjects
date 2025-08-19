@@ -29,7 +29,7 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 	var loc_init = function(complexEntityDef, valueContextId, bundleCore, configure){
 		loc_configure = configure;
 		loc_bundleCore = bundleCore;
-		loc_varDomain = bundleCore.getVariableDomain();
+		loc_varDomain = bundleCore.getValuePortDomain();
 	};
 
 	var loc_out = {

@@ -39,7 +39,7 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
     	loc_taskTrigguers = complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.BLOCKTESTCOMPLEXSCRIPT_TASKTRIGGUER);
 		loc_configure = configure;
 	
-		var varDomain = bundleCore.getVariableDomain();
+		var varDomain = bundleCore.getValuePortDomain();
 		loc_valueContext = varDomain.creatValuePortContainer(valueContextId);
 
 	};

@@ -24,7 +24,7 @@ function(envObj){
 				_.each(eles, function(ele, index){
 					var variationPoints = {
 						afterValueContext: function(complexEntityDef, valueContextId, bundleCore, coreConfigure){
-							var loc_valueContext = bundleCore.getVariableDomain().getValueContext(valueContextId);
+							var loc_valueContext = bundleCore.getValuePortDomain().getValueContext(valueContextId);
 							var valueStructureRuntimeId = loc_valueContext.getValueStructureRuntimeIdByName("nosliw_internal");
 							var valueStructure = loc_valueContext.getValueStructure(valueStructureRuntimeId);
 							valueStructure.addVariable(loc_envObj.getAttributeValue("element"), ele.elementVar);

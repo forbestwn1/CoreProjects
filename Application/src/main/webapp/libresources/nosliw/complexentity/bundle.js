@@ -11,7 +11,7 @@ var packageObj = library;
 	var node_createServiceRequestInfoSimple;
 	var node_createServiceRequestInfoSequence;
 	var node_makeObjectWithType;
-	var nod_createVariableDomain;
+	var nod_createValuePortDomain;
 	var node_resourceUtility;
 	var node_createPackageDebugView;
 	var node_createConfigure;
@@ -35,7 +35,7 @@ var node_createBundleCore = function(parm, configure){
 	var loc_configureValue;
 	
 	//variable domain for this bundle
-	var loc_variableDomain;
+	var loc_valueportDomain;
 
 	var loc_envInterface;
 	
@@ -70,14 +70,14 @@ var node_createBundleCore = function(parm, configure){
 					loc_bundleDef = node_resourceUtility.getResourceFromTree(resourceTree, loc_resourceId).resourceData;
 
 					//build variable domain in bundle
-					loc_variableDomain = nod_createVariableDomain(loc_bundleDef[node_COMMONATRIBUTECONSTANT.RESOURCEDATABRICK_VALUESTRUCTUREDOMAIN]);
+					loc_valueportDomain = nod_createValuePortDomain(loc_bundleDef[node_COMMONATRIBUTECONSTANT.RESOURCEDATABRICK_VALUESTRUCTUREDOMAIN]);
 
 					var branchBrickRequest = node_createServiceRequestInfoSequence(undefined, undefined, requestInfo);
 					var brickDefs = loc_bundleDef[node_COMMONATRIBUTECONSTANT.RESOURCEDATABRICK_SUPPORTBRICKS];
 					_.each(brickDefs, function(brickDef, name){
 						branchBrickRequest.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
 							//build variable domain in bundle
-//							loc_variableDomain = nod_createVariableDomain(loc_bundleDef[node_COMMONATRIBUTECONSTANT.RESOURCEDATABRICK_VALUESTRUCTUREDOMAIN]);
+//							loc_valueportDomain = nod_createValuePortDomain(loc_bundleDef[node_COMMONATRIBUTECONSTANT.RESOURCEDATABRICK_VALUESTRUCTUREDOMAIN]);
 							return nosliw.runtime.getComplexEntityService().getCreateEntityRuntimeRequest(brickDef, undefined, loc_out, undefined, loc_configure, {
 								success : function(request, mainEntityRuntime){
 									node_getEntityTreeNodeInterface(mainEntityRuntime.getCoreEntity()).setParentCore(loc_out);
@@ -166,7 +166,7 @@ var node_createBundleCore = function(parm, configure){
 		
 		getBundleDefinition : function(){		return loc_bundleDef;	},
 
-		getVariableDomain : function(){		return loc_variableDomain;	},
+		getValuePortDomain : function(){		return loc_valueportDomain;	},
 
 		getUpdateRuntimeEnvRequest : function(runtimeEnv, handlers, request){
 			return node_createServiceRequestInfoSimple(undefined, function(request){
@@ -199,7 +199,7 @@ nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_Se
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple", function(){	node_createServiceRequestInfoSimple = this.getData();	});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequence", function(){	node_createServiceRequestInfoSequence = this.getData();	});
 nosliw.registerSetNodeDataEvent("common.objectwithtype.makeObjectWithType", function(){node_makeObjectWithType = this.getData();});
-nosliw.registerSetNodeDataEvent("complexentity.createVariableDomain", function(){nod_createVariableDomain = this.getData();});
+nosliw.registerSetNodeDataEvent("valueport.createValuePortDomain", function(){nod_createValuePortDomain = this.getData();});
 nosliw.registerSetNodeDataEvent("resource.utility", function(){node_resourceUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("debug.createPackageDebugView", function(){node_createPackageDebugView = this.getData();});
 nosliw.registerSetNodeDataEvent("component.createConfigure", function(){node_createConfigure = this.getData();});

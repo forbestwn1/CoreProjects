@@ -42,7 +42,7 @@ var loc_createDataExpressionGroupComponentCore = function(complexEntityDef, valu
 	var loc_complexEntityDef = complexEntityDef;
 	var loc_valueContextId = valueContextId;
 	var loc_bundleCore = bundleCore;
-	var loc_valueContext = loc_bundleCore.getVariableDomain().getValueContext(loc_valueContextId);
+	var loc_valueContext = loc_bundleCore.getValuePortDomain().getValueContext(loc_valueContextId);
 	var loc_envInterface = {};
 	var loc_referencedRuntime = {};
 	
@@ -50,7 +50,7 @@ var loc_createDataExpressionGroupComponentCore = function(complexEntityDef, valu
 
 	var loc_expressionGroup = loc_complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.BLOCKDATAEXPRESSIONGROUP_VALUE);
 
-	var loc_valuePort = node_createValuePortValueContext(loc_valueContextId, loc_bundleCore.getVariableDomain());
+	var loc_valuePort = node_createValuePortValueContext(loc_valueContextId, loc_bundleCore.getValuePortDomain());
 
 	var loc_getAllExpressionItems = function(){
 		return loc_expressionGroup[node_COMMONATRIBUTECONSTANT.CONTAINER_ITEM];

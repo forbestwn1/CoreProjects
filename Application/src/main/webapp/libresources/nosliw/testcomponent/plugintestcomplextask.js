@@ -49,7 +49,7 @@ var loc_createTestTaskCore = function(complexEntityDef, valueContextId, bundleCo
 	var loc_expressionInteractive;
 
 	var loc_init = function(complexEntityDef, valueContextId, bundleCore, configure){
-		var varDomain = bundleCore.getVariableDomain();
+		var varDomain = bundleCore.getValuePortDomain();
 		loc_valueContext = varDomain.creatValuePortContainer(valueContextId);
     	loc_variablesInTask = complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.BLOCKTESTCOMPLEXTASK_VARIABLE);
     	loc_taskInteractive = complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.BLOCKTESTCOMPLEXTASK_INTERACTIVETASK);

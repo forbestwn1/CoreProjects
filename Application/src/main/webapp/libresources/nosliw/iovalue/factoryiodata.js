@@ -30,7 +30,7 @@ var node_ioDataFactory = function(){
 	
 					var complexInterface = node_getEntityObjectInterface(this);
 					var bundle = complexInterface.getBundle();
-					var varDomain = bundle.getVariableDomain();
+					var varDomain = bundle.getValuePortDomain();
 					var valueContext = complexInterface.getValueContext();
 
 					var fullPath = dataOpService.parms.path;
@@ -89,7 +89,7 @@ nosliw.registerSetNodeDataEvent("iovalue.entity.createDynamicData", function(){n
 nosliw.registerSetNodeDataEvent("complexentity.getEntityObjectInterface", function(){node_getEntityObjectInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("variable.valueinvar.operation.createValueInVarOperationRequest", function(){node_createValueInVarOperationRequest = this.getData();});
 nosliw.registerSetNodeDataEvent("variable.valueinvar.operation.ValueInVarOperation", function(){node_ValueInVarOperation = this.getData();});
-nosliw.registerSetNodeDataEvent("variable.valuestructure.createValueStructureVariableInfo", function(){node_createValueStructureVariableInfo = this.getData();});
+nosliw.registerSetNodeDataEvent("valueport.valuestructure.createValueStructureVariableInfo", function(){node_createValueStructureVariableInfo = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("ioDataFactory", node_ioDataFactory); 

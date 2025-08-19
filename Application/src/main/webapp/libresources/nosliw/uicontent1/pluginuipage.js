@@ -38,7 +38,7 @@ var loc_createUIPageComponentCore = function(complexEntityDef, valueContextId, b
 	var loc_complexEntityDef = complexEntityDef;
 	var loc_valueContextId = valueContextId;
 	var loc_bundleCore = bundleCore;
-	var loc_valueContext = loc_bundleCore.getVariableDomain().getValueContext(loc_valueContextId);
+	var loc_valueContext = loc_bundleCore.getValuePortDomain().getValueContext(loc_valueContextId);
 	var loc_envInterface = {};
 	
 	var loc_uiContent;

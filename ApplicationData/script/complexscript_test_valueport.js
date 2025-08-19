@@ -15,7 +15,7 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 
 	var loc_init = function(complexEntityDef, valueContextId, bundleCore, configure){
 		loc_configure = configure;
-		loc_varDomain = bundleCore.getVariableDomain();
+		loc_varDomain = bundleCore.getValuePortDomain();
 	};
 
 	var loc_out = {

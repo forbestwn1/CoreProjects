@@ -98,7 +98,7 @@ var node_createUICustomerTagTestDataCollection = function(envObj){
 					
 					var variationPoints = {
 						afterValueContext: function(complexEntityDef, valueContextId, bundleCore, coreConfigure){
-							var valuePortContainer = bundleCore.getVariableDomain().getValuePortContainer(valueContextId);
+							var valuePortContainer = bundleCore.getValuePortDomain().getValuePortContainer(valueContextId);
 							valuePortContainer.populateVariable(loc_envObj.getAttributeValue("arrayelement"), elementVar);
 							valuePortContainer.populateVariable(loc_envObj.getAttributeValue("arrayindex"), indexVar);
 						}

@@ -24,7 +24,7 @@ var packageObj = library;
 //*******************************************   Start Node Definition  ************************************** 	
 
 //variable domain, it response to value structure domain in complex resource
-var nod_createVariableDomain = function(variableDomainDef){
+var nod_createValuePortDomain = function(variableDomainDef){
 
 	//value structure definition domain
 	var loc_variableDomainDefinition = variableDomainDef;
@@ -583,9 +583,9 @@ nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple"
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSet", function(){	node_createServiceRequestInfoSet = this.getData();	});
 nosliw.registerSetNodeDataEvent("common.objectwithtype.makeObjectWithType", function(){node_makeObjectWithType = this.getData();});
 nosliw.registerSetNodeDataEvent("variable.variable.createVariableManager", function(){node_createVariableManager = this.getData();});
-nosliw.registerSetNodeDataEvent("variable.valuestructure.createValueStructure", function(){node_createValueStructure = this.getData();});
-nosliw.registerSetNodeDataEvent("variable.valuestructure.createValueStructureVariableInfo", function(){node_createValueStructureVariableInfo = this.getData();});
-nosliw.registerSetNodeDataEvent("variable.valuestructure.createValueStructureElementInfo", function(){node_createValueStructureElementInfo = this.getData();});
+nosliw.registerSetNodeDataEvent("valueport.valuestructure.createValueStructure", function(){node_createValueStructure = this.getData();});
+nosliw.registerSetNodeDataEvent("valueport.valuestructure.createValueStructureVariableInfo", function(){node_createValueStructureVariableInfo = this.getData();});
+nosliw.registerSetNodeDataEvent("valueport.valuestructure.createValueStructureElementInfo", function(){node_createValueStructureElementInfo = this.getData();});
 nosliw.registerSetNodeDataEvent("variable.valueinvar.utility", function(){node_dataUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("complexentity.complexEntityUtility", function(){  node_complexEntityUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("valueport.createValuePortElementInfo", function(){node_createValuePortElementInfo = this.getData();});
@@ -595,6 +595,6 @@ nosliw.registerSetNodeDataEvent("variable.valueinvar.operation.valueInVarOperati
 
 
 //Register Node by Name
-packageObj.createChildNode("createVariableDomain", nod_createVariableDomain); 
+packageObj.createChildNode("createValuePortDomain", nod_createValuePortDomain); 
 
 })(packageObj);

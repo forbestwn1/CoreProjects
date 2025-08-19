@@ -41,7 +41,7 @@ var node_makeObjectEntityObjectInterface = function(rawEntity, internalValuePort
 		getInternalValuePortContainer : function(){
 			if(loc_internalValuePortContainerIdOrFactory!=undefined){
 				if(node_basicUtility.isStringValue(loc_internalValuePortContainerIdOrFactory)){
-					return loc_bundleCore.getVariableDomain().getValuePortContainer(loc_internalValuePortContainerIdOrFactory);   
+					return loc_bundleCore.getValuePortDomain().getValuePortContainer(loc_internalValuePortContainerIdOrFactory);   
 				}
 				else{
 					return loc_internalValuePortContainerIdOrFactory();
@@ -54,7 +54,7 @@ var node_makeObjectEntityObjectInterface = function(rawEntity, internalValuePort
 		getExternalValuePortContainer : function(){
 			if(loc_externalValuePortContainerIdOrFactory!=undefined){
 				if(node_basicUtility.isStringValue(loc_externalValuePortContainerIdOrFactory)){
-					return loc_bundleCore.getVariableDomain().getValuePortContainer(loc_externalValuePortContainerIdOrFactory);   
+					return loc_bundleCore.getValuePortDomain().getValuePortContainer(loc_externalValuePortContainerIdOrFactory);   
 				}
 				else{
 					return loc_externalValuePortContainerIdOrFactory();

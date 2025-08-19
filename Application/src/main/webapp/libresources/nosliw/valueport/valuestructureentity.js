@@ -161,6 +161,6 @@ nosliw.registerSetNodeDataEvent("variable.wrapper.createVariableWrapper", functi
 //Register Node by Name
 packageObj.createChildNode("createValueStructureElementInfo", node_createValueStructureElementInfo); 
 packageObj.createChildNode("createValueStructureVariableInfo", node_createValueStructureVariableInfo); 
-packageObj.createChildNode("createValueStructureElement", node_createValueStructureElement); 
+packageObj.createChildNode("xxxxcreateValueStructureElement", node_createValueStructureElement); 
 
 })(packageObj);

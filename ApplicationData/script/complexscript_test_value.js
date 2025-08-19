@@ -31,7 +31,7 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
     	loc_tasks = complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.BLOCKTESTCOMPLEXSCRIPT_TASK);
 		loc_configure = configure;
 	
-		var varDomain = bundleCore.getVariableDomain();
+		var varDomain = bundleCore.getValuePortDomain();
 		loc_valueContext = varDomain.creatValuePortContainer(valueContextId);
 
 		

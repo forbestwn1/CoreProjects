@@ -161,8 +161,8 @@ var node_createComplexEntityRuntimeService = function() {
 		
 		//build value context
 		var parentValuePortContainer = parentEntityCore==undefined?undefined : node_getEntityObjectInterface(parentEntityCore).getInternalValuePortContainer();
-		var externalValuePortContainerId = bundleCore.getVariableDomain().creatValuePortContainer(entityDef[node_COMMONATRIBUTECONSTANT.WITHEXTERNALVALUEPORT_EXTERNALVALUEPORT], parentValuePortContainer==undefined?undefined:parentValuePortContainer.getId());
-		var internalValuePortContainerId = bundleCore.getVariableDomain().creatValuePortContainer(entityDef[node_COMMONATRIBUTECONSTANT.WITHINTERNALVALUEPORT_INTERNALVALUEPORT], externalValuePortContainerId);
+		var externalValuePortContainerId = bundleCore.getValuePortDomain().creatValuePortContainer(entityDef[node_COMMONATRIBUTECONSTANT.WITHEXTERNALVALUEPORT_EXTERNALVALUEPORT], parentValuePortContainer==undefined?undefined:parentValuePortContainer.getId());
+		var internalValuePortContainerId = bundleCore.getValuePortDomain().creatValuePortContainer(entityDef[node_COMMONATRIBUTECONSTANT.WITHINTERNALVALUEPORT_INTERNALVALUEPORT], externalValuePortContainerId);
 		
 		//process raw configure			
 		//get runtime configure & decoration info from configure
