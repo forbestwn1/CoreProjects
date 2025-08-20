@@ -4,7 +4,7 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 	var node_COMMONATRIBUTECONSTANT = nosliw.getNodeData("constant.COMMONATRIBUTECONSTANT");
 	var node_CONSTANT = nosliw.getNodeData("constant.CONSTANT");
 	var node_requestServiceProcessor = nosliw.getNodeData("request.requestServiceProcessor");
-	var node_getObjectType = nosliw.getNodeData("common.objectwithtype.getObjectType");
+	var node_getObjectType = nosliw.getNodeData("common.interfacedef.getObjectType");
 	var node_complexEntityUtility = nosliw.getNodeData("complexentity.complexEntityUtility");
 	var node_getEntityObjectInterface = nosliw.getNodeData("complexentity.getEntityObjectInterface");
 

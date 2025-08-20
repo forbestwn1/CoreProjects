@@ -129,7 +129,7 @@ nosliw.registerSetNodeDataEvent("process.entity.ProcessResult", function(){node_
 nosliw.registerSetNodeDataEvent("resource.utility", function(){node_resourceUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("activity.createActivity", function(){node_createActivity = this.getData();});
 nosliw.registerSetNodeDataEvent("sequence.createSequence", function(){node_createSequence = this.getData();});
-nosliw.registerSetNodeDataEvent("common.objectwithtype.getObjectType", function(){node_getObjectType = this.getData();});
+nosliw.registerSetNodeDataEvent("common.interfacedef.getObjectType", function(){node_getObjectType = this.getData();});
 
 
 //Register Node by Name

@@ -110,7 +110,7 @@
 							"output": [
 								{
 									"name" : "task_result_success_string1",
-									"dataDefininition" : {
+									"dataDefinition" : {
 										"criteria" : "test.string;1.0.0"
 									}
 								}

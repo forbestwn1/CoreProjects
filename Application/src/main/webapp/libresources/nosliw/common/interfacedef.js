@@ -1,5 +1,5 @@
 //get/create package
-var packageObj = library;    
+var packageObj = library.getChildPackage("interfacedef");    
 
 (function(packageObj){
 	//get used node
@@ -12,10 +12,37 @@ var packageObj = library;
 	var node_ServiceInfo;
 	var node_buildInterface;
 	var node_getInterface;
-	var node_getEmbededEntityInterface;
 	var node_getObjectType;
 
 //*******************************************   Start Node Definition  **************************************
+
+var node_makeObjectWithEmbededEntityInterface = function(rawEntity){
+	
+	var loc_envInterface = {};
+	var loc_rawEntity = rawEntity;
+
+	var loc_interfaceEntity = {
+
+		setEnvironmentInterface : function(path, envInterface){
+			var newInterface = {};
+			newInterface[path] = envInterface;
+			loc_envInterface = _.extend({}, loc_envInterface, newInterface);
+			if(loc_rawEntity.setEnvironmentInterface!=undefined)   loc_rawEntity.setEnvironmentInterface(loc_envInterface);  
+		},
+		
+		getEnvironmentInterface : function(){
+			return loc_envInterface;
+		}
+		
+	};
+	
+	return node_buildInterface(rawEntity, node_CONSTANT.INTERFACE_EMBEDEDENTITY, loc_interfaceEntity);
+};
+	
+var node_getEmbededEntityInterface = function(baseObject){
+	return node_getInterface(baseObject, node_CONSTANT.INTERFACE_EMBEDEDENTITY);
+};
+
 
 var node_makeObjectBasicEntityObjectInterface = function(rawEntity, entityDefinition, configure){
 
@@ -48,6 +75,42 @@ var node_getBasicEntityObjectInterface = function(baseObject){
 };
 
 
+var INTERFACENAME_NAME = "name";
+
+/*
+ * build an object to named object
+ */
+var node_makeObjectWithName = function(obj, name){
+	return node_buildInterface(obj, INTERFACENAME_NAME, name);
+};
+
+/*
+ * get object's name
+ */
+var node_getObjectName = function(object){
+	return node_getInterface(object, INTERFACENAME_NAME);
+};
+
+var INTERFACENAME_TYPE = "TYPE";
+	
+/*
+ * build an object to typed object
+ */
+var node_makeObjectWithType = function(obj, type){
+	return node_buildInterface(obj, INTERFACENAME_TYPE, type);
+};
+
+/*
+ * get object's type info
+ * if no type info, the use VALUE as type  
+ */
+var node_getObjectType = function(object){
+	var type = node_getInterface(object, INTERFACENAME_TYPE);
+	if(type!=undefined)  return type;
+	else return node_CONSTANT.TYPEDOBJECT_TYPE_VALUE;
+};
+	
+
 //*******************************************   End Node Definition  ************************************** 	
 
 //populate dependency node data
@@ -60,14 +123,20 @@ nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSet", f
 nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();	});
 nosliw.registerSetNodeDataEvent("common.interface.buildInterface", function(){node_buildInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("common.interface.getInterface", function(){node_getInterface = this.getData();});
-nosliw.registerSetNodeDataEvent("common.embeded.getEmbededEntityInterface", function(){node_getEmbededEntityInterface = this.getData();});
-nosliw.registerSetNodeDataEvent("common.objectwithtype.getObjectType", function(){node_getObjectType = this.getData();});
-
+nosliw.registerSetNodeDataEvent("common.interfacedef.getObjectType", function(){node_getObjectType = this.getData();});
 
 
 //Register Node by Name
+packageObj.createChildNode("makeObjectWithEmbededEntityInterface", node_makeObjectWithEmbededEntityInterface); 
+packageObj.createChildNode("getEmbededEntityInterface", node_getEmbededEntityInterface); 
+
 packageObj.createChildNode("makeObjectBasicEntityObjectInterface", node_makeObjectBasicEntityObjectInterface); 
 packageObj.createChildNode("getBasicEntityObjectInterface", node_getBasicEntityObjectInterface); 
 
+packageObj.createChildNode("makeObjectWithName", node_makeObjectWithName); 
+packageObj.createChildNode("getObjectName", node_getObjectName); 
+
+packageObj.createChildNode("makeObjectWithType", node_makeObjectWithType); 
+packageObj.createChildNode("getObjectType", node_getObjectType); 
 
 })(packageObj);
