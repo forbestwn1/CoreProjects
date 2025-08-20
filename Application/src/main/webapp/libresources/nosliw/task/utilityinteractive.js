@@ -26,24 +26,10 @@ var packageObj = library;
 var node_interactiveUtility = function(){
 
 	var loc_getRequestValuesFromValuePort = function(valuePortContainer, valuePortGroupType, handlers, request){
-		
-		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-		var getParmsRequest = node_createServiceRequestInfoSet(undefined, {
-			success : function(request, result){
-				return result.getResults();
-			}
-		});
-		
 		var valueStructures = valuePortContainer.getValueStructuresByGroupTypeAndValuePortName(valuePortGroupType, node_COMMONCONSTANT.VALUEPORT_TYPE_INTERACTIVE_REQUEST);
-		_.each(valueStructures, function(valueStructure, i){
-			var eleNames = valueStructure.getElementsName();
-			_.each(eleNames, function(eleName, i){
-				var eleVar = valueStructure.getElement(eleName);
-				getParmsRequest.addRequest(eleName, eleVar.getGetValueRequest());
-			});
-		});
-		out.addRequest(getParmsRequest);
-		return out;
+		for(var i in valueStructures){
+			return valueStructures[i].getAllElementsValuesRequest(handlers, request);
+		}
 	};
 
 	var loc_out = {

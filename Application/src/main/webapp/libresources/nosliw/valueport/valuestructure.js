@@ -292,7 +292,12 @@ var node_createValueStructure = function(id, elementInfosArray, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 			var setRequest = node_createServiceRequestInfoSet(undefined, {
 				success : function(request, result){
-					return result.getResults();
+					var out = {};
+					_.each(result.getResults(), function(result, name){
+						out[name] = result.value;
+					});
+					return out;
+//					return result.getResults();
 				}
 			});
 			

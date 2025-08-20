@@ -8,16 +8,18 @@
 			"brickType" : "taskTaskScript",
 			"version" : "1.0.0"
 		},
-		"task" : {
+		"__task__" : {
 			"scriptResourceId": "task_task_test1",
 			"taskInterface" : {
 				"request" : [
 					{
 						"name" : "task_request_string1",
-						"dataInfo" : "test.string;1.0.0",
-						"defaultValue" : {
-							"dataTypeId": "test.string;1.0.0",
-							"value": "default value of request string1"
+						"dataDefinition" : {
+							"criteria" : "test.string;1.0.0",
+							"initData" : {
+								"dataTypeId": "test.string;1.0.0",
+								"value": "default value of request string1"
+							}
 						}
 					}
 				],
@@ -26,7 +28,9 @@
 						"output": [
 							{
 								"name" : "task_result_success_string1",
-								"criteria" : "test.string;1.0.0"
+								"dataDefinition" : {
+									"criteria" : "test.string;1.0.0"
+								}
 							}
 						]
 					}

@@ -89,8 +89,8 @@
 					"mode" : "runtime"
 				}
 			],
-			"resourceId1":"taskTaskScript|1.0.0|@task=taskWrapper|1.0.0|test0",  
-			"brick":{
+			"resourceId":"taskTaskScript|1.0.0|@task=taskWrapper|1.0.0|test0",  
+			"brick1":{
 				"scriptResourceId": "task_task_test1",
 				"taskInterface" : {
 					"request" : [
@@ -122,7 +122,7 @@
 			"adapter": [
 				{
 					"name" : "taskAdapter",
-					"status": "disabled",
+					"status": "disabled1",
 					"brickTypeId" : {
 						"brickType": "dataAssociationForTask",
 						"version": "1.0.0"
@@ -264,7 +264,7 @@
 		{
 			"info": {
 				"name" : "variable-test_complex_script",
-				"status": "disabled",
+				"status": "disabled1",
 				"description" : ""
 			},
 			"relation": [
@@ -277,7 +277,7 @@
 				"script": "complexscript_test_value",
 				"parm" : {
 					"variable1" : ["child_public", "child_public_string", "parent_protected", "parent_private", "parent_internal"],
-					"variable" : ["child_public_string", "parent_public"]
+					"variable" : ["child_public_string", "parent_public", "output1"]
 				},
 				"valueContext" : {
 					"brick": [
