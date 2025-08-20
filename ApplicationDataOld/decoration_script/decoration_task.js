@@ -15,7 +15,7 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 	var node_COMMONATRIBUTECONSTANT = nosliw.getNodeData("constant.COMMONATRIBUTECONSTANT");
 	var node_complexEntityUtility = nosliw.getNodeData("complexentity.complexEntityUtility");
 	var node_getEntityTreeNodeInterface = nosliw.getNodeData("complexentity.getEntityTreeNodeInterface");
-	var node_getBasicEntityObjectInterface = nosliw.getNodeData("common.getBasicEntityObjectInterface");
+	var node_getBasicEntityObjectInterface = nosliw.getNodeData("common.interfacedef.getBasicEntityObjectInterface");
 	var node_namingConvensionUtility = nosliw.getNodeData("common.namingconvension.namingConvensionUtility");
 	var node_getEntityObjectInterface = nosliw.getNodeData("complexentity.getEntityObjectInterface");
 	var node_taskUtility = nosliw.getNodeData("task.taskUtility");

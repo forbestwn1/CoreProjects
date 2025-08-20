@@ -109,7 +109,32 @@ var node_getObjectType = function(object){
 	if(type!=undefined)  return type;
 	else return node_CONSTANT.TYPEDOBJECT_TYPE_VALUE;
 };
+
+/*
+ * build an object have id info
+ */
+var node_makeObjectWithId = function(obj, id){
+	var loc_id = id;
+	if(loc_id==undefined)  loc_id = nosliw.generateId();
 	
+	var embededEntityInterface =  node_getEmbededEntityInterface(obj);
+	if(embededEntityInterface!=null){
+		embededEntityInterface.setEnvironmentInterface(node_CONSTANT.INTERFACE_WITHID, {
+			getId : function(){		return loc_id; },
+		});
+	}
+	
+	return node_buildInterface(obj, node_CONSTANT.INTERFACE_WITHID, loc_id);
+};
+
+/*
+ * get object's id info
+ */
+var node_getObjectId = function(object){
+	return node_getInterface(object, node_CONSTANT.INTERFACE_WITHID);
+};
+		
+
 
 //*******************************************   End Node Definition  ************************************** 	
 
@@ -138,5 +163,8 @@ packageObj.createChildNode("getObjectName", node_getObjectName);
 
 packageObj.createChildNode("makeObjectWithType", node_makeObjectWithType); 
 packageObj.createChildNode("getObjectType", node_getObjectType); 
+
+packageObj.createChildNode("makeObjectWithId", node_makeObjectWithId); 
+packageObj.createChildNode("getObjectId", node_getObjectId); 
 
 })(packageObj);
