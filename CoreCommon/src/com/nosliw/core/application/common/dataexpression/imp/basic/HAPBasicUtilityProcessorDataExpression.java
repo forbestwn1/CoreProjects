@@ -18,6 +18,7 @@ import com.nosliw.core.application.common.structure.HAPElementStructure;
 import com.nosliw.core.application.common.structure.HAPElementStructureLeafData;
 import com.nosliw.core.application.common.structure.reference.HAPConfigureResolveElementReference;
 import com.nosliw.core.application.common.withvariable.HAPContainerVariableInfo;
+import com.nosliw.core.application.valueport.HAPUtilityResovleElement;
 import com.nosliw.core.data.HAPData;
 import com.nosliw.core.resource.HAPFactoryResourceId;
 import com.nosliw.core.resource.HAPManagerResource;
@@ -25,7 +26,6 @@ import com.nosliw.core.resource.HAPResourceId;
 import com.nosliw.core.resource.HAPUtilityResource;
 import com.nosliw.core.runtime.HAPRuntimeInfo;
 import com.nosliw.core.xxx.application.valueport.HAPInfoElementResolve;
-import com.nosliw.core.xxx.application.valueport.HAPUtilityStructureElementReference;
 
 public class HAPBasicUtilityProcessorDataExpression {
 	
@@ -134,7 +134,7 @@ public class HAPBasicUtilityProcessorDataExpression {
 					
 					Map<String, HAPOperand> referenceMapping = referenceOperand.getMapping();
 					for(String varName : referenceMapping.keySet()) {
-						HAPInfoElementResolve varInfo = HAPUtilityStructureElementReference.resolveNameFromExternal(varName, HAPConstantShared.IO_DIRECTION_IN, referedResourceBrick, null, resourceData.getValueStructureDomain());
+						HAPInfoElementResolve varInfo = HAPUtilityResovleElement.resolveNameFromExternal(varName, HAPConstantShared.IO_DIRECTION_IN, referedResourceBrick, null, resourceData.getValueStructureDomain());
 						HAPElementStructure eleStructure = varInfo.getElementStructure();
 						String eleType = eleStructure.getType();
 						if(eleType.equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_DATA)) {

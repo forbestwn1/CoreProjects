@@ -10,9 +10,9 @@ import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.core.application.HAPDomainValueStructure;
 import com.nosliw.core.application.common.structure.reference.HAPConfigureResolveElementReference;
 import com.nosliw.core.application.valueport.HAPIdElement;
+import com.nosliw.core.application.valueport.HAPUtilityResovleElement;
 import com.nosliw.core.application.valueport.HAPWithInternalValuePort;
 import com.nosliw.core.data.criteria.HAPInfoCriteria;
-import com.nosliw.core.xxx.application.valueport.HAPUtilityStructureElementReference;
 
 public class HAPContainerVariableInfo extends HAPSerializableImp{
 
@@ -50,7 +50,7 @@ public class HAPContainerVariableInfo extends HAPSerializableImp{
 	public String addVariable(String variableName, String varIODirection, HAPConfigureResolveElementReference resolveConfigure) {
 		HAPIdElement eleId = this.getVariableId(variableName, varIODirection);
 		if(eleId==null) {
-			eleId = HAPUtilityStructureElementReference.resolveNameFromInternal(variableName, varIODirection, this.m_withInternalValuePort, resolveConfigure, this.m_valueStructureDomain).getElementId();
+			eleId = HAPUtilityResovleElement.resolveNameFromInternal(variableName, varIODirection, this.m_withInternalValuePort, resolveConfigure, this.m_valueStructureDomain).getElementId();
 			Map<String, HAPIdElement> varIdByIoDirection = this.m_variableIdByName.get(variableName);
 			if(varIdByIoDirection==null) {
 				varIdByIoDirection = new LinkedHashMap<String, HAPIdElement>();

@@ -12,8 +12,8 @@ import com.nosliw.core.application.brick.dataexpression.library.HAPBlockDataExpr
 import com.nosliw.core.application.brick.dataexpression.library.HAPElementInLibraryDataExpression;
 import com.nosliw.core.application.common.dataexpression.imp.basic.HAPBasicExpressionData;
 import com.nosliw.core.application.common.dataexpression.imp.basic.HAPBasicPluginProcessorEntityWithVariableDataExpression;
-import com.nosliw.core.application.common.dataexpression.imp.basic.HAPBasicWrapperOperand;
 import com.nosliw.core.application.common.dataexpression.imp.basic.HAPBasicUtilityProcessorDataExpression;
+import com.nosliw.core.application.common.dataexpression.imp.basic.HAPBasicWrapperOperand;
 import com.nosliw.core.application.common.interactive.HAPInteractiveExpression;
 import com.nosliw.core.application.common.withvariable.HAPContainerVariableInfo;
 import com.nosliw.core.application.common.withvariable.HAPManagerWithVariablePlugin;
@@ -102,7 +102,7 @@ public class HAPManualPluginProcessorBlockDataExpressionElementInLibrary extends
 		
 		//discover
 		Map<String, HAPDataTypeCriteria> expections = new LinkedHashMap<String, HAPDataTypeCriteria>();
-		expections.put(HAPBasicPluginProcessorEntityWithVariableDataExpression.RESULT, exe.getExpressionInterface().getResult().getDataCriteria());
+		expections.put(HAPBasicPluginProcessorEntityWithVariableDataExpression.RESULT, exe.getExpressionInterface().getResult().getDataDefinition().getCriteria());
 		Pair<HAPContainerVariableInfo, Map<String, HAPMatchers>> discoverResult = HAPUtilityWithVarible.discoverVariableCriteria(dataExpression, expections, varInfoContainer, this.m_withVariableMan);
 		varInfoContainer = discoverResult.getLeft();
 		
@@ -111,8 +111,8 @@ public class HAPManualPluginProcessorBlockDataExpressionElementInLibrary extends
 		
 		//result
 		HAPDataTypeCriteria resultCriteria = operandWrapper.getOperand().getOutputCriteria();
-		if(exe.getExpressionInterface().getResult().getDataCriteria()==null) {
-			exe.getExpressionInterface().getResult().setDataCriteria(resultCriteria);
+		if(exe.getExpressionInterface().getResult().getDataDefinition().getCriteria()==null) {
+			exe.getExpressionInterface().getResult().getDataDefinition().setCriteria(resultCriteria);
 		}
 		else {
 			exe.setResultMatchers(discoverResult.getRight().get(HAPBasicPluginProcessorEntityWithVariableDataExpression.RESULT));
