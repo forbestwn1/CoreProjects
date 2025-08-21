@@ -19,6 +19,7 @@ var packageObj = library;
 	var node_createTaskInterface;
 	var node_interactiveUtility;
 	var node_getEntityObjectInterface;
+	var node_createTaskCore;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -42,18 +43,20 @@ var loc_createDataExpressionLibraryElementComponentCore = function(complexEntity
 	
 	var loc_envInterface = {};
 
-	var loc_taskContext;
-
 	var loc_taskResult;
 
-	var loc_facadeTaskFactory = {
+	var loc_taskCore;
+	
+	var loc_facadeTaskCore = {
 		//return a task
-		createTask : function(taskContext){
-			loc_taskContext = taskContext;
-			return loc_out;
+		getTaskCore : function(){
+			return loc_taskCore;
 		},
 	};
 
+	var loc_init = function(complexEntityDef, valueContextId, bundleCore, configure){
+		loc_taskCore = node_createTaskCore(loc_out, loc_out);
+	};
 	
 	var loc_out = {
 
@@ -82,7 +85,8 @@ var loc_createDataExpressionLibraryElementComponentCore = function(complexEntity
 		
 	};
 	
-	loc_out = node_makeObjectWithApplicationInterface(loc_out, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_TASKFACTORY, loc_facadeTaskFactory);
+	loc_init(complexEntityDef, valueContextId, bundleCore, configure);
+	loc_out = node_makeObjectWithApplicationInterface(loc_out, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_TASK, loc_facadeTaskCore);
 	return loc_out;
 };
 
@@ -105,7 +109,7 @@ nosliw.registerSetNodeDataEvent("task.createTaskContainerInterface", function(){
 nosliw.registerSetNodeDataEvent("task.createTaskInterface", function(){	node_createTaskInterface = this.getData();	});
 nosliw.registerSetNodeDataEvent("task.interactiveUtility", function(){	node_interactiveUtility = this.getData();	});
 nosliw.registerSetNodeDataEvent("complexentity.getEntityObjectInterface", function(){node_getEntityObjectInterface = this.getData();});
-
+nosliw.registerSetNodeDataEvent("task.createTaskCore", function(){node_createTaskCore = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createDataExpressionLibraryElementPlugin", node_createDataExpressionLibraryElementPlugin); 

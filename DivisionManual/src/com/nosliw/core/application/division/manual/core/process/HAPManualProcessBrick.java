@@ -33,6 +33,9 @@ public class HAPManualProcessBrick {
 		//process value port
 		HAPManualUtilityProcessorValuePort.process(processContext);
 		
+		//process variable
+		HAPManualUtilityProcessorVariable.process(processContext);
+		
 		//process brick
 		HAPManualUtilityProcessorBrick.process(processContext);
 		

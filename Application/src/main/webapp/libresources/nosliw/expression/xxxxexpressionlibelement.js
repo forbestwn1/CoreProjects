@@ -101,6 +101,6 @@ nosliw.registerSetNodeDataEvent("valueport.buildWithValuePort", function(){	node
 
 
 //Register Node by Name
-packageObj.createChildNode("createDataExpressionElementInLibrary", node_createDataExpressionElementInLibrary); 
+packageObj.createChildNode("xxxxcreateDataExpressionElementInLibrary", node_createDataExpressionElementInLibrary); 
 
 })(packageObj);

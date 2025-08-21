@@ -8,7 +8,7 @@
 		{
 			"info": {
 				"name": "valueContext",
-				"status": "disabled1"
+				"status": "disabled"
 			},
 			"brick": [
 				{
@@ -77,10 +77,148 @@
 			]
 		},
 		
+		
+		{
+			"info": {
+				"name" : "test1-dataexpressionlibelement",
+				"status": "disabled1",
+				"description" : ""
+			},
+			"brick":{
+				"name" : "dataexpression1",
+				"status": "disabled1",
+				"description" : "dataexpression1",
+				"request" : [
+					{
+						"name" : "deparm1",
+						"dataDefinition" : {
+							"criteria" : "test.string;1.0.0",
+							"initData" : {
+								"dataTypeId": "test.string;1.0.0",
+								"value": "default value of baseVarNormal"
+							}
+						}
+					},
+					{
+						"name" : "deparm2",
+						"dataDefinition" : {
+							"criteria" : "test.integer;1.0.0",
+							"initData" : {
+								"dataTypeId": "test.integer;1.0.0",
+								"value": 1
+							}
+						}
+					},
+					{
+						"name" : "deparm3",
+						"dataDefinition" : {
+							"criteria" : "test.integer;1.0.0",
+							"initData" : {
+								"dataTypeId": "test.integer;1.0.0",
+								"value": 6
+							}
+						}
+					}
+				],
+				"result" : {
+					"dataDefininition" : {
+						"criteria" : "test.string;1.0.0"
+					}
+				},
+				"expression" : "?(deparm1)?",
+				"expression1" : "!(test.string)!.subString(base:?(deparm1)?,from:?(deparm2)?,to:?(deparm3)?)"
+
+			}
+		},
+		
+		
+		
+		{
+			"info": {
+				"name" : "dataexpressionremote-dataexpressionlibelement",
+				"status": "disabled",
+				"description" : ""
+			},
+			"isTask" : true,
+			"resourceId":"dataexpressionlibelement|1.0.0|@dataexpression1=dataexpressionlibrary|1.0.0|test1",  
+			"adapter":[
+				{
+					"name" : "dataExpressionAdapter",
+					"status": "disabled",
+					"brickTypeId" : {
+						"brickType": "dataAssociationForExpression",
+						"version": "1.0.0"
+					},
+					"brick" : {
+						"definition" : {
+							"in" : {
+								"type" : "mapping",
+								"mapping" : [
+									{
+										"status": "disabled1",
+										"target" : {
+											"rootName" : "deparm1"
+										},
+										"definition" : {
+											"mapping" : {
+												"elementPath": "parm1"
+											}
+										}
+									},
+									{
+										"status": "disabled1",
+										"target" : {
+											"rootName" : "deparm2"
+										},
+										"definition" : {
+											"mapping" : {
+												"elementPath": "integer1"
+											}
+										}
+									},
+									{
+										"status": "disabled1",
+										"target" : {
+											"rootName" : "deparm3"
+										},
+										"definition" : {
+											"mapping" : {
+												"elementPath": "integer2"
+											}
+										}
+									}
+								]
+							},
+							"out" : {
+								"type" : "mapping",
+								"mapping" : [
+									{
+										"target" : {
+											"rootName" : "output1"
+										},
+										"definition" : {
+											"mapping" : {
+												"elementPath": "result",
+												"valuePortId1" : {
+													"valuePortId" : {
+														"group" : "expressionInteractive"
+													}
+												}
+											}
+										}
+									}
+								]
+							}
+						}
+					}
+				}
+			]
+		},
+				
 		{
 			"info": {
 				"name" : "test1-taskTaskScript",
-				"status": "disabled1",
+				"status": "disabled",
 				"description" : ""
 			},
 			"relation": [
@@ -181,90 +319,8 @@
 
 		{
 			"info": {
-				"name" : "dataexpressionremote-dataexpressionlibelement",
-				"status": "disabled",
-				"description" : ""
-			},
-			"isTask" : true,
-			"resourceId":"dataexpressionlibelement|1.0.0|@dataexpression1=dataexpressionlibrary|1.0.0|test1",  
-			"adapter":[
-				{
-					"name" : "dataExpressionAdapter",
-					"status": "disabled1",
-					"brickTypeId" : {
-						"brickType": "dataAssociationForExpression",
-						"version": "1.0.0"
-					},
-					"brick" : {
-						"definition" : {
-							"in" : {
-								"type" : "mapping",
-								"mapping" : [
-									{
-										"status": "disabled1",
-										"target" : {
-											"rootName" : "deparm1"
-										},
-										"definition" : {
-											"mapping" : {
-												"elementPath": "parm1"
-											}
-										}
-									},
-									{
-										"status": "disabled1",
-										"target" : {
-											"rootName" : "deparm2"
-										},
-										"definition" : {
-											"mapping" : {
-												"elementPath": "integer1"
-											}
-										}
-									},
-									{
-										"status": "disabled1",
-										"target" : {
-											"rootName" : "deparm3"
-										},
-										"definition" : {
-											"mapping" : {
-												"elementPath": "integer2"
-											}
-										}
-									}
-								]
-							},
-							"out" : {
-								"type" : "mapping",
-								"mapping" : [
-									{
-										"target" : {
-											"rootName" : "output1"
-										},
-										"definition" : {
-											"mapping" : {
-												"elementPath": "result",
-												"valuePortId1" : {
-													"valuePortId" : {
-														"group" : "expressionInteractive"
-													}
-												}
-											}
-										}
-									}
-								]
-							}
-						}
-					}
-				}
-			]
-		},
-				
-		{
-			"info": {
 				"name" : "variable-test_complex_script",
-				"status": "disabled1",
+				"status": "disabled",
 				"description" : ""
 			},
 			"relation": [

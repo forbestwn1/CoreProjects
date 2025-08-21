@@ -19,14 +19,16 @@ public class HAPManualProviderBrickInfoDataExpressionElementInLibrary extends HA
 
 	private HAPParserDataExpression m_dataExpressionParser;
 	
-	private HAPManagerWithVariablePlugin withVariableMan;
+	private HAPManagerWithVariablePlugin m_withVariableMan;
 	
 	public HAPManualProviderBrickInfoDataExpressionElementInLibrary(
 			HAPManualManagerBrick manualBrickMan, 
 			HAPManagerApplicationBrick brickMan, 
-			HAPParserDataExpression dataExpressionParser) {
+			HAPParserDataExpression dataExpressionParser,
+			HAPManagerWithVariablePlugin withVariableMan) {
 		super(manualBrickMan, brickMan);
 		this.m_dataExpressionParser = dataExpressionParser;
+		this.m_withVariableMan = withVariableMan;
 	}
 	
 	@Override
@@ -41,6 +43,6 @@ public class HAPManualProviderBrickInfoDataExpressionElementInLibrary extends HA
 	}
 
 	@Override
-	protected HAPManualPluginProcessorBrick newBrickProcessor() {   return new HAPManualPluginProcessorBlockDataExpressionElementInLibrary(this.withVariableMan);  }
+	protected HAPManualPluginProcessorBrick newBrickProcessor() {   return new HAPManualPluginProcessorBlockDataExpressionElementInLibrary(this.m_withVariableMan);  }
 
 }

@@ -46,8 +46,8 @@
 					"criteria" : "test.string;1.0.0"
 				}
 			},
-			"expression1" : "?(deparm1)?",
-			"expression" : "!(test.string)!.subString(base:?(deparm1)?,from:?(deparm2)?,to:?(deparm3)?)"
+			"expression" : "?(deparm1)?",
+			"expression1" : "!(test.string)!.subString(base:?(deparm1)?,from:?(deparm2)?,to:?(deparm3)?)"
 		},
 		{
 			"name" : "reference_resource",

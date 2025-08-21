@@ -19,7 +19,6 @@ var packageObj = library.getChildPackage("service");
 	var node_OperationParms;
 	var node_DependentServiceRequestInfo;
 	var node_expressionUtility;
-	var node_dataUtility;
 	var node_namingConvensionUtility;
 	var node_objectOperationUtility;
 	var node_aliasUtility;
@@ -153,7 +152,6 @@ nosliw.registerSetNodeDataEvent("expression.entity.OperationParm", function(){no
 nosliw.registerSetNodeDataEvent("expression.entity.OperationParms", function(){node_OperationParms = this.getData();});
 nosliw.registerSetNodeDataEvent("request.request.entity.DependentServiceRequestInfo", function(){node_DependentServiceRequestInfo = this.getData();});
 nosliw.registerSetNodeDataEvent("expression.utility", function(){node_expressionUtility = this.getData();});
-nosliw.registerSetNodeDataEvent("expression.dataUtility", function(){node_dataUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("common.namingconvension.namingConvensionUtility", function(){node_namingConvensionUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("common.utility.objectOperationUtility", function(){node_objectOperationUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("iovalue.aliasUtility", function(){node_aliasUtility = this.getData();});

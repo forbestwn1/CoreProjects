@@ -169,6 +169,6 @@ nosliw.registerSetNodeDataEvent("task.createTaskInterface", function(){	node_cre
 
 
 //Register Node by Name
-packageObj.createChildNode("createDataExpressionGroupPlugin2", node_createDataExpressionGroupPlugin); 
+packageObj.createChildNode("xxxxcreateDataExpressionGroupPlugin2", node_createDataExpressionGroupPlugin); 
 
 })(packageObj);
