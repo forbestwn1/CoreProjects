@@ -21,6 +21,7 @@ var packageObj = library;
 	var node_requestServiceProcessor;
 	var node_complexEntityUtility;
 	var node_basicUtility;
+	var node_getEntityObjectInterface;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -85,6 +86,9 @@ var loc_createTaskCore = function(taskDef, configure){
 		updateView : function(view){
 			var rootView =  $('<div>Task' + '</div>');
 			$(view).append(rootView);
+
+			var taskInfoView = $('<span></span>');
+			rootView.append(taskInfoView);
 			
 			var taskTrigueView = $('<button>Execute Task</button>');
 			taskTrigueView.click(function() {
@@ -94,6 +98,8 @@ var loc_createTaskCore = function(taskDef, configure){
 				var taskId = loc_createTaskId();
 				out.addRequest(loc_createTaskEntityCoreRequest(loc_envInterface, taskId, {
 					success : function(request, taskEntityCore){
+						var taskValuePortContainerId = node_getEntityObjectInterface(taskEntityCore).getInternalValuePortContainer().getId();
+						taskInfoView.text("    valuePortContainer:  "+taskValuePortContainerId);
 						return node_taskUtility.getExecuteEntityTaskWithAdapterRequest(taskEntityCore, undefined, undefined, {
 							success : function(request, taskResult){
 								var resultStr = node_basicUtility.stringify(taskResult);
@@ -138,6 +144,7 @@ nosliw.registerSetNodeDataEvent("task.taskUtility", function(){node_taskUtility 
 nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
 nosliw.registerSetNodeDataEvent("complexentity.complexEntityUtility", function(){node_complexEntityUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();	});
+nosliw.registerSetNodeDataEvent("complexentity.getEntityObjectInterface", function(){node_getEntityObjectInterface = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createTaskPlugin", node_createTaskPlugin); 

@@ -59,7 +59,7 @@
 				}
 			},			
 			"entity":{
-				"scriptName": "complexscript_test_value",
+				"scriptName": "complexscript_debug_variablelocalbyname",
 				"parm" : {
 					"variable" : []
 				}

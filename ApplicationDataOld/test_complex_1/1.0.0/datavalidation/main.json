@@ -11,7 +11,7 @@
 				"description" : ""
 			},
 			"brick":{
-				"script": "complexscript_test_value",
+				"script": "complexscript_debug_variablelocalbyname",
 				"parm" : {
 					"variable" : ["output1"]
 				}
@@ -25,7 +25,7 @@
 				"description" : ""
 			},
 			"brick":{
-				"script": "complexscript_test_value",
+				"script": "complexscript_debug_variablelocalbyname",
 				"parm" : {
 					"variable" : ["output1"]
 				}
@@ -39,7 +39,7 @@
 				"description" : ""
 			},
 			"brick":{
-				"script": "complexscript_test_valueport"
+				"script": "complexscript_debug_valueportcontainer"
 			}
 		},
 

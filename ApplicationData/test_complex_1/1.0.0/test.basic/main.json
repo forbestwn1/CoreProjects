@@ -84,6 +84,12 @@
 				"status": "disabled1",
 				"description" : ""
 			},
+			"relation": [
+				{
+					"type" : "valueContext",
+					"mode" : "runtime"
+				}
+			],
 			"brick":{
 				"name" : "dataexpression1",
 				"status": "disabled1",
@@ -127,8 +133,58 @@
 				},
 				"expression" : "?(deparm1)?",
 				"expression1" : "!(test.string)!.subString(base:?(deparm1)?,from:?(deparm2)?,to:?(deparm3)?)"
-
-			}
+			},
+			"adapter":[
+				{
+					"name" : "dataExpressionAdapter",
+					"status": "disabled1",
+					"brickTypeId" : {
+						"brickType": "dataAssociationForExpression",
+						"version": "1.0.0"
+					},
+					"brick" : {
+						"definition" : {
+							"in" : {
+								"type" : "mapping",
+								"mapping" : [
+									{
+										"status": "disabled1",
+										"target" : {
+											"rootName" : "deparm1"
+										},
+										"definition" : {
+											"mapping" : {
+												"elementPath": "parm1"
+											}
+										}
+									}
+								]
+							},
+							"out" : {
+								"type" : "mapping",
+								"mapping" : [
+									{
+										"status": "disabled",
+										"target" : {
+											"rootName" : "output1"
+										},
+										"definition" : {
+											"mapping" : {
+												"elementPath": "result",
+												"valuePortId" : {
+													"valuePortId" : {
+														"group" : "expressionInteractive"
+													}
+												}
+											}
+										}
+									}
+								]
+							}
+						}
+					}
+				}
+			]
 		},
 		
 		
@@ -319,6 +375,23 @@
 
 		{
 			"info": {
+				"name" : "debug_valueport-test_complex_script",
+				"status": "disabled",
+				"description" : ""
+			},
+			"relation": [
+				{
+					"type" : "valueContext",
+					"mode" : "runtime"
+				}
+			],
+			"brick":{
+				"script": "complexscript_debug_valueportcontainer"
+			}
+		},
+
+		{
+			"info": {
 				"name" : "variable-test_complex_script",
 				"status": "disabled",
 				"description" : ""
@@ -330,7 +403,7 @@
 				}
 			],
 			"brick":{
-				"script": "complexscript_test_value",
+				"script": "complexscript_debug_variablelocalbyname",
 				"parm" : {
 					"variable1" : ["child_public", "child_public_string", "parent_protected", "parent_private", "parent_internal"],
 					"variable" : ["child_public_string", "parent_public", "output1"]

@@ -4,7 +4,7 @@
 		"status": "disabled1"
 	},
 	"brick":{
-		"script": "complexscript_test_value",
+		"script": "complexscript_debug_variablelocalbyname",
 		"parm" : {
 			"variable1" : ["parent_public"],
 			"variable" : ["child_public"]
