@@ -140,19 +140,19 @@ public class HAPDefinitionProcessorMappingDataAssociation {
 	private static void normalizeValuePortId(HAPDefinitionMappingItemValue mappingItem, HAPPath baseBlockPath, HAPPath secondBlockPath, String direction, String brickRootNameIfNotProvided, HAPBundle currentBundle, HAPManagerResource resourceMan, HAPRuntimeInfo runtimeInfo) {
 		HAPReferenceRootElement targetRef = mappingItem.getTarget();
 		
-		final HAPPath in;
-		HAPPath out = null;
+		final HAPPath sourcePath;
+		HAPPath targetPath = null;
 		
 		if(HAPConstantShared.DATAASSOCIATION_DIRECTION_UPSTREAM.equals(direction)) {
-			out = secondBlockPath;
-			in = baseBlockPath;
+			targetPath = secondBlockPath;
+			sourcePath = baseBlockPath;
 		}
 		else {
-			in = secondBlockPath;
-			out = baseBlockPath;
+			sourcePath = secondBlockPath;
+			targetPath = baseBlockPath;
 		}
 		
-		normalizeRootReference(targetRef, HAPConstantShared.IO_DIRECTION_IN, out, baseBlockPath, brickRootNameIfNotProvided, currentBundle, resourceMan, runtimeInfo);
+		normalizeRootReference(targetRef, HAPConstantShared.IO_DIRECTION_IN, targetPath, baseBlockPath, brickRootNameIfNotProvided, currentBundle, resourceMan, runtimeInfo);
 		
 		HAPUtilityElement.traverseElement(mappingItem.getDefinition(), null, new HAPProcessorStructureElement() {
 
@@ -160,7 +160,7 @@ public class HAPDefinitionProcessorMappingDataAssociation {
 			public Pair<Boolean, HAPElementStructure> process(HAPInfoElement eleInfo, Object value) {
 				if(eleInfo.getElement().getType().equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_RELATIVE_FOR_MAPPING)) {
 					HAPElementStructureLeafRelativeForMapping mappingEle = (HAPElementStructureLeafRelativeForMapping)eleInfo.getElement();
-					normalizeRootReference(mappingEle.getReference(), HAPConstantShared.IO_DIRECTION_OUT, in, baseBlockPath, brickRootNameIfNotProvided, currentBundle, resourceMan, runtimeInfo);
+					normalizeRootReference(mappingEle.getReference(), HAPConstantShared.IO_DIRECTION_OUT, sourcePath, baseBlockPath, brickRootNameIfNotProvided, currentBundle, resourceMan, runtimeInfo);
 				}
 				return null;
 			}

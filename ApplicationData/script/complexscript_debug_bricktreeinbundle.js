@@ -4,7 +4,6 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 	var node_COMMONATRIBUTECONSTANT = nosliw.getNodeData("constant.COMMONATRIBUTECONSTANT");
 	var node_CONSTANT = nosliw.getNodeData("constant.CONSTANT");
 	var node_requestServiceProcessor = nosliw.getNodeData("request.requestServiceProcessor");
-	var node_utilityDebugValuePort = nosliw.getNodeData("valueport.utilityDebugValuePort");
 
 	var loc_configure;
 
@@ -18,6 +17,9 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 		loc_configure = configure;
 		loc_varDomain = bundleCore.getValuePortDomain();
 	};
+
+
+
 
 	var loc_out = {
 		
@@ -41,7 +43,7 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 				var valuePortContainerId = intputView.val();
 				var valuePortContainer = loc_varDomain.getValuePortContainer(valuePortContainerId);
 				if(valuePortContainer!=undefined){
-					var request = node_utilityDebugValuePort.getExportValuePortContainerRequest(valuePortContainer, {
+					var request = valuePortContainer.getExportRequest({
 						success : function(request, values){
 							resultView.val(JSON.stringify(values));
 						}

@@ -178,7 +178,7 @@ var loc_createValuePortContainer = function(id, valuePortContainerDef, variableD
 			});
 		}
 		
-		var valueStructureName;// = valueContextDef[node_COMMONATRIBUTECONSTANT.VALUECONTEXT_VALUESTRUCTURERUNTIMENAMEBYID][valueStructureRuntimeId];
+		var valueStructureName = valueStructureRuntimeId;// = valueContextDef[node_COMMONATRIBUTECONSTANT.VALUECONTEXT_VALUESTRUCTURERUNTIMENAMEBYID][valueStructureRuntimeId];
 
 		return loc_createSolidValueStructureWrapper(valueStructureRuntimeId, valueStructureName, node_createValueStructure(id, valueStructureElementInfosArray));
 	};	
@@ -263,55 +263,10 @@ var loc_createValuePortContainer = function(id, valuePortContainerDef, variableD
 
 		getId : function(){  return loc_id;   },
 		
-		getExportRequest : function(handlers, request){
-			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-			
-			var outValue = {};
-			_.each(loc_valueStructures, function(vsByValuePortName, valuePortGroup){
-				var valueByValuePortName = {};
-				outValue[valuePortGroup] = valueByValuePortName;
-				_.each(vsByValuePortName, function(vses, valuePortName){
-					var vsById = {};
-					valueByValuePortName[valuePortName] = vsById;
-					_.each(vses, function(vsWrapper, vsId){
-						var values = {};
-						vsById[vsId+(vsWrapper.isSolid()==true?"solid":"soft")] = values;
-						var vs = vsWrapper.getValueStructure();
-						var vsEleNames = vs.getElementsName();
-						_.each(vsEleNames, function(eleName){
-							var vsEleVar = vs.getElement(eleName);
-							out.addRequest(vsEleVar.getGetValueRequest({
-								success : function(request, value){
-									var varIdPath = [];
-									vsEleVar.getVariable().prv_buildVarPath(varIdPath);
-									values[eleName] = {
-										value : value,
-										variableId : vsEleVar.getVariable().prv_id,
-										variableIdPath : varIdPath.reverse().join("--") 
-									};
-								}
-							}));
-						});
-						
-/*						
-						out.addRequest(vsWrapper.getValueStructure().getAllElementsValuesRequest({
-							success : function(request, vsValues){
-								vsById[vsId] = vsValues;
-							}
-						}));
-*/
-						
-					})
-				});
-			});
-			
-			out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
-				return outValue;
-			}));
-			
-			return out;
+		getValueStructures : function(){
+			return loc_valueStructures;
 		},
-
+		
 		createValuePort : function(valuePortGroupName, valuePortName){		return loc_createValuePort(this, valuePortGroupName, valuePortName);		},
 
 		createValuePortByGroupType : function(valuePortGroupType, valuePortName){    
@@ -531,17 +486,17 @@ var loc_createSolidValueStructureWrapper = function(valueStructureRuntimeId, val
 			return loc_out.getValueStructure().createVariable(valueStructureVariableInfo);
 		},
 			
-		getName : function(){   return loc_runtimeName;     },
+		getName : function(){   return "solid__"+loc_runtimeName;     },
 	};
 	
 	return loc_out;
 };
 
-var loc_createSoftValueStructureWrapper = function(valueStructureRuntimeId, parentValueContext){
+var loc_createSoftValueStructureWrapper = function(valueStructureRuntimeId, parentValuePortContainer){
 	
 	var loc_runtimeId = valueStructureRuntimeId;
 	
-	var loc_parentValueContext = parentValueContext;
+	var loc_parentValuePortContainer = parentValuePortContainer;
 	
 	var loc_usedCount = 1;
 	
@@ -551,22 +506,31 @@ var loc_createSoftValueStructureWrapper = function(valueStructureRuntimeId, pare
 
 		getRuntimeId : function(){   return loc_runtimeId;    },
 		
-		getValueStructure : function(){   return loc_parentValueContext.getValueStructure(loc_runtimeId);   },
+		getValueStructure : function(){   return loc_parentValuePortContainer.getValueStructure(loc_runtimeId);   },
 		
 		createVariable : function(valueStructureVariableInfo){
-			return loc_parentValueContext.getValueStructure(loc_runtimeId).createVariable(valueStructureVariableInfo);
+			return loc_parentValuePortContainer.getValueStructure(loc_runtimeId).createVariable(valueStructureVariableInfo);
 		},
 			
-		getName : function(){    
-			var currentValueContext = loc_parentValueContext;
-			while(currentValueContext!=undefined){
-				var valueStructureWrapper = currentValueContext.getSolidValueStrcutreWrapper(loc_runtimeId);
-				if(valueStructureWrapper!=null)   return valueStructureWrapper.getName();
+		getName : function(){
+			var parentSymbol = "__parent__";
+			var out = "soft__"+parentSymbol;
+			var currentValuePortContainer = loc_parentValuePortContainer;
+			while(currentValuePortContainer!=undefined){
+				var valueStructureWrapper = currentValuePortContainer.getValueStructureWrapper(loc_runtimeId);
+				if(valueStructureWrapper!=null){
+					out = out + valueStructureWrapper.getName();
+					break;
+				}
 				else{
-					currentValueContext = currentValueContext.getParentValueContext();
+					currentValuePortContainer = currentValuePortContainer.getParentValuePortContainer();
+					out = out + loc_parentSymbol;
 				}
 			}
+			
+			return out;
 		},
+		
 	};
 	
 	return loc_out;

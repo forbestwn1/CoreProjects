@@ -13,6 +13,7 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 	var node_COMMONATRIBUTECONSTANT = nosliw.getNodeData("constant.COMMONATRIBUTECONSTANT");
 	var node_CONSTANT = nosliw.getNodeData("constant.CONSTANT");
 	var node_requestServiceProcessor = nosliw.getNodeData("request.requestServiceProcessor");
+	var node_utilityDebugValuePort = nosliw.getNodeData("valueport.utilityDebugValuePort");
 
 	var loc_configure;
 
@@ -49,7 +50,7 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 				var valuePortContainerId = intputView.val();
 				var valuePortContainer = loc_varDomain.getValuePortContainer(valuePortContainerId);
 				if(valuePortContainer!=undefined){
-					var request = valuePortContainer.getExportRequest({
+					var request = node_utilityDebugValuePort.getExportValuePortContainerRequest(valuePortContainer, {
 						success : function(request, values){
 							resultView.val(JSON.stringify(values));
 						}

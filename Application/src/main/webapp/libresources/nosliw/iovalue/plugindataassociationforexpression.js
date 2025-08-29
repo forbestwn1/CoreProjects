@@ -57,7 +57,20 @@ var loc_createDataAssociationForExpressionAdapter = function(dataAssociationExpr
 	
 	var loc_out = {
 		
-		getExecuteTaskRequest : function(taskContext, handlers, request){
+		getExecuteTaskRequest : function(taskSetup, handlers, request){
+			
+			var onInitTaskRequest = function(handlers, request){
+				return loc_dataAssociationIn.getExecuteRequest(handlers, request);
+			};
+			
+			var onFinishTaskRequest = function(taskResult, handlers, request){
+				return loc_dataAssociationOut.getExecuteRequest(handlers, request);
+			};
+			
+			return node_taskUtility.getExecuteEntityTaskRequest(loc_baseEntityCore, taskSetup, onInitTaskRequest, onFinishTaskRequest, handlers, request);
+		},
+		
+		getExecuteTaskRequest1 : function(taskContext, handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 			
 			var taskFactory = node_getApplicationInterface(loc_baseEntityCore, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_TASKFACTORY);

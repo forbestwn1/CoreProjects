@@ -8,7 +8,7 @@
 		{
 			"info": {
 				"name": "valueContext",
-				"status": "disabled"
+				"status": "disabled1"
 			},
 			"brick": [
 				{
@@ -164,7 +164,7 @@
 								"type" : "mapping",
 								"mapping" : [
 									{
-										"status": "disabled",
+										"status": "disabled1",
 										"target" : {
 											"rootName" : "output1"
 										},
@@ -274,7 +274,7 @@
 		{
 			"info": {
 				"name" : "test1-taskTaskScript",
-				"status": "disabled",
+				"status": "disabled1",
 				"description" : ""
 			},
 			"relation": [
@@ -376,7 +376,7 @@
 		{
 			"info": {
 				"name" : "debug_valueport-test_complex_script",
-				"status": "disabled",
+				"status": "disabled1",
 				"description" : ""
 			},
 			"relation": [
@@ -393,7 +393,7 @@
 		{
 			"info": {
 				"name" : "variable-test_complex_script",
-				"status": "disabled",
+				"status": "disabled1",
 				"description" : ""
 			},
 			"relation": [
