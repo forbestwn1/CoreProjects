@@ -12,6 +12,7 @@ var packageObj = library;
 	var node_ServiceInfo;
 	var node_createTaskContextInterface;
 	var node_basicUtility;
+	var node_createEventObject;
 
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -40,11 +41,13 @@ var node_createTaskCore = function(taskImp, entityCore){
 
 	var loc_taskResult;
 	
-	var loc_lifecycleHandlers = [];
+//	var loc_lifecycleHandlers = [];
 	
 	var loc_runtimeEnv = node_createValueContainerList();
 
 	var loc_initSetupRequests = [];
+	
+	var loc_lifecycleEventObject = node_createEventObject();
 	
 	var loc_addTaskSetup = function(taskSetup){
 		//add init request
@@ -54,11 +57,18 @@ var node_createTaskCore = function(taskImp, entityCore){
 		if(taskSetup.getRuntimeEnv()!=undefined)  loc_runtimeEnv.addChild(taskSetup.getRuntimeEnv());
 	};
 	
+	var loc_triggerLifecycleEvent = function(event, eventData,request){
+		loc_lifecycleEventObject.triggerEvent(event, eventData, request);
+	}
+	
 	var loc_out = {
 	
 		getRuntimeEnv : function(){   return loc_runtimeEnv;      },
 		
-		registerLifecycleHandler : function(handler){  loc_lifecycleHandlers.push(handler);  },
+//		registerLifecycleHandler : function(handler){  loc_lifecycleHandlers.push(handler);  },
+		
+		registerLifecycleEventListener : function(listenerEventObj, handler, thisContext){return loc_lifecycleEventObject.registerListener(undefined, listenerEventObj, handler, thisContext);},
+		
 		
 		getTaskResult : function(){   return loc_taskResult;    },
 
@@ -75,6 +85,7 @@ var node_createTaskCore = function(taskImp, entityCore){
 			out.addRequest(loc_taskImp.getTaskExecuteRequest(loc_runtimeEnv, {
 				success : function(request, taskResult){
 					loc_taskResult = taskResult;
+					loc_triggerLifecycleEvent("finish", loc_taskResult, request);
 					return loc_taskResult;
 				}
 			}));
@@ -113,6 +124,7 @@ nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_Se
 nosliw.registerSetNodeDataEvent("task.createTaskContextInterface", function(){node_createTaskContextInterface = this.getData();	});
 nosliw.registerSetNodeDataEvent("common.valuecontainer.createValueContainerList", function(){node_createValueContainerList = this.getData();	});
 nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("common.event.createEventObject", function(){node_createEventObject = this.getData();});
 
 
 //Register Node by Name

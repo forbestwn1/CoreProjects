@@ -48,6 +48,7 @@ var loc_createTaskCore = function(taskDef, configure){
 	var loc_indexId = 0;
 	
 	var loc_taskInfoView;
+	var loc_outputView;
 	
 	var loc_createTaskId = function(){
 		loc_indexId++;
@@ -61,6 +62,12 @@ var loc_createTaskCore = function(taskDef, configure){
 			+node_getEntityObjectInterface(taskEntityCore).getExternalValuePortContainer().getId());
 		
 	};
+	
+	var loc_updateTaskResultView = function(taskResult){
+		var resultStr = node_basicUtility.stringify(taskResult);
+		console.log(resultStr);
+		loc_outputView.val(resultStr);
+	};
 
 	var loc_createTaskEntityCoreRequest = function(taskId, handlers, request){
 		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
@@ -68,6 +75,13 @@ var loc_createTaskCore = function(taskDef, configure){
 			success : function(request, node){
 				var taskEntityCore = node_complexEntityUtility.getBrickNode(node).getChildValue().getCoreEntity();
 				loc_updateTaskValuePortContainerInfo(taskEntityCore);
+				
+				node_taskUtility.getTaskCoreFromTaskEntityCore(taskEntityCore).registerLifecycleEventListener(undefined, function(event, eventData, request){
+					if(event=="finish"){
+						loc_updateTaskResultView(eventData);
+					}
+				}, taskEntityCore);
+				
 				return taskEntityCore;
 			}
 		}));
@@ -105,9 +119,7 @@ var loc_createTaskCore = function(taskDef, configure){
 						loc_updateTaskValuePortContainerInfo(taskEntityCore);
 						return node_taskUtility.getExecuteEntityTaskWithAdapterRequest(taskEntityCore, undefined, undefined, {
 							success : function(request, taskResult){
-								var resultStr = node_basicUtility.stringify(taskResult);
-								console.log(resultStr);
-								outputView.val(resultStr);
+								loc_updateTaskResultView(taskResult);
 								return taskResult;
 							}
 						});
@@ -117,8 +129,8 @@ var loc_createTaskCore = function(taskDef, configure){
 			});
 			rootView.append(taskTrigueView);
 
-			var outputView =  $(`<textarea rows="5" cols="200"></textarea>`);
-			rootView.append(outputView);
+			loc_outputView =  $(`<textarea rows="5" cols="200"></textarea>`);
+			rootView.append(loc_outputView);
 		},
 		
 	};

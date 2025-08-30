@@ -5,9 +5,11 @@ import java.util.List;
 import java.util.Map;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
+import com.nosliw.common.info.HAPUtilityEntityInfo;
 import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
@@ -40,8 +42,11 @@ public class HAPInteractiveRequest extends HAPSerializableImp{
 	protected boolean buildObjectByJson(Object json){
 		JSONArray parmsArray = (JSONArray)json;
 		for(int i=0; i<parmsArray.length(); i++) {
-			HAPDefinitionParm parm = HAPDefinitionParm.buildParmFromObject(parmsArray.get(i));
-			m_requestParms.add(parm);
+			JSONObject parmJson = parmsArray.getJSONObject(i);
+			if(HAPUtilityEntityInfo.isEnabled(parmJson)){
+				HAPDefinitionParm parm = HAPDefinitionParm.buildParmFromObject(parmJson);
+				m_requestParms.add(parm);
+			}
 		}
 		this.initValuePort();
 		return true;  

@@ -81,7 +81,7 @@
 		{
 			"info": {
 				"name" : "test1-dataexpressionlibelement",
-				"status": "disabled1",
+				"status": "disabled",
 				"description" : ""
 			},
 			"relation": [
@@ -133,8 +133,8 @@
 						"criteria" : "test.string;1.0.0"
 					}
 				},
-				"expression1" : "?(deparm1)?",
-				"expression" : "!(test.string)!.subString(base:?(deparm1)?,from:?(deparm2)?,to:?(deparm3)?)"
+				"expression" : "?(deparm1)?",
+				"expression1" : "!(test.string)!.subString(base:?(deparm1)?,from:?(deparm2)?,to:?(deparm3)?)"
 			},
 			"adapter":[
 				{
@@ -194,7 +194,7 @@
 		{
 			"info": {
 				"name" : "dataexpressionremote-dataexpressionlibelement",
-				"status": "disabled",
+				"status": "disabled1",
 				"description" : ""
 			},
 			"isTask" : true,
@@ -202,7 +202,7 @@
 			"adapter":[
 				{
 					"name" : "dataExpressionAdapter",
-					"status": "disabled",
+					"status": "disabled1",
 					"brickTypeId" : {
 						"brickType": "dataAssociationForExpression",
 						"version": "1.0.0"
@@ -378,7 +378,7 @@
 		{
 			"info": {
 				"name" : "debug_valueport-test_complex_script",
-				"status": "disabled1",
+				"status": "disabled",
 				"description" : ""
 			},
 			"relation": [
@@ -395,7 +395,7 @@
 		{
 			"info": {
 				"name" : "debug_bricktree-test_complex_script",
-				"status": "disabled1",
+				"status": "disabled",
 				"description" : ""
 			},
 			"relation": [

@@ -520,7 +520,7 @@ public class HAPDataTypeHelperImp implements HAPDataTypeHelper{
 		this.discoverExpressionCriteria(criteria, expCriterias);
 		for(HAPDataTypeCriteriaExpression expCriteria : expCriterias){
 			String expressionStr = expCriteria.getExpression();
-			HAPServiceData serviceData = this.m_runtime.executeExpressionSync(expressionStr, parms);
+			HAPServiceData serviceData = null;  //this.m_runtime.executeExpressionSync(expressionStr, parms);
 			HAPData expressionResult = (HAPData)serviceData.getData();
 			String criteriaStr = expressionResult.getValue().toString();
 			HAPDataTypeCriteria solidCriteria = HAPParserCriteria.getInstance().parseCriteria(criteriaStr);

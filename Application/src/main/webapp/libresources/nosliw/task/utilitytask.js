@@ -24,6 +24,12 @@ var packageObj = library;
 
 var node_taskUtility = {
 
+	getTaskCoreFromTaskEntityCore : function(taskEntityCore){
+		var taskCoreFacade = node_getApplicationInterface(taskEntityCore, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_TASK);
+		var taskCore = taskCoreFacade.getTaskCore();
+		return taskCore;
+	},
+
 	getExecuteTaskRequest : function(taskCore, taskSetup, onInitTaskRequest, onFinishTaskRequest, handlers, request){
 		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 		
@@ -60,9 +66,7 @@ var node_taskUtility = {
 	},
 
 	getExecuteEntityTaskRequest : function(entityCore, taskSetup, onInitTaskRequest, onFinishTaskRequest, handlers, request){
-		var taskCoreFacade = node_getApplicationInterface(entityCore, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_TASK);
-		var taskCore = taskCoreFacade.getTaskCore();
-		return this.getExecuteTaskRequest(taskCore, taskSetup, onInitTaskRequest, onFinishTaskRequest, handlers, request);
+		return this.getExecuteTaskRequest(this.getTaskCoreFromTaskEntityCore(entityCore), taskSetup, onInitTaskRequest, onFinishTaskRequest, handlers, request);
 	},
 
 	getExecuteEntityTaskWithAdapterRequest : function(entityCore, adapterName, taskSetup, handlers, request){
@@ -82,7 +86,7 @@ var node_taskUtility = {
 		var taskFactory = node_getApplicationInterface(wrapperCore, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_TASKFACTORY);
 		out.addRequest(taskFactory.getCreateTaskEntityRequest({
 			success : function(request, entityCore){
-				var taskCore = node_getApplicationInterface(entityCore, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_TASK).getTaskCore();
+				var taskCore = node_taskUtility.getTaskCoreFromTaskEntityCore(entityCore); 
 				taskCore.addTaskSetup(taskSetup);
 				return node_taskUtility.getExecuteEntityTaskWithAdapterRequest(entityCore, adapterName);
 			}
