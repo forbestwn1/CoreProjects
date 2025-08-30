@@ -39,16 +39,6 @@ var node_createTaskPlugin = function(){
 	return loc_out;
 };
 
-var loc_createTaskEntityCoreRequest = function(envInterface, taskId, handlers, request){
-	var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-	out.addRequest(envInterface[node_CONSTANT.INTERFACE_ENTITY].createBrickChildByAttributeRequest(taskId, node_COMMONATRIBUTECONSTANT.BLOCKTASKWRAPPER_TASK, undefined, {
-		success : function(request, node){
-			return node.getChildValue().getCoreEntity();
-		}
-	}));
-	return out;
-};
-
 var loc_createTaskCore = function(taskDef, configure){
 
 	var loc_taskDef = taskDef;
@@ -62,18 +52,20 @@ var loc_createTaskCore = function(taskDef, configure){
 		return loc_indexId + "";
 	};
 
+	var loc_createTaskEntityCoreRequest = function(taskId, handlers, request){
+		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+		out.addRequest(loc_envInterface[node_CONSTANT.INTERFACE_ENTITY].createBrickChildByAttributeRequest(taskId, node_COMMONATRIBUTECONSTANT.BLOCKTASKWRAPPER_TASK, undefined, {
+			success : function(request, node){
+				return node_complexEntityUtility.getBrickNode(node).getChildValue().getCoreEntity();
+			}
+		}));
+		return out;
+	};
+
 	var loc_facadeTaskFactory = {
 		getCreateTaskEntityRequest : function(handlers, request){
-			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 			var taskId = loc_createTaskId();
-			out.addRequest(loc_envInterface[node_CONSTANT.INTERFACE_ENTITY].createChildByAttributeRequest(taskId, node_COMMONATRIBUTECONSTANT.BLOCKTASKWRAPPER_TASK, undefined, {
-				success : function(request, node){
-					var taskEntity = node_complexEntityUtility.getBrickNode(node).getChildValue().getCoreEntity();
-					
-					return taskEntity;
-				}
-			}));
-			return out;
+			return loc_createTaskEntityCoreRequest(taskId, handlers, request);
 		}
 	};
 
@@ -96,7 +88,7 @@ var loc_createTaskCore = function(taskDef, configure){
 	
 				//create task entity runtime
 				var taskId = loc_createTaskId();
-				out.addRequest(loc_createTaskEntityCoreRequest(loc_envInterface, taskId, {
+				out.addRequest(loc_createTaskEntityCoreRequest(taskId, {
 					success : function(request, taskEntityCore){
 						taskInfoView.text("    valuePortContainer:  "
 							+node_getEntityObjectInterface(taskEntityCore).getInternalValuePortContainer().getId()

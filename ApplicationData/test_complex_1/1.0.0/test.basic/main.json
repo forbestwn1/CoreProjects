@@ -81,7 +81,7 @@
 		{
 			"info": {
 				"name" : "test1-dataexpressionlibelement",
-				"status": "disabled",
+				"status": "disabled1",
 				"description" : ""
 			},
 			"relation": [
@@ -276,7 +276,7 @@
 		{
 			"info": {
 				"name" : "test1-taskTaskScript",
-				"status": "disabled1",
+				"status": "disabled",
 				"description" : ""
 			},
 			"relation": [
@@ -412,7 +412,7 @@
 		{
 			"info": {
 				"name" : "variable-test_complex_script",
-				"status": "disabled",
+				"status": "disabled1",
 				"description" : ""
 			},
 			"relation": [

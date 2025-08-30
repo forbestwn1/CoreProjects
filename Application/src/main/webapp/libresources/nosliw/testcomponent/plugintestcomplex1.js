@@ -18,6 +18,7 @@ var packageObj = library;
 	var node_basicUtility;
 	var node_getBasicEntityObjectInterface;
 	var node_getEntityObjectInterface;
+	var node_taskUtility;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -101,7 +102,7 @@ var loc_createTestComplex1ComponentCore = function(complexEntityDef, configure){
 						var adapterView = $('<button>Execute Adapter : '+adapterName+'</button>');
 						attributeView.append(adapterView);
 						adapterView.click(function() {
-							var taskWrapperExeRequest = childEntityCore.getExecuteTaskThroughAdapterRequest(adapterName);
+							var taskWrapperExeRequest = node_taskUtility.getExecuteWrapperedTaskWithAdapterRequest(childEntityCore, adapterName);
 							node_requestServiceProcessor.processRequest(taskWrapperExeRequest);
 						});
 					});					
@@ -222,7 +223,7 @@ nosliw.registerSetNodeDataEvent("complexentity.complexEntityUtility", function()
 nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();	});
 nosliw.registerSetNodeDataEvent("common.interfacedef.getBasicEntityObjectInterface", function(){node_getBasicEntityObjectInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("complexentity.getEntityObjectInterface", function(){node_getEntityObjectInterface = this.getData();});
-
+nosliw.registerSetNodeDataEvent("task.taskUtility", function(){node_taskUtility = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createTestComplex1Plugin", node_createTestComplex1Plugin); 
