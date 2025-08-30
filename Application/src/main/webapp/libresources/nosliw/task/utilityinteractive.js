@@ -38,15 +38,15 @@ var node_interactiveUtility = function(){
 			return node_COMMONCONSTANT.VALUEPORT_NAME_INTERACT_RESULT + node_COMMONCONSTANT.SEPERATOR_PREFIX + resultName;
 		},
 		
-		getTaskRequestValuesFromValuePort : function(valuePortContainer, handlers, request){
+		getGetTaskRequestValuesFromValuePortRequest : function(valuePortContainer, handlers, request){
 			return loc_getRequestValuesFromValuePort(valuePortContainer, node_COMMONCONSTANT.VALUEPORTGROUP_TYPE_INTERACTIVETASK, handlers, request);
 		},
 	
-		getExpressionRequestValuesFromValuePort : function(valuePortContainer, handlers, request){
+		getGetExpressionRequestValuesFromValuePortRequest : function(valuePortContainer, handlers, request){
 			return loc_getRequestValuesFromValuePort(valuePortContainer, node_COMMONCONSTANT.VALUEPORTGROUP_TYPE_INTERACTIVEEXPRESSION, handlers, request);
 		},
 	
-		setTaskResultToValuePort : function(taskResult, valuePortContainer, handlers, request){
+		getSetTaskResultToValuePortRequest : function(taskResult, valuePortContainer, handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 			
 			var resultName = taskResult.resultName;
@@ -56,7 +56,7 @@ var node_interactiveUtility = function(){
 			return out;			
 		},
 		
-		setExpressionResultToValuePort : function(expressionResult, valuePortContainer, handlers, request){
+		getSetExpressionResultToValuePortRequest : function(expressionResult, valuePortContainer, handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 			out.addRequest(node_utilityNamedVariable.setValuePortValueRequest(
 				valuePortContainer, 

@@ -46,7 +46,7 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 			var valuePortContainer = node_getEntityObjectInterface(loc_out).getInternalValuePortContainer();
 			var withValuePort = loc_envInterface[node_CONSTANT.INTERFACE_WITHVALUEPORT];
 			
-			out.addRequest(node_interactiveUtility.getTaskRequestValuesFromValuePort(valuePortContainer, {
+			out.addRequest(node_interactiveUtility.getGetTaskRequestValuesFromValuePortRequest(valuePortContainer, {
 				success : function(request, requestValues){
 					var resultValues = {};
 					_.each(requestValues, function(data, name){
@@ -64,7 +64,7 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 					    "resultName": "success",
 					    "resultValue": resultValues
 					};
-					return  node_interactiveUtility.setTaskResultToValuePort(result, valuePortContainer, {
+					return  node_interactiveUtility.getSetTaskResultToValuePortRequest(result, valuePortContainer, {
 						success : function(){
 							loc_taskResult = result;
 							return result;
@@ -88,7 +88,7 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 			};
 
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-			out.addRequest(node_interactiveUtility.setTaskResultToValuePort(result, valuePortContainer, {
+			out.addRequest(node_interactiveUtility.getSetTaskResultToValuePortRequest(result, valuePortContainer, {
 				success : function(){
 					loc_taskResult = result;
 					return result;

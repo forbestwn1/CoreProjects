@@ -75,8 +75,11 @@ var loc_createDataExpressionLibraryElementComponentCore = function(complexEntity
 			out.addRequest(node_expressionUtility.getExecuteDataExpressionRequest(dataExpression, loc_envInterface[node_CONSTANT.INTERFACE_WITHVALUEPORT], undefined, {
 				success : function(request, result){
 					loc_taskResult = result;
-					node_interactiveUtility.setExpressionResultToValuePort(result, valuePortContainer);
-					return loc_taskResult;
+					return node_interactiveUtility.getSetExpressionResultToValuePortRequest(result, valuePortContainer, {
+						success : function(){
+							return loc_taskResult;
+						}
+					});
 				}
 			}));
 			return out;

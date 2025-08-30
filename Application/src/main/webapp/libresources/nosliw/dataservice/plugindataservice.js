@@ -105,11 +105,11 @@ var loc_createDataServiceProvider = function(serviceProvider, configure){
 		getTaskExecuteRequest : function(handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 			var valuePortContainer = node_getEntityObjectInterface(loc_out).getInternalValuePortContainer();
-			out.addRequest(node_interactiveUtility.getTaskRequestValuesFromValuePort(valuePortContainer, {
+			out.addRequest(node_interactiveUtility.getGetTaskRequestValuesFromValuePortRequest(valuePortContainer, {
 				success : function(request, parmsValue){
 					return loc_getExecuteTaskRequest(parmsValue, {
 						success : function(request, serviceResult){
-							return node_interactiveUtility.setTaskResultToValuePort(serviceResult, valuePortContainer, {
+							return node_interactiveUtility.getSetTaskResultToValuePortRequest(serviceResult, valuePortContainer, {
 								success : function(){
 									loc_taskResult = serviceResult;
 									return serviceResult;

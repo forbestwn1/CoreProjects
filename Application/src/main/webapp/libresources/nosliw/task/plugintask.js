@@ -47,16 +47,28 @@ var loc_createTaskCore = function(taskDef, configure){
 
 	var loc_indexId = 0;
 	
+	var loc_taskInfoView;
+	
 	var loc_createTaskId = function(){
 		loc_indexId++;
 		return loc_indexId + "";
+	};
+
+	var loc_updateTaskValuePortContainerInfo = function(taskEntityCore){
+		loc_taskInfoView.text("    valuePortContainer:  "
+			+node_getEntityObjectInterface(taskEntityCore).getInternalValuePortContainer().getId()
+			+"--"
+			+node_getEntityObjectInterface(taskEntityCore).getExternalValuePortContainer().getId());
+		
 	};
 
 	var loc_createTaskEntityCoreRequest = function(taskId, handlers, request){
 		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 		out.addRequest(loc_envInterface[node_CONSTANT.INTERFACE_ENTITY].createBrickChildByAttributeRequest(taskId, node_COMMONATRIBUTECONSTANT.BLOCKTASKWRAPPER_TASK, undefined, {
 			success : function(request, node){
-				return node_complexEntityUtility.getBrickNode(node).getChildValue().getCoreEntity();
+				var taskEntityCore = node_complexEntityUtility.getBrickNode(node).getChildValue().getCoreEntity();
+				loc_updateTaskValuePortContainerInfo(taskEntityCore);
+				return taskEntityCore;
 			}
 		}));
 		return out;
@@ -79,8 +91,8 @@ var loc_createTaskCore = function(taskDef, configure){
 			var rootView =  $('<div>Task' + '</div>');
 			$(view).append(rootView);
 
-			var taskInfoView = $('<span></span>');
-			rootView.append(taskInfoView);
+			loc_taskInfoView = $('<span></span>');
+			rootView.append(loc_taskInfoView);
 			
 			var taskTrigueView = $('<button>Execute Task</button>');
 			taskTrigueView.click(function() {
@@ -90,10 +102,7 @@ var loc_createTaskCore = function(taskDef, configure){
 				var taskId = loc_createTaskId();
 				out.addRequest(loc_createTaskEntityCoreRequest(taskId, {
 					success : function(request, taskEntityCore){
-						taskInfoView.text("    valuePortContainer:  "
-							+node_getEntityObjectInterface(taskEntityCore).getInternalValuePortContainer().getId()
-							+"--"
-							+node_getEntityObjectInterface(taskEntityCore).getExternalValuePortContainer().getId());
+						loc_updateTaskValuePortContainerInfo(taskEntityCore);
 						return node_taskUtility.getExecuteEntityTaskWithAdapterRequest(taskEntityCore, undefined, undefined, {
 							success : function(request, taskResult){
 								var resultStr = node_basicUtility.stringify(taskResult);
