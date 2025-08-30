@@ -81,7 +81,7 @@
 		{
 			"info": {
 				"name" : "test1-dataexpressionlibelement",
-				"status": "disabled1",
+				"status": "disabled",
 				"description" : ""
 			},
 			"relation": [
@@ -107,6 +107,7 @@
 					},
 					{
 						"name" : "deparm2",
+						"status": "disabled",
 						"dataDefinition" : {
 							"criteria" : "test.integer;1.0.0",
 							"initData" : {
@@ -117,6 +118,7 @@
 					},
 					{
 						"name" : "deparm3",
+						"status": "disabled",
 						"dataDefinition" : {
 							"criteria" : "test.integer;1.0.0",
 							"initData" : {
@@ -283,8 +285,8 @@
 					"mode" : "runtime"
 				}
 			],
-			"resourceId":"taskTaskScript|1.0.0|@task=taskWrapper|1.0.0|test0",  
-			"brick1":{
+			"resourceId1":"taskTaskScript|1.0.0|@task=taskWrapper|1.0.0|test0",  
+			"brick":{
 				"scriptResourceId": "task_task_test1",
 				"taskInterface" : {
 					"request" : [
@@ -392,8 +394,25 @@
 
 		{
 			"info": {
-				"name" : "variable-test_complex_script",
+				"name" : "debug_bricktree-test_complex_script",
 				"status": "disabled1",
+				"description" : ""
+			},
+			"relation": [
+				{
+					"type" : "valueContext",
+					"mode" : "runtime"
+				}
+			],
+			"brick":{
+				"script": "complexscript_debug_bricktreeinbundle"
+			}
+		},
+
+		{
+			"info": {
+				"name" : "variable-test_complex_script",
+				"status": "disabled",
 				"description" : ""
 			},
 			"relation": [

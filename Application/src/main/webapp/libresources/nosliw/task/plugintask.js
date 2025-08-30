@@ -98,8 +98,10 @@ var loc_createTaskCore = function(taskDef, configure){
 				var taskId = loc_createTaskId();
 				out.addRequest(loc_createTaskEntityCoreRequest(loc_envInterface, taskId, {
 					success : function(request, taskEntityCore){
-						var taskValuePortContainerId = node_getEntityObjectInterface(taskEntityCore).getInternalValuePortContainer().getId();
-						taskInfoView.text("    valuePortContainer:  "+taskValuePortContainerId);
+						taskInfoView.text("    valuePortContainer:  "
+							+node_getEntityObjectInterface(taskEntityCore).getInternalValuePortContainer().getId()
+							+"--"
+							+node_getEntityObjectInterface(taskEntityCore).getExternalValuePortContainer().getId());
 						return node_taskUtility.getExecuteEntityTaskWithAdapterRequest(taskEntityCore, undefined, undefined, {
 							success : function(request, taskResult){
 								var resultStr = node_basicUtility.stringify(taskResult);
