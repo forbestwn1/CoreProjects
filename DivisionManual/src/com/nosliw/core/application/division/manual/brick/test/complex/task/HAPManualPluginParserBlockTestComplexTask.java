@@ -5,19 +5,19 @@ import org.json.JSONObject;
 
 import com.nosliw.common.info.HAPEntityInfo;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.core.application.HAPManagerApplicationBrick;
+import com.nosliw.core.application.brick.HAPEnumBrickType;
+import com.nosliw.core.application.brick.test.complex.task.HAPBlockTestComplexTask;
 import com.nosliw.core.application.division.manual.core.HAPManualManagerBrick;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionBrick;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionContextParse;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionPluginParserBrickImpComplex;
 import com.nosliw.core.application.valueport.HAPReferenceElement;
-import com.nosliw.core.xxx.application1.brick.HAPEnumBrickType;
-import com.nosliw.core.xxx.application1.brick.test.complex.task.HAPBlockTestComplexTask;
-import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPManualPluginParserBlockTestComplexTask extends HAPManualDefinitionPluginParserBrickImpComplex{
 
-	public HAPManualPluginParserBlockTestComplexTask(HAPManualManagerBrick manualDivisionEntityMan, HAPRuntimeEnvironment runtimeEnv) {
-		super(HAPEnumBrickType.TEST_COMPLEX_TASK_100, HAPManualDefinitionBlockTestComplexTask.class, manualDivisionEntityMan, runtimeEnv);
+	public HAPManualPluginParserBlockTestComplexTask(HAPManualManagerBrick manualDivisionEntityMan, HAPManagerApplicationBrick brickMan) {
+		super(HAPEnumBrickType.TEST_COMPLEX_TASK_100, HAPManualDefinitionBlockTestComplexTask.class, manualDivisionEntityMan, brickMan);
 	}
 
 	@Override

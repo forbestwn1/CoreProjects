@@ -8,6 +8,8 @@ import org.apache.commons.lang3.tuple.Pair;
 import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.brick.HAPEnumBrickType;
+import com.nosliw.core.application.common.datadefinition.HAPDefinitionParm;
+import com.nosliw.core.application.common.datadefinition.HAPDefinitionResult;
 import com.nosliw.core.application.common.interactive.HAPInteractiveExpression;
 import com.nosliw.core.application.common.interactive.HAPInteractiveResultTask;
 import com.nosliw.core.application.common.interactive.HAPInteractiveTask;
@@ -21,10 +23,8 @@ import com.nosliw.core.application.valueport.HAPIdElement;
 import com.nosliw.core.application.valueport.HAPIdValuePortInBrick;
 import com.nosliw.core.application.valueport.HAPIdValuePortInBundle;
 import com.nosliw.core.application.valueport.HAPReferenceElement;
+import com.nosliw.core.application.valueport.HAPUtilityResovleElement;
 import com.nosliw.core.application.valueport.HAPUtilityValuePort;
-import com.nosliw.core.xxx.application.common.interactive1.HAPRequestParmInInteractive;
-import com.nosliw.core.xxx.application.common.interactive1.HAPResultElementInInteractiveTask;
-import com.nosliw.core.xxx.application.valueport.HAPUtilityStructureElementReference;
 
 public class HAPManualPluginProcessorBlockComplexTestComplexTask extends HAPManualPluginProcessorBlockImp{
 
@@ -77,7 +77,7 @@ public class HAPManualPluginProcessorBlockComplexTestComplexTask extends HAPManu
 			buildRquestParmsVars(varRefs, taskInteractive.getRequestParms(), HAPConstantShared.VALUEPORTGROUP_TYPE_INTERACTIVETASK);
 			
 			for(HAPInteractiveResultTask taskResult : taskInteractive.getResult()) {
-				for(HAPResultElementInInteractiveTask output : taskResult.getOutput()) {
+				for(HAPDefinitionResult output : taskResult.getOutput()) {
 					String varName = output.getName();
 					HAPReferenceElement varDef = new HAPReferenceElement(varName);
 					varDef.setIODirection(HAPConstantShared.IO_DIRECTION_IN);
@@ -102,13 +102,13 @@ public class HAPManualPluginProcessorBlockComplexTestComplexTask extends HAPManu
 		for(String varName : varRefs.keySet()) {
 			HAPReferenceElement varRef = varRefs.get(varName);
 			varRef.setValuePortId(HAPUtilityValuePort.normalizeInternalValuePortId(varRef.getValuePortId(), varRef.getIODirection(), executableBlock));
-			HAPIdElement varId = HAPUtilityStructureElementReference.resolveElementReferenceInternal(varRef, executableBlock, new HAPConfigureResolveElementReference(), processContext.getCurrentBundle().getValueStructureDomain()).getElementId();
+			HAPIdElement varId = HAPUtilityResovleElement.resolveElementReferenceInternal(varRef, executableBlock, new HAPConfigureResolveElementReference(), processContext.getCurrentBundle().getValueStructureDomain()).getElementId();
 			executableBlock.getVariables().put(varName, varId);
 		}
 	}
 
-	private void buildRquestParmsVars(Map<String, HAPReferenceElement> varRefs, List<HAPRequestParmInInteractive> requestParms, String valuePortGroup) {
-		for(HAPRequestParmInInteractive requestParm : requestParms) {
+	private void buildRquestParmsVars(Map<String, HAPReferenceElement> varRefs, List<HAPDefinitionParm> requestParms, String valuePortGroup) {
+		for(HAPDefinitionParm requestParm : requestParms) {
 			String varName = requestParm.getName();
 			HAPReferenceElement varDef = new HAPReferenceElement(varName);
 			varDef.setIODirection(HAPConstantShared.IO_DIRECTION_OUT);

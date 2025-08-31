@@ -36,9 +36,11 @@ public interface HAPBlockTestComplexScript extends HAPBrick{
 
 	HAPResourceId getScrip();
 	Map<String, Object> getParms();
+
 	List<HAPResultReferenceResolve> getVariables();
 	List<HAPReferenceElement> getUnknownVariables();
 	List<HAPExecutableVariableExpected> getExtendedVariables();
+	
 	List<HAPInfoAttachmentResolve> getAttachments();
 
 	List<HAPTestTaskTrigguer> getTaskTrigguers();

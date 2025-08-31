@@ -17,7 +17,6 @@ var packageObj = library;
 	var node_createValuePortElementInfo;
 	var node_makeObjectWithApplicationInterface;
 	var node_valuePortUtilityResolvedVariable;
-	var node_createTaskCore;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -41,6 +40,7 @@ var loc_createTestTaskCore = function(complexEntityDef, valueContextId, bundleCo
 
 	var loc_envInterface = {};
 
+	var loc_taskContext;
 	var loc_taskResult;
 	
 	var loc_variablesInTask;
@@ -50,9 +50,6 @@ var loc_createTestTaskCore = function(complexEntityDef, valueContextId, bundleCo
 
 	var loc_expressionInteractive;
 
-	var loc_taskCore;
-	
-
 	var loc_init = function(complexEntityDef, valueContextId, bundleCore, configure){
 		var varDomain = bundleCore.getValuePortDomain();
 		loc_valueContext = varDomain.creatValuePortContainer(valueContextId);
@@ -60,20 +57,22 @@ var loc_createTestTaskCore = function(complexEntityDef, valueContextId, bundleCo
     	loc_taskInteractive = complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.BLOCKTESTCOMPLEXTASK_INTERACTIVETASK);
     	loc_taskInteractiveResult = complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.BLOCKTESTCOMPLEXTASK_INTERACTIVETASKRESULT);
     	loc_expressionInteractive = complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.BLOCKTESTCOMPLEXTASK_INTERACTIVEEXPRESSION);
-
-		loc_taskCore = node_createTaskCore(loc_out, loc_out);
 	};
 
-	var loc_facadeTaskCore = {
+	var loc_facadeTaskFactory = {
 		//return a task
-		getTaskCore : function(){
-			return loc_taskCore;
+		createTask : function(taskContext){
+			loc_taskContext = taskContext;
+			return loc_out;
 		},
 	};
 
 	var loc_out = {
 		
 		setEnvironmentInterface : function(envInterface){		loc_envInterface = envInterface;	},
+		
+		getPreInitRequest : function(){
+		},
 		
 		updateView : function(view){
 			var rootView =  $('<div>Task' + '</div>');
@@ -96,6 +95,12 @@ var loc_createTestTaskCore = function(complexEntityDef, valueContextId, bundleCo
 				});
 			}
 			
+		},
+		
+		getTaskInitRequest : function(handlers, request){
+			if(loc_taskContext!=undefined){
+				return loc_taskContext.getInitTaskRequest(loc_out, handlers, request);
+			}
 		},
 		
 		getTaskExecuteRequest : function(handlers, request){
@@ -177,7 +182,7 @@ var loc_createTestTaskCore = function(complexEntityDef, valueContextId, bundleCo
 	};
 	
 	loc_init(complexEntityDef, valueContextId, bundleCore, configure);
-	loc_out = node_makeObjectWithApplicationInterface(loc_out, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_TASK, loc_facadeTaskCore);
+	loc_out = node_makeObjectWithApplicationInterface(loc_out, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_TASKFACTORY, loc_facadeTaskFactory);
 	return loc_out;
 }
 
@@ -199,10 +204,9 @@ nosliw.registerSetNodeDataEvent("component.componentUtility", function(){node_co
 nosliw.registerSetNodeDataEvent("valueport.createValuePortElementInfo", function(){node_createValuePortElementInfo = this.getData();});
 nosliw.registerSetNodeDataEvent("component.makeObjectWithApplicationInterface", function(){node_makeObjectWithApplicationInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("valueport.valuePortUtilityResolvedVariable", function(){node_valuePortUtilityResolvedVariable = this.getData();});
-nosliw.registerSetNodeDataEvent("task.createTaskCore", function(){node_createTaskCore = this.getData();});
 
 
 //Register Node by Name
-packageObj.createChildNode("createTestComplexTaskPlugin", node_createTestComplexTaskPlugin); 
+packageObj.createChildNode("createTestComplexTaskPlugin1", node_createTestComplexTaskPlugin); 
 
 })(packageObj);

@@ -3,12 +3,12 @@ package com.nosliw.core.application.division.manual.brick.test.complex.task;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import com.nosliw.core.application.brick.interactive.interfacee.expression.HAPBlockInteractiveInterfaceExpression;
+import com.nosliw.core.application.brick.interactive.interfacee.task.HAPBlockInteractiveInterfaceTask;
+import com.nosliw.core.application.brick.test.complex.task.HAPBlockTestComplexTask;
 import com.nosliw.core.application.division.manual.core.HAPManualBrickImp;
 import com.nosliw.core.application.valueport.HAPIdElement;
 import com.nosliw.core.application.valueport.HAPResultReferenceResolve;
-import com.nosliw.core.xxx.application1.brick.interactive.interfacee.expression.HAPBlockInteractiveInterfaceExpression;
-import com.nosliw.core.xxx.application1.brick.interactive.interfacee.task.HAPBlockInteractiveInterfaceTask;
-import com.nosliw.core.xxx.application1.brick.test.complex.task.HAPBlockTestComplexTask;
 
 public class HAPManualBlockTestComplexTask extends HAPManualBrickImp implements HAPBlockTestComplexTask{
 

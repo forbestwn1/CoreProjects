@@ -30,16 +30,20 @@ public class HAPUtilityInteractiveTaskValuePort {
 	public static void buildValuePortGroupForInteractiveTaskEventHandler(Pair<HAPContainerValuePorts, HAPContainerValuePorts> valuePortContainerPair, HAPElementStructure eventDataElement, HAPDomainValueStructure valueStructureDomain) {
 		//request
 		Pair<HAPValuePort, HAPValuePort> requestValuePortPair = getOrCreateTaskInteractiveRequestValuePort(valuePortContainerPair);
-		
-		Set<HAPRootInStructure> roots = new HashSet<HAPRootInStructure>();
-		HAPRootInStructure root = new HAPRootInStructure();
-		root.setDefinition(eventDataElement);
-		root.setName(HAPConstantShared.NAME_ROOT_EVENT);
-		roots.add(root);
-		
-		String valueStructureId = valueStructureDomain.newValueStructure(roots, null, null, null);
-		requestValuePortPair.getLeft().addValueStructureId(valueStructureId, HAPConstantShared.VALUESTRUCTURE_PRIORITY_IMPLIED);
-		requestValuePortPair.getRight().addValueStructureId(valueStructureId, HAPConstantShared.VALUESTRUCTURE_PRIORITY_IMPLIED);
+		String dataRootName = HAPConstantShared.NAME_ROOT_EVENT;
+		HAPElementStructure dataEle = HAPUtilityValuePort.getStructureElementInValuePort(dataRootName, requestValuePortPair.getLeft(), valueStructureDomain);
+		if(dataEle==null) {
+			//if data root is not defined, then add it
+			Set<HAPRootInStructure> roots = new HashSet<HAPRootInStructure>();
+			HAPRootInStructure root = new HAPRootInStructure();
+			root.setDefinition(eventDataElement);
+			root.setName(dataRootName);
+			roots.add(root);
+			
+			String valueStructureId = valueStructureDomain.newValueStructure(roots, null, null, null);
+			requestValuePortPair.getLeft().addValueStructureId(valueStructureId, HAPConstantShared.VALUESTRUCTURE_PRIORITY_IMPLIED);
+			requestValuePortPair.getRight().addValueStructureId(valueStructureId, HAPConstantShared.VALUESTRUCTURE_PRIORITY_IMPLIED);
+		}
 	}
 
 	
@@ -85,7 +89,6 @@ public class HAPUtilityInteractiveTaskValuePort {
 				resultValuePortPair.getRight().addValueStructureId(valueStructureId, HAPConstantShared.VALUESTRUCTURE_PRIORITY_IMPLIED);
 			}
 		}
-			
 	}
 
 	public static void buildValuePortGroupForInteractiveTask(Pair<HAPContainerValuePorts, HAPContainerValuePorts> valuePortContainerPair, HAPInteractiveTask taskInteractive, HAPDomainValueStructure valueStructureDomain) {

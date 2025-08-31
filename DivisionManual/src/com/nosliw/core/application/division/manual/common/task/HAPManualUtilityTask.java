@@ -44,10 +44,18 @@ public class HAPManualUtilityTask {
 		return valuePortContainerInfo.getValuePortContainerPair().getRight().getValuePortGroupByType(HAPConstantShared.VALUEPORTGROUP_TYPE_INTERACTIVETASK).getName();
 	}
 	
-	public static void buildValuePortGroupForInteractiveTaskEventHandler(HAPManualBrick brick, HAPElementStructure eventDataElement, HAPDomainValueStructure valueStructureDomain) {
-		HAPUtilityInteractiveTaskValuePort.buildValuePortGroupForInteractiveTaskEventHandler(Pair.of(brick.getOtherInternalValuePortContainer(), brick.getOtherExternalValuePortContainer()), eventDataElement, valueStructureDomain);
-	}
+//	public static void buildValuePortGroupForInteractiveTaskEventHandler(HAPManualBrick brick, HAPElementStructure eventDataElement, HAPDomainValueStructure valueStructureDomain) {
+//		HAPUtilityInteractiveTaskValuePort.buildValuePortGroupForInteractiveTaskEventHandler(Pair.of(brick.getOtherInternalValuePortContainer(), brick.getOtherExternalValuePortContainer()), eventDataElement, valueStructureDomain);
+//	}
 
+	public static void buildValuePortGroupForInteractiveTaskEventHandler(HAPBundle bundle, HAPPath idPath, String rootNameIfNotProvide, HAPElementStructure dataElement, HAPDomainValueStructure valueStructureDomain) {
+		idPath = figureoutTaskPath(bundle, idPath, rootNameIfNotProvide);
+		HAPManualBrick childBrick = (HAPManualBrick)HAPUtilityBrick.getDescdentBrickLocal(bundle, idPath, rootNameIfNotProvide);
+		if(childBrick!=null) {
+			HAPUtilityInteractiveTaskValuePort.buildValuePortGroupForInteractiveTaskEventHandler(Pair.of(childBrick.getOtherInternalValuePortContainer(), childBrick.getOtherExternalValuePortContainer()), dataElement, valueStructureDomain);
+		}
+	}
+	
 	public static HAPMatchers buildValuePortGroupForInteractiveTaskDataValidation(HAPBundle bundle, HAPPath idPath, String rootNameIfNotProvide, HAPElementStructure dataElement, HAPDomainValueStructure valueStructureDomain) {
 		HAPMatchers out = null;
 		

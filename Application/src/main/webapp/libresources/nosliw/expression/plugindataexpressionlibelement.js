@@ -62,12 +62,6 @@ var loc_createDataExpressionLibraryElementComponentCore = function(complexEntity
 
 		setEnvironmentInterface : function(envInterface){		loc_envInterface = envInterface;	},
 		
-		getTaskInitRequest : function(handlers, request){
-			if(loc_taskContext!=undefined){
-				return loc_taskContext.getInitTaskRequest(loc_out, handlers, request);
-			}
-		},
-
 		getTaskExecuteRequest : function(runtimeEnv, handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);      
 			var valuePortContainer = node_getEntityObjectInterface(loc_out).getInternalValuePortContainer();
