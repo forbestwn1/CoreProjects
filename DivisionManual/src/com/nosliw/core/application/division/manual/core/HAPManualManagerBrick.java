@@ -87,7 +87,7 @@ public class HAPManualManagerBrick implements HAPPluginDivision{
 			File bundleInfoFile = new File(entityLocationInfo.getBasePath().getPath()+"/bundle.json");
 			if(bundleInfoFile.exists()) {
 				JSONObject bundleInfoObj = new JSONObject(HAPUtilityFile.readFile(bundleInfoFile));
-				Object dynamicTaskObj = bundleInfoObj.opt(HAPBundle.DYNAMICTASK);
+				Object dynamicTaskObj = bundleInfoObj.opt(HAPBundle.DYNAMIC);
 				if(dynamicTaskObj!=null) {
 					out.getDynamicTaskInfo().buildObject(dynamicTaskObj, HAPSerializationFormat.JSON);
 				}

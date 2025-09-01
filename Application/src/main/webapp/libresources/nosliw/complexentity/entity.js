@@ -40,10 +40,10 @@ var node_createDynamicTaskInputContainer = function(dynamicInput, coreEntity){
 		getDyanmicTaskInputRequest : function(inputId, handlers, request){
 			var out = loc_dynamicTaskInputs[inputId];
 			if(out==undefined){
-				var taskRef = loc_dynamicInput[node_COMMONATRIBUTECONSTANT.INPUTDYNAMICTASK_DYNAMICTASK][inputId];
-				var refType = taskRef[node_COMMONATRIBUTECONSTANT.REFDYNAMICTASK_TYPE];
+				var taskRef = loc_dynamicInput[node_COMMONATRIBUTECONSTANT.CONTAINERINPUTDYNAMIC_DYNAMICINPUT][inputId];
+				var refType = taskRef[node_COMMONATRIBUTECONSTANT.INPUTDYNAMIC_TYPE];
 				if(refType==node_COMMONCONSTANT.DYNAMICTASK_REF_TYPE_SINGLE){
-					var relativePath = taskRef[node_COMMONATRIBUTECONSTANT.REFDYNAMICTASK_TASKID][node_COMMONATRIBUTECONSTANT.IDBRICKINBUNDLE_RELATIVEPATH];
+					var relativePath = taskRef[node_COMMONATRIBUTECONSTANT.INPUTDYNAMIC_TASKID][node_COMMONATRIBUTECONSTANT.IDBRICKINBUNDLE_RELATIVEPATH];
 					var taskWrapperEntityCore = node_complexEntityUtility.getBrickCoreByRelativePath(loc_coreEntity, relativePath);
 					return node_createServiceRequestInfoSimple(undefined, function(request){
 						var dynamicTaskInput = node_createDynamicTaskInput(taskWrapperEntityCore);

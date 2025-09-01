@@ -5,10 +5,10 @@ import com.nosliw.core.application.common.interactive.HAPInteractiveTask;
 
 public class HAPUtilityInfoDynamic {
 
-	public static HAPInteractiveTask getTaskInterfaceForDynamic(HAPValueOfDynamic dynamicValue, HAPInfoDynamicTask dynamicInfo) {
+	public static HAPInteractiveTask getTaskInterfaceForDynamic(HAPValueOfDynamic dynamicValue, HAPContainerInfoDynamic dynamicInfo) {
 		String interfaceId = dynamicValue.getInterfaceId();
-		HAPInfoDynamicTaskElementLeaf dynamicEle = (HAPInfoDynamicTaskElementLeaf)dynamicInfo.getDescent(interfaceId);
-		return dynamicEle.getTaskInterface();
+		HAPInfoDynamicLeaf dynamicEle = (HAPInfoDynamicLeaf)dynamicInfo.getDescent(interfaceId);
+		return dynamicEle.getCriteria();
 	}
 	
 }

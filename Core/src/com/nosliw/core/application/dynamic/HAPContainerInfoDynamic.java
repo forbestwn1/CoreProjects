@@ -14,24 +14,24 @@ import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 
 @HAPEntityWithAttribute
-public class HAPInfoDynamicTask extends HAPSerializableImp{
+public class HAPContainerInfoDynamic extends HAPSerializableImp{
 
 	@HAPAttribute
 	public static final String ELEMENT = "element";
 	
-	private Map<String, HAPInfoDynamicTaskElement> m_elements;
+	private Map<String, HAPInfoDynamic> m_elements;
 
-	public HAPInfoDynamicTask() {
-		this.m_elements = new LinkedHashMap<String, HAPInfoDynamicTaskElement>();
+	public HAPContainerInfoDynamic() {
+		this.m_elements = new LinkedHashMap<String, HAPInfoDynamic>();
 	}
 	
-	public void addElement(HAPInfoDynamicTaskElement ele) {
+	public void addElement(HAPInfoDynamic ele) {
 		this.m_elements.put(ele.getName(), ele);
 	}
 
-	public HAPInfoDynamicTaskElement getDescent(String path) {
+	public HAPInfoDynamic getDescent(String path) {
 		HAPComplexPath complexPath = new HAPComplexPath(path);
-		HAPInfoDynamicTaskElement out = this.m_elements.get(complexPath.getRoot());
+		HAPInfoDynamic out = this.m_elements.get(complexPath.getRoot());
 		
 		for(String seg : complexPath.getPathSegs()) {
 			out = out.getChild(seg);
@@ -59,7 +59,7 @@ public class HAPInfoDynamicTask extends HAPSerializableImp{
 	private void parseElements(JSONArray jsonArray) {
 		if(jsonArray!=null) {
 			for(int i=0; i<jsonArray.length(); i++) {
-				this.addElement(HAPInfoDynamicTaskElement.parse(jsonArray.get(i)));
+				this.addElement(HAPInfoDynamic.parse(jsonArray.get(i)));
 			}
 		}
 	}

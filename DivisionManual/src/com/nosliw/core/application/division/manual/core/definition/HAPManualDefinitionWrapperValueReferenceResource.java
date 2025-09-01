@@ -6,7 +6,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.core.application.dynamic.HAPInputDynamicTask;
+import com.nosliw.core.application.dynamic.HAPContainerInputDynamic;
 import com.nosliw.core.resource.HAPResourceId;
 
 public class HAPManualDefinitionWrapperValueReferenceResource extends HAPManualDefinitionWrapperValue{
@@ -20,19 +20,19 @@ public class HAPManualDefinitionWrapperValueReferenceResource extends HAPManualD
 	//reference to external resource
 	private HAPResourceId m_resourceId;
 
-	private HAPInputDynamicTask m_dynamicInput;
+	private HAPContainerInputDynamic m_dynamicInput;
 	
 	public HAPManualDefinitionWrapperValueReferenceResource(HAPResourceId resourceId) {
 		super(HAPConstantShared.EMBEDEDVALUE_TYPE_RESOURCEREFERENCE);
 		this.m_resourceId = resourceId;
-		this.m_dynamicInput = new HAPInputDynamicTask();
+		this.m_dynamicInput = new HAPContainerInputDynamic();
 	}
 
 	public HAPResourceId getResourceId() {    return this.m_resourceId;     }
 	public void setResourceId(HAPResourceId resourceId) {    this.m_resourceId = resourceId;      }
 
-	public HAPInputDynamicTask getDyanmicInput(){   return this.m_dynamicInput;     }
-	public void setDynamicInput(HAPInputDynamicTask dynamicInput) {     this.m_dynamicInput = dynamicInput;     }
+	public HAPContainerInputDynamic getDyanmicInput(){   return this.m_dynamicInput;     }
+	public void setDynamicInput(HAPContainerInputDynamic dynamicInput) {     this.m_dynamicInput = dynamicInput;     }
 
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){

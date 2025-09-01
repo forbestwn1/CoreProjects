@@ -4,11 +4,11 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.utils.HAPConstantShared;
 
 @HAPEntityWithAttribute
-public class HAPInfoDynamicTaskElementLeafSet extends HAPInfoDynamicTaskElementLeaf{
+public class HAPInfoDynamicLeafSimple extends HAPInfoDynamicLeaf{
 
 	@Override
 	public String getType() {
-		return HAPConstantShared.DYNAMICTASK_INFO_TYPE_SET;
+		return HAPConstantShared.DYNAMICTASK_INFO_TYPE_SIMPLE;
 	}
 	
 	@Override

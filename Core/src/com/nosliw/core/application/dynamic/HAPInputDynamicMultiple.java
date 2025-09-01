@@ -13,14 +13,14 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.HAPIdBrickInBundle;
 
-public class HAPRefDynamicTaskMultiple extends HAPRefDynamicTask{
+public class HAPInputDynamicMultiple extends HAPInputDynamic{
 
 	@HAPAttribute
 	public final static String TASKIDS = "taskIds"; 
 	
 	private List<HAPIdBrickInBundle> m_taskIds;
 	
-	public HAPRefDynamicTaskMultiple() {
+	public HAPInputDynamicMultiple() {
 		this.m_taskIds = new ArrayList<HAPIdBrickInBundle>();
 	}
 	

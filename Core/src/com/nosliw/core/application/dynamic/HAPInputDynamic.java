@@ -11,25 +11,25 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 
 @HAPEntityWithAttribute
-public abstract class HAPRefDynamicTask extends HAPEntityInfoImp{
+public abstract class HAPInputDynamic extends HAPEntityInfoImp{
 
 	@HAPAttribute
 	public final static String TYPE = "type"; 
 
 	public abstract String getType();
 
-	public static HAPRefDynamicTask parse(Object obj) {
-		HAPRefDynamicTask out = null;
+	public static HAPInputDynamic parse(Object obj) {
+		HAPInputDynamic out = null;
 		JSONObject jsonObj = (JSONObject)obj;
 		Object typeObj = jsonObj.opt(TYPE);
 		String type = typeObj!=null? (String)typeObj : HAPConstantShared.DYNAMICTASK_REF_TYPE_SINGLE;
 		switch(type) {
 		case HAPConstantShared.DYNAMICTASK_REF_TYPE_SINGLE:
-			out = new HAPRefDynamicTaskSingle();
+			out = new HAPInputDynamicSingle();
 			out.buildObject(jsonObj, HAPSerializationFormat.JSON);
 			break;
 		case HAPConstantShared.DYNAMICTASK_REF_TYPE_MULTIPLE:
-			out = new HAPRefDynamicTaskMultiple();
+			out = new HAPInputDynamicMultiple();
 			out.buildObject(jsonObj, HAPSerializationFormat.JSON);
 			break;
 		}

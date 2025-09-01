@@ -12,24 +12,24 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 
 @HAPEntityWithAttribute
-public class HAPInfoDynamicTaskElementNode extends HAPInfoDynamicTaskElement{
+public class HAPInfoDynamicNode extends HAPInfoDynamic{
 
 	@HAPAttribute
 	public static final String CHILD = "child";
 	
-	private Map<String, HAPInfoDynamicTaskElement> m_children;
+	private Map<String, HAPInfoDynamic> m_children;
 	
 	@Override
 	public String getType() {
 		return HAPConstantShared.DYNAMICTASK_INFO_TYPE_NODE;
 	}
 	
-	public void addChild(HAPInfoDynamicTaskElement child) {
+	public void addChild(HAPInfoDynamic child) {
 		this.m_children.put(child.getId(), child);
 	}
 	
 	@Override
-	public HAPInfoDynamicTaskElement getChild(String childName) {   return this.m_children.get(childName);     }
+	public HAPInfoDynamic getChild(String childName) {   return this.m_children.get(childName);     }
 
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
@@ -46,7 +46,7 @@ public class HAPInfoDynamicTaskElementNode extends HAPInfoDynamicTaskElement{
 
 		JSONArray childArray = jsonObj.getJSONArray(CHILD);
 		for(int i=0; i<childArray.length(); i++) {
-			this.addChild(HAPInfoDynamicTaskElement.parse(childArray.getJSONObject(i)));
+			this.addChild(HAPInfoDynamic.parse(childArray.getJSONObject(i)));
 		}
 		return true;
 	}

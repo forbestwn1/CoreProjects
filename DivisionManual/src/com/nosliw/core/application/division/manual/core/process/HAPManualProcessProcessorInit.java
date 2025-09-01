@@ -33,7 +33,7 @@ import com.nosliw.core.application.division.manual.core.definition.HAPManualDefi
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionWrapperValue;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionWrapperValueBrick;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionWrapperValueReferenceResource;
-import com.nosliw.core.application.dynamic.HAPRefDynamicTask;
+import com.nosliw.core.application.dynamic.HAPInputDynamic;
 import com.nosliw.core.application.dynamic.HAPUtilityInfoDynamic;
 import com.nosliw.core.xxx.application.division.manual.core.definition1.HAPManualDefinitionWrapperValueDynamic;
 
@@ -85,7 +85,7 @@ public class HAPManualProcessProcessorInit {
 					//resource reference
 					HAPManualDefinitionWrapperValueReferenceResource resourceRefValueDef = (HAPManualDefinitionWrapperValueReferenceResource)attrValueInfo;
 					HAPWrapperValueOfReferenceResource resourceRefValue = new HAPWrapperValueOfReferenceResource(resourceRefValueDef.getResourceId());
-					for(HAPRefDynamicTask dynamicTask : resourceRefValueDef.getDyanmicInput().getDyanmicTaskReference().values()) {
+					for(HAPInputDynamic dynamicTask : resourceRefValueDef.getDyanmicInput().getDyanmicTaskReference().values()) {
 						resourceRefValue.getDynamicTaskInput().addDynamicTaskReference(dynamicTask);
 					}
 					attrExe.setValueWrapper(resourceRefValue);
