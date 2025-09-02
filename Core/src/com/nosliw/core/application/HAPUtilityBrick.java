@@ -47,6 +47,11 @@ public class HAPUtilityBrick {
 		return getDescendantResult(bundle.getRootBrickWrapper(fullPathInfo.getRoot()).getBrick(), fullPathInfo.getPath());
 	}
 
+	public static HAPResultBrickDescentValue getDescdentBrickResult(HAPBundle bundle, HAPPath path) {
+		HAPComplexPath fullPathInfo = HAPUtilityBundle.getBrickFullPathInfo(path.toString());
+		return getDescendantResult(bundle.getRootBrickWrapper(fullPathInfo.getRoot()).getBrick(), fullPathInfo.getPath());
+	}
+
 	public static HAPBrick getDescdentBrickLocal(HAPBundle bundle, HAPPath path, String rootNameIfNotProvide) {
 		HAPComplexPath fullPathInfo = HAPUtilityBundle.getBrickFullPathInfo(path.toString(), rootNameIfNotProvide);
 		return getDescdentBrickLocal(bundle.getRootBrickWrapper(fullPathInfo.getRoot()).getBrick(), fullPathInfo.getPath());

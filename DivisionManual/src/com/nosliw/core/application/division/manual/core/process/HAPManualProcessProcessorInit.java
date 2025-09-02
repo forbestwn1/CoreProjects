@@ -16,8 +16,6 @@ import com.nosliw.core.application.HAPWrapperValue;
 import com.nosliw.core.application.HAPWrapperValueOfBrick;
 import com.nosliw.core.application.HAPWrapperValueOfDynamic;
 import com.nosliw.core.application.HAPWrapperValueOfReferenceResource;
-import com.nosliw.core.application.common.interactive.HAPInteractiveTask;
-import com.nosliw.core.application.common.interactive.HAPUtilityInteractiveTaskValuePort;
 import com.nosliw.core.application.division.manual.core.HAPInfoTreeNode;
 import com.nosliw.core.application.division.manual.core.HAPManualAdapter;
 import com.nosliw.core.application.division.manual.core.HAPManualAttributeInBrick;
@@ -34,7 +32,6 @@ import com.nosliw.core.application.division.manual.core.definition.HAPManualDefi
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionWrapperValueBrick;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionWrapperValueReferenceResource;
 import com.nosliw.core.application.dynamic.HAPInputDynamic;
-import com.nosliw.core.application.dynamic.HAPUtilityInfoDynamic;
 import com.nosliw.core.xxx.application.division.manual.core.definition1.HAPManualDefinitionWrapperValueDynamic;
 
 public class HAPManualProcessProcessorInit {
@@ -94,9 +91,6 @@ public class HAPManualProcessProcessorInit {
 					HAPManualDefinitionWrapperValueDynamic dynamicValueDef = (HAPManualDefinitionWrapperValueDynamic)attrValueInfo;
 					HAPWrapperValueOfDynamic dynamicValue = new HAPWrapperValueOfDynamic(dynamicValueDef.getDynamicValue());
 					attrExe.setValueWrapper(dynamicValue);
-					
-					HAPInteractiveTask taskInterface = HAPUtilityInfoDynamic.getTaskInterfaceForDynamic(dynamicValueDef.getDynamicValue(), processContext.getCurrentBundle().getDynamicTaskInfo());
-					HAPUtilityInteractiveTaskValuePort.buildValuePortGroupForInteractiveTask(dynamicValue.getDynamicValue(), taskInterface, processContext.getCurrentBundle().getValueStructureDomain());
 				}
 				
 				//adapter

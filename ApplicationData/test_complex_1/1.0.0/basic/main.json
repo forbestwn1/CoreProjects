@@ -276,7 +276,7 @@
 		{
 			"info": {
 				"name" : "test1-taskTaskScript",
-				"status": "disabled",
+				"status": "disabled1",
 				"description" : ""
 			},
 			"relation": [

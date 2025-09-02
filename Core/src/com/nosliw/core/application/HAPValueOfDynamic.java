@@ -11,9 +11,9 @@ import com.nosliw.core.application.valueport.HAPWithExternalValuePort;
 
 public class HAPValueOfDynamic extends HAPSerializableImp implements HAPWithExternalValuePort{
 
-	public static final String INTERFACEID = "interfaceId";
+	public static final String DYNAMICID = "dynamicId";
 	
-	private String m_interfaceId;
+	private String m_dynamicId;
 
 	private HAPContainerValuePorts m_valuePortsContainer;
 	
@@ -23,15 +23,15 @@ public class HAPValueOfDynamic extends HAPSerializableImp implements HAPWithExte
 
 	public HAPValueOfDynamic(String interfaceId) {
 		this();
-		this.m_interfaceId = interfaceId;
+		this.m_dynamicId = interfaceId;
 	}
 
-	public String getInterfaceId() {	return this.m_interfaceId;	}
+	public String getDynamicId() {	return this.m_dynamicId;	}
 	
 	@Override
 	protected boolean buildObjectByJson(Object json){
 		if(json instanceof String) {
-			this.m_interfaceId = (String)json;
+			this.m_dynamicId = (String)json;
 		} else if(json instanceof JSONObject) {
 			
 		}
@@ -40,7 +40,7 @@ public class HAPValueOfDynamic extends HAPSerializableImp implements HAPWithExte
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
-		jsonMap.put(INTERFACEID, m_interfaceId);
+		jsonMap.put(DYNAMICID, m_dynamicId);
 		jsonMap.put(EXTERNALVALUEPORT, this.m_valuePortsContainer.toStringValue(HAPSerializationFormat.JSON));
 	}
 

@@ -7,7 +7,7 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.core.application.common.bricktypecriteria.HAPCriteriaBrickType;
+import com.nosliw.core.application.common.dynamiccriteria.HAPCriteriaDynamic;
 
 @HAPEntityWithAttribute
 public abstract class HAPInfoDynamicLeaf extends HAPInfoDynamic{
@@ -15,15 +15,15 @@ public abstract class HAPInfoDynamicLeaf extends HAPInfoDynamic{
 	@HAPAttribute
 	public final static String CRITERIA = "criteria"; 
 	
-	private HAPCriteriaBrickType m_criteria;
+	private HAPCriteriaDynamic m_criteria;
 	
 	public HAPInfoDynamicLeaf() {}
 	
-	public HAPInfoDynamicLeaf(HAPCriteriaBrickType criteria) {
+	public HAPInfoDynamicLeaf(HAPCriteriaDynamic criteria) {
 		this.m_criteria= criteria;
 	}
 
-	public HAPCriteriaBrickType getCriteria() {
+	public HAPCriteriaDynamic getCriteria() {
 		return this.m_criteria;
 	}
 
@@ -40,8 +40,7 @@ public abstract class HAPInfoDynamicLeaf extends HAPInfoDynamic{
 	protected boolean buildObjectByJson(Object json){
 		super.buildObjectByJson(json);
 		JSONObject jsonObj = (JSONObject)json;
-		this.m_criteria =  new HAPCriteriaBrickType();
-		this.m_criteria.buildObject(jsonObj.getJSONObject(CRITERIA), HAPSerializationFormat.JSON);
+		this.m_criteria =  HAPCriteriaDynamic.parseDynamicCriteria(jsonObj.getJSONObject(CRITERIA));
 		return true;
 	}
 }

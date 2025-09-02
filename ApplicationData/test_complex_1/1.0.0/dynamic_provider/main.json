@@ -1,0 +1,17 @@
+{
+	"info": {
+		"name": "test.common.configure.root",
+		"description": "test.common.configure.root"
+	},
+	"brick": [
+
+		{
+			"info": {
+				"name" : "test1-taskTaskScript",
+				"status": "disabled1",
+				"description" : ""
+			},
+			"dynamic" : "task"
+		}		
+	]
+}
