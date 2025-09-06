@@ -6,50 +6,73 @@ var packageObj = library.getChildPackage("entity");
 	var node_CONSTANT;
 	var node_COMMONCONSTANT;
 	var node_COMMONATRIBUTECONSTANT;
+	var node_createServiceRequestInfoSequence;
 	var node_createServiceRequestInfoSimple;
 	var node_makeObjectWithType;
 	var node_complexEntityUtility;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
-var node_createDynamicTaskInput = function(dynamicTaskFactoryEntity, taskSetup){
+var loc_createDynamicInput = function(dynamicEntity){
 	
-	var loc_dynamicTaskFactoryEntity = dynamicTaskFactoryEntity;
-	var loc_taskSetup = taskSetup;
+	var loc_dynamicEntity = dynamicEntity;
 	
 	var loc_out = {
 		
-		getDynamicTaskFactoryEntity : function(){    return loc_dynamicTaskFactoryEntity;    },
-		
-		getTaskSetup : function(){    return loc_taskSetup;    }
+		getDynamicCoreEntity : function(){    return loc_dynamicEntity;    },
 		
 	};
 	return loc_out;
 };
 
-var node_createDynamicTaskInputContainer = function(dynamicInput, coreEntity){
+
+var node_createDynamicInputContainer = function(dynamicInputDefs, dynamicInputSourceBundleCore){
 	
-	var loc_dynamicInput = dynamicInput;
+	var loc_dynamicInputDefs = dynamicInputDefs;
 	
-	var loc_coreEntity = coreEntity;
+	var loc_dynamicInputBundleCore = dynamicInputSourceBundleCore;
 	
-	var loc_dynamicTaskInputs = {};
+	var loc_dynamicInputs = {};
 	
 	var loc_out = {
-
-		getDyanmicTaskInputRequest : function(inputId, handlers, request){
-			var out = loc_dynamicTaskInputs[inputId];
+		
+		getDynamicInput : function(inputId){
+			return loc_dynamicInputs[inputId];
+		},
+		
+		prepareDyanmicInputRequest : function(inputId, handlers, request){
+			var out = loc_dynamicInputs[inputId];
 			if(out==undefined){
-				var taskRef = loc_dynamicInput[node_COMMONATRIBUTECONSTANT.CONTAINERINPUTDYNAMIC_DYNAMICINPUT][inputId];
-				var refType = taskRef[node_COMMONATRIBUTECONSTANT.INPUTDYNAMIC_TYPE];
+				var dynamicInputDef = loc_dynamicInputDefs[node_COMMONATRIBUTECONSTANT.CONTAINERINPUTDYNAMIC_ELEMENT][inputId];
+				var refType = dynamicInputDef[node_COMMONATRIBUTECONSTANT.INPUTDYNAMIC_TYPE];
 				if(refType==node_COMMONCONSTANT.DYNAMICTASK_REF_TYPE_SINGLE){
-					var relativePath = taskRef[node_COMMONATRIBUTECONSTANT.INPUTDYNAMIC_TASKID][node_COMMONATRIBUTECONSTANT.IDBRICKINBUNDLE_RELATIVEPATH];
-					var taskWrapperEntityCore = node_complexEntityUtility.getBrickCoreByRelativePath(loc_coreEntity, relativePath);
-					return node_createServiceRequestInfoSimple(undefined, function(request){
-						var dynamicTaskInput = node_createDynamicTaskInput(taskWrapperEntityCore);
-						loc_dynamicTaskInputs[inputId] = dynamicTaskInput;
-						return dynamicTaskInput;  
-					}, handlers, request);
+					var relativePath = dynamicInputDef[node_COMMONATRIBUTECONSTANT.INPUTDYNAMIC_BRICKID][node_COMMONATRIBUTECONSTANT.IDBRICKINBUNDLE_RELATIVEPATH];
+					var absolutePath = dynamicInputDef[node_COMMONATRIBUTECONSTANT.INPUTDYNAMIC_BRICKID][node_COMMONATRIBUTECONSTANT.IDBRICKINBUNDLE_IDPATH];
+					var dynamicInputEntityCore = node_complexEntityUtility.getBrickCoreByRelativePath(loc_dynamicInputBundleCore, relativePath);
+					
+//					var dynamicInputEntityCore = node_complexEntityUtility.getDescendantCore(loc_dynamicInputSourceBundleCore, absolutePath);
+					
+					
+					var factory = node_getApplicationInterface(dynamicInputEntityCore, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_FACTORY);
+					if(factory==undefined){
+						return node_createServiceRequestInfoSimple(undefined, function(request){
+							var dynamicInput = loc_createDynamicInput(dynamicInputEntityCore);
+							loc_dynamicInputs[inputId] = dynamicInput;
+							return dynamicInput;  
+						}, handlers, request);
+					}
+					else{
+						//is factory
+						var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+						out.addRequest(factory.getCreateEntityRequest({
+							success : function(request, entityCore){
+								var dynamicInput = loc_createDynamicInput(entityCore);
+								loc_dynamicInputs[inputId] = dynamicInput;
+								return dynamicInput;  
+							}
+						}));
+						return out;
+					}
 				}
 			}
 			else{
@@ -59,7 +82,6 @@ var node_createDynamicTaskInputContainer = function(dynamicInput, coreEntity){
 			}
 			
 		}
-		
 	};
 	
 	return loc_out;
@@ -260,6 +282,7 @@ var loc_createAttributeValueWithDynamic = function(valueWrapper){
 nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("constant.COMMONCONSTANT", function(){node_COMMONCONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){node_COMMONATRIBUTECONSTANT = this.getData();});
+nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequence", function(){	node_createServiceRequestInfoSequence = this.getData();	});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple", function(){	node_createServiceRequestInfoSimple = this.getData();	});
 nosliw.registerSetNodeDataEvent("common.interfacedef.makeObjectWithType", function(){node_makeObjectWithType = this.getData();});
 nosliw.registerSetNodeDataEvent("complexentity.complexEntityUtility", function(){node_complexEntityUtility = this.getData();	});
@@ -267,6 +290,6 @@ nosliw.registerSetNodeDataEvent("complexentity.complexEntityUtility", function()
 //Register Node by Name
 packageObj.createChildNode("EntityIdInDomain", node_EntityIdInDomain); 
 packageObj.createChildNode("createBrickDefinition", node_createBrickDefinition); 
-packageObj.createChildNode("createDynamicTaskInputContainer", node_createDynamicTaskInputContainer); 
+packageObj.createChildNode("createDynamicInputContainer", node_createDynamicInputContainer); 
 
 })(packageObj);

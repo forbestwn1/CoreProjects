@@ -145,6 +145,9 @@ var node_complexEntityUtility = function(){
 			if(coreDataType==node_CONSTANT.TYPEDOBJECT_TYPE_BUNDLE){
 				out = out.getMainEntityCore();
 			}
+			else if(coreDataType==node_CONSTANT.TYPEDOBJECT_TYPE_DYNAMIC){
+				out = out.getDynamicInput().getDynamicCoreEntity();
+			}
 			return out;
 		},
 		

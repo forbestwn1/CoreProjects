@@ -43,7 +43,7 @@ var node_createBundleCore = function(parm, configure){
 
 	var loc_parentView;
 	
-	var loc_dynamicTaskInputContainer;
+	var loc_dynamicInputContainer;
 	
 	var loc_init = function(parm, configure){
 		loc_configure = configure;
@@ -116,7 +116,7 @@ var node_createBundleCore = function(parm, configure){
 			if(categary!=undefined&&categar!=node_COMMONCONSTANT.VALUEADDRESSCATEGARY_BUNDLE)  return;
 			var complexPath = node_namingConvensionUtility.parseComplexPath(name);
 			if(complexPath.root=="#dynamicTask"){
-				return loc_dynamicTaskInputContainer.getDyanmicTaskInputRequest(complexPath.path, handlers, request);
+				return loc_dynamicInputContainer.getDyanmicTaskInputRequest(complexPath.path, handlers, request);
 			}
 		},
 		
@@ -174,9 +174,9 @@ var node_createBundleCore = function(parm, configure){
 			}, handlers, request);
 		},
 		
-		setDynamicTaskInputContainer : function(dynamicTaskInputContainer){		loc_dynamicTaskInputContainer = dynamicTaskInputContainer;		},
+		setDynamicInputContainer : function(dynamicInputContainer){		loc_dynamicInputContainer = dynamicInputContainer;		},
 		
-		getDynamicTaskInputContainer : function(){	return loc_dynamicTaskInputContainer;		},
+		getDynamicInputContainer : function(){	return loc_dynamicInputContainer;		},
 		
 		getValueContainer : function(){		return loc_valueContainer;	},
 		

@@ -4,13 +4,17 @@ import java.util.Map;
 
 import org.json.JSONObject;
 
+import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.core.application.valueport.HAPContainerValuePorts;
 import com.nosliw.core.application.valueport.HAPWithExternalValuePort;
 
+@HAPEntityWithAttribute
 public class HAPValueOfDynamic extends HAPSerializableImp implements HAPWithExternalValuePort{
 
+	@HAPAttribute
 	public static final String DYNAMICID = "dynamicId";
 	
 	private String m_dynamicId;

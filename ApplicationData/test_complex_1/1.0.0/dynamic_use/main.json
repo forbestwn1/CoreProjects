@@ -81,7 +81,7 @@
 		
 		{
 			"info": {
-				"name" : "test1-taskTaskScript",
+				"name" : "test1-test_complex_1",
 				"status": "disabled1",
 				"description" : ""
 			},
@@ -91,14 +91,14 @@
 					"mode" : "runtime"
 				}
 			],
-			"resourceId1":"taskTaskScript|1.0.0|@task=taskWrapper|1.0.0|test0",  
+			"resourceId":"test_complex_1|1.0.0|dynamic_provider",  
 			"dynamicInput" : { 
-				"dynamicTask" :
+				"element" :
 				[ 
 					{
 						"type" : "single",
-						"name" : "default",
-						"taskId" : {
+						"name" : "task",
+						"brickId" : {
 							"idPath" : "#main.test1-taskTaskScript"
 						}
 					}
@@ -107,7 +107,7 @@
 			"adapter": [
 				{
 					"name" : "taskAdapter",
-					"status": "disabled1",
+					"status": "disabled",
 					"brickTypeId" : {
 						"brickType": "dataAssociationForTask",
 						"version": "1.0.0"
@@ -177,7 +177,6 @@
 					"mode" : "runtime"
 				}
 			],
-			"resourceId1":"taskTaskScript|1.0.0|@task=taskWrapper|1.0.0|test0",  
 			"brick":{
 				"scriptResourceId": "task_task_test1",
 				"taskInterface" : {

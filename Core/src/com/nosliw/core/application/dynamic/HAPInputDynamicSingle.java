@@ -12,21 +12,21 @@ import com.nosliw.core.application.HAPIdBrickInBundle;
 public class HAPInputDynamicSingle extends HAPInputDynamic{
 
 	@HAPAttribute
-	public final static String TASKID = "taskId"; 
+	public final static String BRICKID = "brickId"; 
 	
-	private HAPIdBrickInBundle m_taskId;
+	private HAPIdBrickInBundle m_brickId;
 	
 	public HAPInputDynamicSingle() {	}
 	
-	public HAPInputDynamicSingle(HAPIdBrickInBundle taskId) {
-		this.m_taskId = taskId;
+	public HAPInputDynamicSingle(HAPIdBrickInBundle brickId) {
+		this.m_brickId = brickId;
 	}
 	
 	@Override
 	public String getType() {   return HAPConstantShared.DYNAMICTASK_REF_TYPE_SINGLE;  }
 
-	public HAPIdBrickInBundle getTaskId() {    return this.m_taskId;     }
-	public void setTaskId(HAPIdBrickInBundle taskId) {    this.m_taskId = taskId;      }
+	public HAPIdBrickInBundle getTaskId() {    return this.m_brickId;     }
+	public void setTaskId(HAPIdBrickInBundle taskId) {    this.m_brickId = taskId;      }
 	
 	@Override
 	protected boolean buildObjectByJson(Object json){
@@ -34,9 +34,9 @@ public class HAPInputDynamicSingle extends HAPInputDynamic{
 		
 		JSONObject jsonObj = (JSONObject)json;
 		
-		JSONObject taskIdJsonObj = jsonObj.getJSONObject(TASKID);
-		this.m_taskId = new HAPIdBrickInBundle();
-		this.m_taskId.buildObject(taskIdJsonObj, HAPSerializationFormat.JSON);
+		JSONObject taskIdJsonObj = jsonObj.getJSONObject(BRICKID);
+		this.m_brickId = new HAPIdBrickInBundle();
+		this.m_brickId.buildObject(taskIdJsonObj, HAPSerializationFormat.JSON);
 		
 		return true;
 	}
@@ -44,7 +44,7 @@ public class HAPInputDynamicSingle extends HAPInputDynamic{
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(TASKID, this.m_taskId.toStringValue(HAPSerializationFormat.JSON));
+		jsonMap.put(BRICKID, this.m_brickId.toStringValue(HAPSerializationFormat.JSON));
 	}
 
 }

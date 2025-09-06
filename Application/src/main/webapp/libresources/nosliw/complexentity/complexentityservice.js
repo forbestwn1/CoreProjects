@@ -116,7 +116,6 @@ var node_createComplexEntityRuntimeService = function() {
 				
 				entityCore = node_makeObjectWithType(entityCore, brickType);
 				
-				
 				var out1 = node_createServiceRequestInfoSequence(undefined, {
 					success : function(request){
 						return entityCore;
@@ -134,7 +133,7 @@ var node_createComplexEntityRuntimeService = function() {
 		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 
 		out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
-			var dynamicCore = node_createDynamicCore(dynamicDef);
+			var dynamicCore = node_createDynamicCore(dynamicDef, bundleCore);
 			
 			dynamicCore = node_makeObjectWithEmbededEntityInterface(dynamicCore);
 			
@@ -145,11 +144,20 @@ var node_createComplexEntityRuntimeService = function() {
 			dynamicCore = node_makeObjectWithComponentInterface(undefined, dynamicCore, false);
 			
 			dynamicCore = node_makeObjectEntityObjectInterface(dynamicCore, undefined, function(){
-					return node_getEntityObjectInterface(dynamicCore.getCurrentTaskEntityCore()).getExternalValuePortContainer();
+					return node_getEntityObjectInterface(dynamicCore.getValuePortContainerProviderEntityCore()).getExternalValuePortContainer();
 				}, bundleCore);
 			
 			var runtimeConfigureInfo = node_componentUtility.processRuntimeConfigure(configure);
-			return node_createComponentRuntime(dynamicCore, runtimeConfigureInfo.decorations, request);
+			var dyanmicRuntime =  node_createComponentRuntime(dynamicCore, runtimeConfigureInfo.decorations, request);
+
+			var out1 = node_createServiceRequestInfoSequence(undefined, {
+				success : function(request){
+					return dyanmicRuntime;
+				}
+			});
+			out1.addRequest(dynamicCore.getEntityInitRequest());
+			return out1;
+
 		}));
 		
 		return out;

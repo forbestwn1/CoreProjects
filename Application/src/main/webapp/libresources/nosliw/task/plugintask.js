@@ -89,7 +89,7 @@ var loc_createTaskCore = function(taskDef, configure){
 	};
 
 	var loc_facadeTaskFactory = {
-		getCreateTaskEntityRequest : function(handlers, request){
+		getCreateEntityRequest : function(handlers, request){
 			var taskId = loc_createTaskId();
 			return loc_createTaskEntityCoreRequest(taskId, handlers, request);
 		}
@@ -135,7 +135,7 @@ var loc_createTaskCore = function(taskDef, configure){
 		
 	};
 	
-	return node_makeObjectWithApplicationInterface(loc_out, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_TASKFACTORY, loc_facadeTaskFactory);
+	return node_makeObjectWithApplicationInterface(loc_out, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_FACTORY, loc_facadeTaskFactory);
 };
 
 //*******************************************   End Node Definition  ************************************** 	

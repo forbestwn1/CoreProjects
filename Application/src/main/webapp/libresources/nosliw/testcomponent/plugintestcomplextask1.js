@@ -182,7 +182,7 @@ var loc_createTestTaskCore = function(complexEntityDef, valueContextId, bundleCo
 	};
 	
 	loc_init(complexEntityDef, valueContextId, bundleCore, configure);
-	loc_out = node_makeObjectWithApplicationInterface(loc_out, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_TASKFACTORY, loc_facadeTaskFactory);
+	loc_out = node_makeObjectWithApplicationInterface(loc_out, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_FACTORY, loc_facadeTaskFactory);
 	return loc_out;
 }
 

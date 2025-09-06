@@ -79,14 +79,16 @@ var loc_createTestComplex1ComponentCore = function(complexEntityDef, configure){
 			//complex children
 			loc_envInterface[node_CONSTANT.INTERFACE_TREENODEENTITY].processChildren(function(child){
 				var attrName = child.getChildName();
-				
-				var childCoreEntity = node_complexEntityUtility.getBrickNode(child).getChildValue().getCoreEntity();
-				var internalChildValuePortContainer = node_getEntityObjectInterface(childCoreEntity).getInternalValuePortContainer();
-				var externalChildValuePortContainer = node_getEntityObjectInterface(childCoreEntity).getExternalValuePortContainer();
-				
+
 				//not nosliw attribute
 				var rootViewWrapper = $('<div style="overflow-y1: scroll; border-width:thick; border-style:solid; border-color:green"/>');
 				var attributeView = $('<div>childAttr: '+attrName+'</div>');
+				
+				var childCoreEntity = node_complexEntityUtility.getBrickNode(child).getChildValue().getCoreEntity();
+
+				var internalChildValuePortContainer = node_getEntityObjectInterface(childCoreEntity).getInternalValuePortContainer();
+				var externalChildValuePortContainer = node_getEntityObjectInterface(childCoreEntity).getExternalValuePortContainer();
+				
 				var valuePortView = $('<div>valuePortContainerId: '+internalChildValuePortContainer.getId()+"--"+externalChildValuePortContainer.getId()+'</div>');
 				attributeView.append(valuePortView);
 				

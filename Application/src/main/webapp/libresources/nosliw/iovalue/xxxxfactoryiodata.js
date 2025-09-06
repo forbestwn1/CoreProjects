@@ -92,6 +92,6 @@ nosliw.registerSetNodeDataEvent("variable.valueinvar.operation.ValueInVarOperati
 nosliw.registerSetNodeDataEvent("valueport.valuestructure.createValueStructureVariableInfo", function(){node_createValueStructureVariableInfo = this.getData();});
 
 //Register Node by Name
-packageObj.createChildNode("ioDataFactory", node_ioDataFactory); 
+packageObj.createChildNode("xxxxioDataFactory", node_ioDataFactory); 
 
 })(packageObj);
