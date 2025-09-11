@@ -4,14 +4,108 @@
 		"description": "test.common.configure.root"
 	},
 	"brick": [
+		{
+			"info": {
+				"name": "valueContext",
+				"status": "disabled1"
+			},
+			"brick": [
+				{
+					"groupType" : "public",
+					"valueStructure" : {
+						"root": {
+							"provider_parm1": {
+								"definition":{
+									"data": "test.string;1.0.0"
+								}
+							},
+							"provider_output1": {
+								"definition":{
+									"data": "test.string;1.0.0"
+								}
+							}
+						},
+						"initValue": {
+							"provider_parm1": {
+								"dataTypeId": "test.string;1.0.0",
+								"value": "default value of provider_parm1"
+							},
+							"provider_output1": {
+								"dataTypeId": "test.string;1.0.0",
+								"value": "default value of provider_output1"
+							}
+						}
+					}
+				}
+			]
+		},
+
 
 		{
 			"info": {
-				"name" : "test1-taskTaskScript",
+				"name" : "test5-taskTaskScript",
 				"status": "disabled1",
 				"description" : ""
 			},
-			"dynamic" : "task"
+			"dynamic" : "task",
+			"adapter": [
+				{
+					"name" : "taskAdapter",
+					"status": "disabled1",
+					"brickTypeId" : {
+						"brickType": "dataAssociationForTask",
+						"version": "1.0.0"
+					},
+					"brick" : {
+						"definition" : {
+							"in" : {
+								"type" : "mapping",
+								"mapping" : [
+									{
+										"status": "disabled1",
+										"target" : {
+											"rootName" : "task_request_string1",
+											"ioDirection" : "IN",
+											"valuePortId" : {
+												"valuePortId" : {
+													"group" : "taskInteractive"
+												}
+											}
+										},
+										"definition" : {
+											"mapping" : {
+												"elementPath": "provider_parm1"
+											}
+										}
+									}
+								]
+							},
+							"out" : {
+								"success" : {
+									"type" : "mapping",
+									"mapping" : [
+										{
+											"target" : {
+												"rootName" : "provider_output1"
+											},
+											"definition" : {
+												"mapping" : {
+													"elementPath": "task_result_success_string1",
+													"valuePortId" : {
+														"valuePortId" : {
+															"group" : "taskInteractive"
+														}
+													}
+												}
+											}
+										}
+									]
+								}
+							}
+						}
+					}
+				}
+			]
 		}		
 	]
 }

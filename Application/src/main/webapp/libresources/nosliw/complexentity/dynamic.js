@@ -46,22 +46,10 @@ var node_createDynamicCore = function(dynamicDef, bundleCore, configure){
 
 	};
 
-	var loc_getDynamicInputEntityCore = function(){
-		return loc_bundleCore.getDynamicInputContainer().getDyanmicInputEntityCoreRequest(loc_dynamicDef[node_COMMONATRIBUTECONSTANT.VALUEOFDYNAMIC_DYNAMICID]);
-	};
-
-	var loc_facadeTaskCore = {
-		//return a task
-		getTaskCore : function(){
-			return node_getApplicationInterface(loc_currentTaskEntityCore, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_TASK).getTaskCore();
-		},
-	};
-
-
 	var loc_out = {
 
 		getDynamicInput : function(){
-			return loc_bundleCore.getDynamicInputContainer().getDynamicInput(oc_dynamicDef[node_COMMONATRIBUTECONSTANT.VALUEOFDYNAMIC_DYNAMICID]);
+			return loc_bundleCore.getDynamicInputContainer().getDynamicInput(loc_dynamicDef[node_COMMONATRIBUTECONSTANT.VALUEOFDYNAMIC_DYNAMICID]);
 		},
 
 		getEntityInitRequest : function(handlers, request){

@@ -66,28 +66,6 @@ var node_makeObjectEntityObjectInterface = function(rawEntity, internalValuePort
 		
 	};
 
-	var loc_createAdaptersRequest = function(attrDef, baseObj, handlers, request){
-		var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("createAdaptersRequest", {}), handlers, request);
-
-		var adaptersRequest = node_createServiceRequestInfoSet(new node_ServiceInfo("createAdapters", {}), {
-			success : function(request, adaptersResult){
-				return adaptersResult.getResults();
-			}
-		});
-		
-		var adapterNames = attrDef.getAdapterNames();
-		_.each(adapterNames, function(adapterName){
-			var adapterValueWrapper = attrDef.getAdapterValueWrapper(adapterName);								
-			if(adapterValueWrapper.getValueType()==node_COMMONCONSTANT.EMBEDEDVALUE_TYPE_BRICK){
-				var adapterEntityDef = adapterValueWrapper.getEntityDefinition();
-				adaptersRequest.addRequest(adapterName, nosliw.runtime.getComplexEntityService().getCreateAdapterRequest(adapterEntityDef, node_complexEntityUtility.getCoreEntity(baseObj)));
-			}
-		});
-		
-		out.addRequest(adaptersRequest);
-		return out;
-	};
-
 	var embededEntityInterface =  node_getEmbededEntityInterface(rawEntity);
 	var treeNodeEntityInterface =  node_getEntityTreeNodeInterface(rawEntity);
 	var basicEntityInterface = node_getBasicEntityObjectInterface(rawEntity);
@@ -122,7 +100,7 @@ var node_makeObjectEntityObjectInterface = function(rawEntity, internalValuePort
 					out.addRequest(nosliw.runtime.getComplexEntityService().getCreateEntityRuntimeRequest(attrEntityDef, loc_out, loc_bundleCore, variationPoints, childConfigure, {
 						success : function(request, entityRuntime){
 							node_getEntityTreeNodeInterface(entityRuntime.getCoreEntity()).setParentCore(rawEntity);
-							return loc_createAdaptersRequest(attrDef, entityRuntime, {
+							return nosliw.runtime.getComplexEntityService().getCreateAdaptersRequest(attrDef, entityRuntime, {
 								success : function(request, adapters){
 									node_getEntityTreeNodeInterface(entityRuntime.getCoreEntity()).setAdapters(adapters);
 									return treeNodeEntityInterface.addChild(childName, entityRuntime, adapters, true);
@@ -141,16 +119,23 @@ var node_makeObjectEntityObjectInterface = function(rawEntity, internalValuePort
 							//set dynamic task input
 							bundleRuntime.getCoreEntity().setDynamicInputContainer(node_createDynamicInputContainer(attrValueWrapper.getDynamicInput(), bundleRuntime.getCoreEntity()));
 
+                            bundleRuntime.getCoreEntity().setDmbededAttrDef(attrDef);
+
+							return treeNodeEntityInterface.addChild(childName, bundleRuntime, undefined, true);
+
+
+//this part move to post process
+/*
 							return node_getComponentInterface(bundleRuntime.getCoreEntity()).getPreInitRequest({
 								success : function(request){
 									return loc_createAdaptersRequest(attrDef, bundleRuntime, {
 										success : function(request, adapters){
 											node_getEntityTreeNodeInterface(bundleRuntime.getCoreEntity().getMainEntityCore()).setAdapters(adapters);
-											return treeNodeEntityInterface.addChild(childName, bundleRuntime, adapters, true);
 										}
 									});
 								}
 							});
+*/							
 						}
 					}));
 				}
@@ -160,7 +145,7 @@ var node_makeObjectEntityObjectInterface = function(rawEntity, internalValuePort
 					out.addRequest(nosliw.runtime.getComplexEntityService().getCreateDynamicRuntimeRequest(dynamicValue, loc_out, loc_bundleCore, variationPoints, childConfigure, {
 						success : function(request, dynamicRuntime){
 							node_getEntityTreeNodeInterface(dynamicRuntime.getCoreEntity()).setParentCore(rawEntity);
-							return loc_createAdaptersRequest(attrDef, dynamicRuntime, {
+							return nosliw.runtime.getComplexEntityService().getCreateAdaptersRequest(attrDef, dynamicRuntime, {
 								success : function(request, adapters){
 									node_getEntityTreeNodeInterface(dynamicRuntime.getCoreEntity()).setAdapters(adapters);
 									return treeNodeEntityInterface.addChild(childName, dynamicRuntime, adapters, true);

@@ -10,6 +10,7 @@ var packageObj = library.getChildPackage("entity");
 	var node_createServiceRequestInfoSimple;
 	var node_makeObjectWithType;
 	var node_complexEntityUtility;
+	var node_getApplicationInterface;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -286,6 +287,7 @@ nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequenc
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple", function(){	node_createServiceRequestInfoSimple = this.getData();	});
 nosliw.registerSetNodeDataEvent("common.interfacedef.makeObjectWithType", function(){node_makeObjectWithType = this.getData();});
 nosliw.registerSetNodeDataEvent("complexentity.complexEntityUtility", function(){node_complexEntityUtility = this.getData();	});
+nosliw.registerSetNodeDataEvent("component.getApplicationInterface", function(){node_getApplicationInterface = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("EntityIdInDomain", node_EntityIdInDomain); 

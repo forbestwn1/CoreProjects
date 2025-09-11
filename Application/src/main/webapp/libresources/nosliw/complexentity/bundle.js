@@ -20,6 +20,8 @@ var packageObj = library;
 	var node_namingConvensionUtility;
 	var node_getEntityTreeNodeInterface;
 	var node_buildInterface;
+	var node_complexEntityUtility;
+	var node_getObjectType;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -27,6 +29,9 @@ var loc_MAIN_NAME = "main";
 
 //bundle is executable resource unit
 var node_createBundleCore = function(parm, configure){
+
+	//if bundle is embeded as attribute
+	var loc_embededAttrDef;
 
 	var loc_resourceId;
 	var loc_bundleDef;
@@ -92,12 +97,14 @@ var node_createBundleCore = function(parm, configure){
 			}));
 		}
 		
+		//main brick
 		out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
 			var entityDef = loc_bundleDef[node_COMMONATRIBUTECONSTANT.RESOURCEDATABRICK_BRICK];
 			return nosliw.runtime.getComplexEntityService().getCreateEntityRuntimeRequest(entityDef, undefined, loc_out, undefined, loc_configure, {
 				success : function(request, mainEntityRuntime){
 					node_getEntityTreeNodeInterface(mainEntityRuntime.getCoreEntity()).setParentCore(loc_out);
 					loc_envInterface[node_CONSTANT.INTERFACE_TREENODEENTITY].addChild(loc_MAIN_NAME, mainEntityRuntime, undefined, true);
+					return node_complexEntityUtility.getBuildAttributeWithResourceId(mainEntityRuntime.getCoreEntity());
 				}
 			});
 
@@ -107,7 +114,8 @@ var node_createBundleCore = function(parm, configure){
 	};
 
 	var loc_getMainEntity = function(){
-		return loc_envInterface[node_CONSTANT.INTERFACE_TREENODEENTITY].getChild(loc_MAIN_NAME).getChildValue();
+		var mainChild = loc_envInterface[node_CONSTANT.INTERFACE_TREENODEENTITY].getChild(loc_MAIN_NAME);
+		if(mainChild!=undefined)	return mainChild.getChildValue();
 	};
 
 	var loc_valueContainer = {
@@ -133,9 +141,16 @@ var node_createBundleCore = function(parm, configure){
 
 	var loc_out = {
 
+        setDmbededAttrDef : function(embededAttrDef){  loc_embededAttrDef = embededAttrDef;     },
+        getDmbededAttrDef : function(){  return loc_embededAttrDef;     },
+        
+
 		getDataType: function(){    return  "bundle";   },
 
-		getMainEntityCore : function(){    return loc_getMainEntity().getCoreEntity();     },
+		getMainEntityCore : function(){
+			var mainEntity = loc_getMainEntity();
+			if(mainEntity!=undefined)	return mainEntity.getCoreEntity();     
+		},
 
 		getMainEntityRuntime : function(){ return loc_getMainEntity();  },
 
@@ -208,6 +223,8 @@ nosliw.registerSetNodeDataEvent("component.componentUtility", function(){node_co
 nosliw.registerSetNodeDataEvent("common.namingconvension.namingConvensionUtility", function(){node_namingConvensionUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("complexentity.getEntityTreeNodeInterface", function(){node_getEntityTreeNodeInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("common.interface.buildInterface", function(){node_buildInterface = this.getData();});
+nosliw.registerSetNodeDataEvent("complexentity.complexEntityUtility", function(){node_complexEntityUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("common.interfacedef.getObjectType", function(){node_getObjectType = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createBundleCore", node_createBundleCore); 

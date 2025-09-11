@@ -69,6 +69,7 @@ var packageObj = library;
 	var node_makeObjectWithValuePortInterface;
 	var node_createWrapperBrickPlugin;
 	var node_createModulePlugin;
+	var node_getObjectId;
 
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -142,9 +143,12 @@ var node_createComplexEntityRuntimeService = function() {
 			dynamicCore = node_makeObjectBasicEntityObjectInterface(dynamicCore, dynamicDef, configure);
 			
 			dynamicCore = node_makeObjectWithComponentInterface(undefined, dynamicCore, false);
-			
+
 			dynamicCore = node_makeObjectEntityObjectInterface(dynamicCore, undefined, function(){
-					return node_getEntityObjectInterface(dynamicCore.getValuePortContainerProviderEntityCore()).getExternalValuePortContainer();
+					var dynamicInputEntity = dynamicCore.getDynamicInput();
+					if(dynamicInputEntity!=undefined){
+						return node_getEntityObjectInterface(dynamicInputEntity.getDynamicCoreEntity()).getExternalValuePortContainer();
+					}
 				}, bundleCore);
 			
 			var runtimeConfigureInfo = node_componentUtility.processRuntimeConfigure(configure);
@@ -347,6 +351,33 @@ var node_createComplexEntityRuntimeService = function() {
 			return out;
 		},
 				
+		getCreateAdaptersRequest : function(attrDef, baseObj, handlers, request){
+			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("createAdaptersRequest", {}), handlers, request);
+	
+			var adaptersRequest = node_createServiceRequestInfoSet(new node_ServiceInfo("createAdapters", {}), {
+				success : function(request, adaptersResult){
+					return adaptersResult.getResults();
+				}
+			});
+			
+			var adapterNames = attrDef.getAdapterNames();
+			_.each(adapterNames, function(adapterName){
+				var adapterValueWrapper = attrDef.getAdapterValueWrapper(adapterName);								
+				if(adapterValueWrapper.getValueType()==node_COMMONCONSTANT.EMBEDEDVALUE_TYPE_BRICK){
+					var adapterEntityDef = adapterValueWrapper.getEntityDefinition();
+					adaptersRequest.addRequest(adapterName, nosliw.runtime.getComplexEntityService().getCreateAdapterRequest(adapterEntityDef, node_complexEntityUtility.getCoreEntity(baseObj)));
+				}
+			});
+			
+			out.addRequest(adaptersRequest);
+			return out;
+		},
+
+
+
+
+
+
 
 				
 		getCreateBundleRuntimeRequest1 : function(parm, configure, handlers, request){
@@ -462,6 +493,7 @@ nosliw.registerSetNodeDataEvent("entitycontainer.createContainerListPlugin", fun
 nosliw.registerSetNodeDataEvent("valueport.makeObjectWithValuePortInterface", function(){node_makeObjectWithValuePortInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("complexentity.createContainerPlugin", function(){node_createWrapperBrickPlugin = this.getData();});
 nosliw.registerSetNodeDataEvent("module.createModulePlugin", function(){node_createModulePlugin = this.getData();});
+nosliw.registerSetNodeDataEvent("common.interfacedef.getObjectId", function(){node_getObjectId = this.getData();});
 
 
 //Register Node by Name

@@ -56,10 +56,12 @@ var loc_createTaskCore = function(taskDef, configure){
 	};
 
 	var loc_updateTaskValuePortContainerInfo = function(taskEntityCore){
-		loc_taskInfoView.text("    valuePortContainer:  "
-			+node_getEntityObjectInterface(taskEntityCore).getInternalValuePortContainer().getId()
-			+"--"
-			+node_getEntityObjectInterface(taskEntityCore).getExternalValuePortContainer().getId());
+		if(loc_taskInfoView!=undefined){
+				loc_taskInfoView.text("    valuePortContainer:  "
+					+node_getEntityObjectInterface(taskEntityCore).getInternalValuePortContainer().getId()
+					+"--"
+					+node_getEntityObjectInterface(taskEntityCore).getExternalValuePortContainer().getId());
+		}
 		
 	};
 	
@@ -73,16 +75,21 @@ var loc_createTaskCore = function(taskDef, configure){
 		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 		out.addRequest(loc_envInterface[node_CONSTANT.INTERFACE_ENTITY].createBrickChildByAttributeRequest(taskId, node_COMMONATRIBUTECONSTANT.BLOCKTASKWRAPPER_TASK, undefined, {
 			success : function(request, node){
-				var taskEntityCore = node_complexEntityUtility.getBrickNode(node).getChildValue().getCoreEntity();
-				loc_updateTaskValuePortContainerInfo(taskEntityCore);
+				return node_complexEntityUtility.getBuildAttributeWithResourceId(loc_out, {
+					success : function(request){
+
+						var taskEntityCore = node_complexEntityUtility.getBrickNode(node).getChildValue().getCoreEntity();
+						loc_updateTaskValuePortContainerInfo(taskEntityCore);
+						
+						node_taskUtility.getTaskCoreFromTaskEntityCore(taskEntityCore).registerLifecycleEventListener(undefined, function(event, eventData, request){
+							if(event=="finish"){
+								loc_updateTaskResultView(eventData);
+							}
+						}, taskEntityCore);
 				
-				node_taskUtility.getTaskCoreFromTaskEntityCore(taskEntityCore).registerLifecycleEventListener(undefined, function(event, eventData, request){
-					if(event=="finish"){
-						loc_updateTaskResultView(eventData);
+						return taskEntityCore;
 					}
-				}, taskEntityCore);
-				
-				return taskEntityCore;
+				});
 			}
 		}));
 		return out;

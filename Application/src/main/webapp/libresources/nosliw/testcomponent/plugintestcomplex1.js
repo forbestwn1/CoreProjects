@@ -19,6 +19,7 @@ var packageObj = library;
 	var node_getBasicEntityObjectInterface;
 	var node_getEntityObjectInterface;
 	var node_taskUtility;
+	var node_getObjectId;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -89,10 +90,13 @@ var loc_createTestComplex1ComponentCore = function(complexEntityDef, configure){
 				var internalChildValuePortContainer = node_getEntityObjectInterface(childCoreEntity).getInternalValuePortContainer();
 				var externalChildValuePortContainer = node_getEntityObjectInterface(childCoreEntity).getExternalValuePortContainer();
 				
-				var valuePortView = $('<div>valuePortContainerId: '+internalChildValuePortContainer.getId()+"--"+externalChildValuePortContainer.getId()+'</div>');
+				var valuePortView = $('<div>valuePortContainerId: '+
+					(internalChildValuePortContainer!=undefined?internalChildValuePortContainer.getId():"N/A")+
+					"--"+
+					(externalChildValuePortContainer!=undefined?externalChildValuePortContainer.getId():"N/A")+
+					'</div>');
 				attributeView.append(valuePortView);
 				
-
 				//adapter view
 				var childEntityCore = node_complexEntityUtility.getCoreEntity(child.getChildValue());
 				var childEntityType = node_getComponentInterface(childEntityCore).getDataType();
@@ -226,6 +230,7 @@ nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_b
 nosliw.registerSetNodeDataEvent("common.interfacedef.getBasicEntityObjectInterface", function(){node_getBasicEntityObjectInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("complexentity.getEntityObjectInterface", function(){node_getEntityObjectInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("task.taskUtility", function(){node_taskUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("common.interfacedef.getObjectId", function(){node_getObjectId = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createTestComplex1Plugin", node_createTestComplex1Plugin); 
