@@ -103,7 +103,7 @@ var node_makeObjectEntityObjectInterface = function(rawEntity, internalValuePort
 							return nosliw.runtime.getComplexEntityService().getCreateAdaptersRequest(attrDef, entityRuntime, {
 								success : function(request, adapters){
 									node_getEntityTreeNodeInterface(entityRuntime.getCoreEntity()).setAdapters(adapters);
-									return treeNodeEntityInterface.addChild(childName, entityRuntime, undefined, true);
+									return treeNodeEntityInterface.addChild(childName, entityRuntime, true);
 								}
 							});
 						}
@@ -121,7 +121,7 @@ var node_makeObjectEntityObjectInterface = function(rawEntity, internalValuePort
 
                             bundleRuntime.getCoreEntity().setDmbededAttrDef(attrDef);
 
-							return treeNodeEntityInterface.addChild(childName, bundleRuntime, undefined, true);
+							return treeNodeEntityInterface.addChild(childName, bundleRuntime, true);
 
 
 //this part move to post process
@@ -148,7 +148,7 @@ var node_makeObjectEntityObjectInterface = function(rawEntity, internalValuePort
 							return nosliw.runtime.getComplexEntityService().getCreateAdaptersRequest(attrDef, dynamicRuntime, {
 								success : function(request, adapters){
 									node_getEntityTreeNodeInterface(dynamicRuntime.getCoreEntity()).setAdapters(adapters);
-									return treeNodeEntityInterface.addChild(childName, dynamicRuntime, undefined, true);
+									return treeNodeEntityInterface.addChild(childName, dynamicRuntime, true);
 								}
 							});
 						}
@@ -203,13 +203,13 @@ var node_makeObjectEntityTreeNodeInterface = function(rawEntity){
 		
 		getChild : function(childName){   return loc_children.getElement(childName);	},
 
-		addChild : function(childName, entityRuntime, adapters, isComplex){
+		addChild : function(childName, entityRuntime, isComplex){
 			//avoid duplicated name
 			while(this.getChild(childName)!=null){
 				childName = childName + "_1";
 			}
 			
-			var child = loc_createTreeNodeChild(childName, entityRuntime, adapters, isComplex);
+			var child = loc_createTreeNodeChild(childName, entityRuntime, isComplex);
 			loc_children.addElement(childName, child);
 			return child;
 		},
@@ -224,7 +224,7 @@ var node_makeObjectEntityTreeNodeInterface = function(rawEntity){
 			
 			getChild : function(childName){   return loc_interfaceEntity.getChild(childName);	},
 			
-			addChild : function(childName, entityRuntime, adapters, isComplex){   return loc_interfaceEntity.addChild(childName, entityRuntime, adapters, isComplex);  },
+			addChild : function(childName, entityRuntime, isComplex){   return loc_interfaceEntity.addChild(childName, entityRuntime, isComplex);  },
 			
 			processChildren : function(processFun){
 				var that = this;
@@ -253,13 +253,11 @@ var node_getEntityTreeNodeInterface = function(baseObject){
 	return node_getInterface(baseObject, node_CONSTANT.INTERFACE_TREENODEENTITY);
 };
 
-var loc_createTreeNodeChild = function(childName, entityRuntime, adapters, isComplex){
+var loc_createTreeNodeChild = function(childName, entityRuntime, isComplex){
 	
 	var loc_childName = childName;
 	
 	var loc_entityRuntime = entityRuntime;
-	
-	var loc_adapters = adapters;
 	
 	var loc_isComplex = isComplex;
 	
@@ -271,7 +269,9 @@ var loc_createTreeNodeChild = function(childName, entityRuntime, adapters, isCom
 		
 		getChildType : function(){   return node_CONSTANT.ATTRIBUTE_TYPE_NORMAL;   },
 		
-		getAdapters : function(){   return loc_adapters;    },
+		getAdapters : function(){
+			return node_getEntityTreeNodeInterface(this.getChildValue().getCoreEntity()).getAdapters();
+		},
 		
 		getIsComplex : function(){    return loc_isComplex;     }
 		

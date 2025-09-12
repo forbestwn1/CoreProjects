@@ -86,7 +86,7 @@ var node_createBundleCore = function(parm, configure){
 							return nosliw.runtime.getComplexEntityService().getCreateEntityRuntimeRequest(brickDef, undefined, loc_out, undefined, loc_configure, {
 								success : function(request, mainEntityRuntime){
 									node_getEntityTreeNodeInterface(mainEntityRuntime.getCoreEntity()).setParentCore(loc_out);
-									loc_envInterface[node_CONSTANT.INTERFACE_TREENODEENTITY].addChild(name, mainEntityRuntime, undefined, true);
+									loc_envInterface[node_CONSTANT.INTERFACE_TREENODEENTITY].addChild(name, mainEntityRuntime, true);
 								}
 							});
 				
@@ -103,7 +103,7 @@ var node_createBundleCore = function(parm, configure){
 			return nosliw.runtime.getComplexEntityService().getCreateEntityRuntimeRequest(entityDef, undefined, loc_out, undefined, loc_configure, {
 				success : function(request, mainEntityRuntime){
 					node_getEntityTreeNodeInterface(mainEntityRuntime.getCoreEntity()).setParentCore(loc_out);
-					loc_envInterface[node_CONSTANT.INTERFACE_TREENODEENTITY].addChild(loc_MAIN_NAME, mainEntityRuntime, undefined, true);
+					loc_envInterface[node_CONSTANT.INTERFACE_TREENODEENTITY].addChild(loc_MAIN_NAME, mainEntityRuntime, true);
 					return node_complexEntityUtility.getBuildAttributeWithResourceId(mainEntityRuntime.getCoreEntity());
 				}
 			});
