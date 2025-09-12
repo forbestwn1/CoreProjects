@@ -80,7 +80,7 @@
 									}
 								]
 							},
-							"out" : {
+							"out1" : {
 								"success" : {
 									"type" : "mapping",
 									"mapping" : [

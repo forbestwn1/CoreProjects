@@ -18,6 +18,7 @@ var packageObj = library;
 	var node_getExecuteMirrorDataAssociationRequest;
 	var node_getExecuteNoneDataAssociationRequest;
 	var node_basicUtility;
+	var node_complexEntityUtility;
 
 //*******************************************   Start Node Definition  ************************************** 	
 //dataAssociation that has inputIO, dataAssociation and outputIO
@@ -38,8 +39,10 @@ var node_createDataAssociation = function(dataAssociationDef, baseEntityCore, na
 //		nosliw.logging.info("Data association ", loc_out.prv_id, " input data : " + node_basicUtility.stringify(loc_inputIODataSet));
 		if(loc_dataAssociationDef==undefined)  return node_getExecuteNoneDataAssociationRequest(loc_inputIODataSet, loc_dataAssociationDef, loc_outputIODataSet, handlers, request);   //if no data association, then nothing happen
 		else{
+			var baseEntityCore = node_complexEntityUtility.getCoreEntity(loc_baseEntityCore);
+
 			var type = loc_dataAssociationDef[node_COMMONATRIBUTECONSTANT.DATAASSOCIATION_TYPE];
-			if(type==node_COMMONCONSTANT.DATAASSOCIATION_TYPE_MAPPING)	return node_getExecuteMappingDataAssociationRequest(loc_dataAssociationDef, loc_baseEntityCore, loc_out.prv_name, handlers, request);
+			if(type==node_COMMONCONSTANT.DATAASSOCIATION_TYPE_MAPPING)	return node_getExecuteMappingDataAssociationRequest(loc_dataAssociationDef, baseEntityCore, loc_out.prv_name, handlers, request);
 			else if(type==node_COMMONCONSTANT.DATAASSOCIATION_TYPE_MIRROR)		return node_getExecuteMirrorDataAssociationRequest(loc_inputIODataSet, loc_dataAssociationDef, loc_outputIODataSet, loc_out.prv_name, handlers, request);
 			else if(type==node_COMMONCONSTANT.DATAASSOCIATION_TYPE_NONE)	return node_getExecuteNoneDataAssociationRequest(loc_inputIODataSet, loc_dataAssociationDef, loc_outputIODataSet, loc_out.prv_name, handlers, request);
 			else if(type==node_COMMONCONSTANT.DATAASSOCIATION_TYPE_TRANSPARENT){
@@ -97,6 +100,7 @@ nosliw.registerSetNodeDataEvent("iovalue.getExecuteMappingDataAssociationRequest
 nosliw.registerSetNodeDataEvent("iovalue.getExecuteMirrorDataAssociationRequest", function(){node_getExecuteMirrorDataAssociationRequest = this.getData();	});
 nosliw.registerSetNodeDataEvent("iovalue.getExecuteNoneDataAssociationRequest", function(){node_getExecuteNoneDataAssociationRequest = this.getData();	});
 nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("complexentity.complexEntityUtility", function(){node_complexEntityUtility = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createDataAssociation", node_createDataAssociation); 

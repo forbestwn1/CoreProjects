@@ -25,6 +25,7 @@ var packageObj = library;
 var node_taskUtility = {
 
 	getTaskCoreFromTaskEntityCore : function(taskEntityCore){
+		var taskEntityCore = node_complexEntityUtility.getCoreEntity(taskEntityCore);
 		var taskCoreFacade = node_getApplicationInterface(taskEntityCore, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_TASK);
 		var taskCore = taskCoreFacade.getTaskCore();
 		return taskCore;

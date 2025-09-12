@@ -373,6 +373,10 @@ var node_createComplexEntityRuntimeService = function() {
 			return out;
 		},
 
+		getCreateAdapterRequest : function(adapterDefinition, baseCore, handlers, request){
+			return loc_getCreateAdapterRequest(adapterDefinition, baseCore, handlers, request);
+		},
+
 
 
 
@@ -398,10 +402,6 @@ var node_createComplexEntityRuntimeService = function() {
 
 		getCreateDynamicRuntimeRequest : function(dynamicDef, parentCore, bundleCore, variationPoints, configure, handlers, request){
 			return loc_getCreateDynamicRuntimeRequest(dynamicDef, parentCore, bundleCore, variationPoints, configure, handlers, request);
-		},
-
-		getCreateAdapterRequest : function(adapterDefinition, baseCore, handlers, request){
-			return loc_getCreateAdapterRequest(adapterDefinition, baseCore, handlers, request);
 		},
 
 		registerEntityPlugin : function(entityType, version, entityPlugin){

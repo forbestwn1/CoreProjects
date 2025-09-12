@@ -20,6 +20,7 @@ var packageObj = library;
 	var node_getEntityObjectInterface;
 	var node_taskUtility;
 	var node_getObjectId;
+	var node_getApplicationInterface;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -100,18 +101,32 @@ var loc_createTestComplex1ComponentCore = function(complexEntityDef, configure){
 				//adapter view
 				var childEntityCore = node_complexEntityUtility.getCoreEntity(child.getChildValue());
 				var childEntityType = node_getComponentInterface(childEntityCore).getDataType();
+				var taskFacade = node_getApplicationInterface(childEntityCore, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_TASK);
 				if(childEntityType[node_COMMONATRIBUTECONSTANT.IDBRICKTYPE_BRICKTYPE]==node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_TASKWRAPPER){
 					//for task wrapper attribute
 					var childEntityDef = node_getBasicEntityObjectInterface(childEntityCore).getEntityDefinition();
 					var adapterNames = childEntityDef.getAttribute(node_COMMONATRIBUTECONSTANT.BLOCKTASKWRAPPER_TASK).getAdapterNames();
 					_.each(adapterNames, function(adapterName, i){
-						var adapterView = $('<button>Execute Adapter : '+adapterName+'</button>');
+						var adapterView = $('<button>Execute Adapter For Task: '+adapterName+'</button>');
 						attributeView.append(adapterView);
 						adapterView.click(function() {
 							var taskWrapperExeRequest = node_taskUtility.getExecuteWrapperedTaskWithAdapterRequest(childEntityCore, adapterName);
 							node_requestServiceProcessor.processRequest(taskWrapperExeRequest);
 						});
 					});					
+				}
+				else if(taskFacade!=undefined){
+					//for task attribute
+					if(child.getAdapters!=undefined){
+						_.each(child.getAdapters(), function(adapter, adapterName){
+							var adapterView = $('<button>Execute Adapter For Task: '+adapterName+'</button>');
+							attributeView.append(adapterView);
+							adapterView.click(function() {
+								var adapterExecuteRequest =  adapter.getExecuteTaskRequest();
+								node_requestServiceProcessor.processRequest(adapterExecuteRequest);
+							});
+						});
+					}
 				}
 				else{
 					if(child.getAdapters!=undefined){
@@ -231,6 +246,7 @@ nosliw.registerSetNodeDataEvent("common.interfacedef.getBasicEntityObjectInterfa
 nosliw.registerSetNodeDataEvent("complexentity.getEntityObjectInterface", function(){node_getEntityObjectInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("task.taskUtility", function(){node_taskUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("common.interfacedef.getObjectId", function(){node_getObjectId = this.getData();});
+nosliw.registerSetNodeDataEvent("component.getApplicationInterface", function(){node_getApplicationInterface = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createTestComplex1Plugin", node_createTestComplex1Plugin); 

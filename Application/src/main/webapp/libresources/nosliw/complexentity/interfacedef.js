@@ -103,7 +103,7 @@ var node_makeObjectEntityObjectInterface = function(rawEntity, internalValuePort
 							return nosliw.runtime.getComplexEntityService().getCreateAdaptersRequest(attrDef, entityRuntime, {
 								success : function(request, adapters){
 									node_getEntityTreeNodeInterface(entityRuntime.getCoreEntity()).setAdapters(adapters);
-									return treeNodeEntityInterface.addChild(childName, entityRuntime, adapters, true);
+									return treeNodeEntityInterface.addChild(childName, entityRuntime, undefined, true);
 								}
 							});
 						}
@@ -148,7 +148,7 @@ var node_makeObjectEntityObjectInterface = function(rawEntity, internalValuePort
 							return nosliw.runtime.getComplexEntityService().getCreateAdaptersRequest(attrDef, dynamicRuntime, {
 								success : function(request, adapters){
 									node_getEntityTreeNodeInterface(dynamicRuntime.getCoreEntity()).setAdapters(adapters);
-									return treeNodeEntityInterface.addChild(childName, dynamicRuntime, adapters, true);
+									return treeNodeEntityInterface.addChild(childName, dynamicRuntime, undefined, true);
 								}
 							});
 						}

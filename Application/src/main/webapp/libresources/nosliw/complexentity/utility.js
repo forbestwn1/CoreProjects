@@ -59,7 +59,8 @@ var node_complexEntityUtility = function(){
 								success : function(request){
 									return nosliw.runtime.getComplexEntityService().getCreateAdaptersRequest(childEntityCore.getDmbededAttrDef(), childValue, {
 										success : function(request, adapters){
-											node_getEntityTreeNodeInterface(childEntityCore.getMainEntityCore()).setAdapters(adapters);
+											node_getEntityTreeNodeInterface(childEntityCore).setAdapters(adapters);
+//											node_getEntityTreeNodeInterface(childEntityCore.getMainEntityCore()).setAdapters(adapters);
 //											return treeNodeEntityInterface.addChild(childName, childValue, adapters, true);
 										}
 									});
@@ -72,13 +73,6 @@ var node_complexEntityUtility = function(){
 			});
 			
 			return out;
-		},
-		
-		getBrickNode : function(node){
-			if(node_getObjectType(node.getChildValue().getCoreEntity())==node_CONSTANT.TYPEDOBJECT_TYPE_BUNDLE){
-				return node.getChildValue().getCoreEntity().getMainEntityNode();
-			}
-			else return node;					
 		},
 		
 		getBrickCoreByRelativePath : function(baseEntityCore, relativePath){
@@ -169,6 +163,13 @@ var node_complexEntityUtility = function(){
 			var entityCore = node_getObjectType(entity)==node_CONSTANT.TYPEDOBJECT_TYPE_COMPONENTRUNTIME?entity.getCorenEntity():entity;
 			processorInfo.processRoot(entityCore);
 			loc_traverseNode(entityCore, processorInfo);
+		},
+		
+		getBrickNode : function(node){
+			if(node_getObjectType(node.getChildValue().getCoreEntity())==node_CONSTANT.TYPEDOBJECT_TYPE_BUNDLE){
+				return node.getChildValue().getCoreEntity().getMainEntityNode();
+			}
+			else return node;					
 		},
 		
 		getCoreEntity : function(obj){

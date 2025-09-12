@@ -21,6 +21,7 @@ var packageObj = library;
 	var node_makeObjectWithApplicationInterface;
 	var node_getApplicationInterface;
 	var node_taskUtility;
+	var node_requestServiceProcessor;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -37,6 +38,7 @@ var node_createDynamicCore = function(dynamicDef, bundleCore, configure){
 	var loc_configureValue;
 	
 	var loc_parentView;
+	var loc_outputView;
 	
 	var loc_init = function(dynamicDef, bundleCore, configure){
 		loc_dynamicDef = dynamicDef;
@@ -46,7 +48,15 @@ var node_createDynamicCore = function(dynamicDef, bundleCore, configure){
 
 	};
 
+	var loc_updateTaskResultView = function(taskResult){
+		var resultStr = node_basicUtility.stringify(taskResult);
+		console.log(resultStr);
+		loc_outputView.val(resultStr);
+	};
+
 	var loc_out = {
+
+		setEnvironmentInterface : function(envInterface){	loc_envInterface = envInterface;	},
 
 		getDynamicInput : function(){
 			return loc_bundleCore.getDynamicInputContainer().getDynamicInput(loc_dynamicDef[node_COMMONATRIBUTECONSTANT.VALUEOFDYNAMIC_DYNAMICID]);
@@ -56,6 +66,31 @@ var node_createDynamicCore = function(dynamicDef, bundleCore, configure){
 			return loc_bundleCore.getDynamicInputContainer().prepareDyanmicInputRequest(loc_dynamicDef[node_COMMONATRIBUTECONSTANT.VALUEOFDYNAMIC_DYNAMICID], handlers, request);
 		},
 
+		updateView : function(view){    
+			loc_parentView = view;
+			
+			var entityCore = this.getDynamicInput().getDynamicCoreEntity();
+			var taskFacade = node_getApplicationInterface(entityCore, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_TASK);
+			if(taskFacade!=undefined){
+				var taskTrigueView = $('<button>Execute Task</button>');
+				taskTrigueView.click(function() {
+					var out = node_createServiceRequestInfoSequence();
+					out.addRequest(node_taskUtility.getExecuteEntityTaskWithAdapterRequest(loc_out, undefined, undefined, {
+						success : function(request, taskResult){
+							loc_updateTaskResultView(taskResult);
+							return taskResult;
+						}
+					}));
+					node_requestServiceProcessor.processRequest(out);
+				});
+				loc_parentView.append(taskTrigueView);
+	
+				loc_outputView =  $(`<textarea rows="5" cols="200"></textarea>`);
+				loc_parentView.append(loc_outputView);
+				
+			}
+		},
+		
 
 
 
@@ -63,15 +98,10 @@ var node_createDynamicCore = function(dynamicDef, bundleCore, configure){
 
 
 
-
+/*
 		getValuePortContainerProviderEntityCore : function(){    return loc_getDynamicInputEntityCore();      },
 
-
-
-
-
-
-		getDataType: function(){    return  "dyanmic";   },
+		getDataType1: function(){    return  "dyanmic";   },
 
 		setDynamicInput : function(dynamicInput){   loc_dynamicInput = dynamicInput;       },
 
@@ -92,12 +122,7 @@ var node_createDynamicCore = function(dynamicDef, bundleCore, configure){
 
 		getPreInitRequest : function(handlers, request){   },
 
-		setEnvironmentInterface : function(envInterface){	loc_envInterface = envInterface;	},
-		
-		updateView : function(view){    
-			loc_parentView = view;
-		},
-		
+*/		
 	};
 	
 	loc_init(dynamicDef, bundleCore, configure);
@@ -128,6 +153,7 @@ nosliw.registerSetNodeDataEvent("complexentity.getEntityTreeNodeInterface", func
 nosliw.registerSetNodeDataEvent("component.makeObjectWithApplicationInterface", function(){node_makeObjectWithApplicationInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("component.getApplicationInterface", function(){node_getApplicationInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("task.taskUtility", function(){node_taskUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
 
 
 //Register Node by Name

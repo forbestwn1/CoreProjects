@@ -56,6 +56,7 @@ var loc_createTaskCore = function(taskDef, configure){
 	};
 
 	var loc_updateTaskValuePortContainerInfo = function(taskEntityCore){
+		var taskEntityCore = node_complexEntityUtility.getCoreEntity(taskEntityCore);
 		if(loc_taskInfoView!=undefined){
 				loc_taskInfoView.text("    valuePortContainer:  "
 					+node_getEntityObjectInterface(taskEntityCore).getInternalValuePortContainer().getId()
@@ -77,8 +78,7 @@ var loc_createTaskCore = function(taskDef, configure){
 			success : function(request, node){
 				return node_complexEntityUtility.getBuildAttributeWithResourceId(loc_out, {
 					success : function(request){
-
-						var taskEntityCore = node_complexEntityUtility.getBrickNode(node).getChildValue().getCoreEntity();
+						var taskEntityCore = node.getChildValue().getCoreEntity();
 						loc_updateTaskValuePortContainerInfo(taskEntityCore);
 						
 						node_taskUtility.getTaskCoreFromTaskEntityCore(taskEntityCore).registerLifecycleEventListener(undefined, function(event, eventData, request){
