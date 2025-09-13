@@ -30,9 +30,6 @@ var loc_MAIN_NAME = "main";
 //bundle is executable resource unit
 var node_createBundleCore = function(parm, configure){
 
-	//if bundle is embeded as attribute
-	var loc_embededAttrDef;
-
 	var loc_resourceId;
 	var loc_bundleDef;
 
@@ -140,10 +137,6 @@ var node_createBundleCore = function(parm, configure){
 	};
 
 	var loc_out = {
-
-        setDmbededAttrDef : function(embededAttrDef){  loc_embededAttrDef = embededAttrDef;     },
-        getDmbededAttrDef : function(){  return loc_embededAttrDef;     },
-        
 
 		getDataType: function(){    return  "bundle";   },
 

@@ -114,28 +114,18 @@ var node_makeObjectEntityObjectInterface = function(rawEntity, internalValuePort
 					
 					out.addRequest(nosliw.runtime.getComplexEntityService().getCreateBundleRuntimeRequest(attrValueWrapper.getResourceId(), childConfigure, {
 						success: function(request, bundleRuntime){
-							node_getEntityTreeNodeInterface(bundleRuntime.getCoreEntity()).setParentCore(rawEntity);
+							var bundleCore = bundleRuntime.getCoreEntity();
+							node_getEntityTreeNodeInterface(bundleCore).setParentCore(rawEntity);
 
 							//set dynamic task input
-							bundleRuntime.getCoreEntity().setDynamicInputContainer(node_createDynamicInputContainer(attrValueWrapper.getDynamicInput(), bundleRuntime.getCoreEntity()));
+							bundleCore.setDynamicInputContainer(node_createDynamicInputContainer(attrValueWrapper.getDynamicInput(), bundleRuntime.getCoreEntity()));
 
-                            bundleRuntime.getCoreEntity().setDmbededAttrDef(attrDef);
-
-							return treeNodeEntityInterface.addChild(childName, bundleRuntime, true);
-
-
-//this part move to post process
-/*
-							return node_getComponentInterface(bundleRuntime.getCoreEntity()).getPreInitRequest({
-								success : function(request){
-									return loc_createAdaptersRequest(attrDef, bundleRuntime, {
-										success : function(request, adapters){
-											node_getEntityTreeNodeInterface(bundleRuntime.getCoreEntity().getMainEntityCore()).setAdapters(adapters);
-										}
-									});
-								}
+							return nosliw.runtime.getComplexEntityService().getCreateAdaptersRequest(attrDef, {
+								success : function(request, adapters){
+									node_getEntityTreeNodeInterface(bundleCore).setAdapters(adapters);
+									return treeNodeEntityInterface.addChild(childName, bundleRuntime, true);
+								}	
 							});
-*/							
 						}
 					}));
 				}

@@ -56,12 +56,10 @@ var node_complexEntityUtility = function(){
 					if(coreDataType==node_CONSTANT.TYPEDOBJECT_TYPE_BUNDLE){
                         
 							out.addRequest(node_getComponentInterface(childEntityCore).getPreInitRequest({
-								success : function(request){
+								success1 : function(request){
 									return nosliw.runtime.getComplexEntityService().getCreateAdaptersRequest(childEntityCore.getDmbededAttrDef(), {
 										success : function(request, adapters){
 											node_getEntityTreeNodeInterface(childEntityCore).setAdapters(adapters);
-//											node_getEntityTreeNodeInterface(childEntityCore.getMainEntityCore()).setAdapters(adapters);
-//											return treeNodeEntityInterface.addChild(childName, childValue, adapters, true);
 										}
 									});
 								}
