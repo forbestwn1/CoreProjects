@@ -19,9 +19,9 @@ var node_createDataAssociationForTaskAdapterPlugin = function(){
 	
 	var loc_out = {
 
-		getNewAdapterRequest : function(adapterDefinition, baseEntityCore, handlers, request){
+		getNewAdapterRequest : function(adapterDefinition, handlers, request){
 			return node_createServiceRequestInfoSimple({}, function(request){
-				return loc_createDataAssociationForTaskAdapter(adapterDefinition, baseEntityCore);
+				return loc_createDataAssociationForTaskAdapter(adapterDefinition);
 			}, handlers, request);
 		},
 	};
@@ -30,44 +30,40 @@ var node_createDataAssociationForTaskAdapterPlugin = function(){
 };
 
 
-var loc_createDataAssociationForTaskAdapter = function(dataAssociationTask, baseEntityCore){
-	
-	var loc_baseEntityCore;
+var loc_createDataAssociationForTaskAdapter = function(dataAssociationTask){
 	
 	var loc_dataAssociationForTask;
 	var loc_dataAssociationIn;
 	var loc_dataAssociationOut;
 
-	var loc_init = function(dataAssociationTask, baseEntityCore){
-		loc_baseEntityCore = baseEntityCore;
-		
+	var loc_init = function(dataAssociationTask){
 		loc_dataAssociationForTask = dataAssociationTask.getAttributeValue(node_COMMONATRIBUTECONSTANT.ADAPTERDATAASSOCIATIONFORTASK_DATAASSOCIATION);
-		loc_dataAssociationIn = node_createDataAssociation(loc_dataAssociationForTask[node_COMMONATRIBUTECONSTANT.DATAASSOCIATIONFORTASK_IN], loc_baseEntityCore);
+		loc_dataAssociationIn = node_createDataAssociation(loc_dataAssociationForTask[node_COMMONATRIBUTECONSTANT.DATAASSOCIATIONFORTASK_IN]);
 	
 		loc_dataAssociationOut = {};
 		_.each(loc_dataAssociationForTask[node_COMMONATRIBUTECONSTANT.DATAASSOCIATIONFORTASK_OUT], function(da, name){
-			loc_dataAssociationOut[name] = node_createDataAssociation(loc_dataAssociationForTask[node_COMMONATRIBUTECONSTANT.DATAASSOCIATIONFORTASK_OUT][name], loc_baseEntityCore);
+			loc_dataAssociationOut[name] = node_createDataAssociation(loc_dataAssociationForTask[node_COMMONATRIBUTECONSTANT.DATAASSOCIATIONFORTASK_OUT][name]);
 		});
 	};
 	
 	var loc_out = {
 		
-		getExecuteTaskRequest : function(taskSetup, handlers, request){
+		getExecuteTaskRequest : function(baseEntityCore, taskSetup, handlers, request){
 			
 			var onInitTaskRequest = function(handlers, request){
-				return loc_dataAssociationIn.getExecuteRequest(handlers, request);
+				return loc_dataAssociationIn.getExecuteRequest(baseEntityCore, handlers, request);
 			};
 			
 			var onFinishTaskRequest = function(taskResult, handlers, request){
-				return loc_dataAssociationOut[taskResult.resultName].getExecuteRequest(handlers, request);
+				return loc_dataAssociationOut[taskResult.resultName].getExecuteRequest(baseEntityCore, handlers, request);
 			};
 			
-			return node_taskUtility.getExecuteEntityTaskRequest(loc_baseEntityCore, taskSetup, onInitTaskRequest, onFinishTaskRequest, handlers, request);
+			return node_taskUtility.getExecuteEntityTaskRequest(baseEntityCore, taskSetup, onInitTaskRequest, onFinishTaskRequest, handlers, request);
 		},
 		
 	};
 	
-	loc_init(dataAssociationTask, baseEntityCore);
+	loc_init(dataAssociationTask);
 	return loc_out;
 };
 

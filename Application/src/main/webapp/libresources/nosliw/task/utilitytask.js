@@ -74,7 +74,7 @@ var node_taskUtility = {
 		var taskAdapter = this.getTaskAdapter(entityCore, adapterName);
 		
 		if(taskAdapter!=undefined){
-			return taskAdapter.getExecuteTaskRequest(taskSetup, handlers, request);
+			return taskAdapter.getExecuteTaskRequest(entityCore, taskSetup, handlers, request);
 		}
 		else{
 			return this.getExecuteEntityTaskRequest(entityCore, taskSetup, undefined, undefined, handlers, request);
@@ -123,7 +123,16 @@ var node_taskUtility = {
 
 
 
-	getExecuteTaskWithAdapterRequest : function(entityCore, adapterName, taskContext, handlers, request){
+
+
+
+
+
+
+
+
+
+	getExecuteTaskWithAdapterRequest1 : function(entityCore, adapterName, taskContext, handlers, request){
 		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 		var adapters = node_getEntityTreeNodeInterface(entityCore).getAdapters();
 		var taskAdapter;
@@ -151,16 +160,6 @@ var node_taskUtility = {
 		return out;		
 	},
 
-
-
-
-
-
-
-
-
-
-
 	getExecuteTaskRequest1 : function(taskInterface, handlers, request){
 		var result;
 		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
@@ -177,7 +176,7 @@ var node_taskUtility = {
 		return out;
 	},
 	
-	getInvokeTaskRequest : function(taskInfo, taskInput, requirement, bundleCore, handlers, request){
+	getInvokeTaskRequest1 : function(taskInfo, taskInput, requirement, bundleCore, handlers, request){
 		var mainEntityDefPath = bundleCore.getMainEntityDefinitionPath();
 		var taskDefPath = taskInfo.getEntityPath();
 		
@@ -233,7 +232,7 @@ var node_taskUtility = {
 		return this.getTaskAttributeExecuteRequest(node_complexEntityUtility.getDescendant(mainEntityCore, path).getCoreEntity(), attr, taskInput, handlers, request);
 	},
 
-	getInvokeTaskItemRequest : function(taskInfo, taskInput, bundleCore, handlers, request){
+	getInvokeTaskItemRequest1 : function(taskInfo, taskInput, bundleCore, handlers, request){
 		var mainEntityDefPath = bundleCore.getMainEntityDefinitionPath();
 		var taskDefPath = taskInfo[node_COMMONATRIBUTECONSTANT.INFOTASK_PATH];
 		
@@ -246,7 +245,7 @@ var node_taskUtility = {
 		return this.getTaskItemAttributeExecuteRequest(node_complexEntityUtility.getDescendant(mainEntityCore, postSegInfo.segments).getCoreEntity(), postSegInfo.post, taskInfo[node_COMMONATRIBUTECONSTANT.INFOTASK_NAME], taskInput, handlers, request);
 	},
 
-	getTaskItemAttributeExecuteRequest : function(parentCoreEntity, attrName, itemName, taskInput, handlers, request){
+	getTaskItemAttributeExecuteRequest1 : function(parentCoreEntity, attrName, itemName, taskInput, handlers, request){
 		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 
 		var adapterName = node_COMMONCONSTANT.NAME_DEFAULT;
@@ -263,7 +262,7 @@ var node_taskUtility = {
 		return out;
 	},
 	
-	getTaskEntityExecuteRequest : function(parentCoreEntity, attrName, taskInput, adapterInfo, requirement, handlers, request){
+	getTaskEntityExecuteRequest1 : function(parentCoreEntity, attrName, taskInput, adapterInfo, requirement, handlers, request){
 		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 
 		var adapterName = node_COMMONCONSTANT.NAME_DEFAULT;
@@ -280,7 +279,7 @@ var node_taskUtility = {
 		return out;
 	},
 
-	getTaskAttributeExecuteRequest : function(parentCoreEntity, attrName, taskInput, handlers, request){
+	getTaskAttributeExecuteRequest1 : function(parentCoreEntity, attrName, taskInput, handlers, request){
 		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 
 		var adapterName = node_COMMONCONSTANT.NAME_DEFAULT;

@@ -122,7 +122,7 @@ var loc_createTestComplex1ComponentCore = function(complexEntityDef, configure){
 							var adapterView = $('<button>Execute Adapter For Task: '+adapterName+'</button>');
 							attributeView.append(adapterView);
 							adapterView.click(function() {
-								var adapterExecuteRequest =  adapter.getExecuteTaskRequest();
+								var adapterExecuteRequest =  adapter.getExecuteTaskRequest(child.getChildValue().getCoreEntity());
 								node_requestServiceProcessor.processRequest(adapterExecuteRequest);
 							});
 						});
@@ -134,7 +134,7 @@ var loc_createTestComplex1ComponentCore = function(complexEntityDef, configure){
 							var adapterView = $('<button>Execute Adapter : '+adapterName+'</button>');
 							attributeView.append(adapterView);
 							adapterView.click(function() {
-								var adapterExecuteRequest =  adapter.getExecuteRequest();
+								var adapterExecuteRequest =  adapter.getExecuteRequest(child.getChildValue().getCoreEntity());
 								node_requestServiceProcessor.processRequest(adapterExecuteRequest);
 							});
 						});

@@ -27,7 +27,6 @@ var packageObj = library;
 //name in parm is for debugging purpose
 var node_createDataAssociation = function(dataAssociationDef, baseEntityCore, name){
 	
-	var loc_baseEntityCore;
 	var loc_dataAssociationDef;
 
 	var loc_init = function(dataAssociationDef, baseEntityCore, name){
@@ -35,12 +34,10 @@ var node_createDataAssociation = function(dataAssociationDef, baseEntityCore, na
 		loc_baseEntityCore = baseEntityCore;
 	};
 
-	var loc_getExecuteDataAssociationRequest = function(handlers, request){
+	var loc_getExecuteDataAssociationRequest = function(baseEntityCore, handlers, request){
 //		nosliw.logging.info("Data association ", loc_out.prv_id, " input data : " + node_basicUtility.stringify(loc_inputIODataSet));
 		if(loc_dataAssociationDef==undefined)  return node_getExecuteNoneDataAssociationRequest(loc_inputIODataSet, loc_dataAssociationDef, loc_outputIODataSet, handlers, request);   //if no data association, then nothing happen
 		else{
-			var baseEntityCore = node_complexEntityUtility.getCoreEntity(loc_baseEntityCore);
-
 			var type = loc_dataAssociationDef[node_COMMONATRIBUTECONSTANT.DATAASSOCIATION_TYPE];
 			if(type==node_COMMONCONSTANT.DATAASSOCIATION_TYPE_MAPPING)	return node_getExecuteMappingDataAssociationRequest(loc_dataAssociationDef, baseEntityCore, loc_out.prv_name, handlers, request);
 			else if(type==node_COMMONCONSTANT.DATAASSOCIATION_TYPE_MIRROR)		return node_getExecuteMirrorDataAssociationRequest(loc_inputIODataSet, loc_dataAssociationDef, loc_outputIODataSet, loc_out.prv_name, handlers, request);
@@ -59,12 +56,12 @@ var node_createDataAssociation = function(dataAssociationDef, baseEntityCore, na
 		prv_id : nosliw.generateId(),
 		prv_name : name,
 
-		getExecuteRequest : function(handlers, request){
-			return loc_getExecuteDataAssociationRequest(handlers, request);
+		getExecuteRequest : function(baseEntityCore, handlers, request){
+			return loc_getExecuteDataAssociationRequest(baseEntityCore, handlers, request);
 		},
 
-		executeRequest : function(handlers, request){
-			var requestInfo = this.getExecuteRequest(handlers, request);
+		executeRequest : function(baseEntityCore, handlers, request){
+			var requestInfo = this.getExecuteRequest(baseEntityCore, handlers, request);
 			node_requestServiceProcessor.processRequest(requestInfo);
 		},
 		

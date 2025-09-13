@@ -57,7 +57,7 @@ var node_complexEntityUtility = function(){
                         
 							out.addRequest(node_getComponentInterface(childEntityCore).getPreInitRequest({
 								success : function(request){
-									return nosliw.runtime.getComplexEntityService().getCreateAdaptersRequest(childEntityCore.getDmbededAttrDef(), childValue, {
+									return nosliw.runtime.getComplexEntityService().getCreateAdaptersRequest(childEntityCore.getDmbededAttrDef(), {
 										success : function(request, adapters){
 											node_getEntityTreeNodeInterface(childEntityCore).setAdapters(adapters);
 //											node_getEntityTreeNodeInterface(childEntityCore.getMainEntityCore()).setAdapters(adapters);
@@ -85,7 +85,7 @@ var node_complexEntityUtility = function(){
 						hostEntityCore = treeNodeInterface.getParentCore();
 						if(node_getObjectType(hostEntityCore)==node_CONSTANT.TYPEDOBJECT_TYPE_BUNDLE){
 							//for bundle node
-//							hostEntityCore = node_getEntityTreeNodeInterface(hostEntityCore).getParentCore();
+							hostEntityCore = node_getEntityTreeNodeInterface(hostEntityCore).getParentCore();
 						}
 					}
 					else if(seg.startsWith(node_COMMONCONSTANT.NAME_CHILD)) {
@@ -102,7 +102,7 @@ var node_complexEntityUtility = function(){
 					}
 				});		
 			}
-			return hostEntityCore;
+			return node_complexEntityUtility.getCoreEntity(hostEntityCore);
 		},
 
 		getDescendantCore : function(entity, path){

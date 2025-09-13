@@ -29,9 +29,9 @@ var node_createDataAssociationForExpressionAdapterPlugin = function(){
 	
 	var loc_out = {
 
-		getNewAdapterRequest : function(adapterDefinition, baseEntityCore, handlers, request){
+		getNewAdapterRequest : function(adapterDefinition, handlers, request){
 			return node_createServiceRequestInfoSimple({}, function(request){
-				return loc_createDataAssociationForExpressionAdapter(adapterDefinition, baseEntityCore);
+				return loc_createDataAssociationForExpressionAdapter(adapterDefinition);
 			}, handlers, request);
 		},
 	};
@@ -40,39 +40,36 @@ var node_createDataAssociationForExpressionAdapterPlugin = function(){
 };
 
 
-var loc_createDataAssociationForExpressionAdapter = function(dataAssociationExpression, baseEntityCore){
-	
-	var loc_baseEntityCore;
+var loc_createDataAssociationForExpressionAdapter = function(dataAssociationExpression){
 	
 	var loc_dataAssociationForExpression;
 	var loc_dataAssociationIn;
 	var loc_dataAssociationOut;
 
-	var loc_init = function(dataAssociationExpression, baseEntityCore){
-		loc_baseEntityCore = baseEntityCore;
+	var loc_init = function(dataAssociationExpression){
 		loc_dataAssociationForExpression = dataAssociationExpression.getAttributeValue(node_COMMONATRIBUTECONSTANT.ADAPTERDATAASSOCIATIONFOREXPRESSION_DATAASSOCIATION);
-		loc_dataAssociationIn = node_createDataAssociation(loc_dataAssociationForExpression[node_COMMONATRIBUTECONSTANT.DATAASSOCIATIONFOREXPRESSION_IN], loc_baseEntityCore);
-		loc_dataAssociationOut = node_createDataAssociation(loc_dataAssociationForExpression[node_COMMONATRIBUTECONSTANT.DATAASSOCIATIONFOREXPRESSION_OUT], loc_baseEntityCore);
+		loc_dataAssociationIn = node_createDataAssociation(loc_dataAssociationForExpression[node_COMMONATRIBUTECONSTANT.DATAASSOCIATIONFOREXPRESSION_IN]);
+		loc_dataAssociationOut = node_createDataAssociation(loc_dataAssociationForExpression[node_COMMONATRIBUTECONSTANT.DATAASSOCIATIONFOREXPRESSION_OUT]);
 	};
 	
 	var loc_out = {
 		
-		getExecuteTaskRequest : function(taskSetup, handlers, request){
+		getExecuteTaskRequest : function(baseEntityCore, taskSetup, handlers, request){
 			
 			var onInitTaskRequest = function(handlers, request){
-				return loc_dataAssociationIn.getExecuteRequest(handlers, request);
+				return loc_dataAssociationIn.getExecuteRequest(baseEntityCore, handlers, request);
 			};
 			
 			var onFinishTaskRequest = function(taskResult, handlers, request){
-				return loc_dataAssociationOut.getExecuteRequest(handlers, request);
+				return loc_dataAssociationOut.getExecuteRequest(baseEntityCore, handlers, request);
 			};
 			
-			return node_taskUtility.getExecuteEntityTaskRequest(loc_baseEntityCore, taskSetup, onInitTaskRequest, onFinishTaskRequest, handlers, request);
+			return node_taskUtility.getExecuteEntityTaskRequest(baseEntityCore, taskSetup, onInitTaskRequest, onFinishTaskRequest, handlers, request);
 		}
 		
 	};
 	
-	loc_init(dataAssociationExpression, baseEntityCore);
+	loc_init(dataAssociationExpression);
 	return loc_out;
 };
 

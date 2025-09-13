@@ -100,7 +100,7 @@ var node_makeObjectEntityObjectInterface = function(rawEntity, internalValuePort
 					out.addRequest(nosliw.runtime.getComplexEntityService().getCreateEntityRuntimeRequest(attrEntityDef, loc_out, loc_bundleCore, variationPoints, childConfigure, {
 						success : function(request, entityRuntime){
 							node_getEntityTreeNodeInterface(entityRuntime.getCoreEntity()).setParentCore(rawEntity);
-							return nosliw.runtime.getComplexEntityService().getCreateAdaptersRequest(attrDef, entityRuntime, {
+							return nosliw.runtime.getComplexEntityService().getCreateAdaptersRequest(attrDef, {
 								success : function(request, adapters){
 									node_getEntityTreeNodeInterface(entityRuntime.getCoreEntity()).setAdapters(adapters);
 									return treeNodeEntityInterface.addChild(childName, entityRuntime, true);
@@ -145,7 +145,7 @@ var node_makeObjectEntityObjectInterface = function(rawEntity, internalValuePort
 					out.addRequest(nosliw.runtime.getComplexEntityService().getCreateDynamicRuntimeRequest(dynamicValue, loc_out, loc_bundleCore, variationPoints, childConfigure, {
 						success : function(request, dynamicRuntime){
 							node_getEntityTreeNodeInterface(dynamicRuntime.getCoreEntity()).setParentCore(rawEntity);
-							return nosliw.runtime.getComplexEntityService().getCreateAdaptersRequest(attrDef, dynamicRuntime, {
+							return nosliw.runtime.getComplexEntityService().getCreateAdaptersRequest(attrDef, {
 								success : function(request, adapters){
 									node_getEntityTreeNodeInterface(dynamicRuntime.getCoreEntity()).setAdapters(adapters);
 									return treeNodeEntityInterface.addChild(childName, dynamicRuntime, true);

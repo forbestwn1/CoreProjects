@@ -78,13 +78,13 @@ var node_createComplexEntityRuntimeService = function() {
 	var loc_entityPlugins = {};
 	var loc_adapterPlugins = {};
 
-	var loc_getCreateAdapterRequest = function(rawAdapterDefinition, baseCore, handlers, request){
+	var loc_getCreateAdapterRequest = function(rawAdapterDefinition, handlers, request){
 		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 
 		var entityType = rawAdapterDefinition[node_COMMONATRIBUTECONSTANT.BRICK_BRICKTYPE];
 		var adapterEntityPlugin = loc_adapterPlugins[entityType[node_COMMONATRIBUTECONSTANT.IDBRICKTYPE_BRICKTYPE]][entityType[node_COMMONATRIBUTECONSTANT.IDBRICKTYPE_VERSION]];
 		var adapterDefinition = node_createBrickDefinition(rawAdapterDefinition);
-		out.addRequest(adapterEntityPlugin.getNewAdapterRequest(adapterDefinition, baseCore, {
+		out.addRequest(adapterEntityPlugin.getNewAdapterRequest(adapterDefinition, {
 			success : function(request, adapterEntity){
 				return node_makeObjectBasicEntityObjectInterface(adapterEntity, adapterDefinition, undefined);
 			}
@@ -351,7 +351,7 @@ var node_createComplexEntityRuntimeService = function() {
 			return out;
 		},
 				
-		getCreateAdaptersRequest : function(attrDef, baseObj, handlers, request){
+		getCreateAdaptersRequest : function(attrDef, handlers, request){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("createAdaptersRequest", {}), handlers, request);
 	
 			var adaptersRequest = node_createServiceRequestInfoSet(new node_ServiceInfo("createAdapters", {}), {
@@ -365,7 +365,7 @@ var node_createComplexEntityRuntimeService = function() {
 				var adapterValueWrapper = attrDef.getAdapterValueWrapper(adapterName);								
 				if(adapterValueWrapper.getValueType()==node_COMMONCONSTANT.EMBEDEDVALUE_TYPE_BRICK){
 					var adapterEntityDef = adapterValueWrapper.getEntityDefinition();
-					adaptersRequest.addRequest(adapterName, nosliw.runtime.getComplexEntityService().getCreateAdapterRequest(adapterEntityDef, node_complexEntityUtility.getCoreEntity(baseObj)));
+					adaptersRequest.addRequest(adapterName, nosliw.runtime.getComplexEntityService().getCreateAdapterRequest(adapterEntityDef));
 				}
 			});
 			
@@ -373,8 +373,8 @@ var node_createComplexEntityRuntimeService = function() {
 			return out;
 		},
 
-		getCreateAdapterRequest : function(adapterDefinition, baseCore, handlers, request){
-			return loc_getCreateAdapterRequest(adapterDefinition, baseCore, handlers, request);
+		getCreateAdapterRequest : function(adapterDefinition, handlers, request){
+			return loc_getCreateAdapterRequest(adapterDefinition, handlers, request);
 		},
 
 
