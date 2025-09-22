@@ -17,6 +17,11 @@ var packageObj = library.getChildPackage("valuecontainer");
 
 //*******************************************   Start Node Definition  **************************************
 
+var node_getItemValueInContainer = function(container, itemId){
+	return container[node_COMMONATRIBUTECONSTANT.CONTAINER_ITEM][itemId][node_COMMONATRIBUTECONSTANT.ITEMWRAPPER_VALUE];
+};
+
+
 var node_createValueContainerSimple = function(categary){
 	
 	var loc_value = [];
@@ -168,11 +173,12 @@ nosliw.registerSetNodeDataEvent("common.interfacedef.getObjectType", function(){
 
 
 //Register Node by Name
+packageObj.createChildNode("getItemValueInContainer", node_getItemValueInContainer); 
+
 packageObj.createChildNode("createValueContainerList", node_createValueContainerList); 
 packageObj.createChildNode("createValueContainerSimple", node_createValueContainerSimple); 
 
 packageObj.createChildNode("makeObjectValueContainerInterface", node_makeObjectValueContainerInterface); 
 packageObj.createChildNode("getValueContainerInterface", node_getValueContainerInterface); 
-
 
 })(packageObj);

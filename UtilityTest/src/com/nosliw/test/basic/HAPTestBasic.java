@@ -19,9 +19,12 @@ public class HAPTestBasic {
 		HAPManagerApplicationBrick brickMan = context.getBean(HAPManagerApplicationBrick.class);
 		
 //		HAPUtilityBundle.getBrickBundle(new HAPResourceIdSimple(HAPEnumBrickType.TEST_COMPLEX_1_100.getBrickType(), "1.0.0", "dynamic_provider"), brickMan, null);
-		HAPUtilityBundle.getBrickBundle(new HAPResourceIdSimple(HAPEnumBrickType.TEST_COMPLEX_1_100.getBrickType(), "1.0.0", "dynamic_use"), brickMan, null);
+//		HAPUtilityBundle.getBrickBundle(new HAPResourceIdSimple(HAPEnumBrickType.TEST_COMPLEX_1_100.getBrickType(), "1.0.0", "dynamic_use"), brickMan, null);
 		
 //		HAPUtilityBundle.getBrickBundle(new HAPResourceIdSimple(HAPEnumBrickType.DATAEXPRESSIONLIB_100.getBrickType(), "1.0.0", "test1"), brickMan, null);
+
+		HAPUtilityBundle.getBrickBundle(new HAPResourceIdSimple(HAPEnumBrickType.UIPAGE_100.getBrickType(), "1.0.0", "test0"), brickMan, null);
+	
 	}
 
 }

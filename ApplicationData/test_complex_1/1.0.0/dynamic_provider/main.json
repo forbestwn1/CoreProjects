@@ -106,6 +106,28 @@
 					}
 				}
 			]
-		}		
+		},
+		
+		{
+			"info": {
+				"name" : "variable-test_complex_script",
+				"status": "disabled1",
+				"description" : ""
+			},
+			"relation": [
+				{
+					"type" : "valueContext",
+					"mode" : "runtime"
+				}
+			],
+			"brick":{
+				"script": "complexscript_debug_variablelocalbyname",
+				"parm" : {
+					"variable" : ["provider_output1"]
+				}
+			}
+		}
+		
+				
 	]
 }

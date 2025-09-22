@@ -48,25 +48,19 @@ var node_complexEntityUtility = function(){
 				processRoot: function(entityCore){},
 				
 				processLeaf: function(coreEntity, childName){
-					var treeNodeInterface = node_getEntityTreeNodeInterface(coreEntity);
-					var childNode = treeNodeInterface.getChild(childName);
-					var childValue = childNode.getChildValue();
-					var childEntityCore = childValue.getCoreEntity();
+					var childEntityCore = node_getEntityTreeNodeInterface(coreEntity).getChild(childName).getChildValue().getCoreEntity();
 					var coreDataType = node_getObjectType(childEntityCore);
 					if(coreDataType==node_CONSTANT.TYPEDOBJECT_TYPE_BUNDLE){
-                        
-							out.addRequest(node_getComponentInterface(childEntityCore).getPreInitRequest({
-								success1 : function(request){
-									return nosliw.runtime.getComplexEntityService().getCreateAdaptersRequest(childEntityCore.getDmbededAttrDef(), {
-										success : function(request, adapters){
-											node_getEntityTreeNodeInterface(childEntityCore).setAdapters(adapters);
-										}
-									});
-								}
-							}));
-
+						out.addRequest(node_getComponentInterface(childEntityCore).getPreInitRequest({
+							success1 : function(request){
+								return nosliw.runtime.getComplexEntityService().getCreateAdaptersRequest(childEntityCore.getDmbededAttrDef(), {
+									success : function(request, adapters){
+										node_getEntityTreeNodeInterface(childEntityCore).setAdapters(adapters);
+									}
+								});
+							}
+						}));
 					}
-					
 				}
 			});
 			

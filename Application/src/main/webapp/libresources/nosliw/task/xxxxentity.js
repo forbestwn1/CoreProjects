@@ -220,7 +220,7 @@ var node_createTaskWatch = function(taskDef, valuePortEnv, runtimeEnv){
 	
 	var lifecycleCallback = {};
 	lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT] = function(taskDef, valuePortEnv, runtimeEnv){
-		loc_taskWrapper = node_createTaskWrapper(taskDef, valuePortEnv, runtimeEnv);
+		loc_taskWrapper = node_createTaskWrapper(taskDef, valuePortEnv);
 		loc_dataEventObject = node_createEventObject();
 		loc_contextVarGroup = node_createVariablesGroup(valuePortEnv, loc_taskWrapper.getVariableIds(), loc_varsGroupHandler, this);
 	};
@@ -262,10 +262,10 @@ var node_createTaskWatch = function(taskDef, valuePortEnv, runtimeEnv){
 };
 
 
-var node_createTaskInContainerWrapper = function(container, taskId, valuePortEnv, runtimeEnv){
+var node_createTaskInContainerWrapper = function(container, taskId, valuePortEnv){
 	
 	var loc_container = container;
-	var loc_taskWrapper = node_createTaskWrapper(loc_getValueInContainer(container, taskId), valuePortEnv, runtimeEnv);
+	var loc_taskWrapper = node_createTaskWrapper(loc_getValueInContainer(container, taskId), valuePortEnv);
 	
 	var loc_out = {
 		
@@ -285,11 +285,10 @@ var node_createTaskInContainerWrapper = function(container, taskId, valuePortEnv
 	return loc_out;
 };
 
-var node_createTaskWrapper = function(taskDef, valuePortEnv, runtimeEnv){
+var node_createTaskWrapper = function(taskDef, valuePortEnv){
 	
 	var loc_taskDef = taskDef;
 	var loc_valuePortEnv = valuePortEnv;
-	var loc_runtimeEnv = runtimeEnv;
 	
 	var loc_out = {
 		

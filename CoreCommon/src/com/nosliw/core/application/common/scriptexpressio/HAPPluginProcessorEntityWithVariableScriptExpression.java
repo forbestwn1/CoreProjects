@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.lang3.tuple.Pair;
+import org.springframework.stereotype.Component;
 
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.common.dataexpression.HAPExpressionData;
@@ -19,18 +20,15 @@ import com.nosliw.core.application.common.withvariable.HAPUtilityWithVarible;
 import com.nosliw.core.data.criteria.HAPDataTypeCriteria;
 import com.nosliw.core.data.matcher.HAPMatchers;
 import com.nosliw.core.runtime.HAPRuntimeInfo;
-import com.nosliw.core.runtimeenv.HAPRuntimeEnvironment;
 
+@Component
 public class HAPPluginProcessorEntityWithVariableScriptExpression implements HAPPluginProcessorEntityWithVariable<HAPExpressionScript>{
 
 	public static String RESULT = "result";
 	
-	private HAPRuntimeEnvironment m_runtimeEnv;
-	
 	private HAPManagerWithVariablePlugin m_withVariableMan;
 	
-	public HAPPluginProcessorEntityWithVariableScriptExpression(HAPRuntimeEnvironment runtimeEnv, HAPManagerWithVariablePlugin withVariableMan) {
-		this.m_runtimeEnv = runtimeEnv;
+	public HAPPluginProcessorEntityWithVariableScriptExpression(HAPManagerWithVariablePlugin withVariableMan) {
 		this.m_withVariableMan = withVariableMan;
 	}
 	

@@ -10,7 +10,8 @@ var packageObj = library;
 	var node_createEventObject;
 	var node_getLifecycleInterface;
 	var node_createTaskGroupItemWatch;
-	var node_createTaskInContainerWatch;
+    var node_createExpressionTaskWatch;
+    var node_getItemValueInContainer;
 //*******************************************   Start Node Definition  ************************************** 	
 
 	/*
@@ -48,7 +49,7 @@ var packageObj = library;
 		lifecycleCallback[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT] = function(viewElement, scriptExpressionGroup, valuePortEnv, runtimeEnv, requestInfo){
 			loc_ele = viewElement;
 
-			loc_embededSScriptExpressionWatch = node_createTaskInContainerWatch(scriptExpressionGroup, loc_embededScriptExpression[node_COMMONATRIBUTECONSTANT.UIEMBEDEDSCRIPTEXPRESSION_SCRIPTID], valuePortEnv, runtimeEnv);
+            loc_embededSScriptExpressionWatch = node_createExpressionTaskWatch(node_getItemValueInContainer(scriptExpressionGroup, loc_embededScriptExpression[node_COMMONATRIBUTECONSTANT.UIEMBEDEDSCRIPTEXPRESSION_SCRIPTID]), valuePortEnv)
 			loc_embededSScriptExpressionWatch.registerListener(loc_dataEventObject, loc_scriptExpressionEventHandler);
 
 			loc_out.refresh(requestInfo);
@@ -89,7 +90,8 @@ nosliw.registerSetNodeDataEvent("common.lifecycle.makeObjectWithLifecycle", func
 nosliw.registerSetNodeDataEvent("common.event.createEventObject", function(){node_createEventObject = this.getData();});
 nosliw.registerSetNodeDataEvent("common.lifecycle.getLifecycleInterface", function(){node_getLifecycleInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("task.createTaskGroupItemWatch", function(){node_createTaskGroupItemWatch = this.getData();});
-nosliw.registerSetNodeDataEvent("task.createTaskInContainerWatch", function(){node_createTaskInContainerWatch = this.getData();});
+nosliw.registerSetNodeDataEvent("expression.createExpressionTaskWatch", function(){node_createExpressionTaskWatch = this.getData();});
+nosliw.registerSetNodeDataEvent("common.valuecontainer.getItemValueInContainer", function(){node_getItemValueInContainer = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createEmbededScriptExpressionInTagAttribute", node_createEmbededScriptExpressionInTagAttribute); 

@@ -3,18 +3,23 @@
 <body>
 Hellooooooo!!!!!
 
+		<br>
+ 		StringContent:<%=?(public_string)?.value + '   7777 ' %>  
+
+		<br>
+EXPRESSION IN ATTRIBUTE:<span  style="color:<%=?(public_string)?.value=='red'?'red':'blue'%>">Change the input below and color will change according to the value </span> 
+		<br>
+
+<!-- 
+
 	 		<nosliw-debug_test_data_simple data_string="public_string">
 			</nosliw-debug_test_data_simple>
 
 
 		<br>
- 		StringContent:<%=?(public_string)?.value + '   7777 ' %>  
-		<br>
  		UrlContent:<%=?(public_url)?.value + '   7777 ' %>  
 
-		<br>
-EXPRESSION IN ATTRIBUTE:<span  style="color:<%=?(public_string)?.value=='red'?'red':'blue'%>">Change the input below and color will change according to the value </span> 
-		<br>
+ -->
 
 
 <!-- 
@@ -68,7 +73,8 @@ EXPRESSION IN ATTRIBUTE:<span  style="color:<%=?(public_string)?.value=='red'?'r
 					"initValue": {
 						"public_string": {
 							"dataTypeId": "test.string;1.0.0",
-							"value": "default value of public_string"
+							"value": "red",
+							"value1": "default value of public_string"
 						},
 						"public_url": {
 							"dataTypeId": "test.url;1.0.0",
