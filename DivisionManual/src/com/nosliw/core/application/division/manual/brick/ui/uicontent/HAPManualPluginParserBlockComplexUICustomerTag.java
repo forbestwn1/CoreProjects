@@ -88,7 +88,7 @@ public class HAPManualPluginParserBlockComplexUICustomerTag extends HAPManualDef
 					attrEle.setReference(new HAPReferenceElement(attrValue));
 					
 					HAPRootInStructure rootEle = new HAPRootInStructure();
-					rootEle.setName(HAPConstantShared.NOSLIW_RESERVE_ATTRIBUTE + attrName);
+					rootEle.setName("internal_" + attrName);
 					rootEle.setDefinition(attrEle);
 					attrValueStructure.addRoot(rootEle);
 				}
