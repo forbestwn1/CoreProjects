@@ -531,6 +531,9 @@
 			<definition name="UITAG_PARM_SERVICE" value="service"/>
 			<definition name="UITAG_PARM_MAPPING" value="mapping"/>
 
+			<definition name="UITAGDEFINITION_ATTRIBUTETYPE_SIMPLE" value="simple"/>
+			<definition name="UITAGDEFINITION_ATTRIBUTETYPE_VARIABLE" value="variable"/>
+
 			<definition name="UIRESOURCE_CONTEXTINFO_INSTANTIATE" value="instantiate"/>
 			<definition name="UIRESOURCE_CONTEXTINFO_INSTANTIATE_MANUAL" value="manual"/>
 			<definition name="UIRESOURCE_CONTEXTINFO_INSTANTIATE_AUTO" value="auto"/>

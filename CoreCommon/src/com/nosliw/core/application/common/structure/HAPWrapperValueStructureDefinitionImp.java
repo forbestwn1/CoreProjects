@@ -1,18 +1,20 @@
-package com.nosliw.core.application.entity.uitag;
+package com.nosliw.core.application.common.structure;
 
 import com.nosliw.common.info.HAPEntityInfoImp;
-import com.nosliw.core.application.common.structure.HAPInfoStructureInWrapper;
-import com.nosliw.core.application.common.structure.HAPValueStructure;
-import com.nosliw.core.application.common.structure.HAPWrapperValueStructureDefinition;
 
-public class HAPUITagWrapperValueStructure extends HAPEntityInfoImp implements HAPWrapperValueStructureDefinition{
+public class HAPWrapperValueStructureDefinitionImp extends HAPEntityInfoImp implements HAPWrapperValueStructureDefinition{
 
 	private HAPValueStructure m_valueStructure;
 	
 	private HAPInfoStructureInWrapper m_valueStructureInfo;
 	
-	public HAPUITagWrapperValueStructure() {
+	public HAPWrapperValueStructureDefinitionImp() {
 		this.m_valueStructureInfo = new HAPInfoStructureInWrapper(); 
+	}
+	
+	public HAPWrapperValueStructureDefinitionImp(HAPValueStructure valueStructure) {
+		this();
+		this.m_valueStructure = valueStructure;
 	}
 	
 	@Override

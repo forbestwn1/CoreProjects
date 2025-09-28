@@ -47,11 +47,11 @@ public class HAPUITagDefinition extends HAPEntityInfoImp{
 	
 	private List<HAPManualDefinitionBrickRelation> m_parentRelations;
 	
-	private Map<String, HAPUITagAttributeDefinition> m_attributes;
+	private Map<String, HAPUITagDefinitionAttribute> m_attributes;
 	
 	public HAPUITagDefinition() {
 		this.m_parentRelations = new ArrayList<HAPManualDefinitionBrickRelation>();
-		this.m_attributes = new LinkedHashMap<String, HAPUITagAttributeDefinition>();
+		this.m_attributes = new LinkedHashMap<String, HAPUITagDefinitionAttribute>();
 	}
 	
 	public String getType() {  return null;   }
@@ -71,8 +71,8 @@ public class HAPUITagDefinition extends HAPEntityInfoImp{
 	public List<HAPManualDefinitionBrickRelation> getParentRelations(){  return this.m_parentRelations;  }
 	public void addParentRelation(HAPManualDefinitionBrickRelation parentRelation) {     this.m_parentRelations.add(parentRelation);       }
 
-	public void addAttributeDefinition(HAPUITagAttributeDefinition attribute) {   this.m_attributes.put(attribute.getName(), attribute);    }
-	public Map<String, HAPUITagAttributeDefinition> getAttributeDefinition() {   return this.m_attributes;    }
+	public void addAttributeDefinition(HAPUITagDefinitionAttribute attribute) {   this.m_attributes.put(attribute.getName(), attribute);    }
+	public Map<String, HAPUITagDefinitionAttribute> getAttributeDefinition() {   return this.m_attributes;    }
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){

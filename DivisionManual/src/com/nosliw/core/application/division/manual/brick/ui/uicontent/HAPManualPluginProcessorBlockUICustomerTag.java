@@ -10,7 +10,7 @@ import com.nosliw.core.application.division.manual.core.HAPManualBrick;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionBrick;
 import com.nosliw.core.application.division.manual.core.process.HAPManualContextProcessBrick;
 import com.nosliw.core.application.division.manual.core.process.HAPManualPluginProcessorBlockImp;
-import com.nosliw.core.application.entity.uitag.HAPUITagAttributeDefinition;
+import com.nosliw.core.application.entity.uitag.HAPUITagDefinitionAttribute;
 
 public class HAPManualPluginProcessorBlockUICustomerTag extends HAPManualPluginProcessorBlockImp{
 
@@ -31,7 +31,7 @@ public class HAPManualPluginProcessorBlockUICustomerTag extends HAPManualPluginP
 			uiCustomerTagExe.addTagAttribute(attrName, attrValues.get(attrName));
 		}
 
-		Map<String, HAPUITagAttributeDefinition> attrDefs = uiCustomerTagDef.getTagAttributeDefinitions();
+		Map<String, HAPUITagDefinitionAttribute> attrDefs = uiCustomerTagDef.getTagAttributeDefinitions();
 		for(String attrName : attrDefs.keySet()) {
 			uiCustomerTagExe.addAttributeDefinition(attrDefs.get(attrName));
 		}
@@ -43,5 +43,6 @@ public class HAPManualPluginProcessorBlockUICustomerTag extends HAPManualPluginP
 		if(uiCustomerTagDef.getScriptResourceId()!=null) {
 			uiCustomerTagExe.setScriptResourceId(uiCustomerTagDef.getScriptResourceId());
 		}
+		
 	}
 }

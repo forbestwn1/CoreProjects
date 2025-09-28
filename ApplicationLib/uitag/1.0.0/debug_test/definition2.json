@@ -9,15 +9,11 @@
 		},
 		{
 			"name" : "data_string",
-			"type" : "variable",
-			"dataDefinition" : "test.string;1.0.0",
-			"defaultValue" : "#empty"
+			"defaultValue" : "empty"
 		},
 		{
 			"name" : "data_array",
-			"type" : "variable",
-			"dataDefinition" : "test.array;1.0.0",
-			"defaultValue" : "#empty"
+			"defaultValue" : "empty"
 		},
 		{
 			"name" : "arrayelement",
@@ -29,6 +25,35 @@
 		}
 	],
 	"valueContext": [
+		{
+			"groupType" : "public",
+			"valueStructure" : {
+				"root": {
+					"internal_data_string": {
+						"status": "<%=&(nosliwattribute_data_string)&=='empty'?'disabled':''%>",
+						"definition": {
+							"link" : {
+								"elementPath": "<%=&(nosliwattribute_data_string)&%>"
+							},
+							"definition" : {
+								"criteria" : "test.string;1.0.0"
+							}
+						}
+					},
+					"internal_data_array": {
+						"status": "<%=&(nosliwattribute_data_array)&=='empty'?'disabled':''%>",
+						"definition": {
+							"link" : {
+								"elementPath": "<%=&(nosliwattribute_data_array)&%>"
+							},
+							"definition" : {
+								"criteria" : "test.array;1.0.0"
+							}
+						}
+					}
+				}
+			}
+		},
 		{
 			"groupType" : "protected",
 			"status": "<%=&(nosliwattribute_data_array)&=='empty'?'disabled':''%>",

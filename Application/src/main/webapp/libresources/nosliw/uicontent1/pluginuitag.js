@@ -74,7 +74,7 @@ var loc_createUITagComponentCore = function(complexEntityDef, tagDefScriptFun, v
 		var out = loc_attributes[name];
 		if(out==undefined){
 			var attrDef = loc_attributeDefinition[name];
-			if(attrDef!=undefined)	out = attrDef[node_COMMONATRIBUTECONSTANT.UITAGATTRIBUTEDEFINITION_DEFAULTVALUE];
+			if(attrDef!=undefined)	out = attrDef[node_COMMONATRIBUTECONSTANT.UITAGDEFINITIONATTRIBUTE_DEFAULTVALUE];
 		}
 		return out;
 	};

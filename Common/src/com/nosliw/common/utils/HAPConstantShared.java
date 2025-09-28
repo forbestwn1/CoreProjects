@@ -441,6 +441,8 @@ public class HAPConstantShared {
 		public static final String UITAG_PARM_COMMAND = "command";
 		public static final String UITAG_PARM_SERVICE = "service";
 		public static final String UITAG_PARM_MAPPING = "mapping";
+		public static final String UITAGDEFINITION_ATTRIBUTETYPE_SIMPLE = "simple";
+		public static final String UITAGDEFINITION_ATTRIBUTETYPE_VARIABLE = "variable";
 		public static final String UIRESOURCE_CONTEXTINFO_INSTANTIATE = "instantiate";
 		public static final String UIRESOURCE_CONTEXTINFO_INSTANTIATE_MANUAL = "manual";
 		public static final String UIRESOURCE_CONTEXTINFO_INSTANTIATE_AUTO = "auto";

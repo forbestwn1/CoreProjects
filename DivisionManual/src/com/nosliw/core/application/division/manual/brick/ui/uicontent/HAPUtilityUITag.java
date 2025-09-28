@@ -7,28 +7,18 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.common.constant.HAPDefinitionConstant;
 import com.nosliw.core.application.common.structure.HAPWrapperValueStructureDefinition;
 import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualDefinitionBrickValueContext;
-import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualDefinitionBrickValueStructure;
-import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualDefinitionBrickWrapperValueStructure;
+import com.nosliw.core.application.division.manual.common.valuecontext.HAPManualUtilityValueContext;
 import com.nosliw.core.application.division.manual.core.HAPManualEnumBrickType;
 import com.nosliw.core.application.division.manual.core.HAPManualManagerBrick;
-import com.nosliw.core.application.entity.uitag.HAPUITagAttributeDefinition;
 import com.nosliw.core.application.entity.uitag.HAPUITagDefinition;
+import com.nosliw.core.application.entity.uitag.HAPUITagDefinitionAttribute;
 
 public class HAPUtilityUITag {
 
 	public static HAPManualDefinitionBrickValueContext createValueContextBrickFromUITagDefinition(HAPUITagDefinition uiTagDef, HAPManualManagerBrick manualDivisionEntityMan) {
 		HAPManualDefinitionBrickValueContext valueContextBrick = (HAPManualDefinitionBrickValueContext)manualDivisionEntityMan.newBrickDefinition(HAPManualEnumBrickType.VALUECONTEXT_100);
 		for(HAPWrapperValueStructureDefinition uiTagDefValueStructure : uiTagDef.getValueContext().getValueStructures()) {
-			HAPManualDefinitionBrickWrapperValueStructure manualWrapperBrickValueStrucutre = (HAPManualDefinitionBrickWrapperValueStructure)manualDivisionEntityMan.newBrickDefinition(HAPManualEnumBrickType.VALUESTRUCTUREWRAPPER_100);
-
-			HAPManualDefinitionBrickValueStructure manualBrickValueStrucutre = (HAPManualDefinitionBrickValueStructure)manualDivisionEntityMan.newBrickDefinition(HAPManualEnumBrickType.VALUESTRUCTURE_100);
-			manualBrickValueStrucutre.setValue(uiTagDefValueStructure.getValueStructure());
-			manualWrapperBrickValueStrucutre.setValueStructure(manualBrickValueStrucutre);
-			manualWrapperBrickValueStrucutre.getStructureInfo().setGroupType(uiTagDefValueStructure.getStructureInfo().getGroupType());
-			manualWrapperBrickValueStrucutre.getStructureInfo().setInheritMode(uiTagDefValueStructure.getStructureInfo().getInheritMode());
-			uiTagDefValueStructure.cloneToEntityInfo(manualWrapperBrickValueStrucutre);
-		
-			valueContextBrick.addValueStructure(manualWrapperBrickValueStrucutre);
+			HAPManualUtilityValueContext.addValueStuctureWrapperToValueContextBrick(uiTagDefValueStructure, valueContextBrick, manualDivisionEntityMan);
 		}
 		return valueContextBrick;
 	}
@@ -36,7 +26,7 @@ public class HAPUtilityUITag {
 	public static Map<String, HAPDefinitionConstant> getConstantDefinitions(HAPUITagDefinition uiTagDef, Map<String, String> attrValues){
 		Map<String, HAPDefinitionConstant> out = new LinkedHashMap<String, HAPDefinitionConstant>();
 
-		Map<String, HAPUITagAttributeDefinition> tagAttrDefs = uiTagDef.getAttributeDefinition();
+		Map<String, HAPUITagDefinitionAttribute> tagAttrDefs = uiTagDef.getAttributeDefinition();
 		for(String attrName : tagAttrDefs.keySet()) {
 			String constantName = buildAttributeConstantName(attrName);
 			HAPDefinitionConstant constantDef = new HAPDefinitionConstant(constantName, tagAttrDefs.get(attrName).getDefaultValue());

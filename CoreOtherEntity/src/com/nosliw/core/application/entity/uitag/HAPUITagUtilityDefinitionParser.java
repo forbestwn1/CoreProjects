@@ -17,6 +17,7 @@ import com.nosliw.core.application.common.structure.HAPUtilityParserStructure;
 import com.nosliw.core.application.common.structure.HAPValueStructure;
 import com.nosliw.core.application.common.structure.HAPValueStructureImp;
 import com.nosliw.core.application.common.structure.HAPWrapperValueStructureDefinition;
+import com.nosliw.core.application.common.structure.HAPWrapperValueStructureDefinitionImp;
 import com.nosliw.core.resource.HAPFactoryResourceId;
 import com.nosliw.core.resource.HAPResourceId;
 import com.nosliw.core.xxx.application1.HAPWithValueContext;
@@ -96,7 +97,7 @@ public class HAPUITagUtilityDefinitionParser {
 		JSONArray attrArray = jsonObj.optJSONArray(HAPUITagDefinition.ATTRIBUTE);
 		if(attrArray!=null) {
 			for(int i=0; i<attrArray.length(); i++) {
-				HAPUITagAttributeDefinition attr = new HAPUITagAttributeDefinition();
+				HAPUITagDefinitionAttribute attr = HAPUITagDefinitionAttribute.parseUITagDefinitionAttribute(attrArray.getJSONObject(i));
 				attr.buildObject(attrArray.getJSONObject(i), HAPSerializationFormat.JSON);
 				out.addAttributeDefinition(attr);
 			}
@@ -121,11 +122,11 @@ public class HAPUITagUtilityDefinitionParser {
 		
 		
 		//attribute
-		Map<String, HAPUITagAttributeDefinition> attributes = new LinkedHashMap<String, HAPUITagAttributeDefinition>();
+		Map<String, HAPUITagDefinitionAttribute> attributes = new LinkedHashMap<String, HAPUITagDefinitionAttribute>();
 		JSONArray attrArray = jsonObj.optJSONArray(HAPDefinitionEntityUITagDefinition.ATTRIBUTEDEFINITION);
 		if(attrArray!=null) {
 			for(int i=0; i<attrArray.length(); i++) {
-				HAPUITagAttributeDefinition attr = new HAPUITagAttributeDefinition();
+				HAPUITagDefinitionAttribute attr = new HAPUITagDefinitionAttribute();
 				attr.buildObject(attrArray.getJSONObject(i), HAPSerializationFormat.JSON);
 				attributes.put(attr.getName(), attr);
 			}
@@ -187,7 +188,7 @@ public class HAPUITagUtilityDefinitionParser {
 		for(int i=0; i<valueStructuresArray.length(); i++) {
 			JSONObject valueStructureWrapperObj = valueStructuresArray.getJSONObject(i);
 			
-			HAPUITagWrapperValueStructure valueStructureWrapper = new HAPUITagWrapperValueStructure();
+			HAPWrapperValueStructureDefinitionImp valueStructureWrapper = new HAPWrapperValueStructureDefinitionImp();
 			
 			HAPUtilityParserStructure.parseValueStructureWrapper(valueStructureWrapper, valueStructureWrapperObj);
 			

@@ -9,7 +9,7 @@ import com.nosliw.core.application.brick.HAPEnumBrickType;
 import com.nosliw.core.application.brick.ui.uicontent.HAPBlockComplexUICustomerTag;
 import com.nosliw.core.application.common.constant.HAPDefinitionConstant;
 import com.nosliw.core.application.common.parentrelation.HAPManualDefinitionBrickRelation;
-import com.nosliw.core.application.entity.uitag.HAPUITagAttributeDefinition;
+import com.nosliw.core.application.entity.uitag.HAPUITagDefinitionAttribute;
 import com.nosliw.core.application.entity.uitag.HAPUITagDefinition;
 import com.nosliw.core.resource.HAPResourceId;
 
@@ -21,7 +21,7 @@ public class HAPManualDefinitionBlockComplexUICustomerTag extends HAPManualDefin
 		super(HAPEnumBrickType.UICUSTOMERTAG_100);
 		this.setAttributeValueWithValue(HAPBlockComplexUICustomerTag.ATTRIBUTE, new LinkedHashMap<String, String>());
 		this.setAttributeValueWithValue(PARENTRELATIONS, new ArrayList<HAPManualDefinitionBrickRelation>());
-		this.setAttributeValueWithValue(HAPBlockComplexUICustomerTag.ATTRIBUTEDEFINITION, new LinkedHashMap<String, HAPUITagAttributeDefinition>());
+		this.setAttributeValueWithValue(HAPBlockComplexUICustomerTag.ATTRIBUTEDEFINITION, new LinkedHashMap<String, HAPUITagDefinitionAttribute>());
 	}
 
 	public HAPUITagDefinition getUITagDefinition() {    return (HAPUITagDefinition)this.getAttributeValueOfValue(HAPBlockComplexUICustomerTag.TAGDEFINITION);      }
@@ -39,8 +39,8 @@ public class HAPManualDefinitionBlockComplexUICustomerTag extends HAPManualDefin
 	public void addTagAttribute(String attrName, String attrValue) {     this.getTagAttributes().put(attrName, attrValue);        }
 	public Map<String, String> getTagAttributes(){   return (Map<String, String>)this.getAttributeValueOfValue(HAPBlockComplexUICustomerTag.ATTRIBUTE);      }
 
-	public void addTagAttributeDefinition(HAPUITagAttributeDefinition attrDef) {     this.getTagAttributeDefinitions().put(attrDef.getName(), attrDef);        }
-	public Map<String, HAPUITagAttributeDefinition> getTagAttributeDefinitions(){   return (Map<String, HAPUITagAttributeDefinition>)this.getAttributeValueOfValue(HAPBlockComplexUICustomerTag.ATTRIBUTEDEFINITION);      }
+	public void addTagAttributeDefinition(HAPUITagDefinitionAttribute attrDef) {     this.getTagAttributeDefinitions().put(attrDef.getName(), attrDef);        }
+	public Map<String, HAPUITagDefinitionAttribute> getTagAttributeDefinitions(){   return (Map<String, HAPUITagDefinitionAttribute>)this.getAttributeValueOfValue(HAPBlockComplexUICustomerTag.ATTRIBUTEDEFINITION);      }
 
 	public void addParentRelation(HAPManualDefinitionBrickRelation parentRelation) {    this.getParentRelations().add(parentRelation);      }
 	public List<HAPManualDefinitionBrickRelation> getParentRelations(){	return (List<HAPManualDefinitionBrickRelation>)this.getAttributeValueOfValue(PARENTRELATIONS);	}

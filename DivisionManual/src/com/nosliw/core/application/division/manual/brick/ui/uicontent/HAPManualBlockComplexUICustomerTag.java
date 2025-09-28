@@ -5,7 +5,7 @@ import java.util.Map;
 
 import com.nosliw.core.application.brick.ui.uicontent.HAPBlockComplexUICustomerTag;
 import com.nosliw.core.application.division.manual.core.HAPManualBrickImp;
-import com.nosliw.core.application.entity.uitag.HAPUITagAttributeDefinition;
+import com.nosliw.core.application.entity.uitag.HAPUITagDefinitionAttribute;
 import com.nosliw.core.application.entity.uitag.HAPUITagDefinition;
 import com.nosliw.core.resource.HAPResourceId;
 
@@ -15,7 +15,7 @@ public class HAPManualBlockComplexUICustomerTag extends HAPManualBrickImp implem
 	public void init() {
 		super.init();
 		this.setAttributeValueWithValue(HAPBlockComplexUICustomerTag.ATTRIBUTE, new LinkedHashMap<String, String>());
-		this.setAttributeValueWithValue(HAPBlockComplexUICustomerTag.ATTRIBUTEDEFINITION, new LinkedHashMap<String, HAPUITagAttributeDefinition>());
+		this.setAttributeValueWithValue(HAPBlockComplexUICustomerTag.ATTRIBUTEDEFINITION, new LinkedHashMap<String, HAPUITagDefinitionAttribute>());
 	}
 	
 	public String getUITagId() {   return (String)this.getAttributeValueOfValue(UITAGID);  }
@@ -38,7 +38,7 @@ public class HAPManualBlockComplexUICustomerTag extends HAPManualBrickImp implem
 	public HAPResourceId getScriptResourceId(){    return (HAPResourceId)this.getAttributeValueOfValue(SCRIPTRESOURCEID);      }
 	public void setScriptResourceId(HAPResourceId resourceId) {    this.setAttributeValueWithValue(SCRIPTRESOURCEID, resourceId);      }
 
-	public Map<String, HAPUITagAttributeDefinition> getAttributeDefinitions(){   return (Map<String, HAPUITagAttributeDefinition>)this.getAttributeValueOfValue(HAPBlockComplexUICustomerTag.ATTRIBUTEDEFINITION);      }
-	public void addAttributeDefinition(HAPUITagAttributeDefinition attrDef) {    this.getAttributeDefinitions().put(attrDef.getName(), attrDef);     }
+	public Map<String, HAPUITagDefinitionAttribute> getAttributeDefinitions(){   return (Map<String, HAPUITagDefinitionAttribute>)this.getAttributeValueOfValue(HAPBlockComplexUICustomerTag.ATTRIBUTEDEFINITION);      }
+	public void addAttributeDefinition(HAPUITagDefinitionAttribute attrDef) {    this.getAttributeDefinitions().put(attrDef.getName(), attrDef);     }
 
 }

@@ -12,14 +12,23 @@ import com.nosliw.core.application.HAPManagerApplicationBrick;
 import com.nosliw.core.application.brick.HAPEnumBrickType;
 import com.nosliw.core.application.brick.ui.uicontent.HAPWithUIContent;
 import com.nosliw.core.application.common.parentrelation.HAPManualDefinitionBrickRelation;
+import com.nosliw.core.application.common.structure.HAPElementStructureLeafData;
+import com.nosliw.core.application.common.structure.HAPElementStructureLeafRelativeForValue;
+import com.nosliw.core.application.common.structure.HAPRootInStructure;
+import com.nosliw.core.application.common.structure.HAPValueStructure;
+import com.nosliw.core.application.common.structure.HAPValueStructureImp;
+import com.nosliw.core.application.common.structure.HAPWrapperValueStructureDefinitionImp;
 import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualDefinitionBrickValueContext;
+import com.nosliw.core.application.division.manual.common.valuecontext.HAPManualUtilityValueContext;
 import com.nosliw.core.application.division.manual.core.HAPManualManagerBrick;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionBrick;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionContextParse;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionPluginParserBrickImpComplex;
 import com.nosliw.core.application.entity.uitag.HAPManagerUITag;
-import com.nosliw.core.application.entity.uitag.HAPUITagAttributeDefinition;
 import com.nosliw.core.application.entity.uitag.HAPUITagDefinition;
+import com.nosliw.core.application.entity.uitag.HAPUITagDefinitionAttribute;
+import com.nosliw.core.application.entity.uitag.HAPUITagDefinitionAttributeVariable;
+import com.nosliw.core.application.valueport.HAPReferenceElement;
 
 public class HAPManualPluginParserBlockComplexUICustomerTag extends HAPManualDefinitionPluginParserBrickImpComplex{
 
@@ -45,10 +54,44 @@ public class HAPManualPluginParserBlockComplexUICustomerTag extends HAPManualDef
 
 		//tag definition
 		uiCustomerTag.setUITagDefinition(uiTagDef);
+
+		//attribute definition
+		Map<String, HAPUITagDefinitionAttribute> attrDefs = uiTagDef.getAttributeDefinition();
+		for(String attrName : attrDefs.keySet()) {
+			uiCustomerTag.addTagAttributeDefinition(attrDefs.get(attrName));
+		}
 		
+		//parse customer tag attribute 
+		Attributes eleAttrs = ele.attributes();
+		for(Attribute eleAttr : eleAttrs){
+			uiCustomerTag.addTagAttribute(eleAttr.getKey(), eleAttr.getValue());
+		}
+
 		//build value context from ui tag definition
 		HAPManualDefinitionBrickValueContext valueContextBrick = HAPUtilityUITag.createValueContextBrickFromUITagDefinition(uiTagDef, this.getManualDivisionBrickManager());
 		uiCustomerTag.setValueContextBrick(valueContextBrick);
+		
+		//build value structure for variable from attribute
+		HAPValueStructure attrValueStructure = new HAPValueStructureImp();
+		Map<String, HAPUITagDefinitionAttribute> attrs = uiCustomerTag.getTagAttributeDefinitions();
+		for(String attrName : attrs.keySet()) {
+			HAPUITagDefinitionAttribute attr = attrs.get(attrName);
+			if(HAPConstantShared.UITAGDEFINITION_ATTRIBUTETYPE_VARIABLE.equals(attr.getType())) {
+				HAPUITagDefinitionAttributeVariable varAttr = (HAPUITagDefinitionAttributeVariable)attr;
+				
+				HAPElementStructureLeafRelativeForValue attrEle = new HAPElementStructureLeafRelativeForValue();
+				HAPElementStructureLeafData d = new HAPElementStructureLeafData();
+				d.setDataDefinition(varAttr.getDataDefinition());
+				attrEle.setDefinition(d);
+				attrEle.setReference(new HAPReferenceElement(uiCustomerTag.getTagAttributes().get(attr.getName())));
+				
+				HAPRootInStructure rootEle = new HAPRootInStructure();
+				rootEle.setName(HAPConstantShared.NOSLIW_RESERVE_ATTRIBUTE + attrName);
+				rootEle.setDefinition(attrEle);
+				attrValueStructure.addRoot(rootEle);
+			}
+		}
+		HAPManualUtilityValueContext.addValueStuctureWrapperToValueContextBrick(new HAPWrapperValueStructureDefinitionImp(attrValueStructure), valueContextBrick, getManualDivisionBrickManager());
 		
 		//base
 		uiCustomerTag.setBase(uiTagDef.getBase());
@@ -61,18 +104,6 @@ public class HAPManualPluginParserBlockComplexUICustomerTag extends HAPManualDef
 			uiCustomerTag.addParentRelation(parentRelation);
 		}
 		
-		//attribute definition
-		Map<String, HAPUITagAttributeDefinition> attrDefs = uiTagDef.getAttributeDefinition();
-		for(String attrName : attrDefs.keySet()) {
-			uiCustomerTag.addTagAttributeDefinition(attrDefs.get(attrName));
-		}
-		
-		//parse customer tag attribute 
-		Attributes eleAttrs = ele.attributes();
-		for(Attribute eleAttr : eleAttrs){
-			uiCustomerTag.addTagAttribute(eleAttr.getKey(), eleAttr.getValue());
-		}
-
 		//add placeholder element to the customer tag's postion and then remove the original tag from html structure 
 		String uiId = HAPUtilityUIResourceParser.getUIIdInElement(ele); 
 		ele.after("<"+HAPConstantShared.UIRESOURCE_TAG_PLACEHOLDER+" style=\"display:none;\" "+HAPConstantShared.UIRESOURCE_ATTRIBUTE_UIID+"="+ uiId +HAPConstantShared.UIRESOURCE_CUSTOMTAG_WRAPER_END_POSTFIX+"></"+HAPConstantShared.UIRESOURCE_TAG_PLACEHOLDER+">");
