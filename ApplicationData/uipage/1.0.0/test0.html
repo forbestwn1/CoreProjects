@@ -10,6 +10,9 @@ Hellooooooo!!!!!
 EXPRESSION IN ATTRIBUTE:<span  style="color:<%=?(public_string)?.value=='red'?'red':'blue'%>">Change the input below and color will change according to the value </span> 
 		<br>
 
+ 		<nosliw-debug_test data_string="public_string">
+		</nosliw-debug_test>
+
 <!-- 
 
 	 		<nosliw-debug_test_data_simple data_string="public_string">
@@ -27,8 +30,6 @@ EXPRESSION IN ATTRIBUTE:<span  style="color:<%=?(public_string)?.value=='red'?'r
  -->
 
 <!-- 
- 		<nosliw-debug_test data_string="public_url">
-		</nosliw-debug_test>
  -->
 
 <!-- 
@@ -56,17 +57,17 @@ EXPRESSION IN ATTRIBUTE:<span  style="color:<%=?(public_string)?.value=='red'?'r
 					"root" : {
 						"public_string": {
 							"definition":{
-								"criteria": "test.string;1.0.0"
+								"data": "test.string;1.0.0"
 							}
 						},
 						"public_url": {
 							"definition":{
-								"criteria": "test.url;1.0.0"
+								"data": "test.url;1.0.0"
 							}
 						},
 						"public_array": {
 							"definition":{
-								"criteria": "test.array;1.0.0%||element:test.string;1.0.0||%"
+								"data": "test.array;1.0.0%||element:test.string;1.0.0||%"
 							}
 						}
 					},

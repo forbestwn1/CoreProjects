@@ -10,14 +10,12 @@
 		{
 			"name" : "data_string",
 			"type" : "variable",
-			"dataDefinition" : "test.string;1.0.0",
-			"defaultValue" : "#empty"
+			"dataDefinition" : "test.string;1.0.0"
 		},
 		{
 			"name" : "data_array",
 			"type" : "variable",
-			"dataDefinition" : "test.array;1.0.0",
-			"defaultValue" : "#empty"
+			"dataDefinition" : "test.array;1.0.0"
 		},
 		{
 			"name" : "arrayelement",
@@ -31,7 +29,8 @@
 	"valueContext": [
 		{
 			"groupType" : "protected",
-			"status": "<%=&(nosliwattribute_data_array)&=='empty'?'disabled':''%>",
+			"status": "disabled",
+			"status1": "<%=&(nosliwattribute_data_array)&=='empty'?'disabled':''%>",
 			"valueStructure" : {
 				"root": {
 					"<%=&(nosliwattribute_arrayelement)&%>": {

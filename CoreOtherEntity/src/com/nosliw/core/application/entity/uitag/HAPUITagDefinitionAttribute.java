@@ -48,7 +48,7 @@ public abstract class HAPUITagDefinitionAttribute extends HAPEntityInfoImp{
 			break;
 		}
 		if(out!=null) {
-			out.buildObject(out, HAPSerializationFormat.JSON);
+			out.buildObject(jsonObj, HAPSerializationFormat.JSON);
 		}
 		return out;
 	}

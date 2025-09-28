@@ -77,18 +77,21 @@ public class HAPManualPluginParserBlockComplexUICustomerTag extends HAPManualDef
 		for(String attrName : attrs.keySet()) {
 			HAPUITagDefinitionAttribute attr = attrs.get(attrName);
 			if(HAPConstantShared.UITAGDEFINITION_ATTRIBUTETYPE_VARIABLE.equals(attr.getType())) {
-				HAPUITagDefinitionAttributeVariable varAttr = (HAPUITagDefinitionAttributeVariable)attr;
-				
-				HAPElementStructureLeafRelativeForValue attrEle = new HAPElementStructureLeafRelativeForValue();
-				HAPElementStructureLeafData d = new HAPElementStructureLeafData();
-				d.setDataDefinition(varAttr.getDataDefinition());
-				attrEle.setDefinition(d);
-				attrEle.setReference(new HAPReferenceElement(uiCustomerTag.getTagAttributes().get(attr.getName())));
-				
-				HAPRootInStructure rootEle = new HAPRootInStructure();
-				rootEle.setName(HAPConstantShared.NOSLIW_RESERVE_ATTRIBUTE + attrName);
-				rootEle.setDefinition(attrEle);
-				attrValueStructure.addRoot(rootEle);
+				String attrValue = uiCustomerTag.getTagAttributes().get(attrName);
+				if(attrValue!=null) {
+					HAPUITagDefinitionAttributeVariable varAttr = (HAPUITagDefinitionAttributeVariable)attr;
+					
+					HAPElementStructureLeafRelativeForValue attrEle = new HAPElementStructureLeafRelativeForValue();
+					HAPElementStructureLeafData d = new HAPElementStructureLeafData();
+					d.setDataDefinition(varAttr.getDataDefinition());
+					attrEle.setDefinition(d);
+					attrEle.setReference(new HAPReferenceElement(attrValue));
+					
+					HAPRootInStructure rootEle = new HAPRootInStructure();
+					rootEle.setName(HAPConstantShared.NOSLIW_RESERVE_ATTRIBUTE + attrName);
+					rootEle.setDefinition(attrEle);
+					attrValueStructure.addRoot(rootEle);
+				}
 			}
 		}
 		HAPManualUtilityValueContext.addValueStuctureWrapperToValueContextBrick(new HAPWrapperValueStructureDefinitionImp(attrValueStructure), valueContextBrick, getManualDivisionBrickManager());
