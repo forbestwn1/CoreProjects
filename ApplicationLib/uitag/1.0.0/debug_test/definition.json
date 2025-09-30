@@ -5,7 +5,8 @@
 	"base" : "debug_test",
 	"attribute" : [
 		{
-			"name" : "data"
+			"name" : "attribute1",
+			"defaultValue" : "default value for attribute1"
 		},
 		{
 			"name" : "data_string",

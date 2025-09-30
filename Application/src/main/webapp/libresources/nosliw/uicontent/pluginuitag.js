@@ -68,13 +68,17 @@ var loc_createUITagComponentCore = function(complexEntityDef, tagDefScriptFun, v
 	var loc_tagEventObject = node_createEventObject();
 	var loc_eventObject = node_createEventObject();
 
-	var loc_getAttributeValue = function(name){  
-		var out = loc_attributes[name];
-		if(out==undefined){
-			var attrDef = loc_attributeDefinition[name];
-			if(attrDef!=undefined)	out = attrDef[node_COMMONATRIBUTECONSTANT.UITAGDEFINITIONATTRIBUTE_DEFAULTVALUE];
-		}
-		return out;
+	var loc_initAttributes = function(){
+		_.each(loc_attributeDefinition, function(attrDef, name){
+			var defaultValue = attrDef[node_COMMONATRIBUTECONSTANT.UITAGDEFINITIONATTRIBUTE_DEFAULTVALUE];
+			loc_attributes[name] = defaultValue;
+		});
+		
+		loc_attributes = _.extend(loc_attributes, loc_complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.BLOCKCOMPLEXUICUSTOMERTAG_ATTRIBUTE));
+	};
+
+	var loc_getAttributeValue = function(name){
+		return loc_attributes[name];
 	};
 
 	var loc_getValuePortContainer = function(){
@@ -148,7 +152,10 @@ var loc_createUITagComponentCore = function(complexEntityDef, tagDefScriptFun, v
 		
 		getParentUIEntity : function(){   return loc_parentUIEntity;     },
 		
-		updateAttributes : function(attributes){    loc_uiTagCore.updateAttributes(attributes);       },
+		updateAttributes : function(attributes){
+			loc_attributes = _.extend(loc_attributes, attributes);    
+			loc_uiTagCore.updateAttributes(attributes);       
+		},
 		
 		creatVariableByName : function(varName){ 
 			return loc_getValuePortContainer().createVariableByName(varName) 
@@ -157,9 +164,9 @@ var loc_createUITagComponentCore = function(complexEntityDef, tagDefScriptFun, v
 		getEntityInitRequest : function(handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 			
-			loc_attributes = loc_complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.BLOCKCOMPLEXUICUSTOMERTAG_ATTRIBUTE);
-			
 			loc_attributeDefinition = loc_complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.BLOCKCOMPLEXUICUSTOMERTAG_ATTRIBUTEDEFINITION);
+			
+			loc_initAttributes();
 			
 			var uiTagCore;
 			var uiTagBase = loc_complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.BLOCKCOMPLEXUICUSTOMERTAG_BASE); 

@@ -38,6 +38,8 @@ public interface HAPBlockComplexUIContent extends HAPBrick{
 	
 	List<HAPUIEmbededScriptExpressionInAttribute> getScriptExpressionInNormalTagAttribute();
 	
+	List<HAPUIEmbededScriptExpressionInAttribute> getScriptExpressionInCustomerTagAttribute();
+	
 	HAPContainerScriptExpression getScriptExpressions();
 
 	List<HAPElementEvent> getNormalTagEvents();

@@ -158,6 +158,16 @@ var loc_createUIContentComponentCore = function(complexEntityDef, valueContextId
 				}
 			}));
 
+			//init expression in customer tag attribute
+			out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
+				_.each(loc_complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.BLOCKCOMPLEXUICONTENT_SCRIPTEXPRESSIONINCUSTOMERTAGATTRIBUTE), function(embededContentDef, i){
+					var embededContent = node_createEmbededScriptExpressionInCustomTagAttribute(embededContentDef);
+					var scriptExpressionGroup = loc_complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.BLOCKCOMPLEXUICONTENT_SCRIPTEXPRESSIONS);
+					node_getLifecycleInterface(embededContent).init(loc_customerTagByUIId[embededContent.getUIId()], scriptExpressionGroup, loc_getValuePortEnv());
+					loc_expressionContents.push(embededContent);
+				});
+			}));
+
 
 			return out;
 		},

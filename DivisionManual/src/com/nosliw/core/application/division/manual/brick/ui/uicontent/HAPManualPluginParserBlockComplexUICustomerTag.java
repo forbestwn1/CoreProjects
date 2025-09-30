@@ -64,7 +64,9 @@ public class HAPManualPluginParserBlockComplexUICustomerTag extends HAPManualDef
 		//parse customer tag attribute 
 		Attributes eleAttrs = ele.attributes();
 		for(Attribute eleAttr : eleAttrs){
-			uiCustomerTag.addTagAttribute(eleAttr.getKey(), eleAttr.getValue());
+			if(uiTagDef.getAttributeDefinition().get(eleAttr.getKey())!=null) {
+				uiCustomerTag.addTagAttribute(eleAttr.getKey(), eleAttr.getValue());
+			}
 		}
 
 		//build value context from ui tag definition
