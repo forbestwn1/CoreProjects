@@ -60,9 +60,13 @@ var node_makeObjectWithValuePortInterface = function(rawEntity){
 		getValuePort : function(valuePortGroup, valuePortName){   
 			return loc_getInternalValuePort(valuePortGroup, valuePortName);
 		},
-		creatVariableByName : function(varName){
-			if(loc_rawEntity.creatVariableByName!=undefined){
-				return loc_rawEntity.creatVariableByName(varName);
+		createVariableByName : function(varName){
+			if(loc_rawEntity.createVariableByName!=undefined){
+				return loc_rawEntity.createVariableByName(varName);
+			}
+			else{
+        		var complexEntityInterface = node_getEntityObjectInterface(loc_rawEntity);
+				return complexEntityInterface.getInternalValuePortContainer().createVariableByName(varName);
 			}
 		}	
 	});
@@ -85,7 +89,7 @@ var node_buildWithValuePort = function(rawObject){
 
 	var interfaceDef	= {
 		getValuePort : function(valuePortGroup, valuePortName){	},
-		creatVariableByName : function(varName){}	
+		createVariableByName : function(varName){}	
 	};
 	var loc_out = _.extend({}, interfaceDef, loc_rawObject);
 	return loc_out;

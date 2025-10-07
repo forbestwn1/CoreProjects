@@ -110,6 +110,10 @@ var node_basicUtility =
 			}
 		},
 		
+		toObject : function(strValue){
+			return JSON.parse(strValue);
+		},
+		
 		clone : function(src) {
 			if(src==undefined)  return undefined;
 			if(src==null)  return null;

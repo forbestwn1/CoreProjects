@@ -91,7 +91,9 @@ var loc_createUITagComponentCore = function(complexEntityDef, tagDefScriptFun, v
 		processRequest : function(requestInfo){   node_requestServiceProcessor.processRequest(requestInfo);  },
 
 		//--------------------------------- attribute
+		getAttributeDefinition : function(name){  return loc_attributeDefinition[name]; },
 		getAttributeValue : function(name){  return loc_getAttributeValue(name); },
+		getAttributeValues : function(){   return loc_attributes;   },
 		getAllAttributeNames : function(){   
 			var out = [];
 			_.each(loc_attributeDefinition, function(attrDef, name){
@@ -99,11 +101,10 @@ var loc_createUITagComponentCore = function(complexEntityDef, tagDefScriptFun, v
 			});
 			return out;
 		},
-		getAttributes : function(){   return loc_attributes;   },
 
 		//---------------------------------variable
 		createVariableByName : function(variableName){
-			return loc_envInterface[node_CONSTANT.INTERFACE_WITHVALUEPORT].creatVariableByName(variableName);
+			return loc_envInterface[node_CONSTANT.INTERFACE_WITHVALUEPORT].createVariableByName(variableName);
 		},
 		
 		//---------------------------------operation request
@@ -157,7 +158,7 @@ var loc_createUITagComponentCore = function(complexEntityDef, tagDefScriptFun, v
 			loc_uiTagCore.updateAttributes(attributes);       
 		},
 		
-		creatVariableByName : function(varName){ 
+		createVariableByName1 : function(varName){ 
 			return loc_getValuePortContainer().createVariableByName(varName) 
 		},
 		

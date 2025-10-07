@@ -99,7 +99,7 @@ var loc_createUITagComponentCore = function(complexEntityDef, tagDefScriptFun, v
 
 		//---------------------------------variable
 		createVariableByName : function(variableName){
-			return loc_envInterface[node_CONSTANT.INTERFACE_WITHVALUEPORT].creatVariableByName(variableName);
+			return loc_envInterface[node_CONSTANT.INTERFACE_WITHVALUEPORT].createVariableByName(variableName);
 		},
 		
 		//---------------------------------operation request
@@ -154,7 +154,7 @@ var loc_createUITagComponentCore = function(complexEntityDef, tagDefScriptFun, v
 		
 		updateAttributes : function(attributes){    loc_uiTagCore.updateAttributes(attributes);       },
 		
-		creatVariableByName : function(varName){ 
+		createVariableByName : function(varName){ 
 			return loc_getValuePortContainer().createVariableByName(varName) 
 		},
 		

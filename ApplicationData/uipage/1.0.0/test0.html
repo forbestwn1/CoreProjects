@@ -10,7 +10,7 @@ Hellooooooo!!!!!
 EXPRESSION IN ATTRIBUTE:<span  style="color:<%=?(public_string)?.value=='red'?'red':'blue'%>">Change the input below and color will change according to the value </span> 
 		<br>
 
- 		<nosliw-debug_test attribute1="<%=?(public_string)?.value + '   7777 ' %>">
+ 		<nosliw-debug_test attribute1="<%=?(public_string)?.value + '   7777 ' %>" data_string="public_url">
 		</nosliw-debug_test>
 
 <!-- 
@@ -76,8 +76,7 @@ EXPRESSION IN ATTRIBUTE:<span  style="color:<%=?(public_string)?.value=='red'?'r
 					"initValue": {
 						"public_string": {
 							"dataTypeId": "test.string;1.0.0",
-							"value": "red",
-							"value1": "default value of public_string"
+							"value": "default value of public_string"
 						},
 						"public_url": {
 							"dataTypeId": "test.url;1.0.0",

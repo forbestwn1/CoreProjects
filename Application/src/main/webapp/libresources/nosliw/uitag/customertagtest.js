@@ -22,6 +22,29 @@ var node_createUICustomerTagTest = function(envObj){
 	var loc_containerrView;
 	var loc_attributesView;
 
+    var loc_inputVariableInfos = {};
+
+    var loc_isValidVariableAttribute = function(attrName){
+		var out = false;
+		var attrDef = loc_envObj.getAttributeDefinition(attrName);
+		var attrType = attrDef[node_COMMONATRIBUTECONSTANT.UITAGDEFINITIONATTRIBUTE_TYPE];
+		if(attrType==node_COMMONCONSTANT.UITAGDEFINITION_ATTRIBUTETYPE_VARIABLE){
+    		if(loc_envObj.getAttributeValue(attrName)!=undefined){
+				out = true;
+			}
+		}
+		return out;
+	};
+
+	var loc_getUpdateAttributeVariableViewRequest = function(attrName, handlers, request){
+		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+		out.addRequest(loc_envObj.getDataOperationRequestGet(loc_inputVariableInfos[attrName].variable, "", {
+			success : function(requestInfo, data){
+				loc_inputVariableInfos[attrName].view.val(node_basicUtility.stringify(data.value));
+			}
+		}));
+		return out;
+	};
 
 	var loc_initViews = function(handlers, request){
 		loc_containerrView = $('<div/>');
@@ -30,19 +53,43 @@ var node_createUICustomerTagTest = function(envObj){
 		attributesWrapperView.append($('<br>Attributes: <br>'));
     	loc_attributesView = $('<textarea rows="6" cols="150" style="resize: none; border:solid 1px;" data-role="none"></textarea>');
 		attributesWrapperView.append(loc_attributesView);
-		
 		loc_containerrView.append(attributesWrapperView);
+
+		var variablesWrapperView = $('<div/>');
+		variablesWrapperView.append($('<br>Variables: <br>'));
+
+		_.each(loc_inputVariableInfos, function(varInfo, varName){
+    		var varWrapperView = $('<div/>');
+			varWrapperView.append($('<br>'+varName+':<br>'));
+        	varInfo.view = $('<textarea rows="6" cols="150" style="resize: none; border:solid 1px;" data-role="none"></textarea>');
+        	
+			varInfo.view.bind('change', function(){
+    			var currentData = node_basicUtility.toObject(loc_inputVariableInfos[varName].view.val());
+				loc_envObj.executeBatchDataOperationRequest([
+					loc_envObj.getDataOperationSet(loc_inputVariableInfos[varName].variable, "", currentData)
+				]);
+			});
+        	
+			varWrapperView.append(varInfo.view);
+			variablesWrapperView.append(varWrapperView);
+		});
+		loc_containerrView.append(variablesWrapperView);
 
 		return loc_containerrView;
 	};
 	
 	var loc_updateAttributeView = function(){
-		loc_attributesView.val(node_basicUtility.stringify(loc_envObj.getAttributes()));
+		loc_attributesView.val(node_basicUtility.stringify(loc_envObj.getAttributeValues()));
 	};
 	
 	var loc_out = {
 		
 		created : function(){
+			_.each(loc_envObj.getAllAttributeNames(), function(attrName, i){
+				if(loc_isValidVariableAttribute(attrName)){
+					loc_inputVariableInfos[attrName] = {};
+				}
+			});
 		},
 		
 		updateAttributes : function(attributes, request){
@@ -56,6 +103,14 @@ var node_createUICustomerTagTest = function(envObj){
 			return out;
 		},
 		postInit : function(request){
+			var out = node_createServiceRequestInfoSequence(undefined, undefined, request);
+			_.each(loc_inputVariableInfos, function(varInfo, varName){
+				var dataVariable = loc_envObj.createVariableByName(varName);
+				varInfo.variable = dataVariable; 
+				out.addRequest(loc_getUpdateAttributeVariableViewRequest(varName));
+			});	
+			return out;		
+			
 		},
 		destroy : function(request){
 		},

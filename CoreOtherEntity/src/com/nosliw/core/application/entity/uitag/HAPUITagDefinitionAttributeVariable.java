@@ -33,7 +33,7 @@ public class HAPUITagDefinitionAttributeVariable extends HAPUITagDefinitionAttri
 	protected boolean buildObjectByJson(Object json){
 		JSONObject jsonObj = (JSONObject)json;
 		super.buildObjectByJson(jsonObj);
-		JSONObject dfObj = jsonObj.optJSONObject(DATADEFINITION);
+		Object dfObj = jsonObj.opt(DATADEFINITION);
 		if(dfObj!=null) {
 			this.m_dataDefinition = new HAPDataDefinitionWritable();
 			this.m_dataDefinition.buildObject(dfObj, HAPSerializationFormat.JSON);
