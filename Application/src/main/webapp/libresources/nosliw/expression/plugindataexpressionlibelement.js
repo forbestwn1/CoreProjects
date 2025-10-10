@@ -64,7 +64,7 @@ var loc_createDataExpressionLibraryElementComponentCore = function(complexEntity
 		
 		getTaskExecuteRequest : function(runtimeEnv, handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);      
-			var valuePortContainer = node_getEntityObjectInterface(loc_out).getInternalValuePortContainer();
+    		var valuePortContainer = loc_envInterface[node_CONSTANT.INTERFACE_ENTITY].getInternalValuePortContainer();
 			var dataExpression = loc_complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.BLOCKDATAEXPRESSIONELEMENTINLIBRARY_VALUE)[node_COMMONATRIBUTECONSTANT.ELEMENTINLIBRARYDATAEXPRESSION_EXPRESSION];
 			out.addRequest(node_expressionUtility.getExecuteDataExpressionRequest(dataExpression, loc_envInterface[node_CONSTANT.INTERFACE_WITHVALUEPORT], undefined, {
 				success : function(request, result){

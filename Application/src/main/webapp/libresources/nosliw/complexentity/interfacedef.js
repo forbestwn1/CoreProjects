@@ -31,26 +31,25 @@ var node_makeObjectEntityObjectInterface = function(rawEntity, internalValuePort
 	var loc_externalValuePortContainerIdOrFactory = externalValuePortContainerIdOrFactory;
 	
 	var loc_bundleCore = bundleCore;
+
+	var loc_getInternalValuePortContainer = function(){
+		if(loc_internalValuePortContainerIdOrFactory!=undefined){
+			if(node_basicUtility.isStringValue(loc_internalValuePortContainerIdOrFactory)){
+				return loc_bundleCore.getValuePortDomain().getValuePortContainer(loc_internalValuePortContainerIdOrFactory);   
+			}
+			else{
+				return loc_internalValuePortContainerIdOrFactory();
+			}
+		}
+	};
+
 	
 	var loc_interfaceEntity = {
 
 		getEntityInitRequest : function(handlers, request){   return loc_rawEntity.getEntityInitRequest==undefined?undefined:loc_rawEntity.getEntityInitRequest(handlers, request);     },
 
-//		getInternalValuePortContainerId : function(){   return loc_internalValuePortContainerId;   },
-		
-		getInternalValuePortContainer : function(){
-			if(loc_internalValuePortContainerIdOrFactory!=undefined){
-				if(node_basicUtility.isStringValue(loc_internalValuePortContainerIdOrFactory)){
-					return loc_bundleCore.getValuePortDomain().getValuePortContainer(loc_internalValuePortContainerIdOrFactory);   
-				}
-				else{
-					return loc_internalValuePortContainerIdOrFactory();
-				}
-			}
-		},
+		getInternalValuePortContainer : function(){   return loc_getInternalValuePortContainer();  },
 
-//		getExternalValuePortContainerId : function(){   return loc_externalValuePortContainerId;   },
-		
 		getExternalValuePortContainer : function(){
 			if(loc_externalValuePortContainerIdOrFactory!=undefined){
 				if(node_basicUtility.isStringValue(loc_externalValuePortContainerIdOrFactory)){
@@ -71,6 +70,8 @@ var node_makeObjectEntityObjectInterface = function(rawEntity, internalValuePort
 	var basicEntityInterface = node_getBasicEntityObjectInterface(rawEntity);
 	if(embededEntityInterface!=null){
 		embededEntityInterface.setEnvironmentInterface(node_CONSTANT.INTERFACE_ENTITY, {
+
+    		getInternalValuePortContainer : function(){   return loc_getInternalValuePortContainer();  },
 
 /*			
 			getExecuteAdapterRequest : function(attrName){

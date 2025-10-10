@@ -74,7 +74,8 @@ var loc_createUIContentWrapperDebuggerComponentCore = function(complexEntityDef,
 
 		updateView : function(view){
 			var wrapperView = $("<div/>");
-			var childValuePortContainer = node_getEntityObjectInterface(loc_out).getInternalValuePortContainer();
+    		var childValuePortContainer = loc_envInterface[node_CONSTANT.INTERFACE_ENTITY].getInternalValuePortContainer();
+
 			wrapperView.append($("<br>ValuePortContainerId contentwrapperdbugger: "+childValuePortContainer.getId()+"</br>"));
 			wrapperView.append(loc_childContainer.updateView(wrapperView));
 

@@ -24,6 +24,8 @@ var node_createUICustomerTagTest = function(envObj){
 
     var loc_inputVariableInfos = {};
 
+	var loc_embededs = {};
+
     var loc_isValidVariableAttribute = function(attrName){
 		var out = false;
 		var attrDef = loc_envObj.getAttributeDefinition(attrName);
@@ -46,18 +48,43 @@ var node_createUICustomerTagTest = function(envObj){
 		return out;
 	};
 
+    var loc_initEmbededs = function(){
+		var entityEnvInterface = loc_envObj.getEntityEnvInterface();
+		var valuePortContainer = entityEnvInterface[node_CONSTANT.INTERFACE_ENTITY].getInternalValuePortContainer();
+		
+		var valueStructures = valuePortContainer.getValueStructures();
+		_.each(valueStructures, function(byGroupType){
+			_.each(byGroupType, function(byGroupId){
+				_.each(byGroupId, function(vsWrapper, vsId){
+					if(vsWrapper.isSolid()){
+						var vsInfo = vsWrapper.getRuntimeInfo();
+						var vsName = vsInfo[node_COMMONATRIBUTECONSTANT.ENTITYINFO_NAME];
+						if(vsName!=undefined&&vsName.startsWith("embeded_")){
+    						var embeded = {
+	    						name : vsName
+		    				};
+			    			loc_embededs[vsId] = embeded;
+				    	}
+					}
+				});
+			});
+		});
+		
+	};
+
 	var loc_initViews = function(handlers, request){
 		loc_containerrView = $('<div/>');
 
+		//attribute view
 		var attributesWrapperView = $('<div/>');
 		attributesWrapperView.append($('<br>Attributes: <br>'));
     	loc_attributesView = $('<textarea rows="6" cols="150" style="resize: none; border:solid 1px;" data-role="none"></textarea>');
 		attributesWrapperView.append(loc_attributesView);
 		loc_containerrView.append(attributesWrapperView);
 
+        //input variables view
 		var variablesWrapperView = $('<div/>');
 		variablesWrapperView.append($('<br>Variables: <br>'));
-
 		_.each(loc_inputVariableInfos, function(varInfo, varName){
     		var varWrapperView = $('<div/>');
 			varWrapperView.append($('<br>'+varName+':<br>'));
@@ -75,6 +102,37 @@ var node_createUICustomerTagTest = function(envObj){
 		});
 		loc_containerrView.append(variablesWrapperView);
 
+		//embeded view
+		var embededsWrapperView = $('<div/>');
+		embededsWrapperView.append($('<br>Embededs: <br>'));
+		_.each(loc_embededs, function(embededInfo){
+    		var embedWrapperView = $('<div/>');
+			embedWrapperView.append($('<br>'+embededInfo.name+':<br>'));
+    		var embedView = $('<div/>');
+			embedWrapperView.append(embedView);
+		    var buttonView = $('<button type="button">'+embededInfo.name+'</button>');	
+			embedWrapperView.append(buttonView);
+			buttonView.bind('click', function(){
+				var variationPoints = {
+					afterValueContext: function(complexEntityDef, valuePortContainerId, bundleCore, coreConfigure){
+						var valuePortContainer = bundleCore.getValuePortDomain().getValuePortContainer(valueContextId);
+						var valueStructureRuntimeId = valuePortContainer.getValueStructureRuntimeIdByName("nosliw_internal");
+						var valueStructure = valuePortContainer.getValueStructure(valueStructureRuntimeId);
+						valueStructure.addVariable(loc_envObj.getAttributeValue("element"), ele.elementVar);
+						valueStructure.addVariable(loc_envObj.getAttributeValue("index"), ele.indexVar);
+					}
+				}
+				addEleRequest.addRequest(loc_envObj.getCreateDefaultUIContentRequest(variationPoints, {
+					success: function(request, uiConentNode){
+						loc_elements.push(uiConentNode.getChildValue().getCoreEntity());
+					}
+				}));
+			});
+			embededsWrapperView.append(embedWrapperView);
+		});
+		loc_containerrView.append(embededsWrapperView);
+
+		
 		return loc_containerrView;
 	};
 	
@@ -90,6 +148,8 @@ var node_createUICustomerTagTest = function(envObj){
 					loc_inputVariableInfos[attrName] = {};
 				}
 			});
+			
+			loc_initEmbededs();
 		},
 		
 		updateAttributes : function(attributes, request){

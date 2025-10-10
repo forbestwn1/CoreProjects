@@ -178,9 +178,7 @@ var loc_createValuePortContainer = function(id, valuePortContainerDef, variableD
 			});
 		}
 		
-		var valueStructureName = valueStructureRuntimeId;// = valueContextDef[node_COMMONATRIBUTECONSTANT.VALUECONTEXT_VALUESTRUCTURERUNTIMENAMEBYID][valueStructureRuntimeId];
-
-		return loc_createSolidValueStructureWrapper(valueStructureRuntimeId, valueStructureName, node_createValueStructure(id, valueStructureElementInfosArray));
+		return loc_createSolidValueStructureWrapper(variableDomainDef[node_COMMONATRIBUTECONSTANT.DOMAINVALUESTRUCTURE_VALUESTRUCTURERUNTIME][valueStructureRuntimeId], node_createValueStructure(id, valueStructureElementInfosArray));
 	};	
 	
 	
@@ -229,7 +227,7 @@ var loc_createValuePortContainer = function(id, valuePortContainerDef, variableD
 						//value structure not found in parent, then build in current group
 						var valueStructureRuntime = variableDomainDef[node_COMMONATRIBUTECONSTANT.DOMAINVALUESTRUCTURE_VALUESTRUCTURERUNTIME][valueStructureRuntimeId];
 						var valueStructureRuntimeInitValue = valueStructureRuntime[node_COMMONATRIBUTECONSTANT.INFOVALUESTRUCTURERUNTIME_INITVALUE];
-						var valueStructureRuntimeInfo = valueStructureRuntime[node_COMMONATRIBUTECONSTANT.INFOVALUESTRUCTURERUNTIME_INFO];
+						var valueStructureRuntimeInfo = valueStructureRuntime[node_COMMONATRIBUTECONSTANT.ENTITYINFO_INFO];
 						var initMode = valueStructureRuntimeInfo==undefined?undefined:valueStructureRuntimeInfo[node_COMMONCONSTANT.UIRESOURCE_CONTEXTINFO_INSTANTIATE];
 						if(initMode==undefined)   initMode = node_COMMONCONSTANT.UIRESOURCE_CONTEXTINFO_INSTANTIATE_AUTO;
 						
@@ -239,7 +237,7 @@ var loc_createValuePortContainer = function(id, valuePortContainerDef, variableD
 						}
 						else{
 							//build empty value structure
-							valueStructureWrapper = loc_createSolidValueStructure(valueStructureRuntimeId, variableDomainDef, valueStructureRuntimeInitValue, false);
+//							valueStructureWrapper = loc_createSolidValueStructure(valueStructureRuntimeId, variableDomainDef, valueStructureRuntimeInitValue, false);
 						}
 					}
 					else{
@@ -467,10 +465,10 @@ var loc_createValuePort = function(valuePortContainer, valuePortGroup, valuePort
 
 
 
-var loc_createSolidValueStructureWrapper = function(valueStructureRuntimeId, valueStructureName, valueStrucutre){
+var loc_createSolidValueStructureWrapper = function(valueStructureRuntimeInfo, valueStrucutre){
 	
-	var loc_runtimeId = valueStructureRuntimeId;
-	var loc_runtimeName = valueStructureName;
+	var loc_runtimeInfo = valueStructureRuntimeInfo;
+	var loc_runtimeName = valueStructureRuntimeInfo[node_COMMONATRIBUTECONSTANT.ENTITYINFO_NAME];;
 
 	var loc_valueStrucutre = valueStrucutre;
 	
@@ -478,14 +476,16 @@ var loc_createSolidValueStructureWrapper = function(valueStructureRuntimeId, val
 			
 		isSolid : function(){   return true;   },
 
-		getRuntimeId : function(){   return loc_runtimeId;    },
-
 		getValueStructure : function(){   return loc_valueStrucutre;   },
 		
 		createVariable : function(valueStructureVariableInfo){
 			return loc_out.getValueStructure().createVariable(valueStructureVariableInfo);
 		},
-			
+		
+		getRuntimeInfo : function(){   return loc_runtimeInfo;    },
+		
+		getRuntimeId : function(){   return loc_runtimeInfo[node_COMMONATRIBUTECONSTANT.ENTITYINFO_ID];    },
+
 		getName : function(){   return "solid__"+loc_runtimeName;     },
 	};
 	
@@ -504,14 +504,14 @@ var loc_createSoftValueStructureWrapper = function(valueStructureRuntimeId, pare
 		
 		isSolid : function(){   return false;   },
 
-		getRuntimeId : function(){   return loc_runtimeId;    },
-		
 		getValueStructure : function(){   return loc_parentValuePortContainer.getValueStructure(loc_runtimeId);   },
 		
 		createVariable : function(valueStructureVariableInfo){
 			return loc_parentValuePortContainer.getValueStructure(loc_runtimeId).createVariable(valueStructureVariableInfo);
 		},
 			
+		getRuntimeId : function(){   return loc_runtimeId;    },
+		
 		getName : function(){
 			var parentSymbol = "__parent__";
 			var out = "soft__"+parentSymbol;

@@ -11,6 +11,7 @@ import com.nosliw.common.info.HAPEntityInfoImp;
 import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.core.application.common.parentrelation.HAPManualDefinitionBrickRelation;
+import com.nosliw.core.application.common.structure.HAPValueContextDefinition;
 import com.nosliw.core.resource.HAPResourceId;
 
 @HAPEntityWithAttribute
@@ -20,6 +21,8 @@ public class HAPUITagDefinition extends HAPEntityInfoImp{
 	public static final String VERSION = "version";
 	@HAPAttribute
 	public static final String VALUECONTEXT = "valueContext";
+	@HAPAttribute
+	public static final String VALUECONTEXTEMBEDED = "valueContextEmbeded";
 	@HAPAttribute
 	public static final String SCRIPTRESOURCEID = "scriptResourceId";
 	@HAPAttribute
@@ -39,7 +42,9 @@ public class HAPUITagDefinition extends HAPEntityInfoImp{
 	
 	private String m_version;
 	
-	private HAPUITagValueContextDefinition m_valueContext;
+	private HAPValueContextDefinition m_valueContext;
+	
+	private HAPValueContextDefinition m_valueContextEmbeded;
 	
 	private HAPResourceId m_scriptResourceId;
 	
@@ -59,8 +64,11 @@ public class HAPUITagDefinition extends HAPEntityInfoImp{
 	public String getVersion() {   return this.m_version;    }
 	public void setVersion(String version) {    this.m_version = version;     }
 	
-	public HAPUITagValueContextDefinition getValueContext() {    return this.m_valueContext;     }
-	public void setValueContext(HAPUITagValueContextDefinition valueContext) {    this.m_valueContext = valueContext;       }
+	public HAPValueContextDefinition getValueContext() {    return this.m_valueContext;     }
+	public void setValueContext(HAPValueContextDefinition valueContext) {    this.m_valueContext = valueContext;       }
+	
+	public HAPValueContextDefinition getValueContextEmbeded() {    return this.m_valueContextEmbeded;     }
+	public void setValueContextEmbeded(HAPValueContextDefinition valueContext) {    this.m_valueContextEmbeded = valueContext;       }
 	
 	public HAPResourceId getScriptResourceId() {     return this.m_scriptResourceId;     }
 	public void setScriptResourceId(HAPResourceId scriptResourceId) {     this.m_scriptResourceId = scriptResourceId;         }

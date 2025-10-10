@@ -82,10 +82,14 @@ var loc_createUITagComponentCore = function(complexEntityDef, tagDefScriptFun, v
 	};
 
 	var loc_getValuePortContainer = function(){
-		return node_getEntityObjectInterface(loc_out).getInternalValuePortContainer();
+   		return loc_envInterface[node_CONSTANT.INTERFACE_ENTITY].getInternalValuePortContainer();
 	};
 
 	var loc_coreEnvObj = {
+
+		//--------------------------------- debug
+		getEntityEnvInterface : function(){   return loc_envInterface;   },
+      
 
 		//--------------------------------- utility
 		processRequest : function(requestInfo){   node_requestServiceProcessor.processRequest(requestInfo);  },

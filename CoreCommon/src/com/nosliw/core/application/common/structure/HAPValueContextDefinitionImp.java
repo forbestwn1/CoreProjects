@@ -1,18 +1,16 @@
-package com.nosliw.core.application.entity.uitag;
+package com.nosliw.core.application.common.structure;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import com.nosliw.common.serialization.HAPSerializableImp;
-import com.nosliw.core.application.common.structure.HAPValueContextDefinition;
-import com.nosliw.core.application.common.structure.HAPWrapperValueStructureDefinition;
 
-public class HAPUITagValueContextDefinition extends HAPSerializableImp implements HAPValueContextDefinition{
+public class HAPValueContextDefinitionImp extends HAPSerializableImp implements HAPValueContextDefinition{
 
 	private List<HAPWrapperValueStructureDefinition> m_valueStructures;
 	
-	public HAPUITagValueContextDefinition() {
+	public HAPValueContextDefinitionImp() {
 		this.m_valueStructures = new ArrayList<HAPWrapperValueStructureDefinition>();
 	}
 	

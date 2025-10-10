@@ -7,10 +7,19 @@ Hellooooooo!!!!!
  		StringContent:<%=?(public_string)?.value + '   7777 ' %>  
 
 		<br>
+ 		UrlContent:<%=?(public_url)?.value + '   7777 ' %>  
+
+		<br>
 EXPRESSION IN ATTRIBUTE:<span  style="color:<%=?(public_string)?.value=='red'?'red':'blue'%>">Change the input below and color will change according to the value </span> 
 		<br>
 
  		<nosliw-debug_test attribute1="<%=?(public_string)?.value + '   7777 ' %>" data_string="public_url">
+embeded_stringVar
+<!-- 
+    		<br>
+ 	    	embeded_stringVar:<%=?(input_stringVar)?.value + '   7777 ' %>  
+-->
+
 		</nosliw-debug_test>
 
 <!-- 

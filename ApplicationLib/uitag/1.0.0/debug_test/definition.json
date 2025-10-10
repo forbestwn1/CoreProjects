@@ -27,6 +27,24 @@
 			"defaultValue" : "arrayindex"
 		}
 	],
+	"valueContextEmbeded": [
+		{
+            "name" : "embeded_part1",
+			"groupType" : "protected",
+			"info":{
+				"instantiate" : "manual"
+			},
+			"valueStructure" : {
+				"root": {
+					"input_stringVar": {
+    					"definition":{
+							"data": "test.string;1.0.0"
+						}
+					}
+				}
+			}
+		}
+	],
 	"valueContext": [
 		{
 			"groupType" : "protected",
@@ -55,14 +73,13 @@
 				}
 			}
 		}
-	], 
+	],
+	
+	 
 	"attachment": {
 	},
 	"parentRelations" : {
-	
 	},
-	
 	"childRelationConfigure" : {
-	
 	}
 }
