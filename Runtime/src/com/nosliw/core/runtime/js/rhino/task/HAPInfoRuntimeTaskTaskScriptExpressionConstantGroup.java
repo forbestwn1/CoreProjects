@@ -1,4 +1,4 @@
-package com.nosliw.data.core.runtime;
+package com.nosliw.core.runtime.js.rhino.task;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -11,7 +11,7 @@ import com.nosliw.common.container.HAPItemWrapper;
 import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.core.application.common.scriptexpression.HAPExpressionScript;
+import com.nosliw.core.application.common.scriptexpressio.HAPExpressionScript;
 
 @HAPEntityWithAttribute
 public class HAPInfoRuntimeTaskTaskScriptExpressionConstantGroup extends HAPSerializableImp{

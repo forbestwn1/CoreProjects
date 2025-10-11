@@ -19,6 +19,7 @@ import com.nosliw.core.application.HAPIdBrickType;
 import com.nosliw.core.application.HAPManagerApplicationBrick;
 import com.nosliw.core.application.HAPPluginDivision;
 import com.nosliw.core.application.HAPWrapperBrickRoot;
+import com.nosliw.core.application.common.dataexpression.definition.HAPParserDataExpression;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionBrick;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionContextParse;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionInfoBrickLocation;
@@ -35,6 +36,7 @@ import com.nosliw.core.application.division.manual.core.process.HAPManualProcess
 import com.nosliw.core.data.HAPDataTypeHelper;
 import com.nosliw.core.resource.HAPManagerResource;
 import com.nosliw.core.runtime.HAPRuntimeInfo;
+import com.nosliw.core.runtime.HAPRuntimeManager;
 
 @Component
 public class HAPManualManagerBrick implements HAPPluginDivision{
@@ -50,6 +52,10 @@ public class HAPManualManagerBrick implements HAPPluginDivision{
 	private HAPDataTypeHelper m_dataTypeHelper;
 	
 	private HAPManagerResource m_resourceMan;
+	
+	private HAPParserDataExpression m_dataExpressionParser;
+
+	private HAPRuntimeManager m_runtimeMan;
 	
 	public HAPManualManagerBrick() {
 		this.m_brickParserPlugin = new LinkedHashMap<String, HAPManualDefinitionPluginParserBrick>();
@@ -69,6 +75,12 @@ public class HAPManualManagerBrick implements HAPPluginDivision{
 	
 	@Autowired
 	private void setResourceManager(HAPManagerResource resourceMan) {    this.m_resourceMan = resourceMan;      }
+	
+	@Autowired
+	private void setExpressionParser(HAPParserDataExpression dataExpressionParser) {    this.m_dataExpressionParser = dataExpressionParser;      }
+	
+	@Autowired
+	private void setRuntimeManager(HAPRuntimeManager runtimeMan) {    this.m_runtimeMan = runtimeMan;      }
 	
 	@Override
 	public String getDivisionName() {   return HAPConstantShared.BRICK_DIVISION_MANUAL;   }
@@ -159,7 +171,7 @@ public class HAPManualManagerBrick implements HAPPluginDivision{
 
 		//get definition
 		HAPManualDefinitionWrapperBrickRoot brickDefWrapper = HAPManualDefinitionUtilityParserBrick.parseBrickDefinitionWrapper(content, entityLocationInfo.getBrickTypeId(), format, parseContext);
-		HAPWrapperBrickRoot out = HAPManualProcessBrick.processRootBrick(brickDefWrapper, processContext);
+		HAPWrapperBrickRoot out = HAPManualProcessBrick.processRootBrick(brickDefWrapper, this.m_runtimeMan, this.m_dataExpressionParser, processContext);
 		return out;
 	}
 

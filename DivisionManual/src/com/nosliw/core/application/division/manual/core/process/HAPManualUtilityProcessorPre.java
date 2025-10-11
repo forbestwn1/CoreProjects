@@ -1,7 +1,10 @@
 package com.nosliw.core.application.division.manual.core.process;
 
+import java.util.Map;
+
 import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.core.application.common.dataexpression.definition.HAPParserDataExpression;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionAttributeInBrick;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionBrick;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionProcessorBrickNodeDownwardWithPath;
@@ -11,10 +14,11 @@ import com.nosliw.core.application.division.manual.core.definition.HAPManualDefi
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionWrapperBrickRoot;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionWrapperValue;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionWrapperValueReferenceResource;
+import com.nosliw.core.runtime.HAPRuntimeManager;
 
 public class HAPManualUtilityProcessorPre {
 
-	public static void process(HAPManualDefinitionWrapperBrickRoot rootBrickDefWrapper, HAPManualContextProcessBrick processContext) {
+	public static void process(HAPManualDefinitionWrapperBrickRoot rootBrickDefWrapper, HAPRuntimeManager runtimeMan, HAPParserDataExpression dataExpressionParser, HAPManualContextProcessBrick processContext) {
 		HAPManualDefinitionBrick brickDef = rootBrickDefWrapper.getBrick();
 
 		//build path in brick definition from root
@@ -54,9 +58,9 @@ public class HAPManualUtilityProcessorPre {
 		HAPManualDefinitionUtilityAttachment.processAttachment(brickDef, null, processContext);
 
 		//process constant
-//		HAPManualUtilityScriptExpressionConstant.discoverScriptExpressionConstantInBrick(brickDef, manualBrickMan);
-//		Map<String, Map<String, Object>> scriptExpressionResults = HAPManualUtilityScriptExpressionConstant.calculateScriptExpressionConstants(brickDef, m_runtimeEnv, manualBrickMan);
-//		HAPManualUtilityScriptExpressionConstant.solidateScriptExpressionConstantInBrick(brickDef, scriptExpressionResults, manualBrickMan);
+		HAPManualUtilityScriptExpressionConstant.discoverScriptExpressionConstantInBrick(brickDef, processContext.getManualBrickManager());
+		Map<String, Map<String, Object>> scriptExpressionResults = HAPManualUtilityScriptExpressionConstant.calculateScriptExpressionConstants(brickDef, processContext.getManualBrickManager(), runtimeMan, dataExpressionParser);
+		HAPManualUtilityScriptExpressionConstant.solidateScriptExpressionConstantInBrick(brickDef, scriptExpressionResults, processContext.getManualBrickManager());
 		
 	}
 	

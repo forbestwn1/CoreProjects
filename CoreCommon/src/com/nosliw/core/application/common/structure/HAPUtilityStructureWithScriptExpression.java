@@ -1,4 +1,4 @@
-package com.nosliw.core.xxx.application.common.structure;
+package com.nosliw.core.application.common.structure;
 
 import java.util.Map;
 
@@ -7,12 +7,6 @@ import org.apache.commons.lang3.tuple.Pair;
 import com.nosliw.core.application.common.scriptexpressio.HAPUtilityScriptExpressionConstant;
 import com.nosliw.core.application.common.scriptexpressio.HAPUtilityScriptExpressionParser;
 import com.nosliw.core.application.common.scriptexpressio.definition.HAPDefinitionContainerScriptExpression;
-import com.nosliw.core.application.common.structure.HAPElementStructure;
-import com.nosliw.core.application.common.structure.HAPElementStructureLeafRelative;
-import com.nosliw.core.application.common.structure.HAPInfoElement;
-import com.nosliw.core.application.common.structure.HAPProcessorStructureElement;
-import com.nosliw.core.application.common.structure.HAPRootInStructure;
-import com.nosliw.core.application.common.structure.HAPValueStructure;
 
 public class HAPUtilityStructureWithScriptExpression {
 
@@ -40,7 +34,7 @@ public class HAPUtilityStructureWithScriptExpression {
 			}
 			
 
-			HAPUtilityStructure.traverseElement(root.getDefinition(), null, new HAPProcessorStructureElement() {
+			HAPUtilityElement.traverseElement(root.getDefinition(), null, new HAPProcessorStructureElement() {
 				@Override
 				public Pair<Boolean, HAPElementStructure> process(HAPInfoElement eleInfo, Object value) {
 					if(eleInfo.getElement() instanceof HAPElementStructureLeafRelative) {
@@ -84,7 +78,7 @@ public class HAPUtilityStructureWithScriptExpression {
 				}
 			}
 
-			HAPUtilityStructure.traverseElement(root.getDefinition(), null, new HAPProcessorStructureElement() {
+			HAPUtilityElement.traverseElement(root.getDefinition(), null, new HAPProcessorStructureElement() {
 				@Override
 				public Pair<Boolean, HAPElementStructure> process(HAPInfoElement eleInfo, Object value) {
 					if(eleInfo.getElement() instanceof HAPElementStructureLeafRelative) {

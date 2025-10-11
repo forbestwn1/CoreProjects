@@ -5,10 +5,10 @@ import java.util.Map;
 import com.nosliw.core.application.common.scriptexpressio.HAPUtilityScriptExpressionConstant;
 import com.nosliw.core.application.common.scriptexpressio.HAPUtilityScriptExpressionParser;
 import com.nosliw.core.application.common.scriptexpressio.definition.HAPDefinitionContainerScriptExpression;
+import com.nosliw.core.application.common.structure.HAPUtilityStructureWithScriptExpression;
 import com.nosliw.core.application.common.structure.HAPValueStructure;
 import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualDefinitionBrickValueContext;
 import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualDefinitionBrickWrapperValueStructure;
-import com.nosliw.core.xxx.application.common.structure.HAPUtilityStructureWithScriptExpression;
 
 public class HAPManualDefinitionUtilityValueContext {
 

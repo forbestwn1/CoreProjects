@@ -11,6 +11,7 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.HAPManagerApplicationBrick;
 import com.nosliw.core.application.brick.HAPEnumBrickType;
 import com.nosliw.core.application.brick.ui.uicontent.HAPWithUIContent;
+import com.nosliw.core.application.common.constant.HAPDefinitionConstant;
 import com.nosliw.core.application.common.parentrelation.HAPManualDefinitionBrickRelation;
 import com.nosliw.core.application.common.structure.HAPElementStructureLeafData;
 import com.nosliw.core.application.common.structure.HAPElementStructureLeafRelativeForValue;
@@ -108,7 +109,10 @@ public class HAPManualPluginParserBlockComplexUICustomerTag extends HAPManualDef
 		this.parseBrickAttribute(uiCustomerTag, ele, HAPWithUIContent.UICONTENT, HAPEnumBrickType.UICONTENT_100, null, HAPSerializationFormat.HTML, parseContext);
 		//enhance value context in embeded content
 		HAPManualUtilityValueContext.buildValueContextBrickFromValueContext(uiCustomerTag.getUIContent().getValueContextBrick(), uiTagDef.getValueContextEmbeded(), getManualDivisionBrickManager());
-		
+		//enhance constant in embeded content
+		for(HAPDefinitionConstant constant : HAPManualUtilityUITag.buildConstantDefinitions(uiCustomerTag.getUITagDefinition(), uiCustomerTag.getTagAttributes()).values()) {
+			uiCustomerTag.getUIContent().addConstantFromParent(constant);
+		}
 		
 		//add placeholder element to the customer tag's postion and then remove the original tag from html structure 
 		String uiId = HAPUtilityUIResourceParser.getUIIdInElement(ele); 

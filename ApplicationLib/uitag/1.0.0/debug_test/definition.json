@@ -37,6 +37,11 @@
     					"definition":{
 							"data": "test.string;1.0.0"
 						}
+					},
+					"<%=&(nosliwattribute_attribute1)&%>": {
+    					"definition":{
+							"data": "test.string;1.0.0"
+						}
 					}
 				},
 				"initValue": {
@@ -44,7 +49,7 @@
 						"dataTypeId": "test.string;1.0.0",
 						"value": "default value of input_stringVar"
 					}
-				}			
+				}		
 			}
 		}
 	],

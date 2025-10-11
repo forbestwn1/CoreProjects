@@ -11,6 +11,7 @@ import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
 import com.nosliw.core.application.common.constant.HAPDefinitionConstant;
+import com.nosliw.core.application.common.dataexpression.definition.HAPParserDataExpression;
 import com.nosliw.core.application.common.scriptexpressio.HAPExpressionScriptImp;
 import com.nosliw.core.application.common.scriptexpressio.HAPUtilityScriptExpressionConstant;
 import com.nosliw.core.application.common.scriptexpressio.HAPWithScriptExpressionConstantMaster;
@@ -19,22 +20,16 @@ import com.nosliw.core.application.common.scriptexpressio.definition.HAPDefiniti
 import com.nosliw.core.application.common.scriptexpressio.definition.HAPDefinitionScriptExpressionItemInContainer;
 import com.nosliw.core.application.division.manual.core.HAPManualManagerBrick;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionBrick;
+import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionProcessorBrickNodeDownwardWithBrick;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionProcessorBrickNodeDownwardWithPath;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionUtilityBrick;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionUtilityBrickTraverse;
-import com.nosliw.core.runtimeenv.HAPRuntimeEnvironment;
-import com.nosliw.core.runtimeenv.js.rhino.HAPRuntimeEnvironmentImpRhino;
-import com.nosliw.core.xxx.application.division.manual.core.definition1.HAPManualDefinitionProcessorBrickNodeDownwardWithBrick;
+import com.nosliw.core.runtime.HAPRuntimeManager;
+import com.nosliw.core.runtime.js.rhino.task.HAPInfoRuntimeTaskTaskScriptExpressionConstantGroup;
+import com.nosliw.core.runtime.js.rhino.task.HAPRuntimeTaskExecuteRhinoScriptExpressionConstantGroup;
+import com.nosliw.core.xxx.runtimeenv.js.rhino.HAPRuntimeEnvironmentImpRhino;
 
 public class HAPManualUtilityScriptExpressionConstant {
-
-	public static String discoverConstantScript(String content, HAPWithScriptExpressionConstantMaster withConstantScriptExpression) {
-		String out = null;
-		if(HAPUtilityScriptExpressionDefinition.isScriptExpression(content)) {
-			out = withConstantScriptExpression.getScriptExpressionConstantContainer().addScriptExpression(content);
-		}
-		return out;
-	}
 
 	public static void discoverScriptExpressionConstantInBrick(HAPManualDefinitionBrick brickDef, HAPManualManagerBrick manualBrickMan) {
 		HAPManualDefinitionUtilityBrickTraverse.traverseBrickTreeLeavesOfBrickComplex(brickDef, null, new HAPManualDefinitionProcessorBrickNodeDownwardWithBrick() {
@@ -51,7 +46,7 @@ public class HAPManualUtilityScriptExpressionConstant {
 		}, manualBrickMan, brickDef);
 	}
 
-	public static Map<String, Map<String, Object>> calculateScriptExpressionConstants(HAPManualDefinitionBrick brickDef, HAPRuntimeEnvironment runtTimeEnv, HAPManualManagerBrick manualBrickMan) {
+	public static Map<String, Map<String, Object>> calculateScriptExpressionConstants(HAPManualDefinitionBrick brickDef, HAPManualManagerBrick manualBrickMan, HAPRuntimeManager runtimeMan, HAPParserDataExpression dataExpressionParser) {
 		HAPInfoRuntimeTaskTaskScriptExpressionConstantGroup taskInfo = new HAPInfoRuntimeTaskTaskScriptExpressionConstantGroup();
 		
 		HAPManualDefinitionUtilityBrickTraverse.traverseBrickTreeLeavesOfBrickComplex(brickDef, null, new HAPManualDefinitionProcessorBrickNodeDownwardWithPath() {
@@ -69,7 +64,7 @@ public class HAPManualUtilityScriptExpressionConstant {
 							constants.put(name, constantsDef.get(name).getValue());
 						}
 						
-						HAPExpressionScriptImp scriptExpression = HAPUtilityScriptExpressionConstant.processScriptExpressionConstant((HAPDefinitionScriptExpression)item.getValue(), constantsDef, runtTimeEnv.getDataExpressionParser());
+						HAPExpressionScriptImp scriptExpression = HAPUtilityScriptExpressionConstant.processScriptExpressionConstant((HAPDefinitionScriptExpression)item.getValue(), constantsDef, dataExpressionParser);
 						String itemName = null;
 						if(path==null||path.isEmpty()) {
 							itemName = item.getName();
@@ -88,9 +83,9 @@ public class HAPManualUtilityScriptExpressionConstant {
 		
 		Map<String, Map<String, Object>> out = new LinkedHashMap<String, Map<String, Object>>();
 		if(!taskInfo.isEmpty()) {
-			HAPRuntimeTaskExecuteRhinoScriptExpressionConstantGroup task = new HAPRuntimeTaskExecuteRhinoScriptExpressionConstantGroup(taskInfo, runtTimeEnv);
+			HAPRuntimeTaskExecuteRhinoScriptExpressionConstantGroup task = new HAPRuntimeTaskExecuteRhinoScriptExpressionConstantGroup(taskInfo);
 
-			HAPServiceData serviceData = runtTimeEnv.getRuntime().executeTaskSync(task);
+			HAPServiceData serviceData = runtimeMan.getRuntime(HAPRuntimeManager.RUNTIME_JS_RHION).executeTaskSync(task);
 			JSONObject serviceDataJson = (JSONObject)serviceData.getData();
 			
 			for(Object key : serviceDataJson.keySet()) {
@@ -109,7 +104,6 @@ public class HAPManualUtilityScriptExpressionConstant {
 		return out;
 	}
 
-	
 	public static HAPDefinitionContainerScriptExpression solidateScriptExpressionConstantInBrick(HAPManualDefinitionBrick brickDef, Map<String, Map<String, Object>> constants, HAPManualManagerBrick manualBrickMan) {
 		HAPDefinitionContainerScriptExpression out = new HAPDefinitionContainerScriptExpression();
 		HAPManualDefinitionUtilityBrickTraverse.traverseBrickTreeLeavesOfBrickComplex(brickDef, null, new HAPManualDefinitionProcessorBrickNodeDownwardWithPath() {
@@ -128,6 +122,17 @@ public class HAPManualUtilityScriptExpressionConstant {
 		}, manualBrickMan, null);
 		return out;
 	}
+	
+	
+	public static String discoverConstantScript(String content, HAPWithScriptExpressionConstantMaster withConstantScriptExpression) {
+		String out = null;
+		if(HAPUtilityScriptExpressionDefinition.isScriptExpression(content)) {
+			out = withConstantScriptExpression.getScriptExpressionConstantContainer().addScriptExpression(content);
+		}
+		return out;
+	}
+
+
 	
 	public static HAPServiceData executeScriptExpressionConstant(HAPDefinitionScriptExpression scriptExpressionDef, Map<String, Object> constants, HAPRuntimeEnvironmentImpRhino runtimeEnvironment) {
 		Map<String, HAPDefinitionConstant> constantsDef = new LinkedHashMap<String, HAPDefinitionConstant>();

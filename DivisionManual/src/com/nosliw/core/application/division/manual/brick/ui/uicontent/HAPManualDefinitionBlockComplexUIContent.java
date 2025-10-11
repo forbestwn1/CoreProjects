@@ -1,7 +1,9 @@
 package com.nosliw.core.application.division.manual.brick.ui.uicontent;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang.StringEscapeUtils;
 
@@ -10,6 +12,7 @@ import com.nosliw.core.application.brick.ui.uicontent.HAPBlockComplexUIContent;
 import com.nosliw.core.application.brick.ui.uicontent.HAPElementEvent;
 import com.nosliw.core.application.brick.ui.uicontent.HAPUIEmbededScriptExpressionInAttribute;
 import com.nosliw.core.application.brick.ui.uicontent.HAPUIEmbededScriptExpressionInContent;
+import com.nosliw.core.application.common.constant.HAPDefinitionConstant;
 import com.nosliw.core.application.common.parentrelation.HAPManualDefinitionBrickRelation;
 import com.nosliw.core.application.common.scriptexpressio.definition.HAPDefinitionContainerScriptExpression;
 import com.nosliw.core.application.division.manual.brick.container.HAPManualDefinitionBrickContainerList;
@@ -23,6 +26,8 @@ public class HAPManualDefinitionBlockComplexUIContent extends HAPManualDefinitio
 
 	private static final String ID_INDEX = "idIndex";
 	
+	private static final String CONSTANTFROMPARENT = "constantFromParent";
+
 	public HAPManualDefinitionBlockComplexUIContent() {
 		super(HAPEnumBrickType.UICONTENT_100);
 		this.setAttributeValueWithValue(HAPBlockComplexUIContent.SCRIPTEXPRESSIONS, new HAPDefinitionContainerScriptExpression());
@@ -31,6 +36,7 @@ public class HAPManualDefinitionBlockComplexUIContent extends HAPManualDefinitio
 		this.setAttributeValueWithValue(HAPBlockComplexUIContent.SCRIPTEXPRESSIONINCUSTOMERTAGATTRIBUTE, new ArrayList<HAPUIEmbededScriptExpressionInAttribute>());
 		this.setAttributeValueWithValue(HAPBlockComplexUIContent.NORMALTAGEVENT, new ArrayList<HAPElementEvent>());
 		this.setAttributeValueWithValue(HAPBlockComplexUIContent.CUSTOMTAGEVENT, new ArrayList<HAPElementEvent>());
+		this.setAttributeValueWithValue(CONSTANTFROMPARENT, new LinkedHashMap<String, HAPDefinitionConstant>());
 		this.setAttributeValueWithValue(ID_INDEX, new Integer(0));
 	}
 
@@ -75,6 +81,17 @@ public class HAPManualDefinitionBlockComplexUIContent extends HAPManualDefinitio
 	public List<HAPElementEvent> getCustomerTagEvents(){    return (List<HAPElementEvent>)this.getAttributeValueOfValue(HAPBlockComplexUIContent.CUSTOMERTAG);       }
 	public void addCustomerTagEvent(HAPElementEvent event) {    this.getCustomerTagEvents().add(event);     }
 
+	public Map<String, HAPDefinitionConstant> getConstantsFromParent(){    return (Map<String, HAPDefinitionConstant>)this.getAttributeValueOfValue(CONSTANTFROMPARENT);   }
+	public void addConstantFromParent(HAPDefinitionConstant constant) {    this.getConstantsFromParent().put(constant.getName(), constant);        }
+
+	@Override
+	public Map<String, HAPDefinitionConstant> getConstantDefinitions(){
+		Map<String, HAPDefinitionConstant> out = new LinkedHashMap<String, HAPDefinitionConstant>();
+		out.putAll(super.getConstantDefinitions());
+		out.putAll(this.getConstantsFromParent());
+		return out;
+	}
+	
 	@Override
 	public String generateId() {
 		int idIndex = (Integer)this.getAttributeValueOfValue(ID_INDEX);

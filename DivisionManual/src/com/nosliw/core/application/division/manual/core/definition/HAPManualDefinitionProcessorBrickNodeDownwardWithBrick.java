@@ -1,9 +1,6 @@
-package com.nosliw.core.xxx.application.division.manual.core.definition1;
+package com.nosliw.core.application.division.manual.core.definition;
 
 import com.nosliw.common.path.HAPPath;
-import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionBrick;
-import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionProcessorBrickNodeDownwardWithPath;
-import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionUtilityBrick;
 
 public abstract class HAPManualDefinitionProcessorBrickNodeDownwardWithBrick extends HAPManualDefinitionProcessorBrickNodeDownwardWithPath{
 

@@ -27,6 +27,7 @@ import com.nosliw.core.application.common.structure.HAPInfoElement;
 import com.nosliw.core.application.common.structure.HAPProcessorStructureElement;
 import com.nosliw.core.application.common.structure.HAPRootInStructure;
 import com.nosliw.core.application.common.structure.HAPUtilityElement;
+import com.nosliw.core.application.common.structure.HAPUtilityStructureWithScriptExpression;
 import com.nosliw.core.application.common.structure.HAPValueStructure;
 import com.nosliw.core.application.common.structure.HAPValueStructureImp;
 import com.nosliw.core.application.common.structure.reference.HAPInfoRelativeResolve;
@@ -38,7 +39,6 @@ import com.nosliw.core.application.division.story.change.HAPStoryRequestChangeWr
 import com.nosliw.core.application.valueport.HAPResultReferenceResolve;
 import com.nosliw.core.runtimeenv.HAPRuntimeEnvironment;
 import com.nosliw.core.xxx.application.common.datadefinition.HAPVariableDataInfo;
-import com.nosliw.core.xxx.application.common.structure.HAPUtilityStructureWithScriptExpression;
 import com.nosliw.data.core.runtime.HAPInfoRuntimeTaskTaskScriptExpressionConstantGroup;
 import com.nosliw.data.core.runtime.js.imp.rhino.task.HAPRuntimeTaskExecuteRhinoScriptExpressionConstantGroup;
 

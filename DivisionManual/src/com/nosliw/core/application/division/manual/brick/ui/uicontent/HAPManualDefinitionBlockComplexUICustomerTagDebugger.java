@@ -35,7 +35,7 @@ public class HAPManualDefinitionBlockComplexUICustomerTagDebugger extends HAPMan
 	public Map<String, HAPDefinitionConstant> getConstantDefinitions(){
 		Map<String, HAPDefinitionConstant> out = new LinkedHashMap<String, HAPDefinitionConstant>();
 		out.putAll(super.getConstantDefinitions());
-		out.putAll(HAPUtilityUITag.getConstantDefinitions(this.getUITagDefinition(), this.getTagAttributes()));
+		out.putAll(HAPManualUtilityUITag.buildConstantDefinitions(this.getUITagDefinition(), this.getTagAttributes()));
 		return out;
 	}
 }

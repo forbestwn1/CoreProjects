@@ -13,16 +13,18 @@ import com.nosliw.core.application.HAPUtilityBundle;
 import com.nosliw.core.application.HAPWrapperBrickRoot;
 import com.nosliw.core.application.HAPWrapperValueOfReferenceResource;
 import com.nosliw.core.application.brick.HAPUtilityBrickPath;
+import com.nosliw.core.application.common.dataexpression.definition.HAPParserDataExpression;
 import com.nosliw.core.application.division.manual.core.HAPManualWrapperBrickRoot;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionWrapperBrickRoot;
 import com.nosliw.core.application.dynamic.HAPInputDynamic;
 import com.nosliw.core.application.dynamic.HAPInputDynamicSingle;
+import com.nosliw.core.runtime.HAPRuntimeManager;
 
 public class HAPManualProcessBrick {
 
-	public static HAPWrapperBrickRoot processRootBrick(HAPManualDefinitionWrapperBrickRoot rootBrickDefWrapper, HAPManualContextProcessBrick processContext) {
+	public static HAPWrapperBrickRoot processRootBrick(HAPManualDefinitionWrapperBrickRoot rootBrickDefWrapper, HAPRuntimeManager runtimeMan, HAPParserDataExpression dataExpressionParser, HAPManualContextProcessBrick processContext) {
 		//process definition first
-		HAPManualUtilityProcessorPre.process(rootBrickDefWrapper, processContext);
+		HAPManualUtilityProcessorPre.process(rootBrickDefWrapper, runtimeMan, dataExpressionParser, processContext);
 		
 		//init brick
 		HAPManualWrapperBrickRoot out = HAPManualProcessProcessorInit.process(rootBrickDefWrapper, processContext);

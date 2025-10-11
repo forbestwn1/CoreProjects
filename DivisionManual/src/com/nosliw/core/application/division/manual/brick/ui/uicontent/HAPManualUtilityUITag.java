@@ -13,7 +13,7 @@ import com.nosliw.core.application.division.manual.core.HAPManualManagerBrick;
 import com.nosliw.core.application.entity.uitag.HAPUITagDefinition;
 import com.nosliw.core.application.entity.uitag.HAPUITagDefinitionAttribute;
 
-public class HAPUtilityUITag {
+public class HAPManualUtilityUITag {
 
 	public static HAPManualDefinitionBrickValueContext createValueContextBrickFromUITagDefinition(HAPUITagDefinition uiTagDef, HAPManualManagerBrick manualDivisionEntityMan) {
 		HAPManualDefinitionBrickValueContext valueContextBrick = (HAPManualDefinitionBrickValueContext)manualDivisionEntityMan.newBrickDefinition(HAPManualEnumBrickType.VALUECONTEXT_100);
@@ -23,7 +23,7 @@ public class HAPUtilityUITag {
 		return valueContextBrick;
 	}
 	
-	public static Map<String, HAPDefinitionConstant> getConstantDefinitions(HAPUITagDefinition uiTagDef, Map<String, String> attrValues){
+	public static Map<String, HAPDefinitionConstant> buildConstantDefinitions(HAPUITagDefinition uiTagDef, Map<String, String> attrValues){
 		Map<String, HAPDefinitionConstant> out = new LinkedHashMap<String, HAPDefinitionConstant>();
 
 		Map<String, HAPUITagDefinitionAttribute> tagAttrDefs = uiTagDef.getAttributeDefinition();
@@ -44,6 +44,5 @@ public class HAPUtilityUITag {
 	private static String buildAttributeConstantName(String attrName) {
 		return HAPConstantShared.NOSLIW_RESERVE_ATTRIBUTE + attrName;
 	}
-	
 	
 }

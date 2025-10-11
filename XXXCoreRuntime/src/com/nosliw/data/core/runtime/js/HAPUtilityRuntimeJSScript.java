@@ -8,7 +8,6 @@ import com.nosliw.common.interpolate.HAPStringTemplateUtil;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.utils.HAPUtilityFile;
-import com.nosliw.core.resource.HAPRuntimeTaskLoadResources;
 import com.nosliw.core.resource.imp.js.HAPJSScriptInfo;
 import com.nosliw.core.runtime.js.rhino.HAPGatewayRhinoTaskResponse;
 import com.nosliw.core.runtime.js.rhino.HAPRuntimeImpRhino;
@@ -42,25 +41,6 @@ public class HAPUtilityRuntimeJSScript {
 		return out;
 	}
 
-	public static HAPJSScriptInfo buildRequestScriptForLoadResourceTask(HAPRuntimeTaskLoadResources loadResourcesTask, HAPRuntimeImpRhino runtime){
-		Map<String, String> templateParms = new LinkedHashMap<String, String>();
-		templateParms.put("successCommand", HAPGatewayRhinoTaskResponse.COMMAND_SUCCESS);
-		templateParms.put("errorCommand", HAPGatewayRhinoTaskResponse.COMMAND_ERROR);
-		templateParms.put("exceptionCommand", HAPGatewayRhinoTaskResponse.COMMAND_EXCEPTION);
-		
-		templateParms.put("gatewayId", runtime.getTaskResponseGatewayName());
-		templateParms.put("parmTaskId", HAPGatewayRhinoTaskResponse.PARM_TASKID);
-		templateParms.put("taskId", loadResourcesTask.getTaskId());
-		templateParms.put("parmResponseData", HAPGatewayRhinoTaskResponse.PARM_RESPONSEDATA);
-
-		templateParms.put("resourceInfos", HAPUtilityJson.formatJson(HAPUtilityJson.buildJson(loadResourcesTask.getResourcesInfo(), HAPSerializationFormat.JSON)));
-		
-		InputStream javaTemplateStream = HAPUtilityFile.getInputStreamOnClassPath(HAPUtilityRuntimeJSScript.class, "LoadResources.temp");
-		String script = HAPStringTemplateUtil.getStringValue(javaTemplateStream, templateParms);
-		HAPJSScriptInfo out = HAPJSScriptInfo.buildByScript(script, loadResourcesTask.getTaskId());
-		return out;
-	}
-	
 	public static HAPJSScriptInfo buildRequestScriptForExecuteProcessEmbededTask(HAPRuntimeTaskExecuteProcessEmbeded task, HAPRuntimeImpRhino runtime){
 		Map<String, String> templateParms = new LinkedHashMap<String, String>();
 

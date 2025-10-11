@@ -11,13 +11,12 @@ import com.nosliw.core.runtime.HAPRunTaskEventListener;
 import com.nosliw.core.runtime.HAPRuntime;
 import com.nosliw.core.runtime.HAPRuntimeTask;
 import com.nosliw.core.runtime.js.rhino.task.HAPRuntimeTaskLoadResourcesRhino;
-import com.nosliw.core.xxx.runtimeenv.HAPRuntimeEnvironment;
 
 public abstract class HAPRuntimeTaskRhino extends HAPRuntimeTask{
 
 	private String m_taskType;
 	
-	public HAPRuntimeTaskRhino(String taskType, HAPRuntimeEnvironment runtTimeEnv) {
+	public HAPRuntimeTaskRhino(String taskType) {
 		this.m_taskType = taskType;
 	}
 	
@@ -48,7 +47,7 @@ public abstract class HAPRuntimeTaskRhino extends HAPRuntimeTask{
 						if(resourceTaskResult.isSuccess()){
 							//after resource loaded, execute expression
 							try{
-								HAPJSScriptInfo scriptInfo = buildRuntimeScript();
+								HAPJSScriptInfo scriptInfo = buildRuntimeScript(rhinoRuntime);
 								rhinoRuntime.loadTaskScript(scriptInfo, getTask().getTaskId());
 							}
 							catch(Exception e){
@@ -65,7 +64,7 @@ public abstract class HAPRuntimeTaskRhino extends HAPRuntimeTask{
 			}
 			else {
 				//pppp			
-				HAPJSScriptInfo scriptInfo = this.buildRuntimeScript();
+				HAPJSScriptInfo scriptInfo = this.buildRuntimeScript(rhinoRuntime);
 				rhinoRuntime.loadTaskScript(scriptInfo, this.getTaskId());
 			}
 		}
@@ -83,6 +82,6 @@ public abstract class HAPRuntimeTaskRhino extends HAPRuntimeTask{
 
 	abstract protected List<HAPResourceDependency> getResourceDependency();
 	
-	abstract protected HAPJSScriptInfo buildRuntimeScript();
+	abstract protected HAPJSScriptInfo buildRuntimeScript(HAPRuntimeImpRhino runtime);
 
 }

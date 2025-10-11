@@ -13,9 +13,18 @@ Hellooooooo!!!!!
 EXPRESSION IN ATTRIBUTE:<span  style="color:<%=?(public_string)?.value=='red'?'red':'blue'%>">Change the input below and color will change according to the value </span> 
 		<br>
 
- 		<nosliw-debug_test attribute1="<%=?(public_string)?.value + '   7777 ' %>" data_string="public_url">
+ 		<nosliw-debug_test attribute1="myAttr" data_string="public_string">
     		<br>
- 	    	embeded_stringVar:<%=?(input_stringVar)?.value + '   7777 ' %>  
+ 	    	embeded_stringVar:<%=?(input_stringVar)?.value + '   7777 ' %>
+    		<br>
+    		<br>
+    		<br>
+ 	    	
+<!-- 
+ 	    	<nosliw-debug_test data_string="input_stringVar"/>
+ -->
+ 	    	
+ 	    	  
 		</nosliw-debug_test>
 
 <!-- 
