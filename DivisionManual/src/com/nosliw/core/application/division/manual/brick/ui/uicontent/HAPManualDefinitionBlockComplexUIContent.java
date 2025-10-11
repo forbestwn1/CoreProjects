@@ -13,9 +13,11 @@ import com.nosliw.core.application.brick.ui.uicontent.HAPUIEmbededScriptExpressi
 import com.nosliw.core.application.common.parentrelation.HAPManualDefinitionBrickRelation;
 import com.nosliw.core.application.common.scriptexpressio.definition.HAPDefinitionContainerScriptExpression;
 import com.nosliw.core.application.division.manual.brick.container.HAPManualDefinitionBrickContainerList;
+import com.nosliw.core.application.division.manual.core.HAPManualEnumBrickType;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionAttributeInBrick;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionBrick;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionWrapperValueBrick;
+import com.nosliw.core.xxx.application1.HAPWithValueContext;
 
 public class HAPManualDefinitionBlockComplexUIContent extends HAPManualDefinitionBrick{
 
@@ -34,6 +36,7 @@ public class HAPManualDefinitionBlockComplexUIContent extends HAPManualDefinitio
 
 	@Override
 	public void init() {
+		this.setAttributeValueWithBrick(HAPWithValueContext.VALUECONTEXT, this.getManualBrickManager().newBrickDefinition(HAPManualEnumBrickType.VALUECONTEXT_100));
 		this.setAttributeValueWithBrick(HAPBlockComplexUIContent.CUSTOMERTAG, this.getManualBrickManager().newBrickDefinition(HAPEnumBrickType.CONTAINERLIST_100));
 	}
 	

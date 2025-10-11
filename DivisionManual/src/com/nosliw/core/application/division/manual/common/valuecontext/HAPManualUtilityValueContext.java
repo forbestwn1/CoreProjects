@@ -7,6 +7,7 @@ import java.util.List;
 
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.common.structure.HAPUtilityStructure;
+import com.nosliw.core.application.common.structure.HAPValueContextDefinition;
 import com.nosliw.core.application.common.structure.HAPWrapperValueStructureDefinition;
 import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualDefinitionBrickValueContext;
 import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualDefinitionBrickValueStructure;
@@ -20,6 +21,13 @@ public class HAPManualUtilityValueContext {
 	public static HAPManualInfoPartInValueContext createPartInfoDefault() {	return new HAPManualInfoPartInValueContext(HAPConstantShared.VALUESTRUCTUREPART_NAME_DEFAULT, HAPConstantShared.VALUESTRUCTUREPART_PRIORITY_DEFAULT);	}
 	public static HAPManualInfoPartInValueContext createPartInfoExtension() {	return new HAPManualInfoPartInValueContext(HAPConstantShared.VALUESTRUCTUREPART_NAME_EXTENSION, HAPConstantShared.VALUESTRUCTUREPART_PRIORITY_EXTENSION);	}
 	public static HAPManualInfoPartInValueContext createPartInfoFromParent() {	return new HAPManualInfoPartInValueContext(HAPConstantShared.VALUESTRUCTUREPART_NAME_FROMPARENT, HAPConstantShared.VALUESTRUCTUREPART_PRIORITY_FROMPARENT);	}
+	
+	
+	public static void buildValueContextBrickFromValueContext(HAPManualDefinitionBrickValueContext valueContextBrick, HAPValueContextDefinition valueContext, HAPManualManagerBrick manualDivisionEntityMan) {
+		for(HAPWrapperValueStructureDefinition uiTagDefValueStructure : valueContext.getValueStructures()) {
+			HAPManualUtilityValueContext.addValueStuctureWrapperToValueContextBrick(uiTagDefValueStructure, valueContextBrick, manualDivisionEntityMan);
+		}
+	}
 	
 	public static void addValueStuctureWrapperToValueContextBrick(HAPWrapperValueStructureDefinition valueStructureWrapper, HAPManualDefinitionBrickValueContext valueContextBrick, HAPManualManagerBrick manualDivisionEntityMan) {
 		HAPManualDefinitionBrickWrapperValueStructure manualWrapperBrickValueStrucutre = (HAPManualDefinitionBrickWrapperValueStructure)manualDivisionEntityMan.newBrickDefinition(HAPManualEnumBrickType.VALUESTRUCTUREWRAPPER_100);

@@ -22,7 +22,7 @@ import com.nosliw.core.application.brick.ui.uicontent.HAPUIEmbededScriptExpressi
 import com.nosliw.core.application.brick.ui.uicontent.HAPUIEmbededScriptExpressionInContent;
 import com.nosliw.core.application.common.scriptexpressio.HAPUtilityScriptExpressionParser;
 import com.nosliw.core.application.common.scriptexpressio.definition.HAPDefinitionContainerScriptExpression;
-import com.nosliw.core.application.division.manual.core.HAPManualEnumBrickType;
+import com.nosliw.core.application.division.manual.common.valuecontext.HAPManualParserValueContext;
 import com.nosliw.core.application.division.manual.core.HAPManualManagerBrick;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionBrick;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionContextParse;
@@ -44,7 +44,7 @@ public class HAPManualPluginParserBlockComplexUIContent extends HAPManualDefinit
 		Element element = (Element)obj;
 		
 		//parse value context
-		parseValueContext(element, brickManualDef, parseContext);
+		parseValueContext(element, uiContent, parseContext);
 
 		parseDescendantTags(element, uiContent, parseContext);
 		
@@ -205,10 +205,10 @@ public class HAPManualPluginParserBlockComplexUIContent extends HAPManualDefinit
 		}
 	}
 	
-	private void parseValueContext(Element ele, HAPManualDefinitionBrick brickManualDef, HAPManualDefinitionContextParse parseContext) {
+	private void parseValueContext(Element ele, HAPManualDefinitionBlockComplexUIContent brickManualDef, HAPManualDefinitionContextParse parseContext) {
 		List<Element> valueContextEles = HAPUtilityUIResourceParser.getChildElementsByTag(ele, HAPWithValueContext.VALUECONTEXT);
 		for(Element valueContextEle : valueContextEles){
-			parseBrickAttributeSelfJson(brickManualDef, new JSONObject(valueContextEle.html()), HAPWithValueContext.VALUECONTEXT, HAPManualEnumBrickType.VALUECONTEXT_100, null, parseContext);	
+			HAPManualParserValueContext.parseValueContextContentJson(brickManualDef.getValueContextBrick(), new JSONArray(valueContextEle.html()), parseContext);
 			break;
 		}
 		for(Element valueContextEle : valueContextEles) {

@@ -14,12 +14,8 @@ EXPRESSION IN ATTRIBUTE:<span  style="color:<%=?(public_string)?.value=='red'?'r
 		<br>
 
  		<nosliw-debug_test attribute1="<%=?(public_string)?.value + '   7777 ' %>" data_string="public_url">
-embeded_stringVar
-<!-- 
     		<br>
  	    	embeded_stringVar:<%=?(input_stringVar)?.value + '   7777 ' %>  
--->
-
 		</nosliw-debug_test>
 
 <!-- 
@@ -60,8 +56,7 @@ embeded_stringVar
 </body>
 
 	<valuecontext>
-	{
-		"brick": [
+		[
 			{
 				"groupType" : "public",
 				"valueStructure" : {
@@ -108,7 +103,6 @@ embeded_stringVar
 				}
 			}
 		]
-	}
 	</valuecontext>
 
 </html>

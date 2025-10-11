@@ -31,9 +31,6 @@
 		{
             "name" : "embeded_part1",
 			"groupType" : "protected",
-			"info":{
-				"instantiate" : "manual"
-			},
 			"valueStructure" : {
 				"root": {
 					"input_stringVar": {
