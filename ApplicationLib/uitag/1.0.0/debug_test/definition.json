@@ -38,7 +38,13 @@
 							"data": "test.string;1.0.0"
 						}
 					}
-				}
+				},
+				"initValue": {
+					"input_stringVar": {
+						"dataTypeId": "test.string;1.0.0",
+						"value": "default value of input_stringVar"
+					}
+				}			
 			}
 		}
 	],

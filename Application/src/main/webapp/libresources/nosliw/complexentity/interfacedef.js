@@ -73,12 +73,6 @@ var node_makeObjectEntityObjectInterface = function(rawEntity, internalValuePort
 
     		getInternalValuePortContainer : function(){   return loc_getInternalValuePortContainer();  },
 
-/*			
-			getExecuteAdapterRequest : function(attrName){
-				treeNodeEntityInterface.getChild(attrName).getAdapter().getExecuteRequest(loc_out, child.getChildValue());
-			},
-*/
-
 			createAttributeRequest : function(attrName, variationPoints, handlers, request){
 				return this.createChildByAttributeRequest(attrName, attrName, variationPoints, handlers, request);
 			},
@@ -162,6 +156,41 @@ var node_makeObjectEntityObjectInterface = function(rawEntity, internalValuePort
 				}));
 				return out;
 			},
+			
+			createAttributeWithInitRequest : function(attrName, variationPoints, view, handlers, request){
+				return this.createChildByAttributeWithInitRequest(attrName, attrName, variationPoints, view, handlers, request);
+			},
+
+			createChildByAttributeWithInitRequest : function(childName, attrName, variationPoints, view, handlers, request){
+				var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("createComplexAttribute", {}), handlers, request);
+				out.addRequest(this.createChildByAttributeRequest(childName, attrName, variationPoints, {
+					success : function(request, attrNode){
+						var coreEntity = attrNode.getChildValue().getCoreEntity();
+    					return node_getComponentInterface(coreEntity).getPreInitRequest({
+	    					success : function(request){
+		    					node_getComponentInterface(coreEntity).updateView(view);
+		    					return attrNode;
+			    			}
+						});
+					}
+				}));
+				return out;				
+			},
+
+			createBrickAttributeWithInitRequest : function(attrName, variationPoints, view, handlers, request){
+				return this.createBrickChildByAttributeWithInitRequest(attrName, attrName, variationPoints, view, handlers, request);
+			},
+
+			createBrickChildByAttributeWithInitRequest : function(childName, attrName, variationPoints, view, handlers, request){
+				var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+				out.addRequest(this.createChildByAttributeWithInitRequest(childName, attrName, variationPoints, view, {
+					success : function(request, childNode){
+						return node_complexEntityUtility.getBrickNode(childNode);
+					}
+				}));
+				return out;
+			}
+			
 		});
 	}
 	

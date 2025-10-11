@@ -105,6 +105,18 @@ var node_createUICustomerTagTest = function(envObj){
 		//embeded view
 		var embededsWrapperView = $('<div/>');
 		embededsWrapperView.append($('<br>Embededs: <br>'));
+		
+	    var buttonView = $('<button type="button">'+"Show Emdeded"+'</button>');	
+		embededsWrapperView.append(buttonView);
+		buttonView.bind('click', function(){
+			var requestInfo = loc_envObj.getCreateDefaultUIContentWithInitRequest(undefined, embededsWrapperView, {
+				success: function(request, uiConentNode){
+				}
+			});
+			node_requestServiceProcessor.processRequest(requestInfo);
+		});
+		
+/*		
 		_.each(loc_embededs, function(embededInfo){
     		var embedWrapperView = $('<div/>');
 			embedWrapperView.append($('<br>'+embededInfo.name+':<br>'));
@@ -130,6 +142,7 @@ var node_createUICustomerTagTest = function(envObj){
 			});
 			embededsWrapperView.append(embedWrapperView);
 		});
+*/		
 		loc_containerrView.append(embededsWrapperView);
 
 		

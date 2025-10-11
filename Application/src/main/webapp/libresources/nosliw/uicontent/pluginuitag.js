@@ -148,6 +148,16 @@ var loc_createUITagComponentCore = function(complexEntityDef, tagDefScriptFun, v
 			}));
 			return out;
 		},
+		getCreateDefaultUIContentWithInitRequest : function(variationPoints, view, handlers, requestInfo){
+			var out = node_createServiceRequestInfoSequence(undefined, handlers, requestInfo);
+			out.addRequest(loc_envInterface[node_CONSTANT.INTERFACE_ENTITY].createBrickAttributeWithInitRequest(node_COMMONATRIBUTECONSTANT.WITHUICONTENT_UICONTENT, variationPoints, view, {
+				success : function(request, childNode){
+					childNode.getChildValue().getCoreEntity().setParentUIEntity(loc_out);
+					return childNode;
+				}
+			}));
+			return out;
+		},
 
 	};
 
