@@ -1,4 +1,4 @@
-package com.nosliw.core.application.common.datadefinition;
+package com.nosliw.core.application.common.datarule;
 
 import com.nosliw.common.utils.HAPConstantShared;
 

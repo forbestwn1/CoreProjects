@@ -1,4 +1,4 @@
-package com.nosliw.core.application.common.datadefinition;
+package com.nosliw.core.application.common.datarule;
 
 import org.json.JSONObject;
 

@@ -1,4 +1,4 @@
-package com.nosliw.data.core.codetable;
+package com.nosliw.core.application.codetable;
 
 import com.nosliw.common.serialization.HAPSerializableImp;
 

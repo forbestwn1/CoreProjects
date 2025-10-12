@@ -12,6 +12,8 @@ import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.utils.HAPUtilityBasic;
+import com.nosliw.core.application.common.datarule.HAPDataRule;
+import com.nosliw.core.application.common.datarule.HAPParserDataRule;
 import com.nosliw.core.data.criteria.HAPDataTypeCriteria;
 import com.nosliw.core.data.criteria.HAPParserCriteria;
 import com.nosliw.core.data.criteria.HAPUtilityCriteria;

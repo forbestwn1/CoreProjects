@@ -12,7 +12,7 @@ import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.core.application.common.datadefinition.HAPDataRule;
+import com.nosliw.core.application.common.datarule.HAPDataRule;
 import com.nosliw.core.application.common.structure.HAPElementStructure;
 import com.nosliw.core.application.common.structure.HAPElementStructureLeafConstant;
 import com.nosliw.core.application.common.structure.HAPElementStructureLeafData;

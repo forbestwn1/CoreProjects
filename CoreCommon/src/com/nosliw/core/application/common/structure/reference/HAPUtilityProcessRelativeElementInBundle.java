@@ -15,7 +15,7 @@ import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.HAPBundle;
 import com.nosliw.core.application.common.datadefinition.HAPDataDefinitionWritable;
-import com.nosliw.core.application.common.datadefinition.HAPDataRule;
+import com.nosliw.core.application.common.datarule.HAPDataRule;
 import com.nosliw.core.application.common.structure.HAPElementStructure;
 import com.nosliw.core.application.common.structure.HAPElementStructureLeafData;
 import com.nosliw.core.application.common.structure.HAPElementStructureLeafRelative;

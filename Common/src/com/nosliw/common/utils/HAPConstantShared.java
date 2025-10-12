@@ -671,6 +671,7 @@ public class HAPConstantShared {
 		public static final String GATEWAY_UITAG = "uiTag";
 		public static final String GATEWAY_LOADLIBRARIES = "loadLibraries";
 		public static final String GATEWAY_ERRORLOG = "errorLog";
+		public static final String GATEWAY_CODETABLE = "codetable";
 		public static final String GATEWAY_RHINOTASKRESPONSE = "taskResponseGateway";
 
 

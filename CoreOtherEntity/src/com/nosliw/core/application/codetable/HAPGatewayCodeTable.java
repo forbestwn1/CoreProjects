@@ -1,14 +1,17 @@
-package com.nosliw.data.core.codetable;
+package com.nosliw.core.application.codetable;
 
 import org.json.JSONObject;
+import org.springframework.stereotype.Component;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.exception.HAPServiceData;
-import com.nosliw.data.core.runtime.HAPRuntimeInfo;
-import com.nosliw.data.core.runtime.js.HAPGatewayImp;
+import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.core.gateway.HAPGatewayImp;
+import com.nosliw.core.runtime.HAPRuntimeInfo;
 
 @HAPEntityWithAttribute
+@Component
 public class HAPGatewayCodeTable  extends HAPGatewayImp{
 
 	@HAPAttribute
@@ -31,5 +34,8 @@ public class HAPGatewayCodeTable  extends HAPGatewayImp{
 		}
 		return null;
 	}
+
+	@Override
+	public String getName() {   return HAPConstantShared.GATEWAY_CODETABLE;  }
 
 }
