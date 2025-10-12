@@ -4,6 +4,7 @@ import org.json.JSONObject;
 
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.gateway.HAPGatewayImp;
 import com.nosliw.core.runtime.HAPRuntimeInfo;
 
@@ -23,6 +24,9 @@ public class HAPGatewayRhinoTaskResponse extends HAPGatewayImp{
 	}
 	
 	@Override
+	public String getName() {	return HAPConstantShared.GATEWAY_RHINOTASKRESPONSE;	}
+
+	@Override
 	public HAPServiceData command(String command, JSONObject parms, HAPRuntimeInfo runtimeInfo) throws Exception{
 		HAPServiceData serviceData = null;
 		String taskId = parms.getString(PARM_TASKID);
@@ -40,5 +44,6 @@ public class HAPGatewayRhinoTaskResponse extends HAPGatewayImp{
 		this.m_runtime.finishTask(taskId, serviceData);
 		return this.createSuccessWithObject(null);
 	}
+
 
 }

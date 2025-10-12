@@ -7,17 +7,21 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.common.utils.HAPUtilityFile;
 import com.nosliw.core.resource.HAPPluginResourceManager;
 import com.nosliw.core.resource.HAPResourceDataOrWrapper;
+import com.nosliw.core.resource.HAPResourceHelper;
 import com.nosliw.core.resource.HAPResourceIdSimple;
 import com.nosliw.core.runtime.HAPRuntimeInfo;
 import com.nosliw.core.system.HAPSystemFolderUtility;
 
 public class HAPPluginResourceManagerJSLibrary implements HAPPluginResourceManager{
 
-	public HAPPluginResourceManagerJSLibrary() {	}
+	public HAPPluginResourceManagerJSLibrary() {
+		HAPResourceHelper.getInstance().registerResourceId(HAPConstantShared.RUNTIME_RESOURCE_TYPE_JSLIBRARY, HAPResourceIdJSLibrary.class, HAPJSLibraryId.class);
+	}
 	
 	@Override
 	public HAPResourceDataOrWrapper getResourceData(HAPResourceIdSimple simpleResourceId, HAPRuntimeInfo runtimeInfo) {

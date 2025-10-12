@@ -12,7 +12,6 @@ import org.mozilla.javascript.Function;
 import org.mozilla.javascript.NativeObject;
 import org.mozilla.javascript.Scriptable;
 import org.mozilla.javascript.tools.debugger.Main;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import com.google.common.util.concurrent.SettableFuture;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
@@ -57,10 +56,10 @@ public class HAPRuntimeImpRhino implements HAPRuntimeWithScript{
 	//store all the task, for instance, execute expression, load resources
 	private Map<String, HAPRuntimeTask> m_tasks;
 
-	@Autowired
 	private HAPGatewayManager m_gatewayManager;
 	
-	public HAPRuntimeImpRhino(){
+	public HAPRuntimeImpRhino(HAPGatewayManager gatewayManager){
+		this.m_gatewayManager = gatewayManager;
 		this.m_tasks = new LinkedHashMap<String, HAPRuntimeTask>();
 	}
 	
@@ -95,10 +94,8 @@ public class HAPRuntimeImpRhino implements HAPRuntimeWithScript{
 	//register relevant gateway
 	private void registerGateway(){
 		//register TaskResponse gateway
-		m_gatewayManager.registerGateway(this.getTaskResponseGatewayName(), new HAPGatewayRhinoTaskResponse(this));
+		m_gatewayManager.registerGateway(new HAPGatewayRhinoTaskResponse(this));
 	}
-	
-	public String getTaskResponseGatewayName(){		return "taskResponseGateway";	}
 	
 //	@Override
 //	public HAPServiceData executeExpressionSync(String expressionStr, Map<String, HAPData> parmsData) {
@@ -319,7 +316,7 @@ public class HAPRuntimeImpRhino implements HAPRuntimeWithScript{
 	public void close(){
 //		this.m_sciprtTracker.export();
 		HAPRhinoRuntimeUtility.exportToHtml();
-		this.m_gatewayManager.unregisterGateway(this.getTaskResponseGatewayName());
+		this.m_gatewayManager.unregisterGateway(HAPConstantShared.GATEWAY_RHINOTASKRESPONSE);
 	}
 	
 	@Override

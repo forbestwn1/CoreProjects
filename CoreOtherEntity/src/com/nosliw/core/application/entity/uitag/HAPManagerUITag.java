@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.nosliw.common.utils.HAPConstantShared;
@@ -26,9 +27,13 @@ public class HAPManagerUITag{
 
 	private HAPDataTypeHelper m_dataTypeHelper;
 	
-	public HAPManagerUITag(HAPDataTypeHelper dataTypeHelper) {
-		this.m_dataTypeHelper = dataTypeHelper;
-	}
+//	public HAPManagerUITag(HAPDataTypeHelper dataTypeHelper) {
+//		this.m_dataTypeHelper = dataTypeHelper;
+//	}
+
+	@Autowired
+	private void setDataTypeHelper(HAPDataTypeHelper dataTypeHelper) {
+		this.m_dataTypeHelper = dataTypeHelper;	}
 	
 	public HAPUITagDefinition getUITagDefinition(String tagId, String version) {
 		if(version==null) {

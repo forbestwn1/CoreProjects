@@ -452,6 +452,7 @@ var COMMONCONSTANT=
   "GATEWAY_UITAG": "uiTag",
   "GATEWAY_LOADLIBRARIES": "loadLibraries",
   "GATEWAY_ERRORLOG": "errorLog",
+  "GATEWAY_RHINOTASKRESPONSE": "taskResponseGateway",
   "NOSLIW_RESERVE_ATTRIBUTE": "nosliwattribute_",
   "NOSLIW_RESERVE_ATTRIBUTE_PLACEHOLDER": "nosliwattribute_placeholder",
   "NOSLIW_NAME_PREFIX": "nosliw_",

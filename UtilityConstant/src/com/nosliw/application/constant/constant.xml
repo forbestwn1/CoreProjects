@@ -756,6 +756,7 @@
 			<definition name="GATEWAY_LOADLIBRARIES" value="loadLibraries"/>
 			<definition name="GATEWAY_ERRORLOG" value="errorLog"/>
 			
+			<definition name="GATEWAY_RHINOTASKRESPONSE" value="taskResponseGateway"/>
 
 			<definition type="space"/>
 			<definition name="NOSLIW_RESERVE_ATTRIBUTE" value="nosliwattribute_"/>

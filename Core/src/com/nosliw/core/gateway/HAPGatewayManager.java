@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.nosliw.common.exception.HAPServiceData;
+import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.core.resource.HAPResourceHelper;
 import com.nosliw.core.runtime.HAPRuntimeInfo;
 
 @Component
@@ -16,13 +18,19 @@ public class HAPGatewayManager {
 	
 	private Map<String, HAPGateway> m_gateways = new LinkedHashMap<String, HAPGateway>();
 	
-	public HAPGatewayManager(){	}
+	public HAPGatewayManager(){	
+		HAPResourceHelper.getInstance().registerResourceId(HAPConstantShared.RUNTIME_RESOURCE_TYPE_JSGATEWAY, HAPResourceIdJSGateway.class, HAPJSGatewayId.class);
+	}
 	
 	@Autowired
 	private void registerGateways(List<HAPGateway> gateways) {
 		gateways.stream().forEach(g->this.m_gateways.put(g.getName(), g));
 	}
-	
+
+	public void registerGateway(HAPGateway gateway) {
+		this.m_gateways.put(gateway.getName(), gateway);
+	}
+
 	public void unregisterGateway(String name){
 		this.m_gateways.remove(name);
 	}

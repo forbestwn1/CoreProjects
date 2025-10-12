@@ -7,10 +7,14 @@ import java.util.Map;
 import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.serialization.HAPJsonTypeScript;
 import com.nosliw.common.strvalue.HAPStringableValueEntityWithID;
+import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.core.data.HAPDataTypeConverter;
 import com.nosliw.core.data.HAPDataTypeId;
 import com.nosliw.core.data.HAPResourceDataJSConverter;
+import com.nosliw.core.data.HAPResourceIdConverter;
 import com.nosliw.core.resource.HAPResourceDataOrWrapper;
 import com.nosliw.core.resource.HAPResourceDependency;
+import com.nosliw.core.resource.HAPResourceHelper;
 import com.nosliw.core.runtime.HAPRuntimeInfo;
 
 public class HAPResourceDataJSConverterImp extends HAPStringableValueEntityWithID implements HAPResourceDataJSConverter{
@@ -22,6 +26,7 @@ public class HAPResourceDataJSConverterImp extends HAPStringableValueEntityWithI
 	public HAPResourceDataJSConverterImp(String script, HAPDataTypeId dataTypeName){
 		this.setValue(script);
 		this.setDataTypeName(dataTypeName);
+		HAPResourceHelper.getInstance().registerResourceId(HAPConstantShared.RUNTIME_RESOURCE_TYPE_CONVERTER, HAPResourceIdConverter.class, HAPDataTypeConverter.class);
 	}
 	
 	@Override

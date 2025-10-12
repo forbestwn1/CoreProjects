@@ -9,6 +9,7 @@ import java.util.Set;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.google.common.collect.Sets;
@@ -44,8 +45,19 @@ public class HAPDataTypeHelperImp implements HAPDataTypeHelper{
 	private HAPDataAccessDataType m_dataAccess = null;
 	private HAPRuntime m_runtime;
 	
-	public HAPDataTypeHelperImp(HAPRuntimeManager runtimeMan, HAPModuleRuntimeJS jsRuntimeModule){
+//	public HAPDataTypeHelperImp(HAPRuntimeManager runtimeMan, HAPModuleRuntimeJS jsRuntimeModule){
+//		this.m_runtime = runtimeMan.getDefaultRuntime();
+//		this.m_dataAccess = jsRuntimeModule.getDataTypeDataAccess();
+//	}
+	
+	@Autowired
+	private void setRuntimeManager(HAPRuntimeManager runtimeMan) {
 		this.m_runtime = runtimeMan.getDefaultRuntime();
+	}
+	
+	
+	@Autowired
+	private void setRuntimeJSModule(HAPModuleRuntimeJS jsRuntimeModule) {
 		this.m_dataAccess = jsRuntimeModule.getDataTypeDataAccess();
 	}
 	

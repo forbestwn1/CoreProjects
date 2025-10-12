@@ -1,9 +1,12 @@
 package com.nosliw.data.core.imp.runtime.js.resource;
 
 import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.data.HAPOperation;
+import com.nosliw.core.data.HAPOperationId;
 import com.nosliw.core.data.HAPResourceIdOperation;
 import com.nosliw.core.resource.HAPResourceDataOrWrapper;
+import com.nosliw.core.resource.HAPResourceHelper;
 import com.nosliw.core.resource.HAPResourceIdSimple;
 import com.nosliw.core.runtime.HAPRuntimeInfo;
 import com.nosliw.data.core.imp.HAPDataAccessDataType;
@@ -19,6 +22,7 @@ public class HAPPluginResourceManagerJSOperation extends HAPPluginResourceManage
 	public HAPPluginResourceManagerJSOperation(HAPDataAccessRuntimeJS dataAccess, HAPDataAccessDataType dataTypeDataAccess){
 		super(dataAccess);
 		this.m_dataTypeDataAccess = dataTypeDataAccess;
+		HAPResourceHelper.getInstance().registerResourceId(HAPConstantShared.RUNTIME_RESOURCE_TYPE_OPERATION, HAPResourceIdOperation.class, HAPOperationId.class);
 	}
 	
 	@Override
