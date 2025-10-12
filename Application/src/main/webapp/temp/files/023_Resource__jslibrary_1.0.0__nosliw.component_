@@ -1,0 +1,13 @@
+
+if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.getResourceService()!=undefined) nosliw.runtime.getResourceService().importResource({"id":{"resourceTypeId":{"resourceType":"jslibrary",
+"version":"1.0.0"
+},
+"id":"*nosliw.component;"
+},
+"children":[],
+"dependency":{},
+"info":{"ADDTORESOURCEMANAGER":"ADDTORESOURCEMANAGER"
+}
+}, {"uris":["file:/C:/MyWork/CoreProjects/Application/src/main/webapp/libresources/nosliw/component/0_package_component.js","file:/C:/MyWork/CoreProjects/Application/src/main/webapp/libresources/nosliw/component/componentresource.js","file:/C:/MyWork/CoreProjects/Application/src/main/webapp/libresources/nosliw/component/componentruntime.js","file:/C:/MyWork/CoreProjects/Application/src/main/webapp/libresources/nosliw/component/componentstate.js","file:/C:/MyWork/CoreProjects/Application/src/main/webapp/libresources/nosliw/component/configure.js","file:/C:/MyWork/CoreProjects/Application/src/main/webapp/libresources/nosliw/component/corecomplex.js","file:/C:/MyWork/CoreProjects/Application/src/main/webapp/libresources/nosliw/component/decoration.js","file:/C:/MyWork/CoreProjects/Application/src/main/webapp/libresources/nosliw/component/entity.js","file:/C:/MyWork/CoreProjects/Application/src/main/webapp/libresources/nosliw/component/interfacedef.js","file:/C:/MyWork/CoreProjects/Application/src/main/webapp/libresources/nosliw/component/interfacelifecycle.js","file:/C:/MyWork/CoreProjects/Application/src/main/webapp/libresources/nosliw/component/interfacelifecycle2.js","file:/C:/MyWork/CoreProjects/Application/src/main/webapp/libresources/nosliw/component/interfacemanagement.js","file:/C:/MyWork/CoreProjects/Application/src/main/webapp/libresources/nosliw/component/utility.js","file:/C:/MyWork/CoreProjects/Application/src/main/webapp/libresources/nosliw/component/xxxxcomponentruntime2.js"]
+}, {});
+

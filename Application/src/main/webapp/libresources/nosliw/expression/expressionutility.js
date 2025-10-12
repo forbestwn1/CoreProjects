@@ -429,7 +429,7 @@ var node_utility = function()
 					success : function(request, results){
 						var expressionResults = results.getResults();
 						var scriptFun = scriptExpresion[node_COMMONATRIBUTECONSTANT.EXPRESSIONSCRIPT_SCRIPTFUNCTION];
-						return scriptFun(scriptExpresion[node_COMMONATRIBUTECONSTANT.EXPRESSIONSCRIPT_SUPPORTFUNCTION], expressionResults, undefined, allVariables);
+						return scriptFun(scriptExpresion[node_COMMONATRIBUTECONSTANT.EXPRESSIONSCRIPT_SUPPORTFUNCTION], expressionResults, constants, allVariables);
 					}
 				});
 				_.each(dataExpressions[node_COMMONATRIBUTECONSTANT.CONTAINER_ITEM], function(dataExpressionItem, dataExpressionId){

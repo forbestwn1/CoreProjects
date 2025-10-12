@@ -85,7 +85,7 @@ var node_createDynamicCore = function(dynamicDef, bundleCore, configure){
 				});
 				loc_parentView.append(taskTrigueView);
 	
-				loc_outputView =  $(`<textarea rows="5" cols="200"></textarea>`);
+				loc_outputView =  $('<textarea rows="5" cols="200"></textarea>');
 				loc_parentView.append(loc_outputView);
 				
 			}

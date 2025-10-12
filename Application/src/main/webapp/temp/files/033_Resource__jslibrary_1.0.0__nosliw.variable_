@@ -1,0 +1,13 @@
+
+if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.getResourceService()!=undefined) nosliw.runtime.getResourceService().importResource({"id":{"resourceTypeId":{"resourceType":"jslibrary",
+"version":"1.0.0"
+},
+"id":"*nosliw.variable;"
+},
+"children":[],
+"dependency":{},
+"info":{"ADDTORESOURCEMANAGER":"ADDTORESOURCEMANAGER"
+}
+}, {"uris":["file:/C:/MyWork/CoreProjects/Application/src/main/webapp/libresources/nosliw/variable/0_package_variable.js","file:/C:/MyWork/CoreProjects/Application/src/main/webapp/libresources/nosliw/variable/managervariable.js","file:/C:/MyWork/CoreProjects/Application/src/main/webapp/libresources/nosliw/variable/valueinvar.js","file:/C:/MyWork/CoreProjects/Application/src/main/webapp/libresources/nosliw/variable/valueinvarhelperdata.js","file:/C:/MyWork/CoreProjects/Application/src/main/webapp/libresources/nosliw/variable/valueinvarhelperdynamic.js","file:/C:/MyWork/CoreProjects/Application/src/main/webapp/libresources/nosliw/variable/valueinvarhelperobject.js","file:/C:/MyWork/CoreProjects/Application/src/main/webapp/libresources/nosliw/variable/valueinvarOperation.js","file:/C:/MyWork/CoreProjects/Application/src/main/webapp/libresources/nosliw/variable/valueinvarutility.js","file:/C:/MyWork/CoreProjects/Application/src/main/webapp/libresources/nosliw/variable/variable.js","file:/C:/MyWork/CoreProjects/Application/src/main/webapp/libresources/nosliw/variable/variablecontainerinfo.js","file:/C:/MyWork/CoreProjects/Application/src/main/webapp/libresources/nosliw/variable/variablegroup.js","file:/C:/MyWork/CoreProjects/Application/src/main/webapp/libresources/nosliw/variable/wraperfactory.js","file:/C:/MyWork/CoreProjects/Application/src/main/webapp/libresources/nosliw/variable/wrappercommon.js","file:/C:/MyWork/CoreProjects/Application/src/main/webapp/libresources/nosliw/variable/wrapperobjectutility.js","file:/C:/MyWork/CoreProjects/Application/src/main/webapp/libresources/nosliw/variable/wrappervariable.js","file:/C:/MyWork/CoreProjects/Application/src/main/webapp/libresources/nosliw/variable/xxxvaluestructureutility.js","file:/C:/MyWork/CoreProjects/Application/src/main/webapp/libresources/nosliw/variable/xxxxentitys.js","file:/C:/MyWork/CoreProjects/Application/src/main/webapp/libresources/nosliw/variable/xxxxtest.js","file:/C:/MyWork/CoreProjects/Application/src/main/webapp/libresources/nosliw/variable/xxxxtestlib.js","file:/C:/MyWork/CoreProjects/Application/src/main/webapp/libresources/nosliw/variable/xxxxwrapperappdatautility.js"]
+}, {});
+

@@ -1,0 +1,13 @@
+
+if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.getResourceService()!=undefined) nosliw.runtime.getResourceService().importResource({"id":{"resourceTypeId":{"resourceType":"jslibrary",
+"version":"1.0.0"
+},
+"id":"*nosliw.iovalue;"
+},
+"children":[],
+"dependency":{},
+"info":{"ADDTORESOURCEMANAGER":"ADDTORESOURCEMANAGER"
+}
+}, {"uris":["file:/C:/MyWork/CoreProjects/Application/src/main/webapp/libresources/nosliw/iovalue/0_package_iovalue.js","file:/C:/MyWork/CoreProjects/Application/src/main/webapp/libresources/nosliw/iovalue/dataassociation.js","file:/C:/MyWork/CoreProjects/Application/src/main/webapp/libresources/nosliw/iovalue/dataassociationmapping.js","file:/C:/MyWork/CoreProjects/Application/src/main/webapp/libresources/nosliw/iovalue/dataassociationmirror.js","file:/C:/MyWork/CoreProjects/Application/src/main/webapp/libresources/nosliw/iovalue/dataassociationnone.js","file:/C:/MyWork/CoreProjects/Application/src/main/webapp/libresources/nosliw/iovalue/dataassociationutility.js","file:/C:/MyWork/CoreProjects/Application/src/main/webapp/libresources/nosliw/iovalue/plugindataassociation.js","file:/C:/MyWork/CoreProjects/Application/src/main/webapp/libresources/nosliw/iovalue/plugindataassociationforexpression.js","file:/C:/MyWork/CoreProjects/Application/src/main/webapp/libresources/nosliw/iovalue/plugindataassociationfortask.js","file:/C:/MyWork/CoreProjects/Application/src/main/webapp/libresources/nosliw/iovalue/plugindataassociationinteractive.js","file:/C:/MyWork/CoreProjects/Application/src/main/webapp/libresources/nosliw/iovalue/utility.js","file:/C:/MyWork/CoreProjects/Application/src/main/webapp/libresources/nosliw/iovalue/xxxxaliasutility.js","file:/C:/MyWork/CoreProjects/Application/src/main/webapp/libresources/nosliw/iovalue/xxxxentity.js","file:/C:/MyWork/CoreProjects/Application/src/main/webapp/libresources/nosliw/iovalue/xxxxfactoryiodata.js","file:/C:/MyWork/CoreProjects/Application/src/main/webapp/libresources/nosliw/iovalue/xxxxplugindataassociationtask_kkkkk.js","file:/C:/MyWork/CoreProjects/Application/src/main/webapp/libresources/nosliw/iovalue/xxxxtaskutility.js"]
+}, {});
+

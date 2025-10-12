@@ -136,7 +136,7 @@ var loc_createTaskCore = function(taskDef, configure){
 			});
 			rootView.append(taskTrigueView);
 
-			loc_outputView =  $(`<textarea rows="5" cols="200"></textarea>`);
+			loc_outputView =  $('<textarea rows="5" cols="200"></textarea>');
 			rootView.append(loc_outputView);
 		},
 		

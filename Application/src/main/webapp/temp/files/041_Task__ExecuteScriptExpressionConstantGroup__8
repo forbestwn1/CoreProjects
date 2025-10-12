@@ -1,0 +1,228 @@
+	var node_CONSTANT = nosliw.getNodeData("constant.CONSTANT");
+	var node_COMMONCONSTANT = nosliw.getNodeData("constant.COMMONCONSTANT");
+	var node_COMMONATRIBUTECONSTANT = nosliw.getNodeData("constant.COMMONATRIBUTECONSTANT");
+	
+	var node_basicUtility = nosliw.getNodeData("common.utility.basicUtility");
+	var node_createServiceRequestInfoSequence = nosliw.getNodeData("request.request.createServiceRequestInfoSequence");
+	var node_createServiceRequestInfoSet = nosliw.getNodeData("request.request.createServiceRequestInfoSet");
+	var node_requestServiceProcessor = nosliw.getNodeData("request.requestServiceProcessor");
+	var node_ResourceId = nosliw.getNodeData("resource.entity.ResourceId");
+	var node_getApplicationInterface = nosliw.getNodeData("component.getApplicationInterface");
+	var node_ServiceInfo = nosliw.getNodeData("common.service.ServiceInfo");
+	var node_EntityIdInDomain = nosliw.getNodeData("complexentity.entity.EntityIdInDomain");
+	var node_expressionUtility = nosliw.getNodeData("expression.utility");
+
+	var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("ExecuteScriptExpressionConstantGroup"));
+
+	var calItemsRequest = node_createServiceRequestInfoSet(new node_ServiceInfo("allItems", {}), {
+		success : function(requestInfo, results){
+			var parms = {};
+			parms.taskId = "Task__ExecuteScriptExpressionConstantGroup__8";
+			parms.responseData = results.getResults();
+			nosliw.runtime.getGatewayService().executeGatewayCommand("taskResponseGateway", "success", parms);
+		},
+		error : function(requestInfo, serviceData){
+			var parms = {};
+			parms.taskId = "Task__ExecuteScriptExpressionConstantGroup__8";
+			parms.responseData = serviceData;
+			nosliw.runtime.getGatewayService().executeGatewayCommand("taskResponseGateway", "error", parms);
+		},
+		exception : function(requestInfo, serviceData){
+			var parms = {};
+			parms.taskId = "Task__ExecuteScriptExpressionConstantGroup__8";
+			parms.responseData = serviceData;
+			nosliw.runtime.getGatewayService().executeGatewayCommand("taskResponseGateway", "exception", parms);
+		}
+	});
+	
+	var taskInfo = {"container":{"item":{"UIContent.customerTag.ContainerElement_1.item0":{"id":"UIContent.customerTag.ContainerElement_1.item0",
+"name":"UIContent.customerTag.ContainerElement_1.item0",
+"displayName":"UIContent.customerTag.ContainerElement_1.item0",
+"info":{},
+"value":{"scriptExpression":{"variableInfos":{},
+"entityType":"scriptExpression",
+"supportFunction":{"1":function(functions, expressionsData, constantsData, variablesData){
+	return ('element');
+} 
+
+},
+"scriptFunction":function(functions, expressionsData, constantsData, variablesData){
+	return functions["1"](functions, expressionsData, constantsData, variablesData)+"";
+} 
+,
+"dataExpression":{"item":{}
+}
+},
+"constant":{"nosliwattribute_attribute1":"myAttr",
+"nosliwattribute_data_string":"public_string",
+"nosliwattribute_arrayelement":"element",
+"nosliwattribute_arrayindex":"arrayindex"
+}
+}
+},
+"UIContent.customerTag.ContainerElement_1.item1":{"id":"UIContent.customerTag.ContainerElement_1.item1",
+"name":"UIContent.customerTag.ContainerElement_1.item1",
+"displayName":"UIContent.customerTag.ContainerElement_1.item1",
+"info":{},
+"value":{"scriptExpression":{"variableInfos":{},
+"entityType":"scriptExpression",
+"supportFunction":{"1":function(functions, expressionsData, constantsData, variablesData){
+	return ('element');
+} 
+
+},
+"scriptFunction":function(functions, expressionsData, constantsData, variablesData){
+	return functions["1"](functions, expressionsData, constantsData, variablesData)+"";
+} 
+,
+"dataExpression":{"item":{}
+}
+},
+"constant":{"nosliwattribute_attribute1":"myAttr",
+"nosliwattribute_data_string":"public_string",
+"nosliwattribute_arrayelement":"element",
+"nosliwattribute_arrayindex":"arrayindex"
+}
+}
+},
+"UIContent.customerTag.ContainerElement_1.item2":{"id":"UIContent.customerTag.ContainerElement_1.item2",
+"name":"UIContent.customerTag.ContainerElement_1.item2",
+"displayName":"UIContent.customerTag.ContainerElement_1.item2",
+"info":{},
+"value":{"scriptExpression":{"variableInfos":{},
+"entityType":"scriptExpression",
+"supportFunction":{"1":function(functions, expressionsData, constantsData, variablesData){
+	return constantsData["nosliwattribute_data_array"];
+} 
+,
+"3":function(functions, expressionsData, constantsData, variablesData){
+	return ".element";
+} 
+
+},
+"scriptFunction":function(functions, expressionsData, constantsData, variablesData){
+	return functions["1"](functions, expressionsData, constantsData, variablesData)+functions["3"](functions, expressionsData, constantsData, variablesData)+"";
+} 
+,
+"dataExpression":{"item":{}
+}
+},
+"constant":{"nosliwattribute_attribute1":"myAttr",
+"nosliwattribute_data_string":"public_string",
+"nosliwattribute_arrayelement":"element",
+"nosliwattribute_arrayindex":"arrayindex"
+}
+}
+},
+"UIContent.customerTag.ContainerElement_1.item3":{"id":"UIContent.customerTag.ContainerElement_1.item3",
+"name":"UIContent.customerTag.ContainerElement_1.item3",
+"displayName":"UIContent.customerTag.ContainerElement_1.item3",
+"info":{},
+"value":{"scriptExpression":{"variableInfos":{},
+"entityType":"scriptExpression",
+"supportFunction":{"1":function(functions, expressionsData, constantsData, variablesData){
+	return ('arrayindex');
+} 
+
+},
+"scriptFunction":function(functions, expressionsData, constantsData, variablesData){
+	return functions["1"](functions, expressionsData, constantsData, variablesData)+"";
+} 
+,
+"dataExpression":{"item":{}
+}
+},
+"constant":{"nosliwattribute_attribute1":"myAttr",
+"nosliwattribute_data_string":"public_string",
+"nosliwattribute_arrayelement":"element",
+"nosliwattribute_arrayindex":"arrayindex"
+}
+}
+},
+"UIContent.customerTag.ContainerElement_1.item4":{"id":"UIContent.customerTag.ContainerElement_1.item4",
+"name":"UIContent.customerTag.ContainerElement_1.item4",
+"displayName":"UIContent.customerTag.ContainerElement_1.item4",
+"info":{},
+"value":{"scriptExpression":{"variableInfos":{},
+"entityType":"scriptExpression",
+"supportFunction":{"1":function(functions, expressionsData, constantsData, variablesData){
+	return ('arrayindex');
+} 
+
+},
+"scriptFunction":function(functions, expressionsData, constantsData, variablesData){
+	return functions["1"](functions, expressionsData, constantsData, variablesData)+"";
+} 
+,
+"dataExpression":{"item":{}
+}
+},
+"constant":{"nosliwattribute_attribute1":"myAttr",
+"nosliwattribute_data_string":"public_string",
+"nosliwattribute_arrayelement":"element",
+"nosliwattribute_arrayindex":"arrayindex"
+}
+}
+},
+"UIContent.customerTag.ContainerElement_1.UIContent.item0":{"id":"UIContent.customerTag.ContainerElement_1.UIContent.item0",
+"name":"UIContent.customerTag.ContainerElement_1.UIContent.item0",
+"displayName":"UIContent.customerTag.ContainerElement_1.UIContent.item0",
+"info":{},
+"value":{"scriptExpression":{"variableInfos":{},
+"entityType":"scriptExpression",
+"supportFunction":{"1":function(functions, expressionsData, constantsData, variablesData){
+	return ('myAttr');
+} 
+
+},
+"scriptFunction":function(functions, expressionsData, constantsData, variablesData){
+	return functions["1"](functions, expressionsData, constantsData, variablesData)+"";
+} 
+,
+"dataExpression":{"item":{}
+}
+},
+"constant":{"nosliwattribute_attribute1":"myAttr",
+"nosliwattribute_data_string":"public_string",
+"nosliwattribute_arrayelement":"element",
+"nosliwattribute_arrayindex":"arrayindex"
+}
+}
+},
+"UIContent.customerTag.ContainerElement_1.UIContent.item1":{"id":"UIContent.customerTag.ContainerElement_1.UIContent.item1",
+"name":"UIContent.customerTag.ContainerElement_1.UIContent.item1",
+"displayName":"UIContent.customerTag.ContainerElement_1.UIContent.item1",
+"info":{},
+"value":{"scriptExpression":{"variableInfos":{},
+"entityType":"scriptExpression",
+"supportFunction":{"1":function(functions, expressionsData, constantsData, variablesData){
+	return ('myAttr');
+} 
+
+},
+"scriptFunction":function(functions, expressionsData, constantsData, variablesData){
+	return functions["1"](functions, expressionsData, constantsData, variablesData)+"";
+} 
+,
+"dataExpression":{"item":{}
+}
+},
+"constant":{"nosliwattribute_attribute1":"myAttr",
+"nosliwattribute_data_string":"public_string",
+"nosliwattribute_arrayelement":"element",
+"nosliwattribute_arrayindex":"arrayindex"
+}
+}
+}
+}
+}
+};
+	var items = taskInfo[node_COMMONATRIBUTECONSTANT.INFORUNTIMETASKTASKSCRIPTEXPRESSIONCONSTANTGROUP_CONTAINER][node_COMMONATRIBUTECONSTANT.CONTAINER_ITEM];
+	_.each(items, function(item, name){
+	    var itemValue = item[node_COMMONATRIBUTECONSTANT.ITEMWRAPPER_VALUE];
+		calItemsRequest.addRequest(name, node_expressionUtility.getExecuteScriptExpressionRequest(itemValue[node_COMMONATRIBUTECONSTANT.INFORUNTIMETASKTASKSCRIPTEXPRESSIONCONSTANTGROUP_SCRIPTEXPRESSION], undefined, itemValue[node_COMMONATRIBUTECONSTANT.INFORUNTIMETASKTASKSCRIPTEXPRESSIONCONSTANTGROUP_CONSTANT]));
+	});
+	
+	out.addRequest(calItemsRequest);
+
+	node_requestServiceProcessor.processRequest(out);

@@ -1,0 +1,13 @@
+
+if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.getResourceService()!=undefined) nosliw.runtime.getResourceService().importResource({"id":{"resourceTypeId":{"resourceType":"jslibrary",
+"version":"1.0.0"
+},
+"id":"*nosliw.valueport;"
+},
+"children":[],
+"dependency":{},
+"info":{"ADDTORESOURCEMANAGER":"ADDTORESOURCEMANAGER"
+}
+}, {"uris":["file:/C:/MyWork/CoreProjects/Application/src/main/webapp/libresources/nosliw/valueport/0_package_valueport.js","file:/C:/MyWork/CoreProjects/Application/src/main/webapp/libresources/nosliw/valueport/domainvalueport.js","file:/C:/MyWork/CoreProjects/Application/src/main/webapp/libresources/nosliw/valueport/entity.js","file:/C:/MyWork/CoreProjects/Application/src/main/webapp/libresources/nosliw/valueport/interface.js","file:/C:/MyWork/CoreProjects/Application/src/main/webapp/libresources/nosliw/valueport/utilitydebugvalueport.js","file:/C:/MyWork/CoreProjects/Application/src/main/webapp/libresources/nosliw/valueport/utilityvariablebyname.js","file:/C:/MyWork/CoreProjects/Application/src/main/webapp/libresources/nosliw/valueport/utilityvariableresolved.js","file:/C:/MyWork/CoreProjects/Application/src/main/webapp/libresources/nosliw/valueport/valuestructure.js","file:/C:/MyWork/CoreProjects/Application/src/main/webapp/libresources/nosliw/valueport/valuestructureentity.js","file:/C:/MyWork/CoreProjects/Application/src/main/webapp/libresources/nosliw/valueport/xxxxvalueport.js"]
+}, {});
+
