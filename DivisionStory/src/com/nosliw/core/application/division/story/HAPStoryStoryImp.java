@@ -12,7 +12,6 @@ import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.core.application.division.story.brick.HAPStoryConnection;
-import com.nosliw.core.application.division.story.brick.HAPStoryElementGroup;
 import com.nosliw.core.application.division.story.brick.HAPStoryElement;
 import com.nosliw.core.application.division.story.brick.HAPStoryNode;
 import com.nosliw.core.application.division.story.change.HAPStoryChangeItem;
@@ -21,6 +20,7 @@ import com.nosliw.core.application.division.story.change.HAPStoryManagerChange;
 import com.nosliw.core.application.division.story.change.HAPStoryRequestChange;
 import com.nosliw.core.application.division.story.change.HAPStoryResultTransaction;
 import com.nosliw.core.application.division.story.change.HAPStoryUtilityChange;
+import com.nosliw.core.application.division.story.xxx.brick.HAPStoryElementGroup;
 import com.nosliw.common.utils.HAPConstantShared;
 
 public class HAPStoryStoryImp extends HAPEntityInfoImp implements HAPStoryStory{

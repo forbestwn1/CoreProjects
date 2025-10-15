@@ -1,7 +1,7 @@
 package com.nosliw.core.application.division.story;
 
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
-import com.nosliw.core.application.division.story.brick.HAPStoryElementGroup;
+import com.nosliw.core.application.division.story.xxx.brick.HAPStoryElementGroup;
 
 public class HAPStoryUtilityGroup {
 

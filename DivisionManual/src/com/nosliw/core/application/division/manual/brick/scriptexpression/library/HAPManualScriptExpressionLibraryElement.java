@@ -56,7 +56,7 @@ public class HAPManualScriptExpressionLibraryElement extends HAPEntityInfoImp im
 			this.setResult(result);
 		}
 		
-		this.setExpression(jsonObj.getString(HAPElementInLibraryDataExpression.EXPRESSION));
+		this.setExpression(jsonObj.getString(HAPDataExpressionStandAlone.EXPRESSION));
 		
 		return true;  
 	}

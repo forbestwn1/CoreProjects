@@ -13,6 +13,10 @@ Hellooooooo!!!!!
 EXPRESSION IN ATTRIBUTE:<span  style="color:<%=?(public_string)?.value=='red'?'red':'blue'%>">Change the input below and color will change according to the value </span> 
 		<br>
 
+ 		<!--nosliw-debug_test data_string="public_string"/ -->
+
+<!-- 
+
  		<nosliw-debug_test attribute1="myAttr" data_string="public_string">
     		<br>
  	    	embeded_stringVar:<%=?(input_stringVar)?.value + '   7777 ' %>
@@ -26,7 +30,6 @@ EXPRESSION IN ATTRIBUTE:<span  style="color:<%=?(public_string)?.value=='red'?'r
  	    	  
 		</nosliw-debug_test>
 
-<!-- 
 
 	 		<nosliw-debug_test_data_simple data_string="public_string">
 			</nosliw-debug_test_data_simple>
@@ -71,7 +74,44 @@ EXPRESSION IN ATTRIBUTE:<span  style="color:<%=?(public_string)?.value=='red'?'r
 					"root" : {
 						"public_string": {
 							"definition":{
-								"data": "test.string;1.0.0"
+								"data": {
+								    "criteria" : "test.string;1.0.0",
+								    "rule" : [
+								        {
+								            "ruleType" : "mandatory"
+								        },
+								        {
+								            "ruleType" : "enum",
+								            "dataSet" : [
+                								{
+				                					dataTypeId: "test.string;1.0.0",
+								                	value: "default value of public_string1"
+								                },
+                								{
+				                					dataTypeId: "test.string;1.0.0",
+								                	value: "default value of public_string2"
+								                },
+                								{
+				                					dataTypeId: "test.string;1.0.0",
+								                	value: "default value of public_string3"
+								                }
+								            ]
+								        }
+								    ]
+								} 
+							}
+						},
+						"public_float": {
+							"definition":{
+								"data": {
+								    "criteria" : "test.url;1.0.0",
+								    "rule" : [
+								        {
+								            "ruleType" : "expression",
+								            "expression" : "?(data)?.largerThan(data:&(#test##float___5000)&).opposite()"
+								        }
+								    ]
+								} 
 							}
 						},
 						"public_url": {
@@ -88,7 +128,11 @@ EXPRESSION IN ATTRIBUTE:<span  style="color:<%=?(public_string)?.value=='red'?'r
 					"initValue": {
 						"public_string": {
 							"dataTypeId": "test.string;1.0.0",
-							"value": "default value of public_string"
+							"value": "default value of public_string1"
+						},
+						"public_float": {
+							"dataTypeId": "test.float;1.0.0",
+							"value": "100"
 						},
 						"public_url": {
 							"dataTypeId": "test.url;1.0.0",

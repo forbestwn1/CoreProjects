@@ -45,7 +45,7 @@ public interface HAPStoryElement extends HAPEntityInfo, HAPEntityOrReference{
 	
 	HAPDisplayResourceNode getDisplayResource();
 	
-	HAPStoryChangeResult patch(String path, Object value, HAPRuntimeEnvironment runtimeEnv);
+	HAPStoryChangeResult patch(String path, Object value);
 	Object getValueByPath(String path);
 	
 	//configuration for element, for ui purpose

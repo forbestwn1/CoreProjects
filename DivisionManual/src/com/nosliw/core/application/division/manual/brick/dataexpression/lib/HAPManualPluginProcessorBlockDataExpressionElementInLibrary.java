@@ -9,7 +9,7 @@ import com.nosliw.common.path.HAPPath;
 import com.nosliw.core.application.HAPDomainValueStructure;
 import com.nosliw.core.application.brick.HAPEnumBrickType;
 import com.nosliw.core.application.brick.dataexpression.library.HAPBlockDataExpressionElementInLibrary;
-import com.nosliw.core.application.brick.dataexpression.library.HAPElementInLibraryDataExpression;
+import com.nosliw.core.application.common.dataexpression.HAPDataExpressionStandAlone;
 import com.nosliw.core.application.common.dataexpression.imp.basic.HAPBasicExpressionData;
 import com.nosliw.core.application.common.dataexpression.imp.basic.HAPBasicPluginProcessorEntityWithVariableDataExpression;
 import com.nosliw.core.application.common.dataexpression.imp.basic.HAPBasicUtilityProcessorDataExpression;
@@ -39,7 +39,7 @@ public class HAPManualPluginProcessorBlockDataExpressionElementInLibrary extends
 	@Override
 	public void processInit(HAPPath pathFromRoot, HAPManualContextProcessBrick processContext) {
 		Pair<HAPManualDefinitionBrick, HAPManualBrick> brickInfo = this.getBrickPair(pathFromRoot, processContext);
-		HAPElementInLibraryDataExpression exe = ((HAPBlockDataExpressionElementInLibrary)brickInfo.getRight()).getValue();;
+		HAPDataExpressionStandAlone exe = ((HAPBlockDataExpressionElementInLibrary)brickInfo.getRight()).getValue();;
 		HAPManualDataExpressionLibraryElement def = ((HAPManualDefinitionBlockDataExpressionElementInLibrary)brickInfo.getLeft()).getValue();
 		
 		((HAPManualDefinitionBlockDataExpressionElementInLibrary)brickInfo.getLeft()).cloneToEntityInfo(((HAPBlockDataExpressionElementInLibrary)brickInfo.getRight()));
@@ -59,7 +59,7 @@ public class HAPManualPluginProcessorBlockDataExpressionElementInLibrary extends
 		Pair<HAPManualDefinitionBrick, HAPManualBrick> brickInfo = this.getBrickPair(pathFromRoot, processContext);
 		HAPManualDataExpressionLibraryElement def = ((HAPManualDefinitionBlockDataExpressionElementInLibrary)brickInfo.getLeft()).getValue();
 		HAPManualBlockDataExpressionElementInLibrary brick = (HAPManualBlockDataExpressionElementInLibrary)brickInfo.getRight(); 
-		HAPElementInLibraryDataExpression exe = brick.getValue();;
+		HAPDataExpressionStandAlone exe = brick.getValue();;
 		HAPManualUtilityTask.buildValuePortGroupForInteractiveExpression(brick, exe.getExpressionInterface(), valueStructureDomain);
 	}
 
@@ -69,7 +69,7 @@ public class HAPManualPluginProcessorBlockDataExpressionElementInLibrary extends
 
 		Pair<HAPManualDefinitionBrick, HAPManualBrick> brickInfo = this.getBrickPair(pathFromRoot, processContext);
 		HAPManualBlockDataExpressionElementInLibrary blockExe = (HAPManualBlockDataExpressionElementInLibrary)brickInfo.getRight();
-		HAPElementInLibraryDataExpression exe = blockExe.getValue();;
+		HAPDataExpressionStandAlone exe = blockExe.getValue();;
 		HAPManualDataExpressionLibraryElement def = ((HAPManualDefinitionBlockDataExpressionElementInLibrary)brickInfo.getLeft()).getValue();
 		
 		HAPBasicExpressionData dataExpression = (HAPBasicExpressionData)exe.getExpression();
@@ -92,7 +92,7 @@ public class HAPManualPluginProcessorBlockDataExpressionElementInLibrary extends
 
 		Pair<HAPManualDefinitionBrick, HAPManualBrick> brickInfo = this.getBrickPair(pathFromRoot, processContext);
 		HAPManualBlockDataExpressionElementInLibrary blockExe = (HAPManualBlockDataExpressionElementInLibrary)brickInfo.getRight();
-		HAPElementInLibraryDataExpression exe = blockExe.getValue();;
+		HAPDataExpressionStandAlone exe = blockExe.getValue();;
 		HAPManualDataExpressionLibraryElement def = ((HAPManualDefinitionBlockDataExpressionElementInLibrary)brickInfo.getLeft()).getValue();
 
 		HAPContainerVariableInfo varInfoContainer = blockExe.getVariableInfoContainer();
@@ -123,7 +123,7 @@ public class HAPManualPluginProcessorBlockDataExpressionElementInLibrary extends
 	
 	@Override
 	public void process(HAPManualBrick blockExe, HAPManualDefinitionBrick blockDef, HAPManualContextProcessBrick processContext) {
-		HAPElementInLibraryDataExpression exe = ((HAPBlockDataExpressionElementInLibrary)blockExe).getValue();;
+		HAPDataExpressionStandAlone exe = ((HAPBlockDataExpressionElementInLibrary)blockExe).getValue();;
 		HAPManualDataExpressionLibraryElement def = ((HAPManualDefinitionBlockDataExpressionElementInLibrary)blockDef).getValue();
 		
 		def.cloneToEntityInfo(exe);

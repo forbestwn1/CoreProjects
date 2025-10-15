@@ -9,7 +9,6 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.division.story.brick.HAPStoryConnection;
 import com.nosliw.core.application.division.story.brick.HAPStoryElement;
-import com.nosliw.core.application.division.story.brick.HAPStoryElementGroup;
 import com.nosliw.core.application.division.story.brick.HAPStoryNode;
 import com.nosliw.core.application.division.story.brick.connection.HAPStoryConnectionContain;
 import com.nosliw.core.application.division.story.brick.connection.HAPStoryConnectionDataIO;
@@ -28,6 +27,7 @@ import com.nosliw.core.application.division.story.brick.node.HAPStoryNodeUIPage;
 import com.nosliw.core.application.division.story.brick.node.HAPStoryNodeUITagData;
 import com.nosliw.core.application.division.story.brick.node.HAPStoryNodeUITagOther;
 import com.nosliw.core.application.division.story.brick.node.HAPStoryNodeVariable;
+import com.nosliw.core.application.division.story.xxx.brick.HAPStoryElementGroup;
 
 public class HAPStoryParserElement {
 

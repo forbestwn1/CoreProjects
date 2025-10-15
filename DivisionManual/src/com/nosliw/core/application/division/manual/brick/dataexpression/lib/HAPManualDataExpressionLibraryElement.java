@@ -6,9 +6,9 @@ import org.json.JSONObject;
 
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.core.application.brick.dataexpression.library.HAPElementInLibraryDataExpression;
 import com.nosliw.core.application.common.datadefinition.HAPDefinitionParm;
 import com.nosliw.core.application.common.datadefinition.HAPDefinitionResult;
+import com.nosliw.core.application.common.dataexpression.HAPDataExpressionStandAlone;
 import com.nosliw.core.application.common.dataexpression.definition.HAPDefinitionDataExpression;
 import com.nosliw.core.application.common.interactive.HAPInteractiveExpression;
 
@@ -41,7 +41,7 @@ public class HAPManualDataExpressionLibraryElement extends HAPSerializableImp{
 		this.m_interactiveExpression = new HAPInteractiveExpression();
 		this.m_interactiveExpression.buildObject(jsonObj, HAPSerializationFormat.JSON);
 		
-		this.m_expressionStr = jsonObj.getString(HAPElementInLibraryDataExpression.EXPRESSION);
+		this.m_expressionStr = jsonObj.getString(HAPDataExpressionStandAlone.EXPRESSION);
 		
 		return true;  
 	}

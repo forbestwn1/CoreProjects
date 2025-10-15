@@ -12,7 +12,6 @@ import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.utils.HAPUtilityBasic;
-import com.nosliw.core.application.common.datarule.HAPDataRule;
 import com.nosliw.core.application.common.datarule.HAPParserDataRule;
 import com.nosliw.core.data.criteria.HAPDataTypeCriteria;
 import com.nosliw.core.data.criteria.HAPParserCriteria;
@@ -32,7 +31,7 @@ public class HAPDataDefinitionWritable extends HAPDataDefinition{
 	public static String RULECRITERIA = "ruleCriteria";
 
 	//rules that apply constrain for the value
-	private List<HAPDataRule> m_rules;
+	private List<HAPDefinitionDataRule> m_rules;
 	
 	//matchers that apply to rule
 	private HAPMatchersCombo m_ruleMatchers;
@@ -40,16 +39,16 @@ public class HAPDataDefinitionWritable extends HAPDataDefinition{
 	private HAPDataTypeCriteria m_ruleCriteria;
 
 	public HAPDataDefinitionWritable() { 
-		this.m_rules = new ArrayList<HAPDataRule>();
+		this.m_rules = new ArrayList<HAPDefinitionDataRule>();
 	}
 	
 	public HAPDataDefinitionWritable(HAPDataTypeCriteria criteria) {
 		super(criteria);
-		this.m_rules = new ArrayList<HAPDataRule>();
+		this.m_rules = new ArrayList<HAPDefinitionDataRule>();
 	}
 	
-	public List<HAPDataRule> getRules(){   return this.m_rules;   }
-	public void addRule(HAPDataRule rule) {   
+	public List<HAPDefinitionDataRule> getRules(){   return this.m_rules;   }
+	public void addRule(HAPDefinitionDataRule rule) {   
 		if(rule!=null) {
 			this.m_rules.add(rule);
 		}    

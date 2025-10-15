@@ -9,6 +9,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.core.application.HAPBundle;
 import com.nosliw.core.application.HAPDomainValueStructure;
+import com.nosliw.core.application.common.structure.HAPStructure;
 import com.nosliw.core.application.common.structure.HAPStructureImp;
 import com.nosliw.core.application.common.structure.reference.HAPConfigureResolveElementReference;
 import com.nosliw.core.application.common.structure.reference.HAPUtilityResolveReference;
@@ -133,7 +134,7 @@ public class HAPUtilityResovleElement {
 		for(String valueStructureId : valuePort.getValueStructureIds()) {
 			boolean isValid = true;
 
-			HAPStructureImp valueStructureDefInfo = valueStructureDomain.getStructureDefinitionByRuntimeId(valueStructureId);
+			HAPStructure valueStructureDefInfo = valueStructureDomain.getStructureDefinitionByRuntimeId(valueStructureId);
 
 			//check runtime id
 			if(isValid) {

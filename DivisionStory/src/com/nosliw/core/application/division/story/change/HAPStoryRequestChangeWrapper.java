@@ -10,7 +10,7 @@ import com.nosliw.core.application.division.story.HAPStoryReferenceElement;
 import com.nosliw.core.application.division.story.HAPStoryStory;
 import com.nosliw.core.application.division.story.HAPStoryUtilityStory;
 import com.nosliw.core.application.division.story.brick.HAPStoryElement;
-import com.nosliw.core.application.division.story.brick.HAPStoryElementGroup;
+import com.nosliw.core.application.division.story.xxx.brick.HAPStoryElementGroup;
 
 public class HAPStoryRequestChangeWrapper {
 

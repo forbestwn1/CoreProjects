@@ -10,11 +10,11 @@ import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.core.application.division.story.HAPStoryInfoElement;
-import com.nosliw.core.application.division.story.brick.HAPStoryElementGroupImp;
 import com.nosliw.core.application.division.story.brick.HAPStoryElement;
 import com.nosliw.core.application.division.story.change.HAPStoryChangeItemPatch;
 import com.nosliw.core.application.division.story.change.HAPStoryChangeResult;
 import com.nosliw.core.application.division.story.change.HAPStoryUtilityChange;
+import com.nosliw.core.application.division.story.xxx.brick.HAPStoryElementGroupImp;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 

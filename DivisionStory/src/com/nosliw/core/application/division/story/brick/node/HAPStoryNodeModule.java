@@ -2,7 +2,7 @@ package com.nosliw.core.application.division.story.brick.node;
 
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.division.story.brick.HAPStoryElement;
-import com.nosliw.core.application.division.story.brick.HAPStoryNodeImp;
+import com.nosliw.core.application.division.story.xxx.brick.HAPStoryNodeImp;
 
 public class HAPStoryNodeModule extends HAPStoryNodeImp{
 

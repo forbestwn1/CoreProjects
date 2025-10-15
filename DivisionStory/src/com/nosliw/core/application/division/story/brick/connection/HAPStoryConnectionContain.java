@@ -7,8 +7,8 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.core.application.division.story.brick.HAPStoryConnectionImp;
 import com.nosliw.core.application.division.story.brick.HAPStoryElement;
+import com.nosliw.core.application.division.story.xxx.brick.HAPStoryConnectionImp;
 
 @HAPEntityWithAttribute
 public class HAPStoryConnectionContain extends HAPStoryConnectionImp{

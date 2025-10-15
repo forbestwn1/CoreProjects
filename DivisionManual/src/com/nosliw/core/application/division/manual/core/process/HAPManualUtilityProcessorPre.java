@@ -62,6 +62,9 @@ public class HAPManualUtilityProcessorPre {
 		Map<String, Map<String, Object>> scriptExpressionResults = HAPManualUtilityScriptExpressionConstant.calculateScriptExpressionConstants(brickDef, processContext.getManualBrickManager(), runtimeMan, dataExpressionParser);
 		HAPManualUtilityScriptExpressionConstant.solidateScriptExpressionConstantInBrick(brickDef, scriptExpressionResults, processContext.getManualBrickManager());
 		
+		//process rule
+		
+		
 	}
 	
 }

@@ -5,9 +5,9 @@ import org.json.JSONObject;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.core.application.division.story.brick.HAPStoryConnection;
-import com.nosliw.core.application.division.story.brick.HAPStoryElementGroup;
 import com.nosliw.core.application.division.story.brick.HAPStoryNode;
 import com.nosliw.core.application.division.story.change.HAPStoryManagerChange;
+import com.nosliw.core.application.division.story.xxx.brick.HAPStoryElementGroup;
 
 public class HAPStoryParserStory {
 

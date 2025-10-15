@@ -14,6 +14,11 @@
 			"dataDefinition" : "test.string;1.0.0"
 		},
 		{
+			"name" : "data_float",
+			"type" : "variable",
+			"dataDefinition" : "test.float;1.0.0"
+		},
+		{
 			"name" : "data_array",
 			"type" : "variable",
 			"dataDefinition" : "test.array;1.0.0"

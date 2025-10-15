@@ -7,13 +7,13 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfo;
 import com.nosliw.core.application.division.story.brick.HAPStoryConnection;
-import com.nosliw.core.application.division.story.brick.HAPStoryElementGroup;
 import com.nosliw.core.application.division.story.brick.HAPStoryElement;
 import com.nosliw.core.application.division.story.brick.HAPStoryNode;
 import com.nosliw.core.application.division.story.change.HAPStoryChangeItem;
 import com.nosliw.core.application.division.story.change.HAPStoryHandlerChange;
 import com.nosliw.core.application.division.story.change.HAPStoryRequestChange;
 import com.nosliw.core.application.division.story.change.HAPStoryResultTransaction;
+import com.nosliw.core.application.division.story.xxx.brick.HAPStoryElementGroup;
 
 @HAPEntityWithAttribute
 public interface HAPStoryStory extends HAPEntityInfo{

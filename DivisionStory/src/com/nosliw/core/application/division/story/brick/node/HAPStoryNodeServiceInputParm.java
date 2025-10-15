@@ -9,8 +9,8 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.division.story.brick.HAPStoryElement;
-import com.nosliw.core.application.division.story.brick.HAPStoryNodeImp;
 import com.nosliw.core.application.division.story.change.HAPStoryChangeResult;
+import com.nosliw.core.application.division.story.xxx.brick.HAPStoryNodeImp;
 import com.nosliw.core.xxx.application.common.datadefinition.HAPVariableDefinition;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 

@@ -1,0 +1,12 @@
+package com.nosliw.core.application.entity.datarule.enum1;
+
+import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.core.application.entity.datarule.HAPDataRuleImp;
+
+public abstract class HAPDataRuleEnum extends HAPDataRuleImp{
+
+	public HAPDataRuleEnum() {
+		super(HAPConstantShared.DATARULE_TYPE_ENUM);
+	}
+
+}

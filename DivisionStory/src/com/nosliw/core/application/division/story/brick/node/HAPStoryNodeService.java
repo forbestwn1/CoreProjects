@@ -8,12 +8,10 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.division.story.brick.HAPStoryElement;
-import com.nosliw.core.application.division.story.brick.HAPStoryNodeImp;
 import com.nosliw.core.application.division.story.change.HAPStoryChangeItemPatch;
 import com.nosliw.core.application.division.story.change.HAPStoryChangeResult;
 import com.nosliw.core.application.division.story.change.HAPStoryUtilityChange;
-import com.nosliw.core.xxx.application1.service.HAPServiceProfile;
-import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
+import com.nosliw.core.application.division.story.xxx.brick.HAPStoryNodeImp;
 
 @HAPEntityWithAttribute
 public class HAPStoryNodeService extends HAPStoryNodeImp{

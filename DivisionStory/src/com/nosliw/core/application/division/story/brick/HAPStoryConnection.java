@@ -13,8 +13,9 @@ public interface HAPStoryConnection extends HAPStoryElement{
 	@HAPAttribute
 	public static final String END2 = "end2";
 
-	HAPStoryConnectionEnd getEnd1();
+	HAPStoryIdConnectionEnd getEnd1();
 	
-	HAPStoryConnectionEnd getEnd2();
+	HAPStoryIdConnectionEnd getEnd2();
 
+	//connection detail
 }

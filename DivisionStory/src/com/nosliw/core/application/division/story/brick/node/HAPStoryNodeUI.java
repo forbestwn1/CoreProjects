@@ -9,10 +9,10 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.core.application.division.story.brick.HAPStoryElement;
-import com.nosliw.core.application.division.story.brick.HAPStoryNodeImp;
 import com.nosliw.core.application.division.story.change.HAPStoryChangeResult;
 import com.nosliw.core.application.division.story.change.HAPStoryUtilityChange;
 import com.nosliw.core.application.division.story.design.wizard.servicedriven.HAPStoryUIDataStructureInfo;
+import com.nosliw.core.application.division.story.xxx.brick.HAPStoryNodeImp;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 @HAPEntityWithAttribute

@@ -13,6 +13,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.utils.HAPGeneratorId;
 import com.nosliw.core.application.common.structure.HAPRootInStructure;
+import com.nosliw.core.application.common.structure.HAPStructure;
 import com.nosliw.core.application.common.structure.HAPStructureImp;
 import com.nosliw.core.xxx.application.common.structure.HAPUtilityStructure;
 
@@ -32,7 +33,7 @@ public class HAPDomainValueStructure extends HAPSerializableImp{
 	public static final String DEFINITIONBYRUNTIME = "definitionByRuntime";
 
 	//value structure definitions by id
-	private Map<String, HAPStructureImp> m_structureDefinition;
+	private Map<String, HAPStructure> m_structureDefinition;
 	
 	//value structure runtime by id
 	private Map<String, HAPInfoValueStructureRuntime> m_valueStructureRuntime;
@@ -47,7 +48,7 @@ public class HAPDomainValueStructure extends HAPSerializableImp{
 	
 	public HAPDomainValueStructure() {
 		this.m_idGenerator = new HAPGeneratorId();
-		this.m_structureDefinition = new LinkedHashMap<String, HAPStructureImp>();
+		this.m_structureDefinition = new LinkedHashMap<String, HAPStructure>();
 		this.m_valueStructureRuntime = new LinkedHashMap<String, HAPInfoValueStructureRuntime>();
 		this.m_definitionIdByRuntimeId = new LinkedHashMap<String, String>();
 		this.m_isDirty = false;
@@ -55,9 +56,11 @@ public class HAPDomainValueStructure extends HAPSerializableImp{
 
 	public void setIsDirty(boolean isDirty) {    this.m_isDirty = isDirty;     }
 	public boolean getIsDirty() {     return this.m_isDirty;   }
+
+	public Map<String, HAPStructure> getValueStructureDefinitions(){   return this.m_structureDefinition;    }
 	
-	public HAPStructureImp getStructureDefinitionByRuntimeId(String runtimeId) {	return getStructureDefinition(getStructureDefinitionIdByRuntimeId(runtimeId));	}
-	public HAPStructureImp getStructureDefinition(String structureDefId) {    return this.m_structureDefinition.get(structureDefId);     }
+	public HAPStructure getStructureDefinitionByRuntimeId(String runtimeId) {	return getStructureDefinition(getStructureDefinitionIdByRuntimeId(runtimeId));	}
+	public HAPStructure getStructureDefinition(String structureDefId) {    return this.m_structureDefinition.get(structureDefId);     }
 
 	public String getStructureDefinitionIdByRuntimeId(String runtimeId) {	return this.m_definitionIdByRuntimeId.get(runtimeId);	}
 	
@@ -68,7 +71,7 @@ public class HAPDomainValueStructure extends HAPSerializableImp{
 		
 		Set<String> vsDefIds = new HashSet<String>();
 		for(String vsDefId : this.m_structureDefinition.keySet()) {
-			HAPStructureImp vsDef = this.m_structureDefinition.get(vsDefId);
+			HAPStructure vsDef = this.m_structureDefinition.get(vsDefId);
 			if(vsDef.isEmpty()) {
 				vsDefIds.add(vsDefId);
 			}
@@ -115,7 +118,7 @@ public class HAPDomainValueStructure extends HAPSerializableImp{
 	}
 
 	private String cloneDefinition(String defId) {
-		HAPStructureImp structureDef = this.getStructureDefinition(defId);
+		HAPStructure structureDef = this.getStructureDefinition(defId);
 		String id = this.m_idGenerator.generateId();
 		
 		Set<HAPRootInStructure> roots = new HashSet<HAPRootInStructure>();

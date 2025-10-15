@@ -11,6 +11,8 @@ public interface HAPStoryNode extends HAPStoryElement{
 	@HAPAttribute
 	public static final String CONNECTIONS = "connection";
 
+	List<HAPStoryConnectionEnd> getConnectionEnds();
+	
 	//connections node connect to
 	List<String> getConnections();
 	

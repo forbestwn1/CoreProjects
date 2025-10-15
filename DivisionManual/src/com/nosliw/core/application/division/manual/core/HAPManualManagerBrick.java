@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.commons.lang3.tuple.Pair;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -14,12 +15,21 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityFile;
 import com.nosliw.core.application.HAPBundle;
+import com.nosliw.core.application.HAPDomainValueStructure;
 import com.nosliw.core.application.HAPIdBrick;
 import com.nosliw.core.application.HAPIdBrickType;
 import com.nosliw.core.application.HAPManagerApplicationBrick;
 import com.nosliw.core.application.HAPPluginDivision;
 import com.nosliw.core.application.HAPWrapperBrickRoot;
+import com.nosliw.core.application.common.datadefinition.HAPDefinitionDataRule;
 import com.nosliw.core.application.common.dataexpression.definition.HAPParserDataExpression;
+import com.nosliw.core.application.common.structure.HAPElementStructure;
+import com.nosliw.core.application.common.structure.HAPElementStructureLeafData;
+import com.nosliw.core.application.common.structure.HAPInfoElement;
+import com.nosliw.core.application.common.structure.HAPProcessorStructureElement;
+import com.nosliw.core.application.common.structure.HAPRootInStructure;
+import com.nosliw.core.application.common.structure.HAPStructure;
+import com.nosliw.core.application.common.structure.HAPUtilityElement;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionBrick;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionContextParse;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionInfoBrickLocation;
@@ -33,6 +43,7 @@ import com.nosliw.core.application.division.manual.core.process.HAPManualPluginP
 import com.nosliw.core.application.division.manual.core.process.HAPManualPluginProcessorBlock;
 import com.nosliw.core.application.division.manual.core.process.HAPManualPluginProcessorBrick;
 import com.nosliw.core.application.division.manual.core.process.HAPManualProcessBrick;
+import com.nosliw.core.application.entity.datarule.HAPDataRule;
 import com.nosliw.core.data.HAPDataTypeHelper;
 import com.nosliw.core.resource.HAPManagerResource;
 import com.nosliw.core.runtime.HAPRuntimeInfo;
@@ -94,31 +105,66 @@ public class HAPManualManagerBrick implements HAPPluginDivision{
 		
 		HAPManualDefinitionInfoBrickLocation entityLocationInfo = HAPManualDefinitionUtilityBrickLocation.getBrickLocationInfo(brickId);
 
+		Map<String, HAPManualDefinitionWrapperBrickRoot> definitions = new LinkedHashMap();
+
 		//bundle info
 		if(!entityLocationInfo.getIsSingleFile()) {
+			//if folder based, try to get bundle info
 			File bundleInfoFile = new File(entityLocationInfo.getBasePath().getPath()+"/bundle.json");
 			if(bundleInfoFile.exists()) {
+				//if bundle file exists, parse bundle file
 				JSONObject bundleInfoObj = new JSONObject(HAPUtilityFile.readFile(bundleInfoFile));
 				Object dynamicTaskObj = bundleInfoObj.opt(HAPBundle.DYNAMIC);
 				if(dynamicTaskObj!=null) {
 					out.getDynamicTaskInfo().buildObject(dynamicTaskObj, HAPSerializationFormat.JSON);
 				}
 			}
-		}
-		
-		Map<String, HAPManualDefinitionWrapperBrickRoot> definitions = new LinkedHashMap();
-		
-		//branch
-		Map<String, HAPManualDefinitionInfoBrickLocation> branchInfos = HAPManualDefinitionUtilityBrickLocation.getBranchBrickLocationInfos(entityLocationInfo.getBasePath().getPath());
-		for(String branchName : branchInfos.keySet()) {
-			HAPManualWrapperBrickRoot rootBrick = (HAPManualWrapperBrickRoot)createRootBrick(branchInfos.get(branchName), new HAPManualContextProcessBrick(out, branchName, this, this.m_brickManager, this.m_dataTypeHelper, this.m_resourceMan, runtimeInfo));
-			definitions.put(branchName, rootBrick.getDefinition());
+
+			//if folder based, try to get branch info
+			//branch
+			Map<String, HAPManualDefinitionInfoBrickLocation> branchInfos = HAPManualDefinitionUtilityBrickLocation.getBranchBrickLocationInfos(entityLocationInfo.getBasePath().getPath());
+			for(String branchName : branchInfos.keySet()) {
+				HAPManualWrapperBrickRoot rootBrick = (HAPManualWrapperBrickRoot)createRootBrick(branchInfos.get(branchName), new HAPManualContextProcessBrick(out, branchName, this, this.m_brickManager, this.m_dataTypeHelper, this.m_resourceMan, runtimeInfo));
+				definitions.put(branchName, rootBrick.getDefinition());
+			}
 		}
 		
 		//main 
 		{
 			HAPManualWrapperBrickRoot rootBrick = (HAPManualWrapperBrickRoot)createRootBrick(entityLocationInfo, new HAPManualContextProcessBrick(out, HAPConstantShared.NAME_ROOTBRICK_MAIN, this, this.m_brickManager, this.m_dataTypeHelper, this.m_resourceMan, runtimeInfo));
 			definitions.put(HAPConstantShared.NAME_ROOTBRICK_MAIN, rootBrick.getDefinition());
+		}
+		
+		//build new branch to host data rule tasks
+		HAPDomainValueStructure valueStructureDomain = out.getValueStructureDomain();
+		Map<String, HAPStructure> structures = valueStructureDomain.getValueStructureDefinitions();
+		for(HAPStructure structure : structures.values()) {
+			Map<String, HAPRootInStructure> roots = structure.getRoots();
+			for(HAPRootInStructure root : roots.values()) {
+				HAPUtilityElement.traverseElement(root.getDefinition(), null, new HAPProcessorStructureElement(){
+
+					@Override
+					public Pair<Boolean, HAPElementStructure> process(HAPInfoElement eleInfo, Object value) {
+						String eleType = eleInfo.getElement().getType();
+                        if(eleType.equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_DATA)) {
+                        	HAPElementStructureLeafData dataEle = (HAPElementStructureLeafData)eleInfo.getElement();
+                        	for(HAPDefinitionDataRule ruleDef : dataEle.getDataDefinition().getRules()) {
+                        		HAPDataRule rule = ruleDef.getRule();
+                        		
+                        		
+                        	}
+                        }
+						return null;
+					}
+
+					@Override
+					public void postProcess(HAPInfoElement eleInfo, Object value) {
+						// TODO Auto-generated method stub
+						
+					}
+					
+				}, null);
+			}
 		}
 		
 		out.setExtraData(definitions);

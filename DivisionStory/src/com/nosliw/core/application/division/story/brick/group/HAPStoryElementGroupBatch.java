@@ -6,11 +6,11 @@ import org.json.JSONObject;
 
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.division.story.HAPStoryInfoElement;
-import com.nosliw.core.application.division.story.brick.HAPStoryElementGroup;
-import com.nosliw.core.application.division.story.brick.HAPStoryElementGroupImp;
 import com.nosliw.core.application.division.story.brick.HAPStoryElement;
 import com.nosliw.core.application.division.story.change.HAPStoryChangeItemPatch;
 import com.nosliw.core.application.division.story.change.HAPStoryChangeResult;
+import com.nosliw.core.application.division.story.xxx.brick.HAPStoryElementGroup;
+import com.nosliw.core.application.division.story.xxx.brick.HAPStoryElementGroupImp;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPStoryElementGroupBatch extends HAPStoryElementGroupImp{

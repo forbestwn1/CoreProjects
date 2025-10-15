@@ -35,7 +35,7 @@ public class HAPManualPluginProcessorBlockDataExpressionElementInLibrary2 extend
 
 	@Override
 	public void process(HAPManualBrick blockExe, HAPManualDefinitionBrickBlockSimple blockDef, HAPManualContextProcessBrick processContext) {
-		HAPElementInLibraryDataExpression exe = ((HAPBlockDataExpressionElementInLibrary)blockExe).getValue();;
+		HAPDataExpressionStandAlone exe = ((HAPBlockDataExpressionElementInLibrary)blockExe).getValue();;
 		HAPManualDataExpressionLibraryElement def = ((HAPManualDefinitionBlockDataExpressionElementInLibrary)blockDef).getValue();
 		
 		def.cloneToEntityInfo(exe);

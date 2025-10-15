@@ -8,9 +8,9 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.division.story.brick.HAPStoryElement;
-import com.nosliw.core.application.division.story.brick.HAPStoryNodeImp;
 import com.nosliw.core.application.division.story.change.HAPStoryChangeResult;
 import com.nosliw.core.application.division.story.change.HAPStoryUtilityChange;
+import com.nosliw.core.application.division.story.xxx.brick.HAPStoryNodeImp;
 import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
 
 public class HAPStoryNodeScript extends HAPStoryNodeImp{
