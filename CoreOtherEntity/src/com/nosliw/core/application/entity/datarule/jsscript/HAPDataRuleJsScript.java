@@ -7,10 +7,10 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.core.application.entity.datarule.HAPDataRuleImp;
+import com.nosliw.core.application.entity.datarule.HAPDataRule;
 
 @HAPEntityWithAttribute
-public class HAPDataRuleJsScript extends HAPDataRuleImp{
+public class HAPDataRuleJsScript extends HAPDataRule{
 
 	@HAPAttribute
 	public static String SCRIPT = "script";

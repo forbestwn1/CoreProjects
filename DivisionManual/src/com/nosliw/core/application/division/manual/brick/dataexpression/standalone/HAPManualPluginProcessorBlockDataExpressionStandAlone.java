@@ -1,4 +1,4 @@
-package com.nosliw.core.application.division.manual.brick.dataexpression.lib;
+package com.nosliw.core.application.division.manual.brick.dataexpression.standalone;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -8,7 +8,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import com.nosliw.common.path.HAPPath;
 import com.nosliw.core.application.HAPDomainValueStructure;
 import com.nosliw.core.application.brick.HAPEnumBrickType;
-import com.nosliw.core.application.brick.dataexpression.library.HAPBlockDataExpressionElementInLibrary;
+import com.nosliw.core.application.brick.dataexpression.standalone.HAPBlockDataExpressionStandAlone;
 import com.nosliw.core.application.common.dataexpression.HAPDataExpressionStandAlone;
 import com.nosliw.core.application.common.dataexpression.definition.HAPDefinitionDataExpressionStandAlone;
 import com.nosliw.core.application.common.dataexpression.imp.basic.HAPBasicExpressionData;
@@ -19,6 +19,8 @@ import com.nosliw.core.application.common.interactive.HAPInteractiveExpression;
 import com.nosliw.core.application.common.withvariable.HAPContainerVariableInfo;
 import com.nosliw.core.application.common.withvariable.HAPManagerWithVariablePlugin;
 import com.nosliw.core.application.common.withvariable.HAPUtilityWithVarible;
+import com.nosliw.core.application.division.manual.brick.dataexpression.lib.HAPManualBlockDataExpressionElementInLibrary;
+import com.nosliw.core.application.division.manual.brick.dataexpression.lib.HAPManualDefinitionBlockDataExpressionElementInLibrary;
 import com.nosliw.core.application.division.manual.common.task.HAPManualUtilityTask;
 import com.nosliw.core.application.division.manual.core.HAPManualBrick;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionBrick;
@@ -28,22 +30,20 @@ import com.nosliw.core.application.valueport.HAPUtilityValuePortVariable;
 import com.nosliw.core.data.criteria.HAPDataTypeCriteria;
 import com.nosliw.core.data.matcher.HAPMatchers;
 
-public class HAPManualPluginProcessorBlockDataExpressionElementInLibrary extends HAPManualPluginProcessorBlockImp{
+public class HAPManualPluginProcessorBlockDataExpressionStandAlone extends HAPManualPluginProcessorBlockImp{
 
 	private HAPManagerWithVariablePlugin m_withVariableMan;
 	
-	public HAPManualPluginProcessorBlockDataExpressionElementInLibrary(HAPManagerWithVariablePlugin withVariableMan) {
-		super(HAPEnumBrickType.DATAEXPRESSIONLIBELEMENT_100, HAPManualBlockDataExpressionElementInLibrary.class);
+	public HAPManualPluginProcessorBlockDataExpressionStandAlone(HAPManagerWithVariablePlugin withVariableMan) {
+		super(HAPEnumBrickType.DATAEXPRESSIONSTANDALONE_100, HAPManualBlockDataExpressionStandAlone.class);
 		this.m_withVariableMan = withVariableMan;
 	}
 
 	@Override
 	public void processInit(HAPPath pathFromRoot, HAPManualContextProcessBrick processContext) {
 		Pair<HAPManualDefinitionBrick, HAPManualBrick> brickInfo = this.getBrickPair(pathFromRoot, processContext);
-		HAPDataExpressionStandAlone exe = ((HAPBlockDataExpressionElementInLibrary)brickInfo.getRight()).getValue();;
-		HAPDefinitionDataExpressionStandAlone def = ((HAPManualDefinitionBlockDataExpressionElementInLibrary)brickInfo.getLeft()).getValue();
-		
-		((HAPManualDefinitionBlockDataExpressionElementInLibrary)brickInfo.getLeft()).cloneToEntityInfo(((HAPBlockDataExpressionElementInLibrary)brickInfo.getRight()));
+		HAPDataExpressionStandAlone exe = ((HAPBlockDataExpressionStandAlone)brickInfo.getRight()).getValue();;
+		HAPDefinitionDataExpressionStandAlone def = ((HAPManualDefinitionBlockDataExpressionStandAlone)brickInfo.getLeft()).getValue();
 		
 		//build expression in executable
 		exe.setExpression(new HAPBasicExpressionData(HAPBasicUtilityProcessorDataExpression.buildBasicOperand(def.getExpression().getOperand())));
@@ -57,7 +57,7 @@ public class HAPManualPluginProcessorBlockDataExpressionElementInLibrary extends
 	public void processOtherValuePortBuild(HAPPath pathFromRoot, HAPManualContextProcessBrick processContext) {
 		HAPDomainValueStructure valueStructureDomain = processContext.getCurrentBundle().getValueStructureDomain();
 		Pair<HAPManualDefinitionBrick, HAPManualBrick> brickInfo = this.getBrickPair(pathFromRoot, processContext);
-		HAPManualBlockDataExpressionElementInLibrary brick = (HAPManualBlockDataExpressionElementInLibrary)brickInfo.getRight(); 
+		HAPManualBlockDataExpressionStandAlone brick = (HAPManualBlockDataExpressionStandAlone)brickInfo.getRight(); 
 		HAPManualUtilityTask.buildValuePortGroupForInteractiveExpression(brick, brick.getValue().getExpressionInterface(), valueStructureDomain);
 	}
 
@@ -116,53 +116,4 @@ public class HAPManualPluginProcessorBlockDataExpressionElementInLibrary extends
 			exe.setResultMatchers(discoverResult.getRight().get(HAPBasicPluginProcessorEntityWithVariableDataExpression.RESULT));
 		}
 	}
-
-/*	
-	
-	@Override
-	public void process(HAPManualBrick blockExe, HAPManualDefinitionBrick blockDef, HAPManualContextProcessBrick processContext) {
-		HAPDataExpressionStandAlone exe = ((HAPBlockDataExpressionStandAlone)blockExe).getValue();;
-		HAPDefinitionDataExpressionStandAlone def = ((HAPManualDefinitionBlockDataExpressionStandAlone)blockDef).getValue();
-		
-		def.cloneToEntityInfo(exe);
-		
-		//build expression in executable
-		exe.setExpression(new HAPBasicExpressionData(HAPBasicUtilityProcessorDataExpression.buildManualOperand(def.getExpression().getOperand())));
-		HAPBasicExpressionData dataExpression = (HAPBasicExpressionData)exe.getExpression();
-		
-		//interactive request
-		exe.setInteractive(new HAPInteractiveExpression(def.getRequestParms(), def.getResult()));
-		
-		HAPBasicWrapperOperand operandWrapper = dataExpression.getOperandWrapper();
-		
-		HAPContainerVariableInfo varInfoContainer = new HAPContainerVariableInfo(blockExe, processContext.getCurrentBundle().getValueStructureDomain());
-
-		//resolve variable name, build var info container
-		HAPUtilityWithVarible.resolveVariable(dataExpression, varInfoContainer, null, getManualBrickManager());
-		
-		//build variable info in data expression
-		HAPUtilityWithVarible.buildVariableInfoInEntity(dataExpression, varInfoContainer, getManualBrickManager());
-		
-		//build var criteria infor in var info container according to value port def
-		HAPUtilityValuePortVariable.buildVariableInfo(varInfoContainer, blockExe);
-
-		//discover
-		Map<String, HAPDataTypeCriteria> expections = new LinkedHashMap<String, HAPDataTypeCriteria>();
-		expections.put(HAPBasicPluginProcessorEntityWithVariableDataExpression.RESULT, exe.getInteractive().getResult().getDataCriteria());
-		Pair<HAPContainerVariableInfo, Map<String, HAPMatchers>> discoverResult = HAPUtilityWithVarible.discoverVariableCriteria(dataExpression, expections, varInfoContainer, getManualBrickManager());
-		varInfoContainer = discoverResult.getLeft();
-		
-		//update value port element according to var info container after discovery
-		HAPUtilityValuePortVariable.updateValuePortElements(varInfoContainer, blockExe);
-		
-		//result
-		HAPDataTypeCriteria resultCriteria = operandWrapper.getOperand().getOutputCriteria();
-		if(exe.getInteractive().getResult().getDataCriteria()==null) {
-			exe.getInteractive().getResult().setDataCriteria(resultCriteria);
-		}
-		else {
-			exe.setResultMatchers(discoverResult.getRight().get(HAPBasicPluginProcessorEntityWithVariableDataExpression.RESULT));
-		}
-	}
-	*/	
 }

@@ -8,10 +8,10 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.common.dataexpression.definition.HAPDefinitionDataExpression;
-import com.nosliw.core.application.entity.datarule.HAPDataRuleImp;
+import com.nosliw.core.application.entity.datarule.HAPDataRule;
 
 @HAPEntityWithAttribute
-public class HAPDataRuleExpression extends HAPDataRuleImp{
+public class HAPDataRuleExpression extends HAPDataRule{
 
 	@HAPAttribute
 	public static String EXPRESSION = "expression";

@@ -1,0 +1,48 @@
+package com.nosliw.core.application.division.manual.brick.dataexpression.standalone;
+
+import org.springframework.stereotype.Component;
+
+import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.core.application.HAPIdBrickType;
+import com.nosliw.core.application.HAPManagerApplicationBrick;
+import com.nosliw.core.application.brick.HAPEnumBrickType;
+import com.nosliw.core.application.common.dataexpression.definition.HAPParserDataExpression;
+import com.nosliw.core.application.common.withvariable.HAPManagerWithVariablePlugin;
+import com.nosliw.core.application.division.manual.core.HAPManualManagerBrick;
+import com.nosliw.core.application.division.manual.core.HAPManualProviderBrickInfoImp;
+import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionPluginParserBrick;
+import com.nosliw.core.application.division.manual.core.process.HAPManualInfoBrickType;
+import com.nosliw.core.application.division.manual.core.process.HAPManualPluginProcessorBrick;
+
+@Component
+public class HAPManualProviderBrickInfoDataExpressionStandAlone extends HAPManualProviderBrickInfoImp{
+
+	private HAPParserDataExpression m_dataExpressionParser;
+	
+	private HAPManagerWithVariablePlugin m_withVariableMan;
+	
+	public HAPManualProviderBrickInfoDataExpressionStandAlone(
+			HAPManualManagerBrick manualBrickMan, 
+			HAPManagerApplicationBrick brickMan, 
+			HAPParserDataExpression dataExpressionParser,
+			HAPManagerWithVariablePlugin withVariableMan) {
+		super(manualBrickMan, brickMan);
+		this.m_dataExpressionParser = dataExpressionParser;
+		this.m_withVariableMan = withVariableMan;
+	}
+	
+	@Override
+	public HAPIdBrickType getBrickTypeId() {  return HAPEnumBrickType.DATAEXPRESSIONSTANDALONE_100;   }
+
+	@Override
+	protected HAPManualInfoBrickType newBrickTypeInfo() {   return new HAPManualInfoBrickType(true, HAPConstantShared.TASK_TYPE_EXPRESSION);  }
+
+	@Override
+	protected HAPManualDefinitionPluginParserBrick newBrickParser() {
+		return new HAPManualPluginParserBlockDataExpressionStandAlone(this.getManualBrickManager(), this.getBrickManager(), this.m_dataExpressionParser);
+	}
+
+	@Override
+	protected HAPManualPluginProcessorBrick newBrickProcessor() {   return new HAPManualPluginProcessorBlockDataExpressionStandAlone(this.m_withVariableMan);  }
+
+}

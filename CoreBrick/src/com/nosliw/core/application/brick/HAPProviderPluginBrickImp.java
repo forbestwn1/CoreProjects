@@ -43,6 +43,7 @@ public class HAPProviderPluginBrickImp implements HAPProviderPluginBrick{
 		out.add(new HAPPluginBrick(HAPEnumBrickType.INTERACTIVETASKINTERFACE_100));
 		out.add(new HAPPluginBrick(HAPEnumBrickType.INTERACTIVEEXPRESSIONINTERFACE_100));
 
+		out.add(new HAPPluginBrick(HAPEnumBrickType.DATAEXPRESSIONSTANDALONE_100));
 		out.add(new HAPPluginBrickDataExpressionLibrary());
 		out.add(new HAPPluginBrick(HAPEnumBrickType.DATAEXPRESSIONLIBELEMENT_100));
 

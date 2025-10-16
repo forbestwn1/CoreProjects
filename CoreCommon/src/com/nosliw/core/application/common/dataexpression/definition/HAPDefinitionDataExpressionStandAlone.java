@@ -1,4 +1,4 @@
-package com.nosliw.core.application.division.manual.brick.dataexpression.lib;
+package com.nosliw.core.application.common.dataexpression.definition;
 
 import java.util.List;
 
@@ -9,10 +9,9 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.core.application.common.datadefinition.HAPDefinitionParm;
 import com.nosliw.core.application.common.datadefinition.HAPDefinitionResult;
 import com.nosliw.core.application.common.dataexpression.HAPDataExpressionStandAlone;
-import com.nosliw.core.application.common.dataexpression.definition.HAPDefinitionDataExpression;
 import com.nosliw.core.application.common.interactive.HAPInteractiveExpression;
 
-public class HAPManualDataExpressionLibraryElement extends HAPSerializableImp{
+public class HAPDefinitionDataExpressionStandAlone extends HAPSerializableImp{
 
 	private HAPInteractiveExpression m_interactiveExpression;
 	
@@ -20,7 +19,7 @@ public class HAPManualDataExpressionLibraryElement extends HAPSerializableImp{
 	
 	private HAPDefinitionDataExpression m_expression;
 	
-	public HAPManualDataExpressionLibraryElement() {
+	public HAPDefinitionDataExpressionStandAlone() {
 	}
 	
 	public List<HAPDefinitionParm> getRequestParms() {  return this.m_interactiveExpression.getRequestParms();  }

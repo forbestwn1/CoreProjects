@@ -21,6 +21,7 @@ import com.nosliw.core.application.HAPIdBrickType;
 import com.nosliw.core.application.HAPManagerApplicationBrick;
 import com.nosliw.core.application.HAPPluginDivision;
 import com.nosliw.core.application.HAPWrapperBrickRoot;
+import com.nosliw.core.application.brick.HAPEnumBrickType;
 import com.nosliw.core.application.common.datadefinition.HAPDefinitionDataRule;
 import com.nosliw.core.application.common.dataexpression.definition.HAPParserDataExpression;
 import com.nosliw.core.application.common.structure.HAPElementStructure;
@@ -30,6 +31,8 @@ import com.nosliw.core.application.common.structure.HAPProcessorStructureElement
 import com.nosliw.core.application.common.structure.HAPRootInStructure;
 import com.nosliw.core.application.common.structure.HAPStructure;
 import com.nosliw.core.application.common.structure.HAPUtilityElement;
+import com.nosliw.core.application.division.manual.brick.container.HAPManualDefinitionBrickContainer;
+import com.nosliw.core.application.division.manual.common.datarule.HAPManualManagerDataRule;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionBrick;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionContextParse;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionInfoBrickLocation;
@@ -67,6 +70,8 @@ public class HAPManualManagerBrick implements HAPPluginDivision{
 	private HAPParserDataExpression m_dataExpressionParser;
 
 	private HAPRuntimeManager m_runtimeMan;
+
+	private HAPManualManagerDataRule m_manualDataRuleManager;
 	
 	public HAPManualManagerBrick() {
 		this.m_brickParserPlugin = new LinkedHashMap<String, HAPManualDefinitionPluginParserBrick>();
@@ -92,6 +97,9 @@ public class HAPManualManagerBrick implements HAPPluginDivision{
 	
 	@Autowired
 	private void setRuntimeManager(HAPRuntimeManager runtimeMan) {    this.m_runtimeMan = runtimeMan;      }
+	
+	@Autowired
+	private void setManualDataRuleManager(HAPManualManagerDataRule manualDataRuleManager) {   this.m_manualDataRuleManager = manualDataRuleManager;        }
 	
 	@Override
 	public String getDivisionName() {   return HAPConstantShared.BRICK_DIVISION_MANUAL;   }
@@ -136,6 +144,9 @@ public class HAPManualManagerBrick implements HAPPluginDivision{
 		}
 		
 		//build new branch to host data rule tasks
+		HAPManualDefinitionBrickContainer validationRuleTaskContainerBrick = (HAPManualDefinitionBrickContainer)this.newBrickDefinition(HAPEnumBrickType.CONTAINER_100);
+		definitions.put("validationRuleTasks", new HAPManualDefinitionWrapperBrickRoot(validationRuleTaskContainerBrick));
+		
 		HAPDomainValueStructure valueStructureDomain = out.getValueStructureDomain();
 		Map<String, HAPStructure> structures = valueStructureDomain.getValueStructureDefinitions();
 		for(HAPStructure structure : structures.values()) {
@@ -150,18 +161,16 @@ public class HAPManualManagerBrick implements HAPPluginDivision{
                         	HAPElementStructureLeafData dataEle = (HAPElementStructureLeafData)eleInfo.getElement();
                         	for(HAPDefinitionDataRule ruleDef : dataEle.getDataDefinition().getRules()) {
                         		HAPDataRule rule = ruleDef.getRule();
-                        		
-                        		
+                        		rule.setDataCriteria(dataEle.getCriteria());
+                        		HAPManualDefinitionBrick ruleTaskBrickDef = m_manualDataRuleManager.transformDataRule(rule);
+                        		String attrName = validationRuleTaskContainerBrick.addElementWithBrick(ruleTaskBrickDef);
                         	}
                         }
 						return null;
 					}
 
 					@Override
-					public void postProcess(HAPInfoElement eleInfo, Object value) {
-						// TODO Auto-generated method stub
-						
-					}
+					public void postProcess(HAPInfoElement eleInfo, Object value) {		}
 					
 				}, null);
 			}
@@ -275,7 +284,7 @@ public class HAPManualManagerBrick implements HAPPluginDivision{
 		this.registerBlockPluginInfo(HAPEnumBrickType.TASKWRAPPER_100, new HAPManualInfoBrickType(false), new HAPManualPluginParserBlockTaskWrapper(this, this.m_runtimeEnv), new HAPManualPluginProcessorBlockSimpleImpTaskWrapper(this.m_runtimeEnv, this));
 
 		this.registerBlockPluginInfo(HAPEnumBrickType.DATAEXPRESSIONLIB_100, new HAPManualInfoBrickType(false), new HAPManualPluginParserBlockDataExpressionLibrary(this, this.m_runtimeEnv), new HAPManualPluginProcessorBlockDataExpressionLibrary(this.m_runtimeEnv, this)); 
-		this.registerBlockPluginInfo(HAPEnumBrickType.DATAEXPRESSIONLIBELEMENT_100, new HAPManualInfoBrickType(false, HAPConstantShared.TASK_TYPE_EXPRESSION), new HAPManualPluginParserBlockDataExpressionElementInLibrary(this, this.m_runtimeEnv), new HAPManualPluginProcessorBlockDataExpressionElementInLibrary(this.m_runtimeEnv, this)); 
+		this.registerBlockPluginInfo(HAPEnumBrickType.DATAEXPRESSIONLIBELEMENT_100, new HAPManualInfoBrickType(false, HAPConstantShared.TASK_TYPE_EXPRESSION), new HAPManualPluginParserBlockDataExpressionStandAlone(this, this.m_runtimeEnv), new HAPManualPluginProcessorBlockDataExpressionStandAlone(this.m_runtimeEnv, this)); 
 		this.registerBlockPluginInfo(HAPEnumBrickType.DATAEXPRESSIONGROUP_100, new HAPManualInfoBrickType(true, HAPConstantShared.TASK_TYPE_EXPRESSION), new HAPManualPluginParserBlockDataExpressionGroup(this, this.m_runtimeEnv), new HAPManualPluginProcessorBlockDataExpressionGroup(this.m_runtimeEnv, this)); 
 
 		this.registerBlockPluginInfo(HAPEnumBrickType.SCRIPTEXPRESSIONGROUP_100, new HAPManualInfoBrickType(true, HAPConstantShared.TASK_TYPE_EXPRESSION), new HAPManualPluginParserBlockScriptExpressionGroup(this, this.m_runtimeEnv), new HAPManualPluginProcessorBlockScriptExpressionGroup(this.m_runtimeEnv, this)); 

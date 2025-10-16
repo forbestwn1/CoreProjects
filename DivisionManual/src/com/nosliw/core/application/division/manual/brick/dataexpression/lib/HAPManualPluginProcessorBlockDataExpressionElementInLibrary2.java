@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.nosliw.common.utils.HAPProcessTracker;
+import com.nosliw.core.application.common.dataexpression.definition.HAPDefinitionDataExpressionStandAlone;
 import com.nosliw.core.application.common.dataexpression.imp.basic.HAPBasicExpressionData;
 import com.nosliw.core.application.common.dataexpression.imp.basic.HAPBasicUtilityOperand;
 import com.nosliw.core.application.common.dataexpression.imp.basic.HAPBasicUtilityProcessorDataExpression;
@@ -36,7 +37,7 @@ public class HAPManualPluginProcessorBlockDataExpressionElementInLibrary2 extend
 	@Override
 	public void process(HAPManualBrick blockExe, HAPManualDefinitionBrickBlockSimple blockDef, HAPManualContextProcessBrick processContext) {
 		HAPDataExpressionStandAlone exe = ((HAPBlockDataExpressionElementInLibrary)blockExe).getValue();;
-		HAPManualDataExpressionLibraryElement def = ((HAPManualDefinitionBlockDataExpressionElementInLibrary)blockDef).getValue();
+		HAPDefinitionDataExpressionStandAlone def = ((HAPManualDefinitionBlockDataExpressionElementInLibrary)blockDef).getValue();
 		
 		def.cloneToEntityInfo(exe);
 		
