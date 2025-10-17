@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.nosliw.common.constant.HAPEntityWithAttribute;
@@ -23,6 +24,7 @@ import com.nosliw.core.application.brick.interactive.interfacee.task.HAPBlockInt
 import com.nosliw.core.application.brick.service.profile.HAPBlockServiceProfile;
 import com.nosliw.core.application.common.datadefinition.HAPDefinitionParm;
 import com.nosliw.core.application.common.interactive.HAPResultInteractiveTask;
+import com.nosliw.core.application.entity.datarule.HAPManagerDataRule;
 import com.nosliw.core.data.HAPData;
 import com.nosliw.core.runtime.HAPRuntimeInfo;
 
@@ -42,6 +44,9 @@ public class HAPManagerService implements HAPPluginDivision{
 	private HAPManagerServiceInterface m_serviceInterfaceMan;
 	
 	private HAPManagerApplicationBrick m_brickManager;
+	
+	@Autowired
+	private HAPManagerDataRule m_dataRuleManager;
 	
 	public HAPManagerService(HAPManagerServiceInterface serviceInterfaceMan, HAPManagerApplicationBrick brickManager){
 		this.m_serviceInterfaceMan = serviceInterfaceMan;
@@ -72,7 +77,7 @@ public class HAPManagerService implements HAPPluginDivision{
 		} 
 		else if(brickTypeId.equals(HAPEnumBrickType.SERVICEINTERFACE_100)) {
 			HAPBundle bundle = new HAPBundle();
-			bundle.setMainBrickWrapper(new HAPWrapperBrickRoot(this.getServiceInterfaceManager().getServiceInterface(new HAPIdServcieInterface(brickId.getId()))));
+			bundle.setMainBrickWrapper(new HAPWrapperBrickRoot(this.getServiceInterfaceManager().getServiceInterface(new HAPIdServcieInterface(brickId.getId()), this.m_dataRuleManager)));
 			return bundle;
 		}
 		return null;
@@ -128,7 +133,7 @@ public class HAPManagerService implements HAPPluginDivision{
 	private Map<String, HAPInfoService> getAllServicesInfo(){
 		if(this.m_servicesInfo==null) {
 			this.m_servicesInfo = new LinkedHashMap<String, HAPInfoService>();
-			List<HAPInfoService> defs = HAPImporterDataSourceDefinition.loadDataSourceDefinition(this.m_brickManager);
+			List<HAPInfoService> defs = HAPImporterDataSourceDefinition.loadDataSourceDefinition(this.m_brickManager, this.m_dataRuleManager);
 			for(HAPInfoService def : defs) {
 				this.registerServiceInfo(def);
 			}

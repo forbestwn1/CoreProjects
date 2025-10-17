@@ -10,13 +10,17 @@ import com.nosliw.core.application.division.manual.core.HAPManualProviderBrickIn
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionPluginParserBrick;
 import com.nosliw.core.application.division.manual.core.process.HAPManualInfoBrickType;
 import com.nosliw.core.application.division.manual.core.process.HAPManualPluginProcessorBrick;
+import com.nosliw.core.application.entity.datarule.HAPManagerDataRule;
 
 @Component
 public class HAPManualProviderBrickInfoDataAssociation extends HAPManualProviderBrickInfoImp{
 
+	private HAPManagerDataRule m_dataRuleMan;
+	
 	public HAPManualProviderBrickInfoDataAssociation(HAPManualManagerBrick manualBrickMan,
-			HAPManagerApplicationBrick brickMan) {
+			HAPManagerApplicationBrick brickMan, HAPManagerDataRule dataRuleMan) {
 		super(manualBrickMan, brickMan);
+		this.m_dataRuleMan = dataRuleMan;
 	}
 
 	@Override
@@ -24,7 +28,7 @@ public class HAPManualProviderBrickInfoDataAssociation extends HAPManualProvider
 
 	@Override
 	protected HAPManualDefinitionPluginParserBrick newBrickParser() {  
-		return new HAPManualPluginParserAdapterDataAssociation(this.getManualBrickManager(), this.getBrickManager());
+		return new HAPManualPluginParserAdapterDataAssociation(this.getManualBrickManager(), this.getBrickManager(), this.m_dataRuleMan);
 	}
 
 	@Override

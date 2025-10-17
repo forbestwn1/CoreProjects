@@ -11,6 +11,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.core.application.HAPIdBrickInBundle;
 import com.nosliw.core.application.common.structure.HAPElementStructure;
 import com.nosliw.core.application.common.structure.HAPUtilityParserElement;
+import com.nosliw.core.application.entity.datarule.HAPManagerDataRule;
 
 @HAPEntityWithAttribute
 public class HAPInfoTrigguerTask extends HAPEntityInfoImp{
@@ -35,29 +36,33 @@ public class HAPInfoTrigguerTask extends HAPEntityInfoImp{
 	
 	private String m_externalValuePortGroupName;
 
+	public HAPInfoTrigguerTask() {}
+	
 	public String getTrigguerType() {     return this.m_trigguerType;       }
+	public void setTrigguerType(String type) {   this.m_trigguerType = type;    }
 	
 	public HAPElementStructure getEventDataDefinition() {   return this.m_dataDefinition;      }
+	public void setEventDataDefinition(HAPElementStructure dataDef) {   this.m_dataDefinition = dataDef;      }
 	
 	public HAPIdBrickInBundle getHandlerId() {   return this.m_handlerId;     }
+	public void setHandlerId(HAPIdBrickInBundle handlerId) {   this.m_handlerId = handlerId;    }
 	
 	public void setExternalValuePortGroupName(String name) {    this.m_externalValuePortGroupName = name;       }
 	
 	
-	@Override
-	protected boolean buildObjectByJson(Object json){
-		JSONObject jsonObj = (JSONObject)json;
+	public static HAPInfoTrigguerTask parseInfoTrigguerTask(JSONObject jsonObj, HAPManagerDataRule dataRuleMan) {
+		HAPInfoTrigguerTask out = new HAPInfoTrigguerTask();
 		
-		this.buildEntityInfoByJson(jsonObj);
+		out.buildEntityInfoByJson(jsonObj);
 		
-		this.m_trigguerType = (String)jsonObj.opt(TRIGGUERTYPE);
+		out.setTrigguerType((String)jsonObj.opt(TRIGGUERTYPE));
+		out.setEventDataDefinition(HAPUtilityParserElement.parseStructureElement(jsonObj.optJSONObject(DATADEFINITION), dataRuleMan));
 		
-		this.m_dataDefinition = HAPUtilityParserElement.parseStructureElement(jsonObj.optJSONObject(DATADEFINITION));
+		HAPIdBrickInBundle handlerId = new HAPIdBrickInBundle();
+		handlerId.buildObject(jsonObj.opt(HANDLERID), HAPSerializationFormat.JSON);
+		out.setHandlerId(handlerId);
 		
-		this.m_handlerId = new HAPIdBrickInBundle();
-		this.m_handlerId.buildObject(jsonObj.opt(HANDLERID), HAPSerializationFormat.JSON);
-
-		return true;  
+		return out;
 	}
 	
 	@Override

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 import com.nosliw.common.utils.HAPUtilityFile;
 import com.nosliw.core.application.brick.service.interfacee.HAPBlockServiceInterface;
+import com.nosliw.core.application.entity.datarule.HAPManagerDataRule;
 import com.nosliw.core.system.HAPSystemFolderUtility;
 
 @Component
@@ -15,7 +16,7 @@ public class HAPManagerServiceInterface{
 	public HAPManagerServiceInterface() {
 	}
 	
-	public HAPBlockServiceInterface getServiceInterface(HAPIdServcieInterface id) {
+	public HAPBlockServiceInterface getServiceInterface(HAPIdServcieInterface id, HAPManagerDataRule dataRuleMan) {
 		HAPBlockServiceInterfaceImp out = new HAPBlockServiceInterfaceImp();
 		
 		String fileName = HAPSystemFolderUtility.getServiceInterfaceFolder() + id.getId() + ".json";
@@ -27,7 +28,7 @@ public class HAPManagerServiceInterface{
 		out.buildEntityInfoByJson(jsonObj);
 		
 		//interface
-		out.setTaskInteractiveInterface(HAPUtilityServiceParse.parseTaskInterfaceInterfaceBlock(jsonObj));
+		out.setTaskInteractiveInterface(HAPUtilityServiceParse.parseTaskInterfaceInterfaceBlock(jsonObj, dataRuleMan));
 		
 		return out;
 	}

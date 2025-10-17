@@ -6,6 +6,7 @@ import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.core.application.HAPBrick;
 import com.nosliw.core.application.common.interactive.HAPInteractiveTask;
+import com.nosliw.core.application.entity.datarule.HAPManagerDataRule;
 
 public class HAPRestrainBrickTypeFacadeTaskInterface extends HAPSerializableImp implements HAPRestrainBrickTypeFacade{
 
@@ -13,18 +14,25 @@ public class HAPRestrainBrickTypeFacadeTaskInterface extends HAPSerializableImp 
 	
 	private HAPInteractiveTask m_interactiveTaskInterface;
 	
+	public HAPRestrainBrickTypeFacadeTaskInterface() {}
+	
 	@Override
 	public String[] isValid(HAPBrick brick) {
 		return null;
 	}
 
-	public HAPInteractiveTask getTaskInteractiveInterface() {
-		return this.m_interactiveTaskInterface;
-	}
+	public HAPInteractiveTask getTaskInteractiveInterface() {	return this.m_interactiveTaskInterface;	}
+	public void setTaskInteractiveInterface(HAPInteractiveTask taskInterface) {	this.m_interactiveTaskInterface = taskInterface;	}
 
 	@Override
 	public String getType() {
 		return HAPRestrainBrickTypeFacade.TYPE_RESTRAIN_TASK_INTERFACE;
+	}
+	
+	public static HAPRestrainBrickTypeFacadeTaskInterface parse(JSONObject jsonObj, HAPManagerDataRule dataRuleMan) {
+		HAPRestrainBrickTypeFacadeTaskInterface out = new HAPRestrainBrickTypeFacadeTaskInterface();
+		out.setTaskInteractiveInterface(HAPInteractiveTask.parse(jsonObj.getJSONObject(INTERFACE), dataRuleMan));
+		return out;
 	}
 	
 	@Override

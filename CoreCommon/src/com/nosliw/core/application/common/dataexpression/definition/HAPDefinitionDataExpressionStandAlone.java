@@ -22,6 +22,9 @@ public class HAPDefinitionDataExpressionStandAlone extends HAPSerializableImp{
 	public HAPDefinitionDataExpressionStandAlone() {
 	}
 	
+	public HAPInteractiveExpression getExpressionInteractive() {   return this.m_interactiveExpression;    }
+	public void setExpressionInteractive(HAPInteractiveExpression interactive) {   this.m_interactiveExpression = interactive;       }
+	
 	public List<HAPDefinitionParm> getRequestParms() {  return this.m_interactiveExpression.getRequestParms();  }
 	public void addRequestParm(HAPDefinitionParm requestParm) {	this.getRequestParms().add(requestParm);	}
 	

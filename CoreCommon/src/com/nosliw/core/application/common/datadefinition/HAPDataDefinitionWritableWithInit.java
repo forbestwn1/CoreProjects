@@ -17,6 +17,8 @@ public class HAPDataDefinitionWritableWithInit extends HAPDataDefinitionWritable
 
 	private HAPData m_initData;
 
+	public HAPDataDefinitionWritableWithInit() {}
+	
 	public HAPData getInitData() {    return this.m_initData;     }
 	public void setInitData(HAPData initData) {    this.m_initData = initData;      }
 

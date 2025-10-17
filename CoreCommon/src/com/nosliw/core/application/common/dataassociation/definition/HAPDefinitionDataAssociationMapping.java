@@ -4,8 +4,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import org.json.JSONObject;
-
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
@@ -49,25 +47,4 @@ public class HAPDefinitionDataAssociationMapping extends HAPDefinitionDataAssoci
 		jsonMap.put(MAPPING, HAPUtilityJson.buildJson(this.m_items, HAPSerializationFormat.JSON));
 	}
 	
-	@Override
-	protected boolean buildObjectByJson(Object json){
-		super.buildObjectByJson(json);
-		try{
-			super.buildObjectByJson(json);
-			JSONObject jsonObj = (JSONObject)json;
-
-			Object mappingObj = jsonObj.opt(MAPPING);
-			if(mappingObj==null) {
-				mappingObj = jsonObj;
-			}
-			
-			List<HAPDefinitionMappingItemValue> items = HAPDefinitionParserMapping.parses(mappingObj);
-			this.m_items.addAll(items);
-			return true;  
-		}
-		catch(Exception e){
-			e.printStackTrace();
-			return false;
-		}
-	}
 }

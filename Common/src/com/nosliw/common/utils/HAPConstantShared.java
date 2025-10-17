@@ -825,6 +825,10 @@ public class HAPConstantShared {
 
 
 
+		public static final String DATARULE_IMPLEMENTATION_LOCAL = "local";
+
+
+
 		public static final String DESIGNSTAGE_NAME_END = "DESIGNSTAGE_NAME_END";
 
 

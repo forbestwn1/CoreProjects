@@ -30,9 +30,8 @@ public abstract class HAPDataRule extends HAPSerializableImp{
 	public HAPDataTypeCriteria getDataCriteria() {		return this.m_dataCriteria; 	}
 	public void setDataCriteria(HAPDataTypeCriteria dataCriteria) {    this.m_dataCriteria = dataCriteria;       }
 
-	public HAPDataRuleImplementation getImplementation() {
-		return this.m_implementation;
-	}
+	public HAPDataRuleImplementation getImplementation() {	return this.m_implementation;	}
+	public void setImplementation(HAPDataRuleImplementation imp) {  this.m_implementation = imp;     }
 
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){

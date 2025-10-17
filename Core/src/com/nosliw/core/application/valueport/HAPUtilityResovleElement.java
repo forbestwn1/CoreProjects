@@ -10,7 +10,6 @@ import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.core.application.HAPBundle;
 import com.nosliw.core.application.HAPDomainValueStructure;
 import com.nosliw.core.application.common.structure.HAPStructure;
-import com.nosliw.core.application.common.structure.HAPStructureImp;
 import com.nosliw.core.application.common.structure.reference.HAPConfigureResolveElementReference;
 import com.nosliw.core.application.common.structure.reference.HAPUtilityResolveReference;
 import com.nosliw.core.resource.HAPManagerResource;
@@ -223,16 +222,16 @@ class HAPInfoValueStructureReference {
 
 	private String m_id;
 	
-	private HAPStructureImp m_structure;
+	private HAPStructure m_structure;
 	
-	public HAPInfoValueStructureReference(String id, HAPStructureImp structure) {
+	public HAPInfoValueStructureReference(String id, HAPStructure structure) {
 		this.m_id = id;
 		this.m_structure = structure;
 	}
 	
 	public String getValueStructureId() {    return this.m_id;      }
 	
-	public HAPStructureImp getStructureDefinition() {     return this.m_structure;       }
+	public HAPStructure getStructureDefinition() {     return this.m_structure;       }
 
 }
 

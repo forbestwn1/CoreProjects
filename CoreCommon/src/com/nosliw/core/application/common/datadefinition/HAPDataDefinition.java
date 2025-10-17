@@ -15,7 +15,7 @@ import com.nosliw.core.data.criteria.HAPParserCriteria;
 import com.nosliw.core.data.criteria.HAPUtilityCriteria;
 
 @HAPEntityWithAttribute
-public class HAPDataDefinition extends HAPSerializableImp{
+public abstract class HAPDataDefinition extends HAPSerializableImp{
 
 	@HAPAttribute
 	public static String CRITERIA = "criteria";
@@ -68,12 +68,6 @@ public class HAPDataDefinition extends HAPSerializableImp{
 	
 	protected void cloneToDataDefinition(HAPDataDefinition dataDef) {
 		dataDef.m_criteria = HAPUtilityCriteria.cloneDataTypeCriteria(this.m_criteria);
-	}
-	
-	public HAPDataDefinition cloneDataDefinition() {
-		HAPDataDefinition out = new HAPDataDefinition();
-		this.cloneToDataDefinition(out);
-		return out;
 	}
 	
 	@Override

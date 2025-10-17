@@ -10,6 +10,7 @@ import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.core.application.common.task.HAPInfoTrigguerTask;
+import com.nosliw.core.application.entity.datarule.HAPManagerDataRule;
 
 @HAPEntityWithAttribute
 public class HAPTestTaskTrigguer extends HAPSerializableImp{
@@ -24,20 +25,19 @@ public class HAPTestTaskTrigguer extends HAPSerializableImp{
 	
 	private Object m_testData;
 	
+	public HAPTestTaskTrigguer() {}
+	
 	public HAPInfoTrigguerTask getTaskTrigguerInfo() {   return this.m_taskTrigguerInfo;    }
+	public void setTaskTrigguerInfo(HAPInfoTrigguerTask taskInfo) {   this.m_taskTrigguerInfo = taskInfo;    }
 	
 	public Object getTestData() {    return this.m_testData;     }
+	public void setTaskData(Object testData) {   this.m_testData = testData;      }
 	
-	@Override
-	protected boolean buildObjectByJson(Object json){
-		JSONObject jsonObj = (JSONObject)json;
-		
-		this.m_taskTrigguerInfo = new HAPInfoTrigguerTask();
-		this.m_taskTrigguerInfo.buildObject(jsonObj.opt(TRIGGUERINFO), HAPSerializationFormat.JSON);
-
-		this.m_testData = jsonObj.opt(TESTDATA);
-		
-		return true;  
+	public static HAPTestTaskTrigguer parsTestTaskTrigguer(JSONObject jsonObj, HAPManagerDataRule dataRuleMan) {
+		HAPTestTaskTrigguer out = new HAPTestTaskTrigguer();
+		out.setTaskTrigguerInfo(HAPInfoTrigguerTask.parseInfoTrigguerTask(jsonObj.optJSONObject(TRIGGUERINFO), dataRuleMan));
+		out.setTaskData(jsonObj.opt(TESTDATA));
+		return out;
 	}
 	
 	@Override

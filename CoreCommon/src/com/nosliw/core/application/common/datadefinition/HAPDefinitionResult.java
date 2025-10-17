@@ -15,11 +15,8 @@ public class HAPDefinitionResult extends HAPEntityInfoImp{
 
 	private HAPDataDefinitionReadonly m_dataDefinition;
 	
-	public HAPDefinitionResult() {
-		this.m_dataDefinition = new HAPDataDefinitionReadonly();
-	}
-	
 	public HAPDataDefinitionReadonly getDataDefinition() {		return this.m_dataDefinition;	}
+	public void setDataDefinition(HAPDataDefinitionReadonly dataDef) {    this.m_dataDefinition = dataDef;      }
 
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
@@ -31,11 +28,7 @@ public class HAPDefinitionResult extends HAPEntityInfoImp{
 	public boolean buildObject(Object value, HAPSerializationFormat format) {
 		super.buildObject(value, format);
 		JSONObject jsonValue = (JSONObject)value;
-		
-		Object dataDefObj = jsonValue.opt(DATADEFINITION);
-		if(dataDefObj!=null) {
-			this.m_dataDefinition.buildObject(dataDefObj, HAPSerializationFormat.JSON);
-		}
+		this.m_dataDefinition = HAPParserDataDefinition.parseDataDefinitionReadonly(jsonValue.opt(DATADEFINITION));
 		return true;
 	}
 }

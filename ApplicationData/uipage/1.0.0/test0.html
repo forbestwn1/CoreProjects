@@ -78,9 +78,13 @@ EXPRESSION IN ATTRIBUTE:<span  style="color:<%=?(public_string)?.value=='red'?'r
 								    "criteria" : "test.string;1.0.0",
 								    "rule" : [
 								        {
+                            				"name" : "mandatory",
+				                            "status": "disabled",
 								            "ruleType" : "mandatory"
 								        },
 								        {
+                            				"name" : "enum",
+				                            "status": "disabled",
 								            "ruleType" : "enum",
 								            "dataSet" : [
                 								{
@@ -104,9 +108,11 @@ EXPRESSION IN ATTRIBUTE:<span  style="color:<%=?(public_string)?.value=='red'?'r
 						"public_float": {
 							"definition":{
 								"data": {
-								    "criteria" : "test.url;1.0.0",
+								    "criteria" : "test.float;1.0.0",
 								    "rule" : [
 								        {
+                            				"name" : "expression",
+				                            "status": "disabled1",
 								            "ruleType" : "expression",
 								            "expression" : "?(data)?.largerThan(data:&(#test##float___5000)&).opposite()"
 								        }

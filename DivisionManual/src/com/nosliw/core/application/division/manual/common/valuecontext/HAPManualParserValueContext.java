@@ -10,10 +10,11 @@ import com.nosliw.core.application.division.manual.core.HAPManualEnumBrickType;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionAttributeInBrick;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionContextParse;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionUtilityParserBrickFormatJson;
+import com.nosliw.core.application.entity.datarule.HAPManagerDataRule;
 
 public class HAPManualParserValueContext {
 
-	public static void parseValueContextContentJson(HAPManualDefinitionBrickValueContext valueContext, Object jsonValue, HAPManualDefinitionContextParse parseContext) {
+	public static void parseValueContextContentJson(HAPManualDefinitionBrickValueContext valueContext, Object jsonValue, HAPManualDefinitionContextParse parseContext, HAPManagerDataRule dataRuleMan) {
 
 		if(jsonValue instanceof JSONArray) {
 			JSONArray partJsonArray = (JSONArray)jsonValue;

@@ -13,6 +13,7 @@ import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.core.application.common.datadefinition.HAPDefinitionParm;
+import com.nosliw.core.application.entity.datarule.HAPManagerDataRule;
 
 public class HAPInteractiveTask extends HAPSerializableImp implements HAPInteractive{
 
@@ -25,9 +26,11 @@ public class HAPInteractiveTask extends HAPSerializableImp implements HAPInterac
 		this.m_request = new HAPInteractiveRequest();
 	}
 	
+	public void setRequest(HAPInteractiveRequest request) {    this.m_request = request;      }
 	public List<HAPDefinitionParm> getRequestParms() {   return this.m_request.getRequestParms();  }
 
 	public List<HAPInteractiveResultTask> getResult() {   return this.m_results;  }
+	public void addResult(HAPInteractiveResultTask result) {    this.m_results.add(result);    }
 	
 	public HAPInteractiveResultTask getResult(String resultName) {
 		for(HAPInteractiveResultTask result : this.m_results) {
@@ -36,6 +39,39 @@ public class HAPInteractiveTask extends HAPSerializableImp implements HAPInterac
 			}
 		}
 		return null;
+	}
+	
+	public static HAPInteractiveTask parse(JSONObject jsonObj, HAPManagerDataRule dataRuleMan) {
+		HAPInteractiveTask out = new HAPInteractiveTask();
+		
+		JSONArray parmsArray = jsonObj.optJSONArray(REQUEST);
+		if(parmsArray!=null) {
+			out.setRequest(HAPInteractiveRequest.parse(parmsArray, dataRuleMan));
+		}
+		
+		Object resutltsObj = jsonObj.opt(RESULT);
+		if(resutltsObj!=null) {
+			if(resutltsObj instanceof JSONObject) {
+				JSONObject resultObject = (JSONObject)resutltsObj;
+				for(Object key : resultObject.keySet()) {
+					String name = (String)key;
+					HAPInteractiveResultTask resultEle = new HAPInteractiveResultTask();
+					resultEle.buildObject(resultObject.get(name), HAPSerializationFormat.JSON);
+					resultEle.setName(name);
+					out.addResult(resultEle);
+				}
+			}
+			else if(resutltsObj instanceof JSONArray) {
+				JSONArray resultArray = (JSONArray)resutltsObj;
+				for(int i=0; i<resultArray.length(); i++) {
+					HAPInteractiveResultTask resultEle = new HAPInteractiveResultTask();
+					resultEle.buildObject(resultArray.getJSONObject(i), HAPSerializationFormat.JSON);
+					out.addResult(resultEle);
+				}
+			}
+		}
+		
+		return out;
 	}
 	
 	@Override

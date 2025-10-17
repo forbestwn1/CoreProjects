@@ -9,14 +9,19 @@ public class HAPDefinitionDataRule extends HAPEntityInfoImp{
 	@HAPAttribute
 	public static String PATH = "path";
 
-	HAPDataRule m_rule;
+	@HAPAttribute
+	public static String DATARULE = "dataRule";
 
-	String m_path;
+	private HAPDataRule m_rule;
+
+	private String m_path;
+	
+	public HAPDefinitionDataRule() {}
 	
 	public String getPath() {    return this.m_path;    }
-	
 	public void setPath(String path) {   this.m_path = path;      }
 
-    public 	HAPDataRule getRule() {   return this.m_rule;     }
+    public 	HAPDataRule getDataRule() {   return this.m_rule;     }
+	public void setDataRule(HAPDataRule dataRule) {   this.m_rule = dataRule;   }
 	
 }

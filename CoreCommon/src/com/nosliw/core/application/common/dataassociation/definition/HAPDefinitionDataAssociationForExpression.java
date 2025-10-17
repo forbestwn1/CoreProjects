@@ -2,12 +2,9 @@ package com.nosliw.core.application.common.dataassociation.definition;
 
 import java.util.Map;
 
-import org.json.JSONObject;
-
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
-import com.nosliw.common.utils.HAPConstantShared;
 
 public class HAPDefinitionDataAssociationForExpression extends HAPSerializableImp{
 
@@ -28,26 +25,6 @@ public class HAPDefinitionDataAssociationForExpression extends HAPSerializableIm
 	
 	public HAPDefinitionDataAssociation getOutDataAssociation(){    return this.m_outDataAssociation;     }
 	public void setOutDataAssociation(HAPDefinitionDataAssociation outDataAssociation) {   this.m_outDataAssociation = outDataAssociation;  }   
-	
-	@Override
-	protected boolean buildObjectByJson(Object json){  
-		this.buildMapping((JSONObject)json);
-		return true;  
-	}
-
-	private void buildMapping(JSONObject jsonObj) {
-		JSONObject inputMappingJson = jsonObj.optJSONObject(IN);
-		if(inputMappingJson!=null) {
-			this.m_inDataAssociation = HAPDefinitionParserDataAssociation.buildDefinitionByJson(inputMappingJson);
-			this.m_inDataAssociation.setDirection(HAPConstantShared.DATAASSOCIATION_DIRECTION_DOWNSTREAM);
-		}
-
-		JSONObject outputMappingJson = jsonObj.optJSONObject(OUT);
-		if(outputMappingJson!=null) {
-			this.m_outDataAssociation = HAPDefinitionParserDataAssociation.buildDefinitionByJson(outputMappingJson);
-			this.m_outDataAssociation.setDirection(HAPConstantShared.DATAASSOCIATION_DIRECTION_UPSTREAM);
-		}
-	}
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){

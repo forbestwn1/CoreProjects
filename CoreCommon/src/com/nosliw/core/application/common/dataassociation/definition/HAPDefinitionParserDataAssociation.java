@@ -6,10 +6,11 @@ import com.nosliw.common.info.HAPUtilityEntityInfo;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityBasic;
+import com.nosliw.core.application.entity.datarule.HAPManagerDataRule;
 
 public class HAPDefinitionParserDataAssociation {
 
-	public static HAPDefinitionDataAssociation buildDefinitionByJson(JSONObject asJson){
+	public static HAPDefinitionDataAssociation buildDefinitionByJson(JSONObject asJson, HAPManagerDataRule dataRuleMan){
 		if(asJson==null) {
 			return null;
 		}
@@ -26,8 +27,7 @@ public class HAPDefinitionParserDataAssociation {
 		switch(type) {
 		case HAPConstantShared.DATAASSOCIATION_TYPE_MAPPING:
 		{
-			HAPDefinitionDataAssociationMapping out = new HAPDefinitionDataAssociationMapping();
-			out.buildObject(asJson, HAPSerializationFormat.JSON);
+			HAPDefinitionDataAssociationMapping out = HAPDefinitionParserMapping.parse(asJson, dataRuleMan); 
 			return out;
 		}
 		case HAPConstantShared.DATAASSOCIATION_TYPE_MIRROR:
@@ -45,6 +45,14 @@ public class HAPDefinitionParserDataAssociation {
 		}
 
 		return null;
+	}
+	
+	public static void buildToDataAssociation(HAPDefinitionDataAssociation dataAssociationDef, JSONObject daJsonObj) {
+		dataAssociationDef.buildEntityInfoByJson(daJsonObj);
+		Object dirObj = daJsonObj.opt(HAPDefinitionDataAssociation.DIRECTION);
+		if(dirObj!=null) {
+			dataAssociationDef.setDirection((String)dirObj);
+		}
 	}
 	
 }

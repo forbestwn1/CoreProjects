@@ -10,6 +10,7 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.core.application.entity.datarule.HAPManagerDataRule;
 
 @HAPEntityWithAttribute
 public class HAPInfoDynamicNode extends HAPInfoDynamic{
@@ -37,17 +38,15 @@ public class HAPInfoDynamicNode extends HAPInfoDynamic{
 		jsonMap.put(CHILD, HAPManagerSerialize.getInstance().toStringValue(this.m_children.values(), HAPSerializationFormat.JSON));
 	}
 
-	
-	@Override
-	protected boolean buildObjectByJson(Object json){
-		super.buildObjectByJson(json);
+	public static HAPInfoDynamicNode parseNode(JSONObject jsonObj, HAPManagerDataRule dataRuleMan) {
+		HAPInfoDynamicNode out = new HAPInfoDynamicNode();
+		HAPInfoDynamic.parseToDynamicInfo(out, jsonObj);
 		
-		JSONObject jsonObj = (JSONObject)json;
-
 		JSONArray childArray = jsonObj.getJSONArray(CHILD);
 		for(int i=0; i<childArray.length(); i++) {
-			this.addChild(HAPInfoDynamic.parse(childArray.getJSONObject(i)));
+			out.addChild(HAPInfoDynamic.parse(childArray.getJSONObject(i), dataRuleMan));
 		}
-		return true;
+		
+		return out;
 	}
 }

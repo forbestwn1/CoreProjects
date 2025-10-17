@@ -12,6 +12,7 @@ import com.nosliw.common.path.HAPComplexPath;
 import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.core.application.entity.datarule.HAPManagerDataRule;
 
 @HAPEntityWithAttribute
 public class HAPContainerInfoDynamic extends HAPSerializableImp{
@@ -45,21 +46,21 @@ public class HAPContainerInfoDynamic extends HAPSerializableImp{
 		jsonMap.put(ELEMENT, HAPManagerSerialize.getInstance().toStringValue(m_elements, HAPSerializationFormat.JSON));
 	}
 	
-	@Override
-	protected boolean buildObjectByJson(Object json){
+	public static HAPContainerInfoDynamic parse(Object json, HAPManagerDataRule dataRuleMan) {
+		HAPContainerInfoDynamic out = new HAPContainerInfoDynamic();
 		if(json instanceof JSONArray) {
-			this.parseElements((JSONArray)json);
+			parseElements(out, (JSONArray)json, dataRuleMan);
 		}
 		else if(json instanceof JSONObject) {
-			this.parseElements(((JSONObject)json).optJSONArray(ELEMENT));
+			parseElements(out, ((JSONObject)json).optJSONArray(ELEMENT), dataRuleMan);
 		}
-		return true;  
+		return out;
 	}
 
-	private void parseElements(JSONArray jsonArray) {
+	private static void parseElements(HAPContainerInfoDynamic out, JSONArray jsonArray, HAPManagerDataRule dataRuleMan) {
 		if(jsonArray!=null) {
 			for(int i=0; i<jsonArray.length(); i++) {
-				this.addElement(HAPInfoDynamic.parse(jsonArray.get(i)));
+				out.addElement(HAPInfoDynamic.parse(jsonArray.get(i), dataRuleMan));
 			}
 		}
 	}

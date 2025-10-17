@@ -1,5 +1,7 @@
 package com.nosliw.core.application.entity.datarule;
 
-public class HAPDataRuleImplementation {
+public interface HAPDataRuleImplementation {
 
+	String getImmplementationType();
+	
 }

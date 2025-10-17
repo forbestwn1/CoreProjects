@@ -9,6 +9,7 @@ import org.json.JSONObject;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.core.application.bricktypefacade.HAPEnumFacadeSingleBrickType;
 import com.nosliw.core.application.bricktypefacade.HAPFacadeBrickTypeSingle;
+import com.nosliw.core.application.entity.datarule.HAPManagerDataRule;
 
 public class HAPCriteriaDynamicSimpleoFacade extends HAPSerializableImp implements HAPCriteriaDynamic{
 
@@ -24,9 +25,8 @@ public class HAPCriteriaDynamicSimpleoFacade extends HAPSerializableImp implemen
 		this.m_restrains = new ArrayList<HAPRestrainBrickTypeFacade>();
 	}
 	
-	public HAPFacadeBrickTypeSingle getFacade() {
-		return this.m_facade;
-	}
+	public HAPFacadeBrickTypeSingle getFacade() {	return this.m_facade;	}
+	public void setFacade(HAPFacadeBrickTypeSingle facade) {   this.m_facade = facade;    }
 	
 	public List<HAPRestrainBrickTypeFacade> getRestains() {
 		return this.m_restrains;
@@ -37,29 +37,28 @@ public class HAPCriteriaDynamicSimpleoFacade extends HAPSerializableImp implemen
 		return HAPCriteriaDynamic.TYPE_FACADE_SIMPLE;
 	}
 	
-	private void parseRestrain(JSONObject jsonObj) {
-		this.m_restrains.add(HAPRestrainBrickTypeFacade.parseBrickTypeFacadeRestrain(jsonObj));
+	public void parseRestrain(JSONObject jsonObj, HAPManagerDataRule dataRuleMan) {
+		this.m_restrains.add(HAPRestrainBrickTypeFacade.parseBrickTypeFacadeRestrain(jsonObj, dataRuleMan));
 	}
 	
-	@Override
-	protected boolean buildObjectByJson(Object json){
-		JSONObject jsonObj = (JSONObject)json;
+	public static HAPCriteriaDynamicSimpleoFacade parse(JSONObject jsonObj, HAPManagerDataRule dataRuleMan) {
+		HAPCriteriaDynamicSimpleoFacade out = new HAPCriteriaDynamicSimpleoFacade();
 		
-		this.m_facade = HAPEnumFacadeSingleBrickType.getFacadeByName(jsonObj.getString(FACADE));
+		out.setFacade(HAPEnumFacadeSingleBrickType.getFacadeByName(jsonObj.getString(FACADE)));
 		
 		Object restrainObj = jsonObj.opt(RESTRAIN);
 		if(restrainObj!=null) {
 			if(restrainObj instanceof JSONObject) {
-				this.parseRestrain((JSONObject)restrainObj);
+				out.parseRestrain((JSONObject)restrainObj, dataRuleMan);
 			}
 			else if(restrainObj instanceof JSONArray) {
 				JSONArray restrainArray = (JSONArray)restrainObj;
 				for(int i=0; i<restrainArray.length(); i++) {
-					this.parseRestrain(restrainArray.getJSONObject(i));
+					out.parseRestrain(restrainArray.getJSONObject(i), dataRuleMan);
 				}
 			}
 		}
-		return true;  
+		return out;
 	}
-
+	
 }

@@ -4,17 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.utils.HAPUtilityBasic;
-import com.nosliw.core.application.common.datarule.HAPParserDataRule;
 import com.nosliw.core.data.criteria.HAPDataTypeCriteria;
-import com.nosliw.core.data.criteria.HAPParserCriteria;
 import com.nosliw.core.data.criteria.HAPUtilityCriteria;
 import com.nosliw.core.data.matcher.HAPMatchers;
 import com.nosliw.core.data.matcher.HAPMatchersCombo;
@@ -92,35 +87,6 @@ public class HAPDataDefinitionWritable extends HAPDataDefinition{
 		if(this.getRuleCriteria()!=null) {
 			jsonMap.put(RULECRITERIA, HAPManagerSerialize.getInstance().toStringValue(this.getRuleCriteria(), HAPSerializationFormat.LITERATE));
 		}
-	}
-	
-	@Override
-	public boolean buildObject(Object value, HAPSerializationFormat format) {
-		super.buildObject(value, format);
-		if(value instanceof String) {
-		}
-		else if(value instanceof JSONObject){
-			JSONObject jsonValue = (JSONObject)value;
-			
-			JSONArray ruleJsonArray = jsonValue.optJSONArray(RULE);
-			if(ruleJsonArray!=null) {
-				for(int i=0; i<ruleJsonArray.length(); i++) {
-					this.addRule(HAPParserDataRule.parseRule(ruleJsonArray.get(i)));
-				}
-			}
-			
-			JSONObject ruleMatchersObj = jsonValue.optJSONObject(RULEMATCHERS);
-			if(ruleMatchersObj!=null) {
-				this.m_ruleMatchers = new HAPMatchersCombo();
-				this.m_ruleMatchers.buildObject(ruleMatchersObj, HAPSerializationFormat.JSON);
-			}
-
-			String ruleCriteriaStr = (String)jsonValue.opt(RULECRITERIA);
-			if(ruleCriteriaStr!=null) {
-				this.m_ruleCriteria = HAPParserCriteria.getInstance().parseCriteria(ruleCriteriaStr);
-			}
-		}
-		return true;
 	}
 	
 	protected void cloneToDataDefinitionWritable(HAPDataDefinitionWritable out) {

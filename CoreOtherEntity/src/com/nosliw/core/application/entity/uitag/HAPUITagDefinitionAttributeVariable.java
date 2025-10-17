@@ -2,10 +2,7 @@ package com.nosliw.core.application.entity.uitag;
 
 import java.util.Map;
 
-import org.json.JSONObject;
-
 import com.nosliw.common.constant.HAPAttribute;
-import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.common.datadefinition.HAPDataDefinitionWritable;
 
@@ -20,24 +17,12 @@ public class HAPUITagDefinitionAttributeVariable extends HAPUITagDefinitionAttri
 		super(HAPConstantShared.UITAGDEFINITION_ATTRIBUTETYPE_VARIABLE);
 	}
 	
-	public HAPDataDefinitionWritable getDataDefinition() {
-		return this.m_dataDefinition;
-	}
+	public HAPDataDefinitionWritable getDataDefinition() {	return this.m_dataDefinition;	}
+	public void setDataDefinition(HAPDataDefinitionWritable dataDef) {   this.m_dataDefinition = dataDef;      }
 
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
 	}
 	
-	@Override
-	protected boolean buildObjectByJson(Object json){
-		JSONObject jsonObj = (JSONObject)json;
-		super.buildObjectByJson(jsonObj);
-		Object dfObj = jsonObj.opt(DATADEFINITION);
-		if(dfObj!=null) {
-			this.m_dataDefinition = new HAPDataDefinitionWritable();
-			this.m_dataDefinition.buildObject(dfObj, HAPSerializationFormat.JSON);
-		}
-		return true;  
-	}
 }

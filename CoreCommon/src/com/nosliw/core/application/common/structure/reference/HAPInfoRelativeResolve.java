@@ -12,6 +12,7 @@ import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.core.application.common.structure.HAPElementStructure;
 import com.nosliw.core.application.common.structure.HAPUtilityParserElement;
+import com.nosliw.core.application.entity.datarule.HAPManagerDataRule;
 
 @HAPEntityWithAttribute
 public class HAPInfoRelativeResolve extends HAPSerializableImp{
@@ -47,28 +48,33 @@ public class HAPInfoRelativeResolve extends HAPSerializableImp{
 	}
 
 	public String getResolvedStructureId() {   return this.m_structureId;    }
+	public void setResolvedStructureId(String structureId) {    this.m_structureId = structureId;      }
 	
 	public HAPComplexPath getResolvedElementPath() {    return this.m_path;    }
+	public void setResolvedElementPath(HAPComplexPath path) {    this.m_path = path;    }
 	
 	public HAPPath getUnresolvedElementPath() {    return this.m_remainPath;    }
+	public void settUnresolvedElementPath(HAPPath path) {    this.m_remainPath = path;    }
 	
 	public HAPElementStructure getSolidElement() {    return this.m_solidElement;    }
+	public void setSolidElement(HAPElementStructure element) {     this.m_solidElement = element;        }
 	
-	@Override
-	protected boolean buildObjectByJson(Object json){
-		JSONObject jsonObj = (JSONObject)json;
-		this.m_structureId = (String)jsonObj.opt(STRUCTUREID);
-		this.m_path = HAPComplexPath.newInstance(jsonObj.opt(PATH));
-		this.m_remainPath = new HAPPath(jsonObj.optString(REMAINPATH));
-		this.m_solidElement = HAPUtilityParserElement.parseStructureElement(jsonObj.optJSONObject(SOLIDELEMENT));
-		return false;  
+	public static HAPInfoRelativeResolve parse(JSONObject jsonObj, HAPManagerDataRule dataRuleMan) {
+		HAPInfoRelativeResolve out = new HAPInfoRelativeResolve();
+		out.setResolvedStructureId((String)jsonObj.opt(STRUCTUREID));
+		out.setResolvedElementPath(HAPComplexPath.newInstance(jsonObj.opt(PATH)));
+		out.settUnresolvedElementPath(new HAPPath(jsonObj.optString(REMAINPATH)));
+		out.setSolidElement(HAPUtilityParserElement.parseStructureElement(jsonObj.optJSONObject(SOLIDELEMENT), dataRuleMan));
+		return out;
 	}
-
+	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		jsonMap.put(STRUCTUREID, this.m_structureId);
 		jsonMap.put(PATH, this.m_path.toStringValue(HAPSerializationFormat.JSON));
-		if(this.m_path!=null)  jsonMap.put(REMAINPATH, this.m_path.toString());
+		if(this.m_path!=null) {
+			jsonMap.put(REMAINPATH, this.m_path.toString());
+		}
 		jsonMap.put(SOLIDELEMENT, this.m_solidElement.toStringValue(HAPSerializationFormat.JSON));
 	}
 }

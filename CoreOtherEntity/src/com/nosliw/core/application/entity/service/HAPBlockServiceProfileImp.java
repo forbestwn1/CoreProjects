@@ -15,6 +15,7 @@ import com.nosliw.core.application.brick.HAPEnumBrickType;
 import com.nosliw.core.application.brick.service.profile.HAPBlockServiceProfile;
 import com.nosliw.core.application.common.brick.HAPBrickImpWithEntityInfo;
 import com.nosliw.core.application.common.interactive.HAPWithBlockInteractiveTask;
+import com.nosliw.core.application.entity.datarule.HAPManagerDataRule;
 import com.nosliw.core.application.valueport.HAPContainerValuePorts;
 import com.nosliw.core.resource.HAPFactoryResourceId;
 import com.nosliw.core.resource.HAPResourceId;
@@ -38,6 +39,38 @@ public class HAPBlockServiceProfileImp extends HAPBrickImpWithEntityInfo impleme
 	@Override
 	public HAPDisplayResourceNode getDisplayResource() {    return (HAPDisplayResourceNode)this.getAttributeValueOfValue(DISPLAY);  }
 	public void setDisplayResource(HAPDisplayResourceNode displayResource) {    this.setAttributeValueWithValue(DISPLAY, displayResource);      }
+
+	public static HAPBlockServiceProfileImp parse(JSONObject jsonObj, HAPManagerDataRule dataRuleMan){
+		HAPBlockServiceProfileImp out = new HAPBlockServiceProfileImp();
+		out.buildEntityInfoByJson(jsonObj);
+
+		Object displayObj = jsonObj.opt(DISPLAY);
+		if(displayObj!=null) {
+			HAPDisplayResourceNode displayResource = new HAPDisplayResourceNode();
+			displayResource.buildObject(displayObj, HAPSerializationFormat.JSON);
+			out.setDisplayResource(displayResource);
+		}
+		
+		Object resourceObj = jsonObj.opt(HAPWrapperValueOfReferenceResource.RESOURCEID);
+		if(resourceObj!=null) {
+			HAPResourceId resourceId = HAPFactoryResourceId.tryNewInstance(HAPEnumBrickType.INTERACTIVETASKINTERFACE_100.getBrickType(), HAPEnumBrickType.INTERACTIVETASKINTERFACE_100.getVersion(), resourceObj);
+			out.setTaskInterface(resourceId);
+		}
+		else {
+			out.setTaskInterface(HAPUtilityServiceParse.parseTaskInterfaceInterfaceBlock(jsonObj, dataRuleMan));
+		}
+		
+		List<String> tags = new ArrayList<String>();
+		JSONArray tagArray = jsonObj.optJSONArray(TAG);
+		if(tagArray!=null) {
+			for(int i=0; i<tagArray.length(); i++) {
+				tags.add(tagArray.getString(i));
+			}
+		}
+		out.setTags(tags);
+		
+		return out;  
+	}
 
 	@Override
 	protected boolean buildObjectByJson(Object json){

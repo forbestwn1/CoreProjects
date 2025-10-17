@@ -7,8 +7,8 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfoImp;
-import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.core.application.entity.datarule.HAPManagerDataRule;
 
 @HAPEntityWithAttribute
 public abstract class HAPInfoDynamic extends HAPEntityInfoImp{
@@ -20,11 +20,8 @@ public abstract class HAPInfoDynamic extends HAPEntityInfoImp{
 
 	public abstract HAPInfoDynamic getChild(String childName);
 	
-	@Override
-	protected boolean buildObjectByJson(Object json){
-		JSONObject jsonObj = (JSONObject)json;
-		this.buildEntityInfoByJson(jsonObj);
-		return true;
+	public static void parseToDynamicInfo(HAPInfoDynamic dynamicInfo, JSONObject jsonObj) {
+		dynamicInfo.buildEntityInfoByJson(jsonObj);
 	}
 	
 	@Override
@@ -34,7 +31,7 @@ public abstract class HAPInfoDynamic extends HAPEntityInfoImp{
 	}
 
 	
-	public static HAPInfoDynamic parse(Object obj) {
+	public static HAPInfoDynamic parse(Object obj, HAPManagerDataRule dataRuleMan) {
 		HAPInfoDynamic out = null;
 		
 		JSONObject jsonObj = (JSONObject)obj;
@@ -42,16 +39,13 @@ public abstract class HAPInfoDynamic extends HAPEntityInfoImp{
 		
 		switch(type) {
 		case HAPConstantShared.DYNAMICTASK_INFO_TYPE_SET:
-			out = new HAPInfoDynamicLeafSet();
-			out.buildObject(jsonObj, HAPSerializationFormat.JSON);
+			out = HAPInfoDynamicLeafSet.parseSet(jsonObj, dataRuleMan); 
 			break;
 		case HAPConstantShared.DYNAMICTASK_INFO_TYPE_SIMPLE:
-			out = new HAPInfoDynamicLeafSimple();
-			out.buildObject(jsonObj, HAPSerializationFormat.JSON);
+			out = HAPInfoDynamicLeafSimple.parseSimple(jsonObj, dataRuleMan); 
 			break;
 		case HAPConstantShared.DYNAMICTASK_INFO_TYPE_NODE:
-			out = new HAPInfoDynamicNode();
-			out.buildObject(jsonObj, HAPSerializationFormat.JSON);
+			out = HAPInfoDynamicNode.parseNode(jsonObj, dataRuleMan);
 			break;
 		}
 		

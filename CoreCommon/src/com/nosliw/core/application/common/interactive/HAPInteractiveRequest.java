@@ -14,6 +14,7 @@ import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.core.application.common.datadefinition.HAPDefinitionParm;
+import com.nosliw.core.application.entity.datarule.HAPManagerDataRule;
 
 @HAPEntityWithAttribute
 public class HAPInteractiveRequest extends HAPSerializableImp{
@@ -37,21 +38,22 @@ public class HAPInteractiveRequest extends HAPSerializableImp{
 	}
 	
 	public List<HAPDefinitionParm> getRequestParms() {   return this.m_requestParms;  }
+	public void addRequestParm(HAPDefinitionParm parm) {   this.m_requestParms.add(parm);    }
 	
-	@Override
-	protected boolean buildObjectByJson(Object json){
-		JSONArray parmsArray = (JSONArray)json;
+	
+	public static HAPInteractiveRequest parse(JSONArray parmsArray, HAPManagerDataRule dataRuleMan) {
+		HAPInteractiveRequest out = new HAPInteractiveRequest();
 		for(int i=0; i<parmsArray.length(); i++) {
 			JSONObject parmJson = parmsArray.getJSONObject(i);
 			if(HAPUtilityEntityInfo.isEnabled(parmJson)){
-				HAPDefinitionParm parm = HAPDefinitionParm.buildParmFromObject(parmJson);
-				m_requestParms.add(parm);
+				HAPDefinitionParm parm = HAPDefinitionParm.buildParmFromObject(parmJson, dataRuleMan);
+				out.addRequestParm(parm);
 			}
 		}
-		this.initValuePort();
-		return true;  
+		out.initValuePort();
+		return out;
 	}
-
+	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		jsonMap.put(PARM, HAPManagerSerialize.getInstance().toStringValue(this.getRequestParms(), HAPSerializationFormat.JSON));

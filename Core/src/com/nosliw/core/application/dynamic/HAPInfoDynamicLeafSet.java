@@ -1,7 +1,10 @@
 package com.nosliw.core.application.dynamic;
 
+import org.json.JSONObject;
+
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.core.application.entity.datarule.HAPManagerDataRule;
 
 @HAPEntityWithAttribute
 public class HAPInfoDynamicLeafSet extends HAPInfoDynamicLeaf{
@@ -11,9 +14,10 @@ public class HAPInfoDynamicLeafSet extends HAPInfoDynamicLeaf{
 		return HAPConstantShared.DYNAMICTASK_INFO_TYPE_SET;
 	}
 	
-	@Override
-	protected boolean buildObjectByJson(Object json){
-		super.buildObjectByJson(json);
-		return true;
+	public static HAPInfoDynamicLeafSet parseSet(JSONObject jsonObj, HAPManagerDataRule dataRuleMan) {
+		HAPInfoDynamicLeafSet out = new HAPInfoDynamicLeafSet();
+		HAPInfoDynamicLeaf.parseToDynamicLeafInfo(out, jsonObj, dataRuleMan);
+		return out;
 	}
+	
 }

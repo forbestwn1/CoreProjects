@@ -7,10 +7,10 @@ import com.nosliw.core.application.entity.datarule.HAPPluginParserDataRule;
 import com.nosliw.core.application.entity.datarule.HAPProviderDataRule;
 
 @Component
-public class HAPProviderDataRuleMandatory implements HAPProviderDataRule{
+public class HAPProviderDataRuleJSScript implements HAPProviderDataRule{
 
 	@Override
-	public String getDataRuleType() {  return HAPConstantShared.DATARULE_TYPE_MANDATORY;  }
+	public String getDataRuleType() {  return HAPConstantShared.DATARULE_TYPE_JSSCRIPT;  }
 
 	@Override
 	public HAPPluginParserDataRule getParser() {

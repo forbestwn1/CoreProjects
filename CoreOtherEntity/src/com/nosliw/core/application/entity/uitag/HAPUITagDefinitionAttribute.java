@@ -9,6 +9,8 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfoImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.core.application.common.datadefinition.HAPParserDataDefinition;
+import com.nosliw.core.application.entity.datarule.HAPManagerDataRule;
 
 @HAPEntityWithAttribute
 public abstract class HAPUITagDefinitionAttribute extends HAPEntityInfoImp{
@@ -33,24 +35,26 @@ public abstract class HAPUITagDefinitionAttribute extends HAPEntityInfoImp{
 	
 	public Object getDefaultValue() {    return this.m_defaultValue;     }
 	
-	public static HAPUITagDefinitionAttribute parseUITagDefinitionAttribute(JSONObject jsonObj) {
-		HAPUITagDefinitionAttribute out = null;
+	public static HAPUITagDefinitionAttribute parseUITagDefinitionAttribute(JSONObject jsonObj, HAPManagerDataRule dataRuleManager) {
 		String type = (String)jsonObj.opt(TYPE);
 		if(type==null) {
 			type = HAPConstantShared.UITAGDEFINITION_ATTRIBUTETYPE_SIMPLE;
 		}
 		switch(type) {
 		case HAPConstantShared.UITAGDEFINITION_ATTRIBUTETYPE_SIMPLE:
-			out = new HAPUITagDefinitionAttributeSimple();
-			break;
+			HAPUITagDefinitionAttributeSimple simpleAttrDef = new HAPUITagDefinitionAttributeSimple();
+			simpleAttrDef.buildObject(jsonObj, HAPSerializationFormat.JSON);
+			return simpleAttrDef;
 		case HAPConstantShared.UITAGDEFINITION_ATTRIBUTETYPE_VARIABLE:
-			out = new HAPUITagDefinitionAttributeVariable();
-			break;
+			HAPUITagDefinitionAttributeVariable varAttrDef = new HAPUITagDefinitionAttributeVariable();
+			varAttrDef.buildEntityInfoByJson(jsonObj);
+			Object dfObj = jsonObj.opt(HAPUITagDefinitionAttributeVariable.DATADEFINITION);
+			if(dfObj!=null) {
+				varAttrDef.setDataDefinition(HAPParserDataDefinition.parseDataDefinitionWritable(dfObj, dataRuleManager));
+			}
+			return varAttrDef;
 		}
-		if(out!=null) {
-			out.buildObject(jsonObj, HAPSerializationFormat.JSON);
-		}
-		return out;
+		return null;
 	}
 	
 	@Override

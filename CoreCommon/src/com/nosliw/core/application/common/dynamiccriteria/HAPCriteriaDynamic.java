@@ -3,7 +3,7 @@ package com.nosliw.core.application.common.dynamiccriteria;
 import org.json.JSONObject;
 
 import com.nosliw.common.serialization.HAPSerializable;
-import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.core.application.entity.datarule.HAPManagerDataRule;
 
 public interface HAPCriteriaDynamic extends HAPSerializable{
 
@@ -13,15 +13,14 @@ public interface HAPCriteriaDynamic extends HAPSerializable{
 	
 	String getCriteriaType();
 	
-	public static HAPCriteriaDynamic parseDynamicCriteria(JSONObject jsonObj) {
+	public static HAPCriteriaDynamic parseDynamicCriteria(JSONObject jsonObj, HAPManagerDataRule dataRuleMan) {
 		HAPCriteriaDynamic out = null;
 		
 		String type = jsonObj.getString(TYPE);
 		
 		switch(type) {
 		case TYPE_FACADE_SIMPLE:
-			out = new HAPCriteriaDynamicSimpleoFacade();
-			out.buildObject(jsonObj, HAPSerializationFormat.JSON);
+			out = HAPCriteriaDynamicSimpleoFacade.parse(jsonObj, dataRuleMan); 
 			break;
 		}
 		return out;

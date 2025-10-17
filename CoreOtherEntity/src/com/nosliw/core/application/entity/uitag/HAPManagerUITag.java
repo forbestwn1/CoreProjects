@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityFile;
+import com.nosliw.core.application.entity.datarule.HAPManagerDataRule;
 import com.nosliw.core.data.HAPDataTypeHelper;
 import com.nosliw.core.data.criteria.HAPDataTypeCriteria;
 import com.nosliw.core.data.matcher.HAPMatchers;
@@ -25,15 +26,11 @@ public class HAPManagerUITag{
 	private Map<String, HAPUITagDefinitionData> m_dataTagDefs;
 	private Map<String, HAPUITagDefinition> m_otherTagDefs;
 
+	@Autowired
 	private HAPDataTypeHelper m_dataTypeHelper;
 	
-//	public HAPManagerUITag(HAPDataTypeHelper dataTypeHelper) {
-//		this.m_dataTypeHelper = dataTypeHelper;
-//	}
-
 	@Autowired
-	private void setDataTypeHelper(HAPDataTypeHelper dataTypeHelper) {
-		this.m_dataTypeHelper = dataTypeHelper;	}
+	private HAPManagerDataRule m_dataRuleManager;
 	
 	public HAPUITagDefinition getUITagDefinition(String tagId, String version) {
 		if(version==null) {
@@ -41,7 +38,7 @@ public class HAPManagerUITag{
 		}
 		String fileName = getUITagFolder(tagId, version) + "definition.json";
 		JSONObject jsonObj = new JSONObject(HAPUtilityFile.readFile(new File(fileName)));
-		return HAPUITagUtilityDefinitionParser.parseUITagDefinition(jsonObj, tagId, version);
+		return HAPUITagUtilityDefinitionParser.parseUITagDefinition(jsonObj, tagId, version, this.m_dataRuleManager);
 	}
 	
 	public HAPUITagInfo getDefaultUITagData(HAPUITageQueryData query) {

@@ -9,6 +9,7 @@ import org.jsoup.nodes.Attribute;
 import org.jsoup.nodes.Attributes;
 import org.jsoup.nodes.Element;
 import org.jsoup.nodes.TextNode;
+import org.jsoup.parser.Parser;
 import org.jsoup.select.Elements;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
@@ -29,12 +30,16 @@ import com.nosliw.core.application.division.manual.core.definition.HAPManualDefi
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionPluginParserBrickImp;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionUtilityParserBrick;
 import com.nosliw.core.application.division.manual.core.definition.HAPWithAttachment;
+import com.nosliw.core.application.entity.datarule.HAPManagerDataRule;
 import com.nosliw.core.xxx.application1.HAPWithValueContext;
 
 public class HAPManualPluginParserBlockComplexUIContent extends HAPManualDefinitionPluginParserBrickImp{
 
-	public HAPManualPluginParserBlockComplexUIContent(HAPManualManagerBrick manualDivisionEntityMan, HAPManagerApplicationBrick brickMan) {
+    private HAPManagerDataRule m_dataRuleMan;
+	
+	public HAPManualPluginParserBlockComplexUIContent(HAPManualManagerBrick manualDivisionEntityMan, HAPManagerApplicationBrick brickMan, HAPManagerDataRule dataRuleMan) {
 		super(HAPEnumBrickType.UICONTENT_100, HAPManualDefinitionBlockComplexUIContent.class, manualDivisionEntityMan, brickMan);
+		this.m_dataRuleMan = dataRuleMan;
 	}
 
 	@Override
@@ -44,7 +49,7 @@ public class HAPManualPluginParserBlockComplexUIContent extends HAPManualDefinit
 		Element element = (Element)obj;
 		
 		//parse value context
-		parseValueContext(element, uiContent, parseContext);
+		parseValueContext(element, uiContent, parseContext, this.m_dataRuleMan);
 
 		parseDescendantTags(element, uiContent, parseContext);
 		
@@ -205,10 +210,10 @@ public class HAPManualPluginParserBlockComplexUIContent extends HAPManualDefinit
 		}
 	}
 	
-	private void parseValueContext(Element ele, HAPManualDefinitionBlockComplexUIContent brickManualDef, HAPManualDefinitionContextParse parseContext) {
+	private void parseValueContext(Element ele, HAPManualDefinitionBlockComplexUIContent brickManualDef, HAPManualDefinitionContextParse parseContext, HAPManagerDataRule dataRuleMan) {
 		List<Element> valueContextEles = HAPUtilityUIResourceParser.getChildElementsByTag(ele, HAPWithValueContext.VALUECONTEXT);
 		for(Element valueContextEle : valueContextEles){
-			HAPManualParserValueContext.parseValueContextContentJson(brickManualDef.getValueContextBrick(), new JSONArray(valueContextEle.html()), parseContext);
+			HAPManualParserValueContext.parseValueContextContentJson(brickManualDef.getValueContextBrick(), new JSONArray(Parser.unescapeEntities(valueContextEle.html(), false)), parseContext, dataRuleMan);
 			break;
 		}
 		for(Element valueContextEle : valueContextEles) {

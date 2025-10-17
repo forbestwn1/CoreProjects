@@ -12,10 +12,11 @@ import com.nosliw.common.info.HAPUtilityEntityInfo;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPUtilityFile;
 import com.nosliw.core.application.HAPManagerApplicationBrick;
+import com.nosliw.core.application.entity.datarule.HAPManagerDataRule;
 
 public class HAPImporterDataSourceDefinition {
 
-	public static List<HAPInfoService> loadDataSourceDefinition(HAPManagerApplicationBrick brickMan) {
+	public static List<HAPInfoService> loadDataSourceDefinition(HAPManagerApplicationBrick brickMan, HAPManagerDataRule dataRuleMan) {
 		List<HAPInfoService> out = new ArrayList<HAPInfoService>();
 
 		/*
@@ -36,7 +37,7 @@ public class HAPImporterDataSourceDefinition {
 		new HAPClassFilter(){
 			@Override
 			protected void process(Class cls, Object data) {
-				List<HAPInfoService> dataSourceDefs = loadDataSourceDefinition(cls, brickMan);
+				List<HAPInfoService> dataSourceDefs = loadDataSourceDefinition(cls, brickMan, dataRuleMan);
 				out.addAll(dataSourceDefs);
 			}
 
@@ -55,7 +56,7 @@ public class HAPImporterDataSourceDefinition {
 		return out;
 	}
 	
-	private static List<HAPInfoService> loadDataSourceDefinition(Class cls, HAPManagerApplicationBrick brickMan){
+	private static List<HAPInfoService> loadDataSourceDefinition(Class cls, HAPManagerApplicationBrick brickMan, HAPManagerDataRule dataRuleMan){
 		List<HAPInfoService> out = new ArrayList<HAPInfoService>();
 		try{
 			InputStream inputStream = cls.getResourceAsStream("service.ds");
@@ -68,8 +69,7 @@ public class HAPImporterDataSourceDefinition {
 						JSONObject profileJsonObj = serviceDefJson.optJSONObject(HAPInfoService.PROFILE);
 						if(HAPUtilityEntityInfo.isEnabled(profileJsonObj)) {
 							//service profile
-							HAPBlockServiceProfileImp serviceProfile = new HAPBlockServiceProfileImp();
-							serviceProfile.buildObject(profileJsonObj, HAPSerializationFormat.JSON);
+							HAPBlockServiceProfileImp serviceProfile = HAPBlockServiceProfileImp.parse(profileJsonObj, dataRuleMan); 
 							
 							//service runtime
 							JSONObject runtimeJsonObj = serviceDefJson.optJSONObject(HAPInfoService.RUNTIME);

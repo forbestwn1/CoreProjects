@@ -47,7 +47,10 @@ import com.nosliw.core.application.division.manual.core.process.HAPManualPluginP
 import com.nosliw.core.application.division.manual.core.process.HAPManualPluginProcessorBrick;
 import com.nosliw.core.application.division.manual.core.process.HAPManualProcessBrick;
 import com.nosliw.core.application.entity.datarule.HAPDataRule;
+import com.nosliw.core.application.entity.datarule.HAPDataRuleImplementationLocal;
 import com.nosliw.core.data.HAPDataTypeHelper;
+import com.nosliw.core.data.criteria.HAPDataTypeCriteria;
+import com.nosliw.core.data.criteria.HAPUtilityCriteria;
 import com.nosliw.core.resource.HAPManagerResource;
 import com.nosliw.core.runtime.HAPRuntimeInfo;
 import com.nosliw.core.runtime.HAPRuntimeManager;
@@ -160,10 +163,13 @@ public class HAPManualManagerBrick implements HAPPluginDivision{
                         if(eleType.equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_DATA)) {
                         	HAPElementStructureLeafData dataEle = (HAPElementStructureLeafData)eleInfo.getElement();
                         	for(HAPDefinitionDataRule ruleDef : dataEle.getDataDefinition().getRules()) {
-                        		HAPDataRule rule = ruleDef.getRule();
-                        		rule.setDataCriteria(dataEle.getCriteria());
+                        		HAPDataRule rule = ruleDef.getDataRule();
+                        		HAPDataTypeCriteria ruleCriteria = HAPUtilityCriteria.getChildCriteriaByPath(dataEle.getCriteria(), ruleDef.getPath());
+                        		rule.setDataCriteria(ruleCriteria);
                         		HAPManualDefinitionBrick ruleTaskBrickDef = m_manualDataRuleManager.transformDataRule(rule);
                         		String attrName = validationRuleTaskContainerBrick.addElementWithBrick(ruleTaskBrickDef);
+                        		HAPDataRuleImplementationLocal dataRuleImp = new HAPDataRuleImplementationLocal("validationRuleTasks."+attrName+".taskWrapper");
+                        		rule.setImplementation(dataRuleImp);
                         	}
                         }
 						return null;

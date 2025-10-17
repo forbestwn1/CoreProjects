@@ -3,12 +3,9 @@ package com.nosliw.core.application.common.dataassociation.definition;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import org.json.JSONObject;
-
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
-import com.nosliw.common.utils.HAPConstantShared;
 
 public class HAPDefinitionDataAssociationForTask extends HAPSerializableImp{
 
@@ -36,33 +33,6 @@ public class HAPDefinitionDataAssociationForTask extends HAPSerializableImp{
 	}
 	
 	public void addOutDataAssociation(String name, HAPDefinitionDataAssociation dataAssociation) {  this.m_outDataAssociation.put(name, dataAssociation);   }
-	
-	@Override
-	protected boolean buildObjectByJson(Object json){  
-		this.buildMapping((JSONObject)json);
-		return true;  
-	}
-
-	private void buildMapping(JSONObject jsonObj) {
-		JSONObject inputMappingJson = jsonObj.optJSONObject(IN);
-		if(inputMappingJson!=null) {
-			this.m_inDataAssociation = HAPDefinitionParserDataAssociation.buildDefinitionByJson(inputMappingJson);
-			if(this.m_inDataAssociation!=null) {
-				this.m_inDataAssociation.setDirection(HAPConstantShared.DATAASSOCIATION_DIRECTION_DOWNSTREAM);
-			}
-		}
-
-		JSONObject outputMappingJson = jsonObj.optJSONObject(OUT);
-		if(outputMappingJson!=null) {
-			for(Object key : outputMappingJson.keySet()) {
-				HAPDefinitionDataAssociation dataAssociation = HAPDefinitionParserDataAssociation.buildDefinitionByJson(outputMappingJson.optJSONObject((String)key));
-				if(dataAssociation!=null) {
-					dataAssociation.setDirection(HAPConstantShared.DATAASSOCIATION_DIRECTION_UPSTREAM);
-					this.addOutDataAssociation((String)key, dataAssociation);
-				}
-			}
-		}
-	}
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){

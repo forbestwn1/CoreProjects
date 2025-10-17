@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class HAPManagerDataRule {
 
-	private Map<String, HAPPluginParserDataRule> m_parser;
+	private Map<String, HAPPluginParserDataRule> m_parser = new LinkedHashMap<String, HAPPluginParserDataRule>();
 	
 	public HAPManagerDataRule(List<HAPProviderDataRule> dataRuleProviders) {
 		this.m_parser = new LinkedHashMap<String, HAPPluginParserDataRule>();
