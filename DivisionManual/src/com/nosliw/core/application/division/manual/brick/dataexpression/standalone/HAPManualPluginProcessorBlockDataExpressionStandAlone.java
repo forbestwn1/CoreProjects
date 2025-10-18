@@ -19,8 +19,6 @@ import com.nosliw.core.application.common.interactive.HAPInteractiveExpression;
 import com.nosliw.core.application.common.withvariable.HAPContainerVariableInfo;
 import com.nosliw.core.application.common.withvariable.HAPManagerWithVariablePlugin;
 import com.nosliw.core.application.common.withvariable.HAPUtilityWithVarible;
-import com.nosliw.core.application.division.manual.brick.dataexpression.lib.HAPManualBlockDataExpressionElementInLibrary;
-import com.nosliw.core.application.division.manual.brick.dataexpression.lib.HAPManualDefinitionBlockDataExpressionElementInLibrary;
 import com.nosliw.core.application.division.manual.common.task.HAPManualUtilityTask;
 import com.nosliw.core.application.division.manual.core.HAPManualBrick;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionBrick;
@@ -66,9 +64,9 @@ public class HAPManualPluginProcessorBlockDataExpressionStandAlone extends HAPMa
 		HAPDomainValueStructure valueStructureDomain = processContext.getCurrentBundle().getValueStructureDomain();
 
 		Pair<HAPManualDefinitionBrick, HAPManualBrick> brickInfo = this.getBrickPair(pathFromRoot, processContext);
-		HAPManualBlockDataExpressionElementInLibrary blockExe = (HAPManualBlockDataExpressionElementInLibrary)brickInfo.getRight();
+		HAPManualBlockDataExpressionStandAlone blockExe = (HAPManualBlockDataExpressionStandAlone)brickInfo.getRight();
 		HAPDataExpressionStandAlone exe = blockExe.getValue();;
-		HAPDefinitionDataExpressionStandAlone def = ((HAPManualDefinitionBlockDataExpressionElementInLibrary)brickInfo.getLeft()).getValue();
+		HAPDefinitionDataExpressionStandAlone def = ((HAPManualDefinitionBlockDataExpressionStandAlone)brickInfo.getLeft()).getValue();
 		
 		HAPBasicExpressionData dataExpression = (HAPBasicExpressionData)exe.getExpression();
 
@@ -89,9 +87,9 @@ public class HAPManualPluginProcessorBlockDataExpressionStandAlone extends HAPMa
 		HAPDomainValueStructure valueStructureDomain = processContext.getCurrentBundle().getValueStructureDomain();
 
 		Pair<HAPManualDefinitionBrick, HAPManualBrick> brickInfo = this.getBrickPair(pathFromRoot, processContext);
-		HAPManualBlockDataExpressionElementInLibrary blockExe = (HAPManualBlockDataExpressionElementInLibrary)brickInfo.getRight();
+		HAPManualBlockDataExpressionStandAlone blockExe = (HAPManualBlockDataExpressionStandAlone)brickInfo.getRight();
 		HAPDataExpressionStandAlone exe = blockExe.getValue();;
-		HAPDefinitionDataExpressionStandAlone def = ((HAPManualDefinitionBlockDataExpressionElementInLibrary)brickInfo.getLeft()).getValue();
+		HAPDefinitionDataExpressionStandAlone def = ((HAPManualDefinitionBlockDataExpressionStandAlone)brickInfo.getLeft()).getValue();
 
 		HAPContainerVariableInfo varInfoContainer = blockExe.getVariableInfoContainer();
 		

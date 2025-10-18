@@ -12,6 +12,7 @@ import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.core.application.common.datadefinition.HAPDefinitionParm;
 import com.nosliw.core.application.common.datadefinition.HAPDefinitionResult;
+import com.nosliw.core.application.entity.datarule.HAPManagerDataRule;
 
 @HAPEntityWithAttribute
 public class HAPInteractiveExpression extends HAPSerializableImp implements HAPInteractive{
@@ -29,24 +30,25 @@ public class HAPInteractiveExpression extends HAPSerializableImp implements HAPI
 		this.m_result = result;
 	}
 
+	public void setRequest(HAPInteractiveRequest request) {    this.m_request = request;      }
 	public List<HAPDefinitionParm> getRequestParms() {   return this.m_request.getRequestParms();  }
 
 	public HAPDefinitionResult getResult() {   return this.m_result;  }
 	
-	@Override
-	protected boolean buildObjectByJson(Object json){
-		JSONObject jsonObj = (JSONObject)json;
+	public static HAPInteractiveExpression parse(JSONObject jsonObj, HAPManagerDataRule dataRuleMan) {
+		HAPInteractiveExpression out = new HAPInteractiveExpression();
 		
 		JSONArray parmsArray = jsonObj.optJSONArray(REQUEST);
 		if(parmsArray!=null) {
-			this.m_request.buildObject(parmsArray, HAPSerializationFormat.JSON);
+			out.setRequest(HAPInteractiveRequest.parse(parmsArray, dataRuleMan));
 		}
 		
 		JSONObject resutltsObj = jsonObj.optJSONObject(RESULT);
 		if(resutltsObj!=null) {
-			this.m_result.buildObject(resutltsObj, HAPSerializationFormat.JSON);
+			out.m_result.buildObject(resutltsObj, HAPSerializationFormat.JSON);
 		}
-		return true;  
+		
+		return out;
 	}
 	
 	@Override

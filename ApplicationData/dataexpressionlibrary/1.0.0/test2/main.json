@@ -11,34 +11,22 @@
 			"description" : "dataexpression1",
 			"request" : [
 				{
-					"name" : "deparm21",
-					"dataInfo" : "test.string;1.0.0",
-					"defaultValue" : {
-						"dataTypeId": "test.string;1.0.0",
-						"value": "default value of baseVarNormal"
-					}
-				},
-				{
-					"name" : "deparm22",
-					"dataInfo" : "test.integer;1.0.0",
-					"defaultValue" : {
-						"dataTypeId": "test.integer;1.0.0",
-						"value": 1
-					}
-				},
-				{
-					"name" : "deparm23",
-					"dataInfo" : "test.integer;1.0.0",
-					"defaultValue" : {
-						"dataTypeId": "test.integer;1.0.0",
-						"value": 6
+					"name" : "data1",
+					"dataDefinition" : {
+						"criteria" : "test.float;1.0.0",
+						"initData" : {
+							"dataTypeId": "test.float;1.0.0",
+							"value": 100
+						}
 					}
 				}
 			],
 			"result" : {
-				"criteria" : "test.string;1.0.0"
+				"criteria" : "test.boolean;1.0.0"
 			},
-			"expression" : "!(test.string)!.subString(base:?(deparm21)?,from:?(deparm22)?,to:?(deparm23)?)"
+			"expression" : "?(data1)?.largerThan(data:&(#test##float___5000)&).opposite()",
+			"expression2" : "?(data1)?.largerThan(data:&(#test##float___5000)&).opposite()",
+			"expression1" : "&(#test##float___5000)&"
 		}
 	]
 }

@@ -5,11 +5,11 @@ import java.util.List;
 import org.json.JSONObject;
 
 import com.nosliw.common.serialization.HAPSerializableImp;
-import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.core.application.common.datadefinition.HAPDefinitionParm;
 import com.nosliw.core.application.common.datadefinition.HAPDefinitionResult;
 import com.nosliw.core.application.common.dataexpression.HAPDataExpressionStandAlone;
 import com.nosliw.core.application.common.interactive.HAPInteractiveExpression;
+import com.nosliw.core.application.entity.datarule.HAPManagerDataRule;
 
 public class HAPDefinitionDataExpressionStandAlone extends HAPSerializableImp{
 
@@ -31,20 +31,16 @@ public class HAPDefinitionDataExpressionStandAlone extends HAPSerializableImp{
 	public HAPDefinitionResult getResult() {   return this.m_interactiveExpression.getResult();  } 
 	
 	public String getExpressionStr() {    return this.m_expressionStr;     }
+	public void setExpressionStr(String expressionStr) {    this.m_expressionStr = expressionStr;      }
 	
 	public HAPDefinitionDataExpression getExpression() {	return this.m_expression;	}
 	public void setExpression(HAPDefinitionDataExpression expression) {   this.m_expression = expression;     }
 
-	@Override
-	protected boolean buildObjectByJson(Object json){
-		JSONObject jsonObj = (JSONObject)json;
-		super.buildObjectByJson(json);
-		
-		this.m_interactiveExpression = new HAPInteractiveExpression();
-		this.m_interactiveExpression.buildObject(jsonObj, HAPSerializationFormat.JSON);
-		
-		this.m_expressionStr = jsonObj.getString(HAPDataExpressionStandAlone.EXPRESSION);
-		
-		return true;  
+	public static HAPDefinitionDataExpressionStandAlone parse(JSONObject jsonObj, HAPManagerDataRule dataRuleMan) {
+		HAPDefinitionDataExpressionStandAlone out = new HAPDefinitionDataExpressionStandAlone();
+		out.setExpressionInteractive(HAPInteractiveExpression.parse(jsonObj, dataRuleMan));
+		out.setExpressionStr(jsonObj.getString(HAPDataExpressionStandAlone.EXPRESSION));
+		return out;
 	}
+	
 }

@@ -1,18 +1,24 @@
 package com.nosliw.core.application.division.manual.brick.ui.uicontent;
 
+import java.util.Map;
+
 import org.apache.commons.lang3.tuple.Pair;
 
 import com.nosliw.common.path.HAPPath;
+import com.nosliw.core.application.HAPDomainValueStructure;
 import com.nosliw.core.application.brick.HAPEnumBrickType;
 import com.nosliw.core.application.common.dataexpression.definition.HAPParserDataExpression;
+import com.nosliw.core.application.common.scriptexpressio.HAPItemInContainerScriptExpression;
 import com.nosliw.core.application.common.scriptexpressio.HAPUtilityScriptExpression;
 import com.nosliw.core.application.common.withvariable.HAPContainerVariableInfo;
 import com.nosliw.core.application.common.withvariable.HAPManagerWithVariablePlugin;
+import com.nosliw.core.application.common.withvariable.HAPUtilityWithVarible;
 import com.nosliw.core.application.division.manual.core.HAPManualBrick;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionBrick;
 import com.nosliw.core.application.division.manual.core.process.HAPManualContextProcessBrick;
 import com.nosliw.core.application.division.manual.core.process.HAPManualPluginProcessorBlockImp;
 import com.nosliw.core.application.valueport.HAPUtilityValuePortVariable;
+import com.nosliw.core.data.matcher.HAPMatchers;
 
 public class HAPManualPluginProcessorBlockUIContent extends HAPManualPluginProcessorBlockImp{
 
@@ -75,6 +81,21 @@ public class HAPManualPluginProcessorBlockUIContent extends HAPManualPluginProce
 		
 	}
 	
-	
-	
+	@Override
+	public void processValueContextDiscovery(HAPPath pathFromRoot, HAPManualContextProcessBrick processContext) {
+		Pair<HAPManualDefinitionBrick, HAPManualBrick> blockPair = this.getBrickPair(pathFromRoot, processContext);
+		HAPManualDefinitionBlockComplexUIContent uiContentDef = (HAPManualDefinitionBlockComplexUIContent)blockPair.getLeft();
+		HAPManualBlockComplexUIContent uiContentExe = (HAPManualBlockComplexUIContent)blockPair.getRight();
+
+		HAPDomainValueStructure valueStructureDomain = processContext.getCurrentBundle().getValueStructureDomain();
+		HAPContainerVariableInfo varInfoContainer = uiContentExe.getVariableInfoContainer();
+
+		for(HAPItemInContainerScriptExpression item : uiContentExe.getScriptExpressions().getItems()) {
+			Pair<HAPContainerVariableInfo, Map<String, HAPMatchers>> discoverResult = HAPUtilityWithVarible.discoverVariableCriteria(item.getScriptExpression(), null, varInfoContainer, this.m_withVariableMan);
+			varInfoContainer = discoverResult.getLeft();
+			
+			//update value port element according to var info container after discovery
+			HAPUtilityValuePortVariable.updateValuePortElements(varInfoContainer, valueStructureDomain);
+		}
+	}
 }

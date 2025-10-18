@@ -4,18 +4,22 @@
 Hellooooooo!!!!!
 
 		<br>
- 		StringContent:<%=?(public_string)?.value + '   7777 ' %>  
+ 		FloatContent:<%=#|?(public_float)?.largerThan(data:&(#test##float___5000)&).opposite()|#.value%>  
 
-		<br>
- 		UrlContent:<%=?(public_url)?.value + '   7777 ' %>  
+
+ 		<!--nosliw-debug_test data_string="public_string"/ -->
+
+<!-- 
 
 		<br>
 EXPRESSION IN ATTRIBUTE:<span  style="color:<%=?(public_string)?.value=='red'?'red':'blue'%>">Change the input below and color will change according to the value </span> 
 		<br>
 
- 		<!--nosliw-debug_test data_string="public_string"/ -->
+		<br>
+ 		StringContent:<%=?(public_string)?.value + '   7777 ' %>  
 
-<!-- 
+		<br>
+ 		UrlContent:<%=?(public_url)?.value + '   7777 ' %>  
 
  		<nosliw-debug_test attribute1="myAttr" data_string="public_string">
     		<br>
@@ -114,7 +118,8 @@ EXPRESSION IN ATTRIBUTE:<span  style="color:<%=?(public_string)?.value=='red'?'r
                             				"name" : "expression",
 				                            "status": "disabled1",
 								            "ruleType" : "expression",
-								            "expression" : "?(data)?.largerThan(data:&(#test##float___5000)&).opposite()"
+								            "expression1" : "?(data)?.largerThan(data:&(#test##float___5000)&).opposite()",
+								            "expression" : "?(data)?.largerThan(data:&(#test##float___5000)&)"
 								        }
 								    ]
 								} 

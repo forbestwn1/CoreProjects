@@ -13,11 +13,14 @@ import com.nosliw.core.application.division.manual.core.HAPManualProviderBrickIn
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionPluginParserBrick;
 import com.nosliw.core.application.division.manual.core.process.HAPManualInfoBrickType;
 import com.nosliw.core.application.division.manual.core.process.HAPManualPluginProcessorBrick;
+import com.nosliw.core.application.entity.datarule.HAPManagerDataRule;
 
 @Component
 public class HAPManualProviderBrickInfoDataExpressionStandAlone extends HAPManualProviderBrickInfoImp{
 
 	private HAPParserDataExpression m_dataExpressionParser;
+	
+	private HAPManagerDataRule m_dataRuleMan;
 	
 	private HAPManagerWithVariablePlugin m_withVariableMan;
 	
@@ -25,10 +28,12 @@ public class HAPManualProviderBrickInfoDataExpressionStandAlone extends HAPManua
 			HAPManualManagerBrick manualBrickMan, 
 			HAPManagerApplicationBrick brickMan, 
 			HAPParserDataExpression dataExpressionParser,
-			HAPManagerWithVariablePlugin withVariableMan) {
+			HAPManagerWithVariablePlugin withVariableMan,
+			HAPManagerDataRule dataRuleMan) {
 		super(manualBrickMan, brickMan);
 		this.m_dataExpressionParser = dataExpressionParser;
 		this.m_withVariableMan = withVariableMan;
+		this.m_dataRuleMan = dataRuleMan;
 	}
 	
 	@Override
@@ -39,7 +44,7 @@ public class HAPManualProviderBrickInfoDataExpressionStandAlone extends HAPManua
 
 	@Override
 	protected HAPManualDefinitionPluginParserBrick newBrickParser() {
-		return new HAPManualPluginParserBlockDataExpressionStandAlone(this.getManualBrickManager(), this.getBrickManager(), this.m_dataExpressionParser);
+		return new HAPManualPluginParserBlockDataExpressionStandAlone(this.getManualBrickManager(), this.getBrickManager(), this.m_dataExpressionParser, this.m_dataRuleMan);
 	}
 
 	@Override

@@ -2,7 +2,6 @@ package com.nosliw.core.application.division.manual.brick.interactive.interfacee
 
 import org.json.JSONObject;
 
-import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.core.application.HAPManagerApplicationBrick;
 import com.nosliw.core.application.brick.HAPEnumBrickType;
 import com.nosliw.core.application.brick.interactive.interfacee.task.HAPBlockInteractiveInterfaceTask;
@@ -11,11 +10,15 @@ import com.nosliw.core.application.division.manual.core.HAPManualManagerBrick;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionBrick;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionContextParse;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionPluginParserBrickImpSimple;
+import com.nosliw.core.application.entity.datarule.HAPManagerDataRule;
 
 public class HAPManualPluginParserBlockSimpleInteractiveInterfaceExpression extends HAPManualDefinitionPluginParserBrickImpSimple{
 
-	public HAPManualPluginParserBlockSimpleInteractiveInterfaceExpression(HAPManualManagerBrick manualDivisionEntityMan, HAPManagerApplicationBrick brickMan) {
+	private HAPManagerDataRule m_dataRuleMan;
+	
+	public HAPManualPluginParserBlockSimpleInteractiveInterfaceExpression(HAPManualManagerBrick manualDivisionEntityMan, HAPManagerApplicationBrick brickMan, HAPManagerDataRule dataRuleMan) {
 		super(HAPEnumBrickType.INTERACTIVEEXPRESSIONINTERFACE_100, HAPManualDefinitionBlockInteractiveInterfaceExpression.class, manualDivisionEntityMan, brickMan);
+		this.m_dataRuleMan = dataRuleMan;
 	}
 	
 	@Override
@@ -28,8 +31,7 @@ public class HAPManualPluginParserBlockSimpleInteractiveInterfaceExpression exte
 			valueJsonObj = jsonObj;
 		}
 		
-		HAPInteractiveExpression taskInteractive = new HAPInteractiveExpression();
-		taskInteractive.buildObject(valueJsonObj, HAPSerializationFormat.JSON);
+		HAPInteractiveExpression taskInteractive = HAPInteractiveExpression.parse(valueJsonObj, m_dataRuleMan); 
 		expressionInteractiveDef.setValue(taskInteractive);
 	}
 }

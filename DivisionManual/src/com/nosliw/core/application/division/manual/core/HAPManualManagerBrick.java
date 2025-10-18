@@ -147,8 +147,10 @@ public class HAPManualManagerBrick implements HAPPluginDivision{
 		}
 		
 		//build new branch to host data rule tasks
+		String validationTaskBranchName = "validationRuleTasks"; 
 		HAPManualDefinitionBrickContainer validationRuleTaskContainerBrick = (HAPManualDefinitionBrickContainer)this.newBrickDefinition(HAPEnumBrickType.CONTAINER_100);
-		definitions.put("validationRuleTasks", new HAPManualDefinitionWrapperBrickRoot(validationRuleTaskContainerBrick));
+		HAPManualDefinitionWrapperBrickRoot validationRuleTaskContainerBrickWrapper = new HAPManualDefinitionWrapperBrickRoot(validationRuleTaskContainerBrick);
+		definitions.put(validationTaskBranchName, validationRuleTaskContainerBrickWrapper);
 		
 		HAPDomainValueStructure valueStructureDomain = out.getValueStructureDomain();
 		Map<String, HAPStructure> structures = valueStructureDomain.getValueStructureDefinitions();
@@ -181,6 +183,8 @@ public class HAPManualManagerBrick implements HAPPluginDivision{
 				}, null);
 			}
 		}
+		HAPWrapperBrickRoot out1 = HAPManualProcessBrick.processRootBrick(validationRuleTaskContainerBrickWrapper, this.m_runtimeMan, this.m_dataExpressionParser, new HAPManualContextProcessBrick(out, validationTaskBranchName, this, this.m_brickManager, this.m_dataTypeHelper, this.m_resourceMan, runtimeInfo));
+
 		
 		out.setExtraData(definitions);
 		

@@ -48,7 +48,13 @@ public class HAPBasicOperandOperation extends HAPBasicOperand implements HAPOper
 
 	@Override
 	public HAPOperand getBase() {   return this.m_base.getOperand();  }
-	public void setBase(HAPBasicOperand base) {   this.m_base = new HAPBasicWrapperOperand(base);      }
+	public void setBase(HAPBasicOperand base) {
+		if(base==null) {
+			this.m_base = null;
+		} else {
+			this.m_base = new HAPBasicWrapperOperand(base);
+		}      
+	}
 
 	@Override
 	public Map<String, HAPOperand> getParms() {
