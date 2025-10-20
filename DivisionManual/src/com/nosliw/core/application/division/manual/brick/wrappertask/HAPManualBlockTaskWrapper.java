@@ -1,5 +1,6 @@
 package com.nosliw.core.application.division.manual.brick.wrappertask;
 
+import com.nosliw.common.interfac.HAPEntityOrReference;
 import com.nosliw.core.application.brick.wrappertask.HAPBlockTaskWrapper;
 import com.nosliw.core.application.division.manual.core.HAPManualBrickImp;
 
@@ -14,33 +15,8 @@ public class HAPManualBlockTaskWrapper extends HAPManualBrickImp implements HAPB
 	public String getTaskType() {	return (String)this.getAttributeValueOfValue(TASKTYPE);	}
 	public void setTaskType(String taskType) {    this.setAttributeValueWithValue(TASKTYPE, taskType);     }
 
-//	private HAPResultBrickDescentValue getTaskResult() {
-//		return HAPUtilityBrick.getAttributeResultOfBrickGlobal(this, HAPBlockTaskWrapper.TASK, getBrickManager());
-//	}
-//	
-//	public boolean isLocalTask() {     return this.getTaskResult().isInternalBrick();     }
-//	
-//	@Override
-//	public HAPContainerValuePorts getInternalValuePorts(){  return this.getTaskResult().getBrick().getInternalValuePorts();	  }
-//
-//	@Override
-//	public HAPContainerValuePorts getExternalValuePorts(){  return this.getTaskResult().getBrick().getExternalValuePorts(); 	}
-//
-//	@Override
-//	public HAPContainerValuePorts getOtherInternalValuePortContainer() {
-//		HAPResultBrickDescentValue brickResult = this.getTaskResult();
-//		if(brickResult.isInternalBrick()) {
-//			return ((HAPManualBrick)brickResult.getBrick()).getOtherInternalValuePortContainer();
-//		}
-//		throw new RuntimeException();
-//	}
-//	@Override
-//	public HAPContainerValuePorts getOtherExternalValuePortContainer() {   
-//		HAPResultBrickDescentValue brickResult = this.getTaskResult();
-//		if(brickResult.isInternalBrick()) {
-//			return ((HAPManualBrick)brickResult.getBrick()).getOtherExternalValuePortContainer();
-//		}
-//		throw new RuntimeException();
-//	}
+	@Override
+	public HAPEntityOrReference getTask() {     return this.getAttributeValueOfBrick(HAPBlockTaskWrapper.TASK);        }
+	public void setTask(HAPEntityOrReference entityOrRef) {      this.setAttributeValueWithBrick(HAPBlockTaskWrapper.TASK, entityOrRef);        }
 
 }

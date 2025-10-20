@@ -1,25 +1,23 @@
-package com.nosliw.core.application.division.manual.brick.container;
+package com.nosliw.core.application.entity.datarule;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import com.nosliw.common.interfac.HAPEntityOrReference;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityNosliw;
 import com.nosliw.core.application.HAPAttributeInBrick;
+import com.nosliw.core.application.HAPWrapperValue;
 import com.nosliw.core.application.brick.container.HAPBrickContainer;
-import com.nosliw.core.application.division.manual.core.HAPManualBrickWithEntityInfo;
+import com.nosliw.core.application.common.brick.HAPBrickImp;
 
-public class HAPManualBrickContainer extends HAPManualBrickWithEntityInfo implements HAPBrickContainer{
+public class HAPBrickContainerImp extends HAPBrickImp implements HAPBrickContainer{
 
-	@Override
-	public void init() {
-		super.init();
+	public HAPBrickContainerImp() {
 		this.setAttributeIndex(0);
 	}
 	
 	@Override
-	public List<HAPAttributeInBrick> getElements(){
+	public List<HAPAttributeInBrick> getElements() {
 		List<HAPAttributeInBrick> out = new ArrayList<HAPAttributeInBrick>();
 		for(HAPAttributeInBrick attr : this.getAttributes()) {
 			if(HAPUtilityNosliw.getNosliwCoreName(attr.getName())==null) {
@@ -28,17 +26,13 @@ public class HAPManualBrickContainer extends HAPManualBrickWithEntityInfo implem
 		}
 		return out;
 	}
-	 
-	public String addElementWithBrickOrReference(HAPEntityOrReference brickOrRef) {
-		return this.addElementAnom(brickOrRef);
-	}
-	
-	private String addElementAnom(HAPEntityOrReference brickOrRef) {
+
+	public String addElementWrapper(HAPWrapperValue valueWrapper) {
 		String attrName = this.generateAttributeName();
-		this.setAttributeValueWithBrick(attrName, brickOrRef);
+		this.setAttribute(new HAPAttributeInBrick(attrName, valueWrapper));
 		return attrName;
 	}
-
+	
 	private String generateAttributeName() {
 		Integer index = (Integer)this.getAttributeValueOfValue(HAPBrickContainer.ATTRINDEX);
 		index++;

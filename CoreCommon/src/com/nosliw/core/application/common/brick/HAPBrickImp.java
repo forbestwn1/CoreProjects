@@ -23,15 +23,22 @@ import com.nosliw.core.resource.HAPResourceDependency;
 import com.nosliw.core.resource.HAPResourceId;
 import com.nosliw.core.runtime.HAPRuntimeInfo;
 
-public abstract class HAPBrickImp extends HAPSerializableImp implements HAPBrick{
+public class HAPBrickImp extends HAPSerializableImp implements HAPBrick{
 
 	private HAPIdBrickType m_brickTypeId;
 
+	private HAPContainerValuePorts m_internalValuePortsContainer;
+	
+	private HAPContainerValuePorts m_externalValuePortsContainer;
+	
 	//all attributes
 	private List<HAPAttributeInBrick> m_attributes;
 	
 	public HAPBrickImp() {
 		this.m_attributes = new ArrayList<HAPAttributeInBrick>();
+		this.m_internalValuePortsContainer = new HAPContainerValuePorts();
+		this.m_externalValuePortsContainer = new HAPContainerValuePorts();
+		
 	}
 
 	@Override
@@ -130,10 +137,10 @@ public abstract class HAPBrickImp extends HAPSerializableImp implements HAPBrick
 	}
 	
 	@Override
-	public HAPContainerValuePorts getInternalValuePorts() {  		return null;	}
+	public HAPContainerValuePorts getInternalValuePorts() {  		return this.m_internalValuePortsContainer;	}
 
 	@Override
-	public HAPContainerValuePorts getExternalValuePorts() {		return null;	}
+	public HAPContainerValuePorts getExternalValuePorts() {		return this.m_externalValuePortsContainer;	}
 	
 	@Override
 	protected void buildJSJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
