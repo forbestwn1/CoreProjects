@@ -46,7 +46,7 @@ public class HAPManualAttributeInBrick extends HAPAttributeInBrick implements HA
 	public Object getNodeValue() {  return this.getValueWrapper();   }
 
 	private void synTreeNodeInfoInBrick() {
-		if(this.m_tempTreeNodeInfo!=null&&this.getValueWrapper()!=null&&this.getValueWrapper().getValueType().equals(HAPConstantShared.ENTITYATTRIBUTE_VALUETYPE_BRICK)) {
+		if(this.m_tempTreeNodeInfo!=null&&this.getValueWrapper()!=null&&this.getValueWrapper().getValueType().equals(HAPConstantShared.ENTITYATTRIBUTE_VALUETYPE_BRICK)&&this.getValueWrapper().getValue() instanceof HAPManualBrick) {
 			((HAPManualBrick)((HAPWrapperValueOfBrick)this.getValueWrapper()).getBrick()).setTreeNodeInfo(m_tempTreeNodeInfo);
 		}
 	}

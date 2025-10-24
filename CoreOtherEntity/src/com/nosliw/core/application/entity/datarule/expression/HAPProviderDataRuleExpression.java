@@ -1,5 +1,6 @@
 package com.nosliw.core.application.entity.datarule.expression;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.nosliw.common.utils.HAPConstantShared;
@@ -12,14 +13,11 @@ import com.nosliw.core.application.entity.datarule.HAPProviderDataRule;
 @Component
 public class HAPProviderDataRuleExpression implements HAPProviderDataRule{
 
+	@Autowired
 	private HAPParserDataExpression m_dataExpressionParser;
 	
+	@Autowired
 	private HAPManagerWithVariablePlugin m_withVariableMan;
-	
-	public HAPProviderDataRuleExpression(HAPParserDataExpression dataExpressionParser, HAPManagerWithVariablePlugin withVariableMan) {
-		this.m_dataExpressionParser = dataExpressionParser;
-		this.m_withVariableMan = withVariableMan;
-	}
 	
 	@Override
 	public String getDataRuleType() {  return HAPConstantShared.DATARULE_TYPE_EXPRESSION;  }

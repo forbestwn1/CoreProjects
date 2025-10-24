@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.nosliw.common.interfac.HAPEntityOrReference;
@@ -17,8 +18,11 @@ public class HAPManagerDataRule {
 	
 	private Map<String, HAPPluginTransformerDataRule> m_transformer = new LinkedHashMap<String, HAPPluginTransformerDataRule>();
 	
-	public HAPManagerDataRule(List<HAPProviderDataRule> dataRuleProviders) {
-		this.m_parser = new LinkedHashMap<String, HAPPluginParserDataRule>();
+	public HAPManagerDataRule() {
+	}
+
+	@Autowired
+	private void setProviders(List<HAPProviderDataRule> dataRuleProviders) {
 		for(HAPProviderDataRule provider : dataRuleProviders) {
 			this.m_parser.put(provider.getDataRuleType(), provider.getParser());
 			this.m_transformer.put(provider.getDataRuleType(), provider.getTransformer());

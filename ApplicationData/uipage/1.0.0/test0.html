@@ -3,6 +3,20 @@
 <body>
 Hellooooooo!!!!!
 
+
+ 		<nosliw-debug_test attribute1="myAttr" data_string="public_string">
+    		<br>
+ 	    	embeded_stringVar:<%=?(input_stringVar)?.value + '   7777 ' %>
+    		<br>
+ 	    	input_stringVar:<%=?(myAttr)?.value + '   7777 ' %>
+    		<br>
+    		<br>
+ 	    	
+ 	    	<nosliw-debug_test data_string="input_stringVar"/>
+ 	    	
+ 	    	  
+		</nosliw-debug_test>
+
 		<br>
  		FloatContent:<%=#|?(public_float)?.largerThan(data:&(#test##float___5000)&).opposite()|#.value%>  
 

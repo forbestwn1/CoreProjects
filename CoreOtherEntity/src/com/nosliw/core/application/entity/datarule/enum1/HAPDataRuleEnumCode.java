@@ -6,6 +6,7 @@ import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
+import com.nosliw.core.application.entity.datarule.HAPDataRule;
 
 @HAPEntityWithAttribute
 public class HAPDataRuleEnumCode extends HAPDataRuleEnum{
@@ -19,6 +20,14 @@ public class HAPDataRuleEnumCode extends HAPDataRuleEnum{
 
 	public String getEnumCode() {    return this.m_enumCode;    }
 	public void setEnumCode(String enumCode) {   this.m_enumCode = enumCode;     }
+
+	@Override
+	public HAPDataRule cloneDataRule() {
+		HAPDataRuleEnumCode out = new HAPDataRuleEnumCode();
+		this.cloneToDataRule(out);
+		out.m_enumCode = this.m_enumCode;
+		return out;
+	}
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){

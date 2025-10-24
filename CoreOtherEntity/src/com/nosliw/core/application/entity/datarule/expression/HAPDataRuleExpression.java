@@ -16,9 +16,6 @@ public class HAPDataRuleExpression extends HAPDataRule{
 	@HAPAttribute
 	public static String EXPRESSION = "expression";
 
-//	@HAPAttribute
-//	public static String VARIABLENAME = "data";
-
 	
 	private HAPDefinitionDataExpression m_expressionDef;
 
@@ -34,12 +31,18 @@ public class HAPDataRuleExpression extends HAPDataRule{
 	public HAPDefinitionDataExpression getExpressionDefinition() {   return this.m_expressionDef;   }
 	public void setExpressionDefinition(HAPDefinitionDataExpression expression) {   this.m_expressionDef = expression;    }
 
-//	public HAPExecutableEntityExpressionDataGroup getExpressionExecutable() {    return this.m_expressionExe;     }
-	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(EXPRESSION, HAPUtilityJson.buildJson(this.getExpressionDefinition(), HAPSerializationFormat.JSON));
+	}
+
+	@Override
+	public HAPDataRule cloneDataRule() {
+		HAPDataRuleExpression out = new HAPDataRuleExpression();
+		this.cloneToDataRule(out);
+		out.m_expressionDef = this.m_expressionDef; 
+		return out;
 	}
 	
 }

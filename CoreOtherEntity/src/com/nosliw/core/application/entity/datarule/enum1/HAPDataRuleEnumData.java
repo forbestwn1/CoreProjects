@@ -11,6 +11,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
+import com.nosliw.core.application.entity.datarule.HAPDataRule;
 import com.nosliw.core.data.HAPData;
 import com.nosliw.core.data.HAPUtilityData;
 
@@ -27,6 +28,15 @@ public class HAPDataRuleEnumData extends HAPDataRuleEnum {
 	}
 
 	public void addData(HAPData data) {   this.m_data.add(data);    }
+	
+	@Override
+	public HAPDataRule cloneDataRule() {
+		HAPDataRuleEnumData out = new HAPDataRuleEnumData();
+		this.cloneToDataRule(out);
+		out.m_data = this.m_data;
+		return out;
+	}
+
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){

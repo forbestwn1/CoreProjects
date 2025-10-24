@@ -24,4 +24,10 @@ public class HAPDefinitionDataRule extends HAPEntityInfoImp{
     public 	HAPDataRule getDataRule() {   return this.m_rule;     }
 	public void setDataRule(HAPDataRule dataRule) {   this.m_rule = dataRule;   }
 	
+	public HAPDefinitionDataRule cloneDataRuleDef() {
+		HAPDefinitionDataRule out = new HAPDefinitionDataRule();
+		out.m_path = this.m_path;
+		out.m_rule = this.m_rule.cloneDataRule();
+		return out;
+	}
 }

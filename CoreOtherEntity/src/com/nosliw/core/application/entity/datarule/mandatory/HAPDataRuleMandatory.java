@@ -9,4 +9,10 @@ public class HAPDataRuleMandatory extends HAPDataRule{
 		super(HAPConstantShared.DATARULE_TYPE_MANDATORY);
 	}
 
+	@Override
+	public HAPDataRule cloneDataRule() {
+		HAPDataRuleMandatory out = new HAPDataRuleMandatory();
+		this.cloneToDataRule(out);
+		return out;
+	}
 }

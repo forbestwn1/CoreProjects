@@ -33,6 +33,13 @@ public abstract class HAPDataRule extends HAPSerializableImp{
 	public HAPDataRuleImplementation getImplementation() {	return this.m_implementation;	}
 	public void setImplementation(HAPDataRuleImplementation imp) {  this.m_implementation = imp;     }
 
+	abstract public HAPDataRule cloneDataRule();
+	
+	protected void cloneToDataRule(HAPDataRule dataRule) {
+		dataRule.m_implementation = this.m_implementation;
+		dataRule.m_dataCriteria = this.m_dataCriteria;
+	}
+	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);

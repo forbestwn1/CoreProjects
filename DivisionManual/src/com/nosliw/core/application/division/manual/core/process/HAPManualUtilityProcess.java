@@ -2,13 +2,19 @@ package com.nosliw.core.application.division.manual.core.process;
 
 import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.core.application.HAPAttributeInBrick;
 import com.nosliw.core.application.HAPBrick;
 import com.nosliw.core.application.HAPBundle;
 import com.nosliw.core.application.HAPHandlerDownward;
+import com.nosliw.core.application.HAPIdBrickType;
 import com.nosliw.core.application.HAPManagerApplicationBrick;
 import com.nosliw.core.application.HAPUtilityBrick;
+import com.nosliw.core.application.HAPUtilityBundle;
 import com.nosliw.core.application.common.parentrelation.HAPManualDefinitionBrickRelationAutoProcess;
+import com.nosliw.core.application.division.manual.core.HAPInfoTreeNode;
+import com.nosliw.core.application.division.manual.core.HAPManualBrick;
+import com.nosliw.core.application.division.manual.core.HAPManualManagerBrick;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionAttributeInBrick;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionUtilityBrick;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionWrapperValue;
@@ -16,6 +22,29 @@ import com.nosliw.core.application.division.manual.core.definition.HAPManualDefi
 
 public class HAPManualUtilityProcess {
 
+	public static HAPManualBrick newRootBrickInstance(HAPIdBrickType brickTypeId, String rootName, HAPBundle bundle, HAPManualManagerBrick manualBrickMan) {
+		HAPManualBrick brick = manualBrickMan.newBrick(brickTypeId, bundle);
+		
+		if(HAPUtilityBasic.isStringEmpty(rootName)) {
+			brick.setTreeNodeInfo(new HAPInfoTreeNode());
+		}
+		else {
+			brick.setTreeNodeInfo(new HAPInfoTreeNode(new HAPPath(HAPUtilityBundle.buildBranchPathSegment(rootName)), null));
+		}
+		return brick;
+	}
+
+	public static HAPManualBrick newRootBrickInstanceWithInit(HAPIdBrickType brickTypeId, String rootName, HAPBundle bundle, HAPManualManagerBrick manualBrickMan) {
+		HAPManualBrick out = newRootBrickInstance(brickTypeId, rootName, bundle, manualBrickMan);
+		out.init();
+		return out;
+	}
+
+	
+	
+	
+	
+	
 	public static void processComplexDynamicAttribute(HAPManualContextProcessBrick processContext) {
 		HAPManualUtilityBrickTraverse.traverseTreeWithDynamic(processContext, new HAPHandlerDownward() {
 

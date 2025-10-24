@@ -5,6 +5,7 @@ import org.apache.commons.lang3.tuple.Pair;
 import com.nosliw.common.interfac.HAPEntityOrReference;
 import com.nosliw.core.application.HAPDomainValueStructure;
 import com.nosliw.core.application.brick.HAPEnumBrickType;
+import com.nosliw.core.application.brick.dataexpression.standalone.HAPBlockDataExpressionStandAlone;
 import com.nosliw.core.application.common.brick.HAPBrickImp;
 import com.nosliw.core.application.common.dataexpression.HAPDataExpressionStandAlone;
 import com.nosliw.core.application.common.dataexpression.definition.HAPDefinitionDataExpressionStandAlone;
@@ -49,6 +50,7 @@ public class HAPPluginTransformerDataRuleExpression implements HAPPluginTransfor
 		//interactive request
 		dataExpressionStandAloneExe.setExpressionInteractive(new HAPInteractiveExpression(dataExpressionStandAloneDef.getRequestParms(), dataExpressionStandAloneDef.getResult()));
 		
+		brick.setAttributeValueWithValue(HAPBlockDataExpressionStandAlone.VALUE, dataExpressionStandAloneExe);
 		
 		HAPContainerVariableInfo varInfoContainer = new HAPContainerVariableInfo(brick, valueStructureDomian);
 

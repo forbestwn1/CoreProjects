@@ -6,7 +6,7 @@ import com.nosliw.common.path.HAPComplexPath;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.core.application.common.datadefinition.HAPDataDefinitionWritable;
-import com.nosliw.core.application.common.datarule.HAPDataRule;
+import com.nosliw.core.application.common.datadefinition.HAPDefinitionDataRule;
 import com.nosliw.core.application.common.structure.HAPElementStructure;
 import com.nosliw.core.application.common.structure.HAPElementStructureLeafData;
 import com.nosliw.core.application.common.structure.HAPRootInStructure;
@@ -68,9 +68,10 @@ public class HAPUtilityResolveReference {
 					//inherit rule from parent
 					if(relativeInheritRule) {
 						HAPDataDefinitionWritable solidParentDataInfo = ((HAPElementStructureLeafData)candidateNode).getDataDefinition();
-						for(HAPDataRule rule : solidParentDataInfo.getRules()) {
+						
+						for(HAPDefinitionDataRule ruleDef : solidParentDataInfo.getRules()) {
 							String subPath = null;
-							String rulePath = rule.getPath();
+							String rulePath = ruleDef.getPath();
 							String remainPath = resolveInfo.remainPath.getPath();
 							if(HAPUtilityBasic.isEquals(rulePath, remainPath)) {
 								subPath = "";
@@ -79,9 +80,9 @@ public class HAPUtilityResolveReference {
 							}
 
 							if(subPath!=null) {
-								HAPDataRule newRule = rule.cloneDataRule();
-								newRule.setPath(subPath);
-								((HAPElementStructureLeafData)out).getDataDefinition().addRule(newRule);
+								HAPDefinitionDataRule newRuleDef = ruleDef.cloneDataRuleDef();
+								newRuleDef.setPath(subPath);
+								((HAPElementStructureLeafData)out).getDataDefinition().addRule(newRuleDef);
 							}
 						}
 					}

@@ -30,6 +30,14 @@ public class HAPDataRuleJsScript extends HAPDataRule{
 	public void setScript(String script) {    this.m_script = script;     }
 	
 	@Override
+	public HAPDataRule cloneDataRule() {
+		HAPDataRuleJsScript out = new HAPDataRuleJsScript();
+		this.cloneToDataRule(out);
+		out.m_script = this.m_script;
+		return out;
+	}
+
+	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(SCRIPT, this.getScript());

@@ -22,6 +22,7 @@ import com.nosliw.core.application.HAPIdBrickType;
 import com.nosliw.core.application.HAPManagerApplicationBrick;
 import com.nosliw.core.application.HAPPluginDivision;
 import com.nosliw.core.application.HAPWrapperBrickRoot;
+import com.nosliw.core.application.brick.HAPEnumBrickType;
 import com.nosliw.core.application.common.datadefinition.HAPDefinitionDataRule;
 import com.nosliw.core.application.common.dataexpression.definition.HAPParserDataExpression;
 import com.nosliw.core.application.common.structure.HAPElementStructure;
@@ -46,6 +47,7 @@ import com.nosliw.core.application.division.manual.core.process.HAPManualPluginP
 import com.nosliw.core.application.division.manual.core.process.HAPManualPluginProcessorBlock;
 import com.nosliw.core.application.division.manual.core.process.HAPManualPluginProcessorBrick;
 import com.nosliw.core.application.division.manual.core.process.HAPManualProcessBrick;
+import com.nosliw.core.application.division.manual.core.process.HAPManualUtilityProcess;
 import com.nosliw.core.application.entity.datarule.HAPDataRule;
 import com.nosliw.core.application.entity.datarule.HAPDataRuleImplementationLocal;
 import com.nosliw.core.application.entity.datarule.HAPManagerDataRule;
@@ -150,7 +152,7 @@ public class HAPManualManagerBrick implements HAPPluginDivision{
 		//build new branch to host data rule tasks
 		String validationTaskBranchName = "validationRuleTasks";
 		
-		HAPManualBrickContainer containerBrick = new HAPManualBrickContainer();
+		HAPManualBrickContainer containerBrick = (HAPManualBrickContainer)HAPManualUtilityProcess.newRootBrickInstanceWithInit(HAPEnumBrickType.CONTAINER_100, validationTaskBranchName, out, this);
 		
 		HAPDomainValueStructure valueStructureDomain = out.getValueStructureDomain();
 		Map<String, HAPStructure> structures = valueStructureDomain.getValueStructureDefinitions();
@@ -169,14 +171,13 @@ public class HAPManualManagerBrick implements HAPPluginDivision{
                         		HAPDataTypeCriteria ruleCriteria = HAPUtilityCriteria.getChildCriteriaByPath(dataEle.getCriteria(), ruleDef.getPath());
                         		rule.setDataCriteria(ruleCriteria);
                         		
-                        		HAPEntityOrReference ruleTaskBrickOrRef = m_dataRuleManager.transformDataRule(rule, valueStructureDomain);
-                        		
-                        		HAPManualBlockTaskWrapper taskWrapperBrick = new HAPManualBlockTaskWrapper();
-                        		taskWrapperBrick.setTask(ruleTaskBrickOrRef);
-                        		
+                        		HAPManualBlockTaskWrapper taskWrapperBrick = (HAPManualBlockTaskWrapper)newBrickWithInit(HAPEnumBrickType.TASKWRAPPER_100, out); 
                         		String attrName = containerBrick.addElementWithBrickOrReference(taskWrapperBrick);
                         		HAPDataRuleImplementationLocal dataRuleImp = new HAPDataRuleImplementationLocal(validationTaskBranchName + "."+attrName+".taskWrapper");
                         		rule.setImplementation(dataRuleImp);
+
+                        		HAPEntityOrReference ruleTaskBrickOrRef = m_dataRuleManager.transformDataRule(rule, valueStructureDomain);
+                        		taskWrapperBrick.setTask(ruleTaskBrickOrRef);
                         	}
                         }
 						return null;
@@ -267,6 +268,11 @@ public class HAPManualManagerBrick implements HAPPluginDivision{
 		return this.getBrickParsePlugin(brickType).newBrick();      
 	}
 	public HAPManualBrick newBrick(HAPIdBrickType brickType, HAPBundle bundle) {    return this.getBrickProcessPlugin(brickType).newInstance(bundle, this);      }
+	public HAPManualBrick newBrickWithInit(HAPIdBrickType brickType, HAPBundle bundle) {
+		HAPManualBrick out = this.newBrick(brickType, bundle);
+		out.init();
+		return out;
+	}
 	
 	public HAPManualDefinitionPluginParserBrick getBrickParsePlugin(HAPIdBrickType entityTypeId) {   return this.m_brickParserPlugin.get(entityTypeId.getKey());    }
 	public HAPManualPluginProcessorBrick getBrickProcessPlugin(HAPIdBrickType entityTypeId) {   return this.m_brickProcessorPlugin.get(entityTypeId.getKey());    }
