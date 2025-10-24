@@ -1,5 +1,6 @@
 package com.nosliw.core.application;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -48,9 +49,9 @@ public class HAPDomainValueStructure extends HAPSerializableImp{
 	
 	public HAPDomainValueStructure() {
 		this.m_idGenerator = new HAPGeneratorId();
-		this.m_structureDefinition = new LinkedHashMap<String, HAPStructure>();
-		this.m_valueStructureRuntime = new LinkedHashMap<String, HAPInfoValueStructureRuntime>();
-		this.m_definitionIdByRuntimeId = new LinkedHashMap<String, String>();
+		this.m_structureDefinition = new HashMap<String, HAPStructure>();
+		this.m_valueStructureRuntime = new HashMap<String, HAPInfoValueStructureRuntime>();
+		this.m_definitionIdByRuntimeId = new HashMap<String, String>();
 		this.m_isDirty = false;
 	}
 

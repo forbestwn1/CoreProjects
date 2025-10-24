@@ -1,6 +1,7 @@
 package com.nosliw.core.application.division.manual.core;
 
 import java.io.File;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -156,9 +157,10 @@ public class HAPManualManagerBrick implements HAPPluginDivision{
 		
 		HAPDomainValueStructure valueStructureDomain = out.getValueStructureDomain();
 		Map<String, HAPStructure> structures = valueStructureDomain.getValueStructureDefinitions();
-		for(HAPStructure structure : structures.values()) {
+		for(HAPStructure structure : new HashSet<HAPStructure>(structures.values())) {
 			Map<String, HAPRootInStructure> roots = structure.getRoots();
-			for(HAPRootInStructure root : roots.values()) {
+			for(String rootName : roots.keySet()) {
+				HAPRootInStructure root = roots.get(rootName);
 				HAPUtilityElement.traverseElement(root.getDefinition(), null, new HAPProcessorStructureElement(){
 
 					@Override

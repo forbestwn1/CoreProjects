@@ -15,7 +15,7 @@ import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.HAPBundle;
 import com.nosliw.core.application.common.datadefinition.HAPDataDefinitionWritable;
-import com.nosliw.core.application.common.datarule.HAPDataRule;
+import com.nosliw.core.application.common.datadefinition.HAPDefinitionDataRule;
 import com.nosliw.core.application.common.structure.HAPElementStructure;
 import com.nosliw.core.application.common.structure.HAPElementStructureLeafData;
 import com.nosliw.core.application.common.structure.HAPElementStructureLeafRelative;
@@ -37,7 +37,6 @@ import com.nosliw.core.data.matcher.HAPMatcherUtility;
 import com.nosliw.core.data.matcher.HAPMatchers;
 import com.nosliw.core.resource.HAPManagerResource;
 import com.nosliw.core.runtime.HAPRuntimeInfo;
-import com.nosliw.core.runtimeenv.HAPRuntimeEnvironment;
 
 public class HAPUtilityProcessRelativeElementInBundle {
 
@@ -171,9 +170,10 @@ public class HAPUtilityProcessRelativeElementInBundle {
 				if(solidParent.getType().equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_DATA)) {
 					HAPDataDefinitionWritable solidParentDataInfo = ((HAPElementStructureLeafData)solidParent).getDataDefinition();
 					HAPMatchers ruleMatchers = HAPMatcherUtility.reversMatchers(HAPMatcherUtility.cascadeMatchers(solidParentDataInfo.getRuleMatchers()==null?null:solidParentDataInfo.getRuleMatchers().getReverseMatchers(), noVoidMatchers.get("")));
-					for(HAPDataRule rule : solidParentDataInfo.getRules()) {
+
+					for(HAPDefinitionDataRule ruleDef : solidParentDataInfo.getRules()) {
 						HAPDataDefinitionWritable relativeDataInfo = ((HAPElementStructureLeafData)relativeContextEle).getDataDefinition();
-						relativeDataInfo.addRule(rule);
+						relativeDataInfo.addRule(ruleDef);
 						relativeDataInfo.setRuleMatchers(ruleMatchers, solidParentDataInfo.getRuleCriteria());
 					}
 				}
