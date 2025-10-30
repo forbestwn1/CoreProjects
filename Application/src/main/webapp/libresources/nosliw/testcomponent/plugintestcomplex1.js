@@ -74,7 +74,7 @@ var loc_createTestComplex1ComponentCore = function(complexEntityDef, configure){
 			loc_parentView = $(view);
 //			loc_mainView = $('<div class="view view-main" style="overflow-y1: scroll; border-width:thick; border-style:solid; border-color:black">testComplex</div>');
 			loc_mainView = $('<div style="border-width:thick; border-style:solid; border-color:black">testComplex</div>');
-			var parentValuePortView = $('<div>valuePortContainerId: '+loc_entityEnvInterface[node_CONSTANT.INTERFACE_ENTITY].getInternalValuePortContainer().getId()+"--"+node_getEntityObjectInterface(loc_out).getExternalValuePortContainer().getId()+'</div>');
+			var parentValuePortView = $('<div>valuePortContainerId: '+loc_envInterface[node_CONSTANT.INTERFACE_ENTITY].getInternalValuePortContainer().getId()+"--"+node_getEntityObjectInterface(loc_out).getExternalValuePortContainer().getId()+'</div>');
 			loc_mainView.append(parentValuePortView);
 			loc_parentView.append(loc_mainView);
 			

@@ -15,6 +15,57 @@
 					"groupType" : "public",
 					"valueStructure" : {
 						"root": {
+    					    "complex" : {
+	    				        "definition": {
+		    			            "child": {
+			    		                "a" : {
+				    	                    "data" : "test.string;1.0.0"
+					                    }
+					                }
+					            }
+					        },
+							"parent_public": {
+								"definition":{
+									"data": "test.string;1.0.0"
+								}
+							}
+						},
+						"initValue": {
+    						"complex": {
+	    					    "a" : {
+    	    						"dataTypeId": "test.string;1.0.0",
+	    	    					"value": "default value of complex.a"
+				    		    }
+					    	},
+							"parent_public": {
+								"dataTypeId": "test.string;1.0.0",
+								"value": "default value of parent_public"
+							}
+						}
+					}
+				}
+			]
+		},
+		
+		{
+			"info": {
+				"name": "valueContext",
+				"status": "disabled"
+			},
+			"brick": [
+				{
+					"groupType" : "public",
+					"valueStructure" : {
+						"root": {
+    					    "complex" : {
+	    				        "definition": {
+		    			            "child": {
+			    		                "a" : {
+				    	                    "data" : "test.string;1.0.0"
+					                    }
+					                }
+					            }
+					        },
 							"parent_public": {
 								"definition":{
 									"data": "test.string;1.0.0"
@@ -47,6 +98,12 @@
 							}
 						},
 						"initValue": {
+    						"complex": {
+	    					    "a" : {
+    	    						"dataTypeId": "test.string;1.0.0",
+	    	    					"value": "default value of complex.a"
+				    		    }
+					    	},
 							"parent_public": {
 								"dataTypeId": "test.string;1.0.0",
 								"value": "default value of parent_public"
@@ -78,6 +135,58 @@
 		},
 		
 		
+		{
+			"info": {
+				"name" : "variable-test_complex_script",
+				"status": "disabled1",
+				"description" : ""
+			},
+			"relation": [
+				{
+					"type" : "valueContext",
+					"mode" : "runtime"
+				}
+			],
+			"brick":{
+				"script": "complexscript_debug_variablelocalbyname",
+				"parm" : {
+					"variable1" : ["child_public", "child_public_string", "parent_protected", "parent_private", "parent_internal"],
+					"variable" : ["complex.a", "complex", "parent_public"]
+				},
+				"valueContext" : {
+					"brick": [
+						{
+							"groupType" : "public",
+							"valueStructure" : {
+								"root" : {
+									"child_public": {
+										"definition":{
+											"data": "test.string;1.0.0"
+										}
+									},
+									"child_public_string": {
+										"definition":{
+											"data": "test.string;1.0.0"
+										}
+									}
+								},
+								"initValue": {
+									"child_public": {
+										"dataTypeId": "test.string;1.0.0",
+										"value": "default value of child_public"
+									},
+									"child_public_string": {
+										"dataTypeId": "test.string;1.0.0",
+										"value": "default value of child_public_string"
+									}
+								}
+							}
+						}
+					]
+				}
+			}
+		},
+				
 		{
 			"info": {
 				"name" : "test1-dataexpressionlibelement",
@@ -194,7 +303,7 @@
 		{
 			"info": {
 				"name" : "dataexpressionremote-dataexpressionlibelement",
-				"status": "disabled1",
+				"status": "disabled",
 				"description" : ""
 			},
 			"isTask" : true,
@@ -407,59 +516,8 @@
 			"brick":{
 				"script": "complexscript_debug_bricktreeinbundle"
 			}
-		},
-
-		{
-			"info": {
-				"name" : "variable-test_complex_script",
-				"status": "disabled",
-				"description" : ""
-			},
-			"relation": [
-				{
-					"type" : "valueContext",
-					"mode" : "runtime"
-				}
-			],
-			"brick":{
-				"script": "complexscript_debug_variablelocalbyname",
-				"parm" : {
-					"variable1" : ["child_public", "child_public_string", "parent_protected", "parent_private", "parent_internal"],
-					"variable" : ["child_public_string", "parent_public", "output1"]
-				},
-				"valueContext" : {
-					"brick": [
-						{
-							"groupType" : "public",
-							"valueStructure" : {
-								"root" : {
-									"child_public": {
-										"definition":{
-											"data": "test.string;1.0.0"
-										}
-									},
-									"child_public_string": {
-										"definition":{
-											"data": "test.string;1.0.0"
-										}
-									}
-								},
-								"initValue": {
-									"child_public": {
-										"dataTypeId": "test.string;1.0.0",
-										"value": "default value of child_public"
-									},
-									"child_public_string": {
-										"dataTypeId": "test.string;1.0.0",
-										"value": "default value of child_public_string"
-									}
-								}
-							}
-						}
-					]
-				}
-			}
 		}
-		
+
+
 	]
 }

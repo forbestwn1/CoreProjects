@@ -3,8 +3,11 @@
 <body>
 Hellooooooo!!!!!
 
+		<br>
+ 		ComplexContent:<%=?(complex.a)?.value + '   7777 ' %>  
 
- 		<nosliw-debug_test attribute1="myAttr" data_string="public_string">
+
+ 		<nosliw-debug_test attribute1="myAttr" data_string="complex.a">
     		<br>
  	    	embeded_stringVar:<%=?(input_stringVar)?.value + '   7777 ' %>
     		<br>
@@ -87,6 +90,15 @@ EXPRESSION IN ATTRIBUTE:<span  style="color:<%=?(public_string)?.value=='red'?'r
 				"groupType" : "public",
 				"valueStructure" : {
 					"root" : {
+					    "complex" : {
+					        "definition": {
+					            "child": {
+					                "a" : {
+					                    "data" : "test.string;1.0.0"
+					                }
+					            }
+					        }
+					    },
 						"public_string": {
 							"definition":{
 								"data": {
@@ -147,6 +159,12 @@ EXPRESSION IN ATTRIBUTE:<span  style="color:<%=?(public_string)?.value=='red'?'r
 						}
 					},
 					"initValue": {
+						"complex": {
+						    "a" : {
+    							"dataTypeId": "test.string;1.0.0",
+	    						"value": "default value of complex.a"
+						    }
+						},
 						"public_string": {
 							"dataTypeId": "test.string;1.0.0",
 							"value": "default value of public_string1"

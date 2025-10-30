@@ -34,47 +34,6 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 		var varDomain = bundleCore.getValuePortDomain();
 		loc_valueContext = varDomain.creatValuePortContainer(valueContextId);
 
-		
-/*
-		if(loc_scriptVars!=undefined&&loc_scriptVars.length>0){
-			//all defined variable
-			_.each(loc_scriptVars, function(varResolve, i){
-				var varInfo = {
-					reference : varResolve[node_COMMONATRIBUTECONSTANT.RESULTREFERENCERESOLVE_ELEREFERENCE][node_COMMONATRIBUTECONSTANT.IDELEMENT_ELEMENTPATH],
-					variable : loc_valueContext.createResolvedVariable(varResolve),
-				};
-				loc_variableInfos.push(varInfo);
-			});
-		}
-		else{
-			//if no defined variable, then get all variable in value context
-			var vsIds = loc_valueContext.getValueStructureRuntimeIds();
-			_.each(vsIds.solid, function(vsId, i){
-				var vs = loc_valueContext.getValueStructure(vsId);
-				var rootNames = vs.getElementsName();
-				_.each(rootNames, function(rootName, i){
-					var varInfo = {
-						reference : rootName,
-						variable : loc_valueContext.createVariable(vsId, rootName),
-					};
-					loc_variableInfos.push(varInfo);
-				});
-			});		
-
-			_.each(vsIds.soft, function(vsId, i){
-				var vs = loc_valueContext.getValueStructure(vsId);
-				var rootNames = vs.getElementsName();
-				_.each(rootNames, function(rootName, i){
-					var varInfo = {
-						reference : rootName,
-						variable : loc_valueContext.createVariable(vsId, rootName),
-					};
-					loc_variableInfos.push(varInfo);
-				});
-			});		
-		}
-*/
-
 /*
 		//extended variable
 		if(loc_extendVars!=undefined&&loc_extendVars.length>0){
@@ -92,9 +51,7 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 		varInfo.variable.executeDataOperationRequest(node_valueInVarOperationServiceUtility.createGetOperationService(), {
 			success : function(request, data){
 				var value;
-				if(data!=undefined&&data.value!=undefined){
-				    value = JSON.stringify(data.value, null, 4);
-				}
+    		    value = JSON.stringify(data, null, 4);
 				varInfo.displayView.text(value);
 			}	
 		});
@@ -119,10 +76,7 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 			var value = varInfo.view.val();
 			if(value==undefined || value==""){}
 			else {
-				value = {
-					dataTypeId: "test.string;1.0.0",
-					value: varInfo.view.val()
-				};
+				value = JSON.parse(varInfo.view.val());
 			}
 		
 			varInfo.variable.executeDataOperationRequest(node_valueInVarOperationServiceUtility.createSetOperationService("", value));
