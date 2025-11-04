@@ -3,6 +3,7 @@ package com.nosliw.core.application.common.structure.reference;
 import java.util.Set;
 
 import com.nosliw.common.path.HAPComplexPath;
+import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.core.application.common.datadefinition.HAPDataDefinitionWritable;
@@ -11,7 +12,6 @@ import com.nosliw.core.application.common.structure.HAPElementStructure;
 import com.nosliw.core.application.common.structure.HAPElementStructureLeafData;
 import com.nosliw.core.application.common.structure.HAPRootInStructure;
 import com.nosliw.core.application.common.structure.HAPStructure;
-import com.nosliw.core.application.common.structure.HAPUtilityElement;
 import com.nosliw.core.application.valueport.HAPResultDesendantResolve;
 import com.nosliw.core.application.valueport.HAPResultReferenceResolve;
 import com.nosliw.core.data.criteria.HAPDataTypeCriteria;
@@ -31,9 +31,9 @@ public class HAPUtilityResolveReference {
 			resolved.elementPath = path;
 			resolved.fullPath = elementPath;
 
-			resolved.elementInfoSolid = HAPUtilityElement.resolveDescendant(root.getDefinition().getSolidStructureElement(), path);
+			resolved.elementInfoSolid = new HAPResultDesendantResolve(root.getDefinition().getSolidStructureElement(), new HAPPath(), new HAPPath(path)); 
 			if(resolved.elementInfoSolid!=null) {
-				resolved.elementInfoOriginal = HAPUtilityElement.resolveDescendant(root.getDefinition(), path);
+				resolved.elementInfoOriginal = new HAPResultDesendantResolve(root.getDefinition(), new HAPPath(), new HAPPath(path));
 				
 				Set<String> elementTypes = resolveConfigure.candidateElementTypes;
 				if(elementTypes==null || elementTypes.contains(resolved.elementInfoSolid.resolvedElement.getType())) {

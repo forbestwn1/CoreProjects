@@ -21,6 +21,16 @@ public class HAPResultDesendantResolve extends HAPSerializableImp{
 	@HAPAttribute
 	public static final String REMAINPATH = "remainPath";
 
+	public HAPResultDesendantResolve() {
+		
+	}
+	
+	public HAPResultDesendantResolve(HAPElementStructure resolvedElement, HAPPath solvedPath, HAPPath remainPath) {
+		this.resolvedElement = resolvedElement;
+		this.solvedPath = solvedPath;
+		this.remainPath = remainPath;
+	}
+
 	//solved element 
 	public HAPElementStructure resolvedElement;
 	//solved path to element

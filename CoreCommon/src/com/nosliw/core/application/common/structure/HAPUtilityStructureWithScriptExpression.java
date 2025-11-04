@@ -2,8 +2,6 @@ package com.nosliw.core.application.common.structure;
 
 import java.util.Map;
 
-import org.apache.commons.lang3.tuple.Pair;
-
 import com.nosliw.core.application.common.scriptexpressio.HAPUtilityScriptExpressionConstant;
 import com.nosliw.core.application.common.scriptexpressio.HAPUtilityScriptExpressionParser;
 import com.nosliw.core.application.common.scriptexpressio.definition.HAPDefinitionContainerScriptExpression;
@@ -33,24 +31,14 @@ public class HAPUtilityStructureWithScriptExpression {
 				root.setStatus(HAPUtilityScriptExpressionConstant.makeIdLiterate(scriptExpressionId));
 			}
 			
-
-			HAPUtilityElement.traverseElement(root.getDefinition(), null, new HAPProcessorStructureElement() {
-				@Override
-				public Pair<Boolean, HAPElementStructure> process(HAPInfoElement eleInfo, Object value) {
-					if(eleInfo.getElement() instanceof HAPElementStructureLeafRelative) {
-						HAPElementStructureLeafRelative relativeEle = (HAPElementStructureLeafRelative)eleInfo.getElement();
-						String relativePath = relativeEle.getReference().getElementPath();
-						if(HAPUtilityScriptExpressionParser.isScriptExpression(relativePath)) {
-							String relativePathId = scriptExpressionContainer.addScriptExpression(relativePath);
-							relativeEle.getReference().setElementPath(HAPUtilityScriptExpressionConstant.makeIdLiterate(relativePathId));
-						}
-						return Pair.of(false, null);
-					}
-					return null;
+			if(root.getDefinition() instanceof HAPElementStructureLeafRelative) {
+				HAPElementStructureLeafRelative relativeEle = (HAPElementStructureLeafRelative)root.getDefinition();
+				String relativePath = relativeEle.getReference().getElementPath();
+				if(HAPUtilityScriptExpressionParser.isScriptExpression(relativePath)) {
+					String relativePathId = scriptExpressionContainer.addScriptExpression(relativePath);
+					relativeEle.getReference().setElementPath(HAPUtilityScriptExpressionConstant.makeIdLiterate(relativePathId));
 				}
-
-				@Override
-				public void postProcess(HAPInfoElement eleInfo, Object value) {	}}, null);
+			}
 		}
 	}
 	
@@ -78,23 +66,14 @@ public class HAPUtilityStructureWithScriptExpression {
 				}
 			}
 
-			HAPUtilityElement.traverseElement(root.getDefinition(), null, new HAPProcessorStructureElement() {
-				@Override
-				public Pair<Boolean, HAPElementStructure> process(HAPInfoElement eleInfo, Object value) {
-					if(eleInfo.getElement() instanceof HAPElementStructureLeafRelative) {
-						HAPElementStructureLeafRelative relativeEle = (HAPElementStructureLeafRelative)eleInfo.getElement();
-						String relativePath = relativeEle.getReference().getElementPath();
-						String relativePathId = HAPUtilityScriptExpressionConstant.isIdLterate(relativePath);
-						if(relativePathId!=null) {
-							relativeEle.getReference().setElementPath(values.get(relativePathId)+"");
-						}
-						return Pair.of(false, null);
-					}
-					return null;
+			if(root.getDefinition() instanceof HAPElementStructureLeafRelative) {
+				HAPElementStructureLeafRelative relativeEle = (HAPElementStructureLeafRelative)root.getDefinition();
+				String relativePath = relativeEle.getReference().getElementPath();
+				String relativePathId = HAPUtilityScriptExpressionConstant.isIdLterate(relativePath);
+				if(relativePathId!=null) {
+					relativeEle.getReference().setElementPath(values.get(relativePathId)+"");
 				}
-
-				@Override
-				public void postProcess(HAPInfoElement eleInfo, Object value) {	}}, null);
+			}
 		}
 	}
 

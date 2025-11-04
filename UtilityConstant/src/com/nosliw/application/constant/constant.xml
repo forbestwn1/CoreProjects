@@ -319,7 +319,6 @@
 			<definition name="CONTEXT_ELEMENTTYPE_VALUE" value="value"/>
 			<definition name="CONTEXT_ELEMENTTYPE_CONSTANT" value="constant"/>
 			<definition name="CONTEXT_ELEMENTTYPE_CONSTANTREF" value="constantReference"/>
-			<definition name="CONTEXT_ELEMENTTYPE_NODE" value="node"/>
 			<definition name="CONTEXT_ELEMENTTYPE_UNKNOW" value="unknow"/>
 			<definition name="CONTEXT_ELEMENTTYPE_PROVIDE" value="provide"/>
 			<definition name="CONTEXT_ELEMENTTYPE_RUNTIME" value="runtime"/>

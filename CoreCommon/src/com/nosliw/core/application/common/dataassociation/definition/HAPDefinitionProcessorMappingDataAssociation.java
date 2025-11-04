@@ -1,11 +1,7 @@
 package com.nosliw.core.application.common.dataassociation.definition;
 
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
-
-import org.apache.commons.lang3.tuple.Pair;
 
 import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.path.HAPComplexPath;
@@ -18,10 +14,6 @@ import com.nosliw.core.application.common.dataassociation.HAPTunnel;
 import com.nosliw.core.application.common.structure.HAPElementStructure;
 import com.nosliw.core.application.common.structure.HAPElementStructureLeafRelative;
 import com.nosliw.core.application.common.structure.HAPElementStructureLeafRelativeForMapping;
-import com.nosliw.core.application.common.structure.HAPElementStructureNode;
-import com.nosliw.core.application.common.structure.HAPInfoElement;
-import com.nosliw.core.application.common.structure.HAPProcessorStructureElement;
-import com.nosliw.core.application.common.structure.HAPUtilityElement;
 import com.nosliw.core.application.common.structure.reference.HAPConfigureProcessorRelative;
 import com.nosliw.core.application.common.structure.reference.HAPInfoRelativeResolve;
 import com.nosliw.core.application.common.structure.reference.HAPUtilityResolveReference;
@@ -100,16 +92,6 @@ public class HAPDefinitionProcessorMappingDataAssociation {
 			}
 			break;
 		}
-		case HAPConstantShared.CONTEXT_ELEMENTTYPE_NODE:
-		{
-			Map<String, HAPElementStructure> processedChildren = new LinkedHashMap<String, HAPElementStructure>();
-			HAPElementStructureNode nodeStructureElement = (HAPElementStructureNode)defStructureElement;
-			for(String childName : nodeStructureElement.getChildren().keySet()) { 	
-				processedChildren.put(childName, processElementStructure(nodeStructureElement.getChild(childName), relativeEleProcessConfigure, baseBlockPath, dependency, errors, currentBundle, resourceMan, runtimeInfo));
-			}
-			nodeStructureElement.setChildren(processedChildren);
-			break;
-		}
 		}
 		return out;
 	}
@@ -119,22 +101,11 @@ public class HAPDefinitionProcessorMappingDataAssociation {
 		HAPReferenceRootElement targetRef = mappingItem.getTarget();
 
 		HAPUtilityValuePort.normalizeValuePortRelativeBrickPath(targetRef.getValuePortId(), baseBlockPath);
-		
-		HAPUtilityElement.traverseElement(mappingItem.getDefinition(), null, new HAPProcessorStructureElement() {
 
-			@Override
-			public Pair<Boolean, HAPElementStructure> process(HAPInfoElement eleInfo, Object value) {
-				if(eleInfo.getElement().getType().equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_RELATIVE_FOR_MAPPING)) {
-					HAPElementStructureLeafRelativeForMapping mappingEle = (HAPElementStructureLeafRelativeForMapping)eleInfo.getElement();
-					HAPUtilityValuePort.normalizeValuePortRelativeBrickPath(mappingEle.getReference().getValuePortId(), baseBlockPath);
-				}
-				return null;
-			}
-
-			@Override
-			public void postProcess(HAPInfoElement eleInfo, Object value) {	}
-		}, targetRef);
-		
+		if(mappingItem.getDefinition().getType().equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_RELATIVE_FOR_MAPPING)) {
+			HAPElementStructureLeafRelativeForMapping mappingEle = (HAPElementStructureLeafRelativeForMapping)mappingItem.getDefinition();
+			HAPUtilityValuePort.normalizeValuePortRelativeBrickPath(mappingEle.getReference().getValuePortId(), baseBlockPath);
+		}
 	}
 	
 	private static void normalizeValuePortId(HAPDefinitionMappingItemValue mappingItem, HAPPath baseBlockPath, HAPPath secondBlockPath, String direction, String brickRootNameIfNotProvided, HAPBundle currentBundle, HAPManagerResource resourceMan, HAPRuntimeInfo runtimeInfo) {
@@ -154,20 +125,10 @@ public class HAPDefinitionProcessorMappingDataAssociation {
 		
 		normalizeRootReference(targetRef, HAPConstantShared.IO_DIRECTION_IN, targetPath, baseBlockPath, brickRootNameIfNotProvided, currentBundle, resourceMan, runtimeInfo);
 		
-		HAPUtilityElement.traverseElement(mappingItem.getDefinition(), null, new HAPProcessorStructureElement() {
-
-			@Override
-			public Pair<Boolean, HAPElementStructure> process(HAPInfoElement eleInfo, Object value) {
-				if(eleInfo.getElement().getType().equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_RELATIVE_FOR_MAPPING)) {
-					HAPElementStructureLeafRelativeForMapping mappingEle = (HAPElementStructureLeafRelativeForMapping)eleInfo.getElement();
-					normalizeRootReference(mappingEle.getReference(), HAPConstantShared.IO_DIRECTION_OUT, sourcePath, baseBlockPath, brickRootNameIfNotProvided, currentBundle, resourceMan, runtimeInfo);
-				}
-				return null;
-			}
-
-			@Override
-			public void postProcess(HAPInfoElement eleInfo, Object value) {	}
-		}, targetRef);
+		if(mappingItem.getDefinition().getType().equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_RELATIVE_FOR_MAPPING)) {
+			HAPElementStructureLeafRelativeForMapping mappingEle = (HAPElementStructureLeafRelativeForMapping)mappingItem.getDefinition();
+			normalizeRootReference(mappingEle.getReference(), HAPConstantShared.IO_DIRECTION_OUT, sourcePath, baseBlockPath, brickRootNameIfNotProvided, currentBundle, resourceMan, runtimeInfo);
+		}
 	}
 	
 	private static void normalizeRootReference(HAPReferenceRootElement rootRef, String ioDirection, HAPPath blockPathFromRootIfNotProvided, HAPPath baseBlockPathFromRoot, String brickRootNameIfNotProvided, HAPBundle currentBundle, HAPManagerResource resourceMan, HAPRuntimeInfo runtimeInfo) {

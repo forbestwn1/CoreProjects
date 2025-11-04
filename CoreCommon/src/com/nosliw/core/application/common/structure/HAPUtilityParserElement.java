@@ -23,7 +23,6 @@ public class HAPUtilityParserElement {
 		Object provideObj = eleDefJson.opt(HAPElementStructureLeafProvide.PROVIDE);
 		Object criteriaDef = eleDefJson.opt(HAPElementStructureLeafData.DATA);
 		Object valueJsonObj = eleDefJson.opt(HAPElementStructureLeafConstant.VALUE);
-		JSONObject childrenJsonObj = eleDefJson.optJSONObject(HAPElementStructureNode.CHILD);
 		String constantName = (String)eleDefJson.opt(HAPElementStructureLeafConstantReference.CONSTANT);
 		Object runtimeObj = eleDefJson.opt(HAPElementStructureLeafRuntime.RUNTIME);
 		
@@ -67,13 +66,6 @@ public class HAPUtilityParserElement {
 			//data
 			HAPDataDefinitionWritable dataDef = HAPParserDataDefinition.parseDataDefinitionWritable(criteriaDef, dataRuleMan); 
 			out = new HAPElementStructureLeafData(dataDef);   
-		}
-		else if(childrenJsonObj!=null) {
-			//node
-			out = new HAPElementStructureNode();
-			for(Object key : childrenJsonObj.keySet()) {
-				((HAPElementStructureNode)out).addChild((String)key, parseStructureElement(childrenJsonObj.getJSONObject((String)key), dataRuleMan));
-			}
 		}
 		else if(valueJsonObj!=null){
 			//constant

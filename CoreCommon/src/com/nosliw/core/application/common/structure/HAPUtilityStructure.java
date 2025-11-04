@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.utils.HAPConstantShared;
 
 public class HAPUtilityStructure {
@@ -64,6 +65,35 @@ public class HAPUtilityStructure {
 		return contextTypes;
 	}
 
+	//get rid of relative, replace with solid definition
+	public static HAPElementStructure solidateStructureElement(HAPElementStructure raw) {
+		String type = raw.getType();
+		if(HAPConstantShared.CONTEXT_ELEMENTTYPE_RELATIVE_FOR_DEFINITION.equals(type)) {
+			HAPElementStructureLeafRelativeForDefinition forDefinition = (HAPElementStructureLeafRelativeForDefinition)raw;
+			return forDefinition.getResolveInfo().getSolidElement().cloneStructureElement();
+		}
+		else if(HAPConstantShared.CONTEXT_ELEMENTTYPE_RELATIVE_FOR_VALUE.equals(type)) {
+			HAPElementStructureLeafRelativeForValue forValue = (HAPElementStructureLeafRelativeForValue)raw;
+			return forValue.getDefinition().cloneStructureElement();
+		}
+		else {
+			return raw.cloneStructureElement();
+		}
+	}
+	
+
+	public static HAPElementStructure getDescendant(HAPElementStructure element, String path) {
+		HAPElementStructure out = element;
+		HAPPath pathObj = new HAPPath(path);
+		for(String pathSeg : pathObj.getPathSegments()) {
+			if(out!=null) {
+				out = out.getChild(pathSeg);
+			} else {
+				throw new RuntimeException();
+			}
+		}
+		return out;
+	}
 
 
 

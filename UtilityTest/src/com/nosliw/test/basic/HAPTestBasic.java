@@ -23,9 +23,12 @@ public class HAPTestBasic {
 		
 //		HAPUtilityBundle.getBrickBundle(new HAPResourceIdSimple(HAPEnumBrickType.DATAEXPRESSIONLIB_100.getBrickType(), "1.0.0", "test1"), brickMan, null);
 
-		HAPUtilityBundle.getBrickBundle(new HAPResourceIdSimple(HAPEnumBrickType.UIPAGE_100.getBrickType(), "1.0.0", "test0"), brickMan, null);
+//		HAPUtilityBundle.getBrickBundle(new HAPResourceIdSimple(HAPEnumBrickType.UIPAGE_100.getBrickType(), "1.0.0", "test0"), brickMan, null);
 	
 //		HAPUtilityBundle.getBrickBundle(new HAPResourceIdSimple(HAPEnumBrickType.DATAEXPRESSIONLIB_100.getBrickType(), "1.0.0", "test2"), brickMan, null);
+
+		HAPUtilityBundle.getBrickBundle(new HAPResourceIdSimple(HAPEnumBrickType.TEST_COMPLEX_1_100.getBrickType(), "1.0.0", "basic"), brickMan, null);
+	
 	}
 
 }

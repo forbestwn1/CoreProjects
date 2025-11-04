@@ -119,15 +119,6 @@
 					"groupType" : "public",
 					"valueStructure" : {
 						"root": {
-    					    "complex" : {
-	    				        "definition": {
-		    			            "child": {
-			    		                "a" : {
-				    	                    "data" : "test.string;1.0.0"
-					                    }
-					                }
-					            }
-					        },
 							"parent_public": {
 								"definition":{
 									"data": "test.string;1.0.0"

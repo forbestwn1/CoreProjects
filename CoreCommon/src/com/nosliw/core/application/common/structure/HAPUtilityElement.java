@@ -2,18 +2,11 @@ package com.nosliw.core.application.common.structure;
 
 import java.util.List;
 
-import org.apache.commons.lang3.tuple.Pair;
-
 import com.nosliw.common.exception.HAPErrorUtility;
-import com.nosliw.common.path.HAPComplexPath;
-import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.common.utils.HAPUtilityBasic;
-import com.nosliw.common.utils.HAPUtilityNamingConversion;
 import com.nosliw.core.application.common.structure.reference.HAPPathElementMapping;
 import com.nosliw.core.application.common.structure.reference.HAPPathElementMappingConstantToVariable;
 import com.nosliw.core.application.common.structure.reference.HAPPathElementMappingVariableToVariable;
-import com.nosliw.core.application.valueport.HAPResultDesendantResolve;
 import com.nosliw.core.data.HAPDataTypeHelper;
 import com.nosliw.core.data.criteria.HAPDataTypeCriteriaId;
 import com.nosliw.core.data.criteria.HAPInfoCriteria;
@@ -22,45 +15,6 @@ import com.nosliw.core.data.matcher.HAPMatchers;
 
 public class HAPUtilityElement {
 
-	public static HAPElementStructure traverseElement(HAPElementStructure element, String startPath, HAPProcessorStructureElement processor, Object value) {
-		return traverseElement(new HAPInfoElement(element, new HAPComplexPath(startPath)), processor, value);
-	}
-	
-	//traverse through all the context definition element, and process it
-	//if return not null, then means new context element
-	private static HAPElementStructure traverseElement(HAPInfoElement elementInfo, HAPProcessorStructureElement processor, Object value) {
-		HAPElementStructure out = null;
-		HAPElementStructure element = elementInfo.getElement(); 
-		HAPComplexPath path = elementInfo.getElementPath();
-		Pair<Boolean, HAPElementStructure> processOut = processor.process(elementInfo, value);
-		boolean going = true;
-		if(processOut!=null) {
-			if(processOut.getLeft()!=null) {
-				going = processOut.getLeft();
-			}
-			if(processOut.getRight()!=null) {
-				element = processOut.getRight();
-				elementInfo.setElement(element);
-				out = element;
-			}
-		}
-		if(going) {
-			if(HAPConstantShared.CONTEXT_ELEMENTTYPE_NODE.equals(element.getType())) {
-				HAPElementStructureNode nodeEle = (HAPElementStructureNode)element;
-				for(String childNodeName : nodeEle.getChildren().keySet()) {
-					HAPElementStructure childProcessed = traverseElement(new HAPInfoElement(nodeEle.getChild(childNodeName), path.appendSegment(childNodeName)), processor, value);
-					if(childProcessed!=null) {
-						//replace with new element
-						nodeEle.addChild(childNodeName, childProcessed);
-					}
-				}
-			}
-		}
-		processor.postProcess(elementInfo, value);
-		return out;
-	}
-	
-	
 	//merge origin context def with child context def to expect context out
 	//also generate matchers from origin to expect
 	public static void mergeElement(HAPElementStructure fromDef1, HAPElementStructure toDef1, boolean modifyStructure, List<HAPPathElementMapping> mappingPaths, String path, HAPDataTypeHelper dataTypeHelper){
@@ -124,47 +78,6 @@ public class HAPUtilityElement {
 				mappingPaths.add(new HAPPathElementMappingVariableToVariable(path, matcher==null?new HAPMatchers():matcher));
 				break;
 			}
-			case HAPConstantShared.CONTEXT_ELEMENTTYPE_NODE:
-			{
-				HAPElementStructureNode nodeFrom = (HAPElementStructureNode)fromDef;
-				HAPElementStructureNode nodeTo = (HAPElementStructureNode)toDef;
-				for(String nodeName : nodeTo.getChildren().keySet()) {
-					HAPElementStructure childNodeTo = nodeTo.getChildren().get(nodeName);
-					HAPElementStructure childNodeFrom = nodeFrom.getChildren().get(nodeName);
-					String childPath = HAPUtilityNamingConversion.cascadePath(path, nodeName);
-					if(childNodeFrom!=null || modifyStructure) {
-						switch(childNodeTo.getType()) {
-						case HAPConstantShared.CONTEXT_ELEMENTTYPE_DATA:
-						{
-							if(childNodeFrom==null) {
-								childNodeFrom = new HAPElementStructureLeafData();
-								nodeFrom.addChild(nodeName, childNodeFrom);
-							}
-							mergeElement(childNodeFrom, childNodeTo, modifyStructure, mappingPaths, childPath, dataTypeHelper);
-							break;
-						}
-						case HAPConstantShared.CONTEXT_ELEMENTTYPE_NODE:
-						{
-							if(childNodeFrom==null) {
-								childNodeFrom = new HAPElementStructureNode();
-								nodeFrom.addChild(nodeName, childNodeFrom);
-							}
-							mergeElement(childNodeFrom, childNodeTo, modifyStructure, mappingPaths, childPath, dataTypeHelper);
-							break;
-						}
-						default :
-						{
-							if(childNodeFrom==null) {
-								childNodeFrom = childNodeTo.cloneStructureElement();
-								nodeFrom.addChild(nodeName, childNodeFrom);
-							}
-							break;
-						}
-					}
-				}
-				break;
-				}
-			}
 			default : 
 			{
 				mappingPaths.add(new HAPPathElementMappingVariableToVariable(path, new HAPMatchers()));
@@ -172,44 +85,4 @@ public class HAPUtilityElement {
 			}
 		}
 	}
-
-	public static HAPResultDesendantResolve resolveDescendant(HAPElementStructure element, String path) {
-		HAPElementStructure solvedElment = element;
-		HAPPath solvedPath = new HAPPath();
-		HAPPath remainingPath = new HAPPath();
-		if(HAPUtilityBasic.isStringNotEmpty(path)) {
-			String[] pathSegs = new HAPPath(path).getPathSegments();
-			for(String pathSeg : pathSegs){
-				if(remainingPath.isEmpty()) {
-					//solid node
-					HAPElementStructure solidEle = null;
-					if(HAPConstantShared.CONTEXT_ELEMENTTYPE_NODE.equals(solvedElment.getType())) {
-						solidEle = ((HAPElementStructureNode)solvedElment).getChildren().get(pathSeg);
-						if(solidEle==null)
-						 {
-							return null;   //not valid path
-						}
-					}
-					if(solidEle==null) {
-						remainingPath = remainingPath.appendSegment(pathSeg);
-					} else{
-						solvedElment = solidEle;
-						solvedPath = solvedPath.appendSegment(pathSeg);
-					}
-				}
-				else {
-					//remaining path
-					remainingPath = remainingPath.appendSegment(pathSeg);
-				}
-			}
-		}
-		HAPResultDesendantResolve out = new HAPResultDesendantResolve();
-		out.resolvedElement = solvedElment;
-		if(remainingPath!=null) {
-			out.remainPath = remainingPath;
-		}
-		out.solvedPath = solvedPath;
-		return out;
-	}
-
 }

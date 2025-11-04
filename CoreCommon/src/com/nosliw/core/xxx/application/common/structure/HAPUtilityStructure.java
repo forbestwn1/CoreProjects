@@ -14,8 +14,6 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.common.structure.HAPElementStructure;
 import com.nosliw.core.application.common.structure.HAPElementStructureLeafConstant;
 import com.nosliw.core.application.common.structure.HAPElementStructureLeafRelative;
-import com.nosliw.core.application.common.structure.HAPElementStructureLeafRelativeForDefinition;
-import com.nosliw.core.application.common.structure.HAPElementStructureLeafRelativeForValue;
 import com.nosliw.core.application.common.structure.HAPElementStructureNode;
 import com.nosliw.core.application.common.structure.HAPInfoElement;
 import com.nosliw.core.application.common.structure.HAPProcessorStructureElement;
@@ -27,31 +25,6 @@ import com.nosliw.core.runtimeenv.HAPRuntimeEnvironment;
 
 public class HAPUtilityStructure {
 
-	//get rid of relative, replace with solid definition
-	public static HAPElementStructure solidateStructureElement(HAPElementStructure raw) {
-		String type = raw.getType();
-		if(HAPConstantShared.CONTEXT_ELEMENTTYPE_RELATIVE_FOR_DEFINITION.equals(type)) {
-			HAPElementStructureLeafRelativeForDefinition forDefinition = (HAPElementStructureLeafRelativeForDefinition)raw;
-			return forDefinition.getResolveInfo().getSolidElement().cloneStructureElement();
-		}
-		else if(HAPConstantShared.CONTEXT_ELEMENTTYPE_RELATIVE_FOR_VALUE.equals(type)) {
-			HAPElementStructureLeafRelativeForValue forValue = (HAPElementStructureLeafRelativeForValue)raw;
-			return forValue.getDefinition().cloneStructureElement();
-		}
-		else if(HAPConstantShared.CONTEXT_ELEMENTTYPE_NODE.equals(type)) {
-			HAPElementStructureNode out = new HAPElementStructureNode();
-			HAPElementStructureNode nodeStructureElement = (HAPElementStructureNode)raw;
-			Map<String, HAPElementStructure> children = nodeStructureElement.getChildren();
-			for(String childName : children.keySet()) {
-				out.addChild(childName, solidateStructureElement(children.get(childName)));
-			}
-			return out;
-		}
-		else {
-			return raw.cloneStructureElement();
-		}
-	}
-	
 	public static HAPRootStructure getRootFromStructure(HAPStructure1 structure, String rootRefLiterate) {
 		HAPReferenceRootInStrucutre rootRef = HAPUtilityStructureReference.parseRootReferenceLiterate(rootRefLiterate, structure.getStructureType());
 		return getRootFromStructure(structure, rootRef);
@@ -63,19 +36,6 @@ public class HAPUtilityStructure {
 			return null;
 		}
 		return roots.get(0);
-	}
-
-	public static HAPElementStructure getDescendant(HAPElementStructure element, String path) {
-		HAPElementStructure out = element;
-		HAPPath pathObj = new HAPPath(path);
-		for(String pathSeg : pathObj.getPathSegments()) {
-			if(out!=null) {
-				out = out.getChild(pathSeg);
-			} else {
-				throw new RuntimeException();
-			}
-		}
-		return out;
 	}
 
 

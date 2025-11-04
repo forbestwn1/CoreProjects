@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.commons.lang3.tuple.Pair;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -26,13 +25,9 @@ import com.nosliw.core.application.HAPWrapperBrickRoot;
 import com.nosliw.core.application.brick.HAPEnumBrickType;
 import com.nosliw.core.application.common.datadefinition.HAPDefinitionDataRule;
 import com.nosliw.core.application.common.dataexpression.definition.HAPParserDataExpression;
-import com.nosliw.core.application.common.structure.HAPElementStructure;
 import com.nosliw.core.application.common.structure.HAPElementStructureLeafData;
-import com.nosliw.core.application.common.structure.HAPInfoElement;
-import com.nosliw.core.application.common.structure.HAPProcessorStructureElement;
 import com.nosliw.core.application.common.structure.HAPRootInStructure;
 import com.nosliw.core.application.common.structure.HAPStructure;
-import com.nosliw.core.application.common.structure.HAPUtilityElement;
 import com.nosliw.core.application.division.manual.brick.container.HAPManualBrickContainer;
 import com.nosliw.core.application.division.manual.brick.wrappertask.HAPManualBlockTaskWrapper;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionBrick;
@@ -161,34 +156,24 @@ public class HAPManualManagerBrick implements HAPPluginDivision{
 			Map<String, HAPRootInStructure> roots = structure.getRoots();
 			for(String rootName : roots.keySet()) {
 				HAPRootInStructure root = roots.get(rootName);
-				HAPUtilityElement.traverseElement(root.getDefinition(), null, new HAPProcessorStructureElement(){
 
-					@Override
-					public Pair<Boolean, HAPElementStructure> process(HAPInfoElement eleInfo, Object value) {
-						String eleType = eleInfo.getElement().getType();
-                        if(eleType.equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_DATA)) {
-                        	HAPElementStructureLeafData dataEle = (HAPElementStructureLeafData)eleInfo.getElement();
-                        	for(HAPDefinitionDataRule ruleDef : dataEle.getDataDefinition().getRules()) {
-                        		HAPDataRule rule = ruleDef.getDataRule();
-                        		HAPDataTypeCriteria ruleCriteria = HAPUtilityCriteria.getChildCriteriaByPath(dataEle.getCriteria(), ruleDef.getPath());
-                        		rule.setDataCriteria(ruleCriteria);
-                        		
-                        		HAPManualBlockTaskWrapper taskWrapperBrick = (HAPManualBlockTaskWrapper)newBrickWithInit(HAPEnumBrickType.TASKWRAPPER_100, out); 
-                        		String attrName = containerBrick.addElementWithBrickOrReference(taskWrapperBrick);
-                        		HAPDataRuleImplementationLocal dataRuleImp = new HAPDataRuleImplementationLocal(validationTaskBranchName + "."+attrName+".taskWrapper");
-                        		rule.setImplementation(dataRuleImp);
+				String eleType = root.getDefinition().getType();
+                if(eleType.equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_DATA)) {
+                	HAPElementStructureLeafData dataEle = (HAPElementStructureLeafData)root.getDefinition();
+                	for(HAPDefinitionDataRule ruleDef : dataEle.getDataDefinition().getRules()) {
+                		HAPDataRule rule = ruleDef.getDataRule();
+                		HAPDataTypeCriteria ruleCriteria = HAPUtilityCriteria.getChildCriteriaByPath(dataEle.getCriteria(), ruleDef.getPath());
+                		rule.setDataCriteria(ruleCriteria);
+                		
+                		HAPManualBlockTaskWrapper taskWrapperBrick = (HAPManualBlockTaskWrapper)newBrickWithInit(HAPEnumBrickType.TASKWRAPPER_100, out); 
+                		String attrName = containerBrick.addElementWithBrickOrReference(taskWrapperBrick);
+                		HAPDataRuleImplementationLocal dataRuleImp = new HAPDataRuleImplementationLocal(validationTaskBranchName + "."+attrName+".taskWrapper");
+                		rule.setImplementation(dataRuleImp);
 
-                        		HAPEntityOrReference ruleTaskBrickOrRef = m_dataRuleManager.transformDataRule(rule, valueStructureDomain);
-                        		taskWrapperBrick.setTask(ruleTaskBrickOrRef);
-                        	}
-                        }
-						return null;
-					}
-
-					@Override
-					public void postProcess(HAPInfoElement eleInfo, Object value) {		}
-					
-				}, null);
+                		HAPEntityOrReference ruleTaskBrickOrRef = m_dataRuleManager.transformDataRule(rule, valueStructureDomain);
+                		taskWrapperBrick.setTask(ruleTaskBrickOrRef);
+                	}
+                }
 			}
 		}
 		HAPManualWrapperBrickRoot validationRuleTaskBranchRoot = new HAPManualWrapperBrickRoot(containerBrick);

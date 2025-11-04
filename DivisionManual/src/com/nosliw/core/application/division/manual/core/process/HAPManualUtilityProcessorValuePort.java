@@ -29,12 +29,8 @@ import com.nosliw.core.application.common.dynamiccriteria.HAPUtilityDynamicCrite
 import com.nosliw.core.application.common.interactive.HAPUtilityInteractiveTaskValuePort;
 import com.nosliw.core.application.common.parentrelation.HAPManualDefinitionBrickRelation;
 import com.nosliw.core.application.common.parentrelation.HAPManualDefinitionBrickRelationValueContext;
-import com.nosliw.core.application.common.structure.HAPElementStructure;
 import com.nosliw.core.application.common.structure.HAPElementStructureLeafRelative;
-import com.nosliw.core.application.common.structure.HAPInfoElement;
-import com.nosliw.core.application.common.structure.HAPProcessorStructureElement;
 import com.nosliw.core.application.common.structure.HAPRootInStructure;
-import com.nosliw.core.application.common.structure.HAPUtilityElement;
 import com.nosliw.core.application.common.structure.HAPUtilityStructure;
 import com.nosliw.core.application.common.structure.reference.HAPUtilityProcessRelativeElementInBundle;
 import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualDefinitionBrickValueContext;
@@ -260,23 +256,13 @@ public class HAPManualUtilityProcessorValuePort {
 				for(String valueStructureId : valueContextExe.getValueStructureIds()) {
 					for(HAPRootInStructure root: valueStructureDomain.getStructureDefinitionByRuntimeId(valueStructureId).getRoots().values()) {
 						HAPInfoValueStructureRuntime valueStructureRuntimeInfo = valueStructureDomain.getValueStructureRuntimeInfo(valueStructureId);
-						HAPUtilityElement.traverseElement(root.getDefinition(), null, new HAPProcessorStructureElement() {
-
-							@Override
-							public Pair<Boolean, HAPElementStructure> process(HAPInfoElement eleInfo, Object value) {
-								if(eleInfo.getElement() instanceof HAPElementStructureLeafRelative) {
-									HAPElementStructureLeafRelative relativeEle = (HAPElementStructureLeafRelative)eleInfo.getElement();
-									HAPPath defaultParentValueContextPath = findDefaultParentValueContext(childBrick.getTreeNodeInfo().getPathFromRoot(), processContext);
-									HAPIdValuePortInBundle normalizedValuePortId = HAPUtilityValuePort.normalizeInBundleValuePortId(relativeEle.getReference().getValuePortId(), HAPConstantShared.VALUEPORTGROUP_SIDE_INTERNAL, valueStructureRuntimeInfo.getIODirection(), defaultParentValueContextPath, defaultParentValueContextPath, processContext.getRootBrickName(), processContext.getCurrentBundle(), null, null);
-									relativeEle.getReference().setValuePortId(normalizedValuePortId);
-									return Pair.of(false, null);
-								}
-								return Pair.of(true, null);
-							}
-
-							@Override
-							public void postProcess(HAPInfoElement eleInfo, Object value) {
-							}}, valueContextExe);
+						
+						if(root.getDefinition() instanceof HAPElementStructureLeafRelative) {
+							HAPElementStructureLeafRelative relativeEle = (HAPElementStructureLeafRelative)root.getDefinition();
+							HAPPath defaultParentValueContextPath = findDefaultParentValueContext(childBrick.getTreeNodeInfo().getPathFromRoot(), processContext);
+							HAPIdValuePortInBundle normalizedValuePortId = HAPUtilityValuePort.normalizeInBundleValuePortId(relativeEle.getReference().getValuePortId(), HAPConstantShared.VALUEPORTGROUP_SIDE_INTERNAL, valueStructureRuntimeInfo.getIODirection(), defaultParentValueContextPath, defaultParentValueContextPath, processContext.getRootBrickName(), processContext.getCurrentBundle(), null, null);
+							relativeEle.getReference().setValuePortId(normalizedValuePortId);
+						}
 					}
 				}
 				
