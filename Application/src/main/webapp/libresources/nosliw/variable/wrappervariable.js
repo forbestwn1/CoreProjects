@@ -25,10 +25,10 @@ var node_requestServiceProcessor;
 //	variable
 //	variable wrapper + path
 //	same as variable input
-var node_createVariableWrapper = function(data1, data2, adapterInfo, requestInfo){
+var node_createVariableWrapper = function(data1, data2, adapterInfo, info){
 	
 	var loc_resourceLifecycleObj = {};
-	loc_resourceLifecycleObj[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT] = function(data1, data2, adapterInfo, requestInfo){
+	loc_resourceLifecycleObj[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT] = function(data1, data2, adapterInfo, info){
 
 		//every variable has a id, it is for debuging purpose
 		loc_out.prv_id = nosliw.runtime.getIdService().generateId();
@@ -47,7 +47,7 @@ var node_createVariableWrapper = function(data1, data2, adapterInfo, requestInfo
 		}
 		else{
 			if(entityType==node_CONSTANT.TYPEDOBJECT_TYPE_VARIABLEWRAPPER)	data1 = data1.prv_getVariable();
-			loc_setVariable(nosliw.runtime.getVariableManager().createVariable(data1, data2, adapterInfo, requestInfo));
+			loc_setVariable(nosliw.runtime.getVariableManager().createVariable(data1, data2, adapterInfo, info));
 		}
 	};	
 
@@ -85,8 +85,8 @@ var node_createVariableWrapper = function(data1, data2, adapterInfo, requestInfo
 		setVariable : function(variable){	loc_setVariable(variable);  	},
 		getVariable : function(){	return this.prv_variable;	},
 		
-		createChildVariable : function(path, adapterInfo, requestInfo){	
-			return node_createVariableWrapper(this, path, adapterInfo, requestInfo);
+		createChildVariable : function(path, adapterInfo, info){	
+			return node_createVariableWrapper(this, path, adapterInfo, info);
 		}, 
 		
 		release : function(requestInfo){	node_getLifecycleInterface(loc_out).destroy(requestInfo);	},
@@ -114,7 +114,7 @@ var node_createVariableWrapper = function(data1, data2, adapterInfo, requestInfo
 	loc_out = node_makeObjectWithType(loc_out, node_CONSTANT.TYPEDOBJECT_TYPE_VARIABLEWRAPPER);
 	loc_out = node_makeObjectWithId(loc_out, nosliw.generateId());
 
-	node_getLifecycleInterface(loc_out).init(data1, data2, adapterInfo, requestInfo);
+	node_getLifecycleInterface(loc_out).init(data1, data2, adapterInfo, info);
 	
 	return loc_out;
 };

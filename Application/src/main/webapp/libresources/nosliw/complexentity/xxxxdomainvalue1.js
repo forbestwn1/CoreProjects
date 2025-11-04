@@ -9,7 +9,7 @@ var packageObj = library;
 	var node_makeObjectWithType;
 	var node_createVariableManager;
 	var node_createValueStructure;
-	var node_createValueStructureVariableInfo;
+	var node_createValueStructureVariableRef;
 	var node_createValueStructureElementInfo;
 	var node_dataUtility;
 	var node_complexEntityUtility;
@@ -154,7 +154,7 @@ var loc_createValueContext = function(id, valueContextDef, variableDomainDef, pa
 							var resolveRootName = resolvePathObj[node_COMMONATRIBUTECONSTANT.COMPLEXPATH_ROOT];
 							var resolvePath = resolvePathObj[node_COMMONATRIBUTECONSTANT.COMPLEXPATH_PATH];
 							
-							valueStructureElementInfosArray.push(node_createValueStructureElementInfo(rootName, parentValueStructure, node_createValueStructureVariableInfo(resolveRootName, resolvePath), undefined, info));
+							valueStructureElementInfosArray.push(node_createValueStructureElementInfo(rootName, parentValueStructure, node_createValueStructureVariableRef(resolveRootName, resolvePath), undefined, info));
 						}
 					}
 					else{
@@ -236,7 +236,7 @@ var loc_createValueContext = function(id, valueContextDef, variableDomainDef, pa
 
 		createVariable : function(structureRuntimeId, varPathSeg1, varPathSeg2){
 			var valueStructure = this.getValueStructure(structureRuntimeId);
-			return valueStructure.createVariable(node_createValueStructureVariableInfo(varPathSeg1, varPathSeg2));
+			return valueStructure.createVariable(node_createValueStructureVariableRef(varPathSeg1, varPathSeg2));
 		},
 
 		createVariableById : function(variableIdEntity){
@@ -254,7 +254,7 @@ var loc_createValueContext = function(id, valueContextDef, variableDomainDef, pa
 		//
 		createResolvedVariable : function(varResolve){
 			var valueStructure = this.getValueStructure(varResolve[node_COMMONATRIBUTECONSTANT.RESULTREFERENCERESOLVE_STRUCTUREID]);
-			return valueStructure.createVariable(node_createValueStructureVariableInfo(varResolve[node_COMMONATRIBUTECONSTANT.RESULTREFERENCERESOLVE_ELEREFERENCE][node_COMMONATRIBUTECONSTANT.IDEELEMENT_ELEMENTPATH]));
+			return valueStructure.createVariable(node_createValueStructureVariableRef(varResolve[node_COMMONATRIBUTECONSTANT.RESULTREFERENCERESOLVE_ELEREFERENCE][node_COMMONATRIBUTECONSTANT.IDEELEMENT_ELEMENTPATH]));
 		},
 		
 		populateVariable : function(varName, variable){
@@ -419,7 +419,7 @@ nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){no
 nosliw.registerSetNodeDataEvent("common.interfacedef.makeObjectWithType", function(){node_makeObjectWithType = this.getData();});
 nosliw.registerSetNodeDataEvent("variable.variable.createVariableManager", function(){node_createVariableManager = this.getData();});
 nosliw.registerSetNodeDataEvent("variable.valuestructure.createValueStructure", function(){node_createValueStructure = this.getData();});
-nosliw.registerSetNodeDataEvent("variable.valuestructure.createValueStructureVariableInfo", function(){node_createValueStructureVariableInfo = this.getData();});
+nosliw.registerSetNodeDataEvent("variable.valuestructure.createValueStructureVariableRef", function(){node_createValueStructureVariableRef = this.getData();});
 nosliw.registerSetNodeDataEvent("variable.valuestructure.createValueStructureElementInfo", function(){node_createValueStructureElementInfo = this.getData();});
 nosliw.registerSetNodeDataEvent("variable.valueinvar.utility", function(){node_dataUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("complexentity.complexEntityUtility", function(){  node_complexEntityUtility = this.getData();});

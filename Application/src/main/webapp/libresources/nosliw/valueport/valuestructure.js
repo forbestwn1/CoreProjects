@@ -10,7 +10,7 @@ var node_getObjectType;
 var node_createEventObject;
 var node_eventUtility;
 var node_createContextElement;
-var node_createValueStructureVariableInfo;
+var node_createValueStructureVariableRef;
 var node_createVariable;
 var node_DataOperationService;
 var node_makeObjectWithLifecycle;
@@ -40,13 +40,13 @@ var node_createValueStructure = function(id, elementInfosArray, request){
 	
 	//according to contextVariableInfo, find the base variable from Context
 	//base variable contains two info: 1. variable,  2. path from variable
-	var loc_findBaseVariable = function(contextVariableInfo){
-		var fullPath = contextVariableInfo.getFullPath();
+	var loc_findBaseVariable = function(elementRef){
+		var fullPath = elementRef.getFullPath();
 		
 		//get parent var from adapter first
 		//find longest matching path
 		var parentVar;
-		var varPath = contextVariableInfo.path;
+		var varPath = elementRef.path;
 		var pathLength = -1;
 		_.each(loc_out.prv_adapters, function(adapterVariable, path){
 			var comparePath = node_dataUtility.comparePath(fullPath, path);
@@ -66,9 +66,9 @@ var node_createValueStructure = function(id, elementInfosArray, request){
 		
 		//not found, use variable from elements
 		if(parentVar==undefined){
-			if(loc_out.prv_elements[contextVariableInfo.name]!=undefined){
-				parentVar = loc_out.prv_elements[contextVariableInfo.name].variable;
-				varPath = contextVariableInfo.path;
+			if(loc_out.prv_elements[elementRef.name]!=undefined){
+				parentVar = loc_out.prv_elements[elementRef.name].variable;
+				varPath = elementRef.path;
 			}
 			else return;
 		}
@@ -88,8 +88,8 @@ var node_createValueStructure = function(id, elementInfosArray, request){
 		return contextEle.variable;
 	};
 	
-	var loc_createVariableFromContextVariableInfo = function(contextVariableInfo, adapterInfo, requestInfo){
-		var baseVar = loc_findBaseVariable(contextVariableInfo);
+	var loc_createVariableFromContextVariableInfo = function(elementRef, adapterInfo, requestInfo){
+		var baseVar = loc_findBaseVariable(elementRef);
 		if(baseVar==undefined){
 			return;
 //			nosliw.error(contextVariableInfo);
@@ -100,7 +100,7 @@ var node_createValueStructure = function(id, elementInfosArray, request){
 	};
 	
 	var loc_buildAdapterVariableFromMatchers = function(rootName, path, matchers, reverseMatchers){
-		var contextVar = node_createValueStructureVariableInfo(rootName, path);
+		var contextVar = node_createValueStructureVariableRef(rootName, path);
 		var adapter = {
 			getInValueRequest : function(value, handlers, request){
 				return nosliw.runtime.getExpressionService().getMatchDataRequest(value, matchers, handlers, request);
@@ -172,20 +172,15 @@ var node_createValueStructure = function(id, elementInfosArray, request){
 
 	var loc_addValueStructureElement = function(elementInfo, request){
 		//create empty wrapper variable for each element
-		var contextEleVarInfo = loc_createValueStructureElement(elementInfo, request);
+		var valueStructureElement = loc_createValueStructureElement(elementInfo, request);
 
-		if(contextEleVarInfo!=undefined){
-			var contextEle = {
-				name : contextEleVarInfo.name,
-				info : elementInfo.info,
-				variable : contextEleVarInfo.variable
-			};
-			loc_out.prv_eleVariableGroup.addVariable(contextEle.variable, contextEle.path);
-			loc_out.prv_elements[contextEle.name] = contextEle;
+		if(valueStructureElement!=undefined){
+			loc_out.prv_eleVariableGroup.addVariable(valueStructureElement.variable, valueStructureElement.path);
+			loc_out.prv_elements[valueStructureElement.name] = valueStructureElement;
 			
-			var eleVar = contextEle.variable;
+			var eleVar = valueStructureElement.variable;
 			nosliw.logging.info("************************  Named variable creation  ************************");
-			nosliw.logging.info("Name: " + contextEle.name);
+			nosliw.logging.info("Name: " + valueStructureElement.name);
 			nosliw.logging.info("ID: " + eleVar.prv_id);
 			nosliw.logging.info("Wrapper: " + (eleVar.prv_wrapper==undefined?"":eleVar.prv_wrapper.prv_id));
 //					nosliw.logging.info("Parent: " , ((eleVar.prv_getRelativeVariableInfo()==undefined)?"":eleVar.prv_getRelativeVariableInfo().parent.prv_id));
@@ -193,9 +188,12 @@ var node_createValueStructure = function(id, elementInfosArray, request){
 			nosliw.logging.info("***************************************************************");
 			
 			//get all adapters from elementInfo
-			_.each(elementInfo.info.matchers, function(matchers, path){
-				loc_out.prv_adapters[node_dataUtility.combinePath(contextEle.name, path)] = loc_buildAdapterVariableFromMatchers(contextEle.name, path, matchers, elementInfo.info.reverseMatchers[path]);
-			});
+			if(elementInfo.info.matchers!=undefined){
+				var matchersInfo = elementInfo.info.matchers;
+    			_.each(matchersInfo.matchers, function(matchers, path){
+	    			loc_out.prv_adapters[node_dataUtility.combinePath(valueStructureElement.name, path)] = loc_buildAdapterVariableFromMatchers(valueStructureElement.name, path, matchers, matchersInfo.reverseMatchers[path]);
+		    	});
+			}
 
 //			_.each(contextElesInfo.variables, function(contextEleVarInfo, i){
 //			});
@@ -235,7 +233,7 @@ var node_createValueStructure = function(id, elementInfosArray, request){
 		
 		getDataOperationRequest : function(eleName, operationService, handlers, request){
 			var operationPath = operationService.parms.path;
-			var baseVariable = loc_findBaseVariable(node_createValueStructureVariableInfo(eleName, operationPath));
+			var baseVariable = loc_findBaseVariable(node_createValueStructureVariableRef(eleName, operationPath));
 			if(baseVariable!=undefined){
 				if(operationPath!=undefined){
 					operationService.parms.path = baseVariable.path;
@@ -344,7 +342,7 @@ var loc_createValueStructureElement = function(elementInfo, requestInfo){
 	}
 	else if(elementInfo.valueStructure!=undefined){
 		//element by context
-		var eleVariable = elementInfo.valueStructure.createVariable(elementInfo.valueStructureVariable, adapterInfo, requestInfo);
+		var eleVariable = elementInfo.valueStructure.createVariable(elementInfo.valueStructureVariableRef, adapterInfo, requestInfo);
 		//cannot create context element variable
 		if(eleVariable==undefined)   return;
 		loc_out.variable = eleVariable;
@@ -356,6 +354,102 @@ var loc_createValueStructureElement = function(elementInfo, requestInfo){
 	else  loc_out.variable = node_createVariableWrapper(elementInfo.data1, elementInfo.data2, adapterInfo, requestInfo);
 	
 	return loc_out;
+};
+
+var loc_createValueStructureVariable = function(currentValuePortContainer, rootEleDef, pathFromRoot){
+	var out;
+	
+	var eleDef = loc_getElementDefinition(rootEleDef, pathFromRoot);
+	var type = eleDef[node_COMMONATRIBUTECONSTANT.ELEMENTSTRUCTURE_TYPE];
+    if(type==node_COMMONCONSTANT.CONTEXT_ELEMENTTYPE_RELATIVE_FOR_VALUE){
+		var resolveInfo = valueStructureDefRootEle[node_COMMONATRIBUTECONSTANT.ELEMENTSTRUCTURE_RESOLVEDINFO];
+	
+		var parentValueStructureRuntimeId = resolveInfo[node_COMMONATRIBUTECONSTANT.INFORELATIVERESOLVE_STRUCTUREID];
+		var parentValueStructure = currentValuePortContainer.getValueStructure(parentValueStructureRuntimeId);
+							
+		var resolvePathObj = resolveInfo[node_COMMONATRIBUTECONSTANT.INFORELATIVERESOLVE_PATH];
+		var resolveRootName = resolvePathObj[node_COMMONATRIBUTECONSTANT.COMPLEXPATH_ROOT];
+		var resolvePath = resolvePathObj[node_COMMONATRIBUTECONSTANT.COMPLEXPATH_PATH];
+							
+    	var matchers = eleDef[node_COMMONATRIBUTECONSTANT.ELEMENTSTRUCTURE_MATCHERS][""];
+	    var reverseMatchers = eleDef[node_COMMONATRIBUTECONSTANT.ELEMENTSTRUCTURE_REVERSEMATCHERS][""];
+
+		var valueAdapter = {
+			getInValueRequest : function(value, handlers, request){
+				return nosliw.runtime.getExpressionService().getMatchDataRequest(value, matchers, handlers, request);
+			},
+			getOutValueRequest : function(value, handlers, request){
+				return nosliw.runtime.getExpressionService().getMatchDataRequest(value, reverseMatchers, handlers, request);
+			},
+		};
+
+		var out = parentValueStructure.createVariable(
+			node_createValueStructureVariableRef(resolveRootName, resolvePath), 
+			{
+			    valueAdapter : valueAdapter
+		    },
+		    {
+				definition: eleDef
+			},
+		    requestInfo);
+	}
+	else{
+						//not relative or logical relative variable
+						var defaultValue = initValue!=undefined?initValue[rootName]:undefined;  
+						
+						var criteria;
+						if(type==node_COMMONCONSTANT.CONTEXT_ELEMENTTYPE_RELATIVE)	criteria = eleDef[node_COMMONATRIBUTECONSTANT.ELEMENTSTRUCTURE_DEFINITION][node_COMMONATRIBUTECONSTANT.ELEMENTSTRUCTURE_DATA];
+						else  criteria = valueStructureDefRootEle[node_COMMONATRIBUTECONSTANT.ELEMENTSTRUCTURE_DATA]; 
+						if(criteria!=undefined){
+							//app data, if no default, empty variable with wrapper type
+							if(defaultValue!=undefined) 	valueStructureElementInfosArray.push(node_createValueStructureElementInfo(rootName, node_dataUtility.createDataOfAppData(defaultValue), "", info));
+							else  valueStructureElementInfosArray.push(node_createValueStructureElementInfo(rootName, undefined, node_CONSTANT.DATA_TYPE_APPDATA, info));
+						}
+						else{
+							//object, if no default, empty variable with wrapper type
+							if(defaultValue!=undefined)		valueStructureElementInfosArray.push(node_createValueStructureElementInfo(rootName, defaultValue, "", info));
+							else valueStructureElementInfosArray.push(node_createValueStructureElementInfo(rootName, undefined, node_CONSTANT.DATA_TYPE_OBJECT, info));
+						}
+		
+	}
+	
+	
+	
+	
+};
+
+	var loc_createVariableFromContextVariableInfo = function(elementRef, adapterInfo, requestInfo){
+		var baseVar = loc_findBaseVariable(elementRef);
+		if(baseVar==undefined){
+			return;
+//			nosliw.error(contextVariableInfo);
+//			loc_findBaseVariable(contextVariableInfo);
+		}
+		var variable = baseVar.variable.createChildVariable(baseVar.path, adapterInfo, requestInfo); 
+		return variable;
+	};
+	
+	var loc_buildAdapterVariableFromMatchers = function(rootName, path, matchers, reverseMatchers){
+		var contextVar = node_createValueStructureVariableRef(rootName, path);
+		var adapter = {
+			getInValueRequest : function(value, handlers, request){
+				return nosliw.runtime.getExpressionService().getMatchDataRequest(value, matchers, handlers, request);
+			},
+			getOutValueRequest : function(value, handlers, request){
+				return nosliw.runtime.getExpressionService().getMatchDataRequest(value, reverseMatchers, handlers, request);
+			},
+		};
+		var variable = loc_createVariableFromContextVariableInfo(contextVar, {
+			valueAdapter : adapter
+		});
+		return variable;
+	};
+
+
+var loc_getElementDefinition = function(rootEleDef, pathFromRoot){
+	
+	
+	
 };
 
 
@@ -410,7 +504,7 @@ nosliw.registerSetNodeDataEvent("common.interfacedef.getObjectType", function(){
 nosliw.registerSetNodeDataEvent("common.event.createEventObject", function(){node_createEventObject = this.getData();});
 nosliw.registerSetNodeDataEvent("common.event.utility", function(){node_eventUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("variable.context.createContextElement", function(){node_createContextElement = this.getData();});
-nosliw.registerSetNodeDataEvent("valueport.valuestructure.createValueStructureVariableInfo", function(){node_createValueStructureVariableInfo = this.getData();});
+nosliw.registerSetNodeDataEvent("valueport.valuestructure.createValueStructureVariableRef", function(){node_createValueStructureVariableRef = this.getData();});
 nosliw.registerSetNodeDataEvent("variable.variable.createVariable", function(){node_createVariable = this.getData();});
 nosliw.registerSetNodeDataEvent("variable.dataoperation.DataOperationService", function(){node_DataOperationService = this.getData();});
 nosliw.registerSetNodeDataEvent("common.lifecycle.makeObjectWithLifecycle", function(){node_makeObjectWithLifecycle = this.getData();});

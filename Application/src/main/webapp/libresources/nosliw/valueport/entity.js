@@ -10,7 +10,7 @@ var node_COMMONCONSTANT;
 var node_COMMONATRIBUTECONSTANT;
 var node_makeObjectWithType;
 var node_getObjectType;
-var node_createValueStructureVariableInfo;
+var node_createValueStructureVariableRef;
 //*******************************************   Start Node Definition  ************************************** 	
 
 var node_VariableIdValuePair = function(varId, value){
@@ -40,19 +40,19 @@ var node_createValuePortElementInfo = function(elementId, n, p){
 				var index = elementId.indexOf(node_COMMONCONSTANT.SEPERATOR_PATH);
 				if(index!=-1){
 					loc_valueStructureId = elementId.substring(0, index);
-					loc_valueStructureVariableInfo = node_createValueStructureVariableInfo(elementId.substring(index+1));
+					loc_valueStructureVariableInfo = node_createValueStructureVariableRef(elementId.substring(index+1));
 				}
 			}
 			else{
 				//variable id object
 				var rootEleId = elementId[node_COMMONATRIBUTECONSTANT.IDELEMENT_ROOTELEMENTID];
 				loc_valueStructureId = rootEleId[node_COMMONATRIBUTECONSTANT.IDROOTELEMENT_VALUESTRUCTUREID];
-				loc_valueStructureVariableInfo =  node_createValueStructureVariableInfo(rootEleId[node_COMMONATRIBUTECONSTANT.IDROOTELEMENT_ROOTNAME], elementId[node_COMMONATRIBUTECONSTANT.IDELEMENT_ELEMENTPATH]);
+				loc_valueStructureVariableInfo =  node_createValueStructureVariableRef(rootEleId[node_COMMONATRIBUTECONSTANT.IDROOTELEMENT_ROOTNAME], elementId[node_COMMONATRIBUTECONSTANT.IDELEMENT_ELEMENTPATH]);
 			}
 		}
 		else{
 			loc_valueStructureId = elementId;
-			loc_valueStructureVariableInfo =  node_createValueStructureVariableInfo(n, p);
+			loc_valueStructureVariableInfo =  node_createValueStructureVariableRef(n, p);
 		}
 		loc_key = node_namingConvensionUtility.cascadePath(loc_valueStructureId, loc_valueStructureVariableInfo.key);
 	};
@@ -98,7 +98,7 @@ nosliw.registerSetNodeDataEvent("constant.COMMONCONSTANT", function(){node_COMMO
 nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){node_COMMONATRIBUTECONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("common.interfacedef.makeObjectWithType", function(){node_makeObjectWithType = this.getData();});
 nosliw.registerSetNodeDataEvent("common.interfacedef.getObjectType", function(){node_getObjectType = this.getData();});
-nosliw.registerSetNodeDataEvent("valueport.valuestructure.createValueStructureVariableInfo", function(){node_createValueStructureVariableInfo = this.getData();});
+nosliw.registerSetNodeDataEvent("valueport.valuestructure.createValueStructureVariableRef", function(){node_createValueStructureVariableRef = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createValuePortElementInfo", node_createValuePortElementInfo); 

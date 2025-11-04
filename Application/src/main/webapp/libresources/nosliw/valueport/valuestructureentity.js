@@ -21,7 +21,7 @@ var node_createVariableWrapper;
  * 		3. name + parent variable + path + info
  * 		4. name + undefined + value type
  */
-var node_createValueStructureElementInfo = function(name, data1, data2, adapterInfo, info){
+var node_createValueStructureElementInfo = function(name, data1, data2, info){
 	
 	var loc_out = {
 		name : name,
@@ -34,11 +34,11 @@ var node_createValueStructureElementInfo = function(name, data1, data2, adapterI
 	else if(type==node_CONSTANT.TYPEDOBJECT_TYPE_VALUESTRUCTURE){
 		//input is value structure + value structure variable
 		loc_out.valueStructure = data1;
-		loc_out.valueStructureVariable = node_createValueStructureVariableInfo(data2);
+		loc_out.valueStructureVariableRef = node_createValueStructureVariableRef(data2);
 	}
 	else if(type==node_CONSTANT.TYPEDOBJECT_TYPE_EXTENDEDCONTEXT){
 		//input is extended context + context variable
-		var contextVarInfo = node_createValueStructureVariableInfo(data2);
+		var contextVarInfo = node_createValueStructureVariableRef(data2);
 		loc_out.variable = data1.findeVariable(contextVarInfo.name);
 		loc_out.path = contextVarInfo.path;
 	}
@@ -59,7 +59,6 @@ var node_createValueStructureElementInfo = function(name, data1, data2, adapterI
 	}
 	
 	loc_out.info = info==undefined ? {} : info;
-	loc_out.adapterInfo = adapterInfo;
 	return loc_out;
 };
 
@@ -73,7 +72,7 @@ var node_createValueStructureElementInfo = function(name, data1, data2, adapterI
  * 		contextVariable
  * 		string
  */
-var node_createValueStructureVariableInfo = function(n, p){
+var node_createValueStructureVariableRef = function(n, p){
 	var name = n;
 	var path = p;
 	
@@ -120,7 +119,7 @@ var node_createValueStructureVariableInfo = function(n, p){
  * 		variable
  * 		info
  */
-var node_createValueStructureElement = function(elementInfo, requestInfo){
+var node_createValueStructureElementXXXXXXX = function(elementInfo, requestInfo){
 	var loc_out = {
 		info : elementInfo.info,
 	};
@@ -160,7 +159,7 @@ nosliw.registerSetNodeDataEvent("variable.wrapper.createVariableWrapper", functi
 
 //Register Node by Name
 packageObj.createChildNode("createValueStructureElementInfo", node_createValueStructureElementInfo); 
-packageObj.createChildNode("createValueStructureVariableInfo", node_createValueStructureVariableInfo); 
-packageObj.createChildNode("xxxxcreateValueStructureElement", node_createValueStructureElement); 
+packageObj.createChildNode("createValueStructureVariableRef", node_createValueStructureVariableRef); 
+packageObj.createChildNode("xxxxcreateValueStructureElement", node_createValueStructureElementXXXXXXX); 
 
 })(packageObj);

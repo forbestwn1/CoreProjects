@@ -15,7 +15,7 @@ var packageObj = library;
 	var node_getEntityObjectInterface;
 	var node_createValueInVarOperationRequest;
 	var node_ValueInVarOperation;
-	var node_createValueStructureVariableInfo;
+	var node_createValueStructureVariableRef;
 //*******************************************   Start Node Definition  ************************************** 	
 
 var node_ioDataFactory = function(){
@@ -52,7 +52,7 @@ var node_ioDataFactory = function(){
 					dataOpService.parms.path = elePath;
 					var valueStructure = valueContext.getValueStructure(valueStrcutureRuntimeId);
 				
-					out.addRequest(node_createValueInVarOperationRequest(valueStructure, new node_ValueInVarOperation(node_createValueStructureVariableInfo(rootName), dataOpService), {
+					out.addRequest(node_createValueInVarOperationRequest(valueStructure, new node_ValueInVarOperation(node_createValueStructureVariableRef(rootName), dataOpService), {
 						success : function(request, result){
 							if(dataOpService.command==node_CONSTANT.WRAPPER_OPERATION_GET){
 								return result.value;
@@ -89,7 +89,7 @@ nosliw.registerSetNodeDataEvent("iovalue.entity.createDynamicData", function(){n
 nosliw.registerSetNodeDataEvent("complexentity.getEntityObjectInterface", function(){node_getEntityObjectInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("variable.valueinvar.operation.createValueInVarOperationRequest", function(){node_createValueInVarOperationRequest = this.getData();});
 nosliw.registerSetNodeDataEvent("variable.valueinvar.operation.ValueInVarOperation", function(){node_ValueInVarOperation = this.getData();});
-nosliw.registerSetNodeDataEvent("valueport.valuestructure.createValueStructureVariableInfo", function(){node_createValueStructureVariableInfo = this.getData();});
+nosliw.registerSetNodeDataEvent("valueport.valuestructure.createValueStructureVariableRef", function(){node_createValueStructureVariableRef = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("xxxxioDataFactory", node_ioDataFactory); 

@@ -18,7 +18,7 @@ var packageObj = library;
 	var node_createValueInVarOperationRequest;
 	var node_ValueInVarOperation;
 	var node_valueInVarOperationServiceUtility;
-	var node_createValueStructureVariableInfo;
+	var node_createValueStructureVariableRef;
 
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -37,7 +37,7 @@ var node_valueContextUtility = {
 		var valueStructure = valueContext.getValueStructure(valueStrcutureRuntimeId);
 	
 		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-		out.addRequest(node_createValueInVarOperationRequest(valueStructure, new node_ValueInVarOperation(node_createValueStructureVariableInfo(rootName), node_valueInVarOperationServiceUtility.createGetOperationService(elePath)), {
+		out.addRequest(node_createValueInVarOperationRequest(valueStructure, new node_ValueInVarOperation(node_createValueStructureVariableRef(rootName), node_valueInVarOperationServiceUtility.createGetOperationService(elePath)), {
 			success : function(request, result){
 				return result.value;
 			}
@@ -50,7 +50,7 @@ var node_valueContextUtility = {
 		var valueStructure = valueContext.getValueStructure(valueStrcutureRuntimeId);
 	
 		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-		out.addRequest(node_createValueInVarOperationRequest(valueStructure, new node_ValueInVarOperation(node_createValueStructureVariableInfo(rootName), node_valueInVarOperationServiceUtility.createSetOperationService(elePath, value)), {
+		out.addRequest(node_createValueInVarOperationRequest(valueStructure, new node_ValueInVarOperation(node_createValueStructureVariableRef(rootName), node_valueInVarOperationServiceUtility.createSetOperationService(elePath, value)), {
 			success : function(request, result){
 				return result;
 			}
@@ -77,7 +77,7 @@ nosliw.registerSetNodeDataEvent("complexentity.getEntityObjectInterface", functi
 nosliw.registerSetNodeDataEvent("variable.valueinvar.operation.createValueInVarOperationRequest", function(){node_createValueInVarOperationRequest = this.getData();});
 nosliw.registerSetNodeDataEvent("variable.valueinvar.operation.ValueInVarOperation", function(){node_ValueInVarOperation = this.getData();});
 nosliw.registerSetNodeDataEvent("variable.valueinvar.operation.valueInVarOperationServiceUtility", function(){node_valueInVarOperationServiceUtility = this.getData();});
-nosliw.registerSetNodeDataEvent("variable.valuestructure.createValueStructureVariableInfo", function(){node_createValueStructureVariableInfo = this.getData();});
+nosliw.registerSetNodeDataEvent("variable.valuestructure.createValueStructureVariableRef", function(){node_createValueStructureVariableRef = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("valueContextUtility", node_valueContextUtility); 

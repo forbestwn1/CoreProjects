@@ -20,7 +20,6 @@ var node_variableUtility;
 var node_createServiceRequestInfoSequence;
 var node_createServiceRequestInfoSet;
 var node_OrderedContainerElementInfo;
-var node_createVariableWrapper;
 var node_createOrderedContainersInfo;
 var node_createOrderVariableContainer;
 var node_valueInVarOperationServiceUtility;
@@ -37,17 +36,19 @@ var node_createServiceRequestInfoSimple;
  *      2. data + undefined
  *      3. value + value type
  */
-var node_newVariable = function(data1, data2, adapterInfo, requestInfo){
+var node_newVariable = function(data1, data2, adapterInfo, info, requestInfo){
 	//relative to parent : parent + path
 	var loc_relativeVariableInfo;
 	
 	var loc_resourceLifecycleObj = {};
-	loc_resourceLifecycleObj[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT] = function(data1, data2, adapterInfo, requestInfo){
+	loc_resourceLifecycleObj[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT] = function(data1, data2, adapterInfo, info, requestInfo){
 		//whether this variable is live or destroyed
 		loc_out.prv_isLive = true;
 
 		//every variable has a id, it is for debuging purpose
 		loc_out.prv_id = nosliw.runtime.getIdService().generateId();
+		
+		loc_out.info = info;
 		
 		//adapter that will apply to value of wrapper
 		loc_out.prv_valueAdapter = adapterInfo==undefined ? undefined : adapterInfo.valueAdapter;
@@ -90,7 +91,7 @@ var node_newVariable = function(data1, data2, adapterInfo, requestInfo){
 			loc_relativeVariableInfo = new node_RelativeEntityInfo(data1, data2);
 			
 			//add current variable as child of data1 variable
-			data1.prv_addChildVariable(loc_out, data2, adapterInfo);
+			data1.prv_addChildVariable(loc_out, data2, adapterInfo==undefined&&info==undefined);
 			
 			//build wrapper relationship with parent
 			loc_out.prv_updateWrapperInRelativeVariable();
@@ -198,20 +199,19 @@ var node_newVariable = function(data1, data2, adapterInfo, requestInfo){
 		});
 	};
 
-	
-	var loc_addNormalChildVariable = function(childVar, path){
-		var childVarInfo = new node_ChildVariableInfo(childVar, path, path);
+	var loc_addChildVariable = function(childVar, path, isNormal){
+		var childVarInfo;
+		if(isNormal==true){
+    		childVarInfo = new node_ChildVariableInfo(childVar, path, path);
+		}
+		else{
+    		var id = path+"_"+childVar.prv_id;
+	    	childVarInfo = new node_ChildVariableInfo(childVar, path, id, false);
+		}
 		loc_addChildVariable(loc_out.prv_childrenVariable, childVarInfo);
 		return childVarInfo;
 	};
 
-	var loc_addChildVariableWithAdapter = function(childVar, path){
-		var id = path+"_"+childVar.prv_id;
-		var childVarInfo = new node_ChildVariableInfo(childVar, path, id, false);
-		loc_addChildVariable(loc_out.prv_childrenVariable, childVarInfo);
-		return childVarInfo;
-	};
-	
 	var loc_addChildVariable = function(container, childVarInfo){
 		container[childVarInfo.id] = childVarInfo;
 		childVarInfo.variable.registerLifecycleEventListener(loc_out.prv_lifecycleEventObject, function(event, eventData, request){
@@ -334,15 +334,8 @@ var node_newVariable = function(data1, data2, adapterInfo, requestInfo){
 				if(this.prv_wrapper!=undefined)		this.prv_wrapper.setEventAdapter(eventAdapter);
 			},
 			
-			prv_addChildVariable : function(childVar, path, adapterInfo){
-				var out;
-				if(adapterInfo==undefined){
-					out = loc_addNormalChildVariable(childVar, path);
-				}
-				else{
-					out = loc_addChildVariableWithAdapter(childVar, path);
-				}
-				return out;
+			prv_addChildVariable : function(childVar, path, isNormal){
+				return loc_addChildVariable(childVar, path, isNormal);
 			},
 
 			prv_getBaseVariable : function(){
@@ -375,8 +368,8 @@ var node_newVariable = function(data1, data2, adapterInfo, requestInfo){
 			//     variable : child variable 
 			//     id : key in child container for child variable
 			//		path
-			createChildVariable : function(path, adapterInfo, requestInfo){
-				return nosliw.runtime.getVariableManager().createChildVariable(this, path, adapterInfo);
+			createChildVariable : function(path, adapterInfo, info){
+				return nosliw.runtime.getVariableManager().createChildVariable(this, path, adapterInfo, info);
 			},
 
 			/*
@@ -465,7 +458,7 @@ var node_newVariable = function(data1, data2, adapterInfo, requestInfo){
 	loc_out = node_makeObjectWithType(loc_out, node_CONSTANT.TYPEDOBJECT_TYPE_VARIABLE);
 	loc_out = node_makeObjectWithId(loc_out, nosliw.generateId());
 	
-	node_getLifecycleInterface(loc_out).init(data1, data2, adapterInfo, requestInfo);
+	node_getLifecycleInterface(loc_out).init(data1, data2, adapterInfo, info, requestInfo);
 	return loc_out;
 };
 
@@ -498,7 +491,6 @@ nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequenc
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSet", function(){node_createServiceRequestInfoSet = this.getData();});
 nosliw.registerSetNodeDataEvent("variable.valueinvar.utility", function(){node_dataUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("variable.variable.OrderedContainerElementInfo", function(){node_OrderedContainerElementInfo = this.getData();});
-nosliw.registerSetNodeDataEvent("variable.wrapper.createVariableWrapper", function(){node_createVariableWrapper = this.getData();});
 nosliw.registerSetNodeDataEvent("variable.variable.createOrderedContainersInfo", function(){node_createOrderedContainersInfo = this.getData();});
 nosliw.registerSetNodeDataEvent("variable.variable.createOrderVariableContainer", function(){node_createOrderVariableContainer = this.getData();});
 nosliw.registerSetNodeDataEvent("variable.variable.utility", function(){node_variableUtility = this.getData();});

@@ -16,8 +16,8 @@ var node_createVariableManager = function(){
 	//variable usage
 	var loc_varUsage = {};
 
-	var loc_newVariable = function(data1, data2, adapterInfo){
-		var variable = node_newVariable(data1, data2, adapterInfo);
+	var loc_newVariable = function(data1, data2, adapterInfo, info){
+		var variable = node_newVariable(data1, data2, adapterInfo, info);
 		loc_variables[variable.prv_id] = variable;
 		loc_varUsage[variable.prv_id] = 0;
 		return variable;
@@ -48,27 +48,27 @@ var node_createVariableManager = function(){
 			};	
 		},
 		
-		createVariable : function(data1, data2, adapterInfo){
+		createVariable : function(data1, data2, adapterInfo, info){
 			var data1Type = node_getObjectType(data1);
 			if(data1Type==node_CONSTANT.TYPEDOBJECT_TYPE_VARIABLE){
 				//if data1 is variable, then use crete child variable 
-				return this.createChildVariable(data1, data2, adapterInfo);
+				return this.createChildVariable(data1, data2, adapterInfo, info);
 			}
 			else{
-				return loc_newVariable(data1, data2, adapterInfo);
+				return loc_newVariable(data1, data2, adapterInfo, info);
 			}
 		},
 
-		createChildVariable : function(variable, path, adapterInfo){
+		createChildVariable : function(variable, path, adapterInfo, info){
 			var out;
-			if(adapterInfo==undefined){
+			if(adapterInfo==undefined&&info==undefined){
 				//normal child, try to reuse existing one
 				var childVarInfo;
 				if(path==undefined || path=="")  childVarInfo = new node_ChildVariableInfo(variable, "");
 				else childVarInfo = variable.prv_childrenVariable[path];
 				
 				if(childVarInfo==undefined){
-					out = loc_newVariable(variable, path, adapterInfo);
+					out = loc_newVariable(variable, path, adapterInfo, info);
 				}
 				else{
 					out = childVarInfo.variable;
@@ -76,7 +76,7 @@ var node_createVariableManager = function(){
 			}
 			else{
 				//child with extra info
-				out = loc_newVariable(variable, path, adapterInfo);
+				out = loc_newVariable(variable, path, adapterInfo, info);
 			}
 			return out;
 		},
