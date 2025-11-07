@@ -15,18 +15,39 @@
 					"groupType" : "public",
 					"valueStructure" : {
 						"root": {
+							"parent_public_map": {
+		                        "status": "disabled1",
+								"definition":{
+									"data": "test.map;1.0.0%%||stringAttr:test.string;1.0.0,urlAttr:test.url;1.0.0||%%"
+								}
+							},
 							"parent_public_string": {
+		                        "status": "disabled",
 								"definition":{
 									"data": "test.string;1.0.0"
 								}
 							},
 							"parent_public_url": {
+		                        "status": "disabled",
 								"definition":{
 									"data": "test.url;1.0.0"
 								}
 							}
 						},
 						"initValue": {
+							"parent_public_map": {
+								"dataTypeId": "test.map;1.0.0",
+								"value": {
+								    "stringAttr": {
+										"dataTypeId": "test.string;1.0.0",
+										"value": "default value of parent_public_map.stringAttr"
+								    },
+								    "urlAttr": {
+										"dataTypeId": "test.url;1.0.0",
+										"value": "default value of parent_public_map.urlAttr"
+								    }
+								}
+							},
 							"parent_public_string": {
 								"dataTypeId": "test.string;1.0.0",
 								"value": "default value of parent_public_string"
@@ -57,7 +78,7 @@
 				"script": "complexscript_debug_variablelocalbyname",
 				"parm" : {
 					"variable1" : ["child_public", "child_public_string", "parent_protected", "parent_private", "parent_internal"],
-					"variable" : ["child_public_url_link", "child_public_string_link", "parent_public_string"]
+					"variable" : ["child_public_string_link_map_string", "parent_public_map"]
 				},
 				"valueContext" : {
 					"brick": [
@@ -65,8 +86,16 @@
 							"groupType" : "public",
 							"valueStructure" : {
 								"root" : {
-									"child_public_url_link": {
+									"child_public_string_link_map_string": {
 				                        "status": "disabled1",
+										"definition":{
+											"link": {
+                								"elementPath": "parent_public_map.stringAttr"
+											}
+										}
+									},
+									"child_public_string_link_url": {
+				                        "status": "disabled",
 										"definition":{
 											"link": {
                 								"elementPath": "parent_public_url"
@@ -77,7 +106,7 @@
 										}
 									},
 									"child_public_string_link": {
-				                        "status": "disabled1",
+				                        "status": "disabled",
 										"definition":{
 											"link": {
                 								"elementPath": "parent_public_string"
@@ -85,6 +114,7 @@
 										}
 									},
 									"child_public_string": {
+				                        "status": "disabled",
 										"definition":{
 											"data": "test.string;1.0.0"
 										}

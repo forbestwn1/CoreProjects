@@ -4,6 +4,7 @@ import java.util.Map;
 
 import org.json.JSONObject;
 
+import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.path.HAPComplexPath;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPUtilityBasic;
@@ -12,9 +13,11 @@ import com.nosliw.common.utils.HAPUtilityBasic;
 public class HAPReferenceElement extends HAPReferenceRootElement{
 
 	//path to element (no root name)
+	@HAPAttribute
 	public static final String LEAFPATH = "leafPath";
 
 	//root + leaf path
+	@HAPAttribute
 	public static final String ELEMENTPATH = "elementPath";
 
 	private String m_elementPath;

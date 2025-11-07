@@ -189,7 +189,6 @@ public class HAPConstantShared {
 		public static final String CONTEXT_ELEMENTTYPE_VALUE = "value";
 		public static final String CONTEXT_ELEMENTTYPE_CONSTANT = "constant";
 		public static final String CONTEXT_ELEMENTTYPE_CONSTANTREF = "constantReference";
-		public static final String CONTEXT_ELEMENTTYPE_NODE = "node";
 		public static final String CONTEXT_ELEMENTTYPE_UNKNOW = "unknow";
 		public static final String CONTEXT_ELEMENTTYPE_PROVIDE = "provide";
 		public static final String CONTEXT_ELEMENTTYPE_RUNTIME = "runtime";

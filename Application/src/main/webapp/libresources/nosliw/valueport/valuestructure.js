@@ -379,8 +379,8 @@ var loc_createValueStructureVariable = function(currentValuePortContainer, value
 		var parentValueStructure = currentValuePortContainer.getValueStructure(parentValueStructureRuntimeId);
 							
 		var resolvePathObj = resolveInfo[node_COMMONATRIBUTECONSTANT.INFORELATIVERESOLVE_PATH];
-		var resolveRootName = resolvePathObj[node_COMMONATRIBUTECONSTANT.COMPLEXPATH_ROOT];
-		var resolvePath = resolvePathObj[node_COMMONATRIBUTECONSTANT.COMPLEXPATH_PATH];
+		var resolveRootName = eleDef[node_COMMONATRIBUTECONSTANT.ELEMENTSTRUCTURE_LINK][node_COMMONATRIBUTECONSTANT.REFERENCEROOTELEMENT_ROOTNAME]; 
+		var resolvePath = eleDef[node_COMMONATRIBUTECONSTANT.ELEMENTSTRUCTURE_LINK][node_COMMONATRIBUTECONSTANT.REFERENCEROOTELEMENT_LEAFPATH];
 							
 		var valueAdapter;
     	var matchers = eleDef[node_COMMONATRIBUTECONSTANT.ELEMENTSTRUCTURE_MATCHERS]==undefined? undefined : eleDef[node_COMMONATRIBUTECONSTANT.ELEMENTSTRUCTURE_MATCHERS][""];

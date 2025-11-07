@@ -72,8 +72,8 @@ public class HAPInfoRelativeResolve extends HAPSerializableImp{
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		jsonMap.put(STRUCTUREID, this.m_structureId);
 		jsonMap.put(PATH, this.m_path.toStringValue(HAPSerializationFormat.JSON));
-		if(this.m_path!=null) {
-			jsonMap.put(REMAINPATH, this.m_path.toString());
+		if(this.m_remainPath!=null) {
+			jsonMap.put(REMAINPATH, this.m_remainPath.toString());
 		}
 		jsonMap.put(SOLIDELEMENT, this.m_solidElement.toStringValue(HAPSerializationFormat.JSON));
 	}
