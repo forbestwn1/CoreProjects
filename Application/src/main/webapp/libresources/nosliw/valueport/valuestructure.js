@@ -5,6 +5,7 @@ var packageObj = library.getChildPackage("valuestructure");
 //get used node
 var node_CONSTANT;
 var node_COMMONCONSTANT;
+var node_COMMONATRIBUTECONSTANT;
 var node_makeObjectWithType;
 var node_getObjectType;
 var node_createEventObject;
@@ -28,15 +29,29 @@ var node_valueInVarOperationServiceUtility;
 var node_ValueInVarOperation;
 var node_createRequestEventGroupHandler;
 var node_createEmptyValue;
+var node_createValueStructureElementInfo;
 
 //*******************************************   Start Node Definition  ************************************** 	
 /*
  * elementInfosArray : an array of element info describing value structure element
  * 
  */
-var node_createValueStructure = function(id, elementInfosArray, request){
+var node_createValueStructure = function(id, valuePortContainer, request){
 	
 	var loc_updateRequest = {};
+	
+	var loc_valuePortContainer = valuePortContainer;
+	
+	var loc_init = function(id){
+    	//id, for debug purpose
+	    loc_out.prv_id = id;
+		//context elements (wrapper variables)
+		loc_out.prv_elements = {};
+		//object used as event object
+		loc_out.prv_eventObject = node_createEventObject();
+		//adapter variables by path
+		loc_out.prv_adapters = {};
+	}
 	
 	//according to contextVariableInfo, find the base variable from Context
 	//base variable contains two info: 1. variable,  2. path from variable
@@ -137,15 +152,7 @@ var node_createValueStructure = function(id, elementInfosArray, request){
 		loc_out.prv_eventObject.clearup();
 	};
 	
-	loc_resourceLifecycleObj[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT] = function(id, elementInfosArray, request){
-		//id, for debug purpose
-		loc_out.prv_id = id;
-		//context elements (wrapper variables)
-		loc_out.prv_elements = {};
-		//object used as event object
-		loc_out.prv_eventObject = node_createEventObject();
-		//adapter variables by path
-		loc_out.prv_adapters = {};
+	loc_resourceLifecycleObj[node_CONSTANT.LIFECYCLE_RESOURCE_EVENT_INIT] = function(elementInfosArray, request){
 		
 		loc_out.prv_valueChangeEventEnable = false;
 		loc_out.prv_valueChangeEventSource = node_createEventObject();
@@ -162,8 +169,7 @@ var node_createValueStructure = function(id, elementInfosArray, request){
 				}
 			}
 		});
-		
-		//process refer to parent first
+				
 		_.each(elementInfosArray, function(elementInfo, key){
 			loc_addValueStructureElement(elementInfo, request);
 		});
@@ -172,7 +178,7 @@ var node_createValueStructure = function(id, elementInfosArray, request){
 
 	var loc_addValueStructureElement = function(elementInfo, request){
 		//create empty wrapper variable for each element
-		var valueStructureElement = loc_createValueStructureElement(elementInfo, request);
+		var valueStructureElement = loc_createValueStructureElement(elementInfo, loc_valuePortContainer, request);
 
 		if(valueStructureElement!=undefined){
 			loc_out.prv_eleVariableGroup.addVariable(valueStructureElement.variable, valueStructureElement.path);
@@ -186,7 +192,8 @@ var node_createValueStructure = function(id, elementInfosArray, request){
 //					nosliw.logging.info("Parent: " , ((eleVar.prv_getRelativeVariableInfo()==undefined)?"":eleVar.prv_getRelativeVariableInfo().parent.prv_id));
 //					nosliw.logging.info("ParentPath: " , ((eleVar.prv_getRelativeVariableInfo()==undefined)?"":eleVar.prv_getRelativeVariableInfo().path)); 
 			nosliw.logging.info("***************************************************************");
-			
+
+/*			
 			//get all adapters from elementInfo
 			if(elementInfo.info.matchers!=undefined){
 				var matchersInfo = elementInfo.info.matchers;
@@ -194,7 +201,7 @@ var node_createValueStructure = function(id, elementInfosArray, request){
 	    			loc_out.prv_adapters[node_dataUtility.combinePath(valueStructureElement.name, path)] = loc_buildAdapterVariableFromMatchers(valueStructureElement.name, path, matchers, matchersInfo.reverseMatchers[path]);
 		    	});
 			}
-
+*/
 //			_.each(contextElesInfo.variables, function(contextEleVarInfo, i){
 //			});
 			
@@ -312,12 +319,12 @@ var node_createValueStructure = function(id, elementInfosArray, request){
 		
 	};
 
+    loc_init(id);
+
 	//append resource life cycle method to out obj
 	loc_out = node_makeObjectWithLifecycle(loc_out, loc_resourceLifecycleObj, loc_out);
 	
 	loc_out = node_makeObjectWithType(loc_out, node_CONSTANT.TYPEDOBJECT_TYPE_VALUESTRUCTURE);
-	
-	node_getLifecycleInterface(loc_out).init(id, elementInfosArray, request);
 	
 	return loc_out;
 };
@@ -329,7 +336,7 @@ var node_createValueStructure = function(id, elementInfosArray, request){
  * 		variable
  * 		info
  */
-var loc_createValueStructureElement = function(elementInfo, requestInfo){
+var loc_createValueStructureElement = function(elementInfo, valuePortContainer, requestInfo){
 	var loc_out = {
 		name : elementInfo.name,
 		info : elementInfo.info,
@@ -339,6 +346,9 @@ var loc_createValueStructureElement = function(elementInfo, requestInfo){
 	//get variable
 	if(elementInfo.placeholder==true){
 		loc_out.variable= node_createVariableWrapper(node_createEmptyValue(), undefined, adapterInfo, requestInfo);
+	}
+	else if(elementInfo.valueStructureElementDefinition!=undefined){
+		loc_out.variable = loc_createValueStructureVariable(valuePortContainer, elementInfo.valueStructureElementDefinition);
 	}
 	else if(elementInfo.valueStructure!=undefined){
 		//element by context
@@ -356,13 +366,14 @@ var loc_createValueStructureElement = function(elementInfo, requestInfo){
 	return loc_out;
 };
 
-var loc_createValueStructureVariable = function(currentValuePortContainer, rootEleDef, pathFromRoot){
-	var out;
-	
-	var eleDef = loc_getElementDefinition(rootEleDef, pathFromRoot);
+var loc_createValueStructureVariable = function(currentValuePortContainer, valueStructureEleDef){
+	var eleDef = valueStructureEleDef.getDefinition();
+	var variableInfo = {
+		definition: eleDef
+	};
 	var type = eleDef[node_COMMONATRIBUTECONSTANT.ELEMENTSTRUCTURE_TYPE];
     if(type==node_COMMONCONSTANT.CONTEXT_ELEMENTTYPE_RELATIVE_FOR_VALUE){
-		var resolveInfo = valueStructureDefRootEle[node_COMMONATRIBUTECONSTANT.ELEMENTSTRUCTURE_RESOLVEDINFO];
+		var resolveInfo = eleDef[node_COMMONATRIBUTECONSTANT.ELEMENTSTRUCTURE_RESOLVEDINFO];
 	
 		var parentValueStructureRuntimeId = resolveInfo[node_COMMONATRIBUTECONSTANT.INFORELATIVERESOLVE_STRUCTUREID];
 		var parentValueStructure = currentValuePortContainer.getValueStructure(parentValueStructureRuntimeId);
@@ -371,50 +382,48 @@ var loc_createValueStructureVariable = function(currentValuePortContainer, rootE
 		var resolveRootName = resolvePathObj[node_COMMONATRIBUTECONSTANT.COMPLEXPATH_ROOT];
 		var resolvePath = resolvePathObj[node_COMMONATRIBUTECONSTANT.COMPLEXPATH_PATH];
 							
-    	var matchers = eleDef[node_COMMONATRIBUTECONSTANT.ELEMENTSTRUCTURE_MATCHERS][""];
-	    var reverseMatchers = eleDef[node_COMMONATRIBUTECONSTANT.ELEMENTSTRUCTURE_REVERSEMATCHERS][""];
+		var valueAdapter;
+    	var matchers = eleDef[node_COMMONATRIBUTECONSTANT.ELEMENTSTRUCTURE_MATCHERS]==undefined? undefined : eleDef[node_COMMONATRIBUTECONSTANT.ELEMENTSTRUCTURE_MATCHERS][""];
+    	if(matchers!=undefined){
+    	    var reverseMatchers = eleDef[node_COMMONATRIBUTECONSTANT.ELEMENTSTRUCTURE_REVERSEMATCHERS]==undefined? undefined : eleDef[node_COMMONATRIBUTECONSTANT.ELEMENTSTRUCTURE_REVERSEMATCHERS][""];
+    		valueAdapter = {
+	    		getInValueRequest : function(value, handlers, request){
+		    		return nosliw.runtime.getExpressionService().getMatchDataRequest(value, matchers, handlers, request);
+			    },
+    			getOutValueRequest : function(value, handlers, request){
+	    			return nosliw.runtime.getExpressionService().getMatchDataRequest(value, reverseMatchers, handlers, request);
+		    	},
+    		};
+		}
 
-		var valueAdapter = {
-			getInValueRequest : function(value, handlers, request){
-				return nosliw.runtime.getExpressionService().getMatchDataRequest(value, matchers, handlers, request);
-			},
-			getOutValueRequest : function(value, handlers, request){
-				return nosliw.runtime.getExpressionService().getMatchDataRequest(value, reverseMatchers, handlers, request);
-			},
-		};
-
-		var out = parentValueStructure.createVariable(
+		return parentValueStructure.createVariable(
 			node_createValueStructureVariableRef(resolveRootName, resolvePath), 
 			{
 			    valueAdapter : valueAdapter
 		    },
-		    {
-				definition: eleDef
-			},
-		    requestInfo);
+		    variableInfo);
 	}
 	else{
-						//not relative or logical relative variable
-						var defaultValue = initValue!=undefined?initValue[rootName]:undefined;  
-						
-						var criteria;
-						if(type==node_COMMONCONSTANT.CONTEXT_ELEMENTTYPE_RELATIVE)	criteria = eleDef[node_COMMONATRIBUTECONSTANT.ELEMENTSTRUCTURE_DEFINITION][node_COMMONATRIBUTECONSTANT.ELEMENTSTRUCTURE_DATA];
-						else  criteria = valueStructureDefRootEle[node_COMMONATRIBUTECONSTANT.ELEMENTSTRUCTURE_DATA]; 
-						if(criteria!=undefined){
-							//app data, if no default, empty variable with wrapper type
-							if(defaultValue!=undefined) 	valueStructureElementInfosArray.push(node_createValueStructureElementInfo(rootName, node_dataUtility.createDataOfAppData(defaultValue), "", info));
-							else  valueStructureElementInfosArray.push(node_createValueStructureElementInfo(rootName, undefined, node_CONSTANT.DATA_TYPE_APPDATA, info));
-						}
-						else{
-							//object, if no default, empty variable with wrapper type
-							if(defaultValue!=undefined)		valueStructureElementInfosArray.push(node_createValueStructureElementInfo(rootName, defaultValue, "", info));
-							else valueStructureElementInfosArray.push(node_createValueStructureElementInfo(rootName, undefined, node_CONSTANT.DATA_TYPE_OBJECT, info));
-						}
+		var elementInfo;
 		
+		//not relative or logical relative variable
+		var defaultValue = valueStructureEleDef.getInitValue();  
+			
+		var criteria;
+		if(type==node_COMMONCONSTANT.CONTEXT_ELEMENTTYPE_RELATIVE)	criteria = eleDef[node_COMMONATRIBUTECONSTANT.ELEMENTSTRUCTURE_DEFINITION][node_COMMONATRIBUTECONSTANT.ELEMENTSTRUCTURE_DATA];
+		else  criteria = eleDef[node_COMMONATRIBUTECONSTANT.ELEMENTSTRUCTURE_DATA]; 
+		if(criteria!=undefined){
+			//app data, if no default, empty variable with wrapper type
+			if(defaultValue!=undefined) 	elementInfo = node_createValueStructureElementInfo(undefined, node_dataUtility.createDataOfAppData(defaultValue), "");
+			else  elementInfo = node_createValueStructureElementInfo(undefined, undefined, node_CONSTANT.DATA_TYPE_APPDATA);
+		}
+		else{
+			//object, if no default, empty variable with wrapper type
+			if(defaultValue!=undefined)		elementInfo = node_createValueStructureElementInfo(undefined, defaultValue, "");
+			else elementInfo = node_createValueStructureElementInfo(undefined, undefined, node_CONSTANT.DATA_TYPE_OBJECT);
+		}
+		return loc_createValueStructureElement(elementInfo, currentValuePortContainer).variable;
 	}
-	
-	
-	
 	
 };
 
@@ -444,13 +453,6 @@ var loc_createValueStructureVariable = function(currentValuePortContainer, rootE
 		});
 		return variable;
 	};
-
-
-var loc_getElementDefinition = function(rootEleDef, pathFromRoot){
-	
-	
-	
-};
 
 
 var loc_createVariableGroup = function(variablesArray, handler, thisContext){
@@ -499,6 +501,7 @@ var loc_createVariableGroup = function(variablesArray, handler, thisContext){
 //populate dependency node data
 nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("constant.COMMONCONSTANT", function(){node_COMMONCONSTANT = this.getData();});
+nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){node_COMMONATRIBUTECONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("common.interfacedef.makeObjectWithType", function(){node_makeObjectWithType = this.getData();});
 nosliw.registerSetNodeDataEvent("common.interfacedef.getObjectType", function(){node_getObjectType = this.getData();});
 nosliw.registerSetNodeDataEvent("common.event.createEventObject", function(){node_createEventObject = this.getData();});
@@ -522,6 +525,7 @@ nosliw.registerSetNodeDataEvent("variable.valueinvar.operation.valueInVarOperati
 nosliw.registerSetNodeDataEvent("variable.valueinvar.operation.ValueInVarOperation", function(){node_ValueInVarOperation = this.getData();});
 nosliw.registerSetNodeDataEvent("request.event.createRequestEventGroupHandler", function(){node_createRequestEventGroupHandler = this.getData();});
 nosliw.registerSetNodeDataEvent("common.empty.createEmptyValue", function(){node_createEmptyValue = this.getData();});
+nosliw.registerSetNodeDataEvent("valueport.valuestructure.createValueStructureElementInfo", function(){node_createValueStructureElementInfo = this.getData();});
 
 
 //Register Node by Name

@@ -14,6 +14,24 @@ var node_createVariableWrapper;
 
 //*******************************************   Start Node Definition  ************************************** 	
 
+var node_createValueStructureElementDefinition = function(definition, initValue){
+	
+	var loc_definition = definition;
+	var loc_initValue = initValue;
+	
+	var loc_out = {
+		
+		getDefinition : function(){   return loc_definition;    },
+		
+		getInitValue : function(){   return loc_initValue;   }
+		
+	};
+	
+	loc_out = node_makeObjectWithType(loc_out, node_CONSTANT.TYPEDOBJECT_TYPE_VALUESTRUCTUREELEMENTDEFINITION);
+	return loc_out;
+	
+};
+
 /*
  * object to describe value structure element info:
  * 		1. name + parent value structure + value structure Variable + info
@@ -30,6 +48,9 @@ var node_createValueStructureElementInfo = function(name, data1, data2, info){
 	var type = node_getObjectType(data1);
 	if(type==node_CONSTANT.TYPEDOBJECT_TYPE_EMPTY){
 		loc_out.placeholder = true;
+	}
+	else if(type==node_CONSTANT.TYPEDOBJECT_TYPE_VALUESTRUCTUREELEMENTDEFINITION){
+		loc_out.valueStructureElementDefinition = data1;
 	}
 	else if(type==node_CONSTANT.TYPEDOBJECT_TYPE_VALUESTRUCTURE){
 		//input is value structure + value structure variable
@@ -158,6 +179,7 @@ nosliw.registerSetNodeDataEvent("common.interfacedef.getObjectType", function(){
 nosliw.registerSetNodeDataEvent("variable.wrapper.createVariableWrapper", function(){node_createVariableWrapper = this.getData();});
 
 //Register Node by Name
+packageObj.createChildNode("createValueStructureElementDefinition", node_createValueStructureElementDefinition); 
 packageObj.createChildNode("createValueStructureElementInfo", node_createValueStructureElementInfo); 
 packageObj.createChildNode("createValueStructureVariableRef", node_createValueStructureVariableRef); 
 packageObj.createChildNode("xxxxcreateValueStructureElement", node_createValueStructureElementXXXXXXX); 

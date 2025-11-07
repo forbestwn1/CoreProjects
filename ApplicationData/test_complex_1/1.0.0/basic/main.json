@@ -15,15 +15,6 @@
 					"groupType" : "public",
 					"valueStructure" : {
 						"root": {
-    					    "complex" : {
-	    				        "definition": {
-		    			            "child": {
-			    		                "a" : {
-				    	                    "data" : "test.string;1.0.0"
-					                    }
-					                }
-					            }
-					        },
 							"parent_public_string": {
 								"definition":{
 									"data": "test.string;1.0.0"
@@ -36,12 +27,6 @@
 							}
 						},
 						"initValue": {
-    						"complex": {
-	    					    "a" : {
-    	    						"dataTypeId": "test.string;1.0.0",
-	    	    					"value": "default value of complex.a"
-				    		    }
-					    	},
 							"parent_public_string": {
 								"dataTypeId": "test.string;1.0.0",
 								"value": "default value of parent_public_string"
@@ -72,7 +57,7 @@
 				"script": "complexscript_debug_variablelocalbyname",
 				"parm" : {
 					"variable1" : ["child_public", "child_public_string", "parent_protected", "parent_private", "parent_internal"],
-					"variable" : ["parent_public_url", "child_public_string_link"]
+					"variable" : ["child_public_url_link", "child_public_string_link", "parent_public_string"]
 				},
 				"valueContext" : {
 					"brick": [
@@ -80,7 +65,8 @@
 							"groupType" : "public",
 							"valueStructure" : {
 								"root" : {
-									"child_public_string_link": {
+									"child_public_url_link": {
+				                        "status": "disabled1",
 										"definition":{
 											"link": {
                 								"elementPath": "parent_public_url"
@@ -88,6 +74,14 @@
 										    "definition":{
 											    "data": "test.string;1.0.0"
 										    }
+										}
+									},
+									"child_public_string_link": {
+				                        "status": "disabled1",
+										"definition":{
+											"link": {
+                								"elementPath": "parent_public_string"
+											}
 										}
 									},
 									"child_public_string": {
@@ -151,12 +145,6 @@
 							}
 						},
 						"initValue": {
-    						"complex": {
-	    					    "a" : {
-    	    						"dataTypeId": "test.string;1.0.0",
-	    	    					"value": "default value of complex.a"
-				    		    }
-					    	},
 							"parent_public": {
 								"dataTypeId": "test.string;1.0.0",
 								"value": "default value of parent_public"

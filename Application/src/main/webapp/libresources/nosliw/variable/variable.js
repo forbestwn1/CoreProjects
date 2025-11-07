@@ -208,11 +208,21 @@ var node_newVariable = function(data1, data2, adapterInfo, info, requestInfo){
     		var id = path+"_"+childVar.prv_id;
 	    	childVarInfo = new node_ChildVariableInfo(childVar, path, id, false);
 		}
-		loc_addChildVariable(loc_out.prv_childrenVariable, childVarInfo);
+		
+		loc_out.prv_childrenVariable[childVarInfo.id] = childVarInfo;
+		childVarInfo.variable.registerLifecycleEventListener(loc_out.prv_lifecycleEventObject, function(event, eventData, request){
+			if(event==node_CONSTANT.WRAPPER_EVENT_CLEARUP_BEFORE){
+				childVarInfo.variable.unregisterLifecycleEventListener(loc_out.prv_lifecycleEventObject);
+				delete container[childVarInfo.id];
+			}
+		});
+		
+		
+//		loc_addChildVariable(loc_out.prv_childrenVariable, childVarInfo);
 		return childVarInfo;
 	};
 
-	var loc_addChildVariable = function(container, childVarInfo){
+	var loc_addChildVariableXXXXXXXX = function(container, childVarInfo){
 		container[childVarInfo.id] = childVarInfo;
 		childVarInfo.variable.registerLifecycleEventListener(loc_out.prv_lifecycleEventObject, function(event, eventData, request){
 			if(event==node_CONSTANT.WRAPPER_EVENT_CLEARUP_BEFORE){
@@ -221,6 +231,7 @@ var node_newVariable = function(data1, data2, adapterInfo, info, requestInfo){
 			}
 		});
 	};
+
 	
 	//set new wrapper
 	var loc_setWrapper = function(wrapper, requestInfo){
