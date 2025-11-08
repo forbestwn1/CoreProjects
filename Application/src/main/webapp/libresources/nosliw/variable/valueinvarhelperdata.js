@@ -70,7 +70,7 @@ var node_createDataTypeHelperData = function(){
 							operationParms.push(new node_OperationParm(operationBase.base, "base"));
 							operationParms.push(new node_OperationParm({
 								dataTypeId: "test.string;1.0.0",
-								value : operationBase.path
+								value : operationBase.attribute
 							}, "name"));
 							operationParms.push(new node_OperationParm(operationData.value, "value"));
 
