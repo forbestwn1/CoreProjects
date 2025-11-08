@@ -114,84 +114,6 @@ var loc_createValuePortContainer = function(id, valuePortContainerDef, variableD
 	//value structure id in sequence
 	var loc_valueStructureRuntimeIds = [];
 
-
-	var loc_createSolidValueStructure = function(valueStructureRuntimeId, variableDomainDef, initValue, buildRootEle){
-
-		//build context element first
-		var valueStructureElementInfosArray = [];
-		
-		if(buildRootEle!=false){
-			var valueStructureDefId = variableDomainDef[node_COMMONATRIBUTECONSTANT.DOMAINVALUESTRUCTURE_DEFINITIONBYRUNTIME][valueStructureRuntimeId];
-			var valueStructureDefinitionInfo = variableDomainDef[node_COMMONATRIBUTECONSTANT.DOMAINVALUESTRUCTURE_VALUESTRUCTUREDEFINITION][valueStructureDefId];
-			var roots = valueStructureDefinitionInfo[node_COMMONATRIBUTECONSTANT.STRUCTURE_ROOT];
-								
-			_.each(roots, function(valueStructureDefRootObj, rootName){
-				var valueStructureDefRootEle = valueStructureDefRootObj[node_COMMONATRIBUTECONSTANT.ROOTINSTRUCTURE_DEFINITION];
-				
-				var info = {
-					matchers : {
-    					matchers : valueStructureDefRootEle[node_COMMONATRIBUTECONSTANT.ELEMENTSTRUCTURE_MATCHERS],
-	    				reverseMatchers : valueStructureDefRootEle[node_COMMONATRIBUTECONSTANT.ELEMENTSTRUCTURE_REVERSEMATCHERS]
-					},
-					definition : valueStructureDefRootEle
-				};
-				
-				var type = valueStructureDefRootEle[node_COMMONATRIBUTECONSTANT.ELEMENTSTRUCTURE_TYPE];
-				var valueStructureRootInfo = valueStructureDefRootObj[node_COMMONATRIBUTECONSTANT.ENTITYINFO_INFO];
-				
-				if(valueStructureRootInfo[node_COMMONCONSTANT.UIRESOURCE_CONTEXTINFO_INSTANTIATE]==node_COMMONCONSTANT.UIRESOURCE_CONTEXTINFO_INSTANTIATE_MANUAL){
-					//variable placeholder
-					valueStructureElementInfosArray.push(node_createValueStructureElementInfo(rootName, node_createEmptyValue(), undefined, info));
-				}
-				else{
-					if(type==node_COMMONCONSTANT.CONTEXT_ELEMENTTYPE_RELATIVE_FOR_VALUE && 
-							(valueStructureRootInfo==undefined||valueStructureRootInfo[node_COMMONCONSTANT.UIRESOURCE_CONTEXTINFO_RELATIVECONNECTION]!=node_COMMONCONSTANT.UIRESOURCE_CONTEXTINFO_RELATIVECONNECTION_LOGICAL)){
-						//physical relative
-						{
-							//process relative that  refer to element in parent context
-							
-							var resolveInfo = valueStructureDefRootEle[node_COMMONATRIBUTECONSTANT.ELEMENTSTRUCTURE_RESOLVEDINFO];
-	
-							var parentValueStructureRuntimeId = resolveInfo[node_COMMONATRIBUTECONSTANT.INFORELATIVERESOLVE_STRUCTUREID];
-							var parentValueStructure = loc_parentValuePortContainer.getValueStructure(parentValueStructureRuntimeId);
-							
-							var resolvePathObj = resolveInfo[node_COMMONATRIBUTECONSTANT.INFORELATIVERESOLVE_PATH];
-							var resolveRootName = resolvePathObj[node_COMMONATRIBUTECONSTANT.COMPLEXPATH_ROOT];
-							var resolvePath = resolvePathObj[node_COMMONATRIBUTECONSTANT.COMPLEXPATH_PATH];
-							
-							valueStructureElementInfosArray.push(node_createValueStructureElementInfo(rootName, parentValueStructure, node_createValueStructureVariableRef(resolveRootName, resolvePath), info));
-						}
-					}
-					else{
-						//not relative or logical relative variable
-						var defaultValue = initValue!=undefined?initValue[rootName]:undefined;  
-						
-						var criteria;
-						if(type==node_COMMONCONSTANT.CONTEXT_ELEMENTTYPE_RELATIVE)	criteria = valueStructureDefRootEle[node_COMMONATRIBUTECONSTANT.ELEMENTSTRUCTURE_DEFINITION][node_COMMONATRIBUTECONSTANT.ELEMENTSTRUCTURE_DATA];
-						else  criteria = valueStructureDefRootEle[node_COMMONATRIBUTECONSTANT.ELEMENTSTRUCTURE_DATA]; 
-						if(criteria!=undefined){
-							//app data, if no default, empty variable with wrapper type
-							if(defaultValue!=undefined) 	valueStructureElementInfosArray.push(node_createValueStructureElementInfo(rootName, node_dataUtility.createDataOfAppData(defaultValue), "", info));
-							else  valueStructureElementInfosArray.push(node_createValueStructureElementInfo(rootName, undefined, node_CONSTANT.DATA_TYPE_APPDATA, info));
-						}
-						else{
-							//object, if no default, empty variable with wrapper type
-							if(defaultValue!=undefined)		valueStructureElementInfosArray.push(node_createValueStructureElementInfo(rootName, defaultValue, "", info));
-							else valueStructureElementInfosArray.push(node_createValueStructureElementInfo(rootName, undefined, node_CONSTANT.DATA_TYPE_OBJECT, info));
-						}
-					}
-				}
-			});
-		}
-		
-		var valueStructure = node_createValueStructure(id, loc_out, valueStructureElementInfosArray); 
-		_.each(valueStructureElementInfosArray, function(valueStructureEleInfo){
-			valueStructure.addElement(valueStructureEleInfo);
-		});
-		return valueStructure;
-	};	
-	
-	
 	var loc_init = function(id, valuePortContainerDef, variableDomainDef, parentValuePortContainer, variableMan){
 		loc_id = id;
 		loc_parentValuePortContainer = parentValuePortContainer;
@@ -252,7 +174,6 @@ var loc_createValuePortContainer = function(id, valuePortContainerDef, variableD
 
 						if(initMode == node_COMMONCONSTANT.UIRESOURCE_CONTEXTINFO_INSTANTIATE_AUTO){
 							//build with all variable
-//							var valueStructure = loc_createSolidValueStructure(valueStructureRuntimeId, variableDomainDef, valueStructureRuntimeInitValue);
         					var valueStructure = node_createValueStructure(id, loc_out);
         					belongToValuePort[valueStructureRuntimeId] = loc_createSolidValueStructureWrapper(variableDomainDef[node_COMMONATRIBUTECONSTANT.DOMAINVALUESTRUCTURE_VALUESTRUCTURERUNTIME][valueStructureRuntimeId], valueStructure);
         					

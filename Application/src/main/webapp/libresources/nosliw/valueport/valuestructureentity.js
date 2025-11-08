@@ -133,39 +133,6 @@ var node_createValueStructureVariableRef = function(n, p){
 	return loc_out;
 };
 
-/*
- * create real context element based on element info 
- * it contains following attribute:
- * 		name
- * 		variable
- * 		info
- */
-var node_createValueStructureElementXXXXXXX = function(elementInfo, requestInfo){
-	var loc_out = {
-		info : elementInfo.info,
-	};
-
-	//if have mutiple name, use the first one in array as main variable
-	var adapterInfo = elementInfo.adapterInfo;
-	//get variable
-	if(elementInfo.valueStructure!=undefined){
-		var valueStructure = elementInfo.valueStructure;
-		var valueStructureVar = elementInfo.valueStructureVariable;
-		var eleVariable = valueStructure.createVariable(valueStructureVar, adapterInfo, requestInfo);
-		//cannot create context element variable
-		if(eleVariable==undefined)   return;
-		loc_out.variable = {
-			name : elementInfo.name,
-			variable : eleVariable,
-		};
-	}
-	else if(elementInfo.variable!=undefined)		loc_out.variable = {name:elementInfo.name, variable:node_createVariableWrapper(elementInfo.variable, elementInfo.path, adapterInfo, requestInfo)};
-	else		loc_out.variable = {name:elementInfo.name, variable:node_createVariableWrapper(elementInfo.data1, elementInfo.data2, adapterInfo, requestInfo)};
-	
-	return loc_out;
-};
-
-
 //*******************************************   End Node Definition  ************************************** 	
 
 //populate dependency node data
@@ -182,6 +149,5 @@ nosliw.registerSetNodeDataEvent("variable.wrapper.createVariableWrapper", functi
 packageObj.createChildNode("createValueStructureElementDefinition", node_createValueStructureElementDefinition); 
 packageObj.createChildNode("createValueStructureElementInfo", node_createValueStructureElementInfo); 
 packageObj.createChildNode("createValueStructureVariableRef", node_createValueStructureVariableRef); 
-packageObj.createChildNode("xxxxcreateValueStructureElement", node_createValueStructureElementXXXXXXX); 
 
 })(packageObj);
