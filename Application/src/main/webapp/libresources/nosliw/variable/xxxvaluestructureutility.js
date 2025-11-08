@@ -45,7 +45,7 @@ var node_utility = function(){
 								var pathObj = valueStructureDefRootEle[node_COMMONATRIBUTECONSTANT.ELEMENTSTRUCTURE_RESOLVEDPATH];
 								var rootName = pathObj[node_COMMONATRIBUTECONSTANT.COMPLEXPATH_ROOT];
 								var path = pathObj[node_COMMONATRIBUTECONSTANT.COMPLEXPATH_PATH];
-								valueStructureElementInfosArray.push(node_createValueStructureElementInfo(eleName, parentValueContext, node_createValueStructureVariableRef(rootName, path), undefined, info));
+								valueStructureElementInfosArray.push(node_createValueStructureElementCreateInfo(eleName, parentValueContext, node_createValueStructureVariableRef(rootName, path), undefined, info));
 							}
 						}
 						else{
@@ -89,7 +89,7 @@ var node_utility = function(){
 							var path = pathObj[node_COMMONATRIBUTECONSTANT.COMPLEXPATH_PATH];
 							//only process element that parent is created
 							if(valueStructure.getContextElement(rootName)!=undefined){
-								valueStructure.addContextElement(node_createValueStructureElementInfo(eleName, context, node_createValueStructureVariableRef(rootName, path), undefined, info));
+								valueStructure.addContextElement(node_createValueStructureElementCreateInfo(eleName, context, node_createValueStructureVariableRef(rootName, path), undefined, info));
 							}
 						}
 					}

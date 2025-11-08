@@ -39,11 +39,17 @@ var node_createValueStructureElementDefinition = function(definition, initValue)
  * 		3. name + parent variable + path + info
  * 		4. name + undefined + value type
  */
-var node_createValueStructureElementInfo = function(name, data1, data2, info){
-	
+var node_createValueStructureElementCreateInfo = function(name, data1, data2, adapterInfo, variableInfo){
 	var loc_out = {
 		name : name,
+		variableCreateInfo : node_createVariableCreateInfo(data1, data2, adapterInfo, variableInfo),
 	};
+	return loc_out;
+};
+
+var node_createVariableCreateInfo = function(data1, data2, adapterInfo, variableInfo){
+
+	var loc_out = {	};
 
 	var type = node_getObjectType(data1);
 	if(type==node_CONSTANT.TYPEDOBJECT_TYPE_EMPTY){
@@ -79,7 +85,9 @@ var node_createValueStructureElementInfo = function(name, data1, data2, info){
 		loc_out.data2 = data2;
 	}
 	
-	loc_out.info = info==undefined ? {} : info;
+	loc_out.adapterInfo = adapterInfo;
+	loc_out.variableInfo = variableInfo;
+	
 	return loc_out;
 };
 
@@ -147,7 +155,8 @@ nosliw.registerSetNodeDataEvent("variable.wrapper.createVariableWrapper", functi
 
 //Register Node by Name
 packageObj.createChildNode("createValueStructureElementDefinition", node_createValueStructureElementDefinition); 
-packageObj.createChildNode("createValueStructureElementInfo", node_createValueStructureElementInfo); 
+packageObj.createChildNode("createValueStructureElementCreateInfo", node_createValueStructureElementCreateInfo); 
+packageObj.createChildNode("createVariableCreateInfo", node_createVariableCreateInfo); 
 packageObj.createChildNode("createValueStructureVariableRef", node_createValueStructureVariableRef); 
 
 })(packageObj);

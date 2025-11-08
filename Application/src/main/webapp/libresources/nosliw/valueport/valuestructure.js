@@ -29,7 +29,8 @@ var node_valueInVarOperationServiceUtility;
 var node_ValueInVarOperation;
 var node_createRequestEventGroupHandler;
 var node_createEmptyValue;
-var node_createValueStructureElementInfo;
+var node_createValueStructureElementCreateInfo;
+var node_createVariableCreateInfo;
 
 //*******************************************   Start Node Definition  ************************************** 	
 /*
@@ -234,8 +235,8 @@ var node_createValueStructure = function(id, valuePortContainer, request){
 		/*
 		 * create context variable
 		 */
-		createVariable : function(contextVariableInfo, requestInfo){
-			return loc_createVariableFromContextVariableInfo(contextVariableInfo, requestInfo);
+		createVariable : function(contextVariableInfo, adapterInfo, vairableInfo){
+			return loc_createVariableFromContextVariableInfo(contextVariableInfo);
 		},
 		
 		getDataOperationRequest : function(eleName, operationService, handlers, request){
@@ -336,37 +337,42 @@ var node_createValueStructure = function(id, valuePortContainer, request){
  * 		variable
  * 		info
  */
-var loc_createValueStructureElement = function(elementInfo, valuePortContainer, requestInfo){
+var loc_createValueStructureElement = function(elementCreateInfo, valuePortContainer){
 	var loc_out = {
-		name : elementInfo.name,
-		info : elementInfo.info,
+		name : elementCreateInfo.name,
+		variable : loc_createVariable(elementCreateInfo.variableCreateInfo, valuePortContainer)
 	};
-
-	var adapterInfo = elementInfo.adapterInfo;
-	//get variable
-	if(elementInfo.placeholder==true){
-		loc_out.variable= node_createVariableWrapper(node_createEmptyValue(), undefined, adapterInfo, requestInfo);
-	}
-	else if(elementInfo.valueStructureElementDefinition!=undefined){
-		loc_out.variable = loc_createValueStructureVariable(valuePortContainer, elementInfo.valueStructureElementDefinition);
-	}
-	else if(elementInfo.valueStructure!=undefined){
-		//element by context
-		var eleVariable = elementInfo.valueStructure.createVariable(elementInfo.valueStructureVariableRef, adapterInfo, requestInfo);
-		//cannot create context element variable
-		if(eleVariable==undefined)   return;
-		loc_out.variable = eleVariable;
-	}
-	else if(elementInfo.variable!=undefined){
-		//element by variable
-		loc_out.variable= node_createVariableWrapper(elementInfo.variable, elementInfo.path, adapterInfo, requestInfo);
-	}
-	else  loc_out.variable = node_createVariableWrapper(elementInfo.data1, elementInfo.data2, adapterInfo, requestInfo);
-	
 	return loc_out;
 };
 
-var loc_createValueStructureVariable = function(currentValuePortContainer, valueStructureEleDef){
+
+var loc_createVariable = function(variableCreateInfo, valuePortContainer){
+	var out;
+	var adapterInfo = variableCreateInfo.adapterInfo;
+	var variableInfo = variableCreateInfo.variableInfo;
+	if(variableCreateInfo.placeholder==true){
+		out = node_createVariableWrapper(node_createEmptyValue(), undefined, adapterInfo, variableInfo);
+	}
+	else if(variableCreateInfo.valueStructureElementDefinition!=undefined){
+		out = loc_createValueStructureVariable(valuePortContainer, variableCreateInfo.valueStructureElementDefinition);
+	}
+	else if(variableCreateInfo.valueStructure!=undefined){
+		//element by context
+		var eleVariable = variableCreateInfo.valueStructure.createVariable(variableCreateInfo.valueStructureVariableRef, adapterInfo);
+		//cannot create context element variable
+		if(eleVariable==undefined)   return;
+		out = eleVariable;
+	}
+	else if(variableCreateInfo.variable!=undefined){
+		//element by variable
+		out = node_createVariableWrapper(variableCreateInfo.variable, variableCreateInfo.path, adapterInfo, variableInfo);
+	}
+	else  out = node_createVariableWrapper(variableCreateInfo.data1, variableCreateInfo.data2, adapterInfo, variableInfo);
+	return out;
+};
+
+
+var loc_createValueStructureVariable = function(currentValuePortContainer, valueStructureEleDef, adapterInfo){
 	var eleDef = valueStructureEleDef.getDefinition();
 	var variableInfo = {
 		definition: eleDef
@@ -404,7 +410,7 @@ var loc_createValueStructureVariable = function(currentValuePortContainer, value
 		    variableInfo);
 	}
 	else{
-		var elementInfo;
+		var variableCreateInfo;
 		
 		//not relative or logical relative variable
 		var defaultValue = valueStructureEleDef.getInitValue();  
@@ -414,46 +420,18 @@ var loc_createValueStructureVariable = function(currentValuePortContainer, value
 		else  criteria = eleDef[node_COMMONATRIBUTECONSTANT.ELEMENTSTRUCTURE_DATA]; 
 		if(criteria!=undefined){
 			//app data, if no default, empty variable with wrapper type
-			if(defaultValue!=undefined) 	elementInfo = node_createValueStructureElementInfo(undefined, node_dataUtility.createDataOfAppData(defaultValue), "");
-			else  elementInfo = node_createValueStructureElementInfo(undefined, undefined, node_CONSTANT.DATA_TYPE_APPDATA);
+			if(defaultValue!=undefined) 	variableCreateInfo = node_createVariableCreateInfo(node_dataUtility.createDataOfAppData(defaultValue), "", adapterInfo, variableInfo);
+			else  variableCreateInfo = node_createVariableCreateInfo(undefined, node_CONSTANT.DATA_TYPE_APPDATA, adapterInfo, variableInfo);
 		}
 		else{
 			//object, if no default, empty variable with wrapper type
-			if(defaultValue!=undefined)		elementInfo = node_createValueStructureElementInfo(undefined, defaultValue, "");
-			else elementInfo = node_createValueStructureElementInfo(undefined, undefined, node_CONSTANT.DATA_TYPE_OBJECT);
+			if(defaultValue!=undefined)		variableCreateInfo = node_createVariableCreateInfo(defaultValue, "", adapterInfo, variableInfo);
+			else variableCreateInfo = node_createVariableCreateInfo(undefined, node_CONSTANT.DATA_TYPE_OBJECT, adapterInfo, variableInfo);
 		}
-		return loc_createValueStructureElement(elementInfo, currentValuePortContainer).variable;
+		return loc_createVariable(variableCreateInfo, currentValuePortContainer);
 	}
 	
 };
-
-	var loc_createVariableFromContextVariableInfo = function(elementRef, adapterInfo, requestInfo){
-		var baseVar = loc_findBaseVariable(elementRef);
-		if(baseVar==undefined){
-			return;
-//			nosliw.error(contextVariableInfo);
-//			loc_findBaseVariable(contextVariableInfo);
-		}
-		var variable = baseVar.variable.createChildVariable(baseVar.path, adapterInfo, requestInfo); 
-		return variable;
-	};
-	
-	var loc_buildAdapterVariableFromMatchers = function(rootName, path, matchers, reverseMatchers){
-		var contextVar = node_createValueStructureVariableRef(rootName, path);
-		var adapter = {
-			getInValueRequest : function(value, handlers, request){
-				return nosliw.runtime.getExpressionService().getMatchDataRequest(value, matchers, handlers, request);
-			},
-			getOutValueRequest : function(value, handlers, request){
-				return nosliw.runtime.getExpressionService().getMatchDataRequest(value, reverseMatchers, handlers, request);
-			},
-		};
-		var variable = loc_createVariableFromContextVariableInfo(contextVar, {
-			valueAdapter : adapter
-		});
-		return variable;
-	};
-
 
 var loc_createVariableGroup = function(variablesArray, handler, thisContext){
 
@@ -525,8 +503,8 @@ nosliw.registerSetNodeDataEvent("variable.valueinvar.operation.valueInVarOperati
 nosliw.registerSetNodeDataEvent("variable.valueinvar.operation.ValueInVarOperation", function(){node_ValueInVarOperation = this.getData();});
 nosliw.registerSetNodeDataEvent("request.event.createRequestEventGroupHandler", function(){node_createRequestEventGroupHandler = this.getData();});
 nosliw.registerSetNodeDataEvent("common.empty.createEmptyValue", function(){node_createEmptyValue = this.getData();});
-nosliw.registerSetNodeDataEvent("valueport.valuestructure.createValueStructureElementInfo", function(){node_createValueStructureElementInfo = this.getData();});
-
+nosliw.registerSetNodeDataEvent("valueport.valuestructure.createValueStructureElementCreateInfo", function(){node_createValueStructureElementCreateInfo = this.getData();});
+nosliw.registerSetNodeDataEvent("valueport.valuestructure.createVariableCreateInfo", function(){node_createVariableCreateInfo = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createValueStructure", node_createValueStructure); 

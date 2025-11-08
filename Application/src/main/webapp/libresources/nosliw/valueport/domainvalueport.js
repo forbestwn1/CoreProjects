@@ -13,7 +13,7 @@ var packageObj = library;
 	var node_createVariableManager;
 	var node_createValueStructure;
 	var node_createValueStructureVariableRef;
-	var node_createValueStructureElementInfo;
+	var node_createValueStructureElementCreateInfo;
 	var node_dataUtility;
 	var node_complexEntityUtility;
 	var node_createValuePortElementInfo;
@@ -181,7 +181,7 @@ var loc_createValuePortContainer = function(id, valuePortContainerDef, variableD
 			               _.each(valueStructureDefinitionInfo[node_COMMONATRIBUTECONSTANT.STRUCTURE_ROOT], function(valueStructureDefRootObj, rootName){
 				                var valueStructureDefRootEle = valueStructureDefRootObj[node_COMMONATRIBUTECONSTANT.ROOTINSTRUCTURE_DEFINITION];
         						var initValue = valueStructureRuntimeInitValue!=undefined?valueStructureRuntimeInitValue[rootName]:undefined;
-        						elementInfosArray.push(new node_createValueStructureElementInfo(rootName, node_createValueStructureElementDefinition(valueStructureDefRootEle, initValue)));  
+        						elementInfosArray.push(new node_createValueStructureElementCreateInfo(rootName, node_createValueStructureElementDefinition(valueStructureDefRootEle, initValue)));  
 				           });
                         	node_getLifecycleInterface(valueStructure).init(elementInfosArray);
 						}
@@ -493,7 +493,7 @@ nosliw.registerSetNodeDataEvent("common.interfacedef.makeObjectWithType", functi
 nosliw.registerSetNodeDataEvent("variable.variable.createVariableManager", function(){node_createVariableManager = this.getData();});
 nosliw.registerSetNodeDataEvent("valueport.valuestructure.createValueStructure", function(){node_createValueStructure = this.getData();});
 nosliw.registerSetNodeDataEvent("valueport.valuestructure.createValueStructureVariableRef", function(){node_createValueStructureVariableRef = this.getData();});
-nosliw.registerSetNodeDataEvent("valueport.valuestructure.createValueStructureElementInfo", function(){node_createValueStructureElementInfo = this.getData();});
+nosliw.registerSetNodeDataEvent("valueport.valuestructure.createValueStructureElementCreateInfo", function(){node_createValueStructureElementCreateInfo = this.getData();});
 nosliw.registerSetNodeDataEvent("variable.valueinvar.utility", function(){node_dataUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("complexentity.complexEntityUtility", function(){  node_complexEntityUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("valueport.createValuePortElementInfo", function(){node_createValuePortElementInfo = this.getData();});
