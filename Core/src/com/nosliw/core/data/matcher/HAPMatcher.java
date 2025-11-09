@@ -74,7 +74,17 @@ public class HAPMatcher extends HAPExecutableImp{
 	public boolean isReverse() {   return this.m_reverse;   }
 	
 	public boolean isVoid(){
-		return this.m_relationship.getSource().equals(this.m_relationship.getTarget());
+		boolean out = this.m_relationship.getSource().equals(this.m_relationship.getTarget());
+		if(out) {
+			for(HAPMatchers subMatchers : this.m_subMatchers.values()) {
+				if(!subMatchers.isVoid()) {
+					out = false;
+					break;
+				}
+			}
+		}
+		
+		return out;
 	}
 	
 	public HAPDataTypeId getDataTypeId(){   return this.m_dataTypeId;  }

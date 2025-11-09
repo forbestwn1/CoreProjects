@@ -71,7 +71,7 @@ public class HAPMatcherUtility {
 			
 			Map<String, HAPMatchers> subMatchers = originalMatcher.getSubMatchers();
 			for(String name : subMatchers.keySet()) {
-				matcher.addSubMatchers(name, HAPMatcherUtility.reversMatchers(matchers));
+				matcher.addSubMatchers(name, HAPMatcherUtility.reversMatchers(subMatchers.get(name)));
 			}
 			out.addMatcher(matcher);
 		}
