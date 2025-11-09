@@ -82,6 +82,8 @@ var node_createVariableWrapper = function(data1, data2, adapterInfo, info){
 		
 		prv_getVariable : function(){	return this.prv_variable;	},
 
+        getVariableId : function(){   return this.prv_variable.getVariableId();   },
+
 		setVariable : function(variable){	loc_setVariable(variable);  	},
 		getVariable : function(){	return this.prv_variable;	},
 		

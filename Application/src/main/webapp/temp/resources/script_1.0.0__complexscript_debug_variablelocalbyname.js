@@ -71,7 +71,7 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 
 		var varViewWrapper = $('<div></div>');
 		var varNameView = $('<p>Variable:'+node_basicUtility.stringify(varInfo.reference)+'</p>');
-		var varIdView = $('<p>Id:'+varInfo.variable.prv_id+'</p>');
+		var varIdView = $('<p>Variable Id:'+varInfo.variable.getVariableId()+'</p>');
 		varViewWrapper.append(varNameView);	
 		varViewWrapper.append(varIdView);	
 		

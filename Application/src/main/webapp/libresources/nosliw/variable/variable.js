@@ -373,6 +373,9 @@ var node_newVariable = function(data1, data2, adapterInfo, info, requestInfo){
 			prv_newWrapper : function(){
 				loc_setWrapper(node_wrapperFactory.createWrapper(undefined, loc_out.prv_wrapperType), requestInfo);
 			},
+
+           getVariableId : function(){   return loc_out.prv_id;   },
+
 			
 			//create child variable, if exist, then reuse it
 			//return child variable info : {}

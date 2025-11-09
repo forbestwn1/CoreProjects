@@ -38,7 +38,43 @@ var node_createVariableManager = function(){
 		else return loc_variables[variableId];
 	};
 	
+	var loc_exportVariable = function(variable){
+		var out = {
+			id : variable.prv_id,
+			info : variable.info,
+			children : []
+		};
+		
+		_.each(variable.prv_getChildren(), function(childInfo, id){
+			var child = {
+				path : childInfo.path,
+				variable : loc_exportVariable(childInfo.variable)
+			};
+			out.children.push(child);
+		});
+		
+		return out;
+	};
+	
 	var loc_out = {
+		
+		export : function(){
+			var out = [];
+			
+			//find all root variable
+			var rootVarIds = [];
+			_.each(loc_variables, function(variable, varId){
+				var relativeVarInfo = variable.prv_getRelativeVariableInfo();
+				if(relativeVarInfo==undefined){
+					rootVarIds.push(varId);
+				}
+			});
+			
+			_.each(rootVarIds, function(varId, i){
+				out.push(loc_exportVariable(loc_variables[varId]));
+			});
+			return out;
+		},
 		
 		getVariableInfo : function(id){		
 			return { 

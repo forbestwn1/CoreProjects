@@ -104,14 +104,14 @@ var node_createValueStructure = function(id, valuePortContainer, request){
 		return contextEle.variable;
 	};
 	
-	var loc_createVariableFromContextVariableInfo = function(elementRef, adapterInfo, requestInfo){
+	var loc_createVariableFromContextVariableInfo = function(elementRef, adapterInfo, variableInfo){
 		var baseVar = loc_findBaseVariable(elementRef);
 		if(baseVar==undefined){
 			return;
 //			nosliw.error(contextVariableInfo);
 //			loc_findBaseVariable(contextVariableInfo);
 		}
-		var variable = baseVar.variable.createChildVariable(baseVar.path, adapterInfo, requestInfo); 
+		var variable = baseVar.variable.createChildVariable(baseVar.path, adapterInfo, variableInfo); 
 		return variable;
 	};
 	
@@ -236,7 +236,7 @@ var node_createValueStructure = function(id, valuePortContainer, request){
 		 * create context variable
 		 */
 		createVariable : function(contextVariableInfo, adapterInfo, vairableInfo){
-			return loc_createVariableFromContextVariableInfo(contextVariableInfo);
+			return loc_createVariableFromContextVariableInfo(contextVariableInfo, adapterInfo, vairableInfo);
 		},
 		
 		getDataOperationRequest : function(eleName, operationService, handlers, request){

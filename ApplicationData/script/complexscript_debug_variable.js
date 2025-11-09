@@ -4,7 +4,6 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 	var node_COMMONATRIBUTECONSTANT = nosliw.getNodeData("constant.COMMONATRIBUTECONSTANT");
 	var node_CONSTANT = nosliw.getNodeData("constant.CONSTANT");
 	var node_requestServiceProcessor = nosliw.getNodeData("request.requestServiceProcessor");
-	var node_utilityDebugValuePort = nosliw.getNodeData("valueport.utilityDebugValuePort");
 
 	var loc_configure;
 
@@ -13,6 +12,8 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 	var loc_envInterface = {};
 	
 	var loc_varDomain;
+
+	var loc_variableMan = nosliw.runtime.getVariableManager();
 
 	var loc_init = function(complexEntityDef, valueContextId, bundleCore, configure){
 		loc_configure = configure;
@@ -28,22 +29,25 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 		
 		updateView : function(view){
 			var rootView =  $('<div>' + '</div>');
-			var trigueView = $('<button>Check value port container</button>');
-			var intputView = $('<textarea rows="1" cols="150" style="resize: none; border:solid 1px;" data-role="none" placeholder="input value port container id..."></textarea>');
-			var resultView = $('<textarea rows="5" cols="150" style="resize: none; border:solid 1px;" data-role="none"></textarea>');
+			var trigueView = $('<button>Check variable value</button>');
+			var intputView = $('<textarea rows="1" cols="150" style="resize: none; border:solid 1px;" data-role="none" placeholder="Variable id....."></textarea>');
+			var resultView = $('<textarea rows="5" cols="150" style="resize: none; border:solid 1px;" data-role="none" placeholder="Variable value....."></textarea>');
+			var eventView = $('<textarea rows="5" cols="150" style="resize: none; border:solid 1px;" data-role="none" placeholder="Events..."></textarea>');
 			
 			rootView.append(trigueView);
 			rootView.append(intputView);
 			rootView.append(resultView);
+			rootView.append(eventView);
 			$(view).append(rootView);
 
 			trigueView.click(function() {
-				var valuePortContainerId = intputView.val();
-				var valuePortContainer = loc_varDomain.getValuePortContainer(valuePortContainerId);
-				if(valuePortContainer!=undefined){
-					var request = node_utilityDebugValuePort.getExportValuePortContainerRequest(valuePortContainer, {
-						success : function(request, values){
-							resultView.val(JSON.stringify(values));
+				var variableId = intputView.val();
+				
+				var varInfo = loc_variableMan.getVariableInfo(variableId);
+				if(varInfo!=undefined&&varInfo.variable!=undefined){
+					var request = varInfo.variable.getGetValueRequest({
+						success : function(request, value){
+							resultView.val(JSON.stringify(value));
 						}
 					});
 					node_requestServiceProcessor.processRequest(request);
