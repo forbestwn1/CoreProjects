@@ -178,6 +178,17 @@ var node_utility = function(){
 				out = out.getValue();
 			}
 			return out;
+		},
+		
+		getDataTypeInfoFromValue : function(value){
+			var out;
+			if(value!=undefined && value.dataTypeId!=undefined){
+				out = node_CONSTANT.TYPEDOBJECT_TYPE_DATA;
+			}
+			else{
+				out = node_CONSTANT.DATA_TYPE_OBJECT;
+			}
+			return out;
 		}
 		
 	};	

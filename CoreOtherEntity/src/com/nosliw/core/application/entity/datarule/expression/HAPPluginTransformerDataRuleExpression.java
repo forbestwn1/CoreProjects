@@ -4,9 +4,7 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import com.nosliw.common.interfac.HAPEntityOrReference;
 import com.nosliw.core.application.HAPDomainValueStructure;
-import com.nosliw.core.application.brick.HAPEnumBrickType;
-import com.nosliw.core.application.brick.dataexpression.standalone.HAPBlockDataExpressionStandAlone;
-import com.nosliw.core.application.common.brick.HAPBrickImp;
+import com.nosliw.core.application.brick.dataexpression.standalone.HAPBlockDataExpressionStandAloneImp;
 import com.nosliw.core.application.common.dataexpression.HAPDataExpressionStandAlone;
 import com.nosliw.core.application.common.dataexpression.definition.HAPDefinitionDataExpressionStandAlone;
 import com.nosliw.core.application.common.dataexpression.imp.basic.HAPBasicExpressionData;
@@ -33,8 +31,7 @@ public class HAPPluginTransformerDataRuleExpression implements HAPPluginTransfor
 	public HAPEntityOrReference transformDataRule(HAPDataRule dataRule, HAPDomainValueStructure valueStructureDomian) {
 		HAPDataRuleExpression expressionDataRule = (HAPDataRuleExpression)dataRule;
 
-		HAPBrickImp brick = new HAPBrickImp();
-		brick.setBrickType(HAPEnumBrickType.DATAEXPRESSIONSTANDALONE_100);
+		HAPBlockDataExpressionStandAloneImp brick = new HAPBlockDataExpressionStandAloneImp();
 
 		HAPInteractiveExpression interactive = HAPUtilityDataRule.buildExpressionInterface(expressionDataRule.getDataCriteria());
 		
@@ -44,14 +41,12 @@ public class HAPPluginTransformerDataRuleExpression implements HAPPluginTransfor
 		dataExpressionStandAloneDef.setExpression(expressionDataRule.getExpressionDefinition());		
 		dataExpressionStandAloneDef.setExpressionInteractive(interactive);
 		
-		HAPDataExpressionStandAlone dataExpressionStandAloneExe = new HAPDataExpressionStandAlone();
+		HAPDataExpressionStandAlone dataExpressionStandAloneExe = brick.getValue();
 		dataExpressionStandAloneExe.setExpression(new HAPBasicExpressionData(HAPBasicUtilityProcessorDataExpression.buildBasicOperand(dataExpressionStandAloneDef.getExpression().getOperand())));
 		
 		//interactive request
 		dataExpressionStandAloneExe.setExpressionInteractive(new HAPInteractiveExpression(dataExpressionStandAloneDef.getRequestParms(), dataExpressionStandAloneDef.getResult()));
-		
-		brick.setAttributeValueWithValue(HAPBlockDataExpressionStandAlone.VALUE, dataExpressionStandAloneExe);
-		
+
 		HAPContainerVariableInfo varInfoContainer = new HAPContainerVariableInfo(brick, valueStructureDomian);
 
 		//resolve variable name, build var info container

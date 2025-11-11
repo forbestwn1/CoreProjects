@@ -1,7 +1,6 @@
 package com.nosliw.core.application.division.manual.core;
 
 import java.io.File;
-import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,25 +10,16 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.nosliw.common.interfac.HAPEntityOrReference;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityFile;
 import com.nosliw.core.application.HAPBundle;
-import com.nosliw.core.application.HAPDomainValueStructure;
 import com.nosliw.core.application.HAPIdBrick;
 import com.nosliw.core.application.HAPIdBrickType;
 import com.nosliw.core.application.HAPManagerApplicationBrick;
 import com.nosliw.core.application.HAPPluginDivision;
 import com.nosliw.core.application.HAPWrapperBrickRoot;
-import com.nosliw.core.application.brick.HAPEnumBrickType;
-import com.nosliw.core.application.common.datadefinition.HAPDefinitionDataRule;
 import com.nosliw.core.application.common.dataexpression.definition.HAPParserDataExpression;
-import com.nosliw.core.application.common.structure.HAPElementStructureLeafData;
-import com.nosliw.core.application.common.structure.HAPRootInStructure;
-import com.nosliw.core.application.common.structure.HAPStructure;
-import com.nosliw.core.application.division.manual.brick.container.HAPManualBrickContainer;
-import com.nosliw.core.application.division.manual.brick.wrappertask.HAPManualBlockTaskWrapper;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionBrick;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionContextParse;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionInfoBrickLocation;
@@ -43,13 +33,9 @@ import com.nosliw.core.application.division.manual.core.process.HAPManualPluginP
 import com.nosliw.core.application.division.manual.core.process.HAPManualPluginProcessorBlock;
 import com.nosliw.core.application.division.manual.core.process.HAPManualPluginProcessorBrick;
 import com.nosliw.core.application.division.manual.core.process.HAPManualProcessBrick;
-import com.nosliw.core.application.division.manual.core.process.HAPManualUtilityProcess;
-import com.nosliw.core.application.entity.datarule.HAPDataRule;
-import com.nosliw.core.application.entity.datarule.HAPDataRuleImplementationLocal;
 import com.nosliw.core.application.entity.datarule.HAPManagerDataRule;
+import com.nosliw.core.application.entity.datarule.HAPProcessorRuleInBundle;
 import com.nosliw.core.data.HAPDataTypeHelper;
-import com.nosliw.core.data.criteria.HAPDataTypeCriteria;
-import com.nosliw.core.data.criteria.HAPUtilityCriteria;
 import com.nosliw.core.resource.HAPManagerResource;
 import com.nosliw.core.runtime.HAPRuntimeInfo;
 import com.nosliw.core.runtime.HAPRuntimeManager;
@@ -144,41 +130,9 @@ public class HAPManualManagerBrick implements HAPPluginDivision{
 			HAPManualWrapperBrickRoot rootBrick = (HAPManualWrapperBrickRoot)createRootBrick(entityLocationInfo, new HAPManualContextProcessBrick(out, HAPConstantShared.NAME_ROOTBRICK_MAIN, this, this.m_brickManager, this.m_dataTypeHelper, this.m_resourceMan, runtimeInfo));
 			definitions.put(HAPConstantShared.NAME_ROOTBRICK_MAIN, rootBrick.getDefinition());
 		}
-		
-		//build new branch to host data rule tasks
-		String validationTaskBranchName = "validationRuleTasks";
-		
-		HAPManualBrickContainer containerBrick = (HAPManualBrickContainer)HAPManualUtilityProcess.newRootBrickInstanceWithInit(HAPEnumBrickType.CONTAINER_100, validationTaskBranchName, out, this);
-		
-		HAPDomainValueStructure valueStructureDomain = out.getValueStructureDomain();
-		Map<String, HAPStructure> structures = valueStructureDomain.getValueStructureDefinitions();
-		for(HAPStructure structure : new HashSet<HAPStructure>(structures.values())) {
-			Map<String, HAPRootInStructure> roots = structure.getRoots();
-			for(String rootName : roots.keySet()) {
-				HAPRootInStructure root = roots.get(rootName);
 
-				String eleType = root.getDefinition().getType();
-                if(eleType.equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_DATA)) {
-                	HAPElementStructureLeafData dataEle = (HAPElementStructureLeafData)root.getDefinition();
-                	for(HAPDefinitionDataRule ruleDef : dataEle.getDataDefinition().getRules()) {
-                		HAPDataRule rule = ruleDef.getDataRule();
-                		HAPDataTypeCriteria ruleCriteria = HAPUtilityCriteria.getChildCriteriaByPath(dataEle.getCriteria(), ruleDef.getPath());
-                		rule.setDataCriteria(ruleCriteria);
-                		
-                		HAPManualBlockTaskWrapper taskWrapperBrick = (HAPManualBlockTaskWrapper)newBrickWithInit(HAPEnumBrickType.TASKWRAPPER_100, out); 
-                		String attrName = containerBrick.addElementWithBrickOrReference(taskWrapperBrick);
-                		HAPDataRuleImplementationLocal dataRuleImp = new HAPDataRuleImplementationLocal(validationTaskBranchName + "."+attrName+".taskWrapper");
-                		rule.setImplementation(dataRuleImp);
-
-                		HAPEntityOrReference ruleTaskBrickOrRef = m_dataRuleManager.transformDataRule(rule, valueStructureDomain);
-                		taskWrapperBrick.setTask(ruleTaskBrickOrRef);
-                	}
-                }
-			}
-		}
-		HAPManualWrapperBrickRoot validationRuleTaskBranchRoot = new HAPManualWrapperBrickRoot(containerBrick);
-		validationRuleTaskBranchRoot.setName(validationTaskBranchName);
-		out.addRootBrickWrapper(validationRuleTaskBranchRoot);
+		//process data rule
+		HAPProcessorRuleInBundle.process(out, m_dataRuleManager);
 		
 		out.setExtraData(definitions);
 		

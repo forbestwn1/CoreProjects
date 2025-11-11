@@ -6,6 +6,9 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 	var node_valueInVarOperationServiceUtility = nosliw.getNodeData("variable.valueinvar.operation.valueInVarOperationServiceUtility");
 	var node_basicUtility = nosliw.getNodeData("common.utility.basicUtility");
 	var node_createValuePortElementInfo = nosliw.getNodeData("valueport.createValuePortElementInfo");
+	var node_variableRuleUtility = nosliw.getNodeData("variable.variableRuleUtility");
+
+
 
 	var loc_parms;
     var loc_scriptVars;
@@ -78,8 +81,12 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 			else {
 				value = JSON.parse(varInfo.view.val());
 			}
+			
+			var operationService = node_valueInVarOperationServiceUtility.createSetOperationService("", value);
+			
+			node_variableRuleUtility.getExecuteRuleValidationRequest(varInfo.variable, operationService);
 		
-			varInfo.variable.executeDataOperationRequest(node_valueInVarOperationServiceUtility.createSetOperationService("", value));
+			varInfo.variable.executeDataOperationRequest(operationService);
 		});					
 
 		varInfo.displayView = $('<span/>');

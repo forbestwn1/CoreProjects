@@ -13,14 +13,12 @@ import com.nosliw.core.application.division.manual.core.HAPManualBrickWithEntity
 public class HAPManualBrickContainer extends HAPManualBrickWithEntityInfo implements HAPBrickContainer{
 
 	public HAPManualBrickContainer() {
-		int kkkk = 5555;
 	}
 	
 	@Override
 	public void init() {
 		super.init();
 		this.setAttributeIndex(0);
-		int kkkkk = 555;
 	}
 	
 	@Override

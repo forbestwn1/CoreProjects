@@ -34,11 +34,15 @@ public class HAPBrickImp extends HAPSerializableImp implements HAPBrick{
 	//all attributes
 	private List<HAPAttributeInBrick> m_attributes;
 	
+	public HAPBrickImp(HAPIdBrickType brickTypeId) {
+		this();
+		this.m_brickTypeId = brickTypeId;
+	}
+	
 	public HAPBrickImp() {
 		this.m_attributes = new ArrayList<HAPAttributeInBrick>();
 		this.m_internalValuePortsContainer = new HAPContainerValuePorts();
 		this.m_externalValuePortsContainer = new HAPContainerValuePorts();
-		
 	}
 
 	@Override

@@ -28,7 +28,7 @@ public class HAPElementStructureLeafRelativeForValue extends HAPElementStructure
 	@HAPAttribute
 	public static final String REVERSEMATCHERS = "reverseMatchers";
 
-	private HAPElementStructure m_definition;
+	private HAPElementStructureLeafData m_definition;
 	
 	//context node full name --- matchers
 	//used to convert data from parent to data within uiTag
@@ -53,8 +53,8 @@ public class HAPElementStructureLeafRelativeForValue extends HAPElementStructure
 	@Override
 	public HAPElementStructure getSolidStructureElement() {	return this.m_definition;	}
 
-	public HAPElementStructure getDefinition() {   return this.m_definition;   }
-	public void setDefinition(HAPElementStructure definition) {   this.m_definition = definition.getSolidStructureElement();   }
+	public HAPElementStructureLeafData getDefinition() {   return this.m_definition;   }
+	public void setDefinition(HAPElementStructureLeafData definition) {   this.m_definition = (HAPElementStructureLeafData)definition.getSolidStructureElement();   }
 	
 	public void setMatchers(Map<String, HAPMatchers> matchers){
 		this.m_matchers.clear();
@@ -78,7 +78,7 @@ public class HAPElementStructureLeafRelativeForValue extends HAPElementStructure
 		super.toStructureElement(out);
 		HAPElementStructureLeafRelativeForValue that = (HAPElementStructureLeafRelativeForValue)out;
 		if(this.m_definition!=null) {
-			that.m_definition = this.m_definition.cloneStructureElement();
+			that.m_definition = (HAPElementStructureLeafData)this.m_definition.cloneStructureElement();
 		}
 		
 		for(String name : this.m_matchers.keySet()) {

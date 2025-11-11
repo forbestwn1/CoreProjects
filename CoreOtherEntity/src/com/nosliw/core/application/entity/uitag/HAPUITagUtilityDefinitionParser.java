@@ -10,7 +10,6 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityFile;
 import com.nosliw.core.application.common.parentrelation.HAPManualDefinitionBrickRelation;
-import com.nosliw.core.application.common.structure.HAPElementStructureLeafData;
 import com.nosliw.core.application.common.structure.HAPElementStructureLeafRelativeForValue;
 import com.nosliw.core.application.common.structure.HAPRootInStructure;
 import com.nosliw.core.application.common.structure.HAPUtilityParserStructure;
@@ -62,7 +61,7 @@ public class HAPUITagUtilityDefinitionParser {
 				for(String rootName : roots.keySet()) {
 					if(HAPConstantShared.NAME_ROOT_TAGDATA.equals(rootName)) {
 						HAPElementStructureLeafRelativeForValue eleStructure = (HAPElementStructureLeafRelativeForValue)roots.get(rootName).getDefinition();
-						((HAPUITagDefinitionData)out).setDataTypeCriteria(((HAPElementStructureLeafData)eleStructure.getDefinition()).getDataDefinition().getCriteria());
+						((HAPUITagDefinitionData)out).setDataTypeCriteria((eleStructure.getDefinition()).getDataDefinition().getCriteria());
 						break;
 					}
 				}

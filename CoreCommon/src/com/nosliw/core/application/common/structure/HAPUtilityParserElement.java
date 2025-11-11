@@ -39,7 +39,7 @@ public class HAPUtilityParserElement {
 			
 			JSONObject definitionJsonObj = eleDefJson.optJSONObject(HAPElementStructureLeafRelativeForValue.DEFINITION);
 			if(definitionJsonObj!=null) {
-				relativeEle.setDefinition(parseStructureElement(definitionJsonObj, dataRuleMan));
+				relativeEle.setDefinition((HAPElementStructureLeafData)parseStructureElement(definitionJsonObj, dataRuleMan));
 			}
 		}
 		else if(mappingRefObj!=null) {
