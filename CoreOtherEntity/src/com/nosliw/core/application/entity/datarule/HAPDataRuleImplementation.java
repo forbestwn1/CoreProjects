@@ -1,6 +1,8 @@
 package com.nosliw.core.application.entity.datarule;
 
-public interface HAPDataRuleImplementation {
+import com.nosliw.common.serialization.HAPSerializable;
+
+public interface HAPDataRuleImplementation extends HAPSerializable{
 
 	String getImmplementationType();
 	

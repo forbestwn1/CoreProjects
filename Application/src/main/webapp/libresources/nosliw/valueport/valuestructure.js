@@ -19,6 +19,7 @@ var node_getLifecycleInterface;
 var node_namingConvensionUtility;
 var node_ServiceInfo;
 var node_dataUtility;
+var node_pathUtility;
 var node_createServiceRequestInfoSimple;
 var node_createVariableWrapper;
 var node_getHandleEachElementRequest;
@@ -65,7 +66,7 @@ var node_createValueStructure = function(id, valuePortContainer, request){
 		var varPath = elementRef.path;
 		var pathLength = -1;
 		_.each(loc_out.prv_adapters, function(adapterVariable, path){
-			var comparePath = node_dataUtility.comparePath(fullPath, path);
+			var comparePath = node_pathUtility.comparePath(fullPath, path);
 			if(path.length>pathLength){
 				if(comparePath.compare==0){
 					parentVar = adapterVariable;
@@ -493,6 +494,7 @@ nosliw.registerSetNodeDataEvent("common.lifecycle.getLifecycleInterface", functi
 nosliw.registerSetNodeDataEvent("common.namingconvension.namingConvensionUtility", function(){node_namingConvensionUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();	});
 nosliw.registerSetNodeDataEvent("variable.valueinvar.utility", function(){node_dataUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("common.path.pathUtility", function(){node_pathUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple", function(){node_createServiceRequestInfoSimple = this.getData();});
 nosliw.registerSetNodeDataEvent("variable.wrapper.createVariableWrapper", function(){node_createVariableWrapper = this.getData();});
 nosliw.registerSetNodeDataEvent("variable.orderedcontainer.createHandleEachElementProcessor", function(){node_createHandleEachElementProcessor = this.getData();});

@@ -16,6 +16,9 @@ var node_valueInVarOperationServiceUtility;
 var node_dataUtility;
 var node_requestUtility;
 var node_expressionUtility;
+var node_pathUtility;
+var node_variableUtility;
+var node_requestServiceProcessor;
 
 //*******************************************   Start Node Definition  **************************************
 
@@ -38,7 +41,7 @@ var node_utility = function(){
 				dataDefinition = definition[node_COMMONATRIBUTECONSTANT.ELEMENTSTRUCTURE_DATA];
 			}
 			else if(defType==node_COMMONCONSTANT.CONTEXT_ELEMENTTYPE_RELATIVE_FOR_VALUE){
-                definition[node_COMMONATRIBUTECONSTANT.ELEMENTSTRUCTURE_DEFINITION][node_COMMONATRIBUTECONSTANT.ELEMENTSTRUCTURE_DATA];
+                dataDefinition = definition[node_COMMONATRIBUTECONSTANT.ELEMENTSTRUCTURE_DEFINITION][node_COMMONATRIBUTECONSTANT.ELEMENTSTRUCTURE_DATA];
 			}
 			
 			if(dataDefinition!=undefined){
@@ -59,13 +62,13 @@ var node_utility = function(){
    			
    			_.each(dataRuleDefs, function(dataRuleDef, i){
         		var opService = operationService.clone();
-				var rulePath = dataRuleDef[node_COMMONATRIBUTECONSTANT_DEFINITIONDATARULE_PATH];
+				var rulePath = dataRuleDef[node_COMMONATRIBUTECONSTANT.DEFINITIONDATARULE_PATH];
 					
 				var opPath = opService.parms.path;
 				var opValue = opService.parms.value;
 					
 				var ruleValue;
-				var comparePath = node_dataUtility.comparePath(rulePath, opPath);
+				var comparePath = node_pathUtility.comparePath(rulePath, opPath);
                 if(comparePath.compare==0){
      				ruleValue = opValue;
      				allRuleInfo.push(node_createRuleItem(dataRuleDef, ruleValue));
@@ -104,7 +107,7 @@ var node_utility = function(){
             var childrenVars = variable.prv_getChildren();
             _.each(childrenVars, function(childVarInfo, id){
             	 var opService = operationService.clone();
-    			 var compareWithChildPath = node_dataUtility.comparePath(opService.parms.path, childVarInfo.path);
+    			 var compareWithChildPath = node_pathUtility.comparePath(opService.parms.path, childVarInfo.path);
 				 if(compareWithChildPath.compare==2){
 					 
 					 out.addRequest(variable.getGetValueRequest({
@@ -124,7 +127,7 @@ var node_utility = function(){
 														opService.parms.value = value;
 		    											return loc_getCollectRuleInfoRequest(childVarInfo.variable, opService, allRuleInfo);
                 								    }
-			            				        }, requestInfo);
+			            				        });
 											}
 											else{
 												opService.parms.vlaue = childVariableData;
@@ -137,9 +140,23 @@ var node_utility = function(){
 						}
 					}));
 				 }
+				 else if(compareWithChildPath.compare==0){
+                					        if(childVarInfo.variable.prv_valueAdapter!=undefined){
+                    							out.addRequest(childVarInfo.variable.prv_valueAdapter.getInValueRequest(opService.parms.value, {
+	    			                				success: function(request, value){
+														opService.parms.value = value;
+		    											return loc_getCollectRuleInfoRequest(childVarInfo.variable, opService, allRuleInfo);
+                								    }
+			            				        }));
+											}
+					 
+				 }
+				 else if(compareWithChildPath.compare==1){
+					 
+				 }
 			});
 		}
-		
+		return out;
 	};
 	
 	var loc_convertBaseOperationServiceRequest = function(variable, operationService, handlers, request){
@@ -161,12 +178,11 @@ var node_utility = function(){
 			}
 			else{
 				var parentVariable = variable.prv_getRelativeVariableInfo().parent;
-				opService.parms.path = node_dataUtility.combinePath(parentVariable.path, opService.parms.path);
-				opService.parms.value = value;
-                if(parentVariable.prv_valueAdapter!=undefined){
+				opService.parms.path = node_pathUtility.combinePath(parentVariable.path, opService.parms.path);
+                if(variable.prv_valueAdapter!=undefined){
 					out = node_createServiceRequestInfoSequence({}, handlers, request);
 					//apply adapter to value
-					out.addRequest(valueWrapper.prv_valueAdapter.getOutValueRequest(operationData.value, {
+					out.addRequest(variable.prv_valueAdapter.getOutValueRequest(operationData.value, {
 						success: function(request, value){
 							opService.parms.value = value;
 							return loc_convertBaseOperationServiceRequest(parentVariable, opService);
@@ -187,12 +203,12 @@ var node_utility = function(){
 		
 		getExecuteRuleValidationRequest : function(variable, operationService, handlers, request){
     		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-    		out.addRequest(loc_convertBaseOperationServiceRequest(variable, operationService, {
+    		out.addRequest(loc_convertBaseOperationServiceRequest(node_variableUtility.getVariable(variable), operationService, {
 				success : function(request, baseOpInfo){
 					var allRuleInfo = [];
-					loc_getCollectRuleInfoRequest(baseOpInfo.rootVariable, baseOpInfo.operationService, allRuleInfo, {
+					return loc_getCollectRuleInfoRequest(baseOpInfo.rootVariable, baseOpInfo.operationService, allRuleInfo, {
 						success : function(request){
-							
+							console.log(JSON.stringify(allRuleInfo));
 						}
 					});
 				}
@@ -200,6 +216,10 @@ var node_utility = function(){
     		return out;
 		},
 		
+		executeExecuteRuleValidationRequest : function(variable, operationService, handlers, request){
+			var requestInfo = this.getExecuteRuleValidationRequest(variable, operationService, handlers, request);
+			node_requestServiceProcessor.processRequest(requestInfo);
+		},
 	};
 	return loc_out;
 }();
@@ -220,6 +240,9 @@ nosliw.registerSetNodeDataEvent("variable.valueinvar.operation.valueInVarOperati
 nosliw.registerSetNodeDataEvent("variable.valueinvar.utility", function(){node_dataUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("request.utility", function(){node_requestUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("expression.utility", function(){node_expressionUtility = this.getData();	});
+nosliw.registerSetNodeDataEvent("common.path.pathUtility", function(){node_pathUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("variable.variable.variableUtility", function(){node_variableUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("variableRuleUtility", node_utility); 

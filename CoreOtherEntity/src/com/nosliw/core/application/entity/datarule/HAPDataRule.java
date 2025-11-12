@@ -7,6 +7,8 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializableImp;
+import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.core.data.criteria.HAPDataTypeCriteria;
 
 @HAPEntityWithAttribute
@@ -14,6 +16,9 @@ public abstract class HAPDataRule extends HAPSerializableImp{
 
 	@HAPAttribute
 	public static String RULETYPE = "ruleType";
+
+	@HAPAttribute
+	public static String IMPLEMENTATION = "implementation";
 
 	private String m_ruleType;
 	
@@ -44,6 +49,7 @@ public abstract class HAPDataRule extends HAPSerializableImp{
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(RULETYPE, this.getRuleType());
+		jsonMap.put(IMPLEMENTATION, HAPUtilityJson.buildJson(m_implementation, HAPSerializationFormat.JSON));
 	}
 	
 	@Override

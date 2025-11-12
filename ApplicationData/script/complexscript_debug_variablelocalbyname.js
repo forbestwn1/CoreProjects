@@ -84,7 +84,7 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 			
 			var operationService = node_valueInVarOperationServiceUtility.createSetOperationService("", value);
 			
-			node_variableRuleUtility.getExecuteRuleValidationRequest(varInfo.variable, operationService);
+			node_variableRuleUtility.executeExecuteRuleValidationRequest(varInfo.variable, operationService);
 		
 			varInfo.variable.executeDataOperationRequest(operationService);
 		});					

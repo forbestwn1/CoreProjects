@@ -93,7 +93,7 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 			
 			var operationService = node_valueInVarOperationServiceUtility.createSetOperationService("", value);
 			
-			node_variableRuleUtility.getExecuteRuleValidationRequest(varInfo.variable, operationService);
+			node_variableRuleUtility.executeExecuteRuleValidationRequest(varInfo.variable, operationService);
 		
 			varInfo.variable.executeDataOperationRequest(operationService);
 		});					

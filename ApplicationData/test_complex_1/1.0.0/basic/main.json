@@ -16,7 +16,7 @@
 					"valueStructure" : {
 						"root": {
 							"parent_public_map": {
-		                        "status": "disabled1",
+		                        "status": "disabled",
 								"definition":{
 									"data": "test.map;1.0.0%%||stringAttr:test.string;1.0.0,urlAttr:test.url;1.0.0||%%"
 								}
@@ -28,11 +28,28 @@
 								}
 							},
 							"parent_public_url": {
-		                        "status": "disabled",
+		                        "status": "disabled1",
 								"definition":{
-									"data": "test.url;1.0.0"
+									"data": {
+									    "criteria" : "test.url;1.0.0",
+   				    				    "rule" : [
+        			    			        {
+                                   				"name" : "mandatoryParent",
+    	                                        "status": "disabled1",
+        				                        "ruleType" : "mandatory"
+		    			                    }
+			    		                ]
+									}
 								}
-							}
+							},
+    						"public_float": {
+		                        "status": "disabled",
+	    						"definition":{
+		    						"data": {
+			    					    "criteria" : "test.float;1.0.0"
+								    } 
+							    }
+						    }
 						},
 						"initValue": {
 							"parent_public_map": {
@@ -55,7 +72,11 @@
 							"parent_public_url": {
 								"dataTypeId": "test.url;1.0.0",
 								"value": "default value of parent_public_url"
-							}
+							},
+    						"public_float": {
+	    						"dataTypeId": "test.float;1.0.0",
+		    					"value": "100"
+			    			}
 						}
 					}
 				}
@@ -78,7 +99,7 @@
 				"script": "complexscript_debug_variablelocalbyname",
 				"parm" : {
 					"variable1" : ["child_public", "child_public_string", "parent_protected", "parent_private", "parent_internal"],
-					"variable" : ["child_public_string_link_map", "parent_public_map"]
+					"variable" : ["child_public_string_link", "parent_public_url"]
 				},
 				"valueContext" : {
 					"brick": [
@@ -117,11 +138,23 @@
 										}
 									},
 									"child_public_string_link": {
-				                        "status": "disabled",
+				                        "status": "disabled1",
 										"definition":{
 											"link": {
-                								"elementPath": "parent_public_string"
-											}
+                								"elementPath": "parent_public_url"
+											},
+										    "definition":{
+											    "data": {
+											        "criteria" : "test.string;1.0.0",
+             				    				    "rule" : [
+	    	        			    			        {
+                                            				"name" : "mandatoryChild",
+			    	                                        "status": "disabled1",
+				    				                        "ruleType" : "mandatory"
+					    			                    }
+						    		                ]
+							    			    }
+								 		    }
 										}
 									},
 									"child_public_string": {

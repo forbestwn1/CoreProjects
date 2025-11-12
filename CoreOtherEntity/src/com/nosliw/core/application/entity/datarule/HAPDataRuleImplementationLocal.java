@@ -1,9 +1,14 @@
 package com.nosliw.core.application.entity.datarule;
 
+import java.util.Map;
+
+import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.utils.HAPConstantShared;
 
-public class HAPDataRuleImplementationLocal implements HAPDataRuleImplementation{
+public class HAPDataRuleImplementationLocal extends HAPSerializableImp implements HAPDataRuleImplementation{
 
+    public static final String PATHID = "pathId";
+	
 	private String m_pathId;
 	
 	public HAPDataRuleImplementationLocal(String pathId) {
@@ -15,4 +20,9 @@ public class HAPDataRuleImplementationLocal implements HAPDataRuleImplementation
 		return HAPConstantShared.DATARULE_IMPLEMENTATION_LOCAL;
 	}
 	
+	@Override
+	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		super.buildJsonMap(jsonMap, typeJsonMap);
+        jsonMap.put(PATHID, this.m_pathId);
+    }
 }

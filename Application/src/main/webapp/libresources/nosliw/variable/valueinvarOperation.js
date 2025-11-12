@@ -9,11 +9,12 @@ var node_ServiceInfo;
 var node_createServiceRequestInfoSet;
 var node_namingConvensionUtility;
 var node_dataUtility;
+var node_pathUtility;
 var node_createValuePortElementInfo;
 //*******************************************   Start Node Definition  ************************************** 	
 
 var loc_createValueStructureDataOperationRequest = function(valueStructure, valueStructureVarInfo, operationService, handlers, requester_parent){
-	operationService.parms.path = node_dataUtility.combinePath(valueStructureVarInfo.path, operationService.parms.path);
+	operationService.parms.path = node_pathUtility.combinePath(valueStructureVarInfo.path, operationService.parms.path);
 	return valueStructure.getDataOperationRequest(valueStructureVarInfo.name, operationService, handlers, requester_parent);
 };
 
@@ -189,6 +190,7 @@ nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_Se
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSet", function(){node_createServiceRequestInfoSet = this.getData();});
 nosliw.registerSetNodeDataEvent("common.namingconvension.namingConvensionUtility", function(){node_namingConvensionUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("variable.valueinvar.utility", function(){node_dataUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("common.path.pathUtility", function(){node_pathUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("valueport.createValuePortElementInfo", function(){node_createValuePortElementInfo = this.getData();});
 
 

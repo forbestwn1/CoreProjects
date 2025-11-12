@@ -1,7 +1,11 @@
 package com.nosliw.core.application.common.datadefinition;
 
+import java.util.Map;
+
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.info.HAPEntityInfoImp;
+import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.core.application.entity.datarule.HAPDataRule;
 
 public class HAPDefinitionDataRule extends HAPEntityInfoImp{
@@ -26,8 +30,16 @@ public class HAPDefinitionDataRule extends HAPEntityInfoImp{
 	
 	public HAPDefinitionDataRule cloneDataRuleDef() {
 		HAPDefinitionDataRule out = new HAPDefinitionDataRule();
+		this.cloneToEntityInfo(out);
 		out.m_path = this.m_path;
 		out.m_rule = this.m_rule.cloneDataRule();
 		return out;
 	}
+
+	@Override
+	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		super.buildJsonMap(jsonMap, typeJsonMap);
+		jsonMap.put(DATARULE, HAPUtilityJson.buildJson(m_rule, HAPSerializationFormat.JSON));
+        jsonMap.put(PATH, this.m_path);
+    }
 }

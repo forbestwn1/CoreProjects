@@ -48,7 +48,7 @@ var node_newVariable = function(data1, data2, adapterInfo, info, requestInfo){
 		//every variable has a id, it is for debuging purpose
 		loc_out.prv_id = nosliw.runtime.getIdService().generateId();
 		
-		loc_out.info = info;
+		loc_out.prv_info = info;
 		
 		//adapter that will apply to value of wrapper
 		loc_out.prv_valueAdapter = adapterInfo==undefined ? undefined : adapterInfo.valueAdapter;

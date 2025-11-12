@@ -14,14 +14,9 @@ public class HAPProviderDataRuleMandatory implements HAPProviderDataRule{
 	public String getDataRuleType() {  return HAPConstantShared.DATARULE_TYPE_MANDATORY;  }
 
 	@Override
-	public HAPPluginParserDataRule getParser() {
-		return new HAPPluginParserDataRuleMandatory();
-	}
+	public HAPPluginParserDataRule getParser() {	return new HAPPluginParserDataRuleMandatory();	}
 
 	@Override
-	public HAPPluginTransformerDataRule getTransformer() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	public HAPPluginTransformerDataRule getTransformer() {  return new HAPPluginTransformerDataRuleMandatory();   }
 
 }

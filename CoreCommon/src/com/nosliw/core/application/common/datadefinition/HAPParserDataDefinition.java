@@ -50,6 +50,8 @@ public class HAPParserDataDefinition {
 					if(HAPUtilityEntityInfo.isEnabled(dataRuleDefJson)) {
 						HAPDefinitionDataRule dataRuleDef = new HAPDefinitionDataRule();
 						
+						dataRuleDef.buildEntityInfoByJson(dataRuleDefJson);
+						
 						String rulePath = (String)dataRuleDefJson.opt(HAPDefinitionDataRule.PATH);
 						if(rulePath!=null) {
 							dataRuleDef.setPath(rulePath);

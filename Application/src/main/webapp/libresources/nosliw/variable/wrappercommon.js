@@ -13,6 +13,7 @@ var node_getObjectType;
 var node_makeObjectWithId;
 var node_basicUtility;
 var node_dataUtility;
+var node_pathUtility;
 var node_wrapperFactory;
 var node_namingConvensionUtility;
 var node_createServiceRequestInfoSequence;
@@ -202,7 +203,7 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType){
 				events.dataOperation.push(new node_EventInfo(node_CONSTANT.WRAPPER_EVENT_CHANGE));
 			}
 			else{
-				var pathCompare = node_dataUtility.comparePath(loc_out.prv_relativeWrapperInfo.path, eventData.path);
+				var pathCompare = node_pathUtility.comparePath(loc_out.prv_relativeWrapperInfo.path, eventData.path);
 				pathPosition = pathCompare.compare; 
 				if(pathPosition == 0){
 					//event happens on this wrapper, trigue the same
@@ -551,14 +552,14 @@ var node_createWraperCommon = function(parm1, path, typeHelper, dataType){
 							//apply adapter to value
 							out.addRequest(this.prv_valueAdapter.getOutValueRequest(operationData.value, {
 								success: function(request, value){
-									opService.parms.path = that.prv_relativeWrapperInfo.parent.toRealPath(node_dataUtility.combinePath(that.prv_relativeWrapperInfo.path, opService.parms.path)) ;
+									opService.parms.path = that.prv_relativeWrapperInfo.parent.toRealPath(node_pathUtility.combinePath(that.prv_relativeWrapperInfo.path, opService.parms.path)) ;
 									opService.parms.value = value;
 									return that.prv_relativeWrapperInfo.parent.getDataOperationRequest(opService);
 								}
 							}));
 						}
 						else{
-							opService.parms.path = this.prv_relativeWrapperInfo.parent.toRealPath(node_dataUtility.combinePath(this.prv_relativeWrapperInfo.path, opService.parms.path)) ;
+							opService.parms.path = this.prv_relativeWrapperInfo.parent.toRealPath(node_pathUtility.combinePath(this.prv_relativeWrapperInfo.path, opService.parms.path)) ;
 							out = this.prv_relativeWrapperInfo.parent.getDataOperationRequest(opService, handlers, requester_parent);
 						}
 					}
@@ -636,6 +637,7 @@ nosliw.registerSetNodeDataEvent("common.interfacedef.getObjectType", function(){
 nosliw.registerSetNodeDataEvent("common.interfacedef.makeObjectWithId", function(){node_makeObjectWithId = this.getData();});
 nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("variable.valueinvar.utility", function(){node_dataUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("common.path.pathUtility", function(){node_pathUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("variable.wrapper.wrapperFactory", function(){node_wrapperFactory = this.getData();});
 nosliw.registerSetNodeDataEvent("common.namingconvension.namingConvensionUtility", function(){node_namingConvensionUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequence", function(){	node_createServiceRequestInfoSequence = this.getData();	});
