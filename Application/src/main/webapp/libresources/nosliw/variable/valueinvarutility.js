@@ -132,8 +132,11 @@ var node_utility = function(){
 		
 		getDataTypeInfoFromValue : function(value){
 			var out;
-			if(value!=undefined && value.dataTypeId!=undefined){
-				out = node_CONSTANT.TYPEDOBJECT_TYPE_DATA;
+			if(node_getObjectType(value)==node_CONSTANT.TYPEDOBJECT_TYPE_DATA){
+				out = value.dataTypeInfo;
+			}
+			else if(value!=undefined && value.dataTypeId!=undefined){
+				out = node_CONSTANT.DATA_TYPE_APPDATA;
 			}
 			else{
 				out = node_CONSTANT.DATA_TYPE_OBJECT;

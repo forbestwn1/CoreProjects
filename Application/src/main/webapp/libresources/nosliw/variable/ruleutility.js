@@ -19,10 +19,11 @@ var node_expressionUtility;
 var node_pathUtility;
 var node_variableUtility;
 var node_requestServiceProcessor;
+var node_wrapperFactory;
 
 //*******************************************   Start Node Definition  **************************************
 
-var node_createRuleItem = function(ruleDef, data){
+var node_createRuleValidationItem = function(ruleDef, data){
 	return {
 		ruleDef : ruleDef,
 		data : data
@@ -71,14 +72,14 @@ var node_utility = function(){
 				var comparePath = node_pathUtility.comparePath(rulePath, opPath);
                 if(comparePath.compare==0){
      				ruleValue = opValue;
-     				allRuleInfo.push(node_createRuleItem(dataRuleDef, ruleValue));
+     				allRuleInfo.push(node_createRuleValidationItem(dataRuleDef, ruleValue));
    				}
                 else if(comparePath.compare==1){
 					//get child value
 					var dataTypeInfo = node_dataUtility.getDataTypeInfoFromValue(opValue);
 					out.addRequest(node_wrapperFactory.getDataTypeHelper(dataTypeInfo).getChildValueRequest(opValue, comparePath.subPath, {
 						success : function(request, childData){
-            				allRuleInfo.push(node_createRuleItem(dataRuleDef, childData));
+            				allRuleInfo.push(node_createRuleValidationItem(dataRuleDef, childData));
 						}
 					}));
 				}
@@ -86,15 +87,15 @@ var node_utility = function(){
 					//
 					 out.addRequest(variable.getGetValueRequest({
 						success: function(request, data){
-							var ruleValueBeforeChange = node_basicUtility.cloneObject(data);
-        					var dataTypeInfo = node_dataUtility.getDataTypeInfoFromValue(ruleValueBeforeChange);
+							var varValueBeforeChange = node_basicUtility.cloneObject(data);
+        					var dataTypeInfo = node_dataUtility.getDataTypeInfoFromValue(varValueBeforeChange);
 
-        					return node_wrapperFactory.getDataTypeHelper(dataTypeInfo).getChildValueRequest(ruleValueBeforeChange, rulePath, {
+        					return node_wrapperFactory.getDataTypeHelper(dataTypeInfo).getChildValueRequest(varValueBeforeChange, rulePath, {
 		    				    success : function(request, childData){
          					        opService.parms.path = comparePath.subPath;
-		                            return getDataOperationRequest(childData, dataOperationService, {
+		                            return node_wrapperFactory.getDataTypeHelper(dataTypeInfo).getDataOperationRequest(childData.value, opService, {
 										success : function(reuqest, ruleData){
-                        				    allRuleInfo.push(node_createRuleItem(dataRuleDef, ruleData));
+                        				    allRuleInfo.push(node_createRuleValidationItem(dataRuleDef, ruleData));
 										}
 									});							
 				    		    }
@@ -141,15 +142,14 @@ var node_utility = function(){
 					}));
 				 }
 				 else if(compareWithChildPath.compare==0){
-                					        if(childVarInfo.variable.prv_valueAdapter!=undefined){
-                    							out.addRequest(childVarInfo.variable.prv_valueAdapter.getInValueRequest(opService.parms.value, {
-	    			                				success: function(request, value){
-														opService.parms.value = value;
-		    											return loc_getCollectRuleInfoRequest(childVarInfo.variable, opService, allRuleInfo);
-                								    }
-			            				        }));
-											}
-					 
+			        if(childVarInfo.variable.prv_valueAdapter!=undefined){
+    					out.addRequest(childVarInfo.variable.prv_valueAdapter.getInValueRequest(opService.parms.value, {
+	           				success: function(request, value){
+								opService.parms.value = value;
+								return loc_getCollectRuleInfoRequest(childVarInfo.variable, opService, allRuleInfo);
+    					    }
+				        }));
+					}
 				 }
 				 else if(compareWithChildPath.compare==1){
 					 
@@ -178,7 +178,7 @@ var node_utility = function(){
 			}
 			else{
 				var parentVariable = variable.prv_getRelativeVariableInfo().parent;
-				opService.parms.path = node_pathUtility.combinePath(parentVariable.path, opService.parms.path);
+				opService.parms.path = node_pathUtility.combinePath(variable.prv_getRelativeVariableInfo().path, opService.parms.path);
                 if(variable.prv_valueAdapter!=undefined){
 					out = node_createServiceRequestInfoSequence({}, handlers, request);
 					//apply adapter to value
@@ -196,6 +196,40 @@ var node_utility = function(){
 			}
 		}
 		return out;
+	};
+	
+	var loc_executeRuleValidationRequest = function(ruleValidationItem){
+		
+					var relativePath = trigguerInfo[node_COMMONATRIBUTECONSTANT.INFOTRIGGUERTASK_HANDLERID][node_COMMONATRIBUTECONSTANT.IDBRICKINBUNDLE_RELATIVEPATH];
+					var handlerEntityCoreWrapper = node_complexEntityUtility.getBrickCoreByRelativePath(loc_out, relativePath);
+					
+					var taskSetup = node_createTaskSetup(
+						function(coreEntity, handlers, request){
+							//set event data to value port
+							var internalValuePortContainer = node_getEntityObjectInterface(coreEntity).getExternalValuePortContainer();
+							
+							var valuePortName;
+							var rootEleName;
+								valuePortName = node_COMMONCONSTANT.VALUEPORT_NAME_INTERACT_REQUEST;
+								rootEleName = node_COMMONCONSTANT.NAME_ROOT_DATA;
+							
+							return node_utilityNamedVariable.setValuePortValueByGroupNameRequest(
+								internalValuePortContainer,
+								trigguerInfo[node_COMMONATRIBUTECONSTANT.INFOTRIGGUERTASK_VALUEPORTGROUPNAME],
+								valuePortName,
+								rootEleName,
+								taskTrigguer[node_COMMONATRIBUTECONSTANT.TESTTASKTRIGGUER_TESTDATA],
+								handlers, request);
+						}
+					);
+					
+					var taskExeRequest = node_taskUtility.getExecuteWrapperedTaskWithAdapterRequest(handlerEntityCoreWrapper, undefined, taskSetup, {
+						success : function(request, taskResult){
+							eventResultView.val(JSON.stringify(taskResult));
+						}
+					});
+		
+		
 	};
 	
 	
@@ -243,6 +277,7 @@ nosliw.registerSetNodeDataEvent("expression.utility", function(){node_expression
 nosliw.registerSetNodeDataEvent("common.path.pathUtility", function(){node_pathUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("variable.variable.variableUtility", function(){node_variableUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
+nosliw.registerSetNodeDataEvent("variable.wrapper.wrapperFactory", function(){node_wrapperFactory = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("variableRuleUtility", node_utility); 
