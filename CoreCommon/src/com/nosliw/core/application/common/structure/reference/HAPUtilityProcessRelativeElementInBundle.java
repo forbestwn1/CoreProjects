@@ -12,8 +12,6 @@ import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.utils.HAPConstant;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.HAPBundle;
-import com.nosliw.core.application.common.datadefinition.HAPDataDefinitionWritable;
-import com.nosliw.core.application.common.datadefinition.HAPDefinitionDataRule;
 import com.nosliw.core.application.common.structure.HAPElementStructure;
 import com.nosliw.core.application.common.structure.HAPElementStructureLeafData;
 import com.nosliw.core.application.common.structure.HAPElementStructureLeafRelative;
@@ -29,7 +27,6 @@ import com.nosliw.core.application.valueport.HAPReferenceElement;
 import com.nosliw.core.application.valueport.HAPResultReferenceResolve;
 import com.nosliw.core.application.valueport.HAPUtilityResovleElement;
 import com.nosliw.core.data.HAPDataTypeHelper;
-import com.nosliw.core.data.matcher.HAPMatcherUtility;
 import com.nosliw.core.data.matcher.HAPMatchers;
 import com.nosliw.core.resource.HAPManagerResource;
 import com.nosliw.core.runtime.HAPRuntimeInfo;
@@ -151,6 +148,7 @@ public class HAPUtilityProcessRelativeElementInBundle {
 			defStructureElementRelative.setMatchers(noVoidMatchers);
 			
 			//inherit rule from parent
+/* no need to inherit rule from parent
 			if(relativeEleProcessConfigure.isInheritRule()) {
 				HAPElementStructure solidParent = resolvedSolidElement.getSolidStructureElement();
 				if(solidParent.getType().equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_DATA)) {
@@ -164,6 +162,7 @@ public class HAPUtilityProcessRelativeElementInBundle {
 					}
 				}
 			}
+*/			
 		}
 		return out;
 	}

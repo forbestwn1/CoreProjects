@@ -81,7 +81,7 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 		varContainerViewWrapper.append(varViewWrapper);	
 
 		var viewWrapper = $('<div>Value:</div>');
-		varInfo.view = $('<textarea rows="1" cols="150" style="resize: none; border:solid 1px;" data-role="none"></textarea>');
+		varInfo.view = $('<textarea rows="3" cols="150" style="resize: none; border:solid 1px;" data-role="none"></textarea>');
 		viewWrapper.append(varInfo.view);
 		varContainerViewWrapper.append(viewWrapper);	
 		varInfo.view.bind('change', function(){

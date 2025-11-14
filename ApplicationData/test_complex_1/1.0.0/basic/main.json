@@ -23,7 +23,7 @@
    				    				    "rule" : [
         			    			        {
                                    				"name" : "mandatoryParent",
-    	                                        "status": "disabled1",
+    	                                        "status": "disabled",
         				                        "ruleType" : "mandatory"
 		    			                    },
         			    			        {
@@ -35,7 +35,7 @@
         			    			        {
                                    				"name" : "mandatoryParentUrl",
                                    				"path" : "urlAttr",
-    	                                        "status": "disabled",
+    	                                        "status": "disabled1",
         				                        "ruleType" : "mandatory"
 		    			                    }
 			    		                ]
@@ -120,7 +120,7 @@
 				"script": "complexscript_debug_variablelocalbyname",
 				"parm" : {
 					"variable1" : ["child_public", "child_public_string", "parent_protected", "parent_private", "parent_internal"],
-					"variable" : ["child_public_string_link_map_string", "child_public_string_link_map_url"]
+					"variable" : ["parent_public_map", "child_public_string_link_map_url"]
 				},
 				"valueContext" : {
 					"brick": [
@@ -140,7 +140,7 @@
 										}
 									},
 									"child_public_string_link_map_string": {
-				                        "status": "disabled1",
+				                        "status": "disabled",
 										"definition":{
 											"link": {
                 								"elementPath": "parent_public_map.stringAttr"
@@ -152,7 +152,19 @@
 										"definition":{
 											"link": {
                 								"elementPath": "parent_public_map.urlAttr"
-											}
+											},
+										    "definition":{
+											    "data": {
+											        "criteria" : "test.string;1.0.0",
+   				    				                "rule" : [
+        			    			                    {
+                                   				            "name" : "mandatoryChildMapUrl",
+    	                                                    "status": "disabled1",
+        				                                    "ruleType" : "mandatory"
+		    			                                }
+			    		                            ]
+											    }
+										    }
 										}
 									},
 									"child_public_string_link": {

@@ -64,22 +64,29 @@ var node_createDataTypeHelperData = function(){
 				var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("DataOperation", {"command":command, "operationData":operationData}), handlers, request);
 
 				if(command==node_CONSTANT.WRAPPER_OPERATION_SET){
-					out.addRequest(loc_getOperationBaseRequest(value, operationData.path, undefined, 1, {
-						success : function(requestInfo, operationBase){
-							var operationParms = [];
-							operationParms.push(new node_OperationParm(operationBase.base, "base"));
-							operationParms.push(new node_OperationParm({
-								dataTypeId: "test.string;1.0.0",
-								value : operationBase.attribute
-							}, "name"));
-							operationParms.push(new node_OperationParm(operationData.value, "value"));
+					if(operationData.path==null||operationData.path==""){
+						out.addRequest(node_createServiceRequestInfoSimple(undefined, function(){
+							return operationData.value;
+						}));
+					}
+					else{
+    					out.addRequest(loc_getOperationBaseRequest(value, operationData.path, undefined, 1, {
+	    					success : function(requestInfo, operationBase){
+		    					var operationParms = [];
+			    				operationParms.push(new node_OperationParm(operationBase.base, "base"));
+				    			operationParms.push(new node_OperationParm({
+					    			dataTypeId: "test.string;1.0.0",
+						    		value : operationBase.attribute
+							    }, "name"));
+    							operationParms.push(new node_OperationParm(operationData.value, "value"));
 
-							return nosliw.runtime.getExpressionService().getExecuteOperationRequest(
-									operationBase.base.dataTypeId, 
-									node_COMMONCONSTANT.DATAOPERATION_COMPLEX_SETCHILDDATA, 
-									operationParms);
-						}
-					}));
+	    						return nosliw.runtime.getExpressionService().getExecuteOperationRequest(
+		    							operationBase.base.dataTypeId, 
+			    						node_COMMONCONSTANT.DATAOPERATION_COMPLEX_SETCHILDDATA, 
+				    					operationParms);
+					    	}
+    					}));
+					}
 				}
 				else if(command==node_CONSTANT.WRAPPER_OPERATION_ADDELEMENT){
 					out.addRequest(loc_getOperationBaseRequest(value, operationData.path, undefined, 0, {

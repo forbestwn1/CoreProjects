@@ -23,12 +23,17 @@ public class HAPElementStructureLeafRelativeForValue extends HAPElementStructure
 	public static final String DEFINITION = "definition";
 
 	@HAPAttribute
+	public static final String INHERITDEFINITION = "inheritDefinition";
+
+	@HAPAttribute
 	public static final String MATCHERS = "matchers";
 
 	@HAPAttribute
 	public static final String REVERSEMATCHERS = "reverseMatchers";
 
 	private HAPElementStructureLeafData m_definition;
+	
+	private boolean m_inheritDefinition = true;
 	
 	//context node full name --- matchers
 	//used to convert data from parent to data within uiTag
@@ -56,6 +61,9 @@ public class HAPElementStructureLeafRelativeForValue extends HAPElementStructure
 	public HAPElementStructureLeafData getDefinition() {   return this.m_definition;   }
 	public void setDefinition(HAPElementStructureLeafData definition) {   this.m_definition = (HAPElementStructureLeafData)definition.getSolidStructureElement();   }
 	
+	public void setInheritDefinition(boolean inheritDefinition) {   this.m_inheritDefinition = inheritDefinition;      }
+	public boolean getInheritDefinition() {   return this.m_inheritDefinition;      }
+	
 	public void setMatchers(Map<String, HAPMatchers> matchers){
 		this.m_matchers.clear();
 		this.m_matchers.putAll(matchers);
@@ -80,6 +88,7 @@ public class HAPElementStructureLeafRelativeForValue extends HAPElementStructure
 		if(this.m_definition!=null) {
 			that.m_definition = (HAPElementStructureLeafData)this.m_definition.cloneStructureElement();
 		}
+		that.m_inheritDefinition = this.m_inheritDefinition;
 		
 		for(String name : this.m_matchers.keySet()) {
 			that.m_matchers.put(name, this.m_matchers.get(name).cloneMatchers());
@@ -101,6 +110,8 @@ public class HAPElementStructureLeafRelativeForValue extends HAPElementStructure
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(LINK, this.getReference().toStringValue(HAPSerializationFormat.JSON));
 		jsonMap.put(DEFINITION, HAPUtilityJson.buildJson(this.m_definition, HAPSerializationFormat.JSON));
+		jsonMap.put(INHERITDEFINITION, this.m_inheritDefinition+"");
+		typeJsonMap.put(INHERITDEFINITION, Boolean.class);
 		if(this.m_matchers!=null && !this.m_matchers.isEmpty()){
 			jsonMap.put(MATCHERS, HAPUtilityJson.buildJson(this.m_matchers, HAPSerializationFormat.JSON));
 			jsonMap.put(REVERSEMATCHERS, HAPUtilityJson.buildJson(this.m_reverseMatchers, HAPSerializationFormat.JSON));
@@ -117,6 +128,9 @@ public class HAPElementStructureLeafRelativeForValue extends HAPElementStructure
 		if(obj instanceof HAPElementStructureLeafRelativeForValue) {
 			HAPElementStructureLeafRelativeForValue ele = (HAPElementStructureLeafRelativeForValue)obj;
 			if(!HAPUtilityBasic.isEquals(this.getReference(), ele.getReference())) {
+				return false;
+			}
+			if(!HAPUtilityBasic.isEquals(this.getInheritDefinition(), ele.getInheritDefinition())) {
 				return false;
 			}
 			if(!HAPUtilityBasic.isEqualMaps(ele.m_matchers, this.m_matchers)) {

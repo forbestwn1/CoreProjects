@@ -41,7 +41,7 @@ var node_utility = function(){
 			if(defType==node_COMMONCONSTANT.CONTEXT_ELEMENTTYPE_DATA){
 				dataDefinition = definition[node_COMMONATRIBUTECONSTANT.ELEMENTSTRUCTURE_DATA];
 			}
-			else if(defType==node_COMMONCONSTANT.CONTEXT_ELEMENTTYPE_RELATIVE_FOR_VALUE){
+			else if(defType==node_COMMONCONSTANT.CONTEXT_ELEMENTTYPE_RELATIVE_FOR_VALUE&&definition[node_COMMONATRIBUTECONSTANT.ELEMENTSTRUCTURE_INHERITDEFINITION]==false){
                 dataDefinition = definition[node_COMMONATRIBUTECONSTANT.ELEMENTSTRUCTURE_DEFINITION][node_COMMONATRIBUTECONSTANT.ELEMENTSTRUCTURE_DATA];
 			}
 			
@@ -113,7 +113,7 @@ var node_utility = function(){
 					 
 					 out.addRequest(variable.getGetValueRequest({
 						success: function(request, data){
-							var ruleValueBeforeChange = node_basicUtility.cloneObject(data);
+							var ruleValueBeforeChange = node_basicUtility.cloneObject(data.value);
         					var dataTypeInfo = node_dataUtility.getDataTypeInfoFromValue(ruleValueBeforeChange);
 
         					return node_wrapperFactory.getDataTypeHelper(dataTypeInfo).getDataOperationRequest(ruleValueBeforeChange, opService, {
@@ -131,7 +131,7 @@ var node_utility = function(){
 			            				        });
 											}
 											else{
-												opService.parms.vlaue = childVariableData;
+												opService.parms.value = childVariableData;
     											return loc_getCollectRuleInfoRequest(childVarInfo.variable, opService, allRuleInfo);
 											}
 										}

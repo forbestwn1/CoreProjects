@@ -83,6 +83,7 @@ public class HAPManualPluginParserBlockComplexUICustomerTag extends HAPManualDef
 					HAPElementStructureLeafData d = new HAPElementStructureLeafData();
 					d.setDataDefinition(varAttr.getDataDefinition());
 					attrEle.setDefinition(d);
+					attrEle.setInheritDefinition(false);
 					attrEle.setReference(new HAPReferenceElement(attrValue));
 					
 					HAPRootInStructure rootEle = new HAPRootInStructure();
