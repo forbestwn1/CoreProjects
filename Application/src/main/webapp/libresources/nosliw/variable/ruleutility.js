@@ -33,7 +33,7 @@ var node_createRuleValidationItem = function(ruleDef, data){
 var node_utility = function(){
 
     var loc_getRuleDefinitionsFromVariable = function(variable){
-		var definition = variable.prv_info.definition;
+		var definition = variable.prv_info==undefined?undefined:variable.prv_info.definition;
 		if(definition!=undefined){
 			var dataDefinition;
 			

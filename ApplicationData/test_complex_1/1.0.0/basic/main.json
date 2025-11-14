@@ -120,7 +120,7 @@
 				"script": "complexscript_debug_variablelocalbyname",
 				"parm" : {
 					"variable1" : ["child_public", "child_public_string", "parent_protected", "parent_private", "parent_internal"],
-					"variable" : ["parent_public_map", "child_public_string_link_map_url"]
+					"variable" : ["parent_public_map", "parent_public_map.urlAttr", "child_public_string_link_map_url"]
 				},
 				"valueContext" : {
 					"brick": [
