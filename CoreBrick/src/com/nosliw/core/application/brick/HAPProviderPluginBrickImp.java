@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
+import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.core.application.HAPInfoBrickType;
 import com.nosliw.core.application.HAPPluginBrick;
 import com.nosliw.core.application.HAPProviderPluginBrick;
 import com.nosliw.core.application.brick.dataexpression.library.HAPPluginBrickDataExpressionLibrary;
@@ -25,7 +27,7 @@ public class HAPProviderPluginBrickImp implements HAPProviderPluginBrick{
 
 		out.add(new HAPPluginBrick(HAPEnumBrickType.TEST_COMPLEX_1_100));
 		out.add(new HAPPluginBrick(HAPEnumBrickType.TEST_COMPLEX_SCRIPT_100));
-		out.add(new HAPPluginBrick(HAPEnumBrickType.TEST_COMPLEX_TASK_100));
+		out.add(new HAPPluginBrick(HAPEnumBrickType.TEST_COMPLEX_TASK_100, new HAPInfoBrickType(HAPConstantShared.TASK_TYPE_TASK)));
 
 		out.add(new HAPPluginBrickTaskWrapper());
 		out.add(new HAPPluginBrick(HAPEnumBrickType.WRAPPERBRICK_100));
@@ -33,8 +35,8 @@ public class HAPProviderPluginBrickImp implements HAPProviderPluginBrick{
 		out.add(new HAPPluginBrick(HAPEnumBrickType.TASK_TASK_FLOW_100));
 		out.add(new HAPPluginBrick(HAPEnumBrickType.TASK_TASK_ACTIVITYTASK_100));
 
-		out.add(new HAPPluginBrick(HAPEnumBrickType.TASK_TASK_SCRIPT_100));
-		out.add(new HAPPluginBrick(HAPEnumBrickType.TASK_EXPRESSION_SCRIPT_100));
+		out.add(new HAPPluginBrick(HAPEnumBrickType.TASK_TASK_SCRIPT_100, new HAPInfoBrickType(HAPConstantShared.TASK_TYPE_TASK)));
+		out.add(new HAPPluginBrick(HAPEnumBrickType.TASK_EXPRESSION_SCRIPT_100, new HAPInfoBrickType(HAPConstantShared.TASK_TYPE_EXPRESSION)));
 
 		out.add(new HAPPluginBrick(HAPEnumBrickType.SERVICEPROVIDER_100));
 		out.add(new HAPPluginBrickServiceProfile());
@@ -43,14 +45,14 @@ public class HAPProviderPluginBrickImp implements HAPProviderPluginBrick{
 		out.add(new HAPPluginBrick(HAPEnumBrickType.INTERACTIVETASKINTERFACE_100));
 		out.add(new HAPPluginBrick(HAPEnumBrickType.INTERACTIVEEXPRESSIONINTERFACE_100));
 
-		out.add(new HAPPluginBrick(HAPEnumBrickType.DATAEXPRESSIONSTANDALONE_100));
+		out.add(new HAPPluginBrick(HAPEnumBrickType.DATAEXPRESSIONSTANDALONE_100, new HAPInfoBrickType(HAPConstantShared.TASK_TYPE_EXPRESSION)));
 		out.add(new HAPPluginBrickDataExpressionLibrary());
-		out.add(new HAPPluginBrick(HAPEnumBrickType.DATAEXPRESSIONLIBELEMENT_100));
+		out.add(new HAPPluginBrick(HAPEnumBrickType.DATAEXPRESSIONLIBELEMENT_100, new HAPInfoBrickType(HAPConstantShared.TASK_TYPE_EXPRESSION)));
 
 		out.add(new HAPPluginBrick(HAPEnumBrickType.DATAEXPRESSIONGROUP_100));
 
 		out.add(new HAPPluginBrickScriptExpressionLibrary());
-		out.add(new HAPPluginBrick(HAPEnumBrickType.SCRIPTEXPRESSIONLIBELEMENT_100));
+		out.add(new HAPPluginBrick(HAPEnumBrickType.SCRIPTEXPRESSIONLIBELEMENT_100, new HAPInfoBrickType(HAPConstantShared.TASK_TYPE_EXPRESSION)));
 
 		out.add(new HAPPluginBrick(HAPEnumBrickType.SCRIPTEXPRESSIONGROUP_100));
 

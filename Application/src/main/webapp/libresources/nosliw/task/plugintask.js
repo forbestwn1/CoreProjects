@@ -81,7 +81,7 @@ var loc_createTaskCore = function(taskDef, configure){
 						var taskEntityCore = node.getChildValue().getCoreEntity();
 						loc_updateTaskValuePortContainerInfo(taskEntityCore);
 						
-						node_taskUtility.getTaskCoreFromTaskEntityCore(taskEntityCore).registerLifecycleEventListener(undefined, function(event, eventData, request){
+						node_taskUtility.registerTaskLifecycleEventListener(taskEntityCore, undefined, function(event, eventData, request){
 							if(event=="finish"){
 								loc_updateTaskResultView(eventData);
 							}

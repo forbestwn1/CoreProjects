@@ -22,16 +22,36 @@ var packageObj = library;
 
 //*******************************************   Start Node Definition  ************************************** 	
 
-var node_taskUtility = {
+var node_taskUtility = function(){
 
-	getTaskCoreFromTaskEntityCore : function(taskEntityCore){
+  var loc_getTaskCoreFromTaskEntityCore = function(taskEntityCore){
 		var taskEntityCore = node_complexEntityUtility.getCoreEntity(taskEntityCore);
 		var taskCoreFacade = node_getApplicationInterface(taskEntityCore, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_TASK);
 		var taskCore = taskCoreFacade.getTaskCore();
 		return taskCore;
-	},
+  };
 
-	getExecuteTaskRequest : function(taskCore, taskSetup, onInitTaskRequest, onFinishTaskRequest, handlers, request){
+  var loc_getTaskAdapter = function(entityCore, adapterName){
+		var adapters = node_getEntityTreeNodeInterface(entityCore).getAdapters();
+		var taskAdapter;
+		if(adapterName==undefined){
+			//if adapter name not provided, then find adapter for task
+			for(var name in adapters){
+				var adapter = adapters[name];
+				var adapterDef = node_getBasicEntityObjectInterface(adapter).getEntityDefinition();
+				var adapterBrickType = adapterDef.getBrickType()[node_COMMONATRIBUTECONSTANT.IDBRICKTYPE_BRICKTYPE]; 
+				if(adapterBrickType==node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_DATAASSOCIATIONFORTASK||adapterBrickType==node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_DATAASSOCIATIONFOREXPRESSION){
+					taskAdapter = adapter;
+				}
+			}
+		}
+		else{
+			taskAdapter = adapters[adapterName];
+		}
+		return taskAdapter;
+  };
+  
+  var loc_getExecuteTaskRequest = function(taskCore, taskSetup, onInitTaskRequest, onFinishTaskRequest, handlers, request){
 		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 		
 		if(onInitTaskRequest==undefined){
@@ -64,14 +84,21 @@ var node_taskUtility = {
 			}
 		}));
 		return out;		
-	},
+	};
 
+  var loc_out = {
+	  
+	registerTaskLifecycleEventListener : function(taskEntityCore, listenerEventObj, handler, thisContext){
+		var taskCore = loc_getTaskCoreFromTaskEntityCore(taskEntityCore); 
+        taskCore.registerLifecycleEventListener(listenerEventObj, handler, thisContext);
+	},
+	  
 	getExecuteEntityTaskRequest : function(entityCore, taskSetup, onInitTaskRequest, onFinishTaskRequest, handlers, request){
-		return this.getExecuteTaskRequest(this.getTaskCoreFromTaskEntityCore(entityCore), taskSetup, onInitTaskRequest, onFinishTaskRequest, handlers, request);
+		return loc_getExecuteTaskRequest(this.getTaskCoreFromTaskEntityCore(entityCore), taskSetup, onInitTaskRequest, onFinishTaskRequest, handlers, request);
 	},
 
 	getExecuteEntityTaskWithAdapterRequest : function(entityCore, adapterName, taskSetup, handlers, request){
-		var taskAdapter = this.getTaskAdapter(entityCore, adapterName);
+		var taskAdapter = loc_getTaskAdapter(entityCore, adapterName);
 		
 		if(taskAdapter!=undefined){
 			return taskAdapter.getExecuteTaskRequest(entityCore, taskSetup, handlers, request);
@@ -81,222 +108,40 @@ var node_taskUtility = {
 		}
 	},
 
+	getExecuteWrapperedTaskRequest : function(wrapperCore, taskSetup, handlers, request){
+		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+		
+		var taskFactory = node_getApplicationInterface(wrapperCore, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_FACTORY);
+		out.addRequest(taskFactory.getCreateEntityRequest({
+			success : function(request, entityCore){
+				var taskCore = loc_getTaskCoreFromTaskEntityCore(entityCore); 
+				taskCore.addTaskSetup(taskSetup);
+				return loc_getExecuteTaskRequest(taskCore, taskSetup);
+			}
+		}));
+
+		return out;		
+	},
+	
 	getExecuteWrapperedTaskWithAdapterRequest : function(wrapperCore, adapterName, taskSetup, handlers, request){
 		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 		
 		var taskFactory = node_getApplicationInterface(wrapperCore, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_FACTORY);
 		out.addRequest(taskFactory.getCreateEntityRequest({
 			success : function(request, entityCore){
-				var taskCore = node_taskUtility.getTaskCoreFromTaskEntityCore(entityCore); 
+				var taskCore = loc_getTaskCoreFromTaskEntityCore(entityCore); 
 				taskCore.addTaskSetup(taskSetup);
-				return node_taskUtility.getExecuteEntityTaskWithAdapterRequest(entityCore, adapterName);
+				return loc_out.getExecuteEntityTaskWithAdapterRequest(entityCore, adapterName);
 			}
 		}));
 
 		return out;		
 	},
 
-	getTaskAdapter : function(entityCore, adapterName){
-		var adapters = node_getEntityTreeNodeInterface(entityCore).getAdapters();
-		var taskAdapter;
-		if(adapterName==undefined){
-			//if adapter name not provided, then find adapter for task
-			for(var name in adapters){
-				var adapter = adapters[name];
-				var adapterDef = node_getBasicEntityObjectInterface(adapter).getEntityDefinition();
-				var adapterBrickType = adapterDef.getBrickType()[node_COMMONATRIBUTECONSTANT.IDBRICKTYPE_BRICKTYPE]; 
-				if(adapterBrickType==node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_DATAASSOCIATIONFORTASK||adapterBrickType==node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_DATAASSOCIATIONFOREXPRESSION){
-					taskAdapter = adapter;
-				}
-			}
-		}
-		else{
-			taskAdapter = adapters[adapterName];
-		}
-		return taskAdapter;
-	},
+  };
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	getExecuteTaskWithAdapterRequest1 : function(entityCore, adapterName, taskContext, handlers, request){
-		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-		var adapters = node_getEntityTreeNodeInterface(entityCore).getAdapters();
-		var taskAdapter;
-		if(adapterName==undefined){
-			//if adapter name not provided, then find adapter for task
-			for(var name in adapters){
-				var adapter = adapters[name];
-				var adapterDef = node_getBasicEntityObjectInterface(adapter).getEntityDefinition();
-				var adapterBrickType = adapterDef.getBrickType()[node_COMMONATRIBUTECONSTANT.IDBRICKTYPE_BRICKTYPE]; 
-				if(adapterBrickType==node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_DATAASSOCIATIONFORTASK||adapterBrickType==node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_DATAASSOCIATIONFOREXPRESSION){
-					taskAdapter = adapter;
-				}
-			}
-		}
-		else{
-			taskAdapter = adapters[adapterName];
-		}
-		
-		if(taskAdapter!=undefined){
-			out.addRequest(taskAdapter.getExecuteTaskRequest(taskContext));
-		}
-		else{
-			out.addRequest(this.getExecuteEntityTaskRequest(entityCore, undefined, taskContext, undefined));
-		}
-		return out;		
-	},
-
-	getExecuteTaskRequest1 : function(taskInterface, handlers, request){
-		var result;
-		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-		out.addRequest(taskInterface.getInitRequest());
-		out.addRequest(taskInterface.getExecuteRequest({
-			success : function(request, result1){
-				result = result1;
-			}
-		}));
-		out.addRequest(taskInterface.getDestroyRequest());
-		out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
-			return result;
-		}));
-		return out;
-	},
-	
-	getInvokeTaskRequest1 : function(taskInfo, taskInput, requirement, bundleCore, handlers, request){
-		var mainEntityDefPath = bundleCore.getMainEntityDefinitionPath();
-		var taskDefPath = taskInfo.getEntityPath();
-		
-		if(!node_basicUtility.isStringEmpty(mainEntityDefPath)){
-			taskDefPath = taskDefPath.subString(mainEntityDefPath.length);
-		}
-		
-		var pathSegs = node_namingConvensionUtility.parsePathInfos(taskDefPath);
-		var i = 0;
-		var path = "";
-		while(i<pathSegs.length-1){
-			path = node_namingConvensionUtility.cascadePath(path, pathSegs[i]);
-			i++;
-		}
-		var attr = pathSegs[pathSegs.length-1];
-		
-		var taskParentCoreEntity = node_complexEntityUtility.getDescendant(bundleCore.getMainEntity().getCoreEntity(), path);
-		
-		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-		var adapterName = node_COMMONCONSTANT.NAME_DEFAULT;
-		var adapterInfo = taskInput==undefined?undefined:taskInput.getAdpaterInfo();
-		if(adapterInfo!=undefined){
-			adapterName = adapterInfo.name;
-		}
-
-		var extraInfo = {
-			taskInput : taskInput,
-			requirement : requirement
-		};
-		out.addRequest(node_complexEntityUtility.getAttributeAdapterExecuteRequest(taskParentCoreEntity, attr, adapterName, extraInfo));
-
-		return out;
-	},
-
-	getInvokeTaskRequest1 : function(taskInfo, taskInput, bundleCore, handlers, request){
-		var mainEntityDefPath = bundleCore.getMainEntityDefinitionPath();
-		var taskDefPath = taskInfo[node_COMMONATRIBUTECONSTANT.INFOTASK_PATH];
-		
-		if(!node_basicUtility.isStringEmpty(mainEntityDefPath)){
-			taskDefPath = taskDefPath.subString(mainEntityDefPath.length);
-		}
-		
-		var pathSegs = node_namingConvensionUtility.parsePathInfos(taskDefPath);
-		var i = 0;
-		var path = "";
-		while(i<pathSegs.length-1){
-			path = node_namingConvensionUtility.cascadePath(path, pathSegs[i]);
-			i++;
-		}
-		var attr = pathSegs[pathSegs.length-1];
-		
-		var mainEntityCore = bundleCore.getMainEntity().getCoreEntity();
-		return this.getTaskAttributeExecuteRequest(node_complexEntityUtility.getDescendant(mainEntityCore, path).getCoreEntity(), attr, taskInput, handlers, request);
-	},
-
-	getInvokeTaskItemRequest1 : function(taskInfo, taskInput, bundleCore, handlers, request){
-		var mainEntityDefPath = bundleCore.getMainEntityDefinitionPath();
-		var taskDefPath = taskInfo[node_COMMONATRIBUTECONSTANT.INFOTASK_PATH];
-		
-		if(!node_basicUtility.isStringEmpty(mainEntityDefPath)){
-			taskDefPath = taskDefPath.subString(mainEntityDefPath.length);
-		}
-		
-		var postSegInfo = node_basicUtility.parsePostSegment(taskDefPath);
-		var mainEntityCore = bundleCore.getMainEntity().getCoreEntity();
-		return this.getTaskItemAttributeExecuteRequest(node_complexEntityUtility.getDescendant(mainEntityCore, postSegInfo.segments).getCoreEntity(), postSegInfo.post, taskInfo[node_COMMONATRIBUTECONSTANT.INFOTASK_NAME], taskInput, handlers, request);
-	},
-
-	getTaskItemAttributeExecuteRequest1 : function(parentCoreEntity, attrName, itemName, taskInput, handlers, request){
-		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-
-		var adapterName = node_COMMONCONSTANT.NAME_DEFAULT;
-		var adapterInfo = taskInput==undefined?undefined:taskInput.adapterInfo;
-		if(adapterInfo!=undefined){
-			adapterName = adapterInfo.name;
-			out.addRequest(node_complexEntityUtility.getAttributeAdapterExecuteRequest(parentCoreEntity, attrName, adapterName, taskInput));
-		}
-
-		var taskEntityCore = node_getEntityTreeNodeInterface(parentCoreEntity).getChild(attrName).getChildValue().getCoreEntity();
-		var taskInterface = node_getApplicationInterface(taskEntityCore, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_TASKCONTAINER);
-		out.addRequest(taskInterface.getExecuteItemRequest(itemName, taskInput));
-		
-		return out;
-	},
-	
-	getTaskEntityExecuteRequest1 : function(parentCoreEntity, attrName, taskInput, adapterInfo, requirement, handlers, request){
-		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-
-		var adapterName = node_COMMONCONSTANT.NAME_DEFAULT;
-		var adapterInfo = taskInput==undefined?undefined:taskInput.adapterInfo;
-		if(adapterInfo!=undefined){
-			adapterName = adapterInfo.name;
-			out.addRequest(node_complexEntityUtility.getAttributeAdapterExecuteRequest(parentCoreEntity, attrName, adapterName, taskInput));
-		}
-
-		var taskEntityCore = node_getEntityTreeNodeInterface(parentCoreEntity).getChild(attrName).getChildValue().getCoreEntity();
-		var taskInterface = node_getApplicationInterface(taskEntityCore, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_TASK);
-		out.addRequest(taskInterface.getExecuteRequest(taskInput, handlers, request));
-		
-		return out;
-	},
-
-	getTaskAttributeExecuteRequest1 : function(parentCoreEntity, attrName, taskInput, handlers, request){
-		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-
-		var adapterName = node_COMMONCONSTANT.NAME_DEFAULT;
-		var adapterInfo = taskInput==undefined?undefined:taskInput.adapterInfo;
-		if(adapterInfo!=undefined){
-			adapterName = adapterInfo.name;
-			out.addRequest(node_complexEntityUtility.getAttributeAdapterExecuteRequest(parentCoreEntity, attrName, adapterName, taskInput));
-		}
-
-		var taskEntityCore = node_getEntityTreeNodeInterface(parentCoreEntity).getChild(attrName).getChildValue().getCoreEntity();
-		var taskInterface = node_getApplicationInterface(taskEntityCore, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_TASK);
-		out.addRequest(taskInterface.getExecuteRequest(taskInput, handlers, request));
-		
-		return out;
-	},
-	
-};
+  return loc_out;
+}();
 
 //*******************************************   End Node Definition  ************************************** 	
 //populate dependency node data

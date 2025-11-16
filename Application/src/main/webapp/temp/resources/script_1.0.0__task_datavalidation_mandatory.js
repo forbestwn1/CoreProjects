@@ -25,12 +25,8 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 	var node_interactiveUtility = nosliw.getNodeData("task.interactiveUtility");
 	var node_createTaskCore = nosliw.getNodeData("task.createTaskCore");
 
-	var loc_valueContext;
-
 	var loc_envInterface = {};
 	
-	var loc_taskContext;
-
 	var loc_taskCore;
 	
 	var loc_facadeTaskCore = {

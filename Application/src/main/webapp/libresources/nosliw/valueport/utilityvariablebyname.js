@@ -28,6 +28,11 @@ var node_utilityNamedVariable = function(){
 			return valuePortContainer.createValuePort(valuePortGroupName, valuePortName).setValueRequest(eleInfo, value, handlers, request);
 		},
 		
+		setValuePortValueByGroupTypeRequest : function(valuePortContainer, valuePortGroupType, valuePortName, varName, value, handlers, request){
+			var eleInfo = node_createValuePortElementInfo(undefined, varName);
+			return valuePortContainer.createValuePortByGroupType(valuePortGroupType, valuePortName).setValueRequest(eleInfo, value, handlers, request);
+		},
+		
 		setValuesPortValueRequest : function(valuePortContainer, valuePortGroupType, valuePortName, setValueByName, handlers, request){        
 			var setValuesInfo = [];
 			_.each(setValueByName, function(value, name){

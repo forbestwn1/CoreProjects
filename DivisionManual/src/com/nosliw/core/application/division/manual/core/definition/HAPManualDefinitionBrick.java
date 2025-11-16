@@ -12,6 +12,8 @@ import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityNosliw;
 import com.nosliw.core.application.HAPIdBrickType;
+import com.nosliw.core.application.HAPManagerApplicationBrick;
+import com.nosliw.core.application.HAPUtilityBrick;
 import com.nosliw.core.application.HAPValueOfDynamic;
 import com.nosliw.core.application.brick.HAPEnumBrickType;
 import com.nosliw.core.application.brick.wrappertask.HAPBlockTaskWrapper;
@@ -25,7 +27,6 @@ import com.nosliw.core.application.division.manual.brick.data.HAPManualDefinitio
 import com.nosliw.core.application.division.manual.brick.value.HAPManualDefinitionBlockValue;
 import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualDefinitionBrickValueContext;
 import com.nosliw.core.application.division.manual.brick.wrappertask.HAPManualDefinitionBlockTaskWrapper;
-import com.nosliw.core.application.division.manual.common.task.HAPManualUtilityTask;
 import com.nosliw.core.application.division.manual.core.HAPManualManagerBrick;
 import com.nosliw.core.resource.HAPResourceId;
 import com.nosliw.core.xxx.application.division.manual.core.definition1.HAPManualDefinitionUtilityValueContext;
@@ -51,6 +52,8 @@ public abstract class HAPManualDefinitionBrick extends HAPSerializableImp implem
 	private HAPIdBrickType m_brickTypeId;
 
 	private HAPManualManagerBrick m_manualBrickMan;
+	
+	private HAPManagerApplicationBrick m_brickMan;
 	
 	public HAPManualDefinitionBrick (HAPIdBrickType brickTypeId) {
 		this.m_attributes = new ArrayList<HAPManualDefinitionAttributeInBrick>();
@@ -98,6 +101,9 @@ public abstract class HAPManualDefinitionBrick extends HAPSerializableImp implem
 	public void setManualBrickManager(HAPManualManagerBrick manualBrickMan) {     this.m_manualBrickMan = manualBrickMan;       }
 	protected HAPManualManagerBrick getManualBrickManager() {    return this.m_manualBrickMan;     }
 	
+	public void setBrickManager(HAPManagerApplicationBrick brickMan) {     this.m_brickMan = brickMan;       }
+	protected HAPManagerApplicationBrick getBrickManager() {    return this.m_brickMan;     }
+	
 	public void setAttribute(HAPManualDefinitionAttributeInBrick attribute) {
 		for(int i=0; i<this.m_attributes.size(); i++) {
 			if(this.m_attributes.get(i).getName().equals(attribute.getName())) {
@@ -109,7 +115,7 @@ public abstract class HAPManualDefinitionBrick extends HAPSerializableImp implem
 		boolean isTaskAttr = false;
 		HAPIdBrickType attrBrickTypeId = HAPManualDefinitionUtilityBrick.getBrickType(attribute.getValueWrapper());
 		if(attrBrickTypeId!=null) {
-			isTaskAttr = HAPManualUtilityTask.getBrickTaskType(attrBrickTypeId, this.getManualBrickManager())!=null;
+			isTaskAttr = HAPUtilityBrick.getBrickTaskType(attrBrickTypeId, this.getBrickManager())!=null;
 		}
 		
 		if(isTaskAttr&&this.getBrickTypeId()!=HAPEnumBrickType.TASKWRAPPER_100) {

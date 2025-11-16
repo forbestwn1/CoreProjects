@@ -7,7 +7,6 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.HAPBrick;
 import com.nosliw.core.application.HAPBundle;
 import com.nosliw.core.application.HAPDomainValueStructure;
-import com.nosliw.core.application.HAPIdBrickType;
 import com.nosliw.core.application.HAPUtilityBrick;
 import com.nosliw.core.application.brick.HAPEnumBrickType;
 import com.nosliw.core.application.brick.wrappertask.HAPBlockTaskWrapper;
@@ -16,7 +15,6 @@ import com.nosliw.core.application.common.interactive.HAPInteractiveTask;
 import com.nosliw.core.application.common.interactive.HAPUtilityInteractiveTaskValuePort;
 import com.nosliw.core.application.common.structure.HAPElementStructure;
 import com.nosliw.core.application.division.manual.core.HAPManualBrick;
-import com.nosliw.core.application.division.manual.core.HAPManualManagerBrick;
 import com.nosliw.core.application.valueport.HAPInfoValuePortContainer;
 import com.nosliw.core.application.valueport.HAPUtilityBrickValuePort;
 import com.nosliw.core.data.matcher.HAPMatchers;
@@ -25,10 +23,6 @@ import com.nosliw.core.runtime.HAPRuntimeInfo;
 
 public class HAPManualUtilityTask {
 
-	public static String getBrickTaskType(HAPIdBrickType brickTypeId, HAPManualManagerBrick brickManManual) {
-		return brickManManual.getBrickTypeInfo(brickTypeId).getTaskType();
-	}
-	
 	public static HAPPath figureoutTaskPath(HAPBundle bundle, HAPPath idPath, String rootNameIfNotProvide) {
 		HAPPath out = idPath;
 		HAPBrick brick = HAPUtilityBrick.getDescdentBrickLocal(bundle, idPath, rootNameIfNotProvide);

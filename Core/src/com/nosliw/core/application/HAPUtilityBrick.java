@@ -25,6 +25,18 @@ public class HAPUtilityBrick {
 		return out;
 	}
 
+
+	public static HAPIdBrickType getBrickType(HAPEntityOrReference brickOrRef, HAPManagerApplicationBrick brickManager) {
+		HAPIdBrickType out = null;
+		String type = brickOrRef.getEntityOrReferenceType();
+		if(type.equals(HAPConstantShared.BRICK)) {
+			out = ((HAPBrick)brickOrRef).getBrickType();
+		}
+		else if(type.equals(HAPConstantShared.RESOURCEID)) {
+			out = HAPUtilityBrickId.getBrickTypeIdFromResourceTypeId(((HAPResourceId)brickOrRef).getResourceTypeId());
+		}
+		return out;
+	}
 	
 	public static HAPBrick getBrick(HAPEntityOrReference brickOrRef, HAPManagerApplicationBrick brickManager) {
 		HAPBrick out = null;
@@ -76,6 +88,15 @@ public class HAPUtilityBrick {
 		return getDescendantAttribute(bundle.getRootBrickWrapper(fullPathInfo.getRoot()).getBrick(), fullPathInfo.getPath());
 	}
 	
+	public static String getBrickTaskType(HAPIdBrickType brickTypeId, HAPManagerApplicationBrick brickMan) {
+		HAPInfoBrickType brickTypeInfo = brickMan.getBrickTypeInfo(brickTypeId);
+		if(brickTypeInfo!=null) {
+			return brickTypeInfo.getTaskType();
+		}
+		return null;
+	}
+
+	
 	
 	private static HAPBrick getDescdentBrickLocal(HAPBrick brick, HAPPath path) {
 		HAPResultBrickDescentValue brickResult = getDescendantResult(brick, path);
@@ -85,9 +106,6 @@ public class HAPUtilityBrick {
 		return null;
 	}
 	
-	
-	
-
 	private static HAPResultBrickDescentValue getDescendantResult(HAPBrick brick, HAPPath path) {
 		if(path==null||path.isEmpty()) {
 			return new HAPResultBrickDescentValue(brick);

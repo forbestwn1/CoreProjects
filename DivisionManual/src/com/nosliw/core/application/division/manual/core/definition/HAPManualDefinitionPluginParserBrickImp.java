@@ -40,6 +40,7 @@ public class HAPManualDefinitionPluginParserBrickImp implements HAPManualDefinit
 		try {
 			out = this.m_brickClass.newInstance();
 			out.setManualBrickManager(this.getManualDivisionBrickManager());
+			out.setBrickManager(this.getBrickManager());
 			out.init();
 		}
 		catch(Exception e) {

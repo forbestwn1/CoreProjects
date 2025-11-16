@@ -21,6 +21,11 @@ public class HAPInteractiveTask extends HAPSerializableImp implements HAPInterac
 
 	private List<HAPInteractiveResultTask> m_results;
 
+	public HAPInteractiveTask(List<HAPDefinitionParm> requestParms, List<HAPInteractiveResultTask> results) {
+		this.m_request = new HAPInteractiveRequest(requestParms);
+		this.m_results = results;
+	}
+	
 	public HAPInteractiveTask() {
 		this.m_results = new ArrayList<HAPInteractiveResultTask>();
 		this.m_request = new HAPInteractiveRequest();

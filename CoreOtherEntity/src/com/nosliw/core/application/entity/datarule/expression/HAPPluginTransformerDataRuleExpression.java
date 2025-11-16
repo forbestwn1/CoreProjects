@@ -1,7 +1,5 @@
 package com.nosliw.core.application.entity.datarule.expression;
 
-import org.apache.commons.lang3.tuple.Pair;
-
 import com.nosliw.common.interfac.HAPEntityOrReference;
 import com.nosliw.core.application.HAPDomainValueStructure;
 import com.nosliw.core.application.brick.dataexpression.standalone.HAPBlockDataExpressionStandAloneImp;
@@ -10,16 +8,14 @@ import com.nosliw.core.application.common.dataexpression.definition.HAPDefinitio
 import com.nosliw.core.application.common.dataexpression.imp.basic.HAPBasicExpressionData;
 import com.nosliw.core.application.common.dataexpression.imp.basic.HAPBasicUtilityProcessorDataExpression;
 import com.nosliw.core.application.common.interactive.HAPInteractiveExpression;
-import com.nosliw.core.application.common.interactive.HAPUtilityInteractiveTaskValuePort;
 import com.nosliw.core.application.common.withvariable.HAPContainerVariableInfo;
 import com.nosliw.core.application.common.withvariable.HAPManagerWithVariablePlugin;
 import com.nosliw.core.application.common.withvariable.HAPUtilityWithVarible;
 import com.nosliw.core.application.entity.datarule.HAPDataRule;
-import com.nosliw.core.application.entity.datarule.HAPPluginTransformerDataRule;
-import com.nosliw.core.application.entity.datarule.HAPUtilityDataRule;
+import com.nosliw.core.application.entity.datarule.HAPPluginTransformerDataRuleImp;
 import com.nosliw.core.application.valueport.HAPUtilityValuePortVariable;
 
-public class HAPPluginTransformerDataRuleExpression implements HAPPluginTransformerDataRule{
+public class HAPPluginTransformerDataRuleExpression extends HAPPluginTransformerDataRuleImp{
 
 	private HAPManagerWithVariablePlugin m_withVariableMan;
 
@@ -33,9 +29,7 @@ public class HAPPluginTransformerDataRuleExpression implements HAPPluginTransfor
 
 		HAPBlockDataExpressionStandAloneImp brick = new HAPBlockDataExpressionStandAloneImp();
 
-		HAPInteractiveExpression interactive = HAPUtilityDataRule.buildExpressionInterface(expressionDataRule.getDataCriteria());
-		
-		HAPUtilityInteractiveTaskValuePort.buildValuePortGroupForInteractiveExpression(Pair.of(brick.getInternalValuePorts(), brick.getExternalValuePorts()), interactive, valueStructureDomian);
+		HAPInteractiveExpression interactive = this.buildValuePortGroupForRuleTaskBrickExpression(expressionDataRule, brick, valueStructureDomian); 
 		
 		HAPDefinitionDataExpressionStandAlone dataExpressionStandAloneDef = new HAPDefinitionDataExpressionStandAlone(); 
 		dataExpressionStandAloneDef.setExpression(expressionDataRule.getExpressionDefinition());		

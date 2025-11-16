@@ -5,7 +5,6 @@ import com.nosliw.core.application.HAPIdBrickType;
 import com.nosliw.core.application.HAPResultBrickDescentValue;
 import com.nosliw.core.application.HAPUtilityBrick;
 import com.nosliw.core.application.HAPUtilityBrickId;
-import com.nosliw.core.application.division.manual.common.task.HAPManualUtilityTask;
 import com.nosliw.core.application.division.manual.core.HAPManualBrick;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionBrick;
 
@@ -44,7 +43,8 @@ public abstract class HAPManualPluginProcessorAdapter extends HAPManualPluginPro
 		HAPPath baseBlockPath = getRootPathForBaseBrick(processContext);
 		
 		HAPIdBrickType brickTypeId = this.getBaseBrickType(processContext);
-		if(brickTypeId!=null && HAPManualUtilityTask.getBrickTaskType(brickTypeId, processContext.getManualBrickManager())!=null){
+		
+		if(brickTypeId!=null && HAPUtilityBrick.getBrickTaskType(brickTypeId, processContext.getBrickManager())!=null){
 			//base is task type, then second is parent's parent's
 			out = baseBlockPath.trimLast().getLeft().trimLast().getLeft();
 		}

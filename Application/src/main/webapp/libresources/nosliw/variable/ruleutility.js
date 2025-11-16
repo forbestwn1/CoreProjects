@@ -20,6 +20,11 @@ var node_pathUtility;
 var node_variableUtility;
 var node_requestServiceProcessor;
 var node_wrapperFactory;
+var node_complexEntityUtility;
+var node_createTaskSetup;
+var node_taskUtility;
+var node_getEntityObjectInterface;
+var node_utilityNamedVariable;
 
 //*******************************************   Start Node Definition  **************************************
 
@@ -197,45 +202,73 @@ var node_utility = function(){
 		}
 		return out;
 	};
-	
-	var loc_executeRuleValidationRequest = function(ruleValidationItem){
-		
-					var relativePath = trigguerInfo[node_COMMONATRIBUTECONSTANT.INFOTRIGGUERTASK_HANDLERID][node_COMMONATRIBUTECONSTANT.IDBRICKINBUNDLE_RELATIVEPATH];
-					var handlerEntityCoreWrapper = node_complexEntityUtility.getBrickCoreByRelativePath(loc_out, relativePath);
-					
-					var taskSetup = node_createTaskSetup(
-						function(coreEntity, handlers, request){
-							//set event data to value port
-							var internalValuePortContainer = node_getEntityObjectInterface(coreEntity).getExternalValuePortContainer();
-							
-							var valuePortName;
-							var rootEleName;
-								valuePortName = node_COMMONCONSTANT.VALUEPORT_NAME_INTERACT_REQUEST;
-								rootEleName = node_COMMONCONSTANT.NAME_ROOT_DATA;
-							
-							return node_utilityNamedVariable.setValuePortValueByGroupNameRequest(
-								internalValuePortContainer,
-								trigguerInfo[node_COMMONATRIBUTECONSTANT.INFOTRIGGUERTASK_VALUEPORTGROUPNAME],
-								valuePortName,
-								rootEleName,
-								taskTrigguer[node_COMMONATRIBUTECONSTANT.TESTTASKTRIGGUER_TESTDATA],
-								handlers, request);
-						}
-					);
-					
-					var taskExeRequest = node_taskUtility.getExecuteWrapperedTaskWithAdapterRequest(handlerEntityCoreWrapper, undefined, taskSetup, {
-						success : function(request, taskResult){
-							eventResultView.val(JSON.stringify(taskResult));
-						}
-					});
-		
-		
+
+	var loc_executeRuleValidationsRequest = function(ruleValidationItems, bundle, handlers, request){
+   		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+		var ruleValidationResults = [];
+		_.each(ruleValidationItems, function(ruleValidationItem, i){
+			out.addRequest(loc_executeRuleValidationRequest(ruleValidationItem, bundle, {
+				success : function(request, ruleValidationResult){
+					ruleValidationResults.push(ruleValidationResult);
+				}
+			}));
+		});
+		out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
+            return ruleValidationResults;		
+		}));
+        return out;		
 	};
+
 	
+	var loc_executeRuleValidationRequest = function(ruleValidationItem, bundle, handlers, request){
+		var ruleDef = ruleValidationItem.ruleDef;
+		var dataRule = ruleDef[node_COMMONATRIBUTECONSTANT.DEFINITIONDATARULE_DATARULE];
+		var ruleTaskPath = dataRule[node_COMMONATRIBUTECONSTANT.DATARULE_IMPLEMENTATION][node_COMMONATRIBUTECONSTANT.DATARULEIMPLEMENTATIONLOCAL_PATHID];
+		var taskEntityCore = node_complexEntityUtility.getDescendantCore(bundle, ruleTaskPath);
+		
+		var taskSetup = node_createTaskSetup(
+			function(coreEntity, handlers, request){
+				//set event data to value port
+				var externalValuePortContainer = node_getEntityObjectInterface(coreEntity).getExternalValuePortContainer();
+				
+				if(externalValuePortContainer.getValuePortInfoByGroupTypeAndValuePortName(node_COMMONCONSTANT.VALUEPORTGROUP_TYPE_INTERACTIVEEXPRESSION, node_COMMONCONSTANT.VALUEPORT_TYPE_INTERACTIVE_REQUEST)!=undefined){
+					//expression
+    				return node_utilityNamedVariable.setValuePortValueByGroupTypeRequest(
+	    				externalValuePortContainer,
+		    			node_COMMONCONSTANT.VALUEPORTGROUP_TYPE_INTERACTIVEEXPRESSION,
+			    		node_COMMONCONSTANT.VALUEPORT_NAME_INTERACT_REQUEST,
+				    	node_COMMONCONSTANT.NAME_ROOT_DATA,
+					    ruleValidationItem.data,
+					    handlers, request);
+				}
+				else{
+					//task
+    				return node_utilityNamedVariable.setValuePortValueByGroupTypeRequest(
+	    				externalValuePortContainer,
+		    			node_COMMONCONSTANT.VALUEPORTGROUP_TYPE_INTERACTIVETASK,
+			    		node_COMMONCONSTANT.VALUEPORT_NAME_INTERACT_REQUEST,
+				    	node_COMMONCONSTANT.NAME_ROOT_DATA,
+					    ruleValidationItem.data,
+					    handlers, request);
+				}
+    		}
+		);
+		
+   		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+		out.addRequest(node_taskUtility.getExecuteWrapperedTaskRequest(taskEntityCore, taskSetup, {
+			success : function(request, taskResult){
+                return {
+					ruleValidationItem : ruleValidationItem,
+					validationResult : taskResult 
+				};			
+			}
+		}));
+        return out;
+	};
 	
 	var loc_out = {
 		
-		getExecuteRuleValidationRequest : function(variable, operationService, handlers, request){
+		getExecuteRuleValidationRequest : function(variable, operationService, bundleCore, handlers, request){
     		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
     		out.addRequest(loc_convertBaseOperationServiceRequest(node_variableUtility.getVariable(variable), operationService, {
 				success : function(request, baseOpInfo){
@@ -243,6 +276,12 @@ var node_utility = function(){
 					return loc_getCollectRuleInfoRequest(baseOpInfo.rootVariable, baseOpInfo.operationService, allRuleInfo, {
 						success : function(request){
 							console.log(JSON.stringify(allRuleInfo));
+							
+							return loc_executeRuleValidationsRequest(allRuleInfo, bundleCore, {
+								success : function(request, ruleValidationResults){
+        							console.log(JSON.stringify(ruleValidationResults));
+								}
+							});
 						}
 					});
 				}
@@ -250,8 +289,8 @@ var node_utility = function(){
     		return out;
 		},
 		
-		executeExecuteRuleValidationRequest : function(variable, operationService, handlers, request){
-			var requestInfo = this.getExecuteRuleValidationRequest(variable, operationService, handlers, request);
+		executeExecuteRuleValidationRequest : function(variable, operationService, bundleCore, handlers, request){
+			var requestInfo = this.getExecuteRuleValidationRequest(variable, operationService, bundleCore, handlers, request);
 			node_requestServiceProcessor.processRequest(requestInfo);
 		},
 	};
@@ -278,6 +317,11 @@ nosliw.registerSetNodeDataEvent("common.path.pathUtility", function(){node_pathU
 nosliw.registerSetNodeDataEvent("variable.variable.variableUtility", function(){node_variableUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
 nosliw.registerSetNodeDataEvent("variable.wrapper.wrapperFactory", function(){node_wrapperFactory = this.getData();});
+nosliw.registerSetNodeDataEvent("complexentity.complexEntityUtility", function(){node_complexEntityUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("task.createTaskSetup", function(){node_createTaskSetup = this.getData();});
+nosliw.registerSetNodeDataEvent("task.taskUtility", function(){node_taskUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("complexentity.getEntityObjectInterface", function(){node_getEntityObjectInterface = this.getData();});
+nosliw.registerSetNodeDataEvent("valueport.utilityNamedVariable", function(){node_utilityNamedVariable = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("variableRuleUtility", node_utility); 

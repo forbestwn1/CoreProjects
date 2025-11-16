@@ -218,7 +218,14 @@ var loc_createValuePortContainer = function(id, valuePortContainerDef, variableD
 
 		getParentValuePortContainer : function(){   return loc_parentValuePortContainer;    },
 
-		getValuePortInfoByGroupTypeAndValuePortName : function(groupType, valuePortName){	return loc_valuePortInfoByGroupTypeAndValuePortId[groupType][valuePortName][0];	},
+		getValuePortInfoByGroupTypeAndValuePortName : function(groupType, valuePortName){
+			var byPortName = loc_valuePortInfoByGroupTypeAndValuePortId[groupType];
+			if(byPortName!=undefined){
+				if(byPortName[valuePortName]!=undefined){
+        			return byPortName[valuePortName][0];	
+				}
+			}	
+		},
 
 		getValueStructuresByGroupTypeAndValuePortName : function(groupType, valuePortName){
 			var valuePortInfo = this.getValuePortInfoByGroupTypeAndValuePortName(groupType, valuePortName);

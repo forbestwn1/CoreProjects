@@ -27,6 +27,8 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 
 	var loc_tasks;
 
+    var loc_bundleCore;
+
 	var loc_valueContext;
 
 	var loc_variableInfos = [];
@@ -42,6 +44,8 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
     	loc_extendVars = complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.BLOCKTESTCOMPLEXSCRIPT_VARIABLEEXTENDED);
     	loc_tasks = complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.BLOCKTESTCOMPLEXSCRIPT_TASK);
 		loc_configure = configure;
+	
+        loc_bundleCore = bundleCore;	
 	
 		var varDomain = bundleCore.getValuePortDomain();
 		loc_valueContext = varDomain.creatValuePortContainer(valueContextId);
@@ -93,7 +97,7 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 			
 			var operationService = node_valueInVarOperationServiceUtility.createSetOperationService("", value);
 			
-			node_variableRuleUtility.executeExecuteRuleValidationRequest(varInfo.variable, operationService);
+			node_variableRuleUtility.executeExecuteRuleValidationRequest(varInfo.variable, operationService, loc_bundleCore);
 		
 			varInfo.variable.executeDataOperationRequest(operationService);
 		});					

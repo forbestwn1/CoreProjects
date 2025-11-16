@@ -18,6 +18,8 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 
 	var loc_tasks;
 
+    var loc_bundleCore;
+
 	var loc_valueContext;
 
 	var loc_variableInfos = [];
@@ -33,6 +35,8 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
     	loc_extendVars = complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.BLOCKTESTCOMPLEXSCRIPT_VARIABLEEXTENDED);
     	loc_tasks = complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.BLOCKTESTCOMPLEXSCRIPT_TASK);
 		loc_configure = configure;
+	
+        loc_bundleCore = bundleCore;	
 	
 		var varDomain = bundleCore.getValuePortDomain();
 		loc_valueContext = varDomain.creatValuePortContainer(valueContextId);
@@ -84,7 +88,7 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 			
 			var operationService = node_valueInVarOperationServiceUtility.createSetOperationService("", value);
 			
-			node_variableRuleUtility.executeExecuteRuleValidationRequest(varInfo.variable, operationService);
+			node_variableRuleUtility.executeExecuteRuleValidationRequest(varInfo.variable, operationService, loc_bundleCore);
 		
 			varInfo.variable.executeDataOperationRequest(operationService);
 		});					

@@ -176,7 +176,22 @@ public class HAPManagerApplicationBrick {
 	public void registerAdapterTypeByBlockType(HAPIdBrickType blockType, HAPIdBrickType adapterType) {		this.m_adapterTypeByBlockType.put(blockType.getKey(), adapterType);	}
 	public HAPIdBrickType getDefaultAdapterTypeByBlockType(HAPIdBrickType blockType) {   return this.m_adapterTypeByBlockType.get(blockType.getKey());  	}
 	
-	private HAPPluginBrick getBrickPlugin(HAPIdBrickType brickTypeId) {		return this.m_brickPlugins.get(brickTypeId.getBrickType()).get(brickTypeId.getVersion());	}
+	public HAPInfoBrickType getBrickTypeInfo(HAPIdBrickType brickTypeId) {
+		HAPPluginBrick brickTypePlugin = this.getBrickPlugin(brickTypeId);
+		if(brickTypePlugin!=null) {
+			return brickTypePlugin.getBrickTypeInfo();
+		}
+		return null;    
+	}
+	
+	private HAPPluginBrick getBrickPlugin(HAPIdBrickType brickTypeId) {
+		Map<String, HAPPluginBrick> byVersion = this.m_brickPlugins.get(brickTypeId.getBrickType());
+		if(byVersion!=null) {
+			return byVersion.get(brickTypeId.getVersion()); 
+		}
+		
+		return null;	
+	}
 
 	
 	private void buildDependencyGroup(HAPResourceId complexEntityResourceId, Set<HAPResourceId> dependency) {

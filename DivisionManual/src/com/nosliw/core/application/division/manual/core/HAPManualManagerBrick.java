@@ -132,7 +132,7 @@ public class HAPManualManagerBrick implements HAPPluginDivision{
 		}
 
 		//process data rule
-		HAPProcessorRuleInBundle.process(out, m_dataRuleManager);
+		HAPProcessorRuleInBundle.process(out, m_dataRuleManager, this.m_brickManager);
 		
 		out.setExtraData(definitions);
 		
