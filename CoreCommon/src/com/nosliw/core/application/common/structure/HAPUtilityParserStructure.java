@@ -8,7 +8,6 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.nosliw.common.info.HAPUtilityEntityInfo;
-import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.entity.datarule.HAPManagerDataRule;
 
 public class HAPUtilityParserStructure {
@@ -18,11 +17,11 @@ public class HAPUtilityParserStructure {
 
 		HAPInfoStructureInWrapper structureInfo = new HAPInfoStructureInWrapper();
 		
-		String groupType = (String)wrapperObj.opt(HAPInfoStructureInWrapper.GROUPTYPE);
-		if(groupType==null) {
-			groupType = HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PUBLIC;
+		String scope = (String)wrapperObj.opt(HAPInfoStructureInWrapper.SCOPE);
+		if(scope==null) {
+			scope = HAPUtilityScope.DEFAULT_SCOPE;
 		}
-		structureInfo.setGroupType(groupType);
+		structureInfo.setScope(scope);
 
 		String inheritMode = (String)wrapperObj.opt(HAPInfoStructureInWrapper.INHERITMODE);
 		if(inheritMode!=null) {

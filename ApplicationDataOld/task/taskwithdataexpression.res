@@ -7,7 +7,7 @@
 		"valueContext" : {
 			"entity": [
 				{
-					"groupType" : "public",
+					"scope" : "public",
 					"valueStructure" : {
 						"localBase": {
 							"definition":{

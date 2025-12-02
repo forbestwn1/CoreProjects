@@ -6,7 +6,7 @@ import java.util.Comparator;
 import java.util.List;
 
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.core.application.common.structure.HAPUtilityStructure;
+import com.nosliw.core.application.common.structure.HAPUtilityScope;
 import com.nosliw.core.application.common.structure.HAPValueContextDefinition;
 import com.nosliw.core.application.common.structure.HAPWrapperValueStructureDefinition;
 import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualDefinitionBrickValueContext;
@@ -34,7 +34,7 @@ public class HAPManualUtilityValueContext {
 		HAPManualDefinitionBrickValueStructure manualBrickValueStrucutre = (HAPManualDefinitionBrickValueStructure)manualDivisionEntityMan.newBrickDefinition(HAPManualEnumBrickType.VALUESTRUCTURE_100);
 		manualBrickValueStrucutre.setValue(valueStructureWrapper.getValueStructure());
 		manualWrapperBrickValueStrucutre.setValueStructure(manualBrickValueStrucutre);
-		manualWrapperBrickValueStrucutre.getStructureInfo().setGroupType(valueStructureWrapper.getStructureInfo().getGroupType());
+		manualWrapperBrickValueStrucutre.getStructureInfo().setScope(valueStructureWrapper.getStructureInfo().getScope());
 		manualWrapperBrickValueStrucutre.getStructureInfo().setInheritMode(valueStructureWrapper.getStructureInfo().getInheritMode());
 		valueStructureWrapper.cloneToEntityInfo(manualWrapperBrickValueStrucutre);
 		valueContextBrick.addValueStructure(manualWrapperBrickValueStrucutre);
@@ -87,10 +87,10 @@ public class HAPManualUtilityValueContext {
 		Collections.sort(valueStructures, new Comparator<HAPManualInfoValueStructureSorting>() {
 			@Override
 			public int compare(HAPManualInfoValueStructureSorting arg0, HAPManualInfoValueStructureSorting arg1) {
-				String groupType0 = arg0.getValueStructure().getStructureInfo().getGroupType();
-				String groupType1 = arg1.getValueStructure().getStructureInfo().getGroupType();
+				String groupType0 = arg0.getValueStructure().getStructureInfo().getScope();
+				String groupType1 = arg1.getValueStructure().getStructureInfo().getScope();
 				
-				List<String> groups = HAPUtilityStructure.getAllCategariesWithResolvePriority();
+				List<String> groups = HAPUtilityScope.getAllScopesWithResolvePriority();
 				int groupPriority0 = groups.indexOf(groupType0);
 				int groupPriority1 = groups.indexOf(groupType1);
 

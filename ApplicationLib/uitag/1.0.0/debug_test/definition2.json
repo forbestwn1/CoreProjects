@@ -26,7 +26,7 @@
 	],
 	"valueContext": [
 		{
-			"groupType" : "public",
+			"scope" : "public",
 			"valueStructure" : {
 				"root": {
 					"internal_data_string": {
@@ -55,7 +55,7 @@
 			}
 		},
 		{
-			"groupType" : "protected",
+			"scope" : "protected",
 			"status": "<%=&(nosliwattribute_data_array)&=='empty'?'disabled':''%>",
 			"valueStructure" : {
 				"root": {

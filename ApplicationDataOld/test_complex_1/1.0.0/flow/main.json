@@ -269,7 +269,7 @@
 			},
 			"brick": [
 				{
-					"groupType" : "public",
+					"scope" : "public",
 					"valueStructure" : {
 						"root": {
 							"output1": {

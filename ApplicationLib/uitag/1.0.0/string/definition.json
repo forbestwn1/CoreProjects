@@ -11,7 +11,7 @@
 	],
 	"valueContext": [
 		{
-			"groupType" : "public",
+			"scope" : "public",
 			"valueStructure" : {
 				"root": {
 					"internal_data": {

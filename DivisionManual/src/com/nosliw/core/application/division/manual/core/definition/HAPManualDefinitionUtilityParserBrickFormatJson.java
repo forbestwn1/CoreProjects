@@ -21,7 +21,6 @@ import com.nosliw.core.resource.HAPFactoryResourceId;
 import com.nosliw.core.resource.HAPResourceId;
 import com.nosliw.core.xxx.application.division.manual.core.definition1.HAPManualDefinitionWrapperValueDynamic;
 import com.nosliw.core.xxx.application.division.manual.core.definition1.HAPManualDefinitionWrapperValueReferenceAttachment;
-import com.nosliw.core.xxx.application.division.manual.core.definition1.HAPManualDefinitionWrapperValueReferenceBrick;
 
 public class HAPManualDefinitionUtilityParserBrickFormatJson {
 

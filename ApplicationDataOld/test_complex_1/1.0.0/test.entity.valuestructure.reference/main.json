@@ -25,7 +25,7 @@
 			},
 			"entity": [
 				{
-					"groupType" : "public",
+					"scope" : "public",
 					"valueStructure" : {
 						"parent_public": {
 							"definition":{
@@ -67,7 +67,7 @@
 					}
 				},
 				{
-					"groupType" : "protected",
+					"scope" : "protected",
 					"valueStructure" : {
 						"parent_protected": {
 							"definition":{
@@ -81,7 +81,7 @@
 					}
 				},
 				{
-					"groupType" : "private",
+					"scope" : "private",
 					"valueStructure" : {
 						"parent_private": {
 							"definition":{
@@ -95,7 +95,7 @@
 					}
 				},
 				{
-					"groupType" : "internal",
+					"scope" : "internal",
 					"valueStructure" : {
 						"parent_public": {
 							"definition":{

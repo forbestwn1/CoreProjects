@@ -72,7 +72,7 @@
 			},
 			"entity": [
 				{
-					"groupType" : "public",
+					"scope" : "public",
 					"valueStructure" : {
 						"parm1": {
 							"definition":{

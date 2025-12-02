@@ -19,7 +19,7 @@
 	"valueContext": {
 		"entity" : [
 			{
-				"groupType" : "private",
+				"scope" : "private",
 				"valueStructure" : {
 					"internal_data": {
 						"definition" : {
@@ -34,7 +34,7 @@
 				}
 			},
 			{
-				"groupType" : "protected",
+				"scope" : "protected",
 				"name" : "nosliw_internal",
 				"valueStructure" : {
 					"<%=&(nosliwattribute_element)&%>" : {

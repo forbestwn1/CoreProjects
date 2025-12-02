@@ -83,7 +83,7 @@
 			},
 			"brick": [
 				{
-					"groupType" : "public",
+					"scope" : "public",
 					"valueStructure" : {
 						"root" : {
 							"parent_public": {
@@ -101,7 +101,7 @@
 					}
 				},
 				{
-					"groupType" : "protected",
+					"scope" : "protected",
 					"valueStructure" : {
 						"root" : {
 							"parent_protected": {
@@ -123,7 +123,7 @@
 					}
 				},
 				{
-					"groupType" : "private",
+					"scope" : "private",
 					"valueStructure" : {
 						"root" : {
 							"parent_private": {
@@ -145,7 +145,7 @@
 					}
 				},
 				{
-					"groupType" : "internal",
+					"scope" : "internal",
 					"valueStructure" : {
 						"root" : {
 							"parent_internal": {

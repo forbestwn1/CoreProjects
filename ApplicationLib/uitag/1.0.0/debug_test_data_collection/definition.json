@@ -19,7 +19,7 @@
 	],
 	"valueContext": [
 		{
-			"groupType" : "public",
+			"scope" : "public",
 			"valueStructure" : {
 				"root": {
 					"internal_data_array": {
@@ -37,7 +37,7 @@
 			}
 		},
 		{
-			"groupType" : "protected",
+			"scope" : "protected",
 			"status": "<%=&(nosliwattribute_data_array)&=='empty'?'disabled':''%>",
 			"inheritMode" : "definition",
 			"valueStructure" : {

@@ -16,7 +16,7 @@
 		"valueContext" : {
 			"brick": [
 				{
-					"groupType" : "public",
+					"scope" : "public",
 					"valueStructure" : {
 						"root" : {
 							"baseVarNormal": {

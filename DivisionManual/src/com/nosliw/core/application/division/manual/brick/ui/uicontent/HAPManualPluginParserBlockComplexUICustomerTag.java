@@ -1,5 +1,6 @@
 package com.nosliw.core.application.division.manual.brick.ui.uicontent;
 
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.jsoup.nodes.Attribute;
@@ -15,6 +16,7 @@ import com.nosliw.core.application.common.constant.HAPDefinitionConstant;
 import com.nosliw.core.application.common.parentrelation.HAPManualDefinitionBrickRelation;
 import com.nosliw.core.application.common.structure.HAPElementStructureLeafData;
 import com.nosliw.core.application.common.structure.HAPElementStructureLeafRelativeForValue;
+import com.nosliw.core.application.common.structure.HAPInfoStructureInWrapper;
 import com.nosliw.core.application.common.structure.HAPRootInStructure;
 import com.nosliw.core.application.common.structure.HAPValueStructure;
 import com.nosliw.core.application.common.structure.HAPValueStructureImp;
@@ -70,7 +72,7 @@ public class HAPManualPluginParserBlockComplexUICustomerTag extends HAPManualDef
 		HAPManualUtilityValueContext.buildValueContextBrickFromValueContext(uiCustomerTag.getValueContextBrick(), uiTagDef.getValueContext(), getManualDivisionBrickManager());
 		
 		//build value structure for variable from attribute
-		HAPValueStructure attrValueStructure = new HAPValueStructureImp();
+		Map<String, HAPValueStructure> attrValueStructures = new LinkedHashMap<String, HAPValueStructure>();
 		Map<String, HAPUITagDefinitionAttribute> attrs = uiCustomerTag.getTagAttributeDefinitions();
 		for(String attrName : attrs.keySet()) {
 			HAPUITagDefinitionAttribute attr = attrs.get(attrName);
@@ -83,17 +85,30 @@ public class HAPManualPluginParserBlockComplexUICustomerTag extends HAPManualDef
 					HAPElementStructureLeafData d = new HAPElementStructureLeafData();
 					d.setDataDefinition(varAttr.getDataDefinition());
 					attrEle.setDefinition(d);
-					attrEle.setInheritDefinition(false);
 					attrEle.setReference(new HAPReferenceElement(attrValue));
 					
 					HAPRootInStructure rootEle = new HAPRootInStructure();
 					rootEle.setName(attrName);
 					rootEle.setDefinition(attrEle);
-					attrValueStructure.addRoot(rootEle);
+					
+					
+					HAPValueStructure valueStructure = attrValueStructures.get(varAttr.getScope());
+					if(valueStructure==null) {
+						valueStructure = new HAPValueStructureImp();
+						attrValueStructures.put(varAttr.getScope(), valueStructure);
+					}
+					valueStructure.addRoot(rootEle);
 				}
 			}
 		}
-		HAPManualUtilityValueContext.addValueStuctureWrapperToValueContextBrick(new HAPWrapperValueStructureDefinitionImp(attrValueStructure), uiCustomerTag.getValueContextBrick(), getManualDivisionBrickManager());
+		
+		for(String scope : attrValueStructures.keySet()) {
+			HAPWrapperValueStructureDefinitionImp vsWrapper = new HAPWrapperValueStructureDefinitionImp(attrValueStructures.get(scope));
+			HAPInfoStructureInWrapper wrapperInfo = new HAPInfoStructureInWrapper();
+			wrapperInfo.setScope(scope);
+			vsWrapper.setStructureInfo(wrapperInfo);
+			HAPManualUtilityValueContext.addValueStuctureWrapperToValueContextBrick(vsWrapper, uiCustomerTag.getValueContextBrick(), getManualDivisionBrickManager());
+		}
 		
 		//base
 		uiCustomerTag.setBase(uiTagDef.getBase());

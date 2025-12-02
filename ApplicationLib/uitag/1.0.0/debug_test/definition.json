@@ -11,7 +11,8 @@
 		{
 			"name" : "data_string",
 			"type" : "variable",
-			"dataDefinition" : "test.string;1.0.0"
+			"dataDefinition" : "test.string;1.0.0",
+			"scope" : "protected"
 		},
 		{
 			"name" : "data_float",
@@ -35,7 +36,7 @@
 	"valueContextEmbeded": [
 		{
             "name" : "embeded_part1",
-			"groupType" : "protected",
+			"scope" : "public",
 			"valueStructure" : {
 				"root": {
 					"input_stringVar": {
@@ -53,6 +54,10 @@
 					"input_stringVar": {
 						"dataTypeId": "test.string;1.0.0",
 						"value": "default value of input_stringVar"
+					},
+					"<%=&(nosliwattribute_attribute1)&%>": {
+						"dataTypeId": "test.string;1.0.0",
+						"value": "default value of attribute1"
 					}
 				}		
 			}
@@ -60,7 +65,7 @@
 	],
 	"valueContext": [
 		{
-			"groupType" : "protected",
+			"scope" : "protected",
 			"status": "disabled",
 			"status1": "<%=&(nosliwattribute_data_array)&=='empty'?'disabled':''%>",
 			"valueStructure" : {

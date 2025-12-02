@@ -291,7 +291,7 @@
 				"valueContext" : {
 					"brick": [
 						{
-							"groupType" : "public",
+							"scope" : "public",
 							"valueStructure" : {
 								"root" : {
 									"task_input1": {
@@ -551,7 +551,7 @@
 			},
 			"brick": [
 				{
-					"groupType" : "public",
+					"scope" : "public",
 					"valueStructure" : {
 						"root": {
 							"parent_public": {

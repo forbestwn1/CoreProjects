@@ -17,7 +17,6 @@ import com.nosliw.core.application.common.structure.HAPElementStructureLeafConst
 import com.nosliw.core.application.common.structure.HAPElementStructureLeafRelative;
 import com.nosliw.core.application.common.structure.HAPStructure;
 import com.nosliw.core.application.common.structure.HAPUtilityElement;
-import com.nosliw.core.application.common.structure.HAPUtilityStructure;
 import com.nosliw.core.application.common.structure.reference.HAPPathElementMapping;
 import com.nosliw.core.application.common.structure.reference.HAPPathElementMappingConstantToVariable;
 import com.nosliw.core.application.common.structure.reference.HAPPathElementMappingVariableToVariable;
@@ -44,7 +43,7 @@ public class HAPDefinitionUtilityMapping {
 		List<HAPTunnel> out = new ArrayList<HAPTunnel>();
 		
 		HAPComplexPath toItemPath = new HAPComplexPath(rootEleId.getRootName());
-		HAPElementStructure toElement = HAPUtilityStructure.getDescendant(toValueStructure.getRootByName(toItemPath.getRoot()).getDefinition(), toItemPath.getPathStr());
+		HAPElementStructure toElement = HAPUtilityElement.getDescendant(toValueStructure.getRootByName(toItemPath.getRoot()).getDefinition(), toItemPath.getPathStr());
 
 		HAPEndPointInTunnelValuePort toEndPoint = new HAPEndPointInTunnelValuePort(toValuePortRef, toValueStructureId, toItemPath.getFullName());
 

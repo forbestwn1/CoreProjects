@@ -29,7 +29,6 @@ public class HAPManualProcessBrick {
 		//init brick
 		HAPManualWrapperBrickRoot out = HAPManualProcessProcessorInit.process(rootBrickDefWrapper, processContext);
 		
-		
 		processComplexBrickNormalizeBrickPath(processContext);
 		
 		//process value port
@@ -49,7 +48,7 @@ public class HAPManualProcessBrick {
 		
 		return out;
 	}
-	
+
 	private static void processComplexBrickNormalizeBrickPath(HAPManualContextProcessBrick processContext) {
 		HAPManualUtilityBrickTraverse.traverseTreeWithLocalBrick(processContext, new HAPHandlerDownward() {
 

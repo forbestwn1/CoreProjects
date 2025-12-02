@@ -20,7 +20,6 @@ import com.nosliw.core.application.division.manual.core.HAPManualUtilityBrick;
 import com.nosliw.core.application.division.manual.core.HAPManualWrapperBrickRoot;
 import com.nosliw.core.application.division.manual.core.HAPTreeNodeBrick;
 import com.nosliw.core.xxx.application.division.manual.core.definition1.HAPManualDefinitionWrapperValueReferenceAttachment;
-import com.nosliw.core.xxx.application.division.manual.core.definition1.HAPManualDefinitionWrapperValueReferenceBrick;
 
 public class HAPManualDefinitionUtilityBrick {
 

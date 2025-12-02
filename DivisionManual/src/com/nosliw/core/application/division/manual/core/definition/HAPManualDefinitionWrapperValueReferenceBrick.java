@@ -1,8 +1,7 @@
-package com.nosliw.core.xxx.application.division.manual.core.definition1;
+package com.nosliw.core.application.division.manual.core.definition;
 
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.HAPIdBrick;
-import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionWrapperValueWithBrick;
 
 public class HAPManualDefinitionWrapperValueReferenceBrick extends HAPManualDefinitionWrapperValueWithBrick{
 

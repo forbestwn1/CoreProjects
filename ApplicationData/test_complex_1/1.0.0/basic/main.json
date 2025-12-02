@@ -12,7 +12,7 @@
 			},
 			"brick": [
 				{
-					"groupType" : "public",
+					"scope" : "public",
 					"valueStructure" : {
 						"root": {
 							"parent_public_map": {
@@ -115,8 +115,17 @@
 		
 		{
 			"info": {
-				"name" : "variable-test_complex_script",
+				"name" : "local-uipage",
 				"status": "disabled1",
+				"description" : ""
+			},
+			"brickId":"test0|uipage;1.0.0"  
+        },
+		
+		{
+			"info": {
+				"name" : "variable-test_complex_script",
+				"status": "disabled",
 				"description" : ""
 			},
 			"relation": [
@@ -134,7 +143,7 @@
 				"valueContext" : {
 					"brick": [
 						{
-							"groupType" : "public",
+							"scope" : "public",
 							"valueStructure" : {
 								"root" : {
 									"child_public_string_link_map": {
@@ -223,7 +232,7 @@
 			},
 			"brick": [
 				{
-					"groupType" : "public",
+					"scope" : "public",
 					"valueStructure" : {
 						"root": {
 							"parent_public": {
@@ -623,7 +632,7 @@
 		{
 			"info": {
 				"name" : "debug_variableman-test_complex_script",
-				"status": "disabled1",
+				"status": "disabled",
 				"description" : ""
 			},
 			"brick":{
@@ -634,7 +643,7 @@
 		{
 			"info": {
 				"name" : "debug_variable-test_complex_script",
-				"status": "disabled1",
+				"status": "disabled",
 				"description" : ""
 			},
 			"brick":{

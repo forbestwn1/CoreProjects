@@ -52,6 +52,11 @@ public abstract class HAPUITagDefinitionAttribute extends HAPEntityInfoImp{
 			if(dfObj!=null) {
 				varAttrDef.setDataDefinition(HAPParserDataDefinition.parseDataDefinitionWritable(dfObj, dataRuleManager));
 			}
+			String scope = (String)jsonObj.opt(HAPUITagDefinitionAttributeVariable.SCOPE);
+			if(scope==null) {
+				scope = HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PROTECTED;
+			}
+			varAttrDef.setScope(scope);
 			return varAttrDef;
 		}
 		return null;

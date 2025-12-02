@@ -299,7 +299,7 @@
 			},			
 			"entity": [
 				{
-					"groupType" : "public",
+					"scope" : "public",
 					"valueStructure" : {
 						"parent_tree_public": {
 							"definition": {

@@ -14,7 +14,6 @@ import com.nosliw.core.application.division.manual.core.process.HAPManualInfoBri
 import com.nosliw.core.application.valueport.HAPContainerValuePorts;
 import com.nosliw.core.application.valueport.HAPGroupValuePorts;
 import com.nosliw.core.application.valueport.HAPValuePort;
-import com.nosliw.core.resource.HAPManagerResource;
 
 public abstract class HAPManualBrick extends HAPBrickImp{
 
@@ -137,9 +136,6 @@ public abstract class HAPManualBrick extends HAPBrickImp{
 		}
 		return out;
 	}
-	
-	protected HAPManagerApplicationBrick getBrickManager() {    return this.getRuntimeEnvironment().getBrickManager();     }
-	protected HAPManagerResource getResourceManager() {    return this.getRuntimeEnvironment().getResourceManager();     }
 	
 	abstract public boolean buildBrick(Object value, HAPSerializationFormat format, HAPManagerApplicationBrick brickMan);
 

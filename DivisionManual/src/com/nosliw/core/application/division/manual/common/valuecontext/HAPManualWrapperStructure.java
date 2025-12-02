@@ -52,6 +52,6 @@ public class HAPManualWrapperStructure extends HAPSerializableImp{
 	}
 	
 	public void cloneToChildValueStructureWrapper(HAPManualWrapperStructure valueStructureInfo) {
-		valueStructureInfo.getStructureInfo().setGroupType(valueStructureInfo.getStructureInfo().getGroupType());
+		valueStructureInfo.getStructureInfo().setScope(this.getStructureInfo().getScope());
 	}	
 }

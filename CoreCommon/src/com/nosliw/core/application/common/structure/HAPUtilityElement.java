@@ -3,6 +3,7 @@ package com.nosliw.core.application.common.structure;
 import java.util.List;
 
 import com.nosliw.common.exception.HAPErrorUtility;
+import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.common.structure.reference.HAPPathElementMapping;
 import com.nosliw.core.application.common.structure.reference.HAPPathElementMappingConstantToVariable;
@@ -15,6 +16,35 @@ import com.nosliw.core.data.matcher.HAPMatchers;
 
 public class HAPUtilityElement {
 
+	public static HAPElementStructure getDescendant(HAPElementStructure element, String path) {
+		HAPElementStructure out = element;
+		HAPPath pathObj = new HAPPath(path);
+		for(String pathSeg : pathObj.getPathSegments()) {
+			if(out!=null) {
+				out = out.getChild(pathSeg);
+			} else {
+				throw new RuntimeException();
+			}
+		}
+		return out;
+	}
+
+	//get rid of relative, replace with solid definition
+	public static HAPElementStructure solidateStructureElement(HAPElementStructure raw) {
+		String type = raw.getType();
+		if(HAPConstantShared.CONTEXT_ELEMENTTYPE_RELATIVE_FOR_DEFINITION.equals(type)) {
+			HAPElementStructureLeafRelativeForDefinition forDefinition = (HAPElementStructureLeafRelativeForDefinition)raw;
+			return forDefinition.getResolveInfo().getSolidElement().cloneStructureElement();
+		}
+		else if(HAPConstantShared.CONTEXT_ELEMENTTYPE_RELATIVE_FOR_VALUE.equals(type)) {
+			HAPElementStructureLeafRelativeForValue forValue = (HAPElementStructureLeafRelativeForValue)raw;
+			return forValue.getDefinition().cloneStructureElement();
+		}
+		else {
+			return raw.cloneStructureElement();
+		}
+	}
+	
 	//merge origin context def with child context def to expect context out
 	//also generate matchers from origin to expect
 	public static void mergeElement(HAPElementStructure fromDef1, HAPElementStructure toDef1, boolean modifyStructure, List<HAPPathElementMapping> mappingPaths, String path, HAPDataTypeHelper dataTypeHelper){

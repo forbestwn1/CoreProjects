@@ -11,7 +11,7 @@
 			},
 			"brick": [
 				{
-					"groupType" : "public",
+					"scope" : "public",
 					"valueStructure" : {
 						"root": {
 							"provider_parm1": {

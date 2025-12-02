@@ -59,7 +59,14 @@ public class HAPElementStructureLeafRelativeForValue extends HAPElementStructure
 	public HAPElementStructure getSolidStructureElement() {	return this.m_definition;	}
 
 	public HAPElementStructureLeafData getDefinition() {   return this.m_definition;   }
-	public void setDefinition(HAPElementStructureLeafData definition) {   this.m_definition = (HAPElementStructureLeafData)definition.getSolidStructureElement();   }
+	public void setDefinition(HAPElementStructureLeafData definition) {   
+		this.m_definition = (HAPElementStructureLeafData)definition.getSolidStructureElement();
+		this.m_inheritDefinition = false;
+	}
+	public void setDefinitionInherit(HAPElementStructureLeafData definition) {   
+		this.m_definition = (HAPElementStructureLeafData)definition.getSolidStructureElement();
+		this.m_inheritDefinition = true;
+	}
 	
 	public void setInheritDefinition(boolean inheritDefinition) {   this.m_inheritDefinition = inheritDefinition;      }
 	public boolean getInheritDefinition() {   return this.m_inheritDefinition;      }

@@ -169,7 +169,11 @@ var node_makeObjectEntityObjectInterface = function(rawEntity, internalValuePort
     					return node_getComponentInterface(coreEntity).getPreInitRequest({
 	    					success : function(request){
 		    					node_getComponentInterface(coreEntity).updateView(view);
-		    					return attrNode;
+		    					return node_getComponentInterface(coreEntity).getPostInitRequest({
+									success : function(request){
+        		    					return attrNode;
+									}
+								});
 			    			}
 						});
 					}

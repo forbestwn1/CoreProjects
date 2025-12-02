@@ -5,5 +5,6 @@ public class HAPStoryIdConnectionEnd {
 
 	private String m_nodeId;
 	
+	private String m_endPointId;
 	
 }

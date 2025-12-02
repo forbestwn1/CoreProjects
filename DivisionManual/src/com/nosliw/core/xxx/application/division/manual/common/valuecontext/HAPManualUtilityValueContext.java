@@ -38,7 +38,7 @@ public class HAPManualUtilityValueContext {
 		for(HAPManualInfoPartSimple part : parts) {
 			if(HAPConstantShared.VALUESTRUCTUREPART_NAME_EXTENSION.equals(part.getSimpleValueStructurePart().getPartInfo().getName())) {
 				for(HAPManualWrapperStructure valueStructureWrapper : part.getSimpleValueStructurePart().getValueStructures()) {
-					if(groupType.equals(valueStructureWrapper.getGroupType())) {
+					if(groupType.equals(valueStructureWrapper.getScope())) {
 						return valueStructureWrapper.getValueStructureRuntimeId();
 					}
 				}

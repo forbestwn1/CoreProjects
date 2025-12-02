@@ -130,7 +130,7 @@ public class HAPUtilityProcessRelativeElementInBundle {
 		HAPElementStructure resolvedSolidElement = defStructureElementRelative.getResolveInfo().getSolidElement();
 		HAPElementStructure relativeContextEle = defStructureElementRelative.getDefinition();
 		if(relativeContextEle==null) {
-			defStructureElementRelative.setDefinition((HAPElementStructureLeafData)resolvedSolidElement);
+			defStructureElementRelative.setDefinitionInherit((HAPElementStructureLeafData)resolvedSolidElement);
 		}
 		else {
 			//figure out matchers

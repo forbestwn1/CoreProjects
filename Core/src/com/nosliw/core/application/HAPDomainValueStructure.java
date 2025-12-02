@@ -16,7 +16,7 @@ import com.nosliw.common.utils.HAPGeneratorId;
 import com.nosliw.core.application.common.structure.HAPRootInStructure;
 import com.nosliw.core.application.common.structure.HAPStructure;
 import com.nosliw.core.application.common.structure.HAPStructureImp;
-import com.nosliw.core.application.common.structure.HAPUtilityStructure;
+import com.nosliw.core.application.common.structure.HAPUtilityElement;
 
 //all value structure infor in domain
 //  all value structure definition
@@ -126,7 +126,7 @@ public class HAPDomainValueStructure extends HAPSerializableImp{
 		for(HAPRootInStructure oldRoot : structureDef.getRoots().values()) {
 			HAPRootInStructure newRoot = new HAPRootInStructure();
 			oldRoot.cloneToEntityInfo(newRoot);
-			newRoot.setDefinition(HAPUtilityStructure.solidateStructureElement(oldRoot.getDefinition()));
+			newRoot.setDefinition(HAPUtilityElement.solidateStructureElement(oldRoot.getDefinition()));
 			roots.add(newRoot);
 		}
 		

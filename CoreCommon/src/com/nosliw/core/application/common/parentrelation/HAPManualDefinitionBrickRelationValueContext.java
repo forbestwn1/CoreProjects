@@ -26,7 +26,7 @@ public class HAPManualDefinitionBrickRelationValueContext extends HAPManualDefin
 //	public Set<String> getExcludedInfo(){   return (Set<String>)this.getValue(EXCLUDEDINFO);     }
 //	public void setExcludedInfo(Set<String> info) {    this.setValue(EXCLUDEDINFO, info);     }
 //
-//	public String[] getGroupTypes() {    return (String[])this.getValue(GROUPTYPE);   }
+//	public String[] getGroupTypes() {    return (String[])this.getValue(SCOPE);   }
 	
 	public HAPManualDefinitionBrickRelationValueContext mergeHard(HAPManualDefinitionBrickRelationValueContext relation) {
 		if(relation!=null && relation.m_mode!=null) {

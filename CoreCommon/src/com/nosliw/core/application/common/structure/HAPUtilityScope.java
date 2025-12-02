@@ -4,12 +4,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.utils.HAPConstantShared;
 
-public class HAPUtilityStructure {
+public class HAPUtilityScope {
 
-	public static String[] getAllCategaries(){
+	public static String DEFAULT_SCOPE = HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PUBLIC;
+	
+	public static String[] getAllScopes(){
 		String[] contextTypes = {
 			HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PUBLIC,
 			HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PROTECTED,
@@ -19,7 +20,7 @@ public class HAPUtilityStructure {
 		return contextTypes;
 	}
 
-	public static List<String> getAllCategariesWithResolvePriority(){
+	public static List<String> getAllScopesWithResolvePriority(){
 		String[] contextTypes = {
 			HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PRIVATE,
 			HAPConstantShared.UIRESOURCE_CONTEXTTYPE_INTERNAL,
@@ -29,7 +30,7 @@ public class HAPUtilityStructure {
 		return new ArrayList<>(Arrays.asList(contextTypes));
 	}
 
-	public static String[] getAllCategariesWithPriority(){
+	public static String[] getAllScopesWithPriority(){
 		String[] contextTypes = {
 			HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PRIVATE,
 			HAPConstantShared.UIRESOURCE_CONTEXTTYPE_INTERNAL,
@@ -40,7 +41,7 @@ public class HAPUtilityStructure {
 	}
 
 	//context type that can be inherited by child
-	public static String[] getInheritableCategaries(){
+	public static String[] getInheritableScopes(){
 		String[] contextTypes = {
 			HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PUBLIC,
 			HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PROTECTED,
@@ -49,7 +50,7 @@ public class HAPUtilityStructure {
 	}
 
 	//visible to child
-	public static String[] getVisibleToChildCategaries(){
+	public static String[] getVisibleToChildScopes(){
 		String[] contextTypes = {
 			HAPConstantShared.UIRESOURCE_CONTEXTTYPE_INTERNAL,
 			HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PROTECTED,
@@ -58,43 +59,11 @@ public class HAPUtilityStructure {
 		return contextTypes;
 	}
 	
-	public static String[] getVisibleToExternalCategaries(){
+	public static String[] getVisibleToExternalScopes(){
 		String[] contextTypes = {
 			HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PUBLIC
 		};
 		return contextTypes;
 	}
-
-	//get rid of relative, replace with solid definition
-	public static HAPElementStructure solidateStructureElement(HAPElementStructure raw) {
-		String type = raw.getType();
-		if(HAPConstantShared.CONTEXT_ELEMENTTYPE_RELATIVE_FOR_DEFINITION.equals(type)) {
-			HAPElementStructureLeafRelativeForDefinition forDefinition = (HAPElementStructureLeafRelativeForDefinition)raw;
-			return forDefinition.getResolveInfo().getSolidElement().cloneStructureElement();
-		}
-		else if(HAPConstantShared.CONTEXT_ELEMENTTYPE_RELATIVE_FOR_VALUE.equals(type)) {
-			HAPElementStructureLeafRelativeForValue forValue = (HAPElementStructureLeafRelativeForValue)raw;
-			return forValue.getDefinition().cloneStructureElement();
-		}
-		else {
-			return raw.cloneStructureElement();
-		}
-	}
-	
-
-	public static HAPElementStructure getDescendant(HAPElementStructure element, String path) {
-		HAPElementStructure out = element;
-		HAPPath pathObj = new HAPPath(path);
-		for(String pathSeg : pathObj.getPathSegments()) {
-			if(out!=null) {
-				out = out.getChild(pathSeg);
-			} else {
-				throw new RuntimeException();
-			}
-		}
-		return out;
-	}
-
-
 
 }

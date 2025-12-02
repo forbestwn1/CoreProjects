@@ -515,7 +515,7 @@
 				"valueContext" : {
 					"brick": [
 						{
-							"groupType" : "public",
+							"scope" : "public",
 							"valueStructure" : {
 								"root" : {
 									"task_input1": {
@@ -783,7 +783,7 @@
 				"valueContext" : {
 					"brick": [
 						{
-							"groupType" : "public",
+							"scope" : "public",
 							"valueStructure" : {
 								"root" : {
 									"child_public": {
@@ -863,7 +863,7 @@
 			},
 			"brick": [
 				{
-					"groupType" : "public",
+					"scope" : "public",
 					"valueStructure" : {
 						"root": {
 							"parent_public": {

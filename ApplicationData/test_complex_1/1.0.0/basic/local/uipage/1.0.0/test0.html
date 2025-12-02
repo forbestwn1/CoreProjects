@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+<body>
+Hellooooooo!!!!!
+
+		<br>
+
+		<br>
+ 		StringContent:<%=?(page_public_string)?.value + '   7777 ' %>  
+		<br>
+
+ 		<nosliw-debug_test attribute1="myAttr" data_string="page_public_string">
+    		<br>
+ 	    	attribute variable:<%=?(data_string)?.value + '   7777 ' %>
+
+ 	    	<nosliw-debug_test data_string="data_string">
+    
+    
+    
+    		</nosliw-debug_test>
+ 
+ 		<!-- 
+ 	    	attribute variable:<%=?(data_string)?.value + '   7777 ' %>
+    		<br>
+ 	    	embeded_stringVar:<%=?(input_stringVar)?.value + '   7777 ' %>
+    		<br>
+ 	    	input_stringVar:<%=?(myAttr)?.value + '   7777 ' %>
+    		<br>
+    		<br>
+ 	    	<nosliw-debug_test data_string="input_stringVar"/>
+ 	     -->	
+		</nosliw-debug_test>
+
+
+ 		<!--nosliw-debug_test data_string="page_public_string"/ -->
+
+<!-- 
+
+		<br>
+EXPRESSION IN ATTRIBUTE:<span  style="color:<%=?(page_public_string)?.value=='red'?'red':'blue'%>">Change the input below and color will change according to the value </span> 
+		<br>
+
+		<br>
+ 		StringContent:<%=?(page_public_string)?.value + '   7777 ' %>  
+
+		<br>
+ 		UrlContent:<%=?(page_public_url)?.value + '   7777 ' %>  
+
+ 		<nosliw-debug_test attribute1="myAttr" data_string="page_public_string">
+    		<br>
+ 	    	embeded_stringVar:<%=?(input_stringVar)?.value + '   7777 ' %>
+    		<br>
+ 	    	input_stringVar:<%=?(myAttr)?.value + '   7777 ' %>
+    		<br>
+    		<br>
+ 	    	
+ 	    	<nosliw-debug_test data_string="input_stringVar"/>
+ 	    	
+ 	    	  
+		</nosliw-debug_test>
+
+		<br>
+ 		FloatContent:<%=#|?(page_public_float)?.largerThan(data:&(#test##float___5000)&).opposite()|#.value%>  
+
+
+	 		<nosliw-debug_test_data_simple data_string="page_public_string">
+			</nosliw-debug_test_data_simple>
+
+
+		<br>
+ 		UrlContent:<%=?(page_public_url)?.value + '   7777 ' %>  
+
+ -->
+
+
+<!-- 
+		<nosliw-debug_contextvalue/>
+
+		<nosliw-debug_viewvariable/>
+
+ -->
+
+<!-- 
+ -->
+
+<!-- 
+ 		<nosliw-debug_test_data_collection data_array="page_public_array">
+			<br>
+ 			<%=?(element)?.value%>
+			<br>
+			Hello world!!!!!<%=JSON.stringify(?(arrayindex)?)%>
+			<br>
+	 		<nosliw-debug_test_data_simple data_string="element">
+			</nosliw-debug_test_data_simple>
+		</nosliw-debug_test_data_collection>
+ -->
+
+ 
+</body>
+
+	<valuecontext>
+		[
+			{
+				"scope" : "public",
+				"valueStructure" : {
+					"root" : {
+						"page_public_string": {
+							"definition":{
+								"data": {
+								    "criteria" : "test.string;1.0.0",
+								    "rule" : [
+								        {
+                            				"name" : "mandatory",
+				                            "status": "disabled",
+								            "ruleType" : "mandatory"
+								        },
+								        {
+                            				"name" : "enum",
+				                            "status": "disabled",
+								            "ruleType" : "enum",
+								            "dataSet" : [
+                								{
+				                					dataTypeId: "test.string;1.0.0",
+								                	value: "default value of page_public_string1"
+								                },
+                								{
+				                					dataTypeId: "test.string;1.0.0",
+								                	value: "default value of page_public_string2"
+								                },
+                								{
+				                					dataTypeId: "test.string;1.0.0",
+								                	value: "default value of page_public_string3"
+								                }
+								            ]
+								        }
+								    ]
+								} 
+							}
+						},
+						"page_public_float": {
+							"definition":{
+								"data": {
+								    "criteria" : "test.float;1.0.0",
+								    "rule" : [
+								        {
+                            				"name" : "expression",
+				                            "status": "disabled",
+								            "ruleType" : "expression",
+								            "expression" : "?(data)?.largerThan(data:&(#test##float___5000)&).opposite()"
+								        }
+								    ]
+								} 
+							}
+						},
+						"page_public_url": {
+							"definition":{
+								"data": "test.url;1.0.0"
+							}
+						},
+						"page_public_array": {
+							"definition":{
+								"data": "test.array;1.0.0%||element:test.string;1.0.0||%"
+							}
+						}
+					},
+					"initValue": {
+						"page_public_string": {
+							"dataTypeId": "test.string;1.0.0",
+							"value": "default value of page_public_string1"
+						},
+						"page_public_float": {
+							"dataTypeId": "test.float;1.0.0",
+							"value": "100"
+						},
+						"page_public_url": {
+							"dataTypeId": "test.url;1.0.0",
+							"value": "default value of page_public_url"
+						},
+						"page_public_array": {
+							"dataTypeId": "test.array;1.0.0",
+							"value": [
+								{
+									dataTypeId: "test.string;1.0.0",
+									value: "This is my world 1111!"
+								},
+								{
+									dataTypeId: "test.string;1.0.0",
+									value: "This is my world 2222!"
+								}
+							]
+						}
+					}
+				}
+			}
+		]
+	</valuecontext>
+
+</html>

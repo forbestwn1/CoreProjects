@@ -8,7 +8,6 @@
 		<project>Core</project>
 		<project>MiniApp</project>
 		<project>DivisionManual</project>
-		<project>DivisionStory</project>
 		<project>LibraryDataTypeTest</project>
 		<project>CoreCommon</project>
 		<project>UtilityParserCriteria</project>
@@ -16,6 +15,7 @@
 		<project>CoreOtherEntity</project>
 		<project>CoreBrick</project>
 		<project>Runtime</project>
+		<project>XXXDivisionStory</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

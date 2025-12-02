@@ -31,7 +31,7 @@ import com.nosliw.core.application.common.parentrelation.HAPManualDefinitionBric
 import com.nosliw.core.application.common.parentrelation.HAPManualDefinitionBrickRelationValueContext;
 import com.nosliw.core.application.common.structure.HAPElementStructureLeafRelative;
 import com.nosliw.core.application.common.structure.HAPRootInStructure;
-import com.nosliw.core.application.common.structure.HAPUtilityStructure;
+import com.nosliw.core.application.common.structure.HAPUtilityScope;
 import com.nosliw.core.application.common.structure.reference.HAPUtilityProcessRelativeElementInBundle;
 import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualDefinitionBrickValueContext;
 import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualDefinitionBrickWrapperValueStructure;
@@ -177,7 +177,7 @@ public class HAPManualUtilityProcessorValuePort {
 				
 				String valueStructureExeId = valueStructureDomain.newValueStructure();
 				HAPManualWrapperStructure valueStructureWrapperExe = new HAPManualWrapperStructure(valueStructureExeId);
-				valueStructureWrapperExe.getStructureInfo().setGroupType(HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PUBLIC);
+				valueStructureWrapperExe.getStructureInfo().setScope(HAPConstantShared.UIRESOURCE_CONTEXTTYPE_PUBLIC);
 				
 				List<HAPManualWrapperStructure> wrappers = new ArrayList<HAPManualWrapperStructure>();
 				wrappers.add(valueStructureWrapperExe);
@@ -285,7 +285,7 @@ public class HAPManualUtilityProcessorValuePort {
 			//for complex brick, 
 			List<HAPManualPartInValueContext> out = new ArrayList<HAPManualPartInValueContext>();
 			for(HAPManualPartInValueContext part : brick.getManualValueContext().getParts()) {
-				out.add(inheritFromParent(part, HAPUtilityStructure.getInheritableCategaries()));
+				out.add(inheritFromParent(part, HAPUtilityScope.getInheritableScopes()));
 			}
 			return out;
 		}
@@ -374,14 +374,14 @@ public class HAPManualUtilityProcessorValuePort {
 		return out;
 	}
 	
-	private static HAPManualPartInValueContext inheritFromParent(HAPManualPartInValueContext part, String[] groupTypeCandidates) {
+	private static HAPManualPartInValueContext inheritFromParent(HAPManualPartInValueContext part, String[] scopeCandidates) {
 		String partType = part.getPartType();
 		if(partType.equals(HAPConstantShared.VALUESTRUCTUREPART_TYPE_GROUP_WITHENTITY)) {
 			HAPManualPartInValueContextGroupWithEntity groupPart = (HAPManualPartInValueContextGroupWithEntity)part;
 			HAPManualPartInValueContextGroupWithEntity out = new HAPManualPartInValueContextGroupWithEntity(part.getPartInfo().cloneValueStructurePartInfo());
 			part.cloneToPartValueContext(out);
 			for(HAPManualPartInValueContext child : groupPart.getChildren()) {
-				out.addChild(inheritFromParent(child, groupTypeCandidates));
+				out.addChild(inheritFromParent(child, scopeCandidates));
 			}
 			return out;
 		}
@@ -391,7 +391,7 @@ public class HAPManualUtilityProcessorValuePort {
 			part.cloneToPartValueContext(out);
 
 			for(HAPManualWrapperStructure valueStructure : simplePart.getValueStructures()) {
-				if(groupTypeCandidates==null||groupTypeCandidates.length==0||Arrays.asList(groupTypeCandidates).contains(valueStructure.getStructureInfo().getGroupType())) {
+				if(scopeCandidates==null||scopeCandidates.length==0||Arrays.asList(scopeCandidates).contains(valueStructure.getStructureInfo().getScope())) {
 					HAPManualWrapperStructure cloned = valueStructure.cloneValueStructureWrapper();
 					out.addValueStructure(cloned);
 				}

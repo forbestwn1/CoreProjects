@@ -11,7 +11,7 @@
 		"valueContext" :{
 			"entity": [
 				{
-					"groupType" : "public",
+					"scope" : "public",
 					"valueStructure" : {
 						"root_public": {
 							"definition":{

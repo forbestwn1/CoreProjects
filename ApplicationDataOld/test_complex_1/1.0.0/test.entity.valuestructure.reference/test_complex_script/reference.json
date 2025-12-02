@@ -11,7 +11,7 @@
 		"valueContext" :{
 			"entity": [
 				{
-					"groupType" : "public",
+					"scope" : "public",
 					"valueStructure" : {
 						"reference_definition": {
 							"status": "disabled1",
