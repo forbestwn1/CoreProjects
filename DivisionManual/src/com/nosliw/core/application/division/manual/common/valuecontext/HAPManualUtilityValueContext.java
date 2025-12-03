@@ -54,6 +54,16 @@ public class HAPManualUtilityValueContext {
 		return out;
 	}
 
+	public static void sortParts(List<HAPManualPartInValueContext> parts) {
+		Collections.sort(parts, new Comparator<HAPManualPartInValueContext>() {
+
+			@Override
+			public int compare(HAPManualPartInValueContext arg0, HAPManualPartInValueContext arg1) {
+				return HAPUtilityValueStructure.sortPriority(arg0.getPartInfo().getPriority(), arg1.getPartInfo().getPriority());
+			}
+		});
+	}
+
 	private static void getAllChildrenValueStructure(List<Integer> priorityBase, HAPManualPartInValueContext part, List<HAPManualInfoValueStructureSorting> out) {
 		String partType = part.getPartType();
 		if(partType.equals(HAPConstantShared.VALUESTRUCTUREPART_TYPE_SIMPLE)) {
@@ -72,13 +82,13 @@ public class HAPManualUtilityValueContext {
 		}
 	}
 
-	private static List<Integer> appendParentInfo(List<Integer> basePriority, List<Integer> priority) {
+	private static List<Integer> appendParentInfo(List<Integer> basePriority, Integer priority) {
 		List<Integer> out = new ArrayList<Integer>();
 		if(basePriority!=null) {
 			out.addAll(basePriority);
 		}
 		if(priority!=null) {
-			out.addAll(priority);
+			out.add(priority);
 		}
 		return out;
 	}
@@ -106,16 +116,6 @@ public class HAPManualUtilityValueContext {
 		});
 	}
 
-	public static void sortParts(List<HAPManualPartInValueContext> parts) {
-		Collections.sort(parts, new Comparator<HAPManualPartInValueContext>() {
-
-			@Override
-			public int compare(HAPManualPartInValueContext arg0, HAPManualPartInValueContext arg1) {
-				return sortPriority(arg0.getPartInfo().getPriority(), arg1.getPartInfo().getPriority());
-			}
-		});
-	}
-
 	private static double caculatePriority(List<Integer> in) {
 		double priority = 0;
 		double i0 = 1;
@@ -126,8 +126,4 @@ public class HAPManualUtilityValueContext {
 		return priority;
 	}
 
-	private static int sortPriority(List<Integer> p1, List<Integer> p2) {
-		return HAPUtilityValueStructure.sortPriority(caculatePriority(p1), caculatePriority(p2));
-	}
-	
 }
