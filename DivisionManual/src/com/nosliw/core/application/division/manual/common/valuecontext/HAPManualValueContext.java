@@ -11,7 +11,7 @@ import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.core.application.HAPDomainValueStructure;
-import com.nosliw.core.xxx.application.division.manual.common.valuecontext.HAPManualInfoValueStructureSorting;
+import com.nosliw.core.application.valueport.HAPInfoValueStructure;
 import com.nosliw.core.xxx.application1.HAPValueContext;
 
 public class HAPManualValueContext extends HAPSerializableImp implements HAPValueContext{
@@ -48,6 +48,16 @@ public class HAPManualValueContext extends HAPSerializableImp implements HAPValu
 			valueStructureIds.add(valueStructureInfo.getValueStructure().getValueStructureRuntimeId());
 		}
 		return valueStructureIds;
+	}
+	
+	@Override
+	public List<HAPInfoValueStructure> getValueStructuresSorted(){
+		List<HAPInfoValueStructure> out = new ArrayList<HAPInfoValueStructure>();
+		List<HAPManualInfoValueStructureSorting> valueStructureInfos = HAPManualUtilityValueContext.getAllValueStructuresSorted(this);
+		for(HAPManualInfoValueStructureSorting valueStructureInfo : valueStructureInfos) {
+			out.add(new HAPInfoValueStructure(valueStructureInfo.getValueStructure().getValueStructureRuntimeId(), valueStructureInfo.getPriority()));
+		}
+		return out;
 	}
 	
 	public void cleanValueStucture(Set<String> valueStrucutreIds) {

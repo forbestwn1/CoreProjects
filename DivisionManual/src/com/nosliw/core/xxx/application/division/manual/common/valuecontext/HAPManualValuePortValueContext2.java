@@ -8,6 +8,7 @@ import com.nosliw.core.application.common.structure.HAPElementStructure;
 import com.nosliw.core.application.common.structure.HAPRootInStructure;
 import com.nosliw.core.application.common.structure.HAPStructureImp;
 import com.nosliw.core.application.common.structure.reference.HAPConfigureResolveElementReference;
+import com.nosliw.core.application.division.manual.common.valuecontext.HAPManualInfoValueStructureSorting;
 import com.nosliw.core.application.division.manual.common.valuecontext.HAPManualValueContext;
 import com.nosliw.core.application.division.manual.common.valuecontext.HAPManualWrapperStructure;
 import com.nosliw.core.application.division.manual.core.HAPManualBrick;

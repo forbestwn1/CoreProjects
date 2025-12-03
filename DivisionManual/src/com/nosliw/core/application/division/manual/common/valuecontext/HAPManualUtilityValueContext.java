@@ -14,7 +14,7 @@ import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManua
 import com.nosliw.core.application.division.manual.brick.valuestructure.HAPManualDefinitionBrickWrapperValueStructure;
 import com.nosliw.core.application.division.manual.core.HAPManualEnumBrickType;
 import com.nosliw.core.application.division.manual.core.HAPManualManagerBrick;
-import com.nosliw.core.xxx.application.division.manual.common.valuecontext.HAPManualInfoValueStructureSorting;
+import com.nosliw.core.application.valueport.HAPUtilityValueStructure;
 
 public class HAPManualUtilityValueContext {
 
@@ -60,7 +60,7 @@ public class HAPManualUtilityValueContext {
 			HAPManualPartInValueContextSimple simplePart = (HAPManualPartInValueContextSimple)part;
 			for(HAPManualWrapperStructure valueStructure : simplePart.getValueStructures()) {
 				HAPManualInfoValueStructureSorting valueStructureInfo = new HAPManualInfoValueStructureSorting(valueStructure);
-				valueStructureInfo.setPriority(appendParentInfo(priorityBase, simplePart.getPartInfo().getPriority()));
+				valueStructureInfo.setPriority(caculatePriority(appendParentInfo(priorityBase, simplePart.getPartInfo().getPriority())));
 				out.add(valueStructureInfo);
 			}
 		}
@@ -87,20 +87,20 @@ public class HAPManualUtilityValueContext {
 		Collections.sort(valueStructures, new Comparator<HAPManualInfoValueStructureSorting>() {
 			@Override
 			public int compare(HAPManualInfoValueStructureSorting arg0, HAPManualInfoValueStructureSorting arg1) {
-				String groupType0 = arg0.getValueStructure().getStructureInfo().getScope();
-				String groupType1 = arg1.getValueStructure().getStructureInfo().getScope();
-				
-				List<String> groups = HAPUtilityScope.getAllScopesWithResolvePriority();
-				int groupPriority0 = groups.indexOf(groupType0);
-				int groupPriority1 = groups.indexOf(groupType1);
 
 				//compare priority first
-				int out = sortPriority(arg0.getPriority(), arg1.getPriority());
+				int out = HAPUtilityValueStructure.sortPriority(arg0.getPriority(), arg1.getPriority());
 				if(out!=0) {
 					return out;
 				} else {
-					//if priority equal, then compare by group type
-					return groupPriority1 - groupPriority0;
+					//if priority equal, then compare by value structure scope
+					String valueStructureScope0 = arg0.getValueStructure().getStructureInfo().getScope();
+					String valueStructureScope1 = arg1.getValueStructure().getStructureInfo().getScope();
+					
+					List<String> scopesByPriority = HAPUtilityScope.getAllScopesWithResolvePriority();
+					int scopePriority0 = scopesByPriority.indexOf(valueStructureScope0);
+					int scopePriority1 = scopesByPriority.indexOf(valueStructureScope1);
+					return scopePriority0 - scopePriority1;
 				}
 			}
 		});
@@ -116,30 +116,18 @@ public class HAPManualUtilityValueContext {
 		});
 	}
 
-
-	private static int sortPriority(List<Integer> first, List<Integer> second) {
-		double priority0 = 0;
+	private static double caculatePriority(List<Integer> in) {
+		double priority = 0;
 		double i0 = 1;
-		for(int p : first) {
+		for(double p : in) {
 			i0 = i0 / 10;
-			priority0 = priority0 + i0 * p; 
+			priority = priority + i0 * p; 
 		}
-		
-		double priority1 = 0;
-		double i1 = 1;
-		for(int p : second) {
-			i1 = i1 / 10;
-			priority1 = priority1 + i1 * p; 
-		}
-		
-		double out = priority1-priority0;
-		if(out>0) {
-			return 1;
-		} else if(out<0) {
-			return -1;
-		} else {
-			return 0;
-		}
+		return priority;
+	}
+
+	private static int sortPriority(List<Integer> p1, List<Integer> p2) {
+		return HAPUtilityValueStructure.sortPriority(caculatePriority(p1), caculatePriority(p2));
 	}
 	
 }

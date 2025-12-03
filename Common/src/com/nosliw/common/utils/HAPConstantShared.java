@@ -892,7 +892,7 @@ public class HAPConstantShared {
 		public static final String VALUESTRUCTUREPART_NAME_EXTENSION = "extension";
 		public static final int VALUESTRUCTUREPART_PRIORITY_EXTENSION = 7;
 		public static final String VALUESTRUCTUREPART_NAME_FROMPARENT = "fromParent";
-		public static final int VALUESTRUCTUREPART_PRIORITY_FROMPARENT = 10;
+		public static final int VALUESTRUCTUREPART_PRIORITY_FROMPARENT = 9;
 
 
 

@@ -18,6 +18,7 @@ import com.nosliw.core.application.common.structure.HAPElementStructureLeafData;
 import com.nosliw.core.application.common.structure.HAPElementStructureLeafValue;
 import com.nosliw.core.application.common.structure.HAPRootInStructure;
 import com.nosliw.core.application.valueport.HAPContainerValuePorts;
+import com.nosliw.core.application.valueport.HAPInfoValueStructure;
 import com.nosliw.core.application.valueport.HAPUtilityValuePort;
 import com.nosliw.core.application.valueport.HAPValuePort;
 import com.nosliw.core.application.valueport.HAPWithExternalValuePort;
@@ -41,8 +42,8 @@ public class HAPUtilityInteractiveTaskValuePort {
 			roots.add(root);
 			
 			String valueStructureId = valueStructureDomain.newValueStructure(roots, null, null, null);
-			requestValuePortPair.getLeft().addValueStructureId(valueStructureId, HAPConstantShared.VALUESTRUCTURE_PRIORITY_IMPLIED);
-			requestValuePortPair.getRight().addValueStructureId(valueStructureId, HAPConstantShared.VALUESTRUCTURE_PRIORITY_IMPLIED);
+			requestValuePortPair.getLeft().addValueStructureInfo(new HAPInfoValueStructure(valueStructureId, HAPConstantShared.VALUESTRUCTURE_PRIORITY_IMPLIED));
+			requestValuePortPair.getRight().addValueStructureInfo(new HAPInfoValueStructure(valueStructureId, HAPConstantShared.VALUESTRUCTURE_PRIORITY_IMPLIED));
 		}
 	}
 
@@ -67,8 +68,8 @@ public class HAPUtilityInteractiveTaskValuePort {
 				roots.add(root);
 				
 				String valueStructureId = valueStructureDomain.newValueStructure(roots, null, null, null);
-				requestValuePortPair.getLeft().addValueStructureId(valueStructureId, HAPConstantShared.VALUESTRUCTURE_PRIORITY_IMPLIED);
-				requestValuePortPair.getRight().addValueStructureId(valueStructureId, HAPConstantShared.VALUESTRUCTURE_PRIORITY_IMPLIED);
+				requestValuePortPair.getLeft().addValueStructureInfo(new HAPInfoValueStructure(valueStructureId, HAPConstantShared.VALUESTRUCTURE_PRIORITY_IMPLIED));
+				requestValuePortPair.getRight().addValueStructureInfo(new HAPInfoValueStructure(valueStructureId, HAPConstantShared.VALUESTRUCTURE_PRIORITY_IMPLIED));
 			}
 		}
 		
@@ -85,8 +86,8 @@ public class HAPUtilityInteractiveTaskValuePort {
 				roots.add(root);
 				
 				String valueStructureId = valueStructureDomain.newValueStructure(roots, null, null, null);
-				resultValuePortPair.getLeft().addValueStructureId(valueStructureId, HAPConstantShared.VALUESTRUCTURE_PRIORITY_IMPLIED);
-				resultValuePortPair.getRight().addValueStructureId(valueStructureId, HAPConstantShared.VALUESTRUCTURE_PRIORITY_IMPLIED);
+				resultValuePortPair.getLeft().addValueStructureInfo(new HAPInfoValueStructure(valueStructureId, HAPConstantShared.VALUESTRUCTURE_PRIORITY_IMPLIED));
+				resultValuePortPair.getRight().addValueStructureInfo(new HAPInfoValueStructure(valueStructureId, HAPConstantShared.VALUESTRUCTURE_PRIORITY_IMPLIED));
 			}
 		}
 	}

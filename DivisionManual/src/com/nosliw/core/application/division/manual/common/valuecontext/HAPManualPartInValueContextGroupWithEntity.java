@@ -30,7 +30,7 @@ public class HAPManualPartInValueContextGroupWithEntity extends HAPManualPartInV
 		if(child.isEmptyOfValueStructure(null)) {
 			return null;
 		}
-		child.getPartInfo().appendParentInfo(this.getPartInfo().getPriority());
+//		child.getPartInfo().appendParentInfo(this.getPartInfo().getPriority());    kkkkkkk
 		this.m_children.add(child);
 		return child.getPartInfo().getName();
 	}

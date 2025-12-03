@@ -945,7 +945,7 @@
 			<definition name="VALUESTRUCTUREPART_NAME_EXTENSION" value="extension"/>
 			<definition name="VALUESTRUCTUREPART_PRIORITY_EXTENSION" value="7" type="int"/>
 			<definition name="VALUESTRUCTUREPART_NAME_FROMPARENT" value="fromParent"/>
-			<definition name="VALUESTRUCTUREPART_PRIORITY_FROMPARENT" value="10" type="int"/>
+			<definition name="VALUESTRUCTUREPART_PRIORITY_FROMPARENT" value="9" type="int"/>
 
 			<definition type="space"/>
 			<definition name="ENTITYCONTAINER_TYPE_DEFINITION_LIST" value="list"/>

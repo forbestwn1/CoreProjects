@@ -1,6 +1,7 @@
 package com.nosliw.core.application.valueport;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -9,6 +10,8 @@ import java.util.stream.Collectors;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfoImp;
+import com.nosliw.common.serialization.HAPManagerSerialize;
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.utils.HAPConstantShared;
 
@@ -18,6 +21,9 @@ public class HAPValuePort extends HAPEntityInfoImp{
 	@HAPAttribute
 	public static String VALUESTRUCTURE = "valueStructure";
 
+	@HAPAttribute
+	public static String VALUESTRUCTUREINFO = "valueStructureInfo";
+	
 	@HAPAttribute
 	public static String TYPE = "type";
 
@@ -37,10 +43,16 @@ public class HAPValuePort extends HAPEntityInfoImp{
 	}
 	
 	public List<String> getValueStructureIds(){	return this.m_valueStructures.stream().map(HAPInfoValueStructure::getValueStructureId).collect(Collectors.toList());	}
-	public void addValueStructureId(String id) {    this.addValueStructureId(id, HAPConstantShared.VALUESTRUCTURE_PRIORITY_DEFINED);    }
-	public void addValueStructureId(String id, int priority) {
-		this.m_valueStructures.add(new HAPInfoValueStructure(id, priority));
-		this.m_valueStructures.sort((v1, v2)->v2.getPriority()-v1.getPriority());
+
+	public void addValueStructureId(String id) {    this.addValueStructureInfo(new HAPInfoValueStructure(id, HAPConstantShared.VALUESTRUCTURE_PRIORITY_DEFINED));    }
+	public void setValueStructuredSorted(List<HAPInfoValueStructure> valueStructureInfos) {		
+		this.m_valueStructures.addAll(valueStructureInfos);
+	}
+	
+	public void addValueStructureInfo(HAPInfoValueStructure valueStructureInfo) {
+		this.m_valueStructures.add(valueStructureInfo);
+		this.m_valueStructures.sort((v1, v2)-> HAPUtilityValueStructure.sortPriority(v1.getPriority(), v2.getPriority()));
+		Collections.reverse(m_valueStructures);
 	}
 
 	public String getType() {     return this.m_type;    }
@@ -62,22 +74,7 @@ public class HAPValuePort extends HAPEntityInfoImp{
 		jsonMap.put(TYPE, this.getType());
 		jsonMap.put(IODIRECTION, this.getIODirection());
 		jsonMap.put(VALUESTRUCTURE, HAPUtilityJson.buildArrayJson(this.getValueStructureIds().toArray(new String[0])));
+		jsonMap.put(VALUESTRUCTUREINFO, HAPManagerSerialize.getInstance().toStringValue(this.m_valueStructures, HAPSerializationFormat.JSON));
 	}
 
-	class HAPInfoValueStructure{
-		
-		private String m_valueStructureId;
-		
-		private int m_priority;
-		
-		public HAPInfoValueStructure(String valueStructureId, int priority) {
-			this.m_valueStructureId = valueStructureId;
-			this.m_priority = priority;
-		}
-		
-		public String getValueStructureId() {    return this.m_valueStructureId;     }
-		
-		public int getPriority() {   return this.m_priority;    }
-		
-	}
 }
