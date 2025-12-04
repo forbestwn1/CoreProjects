@@ -32,7 +32,7 @@
 		},
 		{
 			"name" : "arrayindex",
-			"defaultValue" : "arrayindex"
+			"defaultValue" : "index"
 		}
 	],
 	"valueContextEmbeded": [
@@ -44,6 +44,25 @@
 					"embeded_stringVar": {
     					"definition":{
 							"data": "test.string;1.0.0"
+						}
+					},
+					"<%=&(nosliwattribute_arrayelement)&%>": {
+            			"status": "<%=&(nosliwattribute_data_array)&==undefined?'disabled':''%>",
+						"definition": {
+							"reference" : {
+								"elementPath": "<%=&(nosliwattribute_data_array)&%>.element"
+							}
+						},
+						"info":{
+							"instantiate" : "manual"
+						}
+					},
+					"<%=&(nosliwattribute_arrayindex)&%>": {
+            			"status": "<%=&(nosliwattribute_data_array)&==undefined?'disabled':''%>",
+						"definition": {
+						},
+						"info":{
+							"instantiate" : "manual"
 						}
 					},
 					"<%=&(nosliwattribute_attribute1)&%>": {

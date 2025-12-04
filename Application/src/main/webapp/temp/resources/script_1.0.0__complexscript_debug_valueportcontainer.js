@@ -38,7 +38,7 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 		updateView : function(view){
 			var rootView =  $('<div>' + '</div>');
 			var trigueView = $('<button>Check value port container</button>');
-			var intputView = $('<textarea rows="1" cols="150" style="resize: none; border:solid 1px;" data-role="none"></textarea>');
+			var intputView = $('<textarea rows="1" cols="150" style="resize: none; border:solid 1px;" data-role="none" placeholder="input value port container id..."></textarea>');
 			var resultView = $('<textarea rows="5" cols="150" style="resize: none; border:solid 1px;" data-role="none"></textarea>');
 			
 			rootView.append(trigueView);

@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Set;
 
 import com.nosliw.common.constant.HAPEntityWithAttribute;
+import com.nosliw.common.info.HAPUtilityEntityInfo;
 import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
@@ -30,6 +31,17 @@ public class HAPStructureImp extends HAPSerializableImp implements HAPStructure{
 		String name = root.getName();
 		this.getRoots().put(name, root);
 		return root;
+	}
+
+	@Override
+	public HAPRootInStructure updateRoot(String name, HAPRootInStructure root) {
+		m_roots.remove(name);
+		if(HAPUtilityEntityInfo.isEnabled(root)){
+			return this.addRoot(root);
+		}
+		else {
+			return null;
+		}
 	}
 
 	@Override

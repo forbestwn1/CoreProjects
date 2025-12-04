@@ -14,6 +14,7 @@ var packageObj = library.getChildPackage("test");
 	var node_requestServiceProcessor;
 	var node_complexEntityUtility;
 	var node_basicUtility;
+	var node_createHandleEachElementProcessor;
 //*******************************************   Start Node Definition  ************************************** 	
 
 var node_createUICustomerTagTest = function(envObj){
@@ -25,6 +26,39 @@ var node_createUICustomerTagTest = function(envObj){
     var loc_inputVariableInfos = {};
 
 	var loc_embededs = {};
+
+    var loc_presentArrayRequest = function(arrayVariable, wrapperView, handlers, requestInfo){
+		var out = node_createServiceRequestInfoSequence(undefined, handlers, requestInfo);
+
+		loc_handleEachElementProcessor = node_createHandleEachElementProcessor(arrayVariable, ""); 
+		
+		out.addRequest(loc_handleEachElementProcessor.getLoopRequest({
+			success : function(requestInfo, eles){
+				var addEleRequest = node_createServiceRequestInfoSequence(undefined, handlers, requestInfo);
+				_.each(eles, function(ele, index){
+					var variationPoints = {
+						afterValueContext: function(complexEntityDef, valuePortContainerId, bundleCore, coreConfigure){
+							var valuePortContainer = bundleCore.getValuePortDomain().getValuePortContainer(valuePortContainerId);
+							var valueStructureRuntimeId = valuePortContainer.getValueStructureRuntimeIdByName("embeded_part1");
+							var valueStructure = valuePortContainer.getValueStructure(valueStructureRuntimeId);
+							valueStructure.addVariable(ele.elementVar, loc_envObj.getAttributeValue("arrayelement"));
+							valueStructure.addVariable(ele.indexVar, loc_envObj.getAttributeValue("arrayindex"));
+						}
+					}
+					addEleRequest.addRequest(loc_envObj.getCreateDefaultUIContentWithInitRequest(variationPoints, wrapperView, {
+						success: function(request, uiConentNode){
+//							loc_elements.push(uiConentNode.getChildValue().getCoreEntity());
+						}
+					}));
+				});
+				addEleRequest.setParmData("processMode", "promiseBased");
+				return addEleRequest;
+			}
+		}));
+		
+		return out;
+	};
+
 
     var loc_isValidVariableAttribute = function(attrName){
 		var out = false;
@@ -116,6 +150,18 @@ var node_createUICustomerTagTest = function(envObj){
 			node_requestServiceProcessor.processRequest(requestInfo);
 		});
 		
+
+	    var arrayButtonView = $('<button type="button">'+"Show Array"+'</button>');	
+		embededsWrapperView.append(arrayButtonView);
+		arrayButtonView.bind('click', function(){
+			var requestInfo = loc_presentArrayRequest(loc_inputVariableInfos["data_array"].variable, embededsWrapperView, {
+				success: function(request, uiConentNode){
+				}
+			});
+			node_requestServiceProcessor.processRequest(requestInfo);
+		});
+		
+
 /*		
 		_.each(loc_embededs, function(embededInfo){
     		var embedWrapperView = $('<div/>');
@@ -206,6 +252,7 @@ nosliw.registerSetNodeDataEvent("uitag.test.createTagUITest", function(){node_cr
 nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
 nosliw.registerSetNodeDataEvent("complexentity.complexEntityUtility", function(){node_complexEntityUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("variable.orderedcontainer.createHandleEachElementProcessor", function(){node_createHandleEachElementProcessor = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createUICustomerTagTest", node_createUICustomerTagTest); 

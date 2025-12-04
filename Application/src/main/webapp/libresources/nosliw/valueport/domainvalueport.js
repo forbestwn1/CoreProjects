@@ -248,6 +248,21 @@ var loc_createValuePortContainer = function(id, valuePortContainerDef, variableD
 			}
 		},
 		
+		getValueStructureRuntimeIdByName : function(valueStructureName){
+			for(var groupName in loc_valueStructures){
+				for(var valuePortName in loc_valueStructures[groupName]){
+					var valueStructureWrappers = loc_valueStructures[groupName][valuePortName];
+					for(var i in valueStructureWrappers){
+    					var runtimeInfo = valueStructureWrappers[i].getRuntimeInfo();
+	    				if(runtimeInfo[node_COMMONATRIBUTECONSTANT.ENTITYINFO_NAME]==valueStructureName){
+		    				return valueStructureWrappers[i].getRuntimeId();
+			    		}
+					}
+					
+				}
+			}
+		},
+		
 		getValueStructureWrapper : function(valueStructureRuntimeId){
 			var valueStructureInfo = loc_valueStructureInfoById[valueStructureRuntimeId];
 			return valueStructureInfo==undefined?undefined : loc_valueStructures[valueStructureInfo.groupName][valueStructureInfo.valuePortName][valueStructureRuntimeId];   
@@ -306,17 +321,6 @@ var loc_createValuePortContainer = function(id, valuePortContainerDef, variableD
 
 
 
-		
-		getValueStructureRuntimeIdByName : function(valueStructureName){
-			var out;
-			out = valueContextDef[node_COMMONATRIBUTECONSTANT.VALUECONTEXT_VALUESTRUCTURERUNTIMEIDBYNAME][valueStructureName];
-			if(out==undefined){
-				if(loc_parentValueContext!=undefined){
-					out = loc_parentValueContext.getValueStructureRuntimeIdByName(valueStructureName);
-				}
-			}
-			return out;
-		},
 		
 		getValueStructureRuntimeIds : function(){
 			var solid = [];
@@ -461,6 +465,10 @@ var loc_createSoftValueStructureWrapper = function(valueStructureRuntimeId, pare
 			return loc_parentValuePortContainer.getValueStructure(loc_runtimeId).createVariable(valueStructureVariableInfo);
 		},
 			
+		getRuntimeInfo : function(){
+			return loc_Utility.getValueStructureWrapperByRuntimeId(loc_parentValuePortContainer, loc_runtimeId);
+		},
+		
 		getRuntimeId : function(){   return loc_runtimeId;    },
 		
 		getName : function(){
@@ -475,7 +483,7 @@ var loc_createSoftValueStructureWrapper = function(valueStructureRuntimeId, pare
 				}
 				else{
 					currentValuePortContainer = currentValuePortContainer.getParentValuePortContainer();
-					out = out + loc_parentSymbol;
+					out = out + parentSymbol;
 				}
 			}
 			
@@ -486,6 +494,24 @@ var loc_createSoftValueStructureWrapper = function(valueStructureRuntimeId, pare
 	
 	return loc_out;
 };
+
+var loc_Utility = function(){
+	
+	var loc_out = {
+		
+		getValueStructureWrapperByRuntimeId : function(valuePortContainer, valueStructureRuntimeId){
+			var wrapper = valuePortContainer.getValueStructureWrapper(valueStructureRuntimeId);
+			if(wrapper!=undefined)  return wrapper.getValueStructure();
+			else if(valuePortContainer.getParentValuePortContainer()!=undefined){
+				return this.getValueStructureWrapperByRuntimeId(valuePortContainer.getParentValuePortContainer(), valueStructureRuntimeId); 
+			}
+		}
+		
+	};
+	
+	return loc_out;
+	
+}();
 
 
 //*******************************************   End Node Definition  ************************************** 	

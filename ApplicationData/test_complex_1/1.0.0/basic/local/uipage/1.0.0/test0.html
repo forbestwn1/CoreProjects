@@ -10,7 +10,15 @@ Hellooooooo!!!!!
 		<br>
  -->
  
- 		<nosliw-debug_test attribute1="myAttr" data_string="page_public_string">
+ 		<nosliw-debug_test attribute1="myAttr" data_array="page_public_array">
+
+    		<br>
+ 	    	arrayindex:<%=?(index)?.value%>
+    		<br>
+ 	    	arrayelement:<%=?(element)?.value%>
+    		<br>
+
+
 <!-- 
 
     		<br>
@@ -20,7 +28,9 @@ Hellooooooo!!!!!
  	    	embeded_stringVar:<%=?(embeded_stringVar)?.value + '   7777 ' %>
  -->
 
+<!-- 
  	    	<nosliw-debug_test data_string="embeded_stringVar">
+ -->
 
 <!-- 
     	    	embeded_stringVar:<%=?(embeded_stringVar)?.value + '   7777 ' %>

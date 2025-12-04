@@ -14,6 +14,9 @@ public interface HAPStructure  extends HAPSerializable{
 	public static final String ROOT = "root";
 	
 	HAPRootInStructure addRoot(HAPRootInStructure root);
+	
+	HAPRootInStructure updateRoot(String name, HAPRootInStructure root);
+
 	Map<String, HAPRootInStructure> getRoots();
 
 	default public HAPRootInStructure getRootByName(String rootName) {   return this.getRoots().get(rootName);  }

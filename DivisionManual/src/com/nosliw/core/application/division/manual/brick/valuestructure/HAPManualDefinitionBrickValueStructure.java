@@ -30,6 +30,9 @@ public class HAPManualDefinitionBrickValueStructure extends HAPManualDefinitionB
 	public HAPRootInStructure addRoot(HAPRootInStructure root) {   return this.getValue().addRoot(root);  }
 
 	@Override
-	public Map<String, HAPRootInStructure> getRoots() {  return this.getValue().getRoots();  }
+	public HAPRootInStructure updateRoot(String name, HAPRootInStructure root) {  return this.getValue().updateRoot(name, root);  }
 	
+	@Override
+	public Map<String, HAPRootInStructure> getRoots() {  return this.getValue().getRoots();  }
+
 }
