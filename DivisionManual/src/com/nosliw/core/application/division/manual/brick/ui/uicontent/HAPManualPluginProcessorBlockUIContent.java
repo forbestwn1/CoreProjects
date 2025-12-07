@@ -5,8 +5,14 @@ import java.util.Map;
 import org.apache.commons.lang3.tuple.Pair;
 
 import com.nosliw.common.path.HAPPath;
+import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.core.application.HAPBundle;
 import com.nosliw.core.application.HAPDomainValueStructure;
 import com.nosliw.core.application.brick.HAPEnumBrickType;
+import com.nosliw.core.application.brick.ui.uicontent.HAPUIHandlerEventTagCustom;
+import com.nosliw.core.application.brick.ui.uicontent.HAPUIHandlerEventTagNormal;
+import com.nosliw.core.application.brick.ui.uicontent.HAPUIInfoEventHandler;
+import com.nosliw.core.application.brick.ui.uicontent.HAPUIInfoEventHandlerTask;
 import com.nosliw.core.application.common.dataexpression.definition.HAPParserDataExpression;
 import com.nosliw.core.application.common.scriptexpressio.HAPItemInContainerScriptExpression;
 import com.nosliw.core.application.common.scriptexpressio.HAPUtilityScriptExpression;
@@ -17,6 +23,7 @@ import com.nosliw.core.application.division.manual.core.HAPManualBrick;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionBrick;
 import com.nosliw.core.application.division.manual.core.process.HAPManualContextProcessBrick;
 import com.nosliw.core.application.division.manual.core.process.HAPManualPluginProcessorBlockImp;
+import com.nosliw.core.application.division.manual.core.process.HAPManualUtilityProcessBrickPath;
 import com.nosliw.core.application.valueport.HAPUtilityValuePortVariable;
 import com.nosliw.core.data.matcher.HAPMatchers;
 
@@ -48,22 +55,36 @@ public class HAPManualPluginProcessorBlockUIContent extends HAPManualPluginProce
 		HAPUtilityScriptExpression.fromDefToExeScriptExpressionContainer(uiContentDef.getScriptExpressions(), uiContentExe.getScriptExpressions(), this.m_dataExpressionParser);
 
 		//event in normal tag
-//		for(HAPElementEvent event : uiContentDef.getNormalTagEvents()) {
-//			uiContentExe.addNormalTagEvent(event);
+		for(HAPUIHandlerEventTagNormal event : uiContentDef.getNormalTagEvents()) {
+			uiContentExe.addNormalTagEvent(event);;
 //			event.setTaskInfo(this.locateTask(event.getHandlerName(), uiContentExe, processContext));
-//		}
+		}
 
 		//event in custom tag
-//		for(HAPElementEvent event : uiContentDef.getCustomTagEvent()) {
-//			uiContentExe.addCustomTagEvent(event);;
-//		}
+		for(HAPUIHandlerEventTagCustom event : uiContentDef.getCustomerTagEvents()) {
+			uiContentExe.addCustomerTagEvent(event);
+		}
 
-		
 		//customer tag
-		
 		
 	}
 	
+	@Override
+	public void normalizeBrickPath(HAPPath pathFromRoot, HAPManualContextProcessBrick processContext) {
+		HAPBundle bundle = processContext.getCurrentBundle();
+		Pair<HAPManualDefinitionBrick, HAPManualBrick> blockPair = this.getBrickPair(pathFromRoot, processContext);
+		HAPManualBlockComplexUIContent executableBlock = (HAPManualBlockComplexUIContent)blockPair.getRight();
+
+		for(HAPUIHandlerEventTagCustom customTagEventHandler : executableBlock.getCustomerTagEvents()) {
+			HAPUIInfoEventHandler handler = customTagEventHandler.getHandlerInfo();
+			String handlerType = handler.getHandlerType();
+			if(handlerType.equals(HAPConstantShared.UICONTENT_EVENTHANDLERTYPE_TASK)) {
+				HAPUIInfoEventHandlerTask handlerTask = (HAPUIInfoEventHandlerTask)handler;
+				HAPManualUtilityProcessBrickPath.normalizeBrickPath(handlerTask.getTaskBrickId(), processContext);
+			}
+		}
+	}
+
 	@Override
 	public void processVariableResolve(HAPPath pathFromRoot, HAPManualContextProcessBrick processContext) {
 		Pair<HAPManualDefinitionBrick, HAPManualBrick> blockPair = this.getBrickPair(pathFromRoot, processContext);

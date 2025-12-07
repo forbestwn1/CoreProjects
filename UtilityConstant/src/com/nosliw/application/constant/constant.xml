@@ -406,7 +406,7 @@
 			<definition name="UIRESOURCE_ATTRIBUTE_STATICID" value="nosliwstaticid"/>
 			<definition name="UIRESOURCE_ATTRIBUTE_GROUP" value="group"/>
 			<definition name="UIRESOURCE_ATTRIBUTE_GROUP_DATAVALIDATION" value="valueValidation"/>
-			<definition name="UIRESOURCE_ATTRIBUTE_EVENT" value="event"/>
+			<definition name="UIRESOURCE_ATTRIBUTE_EVENT" value="event_"/>
 			<definition name="UIRESOURCE_ATTRIBUTE_DATABINDING" value="data"/>
 			<definition name="UIRESOURCE_TAG_PLACEHOLDER" value="nosliw"/>
 			<definition name="UIRESOURCE_CUSTOMTAG_KEYATTRIBUTE_PREFIX" value="nosliw-"/>
@@ -532,6 +532,7 @@
 
 			<definition name="UITAGDEFINITION_ATTRIBUTETYPE_SIMPLE" value="simple"/>
 			<definition name="UITAGDEFINITION_ATTRIBUTETYPE_VARIABLE" value="variable"/>
+			<definition name="UITAGDEFINITION_ATTRIBUTETYPE_EVENT" value="event"/>
 
 			<definition name="UIRESOURCE_CONTEXTINFO_INSTANTIATE" value="instantiate"/>
 			<definition name="UIRESOURCE_CONTEXTINFO_INSTANTIATE_MANUAL" value="manual"/>
@@ -1079,6 +1080,10 @@
 			<definition name="VALUEADDRESSCATEGARY_BUNDLE" value="bundle"/>
 			<definition name="VALUEADDRESSCATEGARY_TASKCONTEXT" value="taskContext"/>
 			<definition name="VALUEADDRESSCATEGARY_FLOWCONTEXT" value="flowContext"/>
+
+			<definition type="space"/>
+			<definition name="UICONTENT_EVENTHANDLERTYPE_TASK" value="task"/>
+			<definition name="UICONTENT_EVENTHANDLERTYPE_SCRIPT" value="script"/>
 
 		</definitions>
 	</constants>

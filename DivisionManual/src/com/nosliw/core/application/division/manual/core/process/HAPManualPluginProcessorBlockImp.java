@@ -82,9 +82,6 @@ public abstract class HAPManualPluginProcessorBlockImp extends HAPManualPluginPr
 	public void postProcessBrick(HAPPath pathFromRoot, HAPManualContextProcessBrick processContext) {}
 
 
-	
-	
-
 	protected Pair<HAPManualDefinitionBrick, HAPManualBrick> getBrickPair(HAPPath pathFromRoot, HAPManualContextProcessBrick processContext){
 		return HAPManualDefinitionUtilityBrick.getBrickPair(pathFromRoot, processContext.getCurrentBundle());
 	}

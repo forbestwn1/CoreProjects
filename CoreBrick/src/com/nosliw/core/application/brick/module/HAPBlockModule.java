@@ -16,10 +16,10 @@ public interface HAPBlockModule {
 	@HAPAttribute
 	public static String BRICK = "brick";
 
-	HAPBrickContainer getLifecycles();
+	HAPBrickContainer getTasks();
 
 	HAPBrickContainer getCommands();
 
-	HAPBrickContainer getBricks();
+	HAPBrickContainer getPages();
 	
 }

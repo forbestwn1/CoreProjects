@@ -14,7 +14,6 @@ import com.nosliw.core.application.HAPBundle;
 import com.nosliw.core.application.HAPIdBrickInBundle;
 import com.nosliw.core.application.HAPUtilityBundle;
 import com.nosliw.core.application.brick.HAPEnumBrickType;
-import com.nosliw.core.application.brick.HAPUtilityBrickPath;
 import com.nosliw.core.application.brick.test.complex.script.HAPBlockTestComplexScript;
 import com.nosliw.core.application.brick.test.complex.script.HAPTestTaskTrigguer;
 import com.nosliw.core.application.common.structure.reference.HAPConfigureResolveElementReference;
@@ -24,6 +23,7 @@ import com.nosliw.core.application.division.manual.core.HAPManualBrick;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionBrick;
 import com.nosliw.core.application.division.manual.core.process.HAPManualContextProcessBrick;
 import com.nosliw.core.application.division.manual.core.process.HAPManualPluginProcessorBlockImp;
+import com.nosliw.core.application.division.manual.core.process.HAPManualUtilityProcessBrickPath;
 import com.nosliw.core.application.valueport.HAPReferenceElement;
 import com.nosliw.core.application.valueport.HAPResultReferenceResolve;
 import com.nosliw.core.application.valueport.HAPUtilityResovleElement;
@@ -45,11 +45,10 @@ public class HAPManualPluginProcessorBlockComplexTestComplexScript extends HAPMa
 		for(HAPTestTaskTrigguer taskTrigguer : definitionBlock.getTaskTrigguers()) {
 			HAPInfoTrigguerTask trigguerInfo = taskTrigguer.getTaskTrigguerInfo();
 			HAPIdBrickInBundle handlerIdInBundle = trigguerInfo.getHandlerId();
-			handlerIdInBundle.setIdPath(HAPUtilityBrickPath.normalizeBrickPath(new HAPPath(handlerIdInBundle.getIdPath()), processContext.getRootBrickName(), false, processContext.getCurrentBundle()).toString());
+			HAPManualUtilityProcessBrickPath.normalizeBrickPath(handlerIdInBundle, processContext);
 		}
-		
 	}
-
+	
 	@Override
 	public void postProcessOtherValuePortBuild(HAPPath pathFromRoot, HAPManualContextProcessBrick processContext) {
 		HAPBundle bundle = processContext.getCurrentBundle();

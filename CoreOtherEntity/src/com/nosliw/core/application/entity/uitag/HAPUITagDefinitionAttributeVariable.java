@@ -3,6 +3,7 @@ package com.nosliw.core.application.entity.uitag;
 import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.common.datadefinition.HAPDataDefinitionWritable;
 
@@ -31,6 +32,8 @@ public class HAPUITagDefinitionAttributeVariable extends HAPUITagDefinitionAttri
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
+		jsonMap.put(SCOPE, this.m_scope);
+		jsonMap.put(DATADEFINITION, this.m_dataDefinition.toStringValue(HAPSerializationFormat.JSON));
 	}
 	
 }

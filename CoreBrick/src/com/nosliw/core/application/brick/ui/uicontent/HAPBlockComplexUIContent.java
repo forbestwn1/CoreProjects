@@ -42,9 +42,9 @@ public interface HAPBlockComplexUIContent extends HAPBrick{
 	
 	HAPContainerScriptExpression getScriptExpressions();
 
-	List<HAPElementEvent> getNormalTagEvents();
+	List<HAPUIHandlerEventTagNormal> getNormalTagEvents();
 	
-	List<HAPElementEvent> getCustomerTagEvents();
+	List<HAPUIHandlerEventTagCustom> getCustomerTagEvents();
 	
 	
 	@HAPAttribute

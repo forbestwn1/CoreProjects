@@ -292,7 +292,7 @@ public class HAPConstantShared {
 		public static final String UIRESOURCE_ATTRIBUTE_STATICID = "nosliwstaticid";
 		public static final String UIRESOURCE_ATTRIBUTE_GROUP = "group";
 		public static final String UIRESOURCE_ATTRIBUTE_GROUP_DATAVALIDATION = "valueValidation";
-		public static final String UIRESOURCE_ATTRIBUTE_EVENT = "event";
+		public static final String UIRESOURCE_ATTRIBUTE_EVENT = "event_";
 		public static final String UIRESOURCE_ATTRIBUTE_DATABINDING = "data";
 		public static final String UIRESOURCE_TAG_PLACEHOLDER = "nosliw";
 		public static final String UIRESOURCE_CUSTOMTAG_KEYATTRIBUTE_PREFIX = "nosliw-";
@@ -442,6 +442,7 @@ public class HAPConstantShared {
 		public static final String UITAG_PARM_MAPPING = "mapping";
 		public static final String UITAGDEFINITION_ATTRIBUTETYPE_SIMPLE = "simple";
 		public static final String UITAGDEFINITION_ATTRIBUTETYPE_VARIABLE = "variable";
+		public static final String UITAGDEFINITION_ATTRIBUTETYPE_EVENT = "event";
 		public static final String UIRESOURCE_CONTEXTINFO_INSTANTIATE = "instantiate";
 		public static final String UIRESOURCE_CONTEXTINFO_INSTANTIATE_MANUAL = "manual";
 		public static final String UIRESOURCE_CONTEXTINFO_INSTANTIATE_AUTO = "auto";
@@ -1050,6 +1051,11 @@ public class HAPConstantShared {
 		public static final String VALUEADDRESSCATEGARY_BUNDLE = "bundle";
 		public static final String VALUEADDRESSCATEGARY_TASKCONTEXT = "taskContext";
 		public static final String VALUEADDRESSCATEGARY_FLOWCONTEXT = "flowContext";
+
+
+
+		public static final String UICONTENT_EVENTHANDLERTYPE_TASK = "task";
+		public static final String UICONTENT_EVENTHANDLERTYPE_SCRIPT = "script";
 
 
 }

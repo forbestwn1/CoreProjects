@@ -10,10 +10,10 @@ Hellooooooo!!!!!
 		<br>
  -->
  
- 		<nosliw-debug_test attribute1="myAttr" data_array="page_public_array">
+ 		<nosliw-debug_test attribute1="myAttr" data_array="page_public_array" nosliw-event_event1="task:eventhandler-test_complex_task">
 
     		<br>
- 	    	arrayindex:<%=?(index)?.value%>
+ 	    	arrayindex:<%=JSON.stringify(?(index)?)%>
     		<br>
  	    	arrayelement:<%=?(element)?.value%>
     		<br>

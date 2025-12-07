@@ -109,6 +109,19 @@ var node_createUICustomerTagTest = function(envObj){
 	var loc_initViews = function(handlers, request){
 		loc_containerrView = $('<div/>');
 
+        //triggue event 
+		var triggueEventWrapperView = $('<div/>');
+	    var triggueEventButtonView = $('<button type="button">'+"TriggueEvent"+'</button>');	
+		triggueEventButtonView.bind('click', function(){
+			var eventData = {
+				"dataTypeId": "test.string;1.0.0",
+				"value": "event data string"
+			};
+			loc_envObj.trigueEvent("event1", eventData);
+		});
+		triggueEventWrapperView.append(triggueEventButtonView);
+		loc_containerrView.append(triggueEventWrapperView);
+		
 		//attribute view
 		var attributesWrapperView = $('<div/>');
 		attributesWrapperView.append($('<br>Attributes: <br>'));
@@ -140,9 +153,9 @@ var node_createUICustomerTagTest = function(envObj){
 		var embededsWrapperView = $('<div/>');
 		embededsWrapperView.append($('<br>Embededs: <br>'));
 		
-	    var buttonView = $('<button type="button">'+"Show Emdeded"+'</button>');	
-		embededsWrapperView.append(buttonView);
-		buttonView.bind('click', function(){
+	    var showEmbededButtonView = $('<button type="button">'+"Show Emdeded"+'</button>');	
+		embededsWrapperView.append(showEmbededButtonView);
+		showEmbededButtonView.bind('click', function(){
 			var requestInfo = loc_envObj.getCreateDefaultUIContentWithInitRequest(undefined, embededsWrapperView, {
 				success: function(request, uiConentNode){
 				}

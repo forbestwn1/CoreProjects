@@ -42,10 +42,13 @@ public abstract class HAPUITagDefinitionAttribute extends HAPEntityInfoImp{
 		}
 		switch(type) {
 		case HAPConstantShared.UITAGDEFINITION_ATTRIBUTETYPE_SIMPLE:
+		{
 			HAPUITagDefinitionAttributeSimple simpleAttrDef = new HAPUITagDefinitionAttributeSimple();
 			simpleAttrDef.buildObject(jsonObj, HAPSerializationFormat.JSON);
 			return simpleAttrDef;
+		}
 		case HAPConstantShared.UITAGDEFINITION_ATTRIBUTETYPE_VARIABLE:
+		{
 			HAPUITagDefinitionAttributeVariable varAttrDef = new HAPUITagDefinitionAttributeVariable();
 			varAttrDef.buildEntityInfoByJson(jsonObj);
 			Object dfObj = jsonObj.opt(HAPUITagDefinitionAttributeVariable.DATADEFINITION);
@@ -58,6 +61,17 @@ public abstract class HAPUITagDefinitionAttribute extends HAPEntityInfoImp{
 			}
 			varAttrDef.setScope(scope);
 			return varAttrDef;
+		}
+		case HAPConstantShared.UITAGDEFINITION_ATTRIBUTETYPE_EVENT:
+		{
+			HAPUITagDefinitionAttributeEvent eventAttrDef = new HAPUITagDefinitionAttributeEvent();
+			eventAttrDef.buildEntityInfoByJson(jsonObj);
+			Object dfObj = jsonObj.opt(HAPUITagDefinitionAttributeEvent.EVENTDATADEFINITION);
+			if(dfObj!=null) {
+				eventAttrDef.setEventDataDefinition(HAPParserDataDefinition.parseDataDefinitionReadonly(dfObj));
+			}
+			return eventAttrDef;
+		}
 		}
 		return null;
 	}

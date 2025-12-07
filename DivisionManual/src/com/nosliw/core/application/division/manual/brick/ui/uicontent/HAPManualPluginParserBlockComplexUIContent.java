@@ -14,13 +14,14 @@ import org.jsoup.select.Elements;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.common.utils.HAPSegmentParser;
 import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.core.application.HAPManagerApplicationBrick;
 import com.nosliw.core.application.brick.HAPEnumBrickType;
 import com.nosliw.core.application.brick.ui.uicontent.HAPElementEvent;
 import com.nosliw.core.application.brick.ui.uicontent.HAPUIEmbededScriptExpressionInAttribute;
 import com.nosliw.core.application.brick.ui.uicontent.HAPUIEmbededScriptExpressionInContent;
+import com.nosliw.core.application.brick.ui.uicontent.HAPUIHandlerEventTagCustom;
+import com.nosliw.core.application.brick.ui.uicontent.HAPUIHandlerEventTagNormal;
 import com.nosliw.core.application.common.scriptexpressio.HAPUtilityScriptExpressionParser;
 import com.nosliw.core.application.common.scriptexpressio.definition.HAPDefinitionContainerScriptExpression;
 import com.nosliw.core.application.division.manual.common.valuecontext.HAPManualParserValueContext;
@@ -135,6 +136,25 @@ public class HAPManualPluginParserBlockComplexUIContent extends HAPManualDefinit
 			String keyAttrName = HAPUtilityUIResourceParser.isKeyAttribute(eleAttrName);
 			
 			if(keyAttrName!=null){
+				if(keyAttrName.startsWith(HAPConstantShared.UIRESOURCE_ATTRIBUTE_EVENT)) {
+					String eventName = keyAttrName.substring(HAPConstantShared.UIRESOURCE_ATTRIBUTE_EVENT.length());
+					if(isCustomerTag){
+						HAPUIHandlerEventTagCustom customEventHandler = new HAPUIHandlerEventTagCustom();
+						customEventHandler.parseContent(eleAttrValue);
+						customEventHandler.setUIId(uiId);
+						customEventHandler.setEvent(eventName);
+						uiContent.addCustomerTagEvent(customEventHandler);
+					}
+					else {
+						HAPUIHandlerEventTagNormal normalEventHandler = new HAPUIHandlerEventTagNormal();
+						normalEventHandler.parseContent(eleAttrValue);
+						normalEventHandler.setUIId(uiId);
+						normalEventHandler.setEvent(eventName);
+						uiContent.addNormalTagEvent(normalEventHandler);
+					}
+				}
+				
+/*				
 				if(keyAttrName.contains(HAPConstantShared.UIRESOURCE_ATTRIBUTE_EVENT)){
 					//process event key attribute
 					HAPSegmentParser events = new HAPSegmentParser(eleAttrValue, HAPConstantShared.SEPERATOR_ELEMENT);
@@ -154,6 +174,7 @@ public class HAPManualPluginParserBlockComplexUIContent extends HAPManualDefinit
 					//remove this attribute from element
 					ele.removeAttr(eleAttrName);
 				}
+*/				
 			}
 		}
 	}

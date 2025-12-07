@@ -22,6 +22,7 @@ public class HAPElementEvent extends HAPSerializableImp{
 	public static final String EVENT = "event";
 	@HAPAttribute
 	public static final String HANDLERNAME = "handlerName";
+
 	@HAPAttribute
 	public static final String SELECTION = "selection";
 	@HAPAttribute
@@ -59,7 +60,9 @@ public class HAPElementEvent extends HAPSerializableImp{
 		jsonMap.put(EVENT, this.m_event);
 		jsonMap.put(HANDLERNAME, this.m_handlerName);
 		jsonMap.put(SELECTION, this.m_selection);
-		if(this.m_taskInfo!=null) jsonMap.put(TASKINFO, this.m_taskInfo.toStringValue(HAPSerializationFormat.JSON));
+		if(this.m_taskInfo!=null) {
+			jsonMap.put(TASKINFO, this.m_taskInfo.toStringValue(HAPSerializationFormat.JSON));
+		}
 	}
 	
 }

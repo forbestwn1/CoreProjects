@@ -133,6 +133,8 @@ var loc_createUITagComponentCore = function(complexEntityDef, tagDefScriptFun, v
 			return this.processRequest(this.getDataOperationRequestGet(target, path, handler, request));		
 		},
 
+		//--------------------------------- query tag
+		queryCustomTagInstance : function(query){          },
 		
 		//--------------------------------- event
 		trigueEvent : function(event, eventData, requestInfo){   loc_tagEventObject.triggerEvent(event, eventData, requestInfo);  },

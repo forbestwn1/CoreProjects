@@ -21,66 +21,87 @@ var packageObj = library.getChildPackage();
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
-var node_createVariableDebuger = function(variable, name){
-	
-	var loc_variable = variable;
+var loc_createComponentVariableInspection = function(){
+	var loc_vueComponent = {
+		data : function(){
+			return {
+				variableId : "",
+				variableValue : "",
+			};
+		},
+		methods : {
+			getVariableValue : function(event){
+				var that = this;
+				var varInfo = nosliw.runtime.getVariableManager().getVariableInfo(that.variableId);
+				if(varInfo!=undefined){
+					var request = varInfo.variable.getDataOperationRequest(node_valueInVarOperationServiceUtility.createGetOperationService(), {
+						success : function(request, data){
+							that.variableValue = JSON.stringify(data.value, null, 4);
+						}
+					});
+					node_requestServiceProcessor.processRequest(request, false);
+					
+				}
+			},
+		},
+		props : ['data'],
+		template : `
+			<div>
+				<div>
+				  <input v-model="variableId" placeholder="variable id"/>
+				  <button v-on:click="getVariableValue">GetValue</button>
+				  <textarea v-model="variableValue"  rows="30" cols="150"></textarea>
+				</div>
+		    </div>
+		`
+	};
+	return loc_vueComponent;
+};
 
-	var loc_name = name;
+
+
+var node_createVariableDebugView = function(view){
 	
-	var loc_view;
-	
-	var loc_valueView;
-	
-	var loc_updateDataDisplay = function(){
-		loc_variable.executeDataOperationRequest(node_valueInVarOperationServiceUtility.createGetOperationService(), {
-			success : function(request, data){
-				var value;
-    		    value = JSON.stringify(data, null, 4);
-				loc_valueView.text(value);
-			}	
-		});
+	var loc_view = $('<div></div>');
+	loc_view = view;
+
+	var loc_componentData = {
 	};
 	
+	var loc_vue;
 	
-    var loc_init =function(){
-		
-    	loc_view = $('<div/>');
-		loc_view.append($('<br>'+loc_name+':<br>'));
-        loc_valueView = $('<textarea rows="6" cols="150" style="resize: none; border:solid 1px;" data-role="none"></textarea>');
-        	
-		loc_valueView.bind('change', function(){
-			var value = loc_valueView.val();
-			if(value==undefined || value==""){}
-			else {
-				value = JSON.parse(varInfo.view.val());
-			}
-			var operationService = node_valueInVarOperationServiceUtility.createSetOperationService("", value);
-			loc_variable.executeDataOperationRequest(operationService);
+	var loc_init = function(){
+		Vue.component('variable-inspection', loc_createComponentVariableInspection());
+
+		loc_vue = new Vue({
+			el: document.getElementById("variableDebug"),
+//    		  root: "#complextreeDebug",
+//			el: loc_view,
+			data: loc_componentData,
+			methods : {
+			},
+			watch: {
+			},
+			computed : {
+			},
+			template : `
+				<div>
+					<variable-inspection/>
+				</div>
+			`
 		});
-		
-    	loc_variable.registerDataChangeEventListener(undefined, function(eventName, eventData){
-			loc_updateDataDisplay();
-		});
-		
-		loc_updateDataDisplay();
 	};
-	
+
 	var loc_out = {
 		
-		getVariable : function(){
-			return loc_variable;
-		},
-		
-		getView : function(){
-			return loc_view;
-		}
+		getView : function(){   return loc_view;   },
 		
 	};
 	
 	loc_init();
 	return loc_out;
 };
-
+	
 
 //*******************************************   End Node Definition  ************************************** 	
 
@@ -105,6 +126,6 @@ nosliw.registerSetNodeDataEvent("variable.valueinvar.utility", function(){  node
 nosliw.registerSetNodeDataEvent("variable.valueinvar.operation.valueInVarOperationServiceUtility", function(){node_valueInVarOperationServiceUtility = this.getData();});
 
 //Register Node by Name
-packageObj.createChildNode("createVariableDebuger", node_createVariableDebuger); 
+packageObj.createChildNode("createVariableDebugView", node_createVariableDebugView); 
 
 })(packageObj);
