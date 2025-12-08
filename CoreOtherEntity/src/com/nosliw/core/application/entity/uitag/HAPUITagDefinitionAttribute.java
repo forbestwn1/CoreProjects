@@ -62,16 +62,6 @@ public abstract class HAPUITagDefinitionAttribute extends HAPEntityInfoImp{
 			varAttrDef.setScope(scope);
 			return varAttrDef;
 		}
-		case HAPConstantShared.UITAGDEFINITION_ATTRIBUTETYPE_EVENT:
-		{
-			HAPUITagDefinitionAttributeEvent eventAttrDef = new HAPUITagDefinitionAttributeEvent();
-			eventAttrDef.buildEntityInfoByJson(jsonObj);
-			Object dfObj = jsonObj.opt(HAPUITagDefinitionAttributeEvent.EVENTDATADEFINITION);
-			if(dfObj!=null) {
-				eventAttrDef.setEventDataDefinition(HAPParserDataDefinition.parseDataDefinitionReadonly(dfObj));
-			}
-			return eventAttrDef;
-		}
 		}
 		return null;
 	}

@@ -9,6 +9,7 @@ import org.jsoup.nodes.Element;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.common.utils.HAPUtilityNamingConversion;
 import com.nosliw.core.application.HAPManagerApplicationBrick;
 import com.nosliw.core.application.brick.HAPEnumBrickType;
 import com.nosliw.core.application.brick.ui.uicontent.HAPWithUIContent;
@@ -63,8 +64,21 @@ public class HAPManualPluginParserBlockComplexUICustomerTag extends HAPManualDef
 		//parse customer tag attribute 
 		Attributes eleAttrs = ele.attributes();
 		for(Attribute eleAttr : eleAttrs){
-			if(uiTagDef.getAttributeDefinition().get(eleAttr.getKey())!=null) {
-				uiCustomerTag.addTagAttribute(eleAttr.getKey(), eleAttr.getValue());
+			String eleAttrValue = eleAttr.getValue();
+			String eleAttrName = eleAttr.getKey();
+			String keyAttrName = HAPUtilityUIResourceParser.isKeyAttribute(eleAttrName);
+			
+			if(keyAttrName!=null){
+				if(keyAttrName.equals(HAPConstantShared.UIRESOURCE_ATTRIBUTE_METADATA)) {
+					String[] pairs = HAPUtilityNamingConversion.parseLevel1(eleAttrValue);
+					for(String pair : pairs) {
+						String[] segs = HAPUtilityNamingConversion.parseParts(pair);
+						uiCustomerTag.addMetaData(segs[0], segs[1]);
+					}
+				}
+			}
+			else if(uiTagDef.getAttributeDefinition().get(eleAttr.getKey())!=null) {
+				uiCustomerTag.addTagAttribute(eleAttrName, eleAttrValue);
 			}
 		}
 

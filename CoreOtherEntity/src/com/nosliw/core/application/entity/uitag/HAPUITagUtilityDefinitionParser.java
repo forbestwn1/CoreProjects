@@ -9,6 +9,9 @@ import org.json.JSONObject;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityFile;
+import com.nosliw.core.application.common.event.HAPEventDefinition;
+import com.nosliw.core.application.common.event.HAPUtilityParser;
+import com.nosliw.core.application.common.event.HAPWithEvents;
 import com.nosliw.core.application.common.parentrelation.HAPManualDefinitionBrickRelation;
 import com.nosliw.core.application.common.structure.HAPElementStructureLeafRelativeForValue;
 import com.nosliw.core.application.common.structure.HAPRootInStructure;
@@ -53,6 +56,30 @@ public class HAPUITagUtilityDefinitionParser {
 		parseValueContext(valueContextEmbeded, jsonObj.getJSONArray(HAPUITagDefinition.VALUECONTEXTEMBEDED), dataRuleManager);
 		out.setValueContextEmbeded(valueContextEmbeded);
 
+		//attribute
+		JSONArray attrArray = jsonObj.optJSONArray(HAPUITagDefinition.ATTRIBUTE);
+		if(attrArray!=null) {
+			for(int i=0; i<attrArray.length(); i++) {
+				HAPUITagDefinitionAttribute attr = HAPUITagDefinitionAttribute.parseUITagDefinitionAttribute(attrArray.getJSONObject(i), dataRuleManager);
+				attr.buildObject(attrArray.getJSONObject(i), HAPSerializationFormat.JSON);
+				out.addAttributeDefinition(attr);
+			}
+		}
+		
+		//event definition
+		JSONArray eventArray = jsonObj.optJSONArray(HAPWithEvents.EVENT);
+		if(eventArray!=null) {
+			for(int i=0; i<eventArray.length(); i++) {
+				HAPEventDefinition eventDef = HAPUtilityParser.parseEventDefinition(eventArray.getJSONObject(i), dataRuleManager);
+				out.addEvent(eventDef);
+			}
+		}
+		
+		
+		
+		
+		
+		
 		//parse data type criteria
 		if(HAPConstantShared.UITAG_TYPE_DATA.equals(uiTagType)) {
 			for(HAPWrapperValueStructureDefinition wrapper : valueContext.getValueStructures()) {
@@ -96,16 +123,6 @@ public class HAPUITagUtilityDefinitionParser {
 		if(parentRelationJsonArray!=null) {
 			for(int i=0; i<parentRelationJsonArray.length(); i++) {
 				out.addParentRelation(HAPManualDefinitionBrickRelation.parseRelation(parentRelationJsonArray.getJSONObject(i)));
-			}
-		}
-		
-		//attribute
-		JSONArray attrArray = jsonObj.optJSONArray(HAPUITagDefinition.ATTRIBUTE);
-		if(attrArray!=null) {
-			for(int i=0; i<attrArray.length(); i++) {
-				HAPUITagDefinitionAttribute attr = HAPUITagDefinitionAttribute.parseUITagDefinitionAttribute(attrArray.getJSONObject(i), dataRuleManager);
-				attr.buildObject(attrArray.getJSONObject(i), HAPSerializationFormat.JSON);
-				out.addAttributeDefinition(attr);
 			}
 		}
 		

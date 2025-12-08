@@ -33,13 +33,22 @@
 		{
 			"name" : "arrayindex",
 			"defaultValue" : "index"
-		},
-		{
-		    "name" : "event1",
-		    "type" : "event",
-			"eventDataDefinition" : "test.string;1.0.0"
 		}
 	],
+	
+	"event" : [
+		{
+		    "name" : "event1",
+			"dataDefinition" : {
+			    "eventData" : {
+				    "definition":{
+					    "data": "test.string;1.0.0"
+    				}
+			    }
+			}
+		}
+	],
+	
 	"valueContextEmbeded": [
 		{
             "name" : "embeded_part1",

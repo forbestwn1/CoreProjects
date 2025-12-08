@@ -5,7 +5,9 @@ import java.util.Map;
 import org.apache.commons.lang3.tuple.Pair;
 
 import com.nosliw.common.path.HAPPath;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.brick.HAPEnumBrickType;
+import com.nosliw.core.application.common.event.HAPUtilityEventValuePort;
 import com.nosliw.core.application.division.manual.core.HAPManualBrick;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionBrick;
 import com.nosliw.core.application.division.manual.core.process.HAPManualContextProcessBrick;
@@ -40,9 +42,29 @@ public class HAPManualPluginProcessorBlockUICustomerTag extends HAPManualPluginP
 		if(uiCustomerTagDef.getBase()!=null) {
 			uiCustomerTagExe.setBase(uiCustomerTagDef.getBase());
 		}
+		
+		Map<String, String> metaData = uiCustomerTagDef.getMetaData();
+		for(String key : metaData.keySet()) {
+			uiCustomerTagExe.addMetaData(key, metaData.get(key));
+		}
+		uiCustomerTagExe.addMetaData(HAPConstantShared.UITAG_METADATA_UITAGNAME, uiCustomerTagDef.getUITagDefinition().getName());
+		uiCustomerTagExe.addMetaData(HAPConstantShared.UITAG_METADATA_UITAGVERSION, uiCustomerTagDef.getUITagDefinition().getVersion());
+		
+
+		
 		if(uiCustomerTagDef.getScriptResourceId()!=null) {
 			uiCustomerTagExe.setScriptResourceId(uiCustomerTagDef.getScriptResourceId());
 		}
-		
 	}
+
+	@Override
+	public void processOtherValuePortBuild(HAPPath pathFromRoot, HAPManualContextProcessBrick processContext) {
+		super.processOtherValuePortBuild(pathFromRoot, processContext);
+		Pair<HAPManualDefinitionBrick, HAPManualBrick> blockPair = this.getBrickPair(pathFromRoot, processContext);
+		
+		HAPManualDefinitionBlockComplexUICustomerTag blockDef = (HAPManualDefinitionBlockComplexUICustomerTag)blockPair.getLeft();
+		
+		HAPUtilityEventValuePort.buildValuePortGroupForEvent(blockPair.getRight().getOtherExternalValuePortContainer(), blockDef.getUITagDefinition(), processContext.getCurrentBundle().getValueStructureDomain());
+	}
+
 }

@@ -39,10 +39,15 @@ public class HAPUtilityParserStructure {
 			else {
 				valueStructure.setInitValue(structureJson.opt(HAPValueStructure.INITVALUE));
 			}
-			List<HAPRootInStructure> roots = parseStructureRoots(rootsObj, dataRuleMan);
-			for(HAPRootInStructure root : roots) {
-				valueStructure.addRoot(root);
-			}
+			
+			parseStuctureJson(rootsObj, valueStructure, dataRuleMan);
+		}
+	}
+	
+	static public void parseStuctureJson(Object structureJsonObj, HAPStructure structure, HAPManagerDataRule dataRuleMan) {
+		List<HAPRootInStructure> roots = parseStructureRoots(structureJsonObj, dataRuleMan);
+		for(HAPRootInStructure root : roots) {
+			structure.addRoot(root);
 		}
 	}
 	

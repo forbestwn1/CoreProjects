@@ -13,6 +13,8 @@ public interface HAPBlockComplexUICustomerTag  extends HAPBrick, HAPWithUIConten
 	public static final String ATTRIBUTE = "attribute";
 	@HAPAttribute
 	public static final String TAGDEFINITION = "tagDefinition";
+	@HAPAttribute
+	public static final String METADATA = "metaData";
 	
 
 	
@@ -31,8 +33,6 @@ public interface HAPBlockComplexUICustomerTag  extends HAPBrick, HAPWithUIConten
 	public static final String VALUESTRUCTUREEXE = "valueStructureExe";
 	@HAPAttribute
 	public static final String REQUIRES = "requires";
-	@HAPAttribute
-	public static final String EVENT = "event";
 
 
 }

@@ -5,8 +5,8 @@ import java.util.Map;
 
 import com.nosliw.core.application.brick.ui.uicontent.HAPBlockComplexUICustomerTag;
 import com.nosliw.core.application.division.manual.core.HAPManualBrickImp;
-import com.nosliw.core.application.entity.uitag.HAPUITagDefinitionAttribute;
 import com.nosliw.core.application.entity.uitag.HAPUITagDefinition;
+import com.nosliw.core.application.entity.uitag.HAPUITagDefinitionAttribute;
 import com.nosliw.core.resource.HAPResourceId;
 
 public class HAPManualBlockComplexUICustomerTag extends HAPManualBrickImp implements HAPBlockComplexUICustomerTag{
@@ -16,6 +16,7 @@ public class HAPManualBlockComplexUICustomerTag extends HAPManualBrickImp implem
 		super.init();
 		this.setAttributeValueWithValue(HAPBlockComplexUICustomerTag.ATTRIBUTE, new LinkedHashMap<String, String>());
 		this.setAttributeValueWithValue(HAPBlockComplexUICustomerTag.ATTRIBUTEDEFINITION, new LinkedHashMap<String, HAPUITagDefinitionAttribute>());
+		this.setAttributeValueWithValue(HAPBlockComplexUICustomerTag.METADATA, new LinkedHashMap<String, String>());
 	}
 	
 	public String getUITagId() {   return (String)this.getAttributeValueOfValue(UITAGID);  }
@@ -30,6 +31,10 @@ public class HAPManualBlockComplexUICustomerTag extends HAPManualBrickImp implem
 
 	public HAPUITagDefinition getUITagDefinition() {    return (HAPUITagDefinition)this.getAttributeValueOfValue(HAPBlockComplexUICustomerTag.TAGDEFINITION);      }
 	public void setUITagDefinition(HAPUITagDefinition tagDef) {    this.setAttributeValueWithValue(HAPBlockComplexUICustomerTag.TAGDEFINITION, tagDef);     }
+
+	public void addMetaData(String key, String value) {    this.getMetaData().put(key, value);      }
+	public Map<String, String> getMetaData(){   return (Map<String, String>)this.getAttributeValueOfValue(HAPBlockComplexUICustomerTag.METADATA);     }
+	
 	
 	
 	public String getBase() {   return (String)this.getAttributeValueOfValue(BASE);    }
@@ -41,4 +46,6 @@ public class HAPManualBlockComplexUICustomerTag extends HAPManualBrickImp implem
 	public Map<String, HAPUITagDefinitionAttribute> getAttributeDefinitions(){   return (Map<String, HAPUITagDefinitionAttribute>)this.getAttributeValueOfValue(HAPBlockComplexUICustomerTag.ATTRIBUTEDEFINITION);      }
 	public void addAttributeDefinition(HAPUITagDefinitionAttribute attrDef) {    this.getAttributeDefinitions().put(attrDef.getName(), attrDef);     }
 
+	
+	
 }

@@ -292,6 +292,7 @@ public class HAPConstantShared {
 		public static final String UIRESOURCE_ATTRIBUTE_STATICID = "nosliwstaticid";
 		public static final String UIRESOURCE_ATTRIBUTE_GROUP = "group";
 		public static final String UIRESOURCE_ATTRIBUTE_GROUP_DATAVALIDATION = "valueValidation";
+		public static final String UIRESOURCE_ATTRIBUTE_METADATA = "metadata";
 		public static final String UIRESOURCE_ATTRIBUTE_EVENT = "event_";
 		public static final String UIRESOURCE_ATTRIBUTE_DATABINDING = "data";
 		public static final String UIRESOURCE_TAG_PLACEHOLDER = "nosliw";
@@ -440,9 +441,10 @@ public class HAPConstantShared {
 		public static final String UITAG_PARM_COMMAND = "command";
 		public static final String UITAG_PARM_SERVICE = "service";
 		public static final String UITAG_PARM_MAPPING = "mapping";
+		public static final String UITAG_METADATA_UITAGNAME = "uiTagName";
+		public static final String UITAG_METADATA_UITAGVERSION = "uiTagVersion";
 		public static final String UITAGDEFINITION_ATTRIBUTETYPE_SIMPLE = "simple";
 		public static final String UITAGDEFINITION_ATTRIBUTETYPE_VARIABLE = "variable";
-		public static final String UITAGDEFINITION_ATTRIBUTETYPE_EVENT = "event";
 		public static final String UIRESOURCE_CONTEXTINFO_INSTANTIATE = "instantiate";
 		public static final String UIRESOURCE_CONTEXTINFO_INSTANTIATE_MANUAL = "manual";
 		public static final String UIRESOURCE_CONTEXTINFO_INSTANTIATE_AUTO = "auto";
@@ -875,6 +877,12 @@ public class HAPConstantShared {
 
 
 
+		public static final String STRUCTURE_NAME_UITAGATTRIBUTE = "uiTagAttribute";
+		public static final String STRUCTURE_NAME_UITAGFOREMBEDED = "uiTagForEmbeded";
+		public static final String STRUCTURE_NAME_UITAGEVENT = "uiTagEvent";
+
+
+
 		public static final String TASK_TYPE_EXPRESSION = "expression";
 		public static final String TASK_TYPE_TASK = "task";
 		public static final String TASK_TYPE_CONTAINER_EXPRESSION = "expressionContainer";
@@ -938,7 +946,7 @@ public class HAPConstantShared {
 		public static final String VALUEPORTGROUP_TYPE_VALUECONTEXT = "valueContext";
 		public static final String VALUEPORTGROUP_TYPE_INTERACTIVEEXPRESSION = "expressionInteractive";
 		public static final String VALUEPORTGROUP_TYPE_INTERACTIVETASK = "taskInteractive";
-		public static final String VALUEPORTGROUP_TYPE_EVENTDATA = "eventData";
+		public static final String VALUEPORTGROUP_TYPE_EVENT = "event";
 		public static final String VALUEPORTGROUP_TYPE_VALIDATIONDATA = "validationData";
 
 

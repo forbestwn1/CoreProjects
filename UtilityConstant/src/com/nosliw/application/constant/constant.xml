@@ -406,6 +406,7 @@
 			<definition name="UIRESOURCE_ATTRIBUTE_STATICID" value="nosliwstaticid"/>
 			<definition name="UIRESOURCE_ATTRIBUTE_GROUP" value="group"/>
 			<definition name="UIRESOURCE_ATTRIBUTE_GROUP_DATAVALIDATION" value="valueValidation"/>
+			<definition name="UIRESOURCE_ATTRIBUTE_METADATA" value="metadata"/>
 			<definition name="UIRESOURCE_ATTRIBUTE_EVENT" value="event_"/>
 			<definition name="UIRESOURCE_ATTRIBUTE_DATABINDING" value="data"/>
 			<definition name="UIRESOURCE_TAG_PLACEHOLDER" value="nosliw"/>
@@ -530,9 +531,12 @@
 			<definition name="UITAG_PARM_SERVICE" value="service"/>
 			<definition name="UITAG_PARM_MAPPING" value="mapping"/>
 
+			<definition name="UITAG_METADATA_UITAGNAME" value="uiTagName"/>
+			<definition name="UITAG_METADATA_UITAGVERSION" value="uiTagVersion"/>
+
+
 			<definition name="UITAGDEFINITION_ATTRIBUTETYPE_SIMPLE" value="simple"/>
 			<definition name="UITAGDEFINITION_ATTRIBUTETYPE_VARIABLE" value="variable"/>
-			<definition name="UITAGDEFINITION_ATTRIBUTETYPE_EVENT" value="event"/>
 
 			<definition name="UIRESOURCE_CONTEXTINFO_INSTANTIATE" value="instantiate"/>
 			<definition name="UIRESOURCE_CONTEXTINFO_INSTANTIATE_MANUAL" value="manual"/>
@@ -928,6 +932,12 @@
 			<definition name="STRUCTURE_TYPE_VALUEGROUP" value="valueGroup"/>
 			<definition name="STRUCTURE_TYPE_VALUEEXECUTABLE" value="valueExecutable"/>
 			<definition name="STRUCTURE_TYPE_MAPPING" value="mapping"/>
+
+			<definition type="space"/>
+			<definition name="STRUCTURE_NAME_UITAGATTRIBUTE" value="uiTagAttribute"/>
+			<definition name="STRUCTURE_NAME_UITAGFOREMBEDED" value="uiTagForEmbeded"/>
+			<definition name="STRUCTURE_NAME_UITAGEVENT" value="uiTagEvent"/>
+
 			
 			<definition type="space"/>
 			<definition name="TASK_TYPE_EXPRESSION" value="expression"/>
@@ -983,7 +993,7 @@
 			<definition name="VALUEPORTGROUP_TYPE_VALUECONTEXT" value="valueContext"/>
 			<definition name="VALUEPORTGROUP_TYPE_INTERACTIVEEXPRESSION" value="expressionInteractive"/>
 			<definition name="VALUEPORTGROUP_TYPE_INTERACTIVETASK" value="taskInteractive"/>
-			<definition name="VALUEPORTGROUP_TYPE_EVENTDATA" value="eventData"/>
+			<definition name="VALUEPORTGROUP_TYPE_EVENT" value="event"/>
 			<definition name="VALUEPORTGROUP_TYPE_VALIDATIONDATA" value="validationData"/>
 
 			<definition type="space"/>

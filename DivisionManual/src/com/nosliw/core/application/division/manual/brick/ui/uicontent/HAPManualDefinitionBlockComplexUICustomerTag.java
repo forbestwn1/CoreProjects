@@ -24,6 +24,7 @@ public class HAPManualDefinitionBlockComplexUICustomerTag extends HAPManualDefin
 		this.setAttributeValueWithValue(HAPBlockComplexUICustomerTag.ATTRIBUTE, new LinkedHashMap<String, String>());
 		this.setAttributeValueWithValue(PARENTRELATIONS, new ArrayList<HAPManualDefinitionBrickRelation>());
 		this.setAttributeValueWithValue(HAPBlockComplexUICustomerTag.ATTRIBUTEDEFINITION, new LinkedHashMap<String, HAPUITagDefinitionAttribute>());
+		this.setAttributeValueWithValue(HAPBlockComplexUICustomerTag.METADATA, new LinkedHashMap<String, String>());
 	}
 
 	@Override
@@ -51,6 +52,9 @@ public class HAPManualDefinitionBlockComplexUICustomerTag extends HAPManualDefin
 
 	public void addParentRelation(HAPManualDefinitionBrickRelation parentRelation) {    this.getParentRelations().add(parentRelation);      }
 	public List<HAPManualDefinitionBrickRelation> getParentRelations(){	return (List<HAPManualDefinitionBrickRelation>)this.getAttributeValueOfValue(PARENTRELATIONS);	}
+	
+	public void addMetaData(String key, String value) {    this.getMetaData().put(key, value);      }
+	public Map<String, String> getMetaData(){   return (Map<String, String>)this.getAttributeValueOfValue(HAPBlockComplexUICustomerTag.METADATA);     }
 	
 	@Override
 	public Map<String, HAPDefinitionConstant> getConstantDefinitions(){

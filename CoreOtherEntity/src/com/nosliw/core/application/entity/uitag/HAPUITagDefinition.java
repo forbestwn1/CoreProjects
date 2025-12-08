@@ -10,12 +10,14 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfoImp;
 import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.core.application.common.event.HAPEventDefinition;
+import com.nosliw.core.application.common.event.HAPWithEvents;
 import com.nosliw.core.application.common.parentrelation.HAPManualDefinitionBrickRelation;
 import com.nosliw.core.application.common.structure.HAPValueContextDefinition;
 import com.nosliw.core.resource.HAPResourceId;
 
 @HAPEntityWithAttribute
-public class HAPUITagDefinition extends HAPEntityInfoImp{
+public class HAPUITagDefinition extends HAPEntityInfoImp implements HAPWithEvents{
 
 	@HAPAttribute
 	public static final String VERSION = "version";
@@ -37,8 +39,6 @@ public class HAPUITagDefinition extends HAPEntityInfoImp{
 	public static final String TYPE = "type";
 	@HAPAttribute
 	public static final String REQUIRES = "requires";
-	@HAPAttribute
-	public static final String EVENT = "event";
 	
 	private String m_version;
 	
@@ -46,17 +46,21 @@ public class HAPUITagDefinition extends HAPEntityInfoImp{
 	
 	private HAPValueContextDefinition m_valueContextEmbeded;
 	
+	private Map<String, HAPUITagDefinitionAttribute> m_attributes;
+
+	private List<HAPEventDefinition> m_events;
+	
 	private HAPResourceId m_scriptResourceId;
 	
 	private String m_base;
 	
 	private List<HAPManualDefinitionBrickRelation> m_parentRelations;
 	
-	private Map<String, HAPUITagDefinitionAttribute> m_attributes;
 	
 	public HAPUITagDefinition() {
 		this.m_parentRelations = new ArrayList<HAPManualDefinitionBrickRelation>();
 		this.m_attributes = new LinkedHashMap<String, HAPUITagDefinitionAttribute>();
+		this.m_events = new ArrayList<HAPEventDefinition>();
 	}
 	
 	public String getType() {  return null;   }
@@ -69,6 +73,18 @@ public class HAPUITagDefinition extends HAPEntityInfoImp{
 	
 	public HAPValueContextDefinition getValueContextEmbeded() {    return this.m_valueContextEmbeded;     }
 	public void setValueContextEmbeded(HAPValueContextDefinition valueContext) {    this.m_valueContextEmbeded = valueContext;       }
+
+	public void addAttributeDefinition(HAPUITagDefinitionAttribute attribute) {   this.m_attributes.put(attribute.getName(), attribute);    }
+	public Map<String, HAPUITagDefinitionAttribute> getAttributeDefinition() {   return this.m_attributes;    }
+	
+	@Override
+	public List<HAPEventDefinition> getEvents() {   return this.m_events;  }
+	public void addEvent(HAPEventDefinition eventDef) {    this.m_events.add(eventDef);     }
+	
+	
+	
+	
+	
 	
 	public HAPResourceId getScriptResourceId() {     return this.m_scriptResourceId;     }
 	public void setScriptResourceId(HAPResourceId scriptResourceId) {     this.m_scriptResourceId = scriptResourceId;         }
@@ -79,9 +95,6 @@ public class HAPUITagDefinition extends HAPEntityInfoImp{
 	public List<HAPManualDefinitionBrickRelation> getParentRelations(){  return this.m_parentRelations;  }
 	public void addParentRelation(HAPManualDefinitionBrickRelation parentRelation) {     this.m_parentRelations.add(parentRelation);       }
 
-	public void addAttributeDefinition(HAPUITagDefinitionAttribute attribute) {   this.m_attributes.put(attribute.getName(), attribute);    }
-	public Map<String, HAPUITagDefinitionAttribute> getAttributeDefinition() {   return this.m_attributes;    }
-	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
@@ -93,5 +106,6 @@ public class HAPUITagDefinition extends HAPEntityInfoImp{
 		
 		jsonMap.put(ATTRIBUTE, HAPManagerSerialize.getInstance().toStringValue(this.m_attributes, HAPSerializationFormat.JSON));
 		
+		jsonMap.put(EVENT, HAPManagerSerialize.getInstance().toStringValue(this.m_events, HAPSerializationFormat.JSON));
 	}
 }
