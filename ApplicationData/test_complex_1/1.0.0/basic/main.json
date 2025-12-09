@@ -128,12 +128,6 @@
 				"status": "disabled1",
 				"description" : ""
 			},
-			"relation": [
-				{
-					"type" : "valueContext",
-					"mode" : "runtime"
-				}
-			],
 			"brick":{
 				"scriptResourceId": "task_debug_eventhandler"
 			},

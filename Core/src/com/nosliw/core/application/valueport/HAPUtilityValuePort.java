@@ -8,7 +8,8 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.HAPBundle;
 import com.nosliw.core.application.HAPDomainValueStructure;
 import com.nosliw.core.application.HAPIdBrickInBundle;
-import com.nosliw.core.application.brick.HAPUtilityBrickPath;
+import com.nosliw.core.application.HAPUtilityBrickPath;
+import com.nosliw.core.application.HAPUtilityBrickReference;
 import com.nosliw.core.application.common.structure.HAPElementStructure;
 import com.nosliw.core.application.common.structure.HAPRootInStructure;
 import com.nosliw.core.resource.HAPManagerResource;
@@ -139,10 +140,7 @@ public class HAPUtilityValuePort {
 
 	
 	public static void normalizeValuePortRelativeBrickPath(HAPIdValuePortInBundle valuePortRef, HAPPath blockPathFromRoot) {
-		HAPIdBrickInBundle brickRef = valuePortRef.getBrickId();
-		if(brickRef.getRelativePath()==null) {
-			brickRef.setRelativePath(HAPUtilityPath.fromAbsoluteToRelativePath(brickRef.getIdPath(), blockPathFromRoot.toString()));
-		}
+		HAPUtilityBrickReference.calculateBrickIdInBundleRelativePath(valuePortRef.getBrickId(), blockPathFromRoot);
 	}
 
 	

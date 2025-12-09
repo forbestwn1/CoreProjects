@@ -42,9 +42,15 @@ public class HAPIdBrickInBundle extends HAPSerializableImp{
 	}
 
 	@Override
+	protected boolean buildObjectByLiterate(String literateValue){	
+		this.m_idPath = literateValue;
+		return true;  
+	}
+
+	@Override
 	protected boolean buildObjectByJson(Object obj){
 		if(obj instanceof String) {
-			this.m_idPath = (String)obj;
+			buildObjectByLiterate((String)obj);
 		}
 		else if(obj instanceof JSONObject) {
 			JSONObject jsonObj = (JSONObject)obj;

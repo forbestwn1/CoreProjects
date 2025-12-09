@@ -4,7 +4,6 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import com.nosliw.common.path.HAPComplexPath;
 import com.nosliw.common.path.HAPPath;
-import com.nosliw.common.path.HAPUtilityPath;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
 import com.nosliw.core.resource.HAPResourceIdSimple;
@@ -18,12 +17,6 @@ public class HAPUtilityBundle {
 		return bundle;
 	}
 
-	public static void processBrickIdInBundle(HAPIdBrickInBundle brickIdInBundle, String basePath) {
-//		HAPComplexPath basePathInfo = getBrickFullPathInfo(new HAPPath(basePath));
-//		brickIdInBundle.setIdPath(normalizePathWithBranch(brickIdInBundle.getIdPath(), basePathInfo.getRoot()));
-		brickIdInBundle.setRelativePath(HAPUtilityPath.fromAbsoluteToRelativePath(brickIdInBundle.getIdPath(), basePath));
-	}
-	
 	public static String buildBranchPathSegment(String branchName) {
 		return HAPConstantShared.SYMBOL_KEYWORD + branchName;
 	}

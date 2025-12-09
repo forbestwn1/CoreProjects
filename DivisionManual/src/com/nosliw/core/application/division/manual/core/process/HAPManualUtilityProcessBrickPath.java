@@ -1,7 +1,6 @@
 package com.nosliw.core.application.division.manual.core.process;
 
 import com.nosliw.common.path.HAPPath;
-import com.nosliw.common.path.HAPUtilityPath;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.HAPAttributeInBrick;
 import com.nosliw.core.application.HAPBrick;
@@ -9,16 +8,21 @@ import com.nosliw.core.application.HAPBundle;
 import com.nosliw.core.application.HAPHandlerDownward;
 import com.nosliw.core.application.HAPIdBrickInBundle;
 import com.nosliw.core.application.HAPUtilityBrick;
+import com.nosliw.core.application.HAPUtilityBrickPath;
+import com.nosliw.core.application.HAPUtilityBrickReference;
 import com.nosliw.core.application.HAPUtilityBundle;
 import com.nosliw.core.application.HAPWrapperValueOfReferenceResource;
-import com.nosliw.core.application.brick.HAPUtilityBrickPath;
 import com.nosliw.core.application.dynamic.HAPInputDynamic;
 import com.nosliw.core.application.dynamic.HAPInputDynamicSingle;
 
 public class HAPManualUtilityProcessBrickPath {
 
-	public static void normalizeBrickPath(HAPIdBrickInBundle handlerIdInBundle, HAPManualContextProcessBrick processContext) {
-		handlerIdInBundle.setIdPath(HAPUtilityBrickPath.normalizeBrickPath(new HAPPath(handlerIdInBundle.getIdPath()), processContext.getRootBrickName(), false, processContext.getCurrentBundle()).toString());
+	public static void normalizeBrickReferenceInBundle(HAPIdBrickInBundle brickIdInBundle, HAPPath basePath, boolean processEnd, HAPManualContextProcessBrick processContext) {
+		HAPUtilityBrickReference.normalizeBrickReferenceInBundle(brickIdInBundle, basePath.getPath(), processEnd, processContext.getRootBrickName(), processContext.getCurrentBundle());
+	}
+	
+	public static void normalizeBrickPath(HAPIdBrickInBundle brickIdInBundle, HAPManualContextProcessBrick processContext) {
+		brickIdInBundle.setIdPath(HAPUtilityBrickPath.normalizeBrickPath(new HAPPath(brickIdInBundle.getIdPath()), processContext.getRootBrickName(), false, processContext.getCurrentBundle()).toString());
 	}
 
 	public static void processComplexBrickNormalizeBrickPath(HAPManualContextProcessBrick processContext) {
@@ -58,10 +62,7 @@ public class HAPManualUtilityProcessBrickPath {
 						switch(taskRef.getType()) {
 						case HAPConstantShared.DYNAMICTASK_REF_TYPE_SINGLE:
 							HAPInputDynamicSingle simpleDynamicTask = (HAPInputDynamicSingle)taskRef;
-							HAPIdBrickInBundle taskIdRef = simpleDynamicTask.getTaskId();
-							taskIdRef.setIdPath(HAPUtilityBrickPath.normalizeBrickPath(new HAPPath(taskIdRef.getIdPath()), processContext.getRootBrickName(), false, processContext.getCurrentBundle()).toString());
-							taskIdRef.setRelativePath(HAPUtilityPath.fromAbsoluteToRelativePath(taskIdRef.getIdPath(), path.toString()));
-							simpleDynamicTask.setTaskId(taskIdRef);
+							normalizeBrickReferenceInBundle(simpleDynamicTask.getTaskId(), path, false, processContext);
 							break;
 						}
 					}

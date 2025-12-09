@@ -12,7 +12,6 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.HAPBundle;
 import com.nosliw.core.application.HAPIdBrickInBundle;
-import com.nosliw.core.application.HAPUtilityBundle;
 import com.nosliw.core.application.brick.HAPEnumBrickType;
 import com.nosliw.core.application.brick.test.complex.script.HAPBlockTestComplexScript;
 import com.nosliw.core.application.brick.test.complex.script.HAPTestTaskTrigguer;
@@ -45,7 +44,7 @@ public class HAPManualPluginProcessorBlockComplexTestComplexScript extends HAPMa
 		for(HAPTestTaskTrigguer taskTrigguer : definitionBlock.getTaskTrigguers()) {
 			HAPInfoTrigguerTask trigguerInfo = taskTrigguer.getTaskTrigguerInfo();
 			HAPIdBrickInBundle handlerIdInBundle = trigguerInfo.getHandlerId();
-			HAPManualUtilityProcessBrickPath.normalizeBrickPath(handlerIdInBundle, processContext);
+			HAPManualUtilityProcessBrickPath.normalizeBrickReferenceInBundle(handlerIdInBundle, pathFromRoot, false, processContext);
 		}
 	}
 	
@@ -59,7 +58,6 @@ public class HAPManualPluginProcessorBlockComplexTestComplexScript extends HAPMa
 		for(HAPTestTaskTrigguer taskTrigguer : definitionBlock.getTaskTrigguers()) {
 			HAPInfoTrigguerTask trigguerInfo = taskTrigguer.getTaskTrigguerInfo();
 			HAPIdBrickInBundle handlerIdInBundle = trigguerInfo.getHandlerId();
-			HAPUtilityBundle.processBrickIdInBundle(handlerIdInBundle, executableBlock.getTreeNodeInfo().getPathFromRoot().toString());
 			
 			String trigguerType = trigguerInfo.getTrigguerType();
 			if(trigguerType.equals(HAPConstantShared.TASK_TRIGGUER_EVENTHANDLE)) {

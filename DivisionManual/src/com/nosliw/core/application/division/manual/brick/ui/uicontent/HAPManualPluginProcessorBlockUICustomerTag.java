@@ -14,7 +14,6 @@ import com.nosliw.core.application.brick.ui.uicontent.HAPUIHandlerEventTagCustom
 import com.nosliw.core.application.brick.ui.uicontent.HAPUIInfoEventHandler;
 import com.nosliw.core.application.brick.ui.uicontent.HAPUIInfoEventHandlerTask;
 import com.nosliw.core.application.common.event.HAPEventDefinition;
-import com.nosliw.core.application.division.manual.common.task.HAPManualUtilityTask;
 import com.nosliw.core.application.division.manual.core.HAPManualBrick;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionBrick;
 import com.nosliw.core.application.division.manual.core.process.HAPManualContextProcessBrick;
@@ -83,7 +82,7 @@ public class HAPManualPluginProcessorBlockUICustomerTag extends HAPManualPluginP
 			String handlerType = handler.getHandlerType();
 			if(handlerType.equals(HAPConstantShared.UICONTENT_EVENTHANDLERTYPE_TASK)) {
 				HAPUIInfoEventHandlerTask handlerTask = (HAPUIInfoEventHandlerTask)handler;
-				HAPManualUtilityProcessBrickPath.normalizeBrickPath(handlerTask.getTaskBrickId(), processContext);
+				HAPManualUtilityProcessBrickPath.normalizeBrickReferenceInBundle(handlerTask.getTaskBrickId(), pathFromRoot, false, processContext);
 			}
 		}
 	}
@@ -104,8 +103,7 @@ public class HAPManualPluginProcessorBlockUICustomerTag extends HAPManualPluginP
 				HAPBundle bundle = processContext.getCurrentBundle();
 				String rootNameIfNotProvide = processContext.getRootBrickName();
 				
-				HAPPath taskPath = HAPManualUtilityTask.figureoutTaskPath(bundle, new HAPPath(handlerTask.getTaskBrickId().getIdPath()), rootNameIfNotProvide);
-				HAPManualBrick childBrick = (HAPManualBrick)HAPUtilityBrick.getDescdentBrickLocal(bundle, taskPath, rootNameIfNotProvide);
+				HAPManualBrick childBrick = (HAPManualBrick)HAPUtilityBrick.getDescdentBrickLocal(bundle, new HAPPath(handlerTask.getTaskBrickId().getIdPath()), rootNameIfNotProvide);
 				if(childBrick!=null) {
 					HAPEventDefinition eventDef = blockDef.getUITagDefinition().getEventDefinition(eventHandler.getEvent());
 
