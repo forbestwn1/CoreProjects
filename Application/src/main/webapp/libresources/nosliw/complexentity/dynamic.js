@@ -20,7 +20,7 @@ var packageObj = library;
 	var node_getEntityTreeNodeInterface;
 	var node_makeObjectWithApplicationInterface;
 	var node_getApplicationInterface;
-	var node_taskUtility;
+	var node_taskExecuteUtility;
 	var node_requestServiceProcessor;
 	
 //*******************************************   Start Node Definition  ************************************** 	
@@ -75,7 +75,7 @@ var node_createDynamicCore = function(dynamicDef, bundleCore, configure){
 				var taskTrigueView = $('<button>Execute Task</button>');
 				taskTrigueView.click(function() {
 					var out = node_createServiceRequestInfoSequence();
-					out.addRequest(node_taskUtility.getExecuteEntityTaskWithAdapterRequest(loc_out, undefined, undefined, {
+					out.addRequest(node_taskExecuteUtility.getExecuteEntityTaskWithAdapterRequest(loc_out, undefined, undefined, {
 						success : function(request, taskResult){
 							loc_updateTaskResultView(taskResult);
 							return taskResult;
@@ -114,7 +114,7 @@ var node_createDynamicCore = function(dynamicDef, bundleCore, configure){
 					loc_currentTaskEntityCore = entityCore;
 					var taskCore = node_getApplicationInterface(entityCore, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_TASK).getTaskCore();
 					taskCore.addTaskSetup(loc_dynamicInput.getTaskSetup());
-					return node_taskUtility.getExecuteEntityTaskWithAdapterRequest(loc_out, adapterName, taskSetup);
+					return node_taskExecuteUtility.getExecuteEntityTaskWithAdapterRequest(loc_out, adapterName, taskSetup);
 				}
 			}));
 			return out;
@@ -152,7 +152,7 @@ nosliw.registerSetNodeDataEvent("common.namingconvension.namingConvensionUtility
 nosliw.registerSetNodeDataEvent("complexentity.getEntityTreeNodeInterface", function(){node_getEntityTreeNodeInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("component.makeObjectWithApplicationInterface", function(){node_makeObjectWithApplicationInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("component.getApplicationInterface", function(){node_getApplicationInterface = this.getData();});
-nosliw.registerSetNodeDataEvent("task.taskUtility", function(){node_taskUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("task.taskExecuteUtility", function(){node_taskExecuteUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
 
 

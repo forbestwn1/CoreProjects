@@ -15,6 +15,9 @@ public interface HAPBlockComplexUICustomerTag  extends HAPBrick, HAPWithUIConten
 	public static final String TAGDEFINITION = "tagDefinition";
 	@HAPAttribute
 	public static final String METADATA = "metaData";
+	@HAPAttribute
+	static final public String EVENT = "event";  
+
 	
 
 	

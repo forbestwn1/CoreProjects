@@ -22,7 +22,7 @@ var node_requestServiceProcessor;
 var node_wrapperFactory;
 var node_complexEntityUtility;
 var node_createTaskSetup;
-var node_taskUtility;
+var node_taskExecuteUtility;
 var node_getEntityObjectInterface;
 var node_utilityNamedVariable;
 
@@ -255,7 +255,7 @@ var node_utility = function(){
 		);
 		
    		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-		out.addRequest(node_taskUtility.getExecuteWrapperedTaskRequest(taskEntityCore, taskSetup, {
+		out.addRequest(node_taskExecuteUtility.getExecuteWrapperedTaskRequest(taskEntityCore, taskSetup, {
 			success : function(request, taskResult){
                 return {
 					ruleValidationItem : ruleValidationItem,
@@ -319,7 +319,7 @@ nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){no
 nosliw.registerSetNodeDataEvent("variable.wrapper.wrapperFactory", function(){node_wrapperFactory = this.getData();});
 nosliw.registerSetNodeDataEvent("complexentity.complexEntityUtility", function(){node_complexEntityUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("task.createTaskSetup", function(){node_createTaskSetup = this.getData();});
-nosliw.registerSetNodeDataEvent("task.taskUtility", function(){node_taskUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("task.taskExecuteUtility", function(){node_taskExecuteUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("complexentity.getEntityObjectInterface", function(){node_getEntityObjectInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("valueport.utilityNamedVariable", function(){node_utilityNamedVariable = this.getData();});
 

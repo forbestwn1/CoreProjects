@@ -27,7 +27,7 @@ var packageObj = library;
 	var node_createValuePortElementInfo;
 	var node_ResourceId;
 	var node_getWithValuePortInterface;
-	var node_taskUtility;
+	var node_taskExecuteUtility;
 	var node_ElementIdValuePair;
 	
 //*******************************************   Start Node Definition  ************************************** 	
@@ -358,7 +358,7 @@ var node_utility = function()
 							return out;
 						};
 						
-						return node_taskUtility.getExecuteEntityTaskRequest(dataExpressionLibEleCore, onInitTaskRequest, undefined, undefined, {
+						return node_taskExecuteUtility.getExecuteEntityTaskRequest(dataExpressionLibEleCore, onInitTaskRequest, undefined, undefined, {
 							success : function(request, task){
 								return task.getTaskResult();
 							}
@@ -562,7 +562,7 @@ nosliw.registerSetNodeDataEvent("component.getApplicationInterface", function(){
 nosliw.registerSetNodeDataEvent("valueport.createValuePortElementInfo", function(){node_createValuePortElementInfo = this.getData();});
 nosliw.registerSetNodeDataEvent("resource.entity.ResourceId", function(){	node_ResourceId = this.getData();	});
 nosliw.registerSetNodeDataEvent("valueport.getWithValuePortInterface", function(){node_getWithValuePortInterface = this.getData();});
-nosliw.registerSetNodeDataEvent("task.taskUtility", function(){node_taskUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("task.taskExecuteUtility", function(){node_taskExecuteUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("valueport.ElementIdValuePair", function(){node_ElementIdValuePair = this.getData();});
 
 //Register Node by Name

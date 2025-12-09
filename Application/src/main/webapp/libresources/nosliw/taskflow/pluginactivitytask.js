@@ -15,7 +15,7 @@ var packageObj = library;
 	var node_utilityNamedVariable;
 	var node_makeObjectWithApplicationInterface;
 	var node_interactiveUtility;
-	var node_taskUtility;
+	var node_taskExecuteUtility;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -62,7 +62,7 @@ var loc_createTaskActivityCore = function(entityDef, configure){
 		getExecuteActivityRequest : function(adapterName, valueContainer, taskSetup, handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 			
-			out.addRequest(node_taskUtility.getExecuteWrapperedTaskWithAdapterRequest(loc_task, adapterName, taskSetup, {
+			out.addRequest(node_taskExecuteUtility.getExecuteWrapperedTaskWithAdapterRequest(loc_task, adapterName, taskSetup, {
 				success : function(request, taskResult){
 					var decsionOutput = loc_decision[node_COMMONATRIBUTECONSTANT.TASKFLOWDECISIONJS_SCRIPT](taskResult);
 					return loc_target[decsionOutput]; 
@@ -93,7 +93,7 @@ nosliw.registerSetNodeDataEvent("complexentity.getEntityObjectInterface", functi
 nosliw.registerSetNodeDataEvent("valueport.utilityNamedVariable", function(){node_utilityNamedVariable = this.getData();});
 nosliw.registerSetNodeDataEvent("component.makeObjectWithApplicationInterface", function(){node_makeObjectWithApplicationInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("task.interactiveUtility", function(){node_interactiveUtility = this.getData();});
-nosliw.registerSetNodeDataEvent("task.taskUtility", function(){node_taskUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("task.taskExecuteUtility", function(){node_taskExecuteUtility = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createTaskActivityPlugin", node_createTaskActivityPlugin); 

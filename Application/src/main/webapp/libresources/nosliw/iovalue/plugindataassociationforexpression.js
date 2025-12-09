@@ -16,7 +16,7 @@ var packageObj = library;
 	var node_createDataAssociation;
 	var node_createIODataSet;
 	var node_dataIOUtility;
-	var node_taskUtility;
+	var node_taskExecuteUtility;
 	var node_ioDataFactory;
 	var node_getBasicEntityObjectInterface;
 	var node_IOTaskInfo;
@@ -64,7 +64,7 @@ var loc_createDataAssociationForExpressionAdapter = function(dataAssociationExpr
 				return loc_dataAssociationOut.getExecuteRequest(baseEntityCore, handlers, request);
 			};
 			
-			return node_taskUtility.getExecuteEntityTaskRequest(baseEntityCore, taskSetup, onInitTaskRequest, onFinishTaskRequest, handlers, request);
+			return node_taskExecuteUtility.getExecuteEntityTaskRequest(baseEntityCore, taskSetup, onInitTaskRequest, onFinishTaskRequest, handlers, request);
 		}
 		
 	};
@@ -90,7 +90,7 @@ nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){no
 nosliw.registerSetNodeDataEvent("iovalue.createDataAssociation", function(){node_createDataAssociation = this.getData();});
 nosliw.registerSetNodeDataEvent("iovalue.entity.createIODataSet", function(){node_createIODataSet = this.getData();});
 nosliw.registerSetNodeDataEvent("iovalue.dataIOUtility", function(){node_dataIOUtility = this.getData();});
-nosliw.registerSetNodeDataEvent("task.taskUtility", function(){node_taskUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("task.taskExecuteUtility", function(){node_taskExecuteUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("iovalue.ioDataFactory", function(){node_ioDataFactory = this.getData();});
 nosliw.registerSetNodeDataEvent("common.interfacedef.getBasicEntityObjectInterface", function(){node_getBasicEntityObjectInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("iovalue.entity.IOTaskInfo", function(){node_IOTaskInfo = this.getData();});

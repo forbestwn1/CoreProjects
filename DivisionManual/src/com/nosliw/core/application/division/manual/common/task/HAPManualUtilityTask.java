@@ -53,7 +53,7 @@ public class HAPManualUtilityTask {
 	public static HAPMatchers buildValuePortGroupForInteractiveTaskDataValidation(HAPBundle bundle, HAPPath idPath, String rootNameIfNotProvide, HAPElementStructure dataElement, HAPDomainValueStructure valueStructureDomain) {
 		HAPMatchers out = null;
 		
-		idPath = figureoutTaskPath(bundle, idPath, rootNameIfNotProvide);
+		idPath = HAPManualUtilityTask.figureoutTaskPath(bundle, idPath, rootNameIfNotProvide);
 		HAPManualBrick childBrick = (HAPManualBrick)HAPUtilityBrick.getDescdentBrickLocal(bundle, idPath, rootNameIfNotProvide);
 		if(childBrick!=null) {
 			HAPUtilityInteractiveTaskValuePort.buildValuePortGroupForInteractiveTaskDataValidation(Pair.of(childBrick.getOtherInternalValuePortContainer(), childBrick.getOtherExternalValuePortContainer()), dataElement, valueStructureDomain);

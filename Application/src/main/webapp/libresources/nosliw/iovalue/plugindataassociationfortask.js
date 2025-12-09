@@ -10,7 +10,7 @@ var packageObj = library;
 	var node_createServiceRequestInfoSequence;
 	var node_ServiceInfo;
 	var node_createDataAssociation;
-	var node_taskUtility;
+	var node_taskExecuteUtility;
 	var node_getApplicationInterface;
 	
 //*******************************************   Start Node Definition  ************************************** 	
@@ -58,7 +58,7 @@ var loc_createDataAssociationForTaskAdapter = function(dataAssociationTask){
 				return loc_dataAssociationOut[taskResult.resultName].getExecuteRequest(baseEntityCore, handlers, request);
 			};
 			
-			return node_taskUtility.getExecuteEntityTaskRequest(baseEntityCore, taskSetup, onInitTaskRequest, onFinishTaskRequest, handlers, request);
+			return node_taskExecuteUtility.getExecuteEntityTaskRequest(baseEntityCore, taskSetup, onInitTaskRequest, onFinishTaskRequest, handlers, request);
 		},
 		
 	};
@@ -78,7 +78,7 @@ nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple"
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequence", function(){	node_createServiceRequestInfoSequence = this.getData();	});
 nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();	});
 nosliw.registerSetNodeDataEvent("iovalue.createDataAssociation", function(){node_createDataAssociation = this.getData();});
-nosliw.registerSetNodeDataEvent("task.taskUtility", function(){node_taskUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("task.taskExecuteUtility", function(){node_taskExecuteUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("component.getApplicationInterface", function(){node_getApplicationInterface = this.getData();});
 
 

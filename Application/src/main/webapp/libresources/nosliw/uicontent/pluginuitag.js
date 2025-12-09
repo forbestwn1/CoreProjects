@@ -68,6 +68,33 @@ var loc_createUITagComponentCore = function(complexEntityDef, tagDefScriptFun, v
 	var loc_tagEventObject = node_createEventObject();
 	var loc_eventObject = node_createEventObject();
 
+	var loc_trigueEvent = function(event, eventData, requestInfo){
+		var eventHandlerDef = loc_complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.BLOCKCOMPLEXUICUSTOMERTAG_EVENT)[event];
+		var eventHandlerInfo = eventHandlerDef[node_COMMONATRIBUTECONSTANT.UIHANDLEREVENT_HANDLERINFO];
+		var handlerType = eventHandlerInfo[node_COMMONATRIBUTECONSTANT.UIINFOEVENTHANDLER_TYPE];
+		
+		if(handlerType==node_COMMONCONSTANT.UICONTENT_EVENTHANDLERTYPE_TASK){
+			var taskBrickId = eventHandlerInfo[node_COMMONATRIBUTECONSTANT.UIINFOEVENTHANDLER_TASKBRICKID];
+			
+			var relativePath = trigguerInfo[node_COMMONATRIBUTECONSTANT.INFOTRIGGUERTASK_HANDLERID][node_COMMONATRIBUTECONSTANT.IDBRICKINBUNDLE_RELATIVEPATH];
+			var handlerEntityCoreWrapper = node_complexEntityUtility.getBrickCoreByRelativePath(loc_out, relativePath);
+
+			var taskSetup = node_createTaskSetup(
+				node_taskUtility.createTaskFunctionWithSettingValuePortValues(
+					node_COMMONCONSTANT.VALUEPORTGROUP_TYPE_EVENT, 
+					node_COMMONCONSTANT.VALUEPORT_TYPE_EVENT, 
+					eventData)
+			);
+					
+			var taskExeRequest = node_taskExecuteUtility.getExecuteWrapperedTaskWithAdapterRequest(handlerEntityCoreWrapper, undefined, taskSetup, {
+				success : function(request, taskResult){
+					eventResultView.val(JSON.stringify(taskResult));
+				}
+			});
+			node_requestServiceProcessor.processRequest(taskExeRequest);
+		}
+	};
+
 	var loc_initAttributes = function(){
 		_.each(loc_attributeDefinition, function(attrDef, name){
 			var defaultValue = attrDef[node_COMMONATRIBUTECONSTANT.UITAGDEFINITIONATTRIBUTE_DEFAULTVALUE];
@@ -137,7 +164,7 @@ var loc_createUITagComponentCore = function(complexEntityDef, tagDefScriptFun, v
 		queryCustomTagInstance : function(query){          },
 		
 		//--------------------------------- event
-		trigueEvent : function(event, eventData, requestInfo){   loc_tagEventObject.triggerEvent(event, eventData, requestInfo);  },
+		trigueEvent : function(event, eventData, requestInfo){   loc_trigueEvent(event, eventData, requestInfo);  },
 
 		//---------------------------------ui resource view
 		getCreateDefaultUIContentRequest : function(variationPoints, handlers, requestInfo){

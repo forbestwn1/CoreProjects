@@ -20,7 +20,6 @@ import com.nosliw.core.application.brick.HAPEnumBrickType;
 import com.nosliw.core.application.brick.ui.uicontent.HAPElementEvent;
 import com.nosliw.core.application.brick.ui.uicontent.HAPUIEmbededScriptExpressionInAttribute;
 import com.nosliw.core.application.brick.ui.uicontent.HAPUIEmbededScriptExpressionInContent;
-import com.nosliw.core.application.brick.ui.uicontent.HAPUIHandlerEventTagCustom;
 import com.nosliw.core.application.brick.ui.uicontent.HAPUIHandlerEventTagNormal;
 import com.nosliw.core.application.common.scriptexpressio.HAPUtilityScriptExpressionParser;
 import com.nosliw.core.application.common.scriptexpressio.definition.HAPDefinitionContainerScriptExpression;
@@ -138,18 +137,11 @@ public class HAPManualPluginParserBlockComplexUIContent extends HAPManualDefinit
 			if(keyAttrName!=null){
 				if(keyAttrName.startsWith(HAPConstantShared.UIRESOURCE_ATTRIBUTE_EVENT)) {
 					String eventName = keyAttrName.substring(HAPConstantShared.UIRESOURCE_ATTRIBUTE_EVENT.length());
-					if(isCustomerTag){
-						HAPUIHandlerEventTagCustom customEventHandler = new HAPUIHandlerEventTagCustom();
-						customEventHandler.parseContent(eleAttrValue);
-						customEventHandler.setUIId(uiId);
-						customEventHandler.setEvent(eventName);
-						uiContent.addCustomerTagEvent(customEventHandler);
-					}
-					else {
+					if(!isCustomerTag){
 						HAPUIHandlerEventTagNormal normalEventHandler = new HAPUIHandlerEventTagNormal();
-						normalEventHandler.parseContent(eleAttrValue);
 						normalEventHandler.setUIId(uiId);
 						normalEventHandler.setEvent(eventName);
+						normalEventHandler.parseContent(eleAttrValue);
 						uiContent.addNormalTagEvent(normalEventHandler);
 					}
 				}

@@ -18,7 +18,7 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 	var node_getBasicEntityObjectInterface = nosliw.getNodeData("common.interfacedef.getBasicEntityObjectInterface");
 	var node_namingConvensionUtility = nosliw.getNodeData("common.namingconvension.namingConvensionUtility");
 	var node_getEntityObjectInterface = nosliw.getNodeData("complexentity.getEntityObjectInterface");
-	var node_taskUtility = nosliw.getNodeData("task.taskUtility");
+	var node_taskExecuteUtility = nosliw.getNodeData("task.taskExecuteUtility");
 
 	var loc_parentView;
 	var loc_mainView;
@@ -94,7 +94,7 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 
 		var taskInfo = node_createTaskInfo(loc_taskListView.val());
 		
-		var request = node_taskUtility.getInvokeTaskRequest(taskInfo, taskInput, undefined, complexEntityInterface.getBundle());
+		var request = node_taskExecuteUtility.getInvokeTaskRequest(taskInfo, taskInput, undefined, complexEntityInterface.getBundle());
 
 /*		
 		var request = taskInterface.getExecuteRequest(taskInput, {

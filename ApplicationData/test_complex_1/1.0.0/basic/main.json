@@ -122,6 +122,25 @@
 			"brickId":"test0|uipage;1.0.0"  
         },
 		
+		{
+			"info": {
+				"name" : "eventhandler-taskTaskScript",
+				"status": "disabled1",
+				"description" : ""
+			},
+			"relation": [
+				{
+					"type" : "valueContext",
+					"mode" : "runtime"
+				}
+			],
+			"brick":{
+				"scriptResourceId": "task_debug_eventhandler"
+			},
+			"adapter": [
+			]
+		},
+
 
 		{
 			"info": {

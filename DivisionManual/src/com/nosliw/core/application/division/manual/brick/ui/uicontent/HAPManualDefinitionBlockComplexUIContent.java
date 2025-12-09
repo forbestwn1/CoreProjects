@@ -11,7 +11,6 @@ import com.nosliw.core.application.brick.HAPEnumBrickType;
 import com.nosliw.core.application.brick.ui.uicontent.HAPBlockComplexUIContent;
 import com.nosliw.core.application.brick.ui.uicontent.HAPUIEmbededScriptExpressionInAttribute;
 import com.nosliw.core.application.brick.ui.uicontent.HAPUIEmbededScriptExpressionInContent;
-import com.nosliw.core.application.brick.ui.uicontent.HAPUIHandlerEventTagCustom;
 import com.nosliw.core.application.brick.ui.uicontent.HAPUIHandlerEventTagNormal;
 import com.nosliw.core.application.common.constant.HAPDefinitionConstant;
 import com.nosliw.core.application.common.parentrelation.HAPManualDefinitionBrickRelation;
@@ -36,7 +35,6 @@ public class HAPManualDefinitionBlockComplexUIContent extends HAPManualDefinitio
 		this.setAttributeValueWithValue(HAPBlockComplexUIContent.SCRIPTEXPRESSIONINNORMALTAGATTRIBUTE, new ArrayList<HAPUIEmbededScriptExpressionInAttribute>());
 		this.setAttributeValueWithValue(HAPBlockComplexUIContent.SCRIPTEXPRESSIONINCUSTOMERTAGATTRIBUTE, new ArrayList<HAPUIEmbededScriptExpressionInAttribute>());
 		this.setAttributeValueWithValue(HAPBlockComplexUIContent.NORMALTAGEVENT, new ArrayList<HAPUIHandlerEventTagNormal>());
-		this.setAttributeValueWithValue(HAPBlockComplexUIContent.CUSTOMTAGEVENT, new ArrayList<HAPUIHandlerEventTagCustom>());
 		this.setAttributeValueWithValue(CONSTANTFROMPARENT, new LinkedHashMap<String, HAPDefinitionConstant>());
 		this.setAttributeValueWithValue(ID_INDEX, new Integer(0));
 	}
@@ -78,9 +76,6 @@ public class HAPManualDefinitionBlockComplexUIContent extends HAPManualDefinitio
 
 	public List<HAPUIHandlerEventTagNormal> getNormalTagEvents(){    return (List<HAPUIHandlerEventTagNormal>)this.getAttributeValueOfValue(HAPBlockComplexUIContent.NORMALTAGEVENT);       }
 	public void addNormalTagEvent(HAPUIHandlerEventTagNormal event) {    this.getNormalTagEvents().add(event);     }
-
-	public List<HAPUIHandlerEventTagCustom> getCustomerTagEvents(){    return (List<HAPUIHandlerEventTagCustom>)this.getAttributeValueOfValue(HAPBlockComplexUIContent.CUSTOMTAGEVENT);       }
-	public void addCustomerTagEvent(HAPUIHandlerEventTagCustom event) {    this.getCustomerTagEvents().add(event);     }
 
 	public Map<String, HAPDefinitionConstant> getConstantsFromParent(){    return (Map<String, HAPDefinitionConstant>)this.getAttributeValueOfValue(CONSTANTFROMPARENT);   }
 	public void addConstantFromParent(HAPDefinitionConstant constant) {    this.getConstantsFromParent().put(constant.getName(), constant);        }

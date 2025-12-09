@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
@@ -48,7 +49,7 @@ public class HAPUITagDefinition extends HAPEntityInfoImp implements HAPWithEvent
 	
 	private Map<String, HAPUITagDefinitionAttribute> m_attributes;
 
-	private List<HAPEventDefinition> m_events;
+	private Map<String, HAPEventDefinition> m_events;
 	
 	private HAPResourceId m_scriptResourceId;
 	
@@ -60,7 +61,7 @@ public class HAPUITagDefinition extends HAPEntityInfoImp implements HAPWithEvent
 	public HAPUITagDefinition() {
 		this.m_parentRelations = new ArrayList<HAPManualDefinitionBrickRelation>();
 		this.m_attributes = new LinkedHashMap<String, HAPUITagDefinitionAttribute>();
-		this.m_events = new ArrayList<HAPEventDefinition>();
+		this.m_events = new LinkedHashMap<String, HAPEventDefinition>();
 	}
 	
 	public String getType() {  return null;   }
@@ -78,9 +79,10 @@ public class HAPUITagDefinition extends HAPEntityInfoImp implements HAPWithEvent
 	public Map<String, HAPUITagDefinitionAttribute> getAttributeDefinition() {   return this.m_attributes;    }
 	
 	@Override
-	public List<HAPEventDefinition> getEvents() {   return this.m_events;  }
-	public void addEvent(HAPEventDefinition eventDef) {    this.m_events.add(eventDef);     }
-	
+	public Set<String> getEventNames() {  return this.m_events.keySet();  }
+	@Override
+	public HAPEventDefinition getEventDefinition(String name) {  return this.m_events.get(name);   }
+	public void addEvent(HAPEventDefinition eventDef) {    this.m_events.put(eventDef.getName(), eventDef);     }
 	
 	
 	
@@ -108,4 +110,5 @@ public class HAPUITagDefinition extends HAPEntityInfoImp implements HAPWithEvent
 		
 		jsonMap.put(EVENT, HAPManagerSerialize.getInstance().toStringValue(this.m_events, HAPSerializationFormat.JSON));
 	}
+
 }

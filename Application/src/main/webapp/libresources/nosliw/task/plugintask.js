@@ -17,7 +17,7 @@ var packageObj = library;
 	var node_makeObjectWithApplicationInterface;
 	var node_getEntityTreeNodeInterface;
 	var node_getApplicationInterface;
-	var node_taskUtility;
+	var node_taskExecuteUtility;
 	var node_requestServiceProcessor;
 	var node_complexEntityUtility;
 	var node_basicUtility;
@@ -81,7 +81,7 @@ var loc_createTaskCore = function(taskDef, configure){
 						var taskEntityCore = node.getChildValue().getCoreEntity();
 						loc_updateTaskValuePortContainerInfo(taskEntityCore);
 						
-						node_taskUtility.registerTaskLifecycleEventListener(taskEntityCore, undefined, function(event, eventData, request){
+						node_taskExecuteUtility.registerTaskLifecycleEventListener(taskEntityCore, undefined, function(event, eventData, request){
 							if(event=="finish"){
 								loc_updateTaskResultView(eventData);
 							}
@@ -124,7 +124,7 @@ var loc_createTaskCore = function(taskDef, configure){
 				out.addRequest(loc_createTaskEntityCoreRequest(taskId, {
 					success : function(request, taskEntityCore){
 						loc_updateTaskValuePortContainerInfo(taskEntityCore);
-						return node_taskUtility.getExecuteEntityTaskWithAdapterRequest(taskEntityCore, undefined, undefined, {
+						return node_taskExecuteUtility.getExecuteEntityTaskWithAdapterRequest(taskEntityCore, undefined, undefined, {
 							success : function(request, taskResult){
 								loc_updateTaskResultView(taskResult);
 								return taskResult;
@@ -162,7 +162,7 @@ nosliw.registerSetNodeDataEvent("expression.utility", function(){node_expression
 nosliw.registerSetNodeDataEvent("component.makeObjectWithApplicationInterface", function(){node_makeObjectWithApplicationInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("complexentity.getEntityTreeNodeInterface", function(){node_getEntityTreeNodeInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("component.getApplicationInterface", function(){node_getApplicationInterface = this.getData();});
-nosliw.registerSetNodeDataEvent("task.taskUtility", function(){node_taskUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("task.taskExecuteUtility", function(){node_taskExecuteUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
 nosliw.registerSetNodeDataEvent("complexentity.complexEntityUtility", function(){node_complexEntityUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();	});

@@ -6,7 +6,7 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 	var node_CONSTANT = nosliw.getNodeData("constant.CONSTANT");
 	var node_createValuePortElementInfo = nosliw.getNodeData("valueport.createValuePortElementInfo");
 	var node_complexEntityUtility = nosliw.getNodeData("complexentity.complexEntityUtility");
-	var node_taskUtility = nosliw.getNodeData("task.taskUtility");
+	var node_taskExecuteUtility = nosliw.getNodeData("task.taskExecuteUtility");
 	var node_requestServiceProcessor = nosliw.getNodeData("request.requestServiceProcessor");
 	var node_getWithValuePortInterface = nosliw.getNodeData("valueport.getWithValuePortInterface");
 	var node_getEntityObjectInterface = nosliw.getNodeData("complexentity.getEntityObjectInterface");
@@ -104,7 +104,7 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 						}
 					);
 					
-					var taskExeRequest = node_taskUtility.getExecuteWrapperedTaskWithAdapterRequest(handlerEntityCoreWrapper, undefined, taskSetup, {
+					var taskExeRequest = node_taskExecuteUtility.getExecuteWrapperedTaskWithAdapterRequest(handlerEntityCoreWrapper, undefined, taskSetup, {
 						success : function(request, taskResult){
 							eventResultView.val(JSON.stringify(taskResult));
 						}

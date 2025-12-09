@@ -3,12 +3,14 @@ package com.nosliw.core.application.brick.ui.uicontent;
 import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
 import com.nosliw.core.application.HAPIdBrickInBundle;
 
+@HAPEntityWithAttribute
 public abstract class HAPUIInfoEventHandler extends HAPSerializableImp{
 
 	@HAPAttribute

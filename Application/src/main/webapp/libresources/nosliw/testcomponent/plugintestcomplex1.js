@@ -18,7 +18,7 @@ var packageObj = library;
 	var node_basicUtility;
 	var node_getBasicEntityObjectInterface;
 	var node_getEntityObjectInterface;
-	var node_taskUtility;
+	var node_taskExecuteUtility;
 	var node_getObjectId;
 	var node_getApplicationInterface;
 	
@@ -110,7 +110,7 @@ var loc_createTestComplex1ComponentCore = function(complexEntityDef, configure){
 						var adapterView = $('<button>Execute Adapter For Task: '+adapterName+'</button>');
 						attributeView.append(adapterView);
 						adapterView.click(function() {
-							var taskWrapperExeRequest = node_taskUtility.getExecuteWrapperedTaskWithAdapterRequest(childEntityCore, adapterName);
+							var taskWrapperExeRequest = node_taskExecuteUtility.getExecuteWrapperedTaskWithAdapterRequest(childEntityCore, adapterName);
 							node_requestServiceProcessor.processRequest(taskWrapperExeRequest);
 						});
 					});					
@@ -244,7 +244,7 @@ nosliw.registerSetNodeDataEvent("complexentity.complexEntityUtility", function()
 nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();	});
 nosliw.registerSetNodeDataEvent("common.interfacedef.getBasicEntityObjectInterface", function(){node_getBasicEntityObjectInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("complexentity.getEntityObjectInterface", function(){node_getEntityObjectInterface = this.getData();});
-nosliw.registerSetNodeDataEvent("task.taskUtility", function(){node_taskUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("task.taskExecuteUtility", function(){node_taskExecuteUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("common.interfacedef.getObjectId", function(){node_getObjectId = this.getData();});
 nosliw.registerSetNodeDataEvent("component.getApplicationInterface", function(){node_getApplicationInterface = this.getData();});
 

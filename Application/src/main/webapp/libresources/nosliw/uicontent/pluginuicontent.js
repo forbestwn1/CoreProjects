@@ -28,7 +28,6 @@ var packageObj = library;
 	var node_requestServiceProcessor;
 	var node_complexEntityUtility;
 	var node_createTaskInput;
-	var node_taskUtility;
 	var node_createValuePortValueContext;
 	
 //*******************************************   Start Node Definition  ************************************** 	
@@ -237,7 +236,6 @@ nosliw.registerSetNodeDataEvent("complexentity.getEntityTreeNodeInterface", func
 nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
 nosliw.registerSetNodeDataEvent("complexentity.complexEntityUtility", function(){node_complexEntityUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("task.createTaskInput", function(){node_createTaskInput = this.getData();});
-nosliw.registerSetNodeDataEvent("task.taskUtility", function(){node_taskUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("valueport.createValuePortValueContext", function(){	node_createValuePortValueContext = this.getData();	});
 
 //Register Node by Name

@@ -12,6 +12,7 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
 import com.nosliw.core.application.HAPManagerApplicationBrick;
 import com.nosliw.core.application.brick.HAPEnumBrickType;
+import com.nosliw.core.application.brick.ui.uicontent.HAPUIHandlerEventTagCustom;
 import com.nosliw.core.application.brick.ui.uicontent.HAPWithUIContent;
 import com.nosliw.core.application.common.constant.HAPDefinitionConstant;
 import com.nosliw.core.application.common.parentrelation.HAPManualDefinitionBrickRelation;
@@ -70,11 +71,21 @@ public class HAPManualPluginParserBlockComplexUICustomerTag extends HAPManualDef
 			
 			if(keyAttrName!=null){
 				if(keyAttrName.equals(HAPConstantShared.UIRESOURCE_ATTRIBUTE_METADATA)) {
+					//meta data attribute
 					String[] pairs = HAPUtilityNamingConversion.parseLevel1(eleAttrValue);
 					for(String pair : pairs) {
 						String[] segs = HAPUtilityNamingConversion.parseParts(pair);
 						uiCustomerTag.addMetaData(segs[0], segs[1]);
 					}
+				}
+				else if(keyAttrName.startsWith(HAPConstantShared.UIRESOURCE_ATTRIBUTE_EVENT)) {
+					//event handler attribute
+					String eventName = keyAttrName.substring(HAPConstantShared.UIRESOURCE_ATTRIBUTE_EVENT.length());
+					HAPUIHandlerEventTagCustom eventHandler = new HAPUIHandlerEventTagCustom();
+					eventHandler.setUIId(uiCustomerTag.getUIId());
+					eventHandler.setEvent(eventName);
+					eventHandler.parseContent(eleAttrValue);
+					uiCustomerTag.addEvent(eventHandler);
 				}
 			}
 			else if(uiTagDef.getAttributeDefinition().get(eleAttr.getKey())!=null) {

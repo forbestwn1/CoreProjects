@@ -24,120 +24,38 @@ var packageObj = library;
 
 var node_taskUtility = function(){
 
-  var loc_getTaskCoreFromTaskEntityCore = function(taskEntityCore){
-		var taskEntityCore = node_complexEntityUtility.getCoreEntity(taskEntityCore);
-		var taskCoreFacade = node_getApplicationInterface(taskEntityCore, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_TASK);
-		var taskCore = taskCoreFacade.getTaskCore();
-		return taskCore;
-  };
-
-  var loc_getTaskAdapter = function(entityCore, adapterName){
-		var adapters = node_getEntityTreeNodeInterface(entityCore).getAdapters();
-		var taskAdapter;
-		if(adapterName==undefined){
-			//if adapter name not provided, then find adapter for task
-			for(var name in adapters){
-				var adapter = adapters[name];
-				var adapterDef = node_getBasicEntityObjectInterface(adapter).getEntityDefinition();
-				var adapterBrickType = adapterDef.getBrickType()[node_COMMONATRIBUTECONSTANT.IDBRICKTYPE_BRICKTYPE]; 
-				if(adapterBrickType==node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_DATAASSOCIATIONFORTASK||adapterBrickType==node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_DATAASSOCIATIONFOREXPRESSION){
-					taskAdapter = adapter;
-				}
-			}
-		}
-		else{
-			taskAdapter = adapters[adapterName];
-		}
-		return taskAdapter;
-  };
-  
-  var loc_getExecuteTaskRequest = function(taskCore, taskSetup, onInitTaskRequest, onFinishTaskRequest, handlers, request){
-		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-		
-		if(onInitTaskRequest==undefined){
-			onInitTaskRequest = function(handlers, request){
-				return node_createServiceRequestInfoSimple(undefined, function(){}, handlers, request);
-			}
-		}
-
-		if(onFinishTaskRequest==undefined){
-			onFinishTaskRequest = function(taskResult, handlers, request){
-				return node_createServiceRequestInfoSimple(undefined, function(){}, handlers, request);
-			}
-		}
-		
-		//task init
-		taskCore.addTaskSetup(taskSetup);
-		out.addRequest(taskCore.getTaskInitRequest());
-
-		out.addRequest(onInitTaskRequest({
-			success : function(request){
-				return taskCore.getTaskExecuteRequest({
-					success : function(request, taskResult){
-						return onFinishTaskRequest(taskResult, {
-							success : function(request){
-								return taskResult;
-							}
-						});
-					}
-				});
-			}
-		}));
-		return out;		
-	};
 
   var loc_out = {
 	  
-	registerTaskLifecycleEventListener : function(taskEntityCore, listenerEventObj, handler, thisContext){
-		var taskCore = loc_getTaskCoreFromTaskEntityCore(taskEntityCore); 
-        taskCore.registerLifecycleEventListener(listenerEventObj, handler, thisContext);
-	},
-	  
-	getExecuteEntityTaskRequest : function(entityCore, taskSetup, onInitTaskRequest, onFinishTaskRequest, handlers, request){
-		return loc_getExecuteTaskRequest(this.getTaskCoreFromTaskEntityCore(entityCore), taskSetup, onInitTaskRequest, onFinishTaskRequest, handlers, request);
-	},
-
-	getExecuteEntityTaskWithAdapterRequest : function(entityCore, adapterName, taskSetup, handlers, request){
-		var taskAdapter = loc_getTaskAdapter(entityCore, adapterName);
-		
-		if(taskAdapter!=undefined){
-			return taskAdapter.getExecuteTaskRequest(entityCore, taskSetup, handlers, request);
-		}
-		else{
-			return this.getExecuteEntityTaskRequest(entityCore, taskSetup, undefined, undefined, handlers, request);
-		}
+    createTaskFunctionWithSettingValuePortValues : function(valuePortGroupType, valuePortName, setValueByName){
+        		
+		return function(coreEntity, handlers, request){
+			//set event data to value port
+			var valuePortContainer = node_getEntityObjectInterface(coreEntity).getExternalValuePortContainer();
+							
+			return node_utilityNamedVariable.setValuesPortValueRequest(
+				valuePortContainer,
+				valuePortGroupType,
+				valuePortName,
+				setValueByName,
+				handlers, request);
+		};
 	},
 
-	getExecuteWrapperedTaskRequest : function(wrapperCore, taskSetup, handlers, request){
-		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-		
-		var taskFactory = node_getApplicationInterface(wrapperCore, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_FACTORY);
-		out.addRequest(taskFactory.getCreateEntityRequest({
-			success : function(request, entityCore){
-				var taskCore = loc_getTaskCoreFromTaskEntityCore(entityCore); 
-				taskCore.addTaskSetup(taskSetup);
-				return loc_getExecuteTaskRequest(taskCore, taskSetup);
-			}
-		}));
-
-		return out;		
-	},
-	
-	getExecuteWrapperedTaskWithAdapterRequest : function(wrapperCore, adapterName, taskSetup, handlers, request){
-		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-		
-		var taskFactory = node_getApplicationInterface(wrapperCore, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_FACTORY);
-		out.addRequest(taskFactory.getCreateEntityRequest({
-			success : function(request, entityCore){
-				var taskCore = loc_getTaskCoreFromTaskEntityCore(entityCore); 
-				taskCore.addTaskSetup(taskSetup);
-				return loc_out.getExecuteEntityTaskWithAdapterRequest(entityCore, adapterName);
-			}
-		}));
-
-		return out;		
-	},
-
+    createTaskFunctionWithSettingValuePortValuesByGroupName : function(valuePortGroupName, valuePortName, setValueByName){
+        		
+		return function(coreEntity, handlers, request){
+			//set event data to value port
+			var valuePortContainer = node_getEntityObjectInterface(coreEntity).getExternalValuePortContainer();
+							
+			return node_utilityNamedVariable.setValuesPortValueByGroupNameRequest(
+				valuePortContainer,
+				valuePortGroupName,
+				valuePortName,
+				setValueByName,
+				handlers, request);
+		};
+	}
   };
 
   return loc_out;
