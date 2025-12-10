@@ -114,8 +114,10 @@ var node_createUICustomerTagTest = function(envObj){
 	    var triggueEventButtonView = $('<button type="button">'+"TriggueEvent"+'</button>');	
 		triggueEventButtonView.bind('click', function(){
 			var eventData = {
-				"dataTypeId": "test.string;1.0.0",
-				"value": "event data string"
+				"eventData": {
+    				"dataTypeId": "test.string;1.0.0",
+	    			"value": "event data string"
+				}
 			};
 			loc_envObj.trigueEvent("event1", eventData);
 		});

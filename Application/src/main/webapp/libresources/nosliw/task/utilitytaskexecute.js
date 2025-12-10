@@ -94,7 +94,7 @@ var node_taskExecuteUtility = function(){
 	},
 	  
 	getExecuteEntityTaskRequest : function(entityCore, taskSetup, onInitTaskRequest, onFinishTaskRequest, handlers, request){
-		return loc_getExecuteTaskRequest(this.getTaskCoreFromTaskEntityCore(entityCore), taskSetup, onInitTaskRequest, onFinishTaskRequest, handlers, request);
+		return loc_getExecuteTaskRequest(loc_getTaskCoreFromTaskEntityCore(entityCore), taskSetup, onInitTaskRequest, onFinishTaskRequest, handlers, request);
 	},
 
 	getExecuteEntityTaskWithAdapterRequest : function(entityCore, adapterName, taskSetup, handlers, request){

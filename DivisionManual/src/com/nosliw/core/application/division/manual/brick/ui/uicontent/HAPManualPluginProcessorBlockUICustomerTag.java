@@ -8,12 +8,12 @@ import org.apache.commons.lang3.tuple.Pair;
 import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.HAPBundle;
-import com.nosliw.core.application.HAPUtilityBrick;
 import com.nosliw.core.application.brick.HAPEnumBrickType;
 import com.nosliw.core.application.brick.ui.uicontent.HAPUIHandlerEventTagCustom;
 import com.nosliw.core.application.brick.ui.uicontent.HAPUIInfoEventHandler;
 import com.nosliw.core.application.brick.ui.uicontent.HAPUIInfoEventHandlerTask;
 import com.nosliw.core.application.common.event.HAPEventDefinition;
+import com.nosliw.core.application.common.task.HAPUtilityTask;
 import com.nosliw.core.application.division.manual.core.HAPManualBrick;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionBrick;
 import com.nosliw.core.application.division.manual.core.process.HAPManualContextProcessBrick;
@@ -103,7 +103,7 @@ public class HAPManualPluginProcessorBlockUICustomerTag extends HAPManualPluginP
 				HAPBundle bundle = processContext.getCurrentBundle();
 				String rootNameIfNotProvide = processContext.getRootBrickName();
 				
-				HAPManualBrick childBrick = (HAPManualBrick)HAPUtilityBrick.getDescdentBrickLocal(bundle, new HAPPath(handlerTask.getTaskBrickId().getIdPath()), rootNameIfNotProvide);
+				HAPManualBrick childBrick = (HAPManualBrick)HAPUtilityTask.getDescdentBrickLocalTask(bundle, new HAPPath(handlerTask.getTaskBrickId().getIdPath()), rootNameIfNotProvide);
 				if(childBrick!=null) {
 					HAPEventDefinition eventDef = blockDef.getUITagDefinition().getEventDefinition(eventHandler.getEvent());
 

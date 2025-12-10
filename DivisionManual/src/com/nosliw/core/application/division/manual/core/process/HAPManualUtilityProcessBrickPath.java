@@ -8,7 +8,6 @@ import com.nosliw.core.application.HAPBundle;
 import com.nosliw.core.application.HAPHandlerDownward;
 import com.nosliw.core.application.HAPIdBrickInBundle;
 import com.nosliw.core.application.HAPUtilityBrick;
-import com.nosliw.core.application.HAPUtilityBrickPath;
 import com.nosliw.core.application.HAPUtilityBrickReference;
 import com.nosliw.core.application.HAPUtilityBundle;
 import com.nosliw.core.application.HAPWrapperValueOfReferenceResource;
@@ -21,9 +20,9 @@ public class HAPManualUtilityProcessBrickPath {
 		HAPUtilityBrickReference.normalizeBrickReferenceInBundle(brickIdInBundle, basePath.getPath(), processEnd, processContext.getRootBrickName(), processContext.getCurrentBundle());
 	}
 	
-	public static void normalizeBrickPath(HAPIdBrickInBundle brickIdInBundle, HAPManualContextProcessBrick processContext) {
-		brickIdInBundle.setIdPath(HAPUtilityBrickPath.normalizeBrickPath(new HAPPath(brickIdInBundle.getIdPath()), processContext.getRootBrickName(), false, processContext.getCurrentBundle()).toString());
-	}
+//	public static void normalizeBrickPath(HAPIdBrickInBundle brickIdInBundle, HAPManualContextProcessBrick processContext) {
+//		brickIdInBundle.setIdPath(HAPUtilityBrickPath.normalizeBrickPath(new HAPPath(brickIdInBundle.getIdPath()), processContext.getRootBrickName(), false, processContext.getCurrentBundle()).toString());
+//	}
 
 	public static void processComplexBrickNormalizeBrickPath(HAPManualContextProcessBrick processContext) {
 		HAPManualUtilityBrickTraverse.traverseTreeWithLocalBrick(processContext, new HAPHandlerDownward() {

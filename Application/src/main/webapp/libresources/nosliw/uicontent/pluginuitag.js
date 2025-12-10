@@ -29,6 +29,10 @@ var packageObj = library;
 	var node_createUICustomerTagViewVariable;
 	var node_getEntityObjectInterface;
 	var node_uiTagUtility;
+	var node_complexEntityUtility;
+	var node_createTaskSetup;
+	var node_taskUtility;
+	var node_taskExecuteUtility;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -75,8 +79,7 @@ var loc_createUITagComponentCore = function(complexEntityDef, tagDefScriptFun, v
 		
 		if(handlerType==node_COMMONCONSTANT.UICONTENT_EVENTHANDLERTYPE_TASK){
 			var taskBrickId = eventHandlerInfo[node_COMMONATRIBUTECONSTANT.UIINFOEVENTHANDLER_TASKBRICKID];
-			
-			var relativePath = trigguerInfo[node_COMMONATRIBUTECONSTANT.INFOTRIGGUERTASK_HANDLERID][node_COMMONATRIBUTECONSTANT.IDBRICKINBUNDLE_RELATIVEPATH];
+			var relativePath = taskBrickId[node_COMMONATRIBUTECONSTANT.IDBRICKINBUNDLE_RELATIVEPATH];
 			var handlerEntityCoreWrapper = node_complexEntityUtility.getBrickCoreByRelativePath(loc_out, relativePath);
 
 			var taskSetup = node_createTaskSetup(
@@ -88,7 +91,7 @@ var loc_createUITagComponentCore = function(complexEntityDef, tagDefScriptFun, v
 					
 			var taskExeRequest = node_taskExecuteUtility.getExecuteWrapperedTaskWithAdapterRequest(handlerEntityCoreWrapper, undefined, taskSetup, {
 				success : function(request, taskResult){
-					eventResultView.val(JSON.stringify(taskResult));
+//					eventResultView.val(JSON.stringify(taskResult));
 				}
 			});
 			node_requestServiceProcessor.processRequest(taskExeRequest);
@@ -298,6 +301,11 @@ nosliw.registerSetNodeDataEvent("uitag.test.createUICustomerTagTest", function()
 nosliw.registerSetNodeDataEvent("uitag.test.createUICustomerTagViewVariable", function(){node_createUICustomerTagViewVariable = this.getData();	});
 nosliw.registerSetNodeDataEvent("complexentity.getEntityObjectInterface", function(){node_getEntityObjectInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("uicontent.uiTagUtility", function(){node_uiTagUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("complexentity.complexEntityUtility", function(){node_complexEntityUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("task.createTaskSetup", function(){node_createTaskSetup = this.getData();});
+nosliw.registerSetNodeDataEvent("task.taskUtility", function(){node_taskUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("task.taskExecuteUtility", function(){node_taskExecuteUtility = this.getData();});
+
 
 //Register Node by Name
 packageObj.createChildNode("createUITagPlugin", node_createUITagPlugin); 

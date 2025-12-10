@@ -49,6 +49,7 @@ var loc_createTaskCore = function(taskDef, configure){
 	
 	var loc_taskInfoView;
 	var loc_outputView;
+	var loc_taskViewContainer;
 	
 	var loc_createTaskId = function(){
 		loc_indexId++;
@@ -74,7 +75,7 @@ var loc_createTaskCore = function(taskDef, configure){
 
 	var loc_createTaskEntityCoreRequest = function(taskId, handlers, request){
 		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-		out.addRequest(loc_envInterface[node_CONSTANT.INTERFACE_ENTITY].createBrickChildByAttributeRequest(taskId, node_COMMONATRIBUTECONSTANT.BLOCKTASKWRAPPER_TASK, undefined, {
+		out.addRequest(loc_envInterface[node_CONSTANT.INTERFACE_ENTITY].createChildByAttributeWithInitRequest(taskId, node_COMMONATRIBUTECONSTANT.BLOCKTASKWRAPPER_TASK, undefined, loc_taskViewContainer, {
 			success : function(request, node){
 				return node_complexEntityUtility.getBuildAttributeWithResourceId(loc_out, {
 					success : function(request){
@@ -138,6 +139,8 @@ var loc_createTaskCore = function(taskDef, configure){
 
 			loc_outputView =  $('<textarea rows="5" cols="200"></textarea>');
 			rootView.append(loc_outputView);
+			loc_taskViewContainer =  $('<div></div>');
+			rootView.append(loc_taskViewContainer);
 		},
 		
 	};

@@ -9,7 +9,13 @@ import com.nosliw.core.application.brick.wrappertask.HAPBlockTaskWrapper;
 
 public class HAPUtilityTask {
 
-	public static HAPPath figureoutTaskPath(HAPBundle bundle, HAPPath idPath, String rootNameIfNotProvide) {
+	//get descdent task brick (if path refer to task wrapper, then expend path to task in wrapper)
+	public static HAPBrick getDescdentBrickLocalTask(HAPBundle bundle, HAPPath idPath, String rootNameIfNotProvide) {
+		return HAPUtilityBrick.getDescdentBrickLocal(bundle, HAPUtilityTask.figureoutTaskPath(bundle, idPath, rootNameIfNotProvide), rootNameIfNotProvide);		
+	}
+	
+	//get task path (if path reference to task wrapper, then expend path to task in wrapper)
+	private static HAPPath figureoutTaskPath(HAPBundle bundle, HAPPath idPath, String rootNameIfNotProvide) {
 		HAPPath out = idPath;
 		HAPBrick brick = HAPUtilityBrick.getDescdentBrickLocal(bundle, idPath, rootNameIfNotProvide);
 		if(brick!=null&&brick.getBrickType().equals(HAPEnumBrickType.TASKWRAPPER_100)) {

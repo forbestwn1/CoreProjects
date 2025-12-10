@@ -19,6 +19,7 @@ var packageObj = library;
 	var node_getApplicationInterface;
 	var node_getEntityObjectInterface;
 	var node_getBasicEntityObjectInterface;
+	var node_utilityNamedVariable;
 
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -79,6 +80,7 @@ nosliw.registerSetNodeDataEvent("complexentity.complexEntityUtility", function()
 nosliw.registerSetNodeDataEvent("component.getApplicationInterface", function(){node_getApplicationInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("complexentity.getEntityObjectInterface", function(){node_getEntityObjectInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("common.interfacedef.getBasicEntityObjectInterface", function(){node_getBasicEntityObjectInterface = this.getData();});
+nosliw.registerSetNodeDataEvent("valueport.utilityNamedVariable", function(){node_utilityNamedVariable = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("taskUtility", node_taskUtility); 
