@@ -1,4 +1,4 @@
-package com.nosliw.core.application.brick.ui.uicontent;
+package com.nosliw.core.application.common.event;
 
 import java.util.Map;
 
@@ -7,7 +7,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.HAPIdBrickInBundle;
 
-public class HAPUIInfoEventHandlerTask extends HAPUIInfoEventHandler{
+public class HAPEventInfoHandlerTask extends HAPEventInfoHandler{
 
 	@HAPAttribute
 	public static final String TASKBRICKID = "taskBrickId";
@@ -15,7 +15,7 @@ public class HAPUIInfoEventHandlerTask extends HAPUIInfoEventHandler{
 	private HAPIdBrickInBundle m_taskBrickId;
 	
 	@Override
-	public String getHandlerType() {   return HAPConstantShared.UICONTENT_EVENTHANDLERTYPE_TASK;   }
+	public String getHandlerType() {   return HAPConstantShared.EVENT_HANDLERTYPE_TASK;   }
 
 	public void setTaskBrickId(HAPIdBrickInBundle taskBrickId) {	this.m_taskBrickId = taskBrickId;	}
 	

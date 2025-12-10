@@ -7,7 +7,7 @@ import com.nosliw.core.application.common.structure.HAPStructureImp;
 import com.nosliw.core.application.common.structure.HAPUtilityParserStructure;
 import com.nosliw.core.application.entity.datarule.HAPManagerDataRule;
 
-public class HAPUtilityParser {
+public class HAPEventUtilityParser {
 
 	public static HAPEventDefinition parseEventDefinition(Object obj, HAPManagerDataRule dataRuleManager) {
 		HAPEventDefinition out = new HAPEventDefinition();

@@ -1,4 +1,4 @@
-package com.nosliw.core.application.brick.ui.uicontent;
+package com.nosliw.core.application.common.event;
 
 import java.util.Map;
 
@@ -11,27 +11,27 @@ import com.nosliw.common.utils.HAPUtilityNamingConversion;
 import com.nosliw.core.application.HAPIdBrickInBundle;
 
 @HAPEntityWithAttribute
-public abstract class HAPUIInfoEventHandler extends HAPSerializableImp{
+public abstract class HAPEventInfoHandler extends HAPSerializableImp{
 
 	@HAPAttribute
 	public static final String TYPE = "type";
 	
 	public abstract String getHandlerType();
 	
-	public static HAPUIInfoEventHandler parseHandlerInfo(Object obj) {
+	public static HAPEventInfoHandler parseHandlerInfo(Object obj) {
 		if(obj instanceof String) {
 			String str = (String)obj;
 			String[] segs = HAPUtilityNamingConversion.parseParts(str);
 			String handlerType = segs[0];
-			if(HAPConstantShared.UICONTENT_EVENTHANDLERTYPE_TASK.equals(handlerType)) {
-				HAPUIInfoEventHandlerTask out = new HAPUIInfoEventHandlerTask();
+			if(HAPConstantShared.EVENT_HANDLERTYPE_TASK.equals(handlerType)) {
+				HAPEventInfoHandlerTask out = new HAPEventInfoHandlerTask();
 				HAPIdBrickInBundle taskId = new HAPIdBrickInBundle();
 				taskId.buildObject(segs[1], HAPSerializationFormat.LITERATE);
 				out.setTaskBrickId(taskId);
 				return out;
 			}
-			else if(HAPConstantShared.UICONTENT_EVENTHANDLERTYPE_SCRIPT.equals(handlerType)) {
-				HAPUIInfoEventHandlerScript out = new HAPUIInfoEventHandlerScript();
+			else if(HAPConstantShared.EVENT_HANDLERTYPE_SCRIPT.equals(handlerType)) {
+				HAPEventInfoHandlerScript out = new HAPEventInfoHandlerScript();
 				out.setFunctionName(segs[1]);
 				return out;
 			}

@@ -1092,8 +1092,8 @@
 			<definition name="VALUEADDRESSCATEGARY_FLOWCONTEXT" value="flowContext"/>
 
 			<definition type="space"/>
-			<definition name="UICONTENT_EVENTHANDLERTYPE_TASK" value="task"/>
-			<definition name="UICONTENT_EVENTHANDLERTYPE_SCRIPT" value="script"/>
+			<definition name="EVENT_HANDLERTYPE_TASK" value="task"/>
+			<definition name="EVENT_HANDLERTYPE_SCRIPT" value="script"/>
 
 		</definitions>
 	</constants>

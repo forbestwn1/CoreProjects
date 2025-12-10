@@ -75,10 +75,10 @@ var loc_createUITagComponentCore = function(complexEntityDef, tagDefScriptFun, v
 	var loc_trigueEvent = function(event, eventData, requestInfo){
 		var eventHandlerDef = loc_complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.BLOCKCOMPLEXUICUSTOMERTAG_EVENT)[event];
 		var eventHandlerInfo = eventHandlerDef[node_COMMONATRIBUTECONSTANT.UIHANDLEREVENT_HANDLERINFO];
-		var handlerType = eventHandlerInfo[node_COMMONATRIBUTECONSTANT.UIINFOEVENTHANDLER_TYPE];
+		var handlerType = eventHandlerInfo[node_COMMONATRIBUTECONSTANT.EVENTINFOHANDLER_TYPE];
 		
-		if(handlerType==node_COMMONCONSTANT.UICONTENT_EVENTHANDLERTYPE_TASK){
-			var taskBrickId = eventHandlerInfo[node_COMMONATRIBUTECONSTANT.UIINFOEVENTHANDLER_TASKBRICKID];
+		if(handlerType==node_COMMONCONSTANT.EVENT_HANDLERTYPE_TASK){
+			var taskBrickId = eventHandlerInfo[node_COMMONATRIBUTECONSTANT.EVENTINFOHANDLER_TASKBRICKID];
 			var relativePath = taskBrickId[node_COMMONATRIBUTECONSTANT.IDBRICKINBUNDLE_RELATIVEPATH];
 			var handlerEntityCoreWrapper = node_complexEntityUtility.getBrickCoreByRelativePath(loc_out, relativePath);
 

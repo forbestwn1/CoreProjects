@@ -10,7 +10,7 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityFile;
 import com.nosliw.core.application.common.event.HAPEventDefinition;
-import com.nosliw.core.application.common.event.HAPUtilityParser;
+import com.nosliw.core.application.common.event.HAPEventUtilityParser;
 import com.nosliw.core.application.common.event.HAPWithEvents;
 import com.nosliw.core.application.common.parentrelation.HAPManualDefinitionBrickRelation;
 import com.nosliw.core.application.common.structure.HAPElementStructureLeafRelativeForValue;
@@ -70,7 +70,7 @@ public class HAPUITagUtilityDefinitionParser {
 		JSONArray eventArray = jsonObj.optJSONArray(HAPWithEvents.EVENT);
 		if(eventArray!=null) {
 			for(int i=0; i<eventArray.length(); i++) {
-				HAPEventDefinition eventDef = HAPUtilityParser.parseEventDefinition(eventArray.getJSONObject(i), dataRuleManager);
+				HAPEventDefinition eventDef = HAPEventUtilityParser.parseEventDefinition(eventArray.getJSONObject(i), dataRuleManager);
 				out.addEvent(eventDef);
 			}
 		}

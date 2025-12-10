@@ -1,11 +1,11 @@
-package com.nosliw.core.application.brick.ui.uicontent;
+package com.nosliw.core.application.common.event;
 
 import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.utils.HAPConstantShared;
 
-public class HAPUIInfoEventHandlerScript extends HAPUIInfoEventHandler{
+public class HAPEventInfoHandlerScript extends HAPEventInfoHandler{
 
 	@HAPAttribute
 	public static final String FUNCTIONNAME = "functionName";
@@ -13,7 +13,7 @@ public class HAPUIInfoEventHandlerScript extends HAPUIInfoEventHandler{
 	private String m_functionName;
 	
 	@Override
-	public String getHandlerType() {   return HAPConstantShared.UICONTENT_EVENTHANDLERTYPE_SCRIPT;   }
+	public String getHandlerType() {   return HAPConstantShared.EVENT_HANDLERTYPE_SCRIPT;   }
 
 	public String getFunctionName() {     return this.m_functionName;     }
 	public void setFunctionName(String functionName) {      this.m_functionName = functionName;      }

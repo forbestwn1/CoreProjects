@@ -1062,8 +1062,8 @@ public class HAPConstantShared {
 
 
 
-		public static final String UICONTENT_EVENTHANDLERTYPE_TASK = "task";
-		public static final String UICONTENT_EVENTHANDLERTYPE_SCRIPT = "script";
+		public static final String EVENT_HANDLERTYPE_TASK = "task";
+		public static final String EVENT_HANDLERTYPE_SCRIPT = "script";
 
 
 }

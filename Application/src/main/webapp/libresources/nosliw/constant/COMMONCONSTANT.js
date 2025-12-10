@@ -651,8 +651,8 @@ var COMMONCONSTANT=
   "VALUEADDRESSCATEGARY_BUNDLE": "bundle",
   "VALUEADDRESSCATEGARY_TASKCONTEXT": "taskContext",
   "VALUEADDRESSCATEGARY_FLOWCONTEXT": "flowContext",
-  "UICONTENT_EVENTHANDLERTYPE_TASK": "task",
-  "UICONTENT_EVENTHANDLERTYPE_SCRIPT": "script"
+  "EVENT_HANDLERTYPE_TASK": "task",
+  "EVENT_HANDLERTYPE_SCRIPT": "script"
 };
 
 //*******************************************   End Node Definition  ************************************** 	
