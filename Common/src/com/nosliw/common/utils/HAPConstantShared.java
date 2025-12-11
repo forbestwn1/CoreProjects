@@ -514,6 +514,7 @@ public class HAPConstantShared {
 		public static final String RUNTIME_RESOURCE_TYPE_TEST_COMPLEX_SCRIPT = "test_complex_script";
 		public static final String RUNTIME_RESOURCE_TYPE_TEST_DECORATION_SCRIPT = "test.decoration.script";
 		public static final String RUNTIME_RESOURCE_TYPE_TEST_COMPLEX_TASK = "test_complex_task";
+		public static final String RUNTIME_RESOURCE_TYPE_TEST_COMPLEX_TASK_SCRIPT = "test_complex_task_script";
 		public static final String RUNTIME_RESOURCE_TYPE_TASK_TASK_SCRIPT = "taskTaskScript";
 		public static final String RUNTIME_RESOURCE_TYPE_TASK_EXPRESSION_SCRIPT = "taskExpressionScript";
 		public static final String RUNTIME_RESOURCE_TYPE_TASK_FLOW = "flow";

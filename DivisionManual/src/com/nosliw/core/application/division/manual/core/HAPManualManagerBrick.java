@@ -237,7 +237,7 @@ public class HAPManualManagerBrick implements HAPPluginDivision{
 		
 		this.registerBlockPluginInfo(HAPEnumBrickType.SERVICEPROVIDER_100, new HAPManualInfoBrickType(false, HAPConstantShared.TASK_TYPE_TASK), new HAPManualPluginParserBlockServiceProvider(this, this.m_runtimeEnv), new HAPManualPluginProcessorBlockSimpleImpServiceProvider(this.m_runtimeEnv, this));
 
-		this.registerBlockPluginInfo(HAPEnumBrickType.TASK_TASK_SCRIPT_100, new HAPManualInfoBrickType(false, HAPConstantShared.TASK_TYPE_TASK), new HAPManualPluginParserBlockTaskTaskScript(this, this.m_runtimeEnv), new HAPManualPluginProcessorBlockTaskTaskScript(this.m_runtimeEnv, this));
+		this.registerBlockPluginInfo(HAPEnumBrickType.TASK_TASK_SCRIPT_100, new HAPManualInfoBrickType(false, HAPConstantShared.TASK_TYPE_TASK), new HAPManualPluginParserBlockTestComplexTaskScript(this, this.m_runtimeEnv), new HAPManualPluginProcessorBlockTestComplexTaskScript(this.m_runtimeEnv, this));
 		
 		this.registerBlockPluginInfo(HAPEnumBrickType.TASK_TASK_FLOW_100, new HAPManualInfoBrickType(true, HAPConstantShared.TASK_TYPE_TASK), new HAPManualPluginParserBlockTaskFlowFlow(this, this.m_runtimeEnv), new HAPManualPluginProcessorBlockTaskFlowFlow(this.m_runtimeEnv, this));
 		this.registerBlockPluginInfo(HAPEnumBrickType.TASK_TASK_ACTIVITYTASK_100, new HAPManualInfoBrickType(true), new HAPManualPluginParserBlockTaskFlowActivityTask(this, this.m_runtimeEnv), new HAPManualPluginProcessorBlockTaskFlowActivityTask(this.m_runtimeEnv, this));

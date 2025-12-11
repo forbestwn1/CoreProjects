@@ -34,7 +34,7 @@ public class HAPManualPluginParserBlockTestComplexScript extends HAPManualDefini
 		scriptEntity.setScript(scriptResourceId);
 		
 //		HAPResourceDefinition scriptResoureDef = this.getRuntimeEnvironment().getResourceDefinitionManager().getResourceDefinition(HAPFactoryResourceId.newInstance(HAPConstantShared.RUNTIME_RESOURCE_TYPE_SCRIPT, scriptName), parserContext.getGlobalDomain());
-//		HAPUtilityEntityDefinition.setEntitySimpleAttributeWithId(entity, HAPManualDefinitionBlockTestComplexTask.ATTR_SCRIPT, scriptResoureDef.getEntityId(), this.getRuntimeEnvironment().getDomainEntityManager());
+//		HAPUtilityEntityDefinition.setEntitySimpleAttributeWithId(entity, HAPManualDefinitionBlockTestComplexTaskScript.ATTR_SCRIPT, scriptResoureDef.getEntityId(), this.getRuntimeEnvironment().getDomainEntityManager());
 		
 		//parms
 		JSONObject parms =  jsonObj.optJSONObject(HAPBlockTestComplexScript.PARM);

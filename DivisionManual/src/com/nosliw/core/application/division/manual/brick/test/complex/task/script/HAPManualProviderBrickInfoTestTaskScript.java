@@ -1,4 +1,4 @@
-package com.nosliw.core.application.division.manual.brick.test.complex.task;
+package com.nosliw.core.application.division.manual.brick.test.complex.task.script;
 
 import org.springframework.stereotype.Component;
 
@@ -12,24 +12,24 @@ import com.nosliw.core.application.division.manual.core.process.HAPManualInfoBri
 import com.nosliw.core.application.division.manual.core.process.HAPManualPluginProcessorBrick;
 
 @Component
-public class HAPManualProviderBrickInfoTestTask extends HAPManualProviderBrickInfoImp{
+public class HAPManualProviderBrickInfoTestTaskScript extends HAPManualProviderBrickInfoImp{
 
-	public HAPManualProviderBrickInfoTestTask(HAPManualManagerBrick manualBrickMan,
+	public HAPManualProviderBrickInfoTestTaskScript(HAPManualManagerBrick manualBrickMan,
 			HAPManagerApplicationBrick brickMan) {
 		super(manualBrickMan, brickMan);
 	}
 
 	@Override
-	public HAPIdBrickType getBrickTypeId() {   return HAPEnumBrickType.TEST_COMPLEX_TASK_100;   }
+	public HAPIdBrickType getBrickTypeId() {   return HAPEnumBrickType.TEST_COMPLEX_TASK_SCRIPT_100;   }
 
 	@Override
 	protected HAPManualDefinitionPluginParserBrick newBrickParser() {
-		return new HAPManualPluginParserBlockTestComplexTask(this.getManualBrickManager(), this.getBrickManager());
+		return new HAPManualPluginParserBlockTestComplexTaskScript(this.getManualBrickManager(), this.getBrickManager());
 	}
 
 	@Override
 	protected HAPManualPluginProcessorBrick newBrickProcessor() {
-		return new HAPManualPluginProcessorBlockComplexTestComplexTask();
+		return new HAPManualPluginProcessorBlockTestComplexTaskScript();
 	}
 
 	@Override

@@ -44,7 +44,7 @@ public abstract class HAPManualPluginProcessorAdapter extends HAPManualPluginPro
 		
 		HAPIdBrickType brickTypeId = this.getBaseBrickType(processContext);
 		
-		if(brickTypeId!=null && HAPUtilityBrick.getBrickTaskType(brickTypeId, processContext.getBrickManager())!=null){
+		if(brickTypeId!=null && HAPUtilityBrick.isBrickTask(brickTypeId, processContext.getBrickManager())){
 			//base is task type, then second is parent's parent's
 			out = baseBlockPath.trimLast().getLeft().trimLast().getLeft();
 		}

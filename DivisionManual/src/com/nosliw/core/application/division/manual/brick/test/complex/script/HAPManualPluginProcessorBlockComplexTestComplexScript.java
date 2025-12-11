@@ -144,14 +144,14 @@ public class HAPManualPluginProcessorBlockComplexTestComplexScript extends HAPMa
 		HAPExecutableBundle currentBundle = processContext.getCurrentBundle();
 		HAPDomainEntityDefinitionGlobal definitionDomain = currentBundle.getDefinitionDomain();
 		
-		HAPBlockTestComplexTask executableEntity = (HAPBlockTestComplexTask)complexEntityExecutable;
+		HAPBlockTestComplexTaskScript executableEntity = (HAPBlockTestComplexTaskScript)complexEntityExecutable;
 		
 		HAPIdEntityInDomain complexEntityDefinitionId = executableEntity.getDefinitionEntityId();
-		HAPManualDefinitionBlockTestComplexTask definitionEntity = (HAPManualDefinitionBlockTestComplexTask)definitionDomain.getEntityInfoDefinition(complexEntityDefinitionId).getEntity();
+		HAPManualDefinitionBlockTestComplexTaskScript definitionEntity = (HAPManualDefinitionBlockTestComplexTaskScript)definitionDomain.getEntityInfoDefinition(complexEntityDefinitionId).getEntity();
 		Map<String, Object> parms = definitionEntity.getParms();
 		
 		//extended variable
-		Object variablesExtension = parms.get(HAPBlockTestComplexTask.VARIABLEEXTENDED);
+		Object variablesExtension = parms.get(HAPBlockTestComplexTaskScript.VARIABLEEXTENDED);
 		if(variablesExtension!=null) {
 			JSONArray varJsonArray = (JSONArray)variablesExtension;
 			List<HAPExecutableVariableExpected> resolvedVars = new ArrayList<HAPExecutableVariableExpected>();
@@ -175,11 +175,11 @@ public class HAPManualPluginProcessorBlockComplexTestComplexScript extends HAPMa
 		HAPDomainEntityDefinitionGlobal definitionDomain = currentBundle.getDefinitionDomain();
 		HAPDomainValueStructure valueStructureDomain = currentBundle.getValueStructureDomain();
 		
-		HAPBlockTestComplexTask executableEntity = (HAPBlockTestComplexTask)complexEntityExecutable;
+		HAPBlockTestComplexTaskScript executableEntity = (HAPBlockTestComplexTaskScript)complexEntityExecutable;
 		HAPExecutableEntityValueContext valueStructureComplex = executableEntity.getValueContext();
 		
 		HAPIdEntityInDomain complexEntityDefinitionId = complexEntityExecutable.getDefinitionEntityId();
-		HAPManualDefinitionBlockTestComplexTask definitionEntity = (HAPManualDefinitionBlockTestComplexTask)definitionDomain.getEntityInfoDefinition(complexEntityDefinitionId).getEntity();
+		HAPManualDefinitionBlockTestComplexTaskScript definitionEntity = (HAPManualDefinitionBlockTestComplexTaskScript)definitionDomain.getEntityInfoDefinition(complexEntityDefinitionId).getEntity();
 
 		
 		HAPEntityBundle bundle = processContext.getCurrentBundle();
@@ -194,7 +194,7 @@ public class HAPManualPluginProcessorBlockComplexTestComplexScript extends HAPMa
 		executableEntity.setParms(parms);
 	
 		//normal variable
-		Object variables = parms.get(HAPBlockTestComplexTask.VARIABLE);
+		Object variables = parms.get(HAPBlockTestComplexTaskScript.VARIABLE);
 		if(variables!=null) {
 			JSONArray varJsonArray = (JSONArray)variables;
 			List<HAPResultReferenceResolve> resolvedVars = new ArrayList<HAPResultReferenceResolve>();
@@ -215,7 +215,7 @@ public class HAPManualPluginProcessorBlockComplexTestComplexScript extends HAPMa
 		}
 	
 		HAPDomainAttachment attachmentDomain = processContext.getCurrentBundle().getAttachmentDomain();
-		Object attachmentsObj = parms.get(HAPBlockTestComplexTask.ATTACHMENT);
+		Object attachmentsObj = parms.get(HAPBlockTestComplexTaskScript.ATTACHMENT);
 		if(attachmentsObj!=null) {
 			List<HAPInfoAttachmentResolve> attachments = new ArrayList<HAPInfoAttachmentResolve>(); 
 			JSONArray attachmentsArray = (JSONArray)attachmentsObj;
@@ -241,7 +241,7 @@ public class HAPManualPluginProcessorBlockComplexTestComplexScript extends HAPMa
 		HAPExecutableBundle currentBundle = processContext.getCurrentBundle();
 		HAPDomainValueStructure valueStructureDomain = currentBundle.getValueStructureDomain();
 		
-		HAPBlockTestComplexTask executableEntity = (HAPBlockTestComplexTask)complexEntityExecutable;
+		HAPBlockTestComplexTaskScript executableEntity = (HAPBlockTestComplexTaskScript)complexEntityExecutable;
 		HAPExecutableEntityValueContext valueStructureComplex = executableEntity.getValueContext();
 		
 		List<HAPExecutableVariableExpected> expectedVars = executableEntity.getExtendedVariables();
@@ -260,7 +260,7 @@ public class HAPManualPluginProcessorBlockComplexTestComplexScript extends HAPMa
 		
 		HAPExecutableBundle currentBundle = processContext.getCurrentBundle();
 		HAPDomainValueStructure valueStructureDomain = currentBundle.getValueStructureDomain();
-		HAPBlockTestComplexTask executableEntity = (HAPBlockTestComplexTask)complexEntityExecutable;
+		HAPBlockTestComplexTaskScript executableEntity = (HAPBlockTestComplexTaskScript)complexEntityExecutable;
 		
 		List<HAPExecutableVariableExpected> expectedVars = executableEntity.getExtendedVariables();
 		if(expectedVars!=null) {

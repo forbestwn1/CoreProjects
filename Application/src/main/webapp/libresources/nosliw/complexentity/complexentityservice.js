@@ -46,6 +46,7 @@ var packageObj = library;
 	var node_createTestComplex1Plugin;
 	var node_createTestComplexScriptPlugin;
 	var node_createTestComplexTaskPlugin;
+	var node_createTestComplexTaskScriptPlugin;
 	var node_createDataAssociationAdapterPlugin;
 	var node_createDataAssociationInteractiveAdapterPlugin;
 	var node_createDataAssociationForTaskAdapterPlugin;
@@ -205,6 +206,7 @@ var node_createComplexEntityRuntimeService = function() {
 		loc_out.registerEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_TEST_COMPLEX_1, "1.0.0", node_createTestComplex1Plugin());
 		loc_out.registerEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_TEST_COMPLEX_SCRIPT, "1.0.0", node_createTestComplexScriptPlugin());
 		loc_out.registerEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_TEST_COMPLEX_TASK, "1.0.0", node_createTestComplexTaskPlugin());
+		loc_out.registerEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_TEST_COMPLEX_TASK_SCRIPT, "1.0.0", node_createTestComplexTaskScriptPlugin());
 
 		loc_out.registerEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_DATAEXPRESSIONGROUP, "1.0.0", node_createDataExpressionGroupPlugin());
 		loc_out.registerEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_DATAEXPRESSIONGROUPTEMP, "1.0.0", node_createDataExpressionGroupPlugin());
@@ -470,6 +472,7 @@ nosliw.registerSetNodeDataEvent("complexentity.createDynamicCore", function(){no
 nosliw.registerSetNodeDataEvent("testcomponent.createTestComplex1Plugin", function(){node_createTestComplex1Plugin = this.getData();});
 nosliw.registerSetNodeDataEvent("testcomponent.createTestComplexScriptPlugin", function(){node_createTestComplexScriptPlugin = this.getData();});
 nosliw.registerSetNodeDataEvent("testcomponent.createTestComplexTaskPlugin", function(){node_createTestComplexTaskPlugin = this.getData();});
+nosliw.registerSetNodeDataEvent("testcomponent.createTestComplexTaskScriptPlugin", function(){node_createTestComplexTaskScriptPlugin = this.getData();});
 nosliw.registerSetNodeDataEvent("iovalue.createDataAssociationAdapterPlugin", function(){node_createDataAssociationAdapterPlugin = this.getData();});
 nosliw.registerSetNodeDataEvent("iovalue.createDataAssociationInteractiveAdapterPlugin", function(){node_createDataAssociationInteractiveAdapterPlugin = this.getData();});
 nosliw.registerSetNodeDataEvent("iovalue.createDataAssociationForTaskAdapterPlugin", function(){node_createDataAssociationForTaskAdapterPlugin = this.getData();});

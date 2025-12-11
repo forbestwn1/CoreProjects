@@ -87,7 +87,15 @@ public class HAPUtilityBrick {
 		HAPComplexPath fullPathInfo = HAPUtilityBundle.getBrickFullPathInfo(path);
 		return getDescendantAttribute(bundle.getRootBrickWrapper(fullPathInfo.getRoot()).getBrick(), fullPathInfo.getPath());
 	}
-	
+
+	public static boolean isBrickTask(HAPIdBrickType brickTypeId, HAPManagerApplicationBrick brickMan) {
+		HAPInfoBrickType brickTypeInfo = brickMan.getBrickTypeInfo(brickTypeId);
+		if(brickTypeInfo!=null) {
+			return brickTypeInfo.isTask();
+		}
+		return false;
+	}
+
 	public static String getBrickTaskType(HAPIdBrickType brickTypeId, HAPManagerApplicationBrick brickMan) {
 		HAPInfoBrickType brickTypeInfo = brickMan.getBrickTypeInfo(brickTypeId);
 		if(brickTypeInfo!=null) {

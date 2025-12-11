@@ -8,11 +8,16 @@ import com.nosliw.core.resource.HAPResourceId;
 public class HAPManualBlockTaskTaskScript extends HAPManualBrickImp implements HAPBlockTaskTaskScript{
 
 	@Override
+	public void init() {
+		super.init();
+	}
+	
+	@Override
 	public HAPEntityOrReference getTaskInterface() {    return this.getAttributeValueOfBrick(TASKINTERFACE);  }
 	public void setTaskInterface(HAPEntityOrReference taskInterface) {   this.setAttributeValueWithBrick(TASKINTERFACE, taskInterface);     }
 
 	@Override
 	public HAPResourceId getScriptResourceId() {   return (HAPResourceId)this.getAttributeValueOfValue(SCRIPTRESOURCEID);  }
 	public void setScriptResourceId(HAPResourceId resourceId) {    this.setAttributeValueWithValue(SCRIPTRESOURCEID, resourceId);  }
-
+	
 }

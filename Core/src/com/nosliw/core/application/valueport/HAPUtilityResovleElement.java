@@ -17,7 +17,12 @@ import com.nosliw.core.runtime.HAPRuntimeInfo;
 import com.nosliw.core.xxx.application.valueport.HAPInfoElementResolve;
 
 public class HAPUtilityResovleElement {
+	
+	public static HAPInfoElementResolve resolveNameFromInternal(String name, HAPWithInternalValuePort withValuePort, HAPConfigureResolveElementReference resolveConfigure, HAPDomainValueStructure valueStructureDomain) {
+//		withValuePort.getInternalValuePorts().get
+	}
 
+	
 	public static HAPInfoElementResolve resolveNameFromInternal(String name, String ioDirection, HAPWithInternalValuePort withValuePort, HAPConfigureResolveElementReference resolveConfigure, HAPDomainValueStructure valueStructureDomain) {
 		HAPReferenceElement ref = buildInternalElementReference(name, ioDirection, withValuePort); 
 		return resolveElementReferenceInternal(ref, withValuePort, null, valueStructureDomain);

@@ -28,6 +28,7 @@ public class HAPProviderPluginBrickImp implements HAPProviderPluginBrick{
 		out.add(new HAPPluginBrick(HAPEnumBrickType.TEST_COMPLEX_1_100));
 		out.add(new HAPPluginBrick(HAPEnumBrickType.TEST_COMPLEX_SCRIPT_100));
 		out.add(new HAPPluginBrick(HAPEnumBrickType.TEST_COMPLEX_TASK_100, new HAPInfoBrickType(HAPConstantShared.TASK_TYPE_TASK)));
+		out.add(new HAPPluginBrick(HAPEnumBrickType.TEST_COMPLEX_TASK_SCRIPT_100, new HAPInfoBrickType(true)));
 
 		out.add(new HAPPluginBrickTaskWrapper());
 		out.add(new HAPPluginBrick(HAPEnumBrickType.WRAPPERBRICK_100));

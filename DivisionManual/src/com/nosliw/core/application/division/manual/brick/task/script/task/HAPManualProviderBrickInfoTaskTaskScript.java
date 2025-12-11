@@ -2,7 +2,6 @@ package com.nosliw.core.application.division.manual.brick.task.script.task;
 
 import org.springframework.stereotype.Component;
 
-import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.HAPIdBrickType;
 import com.nosliw.core.application.HAPManagerApplicationBrick;
 import com.nosliw.core.application.brick.HAPEnumBrickType;
@@ -34,6 +33,6 @@ public class HAPManualProviderBrickInfoTaskTaskScript extends HAPManualProviderB
 	}
 
 	@Override
-	protected HAPManualInfoBrickType newBrickTypeInfo() {  return new HAPManualInfoBrickType(true, HAPConstantShared.TASK_TYPE_TASK);  }
+	protected HAPManualInfoBrickType newBrickTypeInfo() {  return new HAPManualInfoBrickType(true);  }
 
 }

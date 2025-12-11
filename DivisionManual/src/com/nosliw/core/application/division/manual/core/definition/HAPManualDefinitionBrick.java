@@ -115,7 +115,7 @@ public abstract class HAPManualDefinitionBrick extends HAPSerializableImp implem
 		boolean isTaskAttr = false;
 		HAPIdBrickType attrBrickTypeId = HAPManualDefinitionUtilityBrick.getBrickType(attribute.getValueWrapper());
 		if(attrBrickTypeId!=null) {
-			isTaskAttr = HAPUtilityBrick.getBrickTaskType(attrBrickTypeId, this.getBrickManager())!=null;
+			isTaskAttr = HAPUtilityBrick.isBrickTask(attrBrickTypeId, this.getBrickManager());
 		}
 		
 		if(isTaskAttr&&this.getBrickTypeId()!=HAPEnumBrickType.TASKWRAPPER_100) {

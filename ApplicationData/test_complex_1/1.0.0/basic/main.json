@@ -124,12 +124,13 @@
 		
 		{
 			"info": {
-				"name" : "eventhandler-taskTaskScript",
+				"name" : "eventhandler-test_complex_task_script",
 				"status": "disabled1",
 				"description" : ""
 			},
 			"brick":{
-				"scriptResourceId": "task_debug_eventhandler"
+				"scriptResourceId": "task_debug_eventhandler",
+				"variable1": ["eventData"]
 			},
 			"adapter": [
 			]

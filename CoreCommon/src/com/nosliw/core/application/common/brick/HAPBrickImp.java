@@ -120,11 +120,13 @@ public class HAPBrickImp extends HAPSerializableImp implements HAPBrick{
 	
 	public void setAttributeValueWithValue(String attributeName, Object attrValue) {		this.setAttribute(newAttribute(attributeName, new HAPWrapperValueOfValue(attrValue)));	}
 	public void setAttributeValueWithBrick(String attributeName, HAPEntityOrReference brickOrRef) {
-		if(brickOrRef.getEntityOrReferenceType().equals(HAPConstantShared.BRICK)) {
-			this.setAttribute(newAttribute(attributeName, new HAPWrapperValueOfBrick((HAPBrick)brickOrRef)));
-		}
-		else if(brickOrRef.getEntityOrReferenceType().equals(HAPConstantShared.RESOURCEID)) {
-			this.setAttribute(newAttribute(attributeName, new HAPWrapperValueOfReferenceResource((HAPResourceId)brickOrRef)));
+		if(brickOrRef!=null) {
+			if(brickOrRef.getEntityOrReferenceType().equals(HAPConstantShared.BRICK)) {
+				this.setAttribute(newAttribute(attributeName, new HAPWrapperValueOfBrick((HAPBrick)brickOrRef)));
+			}
+			else if(brickOrRef.getEntityOrReferenceType().equals(HAPConstantShared.RESOURCEID)) {
+				this.setAttribute(newAttribute(attributeName, new HAPWrapperValueOfReferenceResource((HAPResourceId)brickOrRef)));
+			}
 		}
 	}
 	public void setAttributeValueWithDynamic(String attributeName, HAPValueOfDynamic dynamic) {	this.setAttribute(newAttribute(attributeName, new HAPWrapperValueOfDynamic(dynamic)));	}
