@@ -33,6 +33,7 @@ var packageObj = library;
 	var node_createTaskSetup;
 	var node_taskUtility;
 	var node_taskExecuteUtility;
+	var node_uiEventUtility;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -74,28 +75,10 @@ var loc_createUITagComponentCore = function(complexEntityDef, tagDefScriptFun, v
 
 	var loc_trigueEvent = function(event, eventData, requestInfo){
 		var eventHandlerDef = loc_complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.BLOCKCOMPLEXUICUSTOMERTAG_EVENT)[event];
-		var eventHandlerInfo = eventHandlerDef[node_COMMONATRIBUTECONSTANT.UIHANDLEREVENT_HANDLERINFO];
-		var handlerType = eventHandlerInfo[node_COMMONATRIBUTECONSTANT.EVENTINFOHANDLER_TYPE];
-		
-		if(handlerType==node_COMMONCONSTANT.EVENT_HANDLERTYPE_TASK){
-			var taskBrickId = eventHandlerInfo[node_COMMONATRIBUTECONSTANT.EVENTINFOHANDLER_TASKBRICKID];
-			var relativePath = taskBrickId[node_COMMONATRIBUTECONSTANT.IDBRICKINBUNDLE_RELATIVEPATH];
-			var handlerEntityCoreWrapper = node_complexEntityUtility.getBrickCoreByRelativePath(loc_out, relativePath);
-
-			var taskSetup = node_createTaskSetup(
-				node_taskUtility.createTaskFunctionWithSettingValuePortValues(
-					node_COMMONCONSTANT.VALUEPORTGROUP_TYPE_EVENT, 
-					node_COMMONCONSTANT.VALUEPORT_TYPE_EVENT, 
-					eventData)
-			);
-					
-			var taskExeRequest = node_taskExecuteUtility.getExecuteWrapperedTaskWithAdapterRequest(handlerEntityCoreWrapper, undefined, taskSetup, {
-				success : function(request, taskResult){
-//					eventResultView.val(JSON.stringify(taskResult));
-				}
-			});
-			node_requestServiceProcessor.processRequest(taskExeRequest);
-		}
+		var eventHandlerRef = eventHandlerDef[node_COMMONATRIBUTECONSTANT.UIEVENTHANDLERINFO_HANDLERREFERENCE];
+	
+	    var evenHandleReqeust = node_uiEventUtility.getHandleEventRequest(eventHandlerRef, eventData, loc_out);
+		node_requestServiceProcessor.processRequest(evenHandleReqeust);
 	};
 
 	var loc_initAttributes = function(){
@@ -305,6 +288,7 @@ nosliw.registerSetNodeDataEvent("complexentity.complexEntityUtility", function()
 nosliw.registerSetNodeDataEvent("task.createTaskSetup", function(){node_createTaskSetup = this.getData();});
 nosliw.registerSetNodeDataEvent("task.taskUtility", function(){node_taskUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("task.taskExecuteUtility", function(){node_taskExecuteUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("uicontent.uiEventUtility", function(){node_uiEventUtility = this.getData();});
 
 
 //Register Node by Name

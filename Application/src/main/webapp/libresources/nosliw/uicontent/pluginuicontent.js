@@ -29,6 +29,7 @@ var packageObj = library;
 	var node_complexEntityUtility;
 	var node_createTaskInput;
 	var node_createValuePortValueContext;
+	var node_uiEventUtility;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -52,6 +53,8 @@ var loc_createUIContentComponentCore = function(complexEntityDef, valueContextId
 	var loc_valueContextId = valueContextId;
 	var loc_bundleCore = bundleCore;
 
+    var loc_normalEventHandlerInfoDef = {};
+    
 	var loc_envInterface = {};
 
 	//object store all the functions for js block
@@ -98,6 +101,38 @@ var loc_createUIContentComponentCore = function(complexEntityDef, valueContextId
 
 	var loc_getValuePortEnv = function(){
 		return loc_envInterface[node_CONSTANT.INTERFACE_WITHVALUEPORT];
+	};
+
+	/*
+	 * init element event object
+	 */
+	var loc_initElementEvent = function(eleEvent){
+		var uiId = eleEvent[node_COMMONATRIBUTECONSTANT.WITHUIID_UIID];
+		//get element for this event
+		var ele = loc_getLocalElementByUIId(uiId);
+		var subEle = ele;
+		//if have sel attribute set, then find sub element according to sel
+//		var selection = eleEvent[node_COMMONATRIBUTECONSTANT.ELEMENTEVENT_SELECTION];
+//		if(!node_basicUtility.isStringEmpty(selection))		subEle = ele.find(selection);
+
+		//register event
+		var eventValue = eleEvent;
+		var eventName = eleEvent[node_COMMONATRIBUTECONSTANT.UIEVENTHANDLERINFO_EVENT];
+		subEle.bind(eventName, function(event){
+			event.preventDefault();
+			
+			var eventData = {
+				eventData : event, 
+				source : this,
+			};
+    	    var evenHandleReqeust = node_uiEventUtility.getHandleEventRequest(loc_normalEventHandlerInfoDef[uiId][eventName][node_COMMONATRIBUTECONSTANT.UIEVENTHANDLERINFO_HANDLERREFERENCE], eventData, loc_out);
+	    	node_requestServiceProcessor.processRequest(evenHandleReqeust);
+		});
+		
+		return {
+			source : subEle,
+			event :  eventName,
+		};
 	};
 
 
@@ -164,6 +199,22 @@ var loc_createUIContentComponentCore = function(complexEntityDef, valueContextId
 					var scriptExpressionGroup = loc_complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.BLOCKCOMPLEXUICONTENT_SCRIPTEXPRESSIONS);
 					node_getLifecycleInterface(embededContent).init(loc_customerTagByUIId[embededContent.getUIId()], scriptExpressionGroup, loc_getValuePortEnv());
 					loc_expressionContents.push(embededContent);
+				});
+				
+				//init regular tag event
+				_.each(loc_complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.BLOCKCOMPLEXUICONTENT_NORMALTAGEVENT), function(eventHandlerInfoDef, key, list){
+					var eventName = eventHandlerInfoDef[node_COMMONATRIBUTECONSTANT.UIEVENTHANDLERINFO_EVENT];
+					var uiId = eventHandlerInfoDef[node_COMMONATRIBUTECONSTANT.WITHUIID_UIID];
+                    var byEventName = loc_normalEventHandlerInfoDef[uiId];
+                    if(byEventName==undefined){
+						byEventName = {}; 
+						loc_normalEventHandlerInfoDef[uiId] = byEventName;
+					}
+					byEventName[eventName] = eventHandlerInfoDef;
+				});
+
+				_.each(loc_complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.BLOCKCOMPLEXUICONTENT_NORMALTAGEVENT), function(eleEvent, key, list){
+					loc_elementEvents.push(loc_initElementEvent(eleEvent));
 				});
 			}));
 
@@ -237,6 +288,7 @@ nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){no
 nosliw.registerSetNodeDataEvent("complexentity.complexEntityUtility", function(){node_complexEntityUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("task.createTaskInput", function(){node_createTaskInput = this.getData();});
 nosliw.registerSetNodeDataEvent("valueport.createValuePortValueContext", function(){	node_createValuePortValueContext = this.getData();	});
+nosliw.registerSetNodeDataEvent("uicontent.uiEventUtility", function(){node_uiEventUtility = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createUIContentPlugin", node_createUIContentPlugin); 

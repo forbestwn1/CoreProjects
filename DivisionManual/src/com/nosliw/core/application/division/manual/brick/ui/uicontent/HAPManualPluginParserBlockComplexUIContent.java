@@ -20,7 +20,7 @@ import com.nosliw.core.application.brick.HAPEnumBrickType;
 import com.nosliw.core.application.brick.ui.uicontent.HAPElementEvent;
 import com.nosliw.core.application.brick.ui.uicontent.HAPUIEmbededScriptExpressionInAttribute;
 import com.nosliw.core.application.brick.ui.uicontent.HAPUIEmbededScriptExpressionInContent;
-import com.nosliw.core.application.brick.ui.uicontent.HAPUIHandlerEventTagNormal;
+import com.nosliw.core.application.brick.ui.uicontent.HAPUIEventHandlerInfoNormal;
 import com.nosliw.core.application.common.scriptexpressio.HAPUtilityScriptExpressionParser;
 import com.nosliw.core.application.common.scriptexpressio.definition.HAPDefinitionContainerScriptExpression;
 import com.nosliw.core.application.division.manual.common.valuecontext.HAPManualParserValueContext;
@@ -138,7 +138,7 @@ public class HAPManualPluginParserBlockComplexUIContent extends HAPManualDefinit
 				if(keyAttrName.startsWith(HAPConstantShared.UIRESOURCE_ATTRIBUTE_EVENT)) {
 					String eventName = keyAttrName.substring(HAPConstantShared.UIRESOURCE_ATTRIBUTE_EVENT.length());
 					if(!isCustomerTag){
-						HAPUIHandlerEventTagNormal normalEventHandler = new HAPUIHandlerEventTagNormal();
+						HAPUIEventHandlerInfoNormal normalEventHandler = new HAPUIEventHandlerInfoNormal();
 						normalEventHandler.setUIId(uiId);
 						normalEventHandler.setEvent(eventName);
 						normalEventHandler.parseContent(eleAttrValue);

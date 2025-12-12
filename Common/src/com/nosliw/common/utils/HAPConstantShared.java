@@ -1025,6 +1025,7 @@ public class HAPConstantShared {
 		public static final String NAME_ROOT_DATA = "data";
 		public static final String NAME_ROOT_ERROR = "error";
 		public static final String NAME_ROOT_TAGDATA = "internal_data";
+		public static final String NAME_ROOT_EVENT_DATA = "eventData";
 
 
 

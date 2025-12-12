@@ -12,7 +12,7 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
 import com.nosliw.core.application.HAPManagerApplicationBrick;
 import com.nosliw.core.application.brick.HAPEnumBrickType;
-import com.nosliw.core.application.brick.ui.uicontent.HAPUIHandlerEventTagCustom;
+import com.nosliw.core.application.brick.ui.uicontent.HAPUIEventHandlerInfoCustom;
 import com.nosliw.core.application.brick.ui.uicontent.HAPWithUIContent;
 import com.nosliw.core.application.common.constant.HAPDefinitionConstant;
 import com.nosliw.core.application.common.parentrelation.HAPManualDefinitionBrickRelation;
@@ -81,8 +81,7 @@ public class HAPManualPluginParserBlockComplexUICustomerTag extends HAPManualDef
 				else if(keyAttrName.startsWith(HAPConstantShared.UIRESOURCE_ATTRIBUTE_EVENT)) {
 					//event handler attribute
 					String eventName = keyAttrName.substring(HAPConstantShared.UIRESOURCE_ATTRIBUTE_EVENT.length());
-					HAPUIHandlerEventTagCustom eventHandler = new HAPUIHandlerEventTagCustom();
-					eventHandler.setUIId(uiCustomerTag.getUIId());
+					HAPUIEventHandlerInfoCustom eventHandler = new HAPUIEventHandlerInfoCustom();
 					eventHandler.setEvent(eventName);
 					eventHandler.parseContent(eleAttrValue);
 					uiCustomerTag.addEvent(eventHandler);

@@ -39,7 +39,7 @@ public interface HAPBlockComplexUIContent extends HAPBrick{
 	
 	HAPContainerScriptExpression getScriptExpressions();
 
-	List<HAPUIHandlerEventTagNormal> getNormalTagEvents();
+	List<HAPUIEventHandlerInfoNormal> getNormalTagEvents();
 	
 	
 	@HAPAttribute

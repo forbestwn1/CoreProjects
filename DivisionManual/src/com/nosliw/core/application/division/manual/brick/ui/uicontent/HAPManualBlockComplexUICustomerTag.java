@@ -4,7 +4,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 import com.nosliw.core.application.brick.ui.uicontent.HAPBlockComplexUICustomerTag;
-import com.nosliw.core.application.brick.ui.uicontent.HAPUIHandlerEventTagCustom;
+import com.nosliw.core.application.brick.ui.uicontent.HAPUIEventHandlerInfoCustom;
 import com.nosliw.core.application.division.manual.core.HAPManualBrickImp;
 import com.nosliw.core.application.entity.uitag.HAPUITagDefinition;
 import com.nosliw.core.application.entity.uitag.HAPUITagDefinitionAttribute;
@@ -18,7 +18,7 @@ public class HAPManualBlockComplexUICustomerTag extends HAPManualBrickImp implem
 		this.setAttributeValueWithValue(HAPBlockComplexUICustomerTag.ATTRIBUTE, new LinkedHashMap<String, String>());
 		this.setAttributeValueWithValue(HAPBlockComplexUICustomerTag.ATTRIBUTEDEFINITION, new LinkedHashMap<String, HAPUITagDefinitionAttribute>());
 		this.setAttributeValueWithValue(HAPBlockComplexUICustomerTag.METADATA, new LinkedHashMap<String, String>());
-		this.setAttributeValueWithValue(HAPBlockComplexUICustomerTag.EVENT, new LinkedHashMap<String, HAPUIHandlerEventTagCustom>());
+		this.setAttributeValueWithValue(HAPBlockComplexUICustomerTag.EVENT, new LinkedHashMap<String, HAPUIEventHandlerInfoCustom>());
 	}
 	
 	public String getUITagId() {   return (String)this.getAttributeValueOfValue(UITAGID);  }
@@ -37,8 +37,8 @@ public class HAPManualBlockComplexUICustomerTag extends HAPManualBrickImp implem
 	public void addMetaData(String key, String value) {    this.getMetaData().put(key, value);      }
 	public Map<String, String> getMetaData(){   return (Map<String, String>)this.getAttributeValueOfValue(HAPBlockComplexUICustomerTag.METADATA);     }
 	
-	public Map<String, HAPUIHandlerEventTagCustom> getEvents(){    return (Map<String, HAPUIHandlerEventTagCustom>)this.getAttributeValueOfValue(HAPBlockComplexUICustomerTag.EVENT);       }
-	public void addEvent(HAPUIHandlerEventTagCustom event) {    this.getEvents().put(event.getEvent(), event);     }
+	public Map<String, HAPUIEventHandlerInfoCustom> getEvents(){    return (Map<String, HAPUIEventHandlerInfoCustom>)this.getAttributeValueOfValue(HAPBlockComplexUICustomerTag.EVENT);       }
+	public void addEvent(HAPUIEventHandlerInfoCustom event) {    this.getEvents().put(event.getEvent(), event);     }
 	
 	
 	public String getBase() {   return (String)this.getAttributeValueOfValue(BASE);    }

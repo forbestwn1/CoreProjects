@@ -124,7 +124,21 @@
 		
 		{
 			"info": {
-				"name" : "eventhandler-test_complex_task_script",
+				"name" : "eventhandler_tag_custom-test_complex_task_script",
+				"status": "disabled1",
+				"description" : ""
+			},
+			"brick":{
+				"scriptResourceId": "task_debug_eventhandler",
+				"variable1": ["eventData"]
+			},
+			"adapter": [
+			]
+		},
+
+		{
+			"info": {
+				"name" : "eventhandler_tag_normal-test_complex_task_script",
 				"status": "disabled1",
 				"description" : ""
 			},

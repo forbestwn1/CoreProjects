@@ -5,7 +5,7 @@ import java.util.Map;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.utils.HAPConstantShared;
 
-public class HAPEventInfoHandlerScript extends HAPEventInfoHandler{
+public class HAPEventReferenceHandlerScript extends HAPEventReferenceHandler{
 
 	@HAPAttribute
 	public static final String FUNCTIONNAME = "functionName";

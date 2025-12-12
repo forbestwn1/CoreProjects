@@ -6,7 +6,7 @@ import java.util.List;
 import com.nosliw.core.application.brick.ui.uicontent.HAPBlockComplexUIContent;
 import com.nosliw.core.application.brick.ui.uicontent.HAPUIEmbededScriptExpressionInAttribute;
 import com.nosliw.core.application.brick.ui.uicontent.HAPUIEmbededScriptExpressionInContent;
-import com.nosliw.core.application.brick.ui.uicontent.HAPUIHandlerEventTagNormal;
+import com.nosliw.core.application.brick.ui.uicontent.HAPUIEventHandlerInfoNormal;
 import com.nosliw.core.application.common.scriptexpressio.HAPContainerScriptExpression;
 import com.nosliw.core.application.division.manual.core.HAPManualBrickImp;
 
@@ -19,7 +19,7 @@ public class HAPManualBlockComplexUIContent extends HAPManualBrickImp implements
 		this.setAttributeValueWithValue(HAPBlockComplexUIContent.SCRIPTEXPRESSIONINNORMALTAGATTRIBUTE, new ArrayList<HAPUIEmbededScriptExpressionInAttribute>());
 		this.setAttributeValueWithValue(HAPBlockComplexUIContent.SCRIPTEXPRESSIONINCUSTOMERTAGATTRIBUTE, new ArrayList<HAPUIEmbededScriptExpressionInAttribute>());
 
-		this.setAttributeValueWithValue(HAPBlockComplexUIContent.NORMALTAGEVENT, new ArrayList<HAPUIHandlerEventTagNormal>());
+		this.setAttributeValueWithValue(HAPBlockComplexUIContent.NORMALTAGEVENT, new ArrayList<HAPUIEventHandlerInfoNormal>());
 		
 		this.setAttributeValueWithValue(HAPBlockComplexUIContent.SCRIPTEXPRESSIONS, new HAPContainerScriptExpression());
 		
@@ -42,8 +42,8 @@ public class HAPManualBlockComplexUIContent extends HAPManualBrickImp implements
 	public HAPContainerScriptExpression getScriptExpressions() {   return (HAPContainerScriptExpression)this.getAttributeValueOfValue(SCRIPTEXPRESSIONS);  }
 
 	@Override
-	public List<HAPUIHandlerEventTagNormal> getNormalTagEvents(){    return (List<HAPUIHandlerEventTagNormal>)this.getAttributeValueOfValue(HAPBlockComplexUIContent.NORMALTAGEVENT);       }
-	public void addNormalTagEvent(HAPUIHandlerEventTagNormal event) {    this.getNormalTagEvents().add(event);     }
+	public List<HAPUIEventHandlerInfoNormal> getNormalTagEvents(){    return (List<HAPUIEventHandlerInfoNormal>)this.getAttributeValueOfValue(HAPBlockComplexUIContent.NORMALTAGEVENT);       }
+	public void addNormalTagEvent(HAPUIEventHandlerInfoNormal event) {    this.getNormalTagEvents().add(event);     }
 
 	
 }
