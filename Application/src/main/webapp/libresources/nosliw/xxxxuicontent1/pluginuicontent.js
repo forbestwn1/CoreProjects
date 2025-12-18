@@ -51,8 +51,9 @@ var loc_createUIContentComponentCore = function(complexEntityDef, valueContextId
 	var loc_complexEntityDef = complexEntityDef;
 	var loc_valueContextId = valueContextId;
 	var loc_bundleCore = bundleCore;
-	var loc_valueContext = loc_bundleCore.getValuePortDomain().getValueContext(loc_valueContextId);
 	var loc_envInterface = {};
+
+	var loc_customerTagByUIId = {};
 
 	//object store all the functions for js block
 	var loc_scriptObject = loc_complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYCOMPLEXUICONTENT_SCRIPT);
@@ -79,8 +80,7 @@ var loc_createUIContentComponentCore = function(complexEntityDef, valueContextId
 
 	var loc_parentUIEntity;
 	
-	var loc_customerTagByUIId = {};
-
+	var loc_valueContext = loc_bundleCore.getValuePortDomain().getValueContext(loc_valueContextId);
 	/*
 	 * init element event object
 	 */
@@ -279,6 +279,7 @@ var loc_createUIContentComponentCore = function(complexEntityDef, valueContextId
 			out.addRequest(loc_envInterface[node_CONSTANT.INTERFACE_ENTITY].createAttributeRequest(node_COMMONATRIBUTECONSTANT.EXECUTABLEENTITYCOMPLEXUICONTENT_CUSTOMERTAG, undefined, {
 				success: function(request, attrNode){
 					_.each(attrNode.getChildValue().getCoreEntity().getChildrenEntity(), function(child){
+						//custom tag 
 						var customTag = child.getCoreEntity();
 						loc_customerTagByUIId[customTag.getUIId()] = customTag;
 						customTag.setParentUIEntity(loc_out);

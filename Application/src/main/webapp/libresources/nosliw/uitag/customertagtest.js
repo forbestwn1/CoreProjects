@@ -22,10 +22,40 @@ var node_createUICustomerTagTest = function(envObj){
 
 	var loc_containerrView;
 	var loc_attributesView;
+	var loc_referenceCustomEventViews=[];
 
     var loc_inputVariableInfos = {};
 
+    var loc_referencedCustomTags;
+
 	var loc_embededs = {};
+
+    var loc_processReferencedCustomerTag = function(){
+		var query = {
+			elements : []
+		};
+		var queryStr = loc_envObj.getAttributeValue(reference_tag);
+		if(queryStr!=undefined){
+			var parmSegs = node_namingConvensionUtility.parseLevel1(queryStr);
+			_.each(parmSegs, function(parmSeg){
+    			var segs = node_namingConvensionUtility.parsePart(parmSeg);
+				query.elements.push({
+					key : seg[0],
+					value : seg[1]
+				});
+			});
+    		loc_referencedCustomTags = loc_envObj.queryCustomTagInstance(query);
+    		_.each(loc_referencedCustomTags, function(customTag, i){
+				customTag.registerTagEventListener(undefined, function(event, eventData){
+					loc_referenceCustomEventViews[i].val(node_basicUtility.stringify({
+						event : event,
+						eventData : eventData
+					}));
+				});
+			});
+    		
+		}
+	};
 
     var loc_presentArrayRequest = function(arrayVariable, wrapperView, handlers, requestInfo){
 		var out = node_createServiceRequestInfoSequence(undefined, handlers, requestInfo);
@@ -108,6 +138,19 @@ var node_createUICustomerTagTest = function(envObj){
 
 	var loc_initViews = function(handlers, request){
 		loc_containerrView = $('<div/>');
+
+        //reference customer tag
+        if(loc_referencedCustomTags!=undefined){
+    		var referenceCustomWrapperView = $('<div/>');
+			referenceCustomWrapperView.append($('<br>Custom Tag : <br>'));
+    		loc_containerrView.append(referenceCustomWrapperView);
+    		
+    		_.each(loc_referencedCustomTags, function(ref, i){
+        	    var referenceCustomEventView = $('<textarea rows="6" cols="150" style="resize: none; border:solid 1px;" data-role="none"></textarea>');
+     			referenceCustomWrapperView.append(referenceCustomEventView);
+     			loc_referenceCustomEventViews.push(referenceCustomEventView);
+			});
+		}
 
         //triggue event 
 		var triggueEventWrapperView = $('<div/>');
@@ -243,8 +286,10 @@ var node_createUICustomerTagTest = function(envObj){
 				varInfo.variable = dataVariable; 
 				out.addRequest(loc_getUpdateAttributeVariableViewRequest(varName));
 			});	
+
+            loc_processReferencedCustomerTag();
+            
 			return out;		
-			
 		},
 		destroy : function(request){
 		},

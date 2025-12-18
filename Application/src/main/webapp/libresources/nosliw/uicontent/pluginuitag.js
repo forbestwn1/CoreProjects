@@ -34,6 +34,7 @@ var packageObj = library;
 	var node_taskUtility;
 	var node_taskExecuteUtility;
 	var node_uiEventUtility;
+	var node_uiContentUtility;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -147,7 +148,7 @@ var loc_createUITagComponentCore = function(complexEntityDef, tagDefScriptFun, v
 		},
 
 		//--------------------------------- query tag
-		queryCustomTagInstance : function(query){          },
+		queryCustomTagInstance : function(query){    return node_uiContentUtility.queryCustomTag(loc_out, query);      },
 		
 		//--------------------------------- event
 		trigueEvent : function(event, eventData, requestInfo){   loc_trigueEvent(event, eventData, requestInfo);  },
@@ -289,6 +290,7 @@ nosliw.registerSetNodeDataEvent("task.createTaskSetup", function(){node_createTa
 nosliw.registerSetNodeDataEvent("task.taskUtility", function(){node_taskUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("task.taskExecuteUtility", function(){node_taskExecuteUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("uicontent.uiEventUtility", function(){node_uiEventUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("uicontent.utility", function(){node_uiContentUtility = this.getData();});
 
 
 //Register Node by Name

@@ -47,6 +47,10 @@ var node_namingConvensionUtility = function(){
 			return fullPath.split(node_COMMONCONSTANT.SEPERATOR_LEVEL2);
 		},
 
+		parsePart : function(fullPath){
+			return fullPath.split(node_COMMONCONSTANT.SEPERATOR_PART);
+		},
+
 		/*
 		 * get all sub path from full path
 		 */

@@ -23,7 +23,6 @@ var packageObj = library;
 	var node_createEmbededScriptExpressionInCustomTagAttribute;
 	var node_getLifecycleInterface;
 	var node_basicUtility;
-	var node_uiContentUtility;
 	var node_getEntityTreeNodeInterface;
 	var node_requestServiceProcessor;
 	var node_complexEntityUtility;
@@ -57,6 +56,12 @@ var loc_createUIContentComponentCore = function(complexEntityDef, valueContextId
     
 	var loc_envInterface = {};
 
+	var loc_customerTagByUIId = {};
+
+    var loc_uiIdByCustomerTagMetaData = {};
+
+
+
 	//object store all the functions for js block
 	var loc_scriptObject = loc_complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.BLOCKCOMPLEXUICONTENT_SCRIPT);
 
@@ -82,8 +87,6 @@ var loc_createUIContentComponentCore = function(complexEntityDef, valueContextId
 
 	var loc_parentUIEntity;
 	
-	var loc_customerTagByUIId = {};
-
 	/*
 	 * update ui id by adding space name ahead of them
 	 */
@@ -135,12 +138,40 @@ var loc_createUIContentComponentCore = function(complexEntityDef, valueContextId
 		};
 	};
 
+    var loc_queryCustomTag = function(query){
+		var outUIIds;
+		_.each(query.elements, function(ele, i){
+            var byValues = loc_uiIdByCustomerTagMetaData[ele.key];
+            if(byValues!=undefined){
+				var uiIds = byValues[ele.value];
+				if(uiIds!=undefined){
+    				if(outUIIds==undefined){
+	    				outUIIds = uiIds;
+		    		}
+			    	else{
+                        var setUIId = new Set(uiIds);					
+						outUIIds = outUIIds.filter(item=>setUIId.has(item));
+				    }
+				}
+			}			
+		});
+		
+		var out = [];
+		if(outUIIds!=undefined){
+			_.each(outUIIds, function(uiId){
+				out.push(loc_customerTagByUIId[uiId]);
+			});
+		}
+		return out;
+	};
+
 
 	var loc_out = {
 		
 		setParentUIEntity : function(parentUIEntity){	loc_parentUIEntity = parentUIEntity;	},
-		
 		getParentUIEntity : function(){   return loc_parentUIEntity;     },
+		
+		queryCustomTagLocally : function(query){   return loc_queryCustomTag(query);     },
 		
 		findEntityLocally : function(entityType, entityName){  return loc_findEntityLocally(entityType, entityName);  },
 		
@@ -188,6 +219,24 @@ var loc_createUIContentComponentCore = function(complexEntityDef, valueContextId
 						var customTag = child.getCoreEntity();
 						loc_customerTagByUIId[customTag.getUIId()] = customTag;
 						customTag.setParentUIEntity(loc_out);
+						
+						//meta data on custom tag
+						var customTagDef = node_getBasicEntityObjectInterface(customTag);
+						var metaDatas = customTagDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.BLOCKCOMPLEXUICUSTOMERTAG_METADATA);
+						_.each(metaDatas, function(value, key){
+    						var byValue = loc_uiIdByCustomerTagMetaData[key];
+    						if(byValue==undefined){
+								byValue = {};
+								loc_uiIdByCustomerTagMetaData[key] = byValue;
+							}
+							var uiIds = byValue[value];
+							if(uiIds==undefined){
+								uiIds = [];
+								byValue[value] = uiIds;
+							}
+							uiIds.push(customTag.getUIId());
+						});
+						
 					});
 				}
 			}));
@@ -282,7 +331,6 @@ nosliw.registerSetNodeDataEvent("uicontent.createEmbededScriptExpressionInTagAtt
 nosliw.registerSetNodeDataEvent("uicontent.createEmbededScriptExpressionInCustomTagAttribute", function(){node_createEmbededScriptExpressionInCustomTagAttribute = this.getData();});
 nosliw.registerSetNodeDataEvent("common.lifecycle.getLifecycleInterface", function(){node_getLifecycleInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();});
-nosliw.registerSetNodeDataEvent("uicontent.utility", function(){node_uiContentUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("complexentity.getEntityTreeNodeInterface", function(){node_getEntityTreeNodeInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
 nosliw.registerSetNodeDataEvent("complexentity.complexEntityUtility", function(){node_complexEntityUtility = this.getData();});

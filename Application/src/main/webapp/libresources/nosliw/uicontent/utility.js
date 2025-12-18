@@ -23,6 +23,30 @@ var node_utility = function(){
 	
 	var loc_out = {
 		
+		queryCustomTag : function(currentUIEntity, query){
+			var queryResult = undefined;
+			while(queryResult==undefined){
+				var objType = node_getObjectType(currentUIEntity);
+				if(objType==node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_UICONTENT){
+					queryResult = currentUIEntity.queryCustomTagLocally(query);
+					if(queryResult==undefined){
+						currentUIEntity = currentUIEntity.getParentUIEntity();
+					}
+				}
+				else if(objType==node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_UITAG){
+					currentUIEntity = currentUIEntity.getParentUIEntity();
+				}
+				else if(objType==node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_UIPAGE){
+					break;
+				}
+			}
+			return queryResult;
+		},
+		
+		
+		
+		
+		
 		findEntityUp : function(currentUIContent, entityType, entityName){
 			var entityInfo;
 			var currentUIEntity = currentUIContent;
