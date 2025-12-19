@@ -29,6 +29,8 @@ var packageObj = library;
 	var node_createTaskInput;
 	var node_createValuePortValueContext;
 	var node_uiEventUtility;
+	var node_getBasicEntityObjectInterface;
+	var node_makeObjectWithType;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -221,7 +223,7 @@ var loc_createUIContentComponentCore = function(complexEntityDef, valueContextId
 						customTag.setParentUIEntity(loc_out);
 						
 						//meta data on custom tag
-						var customTagDef = node_getBasicEntityObjectInterface(customTag);
+						var customTagDef = node_getBasicEntityObjectInterface(customTag).getEntityDefinition();
 						var metaDatas = customTagDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.BLOCKCOMPLEXUICUSTOMERTAG_METADATA);
 						_.each(metaDatas, function(value, key){
     						var byValue = loc_uiIdByCustomerTagMetaData[key];
@@ -305,6 +307,8 @@ var loc_createUIContentComponentCore = function(complexEntityDef, valueContextId
 
 	};
 	
+	loc_out = node_makeObjectWithType(loc_out, node_CONSTANT.TYPEDOBJECT_TYPE_UICONTENT);
+
 	return loc_out;	
 };
 
@@ -325,7 +329,7 @@ nosliw.registerSetNodeDataEvent("expression.utility", function(){node_expression
 nosliw.registerSetNodeDataEvent("component.makeObjectWithApplicationInterface", function(){node_makeObjectWithApplicationInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSet", function(){	node_createServiceRequestInfoSet = this.getData();	});
 nosliw.registerSetNodeDataEvent("uicommon.createViewContainer", function(){node_createViewContainer = this.getData();});
-nosliw.registerSetNodeDataEvent("uicontent.utility", function(){node_uiContentUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("uicontent.uiContentUtility", function(){node_uiContentUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("uicontent.createEmbededScriptExpressionInContent", function(){node_createEmbededScriptExpressionInContent = this.getData();});
 nosliw.registerSetNodeDataEvent("uicontent.createEmbededScriptExpressionInTagAttribute", function(){node_createEmbededScriptExpressionInTagAttribute = this.getData();});
 nosliw.registerSetNodeDataEvent("uicontent.createEmbededScriptExpressionInCustomTagAttribute", function(){node_createEmbededScriptExpressionInCustomTagAttribute = this.getData();});
@@ -337,6 +341,8 @@ nosliw.registerSetNodeDataEvent("complexentity.complexEntityUtility", function()
 nosliw.registerSetNodeDataEvent("task.createTaskInput", function(){node_createTaskInput = this.getData();});
 nosliw.registerSetNodeDataEvent("valueport.createValuePortValueContext", function(){	node_createValuePortValueContext = this.getData();	});
 nosliw.registerSetNodeDataEvent("uicontent.uiEventUtility", function(){node_uiEventUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("common.interfacedef.getBasicEntityObjectInterface", function(){node_getBasicEntityObjectInterface = this.getData();});
+nosliw.registerSetNodeDataEvent("common.interfacedef.makeObjectWithType", function(){node_makeObjectWithType = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createUIContentPlugin", node_createUIContentPlugin); 

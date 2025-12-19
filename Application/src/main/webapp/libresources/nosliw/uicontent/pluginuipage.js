@@ -16,6 +16,7 @@ var packageObj = library;
 	var node_expressionUtility;
 	var node_makeObjectWithApplicationInterface;
 	var node_createServiceRequestInfoSet;
+	var node_makeObjectWithType;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -65,6 +66,8 @@ var loc_createUIPageComponentCore = function(complexEntityDef, valueContextId, b
 		
 	};
 	
+	loc_out = node_makeObjectWithType(loc_out, node_CONSTANT.TYPEDOBJECT_TYPE_UIPAGE);
+	
 	return loc_out;	
 };
 
@@ -84,6 +87,7 @@ nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple"
 nosliw.registerSetNodeDataEvent("expression.utility", function(){node_expressionUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("component.makeObjectWithApplicationInterface", function(){node_makeObjectWithApplicationInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSet", function(){	node_createServiceRequestInfoSet = this.getData();	});
+nosliw.registerSetNodeDataEvent("common.interfacedef.makeObjectWithType", function(){node_makeObjectWithType = this.getData();});
 
 
 //Register Node by Name

@@ -19,7 +19,7 @@ var packageObj = library;
 	var node_complexEntityUtility;
 //*******************************************   Start Node Definition  ************************************** 	
 
-var node_utility = function(){
+var node_uiContentUtility = function(){
 	
 	var loc_out = {
 		
@@ -27,16 +27,16 @@ var node_utility = function(){
 			var queryResult = undefined;
 			while(queryResult==undefined){
 				var objType = node_getObjectType(currentUIEntity);
-				if(objType==node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_UICONTENT){
+				if(objType==node_COMMONCONSTANT.TYPEDOBJECT_TYPE_UICONTENT){
 					queryResult = currentUIEntity.queryCustomTagLocally(query);
 					if(queryResult==undefined){
 						currentUIEntity = currentUIEntity.getParentUIEntity();
 					}
 				}
-				else if(objType==node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_UITAG){
+				else if(objType==node_COMMONCONSTANT.TYPEDOBJECT_TYPE_UITAG){
 					currentUIEntity = currentUIEntity.getParentUIEntity();
 				}
-				else if(objType==node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_UIPAGE){
+				else if(objType==node_COMMONCONSTANT.TYPEDOBJECT_TYPE_UIPAGE){
 					break;
 				}
 			}
@@ -274,6 +274,6 @@ nosliw.registerSetNodeDataEvent("common.interfacedef.getObjectType", function(){
 nosliw.registerSetNodeDataEvent("complexentity.complexEntityUtility", function(){node_complexEntityUtility = this.getData();});
 
 //Register Node by Name
-packageObj.createChildNode("utility", node_utility); 
+packageObj.createChildNode("uiContentUtility", node_uiContentUtility); 
 
 })(packageObj);

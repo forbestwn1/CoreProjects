@@ -15,6 +15,7 @@ var packageObj = library.getChildPackage("test");
 	var node_complexEntityUtility;
 	var node_basicUtility;
 	var node_createHandleEachElementProcessor;
+	var node_namingConvensionUtility;
 //*******************************************   Start Node Definition  ************************************** 	
 
 var node_createUICustomerTagTest = function(envObj){
@@ -34,14 +35,14 @@ var node_createUICustomerTagTest = function(envObj){
 		var query = {
 			elements : []
 		};
-		var queryStr = loc_envObj.getAttributeValue(reference_tag);
+		var queryStr = loc_envObj.getAttributeValue("reference_tag");
 		if(queryStr!=undefined){
 			var parmSegs = node_namingConvensionUtility.parseLevel1(queryStr);
 			_.each(parmSegs, function(parmSeg){
     			var segs = node_namingConvensionUtility.parsePart(parmSeg);
 				query.elements.push({
-					key : seg[0],
-					value : seg[1]
+					key : segs[0],
+					value : segs[1]
 				});
 			});
     		loc_referencedCustomTags = loc_envObj.queryCustomTagInstance(query);
@@ -313,6 +314,7 @@ nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){no
 nosliw.registerSetNodeDataEvent("complexentity.complexEntityUtility", function(){node_complexEntityUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("variable.orderedcontainer.createHandleEachElementProcessor", function(){node_createHandleEachElementProcessor = this.getData();});
+nosliw.registerSetNodeDataEvent("common.namingconvension.namingConvensionUtility", function(){node_namingConvensionUtility = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createUICustomerTagTest", node_createUICustomerTagTest); 

@@ -13,6 +13,7 @@ var packageObj = library;
     var node_createUICustomerTagViewVariable;
     var node_createUICustomerTagTestDataSimple;
     var node_createUICustomerTagTestDataCollection;
+    var node_uiContentUtility;
 //*******************************************   Start Node Definition  ************************************** 	
 
 var node_uiTagUtility = function(){
@@ -20,6 +21,11 @@ var node_uiTagUtility = function(){
 	
 	
 	var loc_out = {
+		
+		queryCustomTag : function(currentCustomTag, query){
+			var results = node_uiContentUtility.queryCustomTag(currentCustomTag, query);
+			return results.filter(customTag=>customTag.getUIId()!=currentCustomTag.getUIId());
+        },		
 		
 		getUITagFunctionRequest : function(uiTagDefinition, handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
@@ -75,6 +81,7 @@ nosliw.registerSetNodeDataEvent("uitag.test.createUICustomerTagTest", function()
 nosliw.registerSetNodeDataEvent("uitag.test.createUICustomerTagViewVariable", function(){node_createUICustomerTagViewVariable = this.getData();	});
 nosliw.registerSetNodeDataEvent("uitag.test.createUICustomerTagTestDataSimple", function(){node_createUICustomerTagTestDataSimple = this.getData();	});
 nosliw.registerSetNodeDataEvent("uitag.test.createUICustomerTagTestDataCollection", function(){node_createUICustomerTagTestDataCollection = this.getData();	});
+nosliw.registerSetNodeDataEvent("uicontent.uiContentUtility", function(){node_uiContentUtility = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("uiTagUtility", node_uiTagUtility); 
