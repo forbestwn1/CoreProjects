@@ -26,17 +26,17 @@ var node_uiContentUtility = function(){
 		queryCustomTag : function(currentUIEntity, query){
 			var queryResult = undefined;
 			while(queryResult==undefined){
-				var objType = node_getObjectType(currentUIEntity);
-				if(objType==node_COMMONCONSTANT.TYPEDOBJECT_TYPE_UICONTENT){
+				var brickType = node_getObjectType(currentUIEntity)[node_COMMONATRIBUTECONSTANT.IDBRICKTYPE_BRICKTYPE];
+				if(brickType==node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_UICONTENT){
 					queryResult = currentUIEntity.queryCustomTagLocally(query);
 					if(queryResult==undefined){
 						currentUIEntity = currentUIEntity.getParentUIEntity();
 					}
 				}
-				else if(objType==node_COMMONCONSTANT.TYPEDOBJECT_TYPE_UITAG){
+				else if(brickType==node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_UICUSTOMERTAG){
 					currentUIEntity = currentUIEntity.getParentUIEntity();
 				}
-				else if(objType==node_COMMONCONSTANT.TYPEDOBJECT_TYPE_UIPAGE){
+				else if(brickType==node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_UIPAGE){
 					break;
 				}
 			}

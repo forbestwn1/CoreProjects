@@ -221,7 +221,7 @@ var loc_createUIContentComponentCore = function(complexEntityDef, valueContextId
 						var customTag = child.getCoreEntity();
 						loc_customerTagByUIId[customTag.getUIId()] = customTag;
 						customTag.setParentUIEntity(loc_out);
-						
+
 						//meta data on custom tag
 						var customTagDef = node_getBasicEntityObjectInterface(customTag).getEntityDefinition();
 						var metaDatas = customTagDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.BLOCKCOMPLEXUICUSTOMERTAG_METADATA);
@@ -238,10 +238,16 @@ var loc_createUIContentComponentCore = function(complexEntityDef, valueContextId
 							}
 							uiIds.push(customTag.getUIId());
 						});
-						
+
 					});
 				}
 			}));
+
+			out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
+				_.each(loc_customerTagByUIId, function(customTag, uiId){
+				});
+			}));
+
 
 			//init expression in customer tag attribute
 			out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
@@ -307,8 +313,6 @@ var loc_createUIContentComponentCore = function(complexEntityDef, valueContextId
 
 	};
 	
-	loc_out = node_makeObjectWithType(loc_out, node_CONSTANT.TYPEDOBJECT_TYPE_UICONTENT);
-
 	return loc_out;	
 };
 

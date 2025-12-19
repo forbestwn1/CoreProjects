@@ -81,10 +81,13 @@ public class HAPManualPluginParserBlockComplexUICustomerTag extends HAPManualDef
 				else if(keyAttrName.startsWith(HAPConstantShared.UIRESOURCE_ATTRIBUTE_EVENT)) {
 					//event handler attribute
 					String eventName = keyAttrName.substring(HAPConstantShared.UIRESOURCE_ATTRIBUTE_EVENT.length());
-					HAPUIEventHandlerInfoCustom eventHandler = new HAPUIEventHandlerInfoCustom();
-					eventHandler.setEvent(eventName);
-					eventHandler.parseContent(eleAttrValue);
-					uiCustomerTag.addEvent(eventHandler);
+					
+					if(uiTagDef.getEventDefinition(eventName)!=null) {
+						HAPUIEventHandlerInfoCustom eventHandler = new HAPUIEventHandlerInfoCustom();
+						eventHandler.setEvent(eventName);
+						eventHandler.parseContent(eleAttrValue);
+						uiCustomerTag.addEvent(eventHandler);
+					}
 				}
 			}
 			else if(uiTagDef.getAttributeDefinition().get(eleAttr.getKey())!=null) {

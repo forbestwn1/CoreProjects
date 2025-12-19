@@ -47,7 +47,7 @@ var node_createUICustomerTagTest = function(envObj){
 			});
     		loc_referencedCustomTags = loc_envObj.queryCustomTagInstance(query);
     		_.each(loc_referencedCustomTags, function(customTag, i){
-				customTag.registerTagEventListener(undefined, function(event, eventData){
+				customTag.registerEventListener(undefined, function(event, eventData){
 					loc_referenceCustomEventViews[i].val(node_basicUtility.stringify({
 						event : event,
 						eventData : eventData
@@ -142,14 +142,17 @@ var node_createUICustomerTagTest = function(envObj){
 
         //reference customer tag
         if(loc_referencedCustomTags!=undefined){
-    		var referenceCustomWrapperView = $('<div/>');
-			referenceCustomWrapperView.append($('<br>Custom Tag : <br>'));
-    		loc_containerrView.append(referenceCustomWrapperView);
+    		var referenceCustomsWrapperView = $('<div/>');
+    		loc_containerrView.append(referenceCustomsWrapperView);
     		
     		_.each(loc_referencedCustomTags, function(ref, i){
+        		var referenceCustomWrapperView = $('<div/>');
+    			referenceCustomWrapperView.append($('<br>Custom Tag UIId: ' + ref.getUIId() + ' <br>'));
         	    var referenceCustomEventView = $('<textarea rows="6" cols="150" style="resize: none; border:solid 1px;" data-role="none"></textarea>');
      			referenceCustomWrapperView.append(referenceCustomEventView);
      			loc_referenceCustomEventViews.push(referenceCustomEventView);
+     			
+     			referenceCustomsWrapperView.append(referenceCustomWrapperView);
 			});
 		}
 
@@ -276,6 +279,7 @@ var node_createUICustomerTagTest = function(envObj){
 		},
 		
 		initViews : function(handlers, request){
+            loc_processReferencedCustomerTag();
 			var out = loc_initViews(handlers, request);
 			loc_updateAttributeView();
 			return out;
@@ -287,8 +291,6 @@ var node_createUICustomerTagTest = function(envObj){
 				varInfo.variable = dataVariable; 
 				out.addRequest(loc_getUpdateAttributeVariableViewRequest(varName));
 			});	
-
-            loc_processReferencedCustomerTag();
             
 			return out;		
 		},

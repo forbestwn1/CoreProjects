@@ -66,8 +66,6 @@ var loc_createUIPageComponentCore = function(complexEntityDef, valueContextId, b
 		
 	};
 	
-	loc_out = node_makeObjectWithType(loc_out, node_CONSTANT.TYPEDOBJECT_TYPE_UIPAGE);
-	
 	return loc_out;	
 };
 
