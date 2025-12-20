@@ -19,9 +19,6 @@ public class HAPProviderDataRuleEnum implements HAPProviderDataRule{
 	}
 
 	@Override
-	public HAPPluginTransformerDataRule getTransformer() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	public HAPPluginTransformerDataRule getTransformer() {   return new HAPPluginTransformerDataRuleEnum();  }
 
 }

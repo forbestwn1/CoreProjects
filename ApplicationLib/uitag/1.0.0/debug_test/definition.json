@@ -41,11 +41,20 @@
 	
 	"event" : [
 		{
-		    "name" : "event1",
+		    "name" : "eventNormal",
 			"dataDefinition" : {
 			    "eventData" : {
 				    "definition":{
 					    "data": "test.string;1.0.0"
+    				}
+			    }
+			}
+		},
+		{
+		    "name" : "eventDataValidation",
+			"dataDefinition" : {
+			    "result" : {
+				    "definition":{
     				}
 			    }
 			}

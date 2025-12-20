@@ -67,7 +67,26 @@
                                    				"name" : "mandatoryParent",
     	                                        "status": "disabled1",
         				                        "ruleType" : "mandatory"
-		    			                    }
+		    			                    },
+    								        {
+                                				"name" : "enum",
+		    		                            "status": "disabled1",
+			    					            "ruleType" : "enum",
+				    				            "dataSet" : [
+                	    							{
+				                    					"dataTypeId": "test.string;1.0.0",
+							    	                	"value": "default value of page_public_string1"
+								                    },
+                					    			{
+				                		     			"dataTypeId": "test.string;1.0.0",
+								                    	"value": "default value of page_public_string2"
+								                    },
+                    								{
+	    			                					"dataTypeId": "test.string;1.0.0",
+		    						                	"value": "default value of page_public_string3"
+			    					                }
+				    				            ]
+					    			        }
 			    		                ]
 									}
 								}
@@ -116,7 +135,7 @@
 		{
 			"info": {
 				"name" : "local-uipage",
-				"status": "disabled1",
+				"status": "disabled",
 				"description" : ""
 			},
 			"brickId":"test0|uipage;1.0.0"  
@@ -154,7 +173,7 @@
 		{
 			"info": {
 				"name" : "variable-test_complex_script",
-				"status": "disabled",
+				"status": "disabled1",
 				"description" : ""
 			},
 			"relation": [

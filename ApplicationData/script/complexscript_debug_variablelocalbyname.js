@@ -81,14 +81,20 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 		varContainerViewWrapper.append(viewWrapper);	
 		varInfo.view.bind('change', function(){
 			var value = varInfo.view.val();
-			if(value==undefined || value==""){}
+			if(value==undefined || value.trim()==""){
+				value = undefined;
+			}
 			else {
 				value = JSON.parse(varInfo.view.val());
 			}
 			
 			var operationService = node_valueInVarOperationServiceUtility.createSetOperationService("", value);
 			
-			node_variableRuleUtility.executeExecuteRuleValidationRequest(varInfo.variable, operationService, loc_bundleCore);
+			node_variableRuleUtility.executeExecuteRuleValidationRequest(varInfo.variable, operationService, loc_bundleCore, {
+				success : function(request, result){
+					var kkkk = 5555;
+				}
+			});
 		
 			varInfo.variable.executeDataOperationRequest(operationService);
 		});					

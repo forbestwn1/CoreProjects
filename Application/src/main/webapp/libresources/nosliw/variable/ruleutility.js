@@ -268,6 +268,16 @@ var node_utility = function(){
 	
 	var loc_out = {
 		
+		getExecuteRuleValidationForVariableSetRequest : function(variable, value, bundleCore, handlers, request){
+			var operationService = node_valueInVarOperationServiceUtility.createSetOperationService("", value);
+	        return loc_out.executeExecuteRuleValidationRequest(variable, operationService, bundleCore, handlers, request);		
+		},
+		
+		executeExecuteRuleValidationForVariableSetRequest : function(variable, value, bundleCore, handlers, request){
+			var requestInfo = loc_out.getExecuteRuleValidationForVariableSetRequest(variable, value, bundleCore, handlers, request)
+			node_requestServiceProcessor.processRequest(requestInfo);
+		},
+		
 		getExecuteRuleValidationRequest : function(variable, operationService, bundleCore, handlers, request){
     		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
     		out.addRequest(loc_convertBaseOperationServiceRequest(node_variableUtility.getVariable(variable), operationService, {

@@ -49,10 +49,6 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 			var dataVariable = valuePortContainer.getVariableByName(node_COMMONCONSTANT.VALUEPORTGROUP_TYPE_INTERACTIVETASK, node_COMMONCONSTANT.VALUEPORT_NAME_INTERACT_REQUEST, node_COMMONCONSTANT.NAME_ROOT_DATA);
 			out.addRequest(dataVariable.getGetValueRequest({
 				success : function(request, dataValue){
-					
-					
-					
-					
 					var taskResult;
 					if(dataValue==undefined){
 						var errorMessage = {
