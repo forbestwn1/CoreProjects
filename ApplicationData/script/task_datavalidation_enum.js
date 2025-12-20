@@ -17,6 +17,7 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 	var node_createTaskCore = nosliw.getNodeData("task.createTaskCore");
 	var node_dataUtility = nosliw.getNodeData("common.utility.dataUtility");
 	var node_TaskResult = nosliw.getNodeData("task.TaskResult");
+	var node_ruleUtility = nosliw.getNodeData("rule.ruleUtility");
 
     var loc_complexEntityDef;
     
@@ -65,14 +66,14 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 
 					for(var i in enumDataSet){
 						if(node_dataUtility.isDataEqual(enumDataSet[i], value)==true){
-    						return new node_TaskResult("success"); 
+    						return node_ruleUtility.createRuleValidationSuccessResult(); 
 						}
 					}
 
-					return  new node_TaskResult(node_COMMONCONSTANT.TASK_RESULT_FAIL, {
+    				return node_ruleUtility.createRuleValidationFailResult({
 						"dataTypeId": "test.string;1.0.0",
 						"value": "value is not valid"
-					});
+					}); 
 				}
 			}));
 

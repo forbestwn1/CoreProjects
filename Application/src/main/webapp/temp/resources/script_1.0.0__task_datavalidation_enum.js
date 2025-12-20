@@ -25,6 +25,8 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 	var node_interactiveUtility = nosliw.getNodeData("task.interactiveUtility");
 	var node_createTaskCore = nosliw.getNodeData("task.createTaskCore");
 	var node_dataUtility = nosliw.getNodeData("common.utility.dataUtility");
+	var node_TaskResult = nosliw.getNodeData("task.TaskResult");
+	var node_ruleUtility = nosliw.getNodeData("rule.ruleUtility");
 
     var loc_complexEntityDef;
     
@@ -73,19 +75,14 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 
 					for(var i in enumDataSet){
 						if(node_dataUtility.isDataEqual(enumDataSet[i], value)==true){
-    						return {
-	    					    "resultName": "success"
-		    				};
+    						return node_ruleUtility.createRuleValidationSuccessResult(); 
 						}
 					}
 
-					return {
-					    "resultName": node_COMMONCONSTANT.TASK_RESULT_FAIL,
-					    "resultValue": {
-							"dataTypeId": "test.string;1.0.0",
-							"value": "value is not valid"
-						}
-					};
+    				return node_ruleUtility.createRuleValidationFailResult({
+						"dataTypeId": "test.string;1.0.0",
+						"value": "value is not valid"
+					}); 
 				}
 			}));
 

@@ -16,6 +16,7 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 	var node_interactiveUtility = nosliw.getNodeData("task.interactiveUtility");
 	var node_createTaskCore = nosliw.getNodeData("task.createTaskCore");
 	var node_TaskResult = nosliw.getNodeData("task.TaskResult");
+	var node_ruleUtility = nosliw.getNodeData("rule.ruleUtility");
 
 	var loc_envInterface = {};
 	
@@ -60,12 +61,12 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 						errorValue[node_COMMONCONSTANT.NAME_ROOT_ERROR] = errorMessage; 
 						return node_utilityNamedVariable.setValuesPortValueRequest(valuePortContainer, node_COMMONCONSTANT.VALUEPORTGROUP_TYPE_INTERACTIVETASK, node_interactiveUtility.getResultValuePortNameByResultName(node_COMMONCONSTANT.TASK_RESULT_FAIL), errorValue, {
 							success : function(request){
-								return new node_TaskResult(node_COMMONCONSTANT.TASK_RESULT_FAIL, errorMessage);
+                				return node_ruleUtility.createRuleValidationFailResult(errorMessage);
 							}
 						});
 					}
 					else{
-						return new node_TaskResult("success"); 
+   						return node_ruleUtility.createRuleValidationSuccessResult(); 
 					}
 				}
 			}));

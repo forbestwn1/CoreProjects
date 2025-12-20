@@ -15,7 +15,7 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 	var node_valueInVarOperationServiceUtility = nosliw.getNodeData("variable.valueinvar.operation.valueInVarOperationServiceUtility");
 	var node_basicUtility = nosliw.getNodeData("common.utility.basicUtility");
 	var node_createValuePortElementInfo = nosliw.getNodeData("valueport.createValuePortElementInfo");
-	var node_variableRuleUtility = nosliw.getNodeData("variable.variableRuleUtility");
+	var node_ruleExecuteUtility = nosliw.getNodeData("rule.ruleExecuteUtility");
 
 
 
@@ -99,7 +99,7 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 			
 			var operationService = node_valueInVarOperationServiceUtility.createSetOperationService("", value);
 			
-			node_variableRuleUtility.executeExecuteRuleValidationRequest(varInfo.variable, operationService, loc_bundleCore, {
+			node_ruleExecuteUtility.executeExecuteRuleValidationRequest(varInfo.variable, operationService, loc_bundleCore, {
 				success : function(request, result){
 					var kkkk = 5555;
 				}

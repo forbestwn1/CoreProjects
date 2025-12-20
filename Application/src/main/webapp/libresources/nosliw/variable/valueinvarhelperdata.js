@@ -175,7 +175,7 @@ nosliw.registerSetNodeDataEvent("common.segmentparser.parseSegment", function(){
 nosliw.registerSetNodeDataEvent("common.segmentparser.parsePathSegment", function(){node_parsePathSegment = this.getData();});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple", function(){	node_createServiceRequestInfoSimple = this.getData();	});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSet", function(){node_createServiceRequestInfoSet = this.getData();});
-nosliw.registerSetNodeDataEvent("common.utility.dataOperationUtility", function(){node_dataOperationUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("data.utility.dataOperationUtility", function(){node_dataOperationUtility = this.getData();});
 
 
 nosliw.registerSetNodeDataEvent("variable.wrapper.wrapperFactory", function(){

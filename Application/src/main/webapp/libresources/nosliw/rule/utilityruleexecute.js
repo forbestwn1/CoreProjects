@@ -25,6 +25,7 @@ var node_createTaskSetup;
 var node_taskExecuteUtility;
 var node_getEntityObjectInterface;
 var node_utilityNamedVariable;
+var node_ruleUtility;
 
 //*******************************************   Start Node Definition  **************************************
 
@@ -35,7 +36,7 @@ var node_createRuleValidationItem = function(ruleDef, data){
 	};
 };
  	
-var node_utility = function(){
+var node_ruleExecuteUtility = function(){
 
     var loc_getRuleDefinitionsFromVariable = function(variable){
 		var definition = variable.prv_info==undefined?undefined:variable.prv_info.definition;
@@ -285,11 +286,29 @@ var node_utility = function(){
 					var allRuleInfo = [];
 					return loc_getCollectRuleInfoRequest(baseOpInfo.rootVariable, baseOpInfo.operationService, allRuleInfo, {
 						success : function(request){
-							console.log(JSON.stringify(allRuleInfo));
+//							console.log(JSON.stringify(allRuleInfo));
 							
 							return loc_executeRuleValidationsRequest(allRuleInfo, bundleCore, {
 								success : function(request, ruleValidationResults){
-        							console.log(JSON.stringify(ruleValidationResults));
+									var errorMessages = [];
+									var ifSuccess = true;
+									_.each(ruleValidationResults, function(ruleValidationResultInfo){
+										var ruleValidationResult = ruleValidationResultInfo.validationResult;
+										if(!node_ruleUtility.isRuleValidationSuccess(ruleValidationResult)){
+											ifSuccess = false;
+											errorMessages.push(ruleValidationResult.resultValue);
+										}
+									});
+									var out;
+									if(ifSuccess){
+										out = node_ruleUtility.createRuleValidationSuccessResult();
+									}
+									else{
+										out = node_ruleUtility.createRuleValidationFailResult(errorMessages);
+									}
+									
+        							console.log(JSON.stringify(out));
+        							return out;
 								}
 							});
 						}
@@ -332,8 +351,9 @@ nosliw.registerSetNodeDataEvent("task.createTaskSetup", function(){node_createTa
 nosliw.registerSetNodeDataEvent("task.taskExecuteUtility", function(){node_taskExecuteUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("complexentity.getEntityObjectInterface", function(){node_getEntityObjectInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("valueport.utilityNamedVariable", function(){node_utilityNamedVariable = this.getData();});
+nosliw.registerSetNodeDataEvent("rule.ruleUtility", function(){node_ruleUtility = this.getData();});
 
 //Register Node by Name
-packageObj.createChildNode("variableRuleUtility", node_utility); 
+packageObj.createChildNode("ruleExecuteUtility", node_ruleExecuteUtility); 
 
 })(packageObj);

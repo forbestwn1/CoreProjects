@@ -22,7 +22,7 @@
 			var node_createServiceRequestInfoSimple = nosliw.getNodeData("request.request.createServiceRequestInfoSimple");
 			var node_objectOperationUtility = nosliw.getNodeData("common.utility.objectOperationUtility");
 			var node_ServiceInfo = nosliw.getNodeData("common.service.ServiceInfo");
-			var node_dataOperationUtility = nosliw.getNodeData("common.utility.dataOperationUtility");
+			var node_dataOperationUtility = nosliw.getNodeData("data.utility.dataOperationUtility");
 			var node_createIODataSet = nosliw.getNodeData("iovalue.entity.createIODataSet");
 			
 			var loc_out = {
