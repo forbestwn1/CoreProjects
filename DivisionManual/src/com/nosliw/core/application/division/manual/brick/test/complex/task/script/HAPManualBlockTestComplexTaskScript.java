@@ -35,10 +35,13 @@ public class HAPManualBlockTestComplexTaskScript extends HAPManualBrickImp imple
 
 	@Override
 	public HAPEntityOrReference getTaskInterface() {    return this.getAttributeValueOfBrick(TASKINTERFACE);  }
+	@Override
 	public void setTaskInterface(HAPEntityOrReference taskInterface) {   this.setAttributeValueWithBrick(TASKINTERFACE, taskInterface);     }
 
 	@Override
 	public HAPEntityOrReference getExpressionInterface() {  return this.getAttributeValueOfBrick(EXPRESSIONINTERFACE);  }
+	@Override
 	public void setExpressionInterface(HAPEntityOrReference expressionInterface) {   this.setAttributeValueWithBrick(EXPRESSIONINTERFACE, expressionInterface);     }
-	
+
 }
+ 

@@ -5,10 +5,8 @@ import java.util.Map;
 import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
-import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.core.application.entity.datarule.HAPDataRule;
 
-@HAPEntityWithAttribute
 public class HAPDataRuleEnumCode extends HAPDataRuleEnum{
 
 	@HAPAttribute

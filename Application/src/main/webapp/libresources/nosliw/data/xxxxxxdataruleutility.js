@@ -185,6 +185,6 @@ nosliw.registerSetNodeDataEvent("request.utility", function(){node_requestUtilit
 nosliw.registerSetNodeDataEvent("expression.utility", function(){node_expressionUtility = this.getData();	});
 
 //Register Node by Name
-packageObj.createChildNode("dataRuleUtility", node_utility); 
+packageObj.createChildNode("XXXXXXdataRuleUtility", node_utility); 
 
 })(packageObj);

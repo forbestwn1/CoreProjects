@@ -10,4 +10,6 @@ public interface HAPWithBlockInteractiveTask{
 	
 	public HAPEntityOrReference getTaskInterface();
 
+	public void setTaskInterface(HAPEntityOrReference taskInterface);
+
 }

@@ -10,4 +10,5 @@ public interface HAPWithBlockInteractiveExpression {
 	
 	public HAPEntityOrReference getExpressionInterface();
 
+	public void setExpressionInterface(HAPEntityOrReference expressionInterfac);
 }

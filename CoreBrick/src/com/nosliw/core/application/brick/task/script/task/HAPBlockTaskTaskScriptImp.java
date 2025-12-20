@@ -13,10 +13,16 @@ public class HAPBlockTaskTaskScriptImp extends HAPBrickImp implements HAPBlockTa
 	
 	@Override
 	public HAPEntityOrReference getTaskInterface() {    return this.getAttributeValueOfBrick(TASKINTERFACE);  }
+	@Override
 	public void setTaskInterface(HAPEntityOrReference taskInterface) {   this.setAttributeValueWithBrick(TASKINTERFACE, taskInterface);     }
 
 	@Override
 	public HAPResourceId getScriptResourceId() {   return (HAPResourceId)this.getAttributeValueOfValue(SCRIPTRESOURCEID);  }
 	public void setScriptResourceId(HAPResourceId resourceId) {    this.setAttributeValueWithValue(SCRIPTRESOURCEID, resourceId);  }
 
+	@Override
+	public Object getExtra() {   return this.getAttributeValueOfValue(EXTRA);  }
+	public void setExtra(Object extra) {    this.setAttributeValueWithValue(EXTRA, extra);  }
+
 }
+ 

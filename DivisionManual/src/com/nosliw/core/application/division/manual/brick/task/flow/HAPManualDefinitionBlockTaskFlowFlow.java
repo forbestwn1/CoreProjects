@@ -18,9 +18,10 @@ public class HAPManualDefinitionBlockTaskFlowFlow extends HAPManualDefinitionBri
 	protected void init() {
 		this.setAttributeValueWithBrick(HAPBlockTaskFlowFlow.ACTIVITY, this.getManualBrickManager().newBrickDefinition(HAPEnumBrickType.CONTAINER_100));
 	}
-
+ 
 	@Override
 	public HAPEntityOrReference getTaskInterface() {    return this.getAttributeValueOfBrick(HAPWithBlockInteractiveTask.TASKINTERFACE);  }
+	@Override
 	public void setTaskInterface(HAPEntityOrReference taskInterface) {    this.setAttributeValueWithBrick(HAPWithBlockInteractiveTask.TASKINTERFACE, taskInterface);       }
 	
 	public HAPTaskFlowNext getStart() {	return (HAPTaskFlowNext)this.getAttributeValueOfValue(HAPBlockTaskFlowFlow.START);	}

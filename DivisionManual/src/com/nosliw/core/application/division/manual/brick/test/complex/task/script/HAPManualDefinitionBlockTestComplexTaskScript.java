@@ -37,10 +37,12 @@ public class HAPManualDefinitionBlockTestComplexTaskScript
 	
 	@Override
 	public HAPEntityOrReference getTaskInterface() {    return this.getAttributeValueOfBrick(HAPWithBlockInteractiveTask.TASKINTERFACE);  }
+	@Override
 	public void setTaskInterface(HAPEntityOrReference taskInterface) {    this.setAttributeValueWithBrick(HAPWithBlockInteractiveTask.TASKINTERFACE, taskInterface);       }
 
 	@Override
 	public HAPEntityOrReference getExpressionInterface() {   return this.getAttributeValueOfBrick(HAPWithBlockInteractiveExpression.EXPRESSIONINTERFACE);  }
+	@Override
 	public void setExpressionInterface(HAPEntityOrReference expressionInterface) {    this.setAttributeValueWithBrick(HAPWithBlockInteractiveExpression.EXPRESSIONINTERFACE, expressionInterface);       }
 
 }

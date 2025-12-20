@@ -52,7 +52,26 @@
                                    				"name" : "mandatoryParentString",
     	                                        "status": "disabled1",
 	    				                        "ruleType" : "mandatory"
-		    			                    }
+		    			                    },
+    								        {
+                                				"name" : "enum",
+		    		                            "status": "disabled1",
+			    					            "ruleType" : "enum",
+				    				            "dataSet" : [
+                	    							{
+				                    					"dataTypeId": "test.string;1.0.0",
+							    	                	"value": "default value of parent_public_string1"
+								                    },
+                					    			{
+				                		     			"dataTypeId": "test.string;1.0.0",
+								                    	"value": "default value of parent_public_string2"
+								                    },
+                    								{
+	    			                					"dataTypeId": "test.string;1.0.0",
+		    						                	"value": "default value of parent_public_string3"
+			    					                }
+				    				            ]
+					    			        }
 			    		                ]
 				    			    }
 								}
@@ -67,26 +86,7 @@
                                    				"name" : "mandatoryParent",
     	                                        "status": "disabled1",
         				                        "ruleType" : "mandatory"
-		    			                    },
-    								        {
-                                				"name" : "enum",
-		    		                            "status": "disabled1",
-			    					            "ruleType" : "enum",
-				    				            "dataSet" : [
-                	    							{
-				                    					"dataTypeId": "test.string;1.0.0",
-							    	                	"value": "default value of page_public_string1"
-								                    },
-                					    			{
-				                		     			"dataTypeId": "test.string;1.0.0",
-								                    	"value": "default value of page_public_string2"
-								                    },
-                    								{
-	    			                					"dataTypeId": "test.string;1.0.0",
-		    						                	"value": "default value of page_public_string3"
-			    					                }
-				    				            ]
-					    			        }
+		    			                    }
 			    		                ]
 									}
 								}
@@ -116,7 +116,7 @@
 							},
 							"parent_public_string": {
 								"dataTypeId": "test.string;1.0.0",
-								"value": "default value of parent_public_string"
+								"value": "default value of parent_public_string1"
 							},
 							"parent_public_url": {
 								"dataTypeId": "test.url;1.0.0",

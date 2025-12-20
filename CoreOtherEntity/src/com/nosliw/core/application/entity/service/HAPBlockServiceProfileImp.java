@@ -28,6 +28,7 @@ public class HAPBlockServiceProfileImp extends HAPBrickImpWithEntityInfo impleme
 		this.setBrickType(HAPEnumBrickType.SERVICEPROFILE_100);
 	} 
 	
+	@Override
 	public void setTaskInterface(HAPEntityOrReference brickOrRef) {		this.setAttributeValueWithBrick(HAPWithBlockInteractiveTask.TASKINTERFACE, brickOrRef);	}
 	@Override
 	public HAPEntityOrReference getTaskInterface() {   return this.getAttributeValueOfBrickLocal(HAPWithBlockInteractiveTask.TASKINTERFACE);   }
@@ -39,7 +40,7 @@ public class HAPBlockServiceProfileImp extends HAPBrickImpWithEntityInfo impleme
 	@Override
 	public HAPDisplayResourceNode getDisplayResource() {    return (HAPDisplayResourceNode)this.getAttributeValueOfValue(DISPLAY);  }
 	public void setDisplayResource(HAPDisplayResourceNode displayResource) {    this.setAttributeValueWithValue(DISPLAY, displayResource);      }
-
+ 
 	public static HAPBlockServiceProfileImp parse(JSONObject jsonObj, HAPManagerDataRule dataRuleMan){
 		HAPBlockServiceProfileImp out = new HAPBlockServiceProfileImp();
 		out.buildEntityInfoByJson(jsonObj);

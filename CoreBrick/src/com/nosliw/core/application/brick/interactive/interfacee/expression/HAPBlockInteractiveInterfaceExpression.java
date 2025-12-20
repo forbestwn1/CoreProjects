@@ -13,4 +13,6 @@ public interface HAPBlockInteractiveInterfaceExpression extends HAPBrick{
 
 	HAPInteractiveExpression getValue();
 
+	void setValue(HAPInteractiveExpression value);
+	
 }

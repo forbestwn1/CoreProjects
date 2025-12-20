@@ -1,4 +1,13 @@
-function(complexEntityDef, valueContextId, bundleCore, configure){
+
+if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.getResourceService()!=undefined) nosliw.runtime.getResourceService().importResource({"id":{"resourceTypeId":{"resourceType":"script",
+"version":"1.0.0"
+},
+"id":"*task_datavalidation_enum"
+},
+"children":[],
+"dependency":{},
+"info":{}
+}, {"script":function(complexEntityDef, valueContextId, bundleCore, configure){
 
 	var node_createServiceRequestInfoSequence = nosliw.getNodeData("request.request.createServiceRequestInfoSequence");
 	var node_createServiceRequestInfoSimple = nosliw.getNodeData("request.request.createServiceRequestInfoSimple");
@@ -15,8 +24,10 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 	var node_makeObjectWithApplicationInterface = nosliw.getNodeData("component.makeObjectWithApplicationInterface");
 	var node_interactiveUtility = nosliw.getNodeData("task.interactiveUtility");
 	var node_createTaskCore = nosliw.getNodeData("task.createTaskCore");
-	var node_TaskResult = nosliw.getNodeData("task.TaskResult");
+	var node_dataUtility = nosliw.getNodeData("common.utility.dataUtility");
 
+    var loc_complexEntityDef;
+    
 	var loc_envInterface = {};
 	
 	var loc_taskCore;
@@ -29,6 +40,7 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 	};
 
 	var loc_init = function(complexEntityDef, valueContextId, bundleCore, configure){
+		loc_complexEntityDef = complexEntityDef;
 		loc_taskCore = node_createTaskCore(loc_out, loc_out);
 	};
 
@@ -50,23 +62,30 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 			var dataVariable = valuePortContainer.getVariableByName(node_COMMONCONSTANT.VALUEPORTGROUP_TYPE_INTERACTIVETASK, node_COMMONCONSTANT.VALUEPORT_NAME_INTERACT_REQUEST, node_COMMONCONSTANT.NAME_ROOT_DATA);
 			out.addRequest(dataVariable.getGetValueRequest({
 				success : function(request, dataValue){
-					var taskResult;
-					if(dataValue==undefined){
-						var errorMessage = {
+					var value = dataValue==undefined? undefined : dataValue.value;
+					
+            		var dataRuleDef = loc_complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.BLOCKTASKTASKSCRIPT_EXTRA);
+					var enumDataSet = dataRuleDef[node_COMMONATRIBUTECONSTANT.DATARULEENUM_DATASET];
+					
+					if(enumDataSet==undefined){
+						//for enum code, try get enum data set
+					}
+
+					for(var i in enumDataSet){
+						if(node_dataUtility.isDataEqual(enumDataSet[i], value)==true){
+    						return {
+	    					    "resultName": "success"
+		    				};
+						}
+					}
+
+					return {
+					    "resultName": node_COMMONCONSTANT.TASK_RESULT_FAIL,
+					    "resultValue": {
 							"dataTypeId": "test.string;1.0.0",
-							"value": "value should not be empty"
-						};
-						var errorValue = {};
-						errorValue[node_COMMONCONSTANT.NAME_ROOT_ERROR] = errorMessage; 
-						return node_utilityNamedVariable.setValuesPortValueRequest(valuePortContainer, node_COMMONCONSTANT.VALUEPORTGROUP_TYPE_INTERACTIVETASK, node_interactiveUtility.getResultValuePortNameByResultName(node_COMMONCONSTANT.TASK_RESULT_FAIL), errorValue, {
-							success : function(request){
-								return new node_TaskResult(node_COMMONCONSTANT.TASK_RESULT_FAIL, errorMessage);
-							}
-						});
-					}
-					else{
-						return new node_TaskResult("success"); 
-					}
+							"value": "value is not valid"
+						}
+					};
 				}
 			}));
 
@@ -79,3 +98,7 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 	loc_out = node_makeObjectWithApplicationInterface(loc_out, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_TASK, loc_facadeTaskCore);
 	return loc_out;
 }
+
+}, {"loadPattern":"file"
+});
+
