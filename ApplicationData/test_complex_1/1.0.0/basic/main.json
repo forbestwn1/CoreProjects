@@ -135,7 +135,7 @@
 		{
 			"info": {
 				"name" : "local-uipage",
-				"status": "disabled",
+				"status": "disabled1",
 				"description" : ""
 			},
 			"brickId":"test0|uipage;1.0.0"  
@@ -173,7 +173,7 @@
 		{
 			"info": {
 				"name" : "variable-test_complex_script",
-				"status": "disabled1",
+				"status": "disabled",
 				"description" : ""
 			},
 			"relation": [

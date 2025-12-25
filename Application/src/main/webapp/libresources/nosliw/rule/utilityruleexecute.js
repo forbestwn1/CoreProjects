@@ -204,6 +204,16 @@ var node_ruleExecuteUtility = function(){
 		return out;
 	};
 
+    var loc_convertToBaseVariable = function(variable, pathInfoArray){
+		var varAdapter = variable.prv_valueAdapter;
+		var parentVariable = variable.prv_getRelativeVariableInfo().parent;
+		var pathToParent = variable.prv_getRelativeVariableInfo().path;
+		
+		
+		
+	};
+
+
 	var loc_executeRuleValidationsRequest = function(ruleValidationItems, bundle, handlers, request){
    		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 		var ruleValidationResults = [];
@@ -268,17 +278,16 @@ var node_ruleExecuteUtility = function(){
 	};
 	
 	var loc_out = {
-		
-		getExecuteRuleValidationForVariableSetRequest : function(variable, value, bundleCore, handlers, request){
-			var operationService = node_valueInVarOperationServiceUtility.createSetOperationService("", value);
-	        return loc_out.executeExecuteRuleValidationRequest(variable, operationService, bundleCore, handlers, request);		
+
+		getExecuteRuleValidationForVariableOperationRequest : function(varOperation, bundleCore, handlers, request){
+	        return loc_out.executeExecuteRuleValidationRequest(varOperation.target, varOperation.operationService, bundleCore, handlers, request);		
 		},
-		
-		executeExecuteRuleValidationForVariableSetRequest : function(variable, value, bundleCore, handlers, request){
-			var requestInfo = loc_out.getExecuteRuleValidationForVariableSetRequest(variable, value, bundleCore, handlers, request)
+
+		executeExecuteRuleValidationForVariableOperationRequest : function(varOperation, bundleCore, handlers, request){
+			var requestInfo = getExecuteRuleValidationForVariableOperationRequest(varOperation, bundleCore, handlers, request);
 			node_requestServiceProcessor.processRequest(requestInfo);
 		},
-		
+
 		getExecuteRuleValidationRequest : function(variable, operationService, bundleCore, handlers, request){
     		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
     		out.addRequest(loc_convertBaseOperationServiceRequest(node_variableUtility.getVariable(variable), operationService, {

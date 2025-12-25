@@ -21,7 +21,6 @@ var packageObj = library;
 	var node_getObjectType;
 	var node_ValueInVarOperation;
 	var node_valueInVarOperationServiceUtility;
-	var node_createBatchValueInVarOperationRequest;
 	var node_requestServiceProcessor;
 	var node_createValueInVarOperationRequest;
 	var node_createEventObject;
@@ -113,7 +112,6 @@ nosliw.registerSetNodeDataEvent("uitag.buildUITagCoreObject", function(){node_bu
 nosliw.registerSetNodeDataEvent("common.interfacedef.getObjectType", function(){node_getObjectType = this.getData();});
 nosliw.registerSetNodeDataEvent("variable.valueinvar.operation.ValueInVarOperation", function(){node_ValueInVarOperation = this.getData();});
 nosliw.registerSetNodeDataEvent("variable.valueinvar.operation.valueInVarOperationServiceUtility", function(){node_valueInVarOperationServiceUtility = this.getData();});
-nosliw.registerSetNodeDataEvent("variable.valueinvar.operation.createBatchValueInVarOperationRequest", function(){node_createBatchValueInVarOperationRequest  = this.getData();});
 nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
 nosliw.registerSetNodeDataEvent("variable.valueinvar.operation.createValueInVarOperationRequest", function(){node_createValueInVarOperationRequest = this.getData();});
 nosliw.registerSetNodeDataEvent("common.event.createEventObject", function(){node_createEventObject = this.getData();});

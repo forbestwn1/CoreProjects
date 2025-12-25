@@ -188,9 +188,17 @@ var node_createUICustomerTagTest = function(envObj){
         	
 			varInfo.view.bind('change', function(){
     			var currentData = node_basicUtility.toObject(loc_inputVariableInfos[varName].view.val());
+    			
 				loc_envObj.executeBatchDataOperationRequest([
 					loc_envObj.getDataOperationSet(loc_inputVariableInfos[varName].variable, "", currentData)
-				]);
+				], {
+					success : function(requet){
+						var kkkk = 5555;
+					},
+					error : function(request, serviceData){
+						var kkkk = 5555;
+					}
+				});
 			});
         	
 			varWrapperView.append(varInfo.view);

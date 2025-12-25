@@ -236,7 +236,7 @@ nosliw.registerSetNodeDataEvent("constant.COMMONCONSTANT", function(){node_COMMO
 nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("remote.errorUtility", function(){node_remoteServiceErrorUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("remote.utility", function(){node_remoteServiceUtility = this.getData();});
-nosliw.registerSetNodeDataEvent("error.utility", function(){node_errorUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("error.errorUtility", function(){node_errorUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();});
 
 

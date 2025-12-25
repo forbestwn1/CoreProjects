@@ -35,6 +35,8 @@ var packageObj = library;
 	var node_taskExecuteUtility;
 	var node_uiEventUtility;
 	var node_makeObjectWithType;
+	var node_errorUtility;
+	var node_ruleExecuteUtility;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -132,11 +134,42 @@ var loc_createUITagComponentCore = function(complexEntityDef, tagDefScriptFun, v
 		
 		//---------------------------------operation request
 		getBatchDataOperationRequest : function(operations, handlers, request){
-			var requestInfo = node_createBatchValueInVarOperationRequest(loc_getValuePortContainer(), handlers, request);
-			_.each(operations, function(operation, i){
-				requestInfo.addValueInVarOperation(operation);						
+     		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+
+            //validation first
+        	var validationsRequest = node_createServiceRequestInfoSet(undefined, {
+				success : function(request, validationsResult){
+					var errorData;
+					_.each(validationsResult.getResults(), function(validationResult, i){
+						if(!node_ruleUtility.isRuleValidationSuccess(validationResult)){
+							if(errorData==undefined){
+								errorData = {};
+							}
+							errorData[i] = validationResult;
+						}
+					});
+					if(errorData!=undefined){
+						//validation failed
+                		var validationFailRequest = node_createServiceRequestInfoCommon(undefined, handlers, requester_parent);		
+                		validationFailRequest.setRequestExecuteInfo(new node_ServiceRequestExecuteInfo(function(requestInfo){
+            				requestInfo.errorFinish(new node_ServiceData(node_CONSTANT.ERROR_VALIDATION_VALUE, node_CONSTANT.ERROR_VALIDATION_VALUE, errorData));
+                		}, validationFailRequest));
+                		return validationFailRequest;
+					}
+					else{
+            			var varOperationsRequest = node_createBatchValueInVarOperationRequest(loc_getValuePortContainer());
+			            _.each(operations, function(operation, i){
+				            varOperationsRequest.addValueInVarOperation(operation);						
+			            });
+			            return varOperationsRequest;
+					}
+				}
 			});
-			return requestInfo;
+			_.each(operations, function(operation, i){
+				validationsRequest.addRequest(i, node_ruleExecuteUtility.getExecuteRuleValidationForVariableOperationRequest(operation, loc_bundleCore));
+			});
+			out.addRequest(validationsRequest);
+			return out;
 		},
 		executeBatchDataOperationRequest : function(operations, handlers, request){		this.processRequest(this.getBatchDataOperationRequest(operations, handlers, request));		},
 		
@@ -296,7 +329,8 @@ nosliw.registerSetNodeDataEvent("task.taskUtility", function(){node_taskUtility 
 nosliw.registerSetNodeDataEvent("task.taskExecuteUtility", function(){node_taskExecuteUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("uicontent.uiEventUtility", function(){node_uiEventUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("common.interfacedef.makeObjectWithType", function(){node_makeObjectWithType = this.getData();});
-
+nosliw.registerSetNodeDataEvent("error.errorUtility", function(){node_errorUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("rule.ruleExecuteUtility", function(){node_ruleExecuteUtility = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createUITagPlugin", node_createUITagPlugin); 

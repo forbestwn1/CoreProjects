@@ -396,7 +396,7 @@ nosliw.registerSetNodeDataEvent("application.instance.story.createComponentUITag
 nosliw.registerSetNodeDataEvent("application.instance.story.createComponentUITagSelect", function(){node_createComponentUITagSelect = this.getData();});
 nosliw.registerSetNodeDataEvent("application.instance.story.storyUtility", function(){node_storyUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("application.instance.story.storyChangeUtility", function(){node_storyChangeUtility = this.getData();});
-nosliw.registerSetNodeDataEvent("error.utility", function(){node_errorUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("error.errorUtility", function(){node_errorUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("application.instance.story.designUtility", function(){node_designUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("application.instance.story.entity.DesignStep", function(){node_DesignStep = this.getData();});
 nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});
