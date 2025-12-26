@@ -280,7 +280,7 @@ var node_ruleExecuteUtility = function(){
 	var loc_out = {
 
 		getExecuteRuleValidationForVariableOperationRequest : function(varOperation, bundleCore, handlers, request){
-	        return loc_out.executeExecuteRuleValidationRequest(varOperation.target, varOperation.operationService, bundleCore, handlers, request);		
+	        return loc_out.getExecuteRuleValidationRequest(varOperation.target, varOperation.operationService, bundleCore, handlers, request);		
 		},
 
 		executeExecuteRuleValidationForVariableOperationRequest : function(varOperation, bundleCore, handlers, request){
@@ -295,7 +295,7 @@ var node_ruleExecuteUtility = function(){
 					var allRuleInfo = [];
 					return loc_getCollectRuleInfoRequest(baseOpInfo.rootVariable, baseOpInfo.operationService, allRuleInfo, {
 						success : function(request){
-//							console.log(JSON.stringify(allRuleInfo));
+							console.log(JSON.stringify(allRuleInfo));
 							
 							return loc_executeRuleValidationsRequest(allRuleInfo, bundleCore, {
 								success : function(request, ruleValidationResults){

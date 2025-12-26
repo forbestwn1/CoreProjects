@@ -37,6 +37,10 @@ var packageObj = library;
 	var node_makeObjectWithType;
 	var node_errorUtility;
 	var node_ruleExecuteUtility;
+	var node_ruleUtility;
+	var node_createServiceRequestInfoCommon;
+	var node_ServiceRequestExecuteInfo;
+	var node_ServiceData;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -150,7 +154,7 @@ var loc_createUITagComponentCore = function(complexEntityDef, tagDefScriptFun, v
 					});
 					if(errorData!=undefined){
 						//validation failed
-                		var validationFailRequest = node_createServiceRequestInfoCommon(undefined, handlers, requester_parent);		
+                		var validationFailRequest = node_createServiceRequestInfoCommon(undefined);		
                 		validationFailRequest.setRequestExecuteInfo(new node_ServiceRequestExecuteInfo(function(requestInfo){
             				requestInfo.errorFinish(new node_ServiceData(node_CONSTANT.ERROR_VALIDATION_VALUE, node_CONSTANT.ERROR_VALIDATION_VALUE, errorData));
                 		}, validationFailRequest));
@@ -166,7 +170,11 @@ var loc_createUITagComponentCore = function(complexEntityDef, tagDefScriptFun, v
 				}
 			});
 			_.each(operations, function(operation, i){
-				validationsRequest.addRequest(i, node_ruleExecuteUtility.getExecuteRuleValidationForVariableOperationRequest(operation, loc_bundleCore));
+				validationsRequest.addRequest(i+"", node_ruleExecuteUtility.getExecuteRuleValidationForVariableOperationRequest(operation, loc_bundleCore, {
+					success : function(request, result){
+						return result;
+					}
+				}));
 			});
 			out.addRequest(validationsRequest);
 			return out;
@@ -331,6 +339,11 @@ nosliw.registerSetNodeDataEvent("uicontent.uiEventUtility", function(){node_uiEv
 nosliw.registerSetNodeDataEvent("common.interfacedef.makeObjectWithType", function(){node_makeObjectWithType = this.getData();});
 nosliw.registerSetNodeDataEvent("error.errorUtility", function(){node_errorUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("rule.ruleExecuteUtility", function(){node_ruleExecuteUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("rule.ruleUtility", function(){node_ruleUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoCommon", function(){	node_createServiceRequestInfoCommon = this.getData();	});
+nosliw.registerSetNodeDataEvent("request.entity.ServiceRequestExecuteInfo", function(){node_ServiceRequestExecuteInfo = this.getData();});
+nosliw.registerSetNodeDataEvent("error.entity.ServiceData", function(){node_ServiceData = this.getData();});
+
 
 //Register Node by Name
 packageObj.createChildNode("createUITagPlugin", node_createUITagPlugin); 
