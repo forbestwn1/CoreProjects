@@ -77,16 +77,35 @@
 								}
 							},
 							"parent_public_url": {
-		                        "status": "disabled",
+		                        "status": "disabled1",
 								"definition":{
 									"data": {
 									    "criteria" : "test.url;1.0.0",
    				    				    "rule" : [
         			    			        {
                                    				"name" : "mandatoryParent",
-    	                                        "status": "disabled1",
+    	                                        "status": "disabled",
         				                        "ruleType" : "mandatory"
-		    			                    }
+		    			                    },
+    								        {
+                                				"name" : "enumParent",
+		    		                            "status": "disabled",
+			    					            "ruleType" : "enum",
+				    				            "dataSet" : [
+                	    							{
+				                    					"dataTypeId": "test.url;1.0.0",
+							    	                	"value": "default value of parent_public_url"
+								                    },
+                					    			{
+				                		     			"dataTypeId": "test.url;1.0.0",
+								                    	"value": "default value of parent_public_url1"
+								                    },
+                    								{
+	    			                					"dataTypeId": "test.url;1.0.0",
+		    						                	"value": "default value of parent_public_url2"
+			    					                }
+				    				            ]
+					    			        }
 			    		                ]
 									}
 								}
@@ -135,7 +154,7 @@
 		{
 			"info": {
 				"name" : "local-uipage",
-				"status": "disabled1",
+				"status": "disabled",
 				"description" : ""
 			},
 			"brickId":"test0|uipage;1.0.0"  
@@ -144,7 +163,7 @@
 		{
 			"info": {
 				"name" : "eventhandler_tag_custom-test_complex_task_script",
-				"status": "disabled1",
+				"status": "disabled",
 				"description" : ""
 			},
 			"brick":{
@@ -158,7 +177,7 @@
 		{
 			"info": {
 				"name" : "eventhandler_tag_normal-test_complex_task_script",
-				"status": "disabled1",
+				"status": "disabled",
 				"description" : ""
 			},
 			"brick":{
@@ -173,7 +192,7 @@
 		{
 			"info": {
 				"name" : "variable-test_complex_script",
-				"status": "disabled",
+				"status": "disabled1",
 				"description" : ""
 			},
 			"relation": [
@@ -186,7 +205,7 @@
 				"script": "complexscript_debug_variablelocalbyname",
 				"parm" : {
 					"variable1" : ["child_public", "child_public_string", "parent_protected", "parent_private", "parent_internal"],
-					"variable" : ["parent_public_string"]
+					"variable" : ["child_public_string_link"]
 				},
 				"valueContext" : {
 					"brick": [
@@ -234,7 +253,7 @@
 										}
 									},
 									"child_public_string_link": {
-				                        "status": "disabled",
+				                        "status": "disabled1",
 										"definition":{
 											"link": {
                 								"elementPath": "parent_public_url"
@@ -680,7 +699,7 @@
 		{
 			"info": {
 				"name" : "debug_variableman-test_complex_script",
-				"status": "disabled",
+				"status": "disabled1",
 				"description" : ""
 			},
 			"brick":{

@@ -26,6 +26,7 @@ var node_taskExecuteUtility;
 var node_getEntityObjectInterface;
 var node_utilityNamedVariable;
 var node_ruleUtility;
+var node_namingConvensionUtility;
 
 //*******************************************   Start Node Definition  **************************************
 
@@ -171,48 +172,59 @@ var node_ruleExecuteUtility = function(){
 		var opService = operationService.clone();
 
 		var command = operationService.command;
-		var operationData = operationService.parms;
 		if(command==node_CONSTANT.WRAPPER_OPERATION_SET){
-			if(variable.prv_isBase==true){
-    			//if set to base, then just set directly
-	    		out = node_createServiceRequestInfoSimple(undefined, function(){
-					return {
-						rootVariable : variable,
-						operationService : opService
-					};
-			    }, handlers, request);
-			}
-			else{
-				var parentVariable = variable.prv_getRelativeVariableInfo().parent;
-				opService.parms.path = node_pathUtility.combinePath(variable.prv_getRelativeVariableInfo().path, opService.parms.path);
-                if(variable.prv_valueAdapter!=undefined){
-					out = node_createServiceRequestInfoSequence({}, handlers, request);
-					//apply adapter to value
-					out.addRequest(variable.prv_valueAdapter.getOutValueRequest(operationData.value, {
-						success: function(request, value){
-							opService.parms.value = value;
-							return loc_convertBaseOperationServiceRequest(parentVariable, opService);
-						}
-					}));
-					return out;
-				}
-				else{
-					out = loc_convertBaseOperationServiceRequest(parentVariable, opService, handlers, request);
+			var toRootPathInfo = node_variableUtility.toBaseVariableConvertInfo(variable);
+			
+			var adapters = [];
+			var path = "";
+			for(var i in toRootPathInfo){
+				path = node_namingConvensionUtility.cascadePath(path, toRootPathInfo[i].pathToParent, false);
+				var adapter = toRootPathInfo[i].adapter;
+				if(adapter!=undefined){
+				    if(node_pathUtility.isEmptyPath()){
+						adapters.push(adapter);
+					}
+					else{
+						throw error;
+					}
 				}
 			}
+			opService.parms.path = path;
+			
+			if(adapters.length>0){
+				out.addRequest(loc_getExecuteAdapterRequest(opService.parms.value, adapters, 0, {
+					success : function(request, value){
+	    				opService.parms.value = value;
+					}
+				}));
+			}
+
+    		out.addRequest(node_createServiceRequestInfoSimple(undefined, function(){
+				return {
+					rootVariable : toRootPathInfo[toRootPathInfo.length-1].baseVariable,
+					operationService : opService
+				};
+		    }));
 		}
 		return out;
 	};
 
-    var loc_convertToBaseVariable = function(variable, pathInfoArray){
-		var varAdapter = variable.prv_valueAdapter;
-		var parentVariable = variable.prv_getRelativeVariableInfo().parent;
-		var pathToParent = variable.prv_getRelativeVariableInfo().path;
+    var loc_getExecuteAdapterRequest = function(value, adapters, i, handlers, request){
+		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 		
+		out.addRequest(adapters[i].getOutValueRequest(value, {
+			success: function(request, value){
+				if(i>=adapters.length-1){
+					return value;
+				}
+				else{
+    				return loc_getExecuteAdapterRequest(value, adapters, i+1);
+				}
+    		}
+	    }));
 		
-		
+		return out;
 	};
-
 
 	var loc_executeRuleValidationsRequest = function(ruleValidationItems, bundle, handlers, request){
    		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
@@ -299,13 +311,17 @@ var node_ruleExecuteUtility = function(){
 							
 							return loc_executeRuleValidationsRequest(allRuleInfo, bundleCore, {
 								success : function(request, ruleValidationResults){
-									var errorMessages = [];
+									var errorInfos = [];
 									var ifSuccess = true;
 									_.each(ruleValidationResults, function(ruleValidationResultInfo){
 										var ruleValidationResult = ruleValidationResultInfo.validationResult;
+										var ruleValidationItem = ruleValidationResultInfo.ruleValidationItem;
 										if(!node_ruleUtility.isRuleValidationSuccess(ruleValidationResult)){
 											ifSuccess = false;
-											errorMessages.push(ruleValidationResult.resultValue);
+											errorInfos.push({
+												resultData: ruleValidationResult.resultValue,
+												ruleName: ruleValidationItem.ruleDef[node_COMMONATRIBUTECONSTANT.ENTITYINFO_NAME]
+											});
 										}
 									});
 									var out;
@@ -313,7 +329,7 @@ var node_ruleExecuteUtility = function(){
 										out = node_ruleUtility.createRuleValidationSuccessResult();
 									}
 									else{
-										out = node_ruleUtility.createRuleValidationFailResult(errorMessages);
+										out = node_ruleUtility.createRuleValidationFailResult(errorInfos);
 									}
 									
         							console.log(JSON.stringify(out));
@@ -361,6 +377,7 @@ nosliw.registerSetNodeDataEvent("task.taskExecuteUtility", function(){node_taskE
 nosliw.registerSetNodeDataEvent("complexentity.getEntityObjectInterface", function(){node_getEntityObjectInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("valueport.utilityNamedVariable", function(){node_utilityNamedVariable = this.getData();});
 nosliw.registerSetNodeDataEvent("rule.ruleUtility", function(){node_ruleUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("common.namingconvension.namingConvensionUtility", function(){node_namingConvensionUtility = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("ruleExecuteUtility", node_ruleExecuteUtility); 

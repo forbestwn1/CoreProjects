@@ -196,7 +196,7 @@ var node_createUICustomerTagTest = function(envObj){
 						var kkkk = 5555;
 					},
 					error : function(request, serviceData){
-						var kkkk = 5555;
+						loc_envObj.trigueEvent(serviceData.code, serviceData.data);
 					}
 				});
 			});

@@ -17,6 +17,11 @@ var node_pathUtility = function(){
 	
 	var loc_out = {
 
+        isEmptyPath : function(path){
+			if(path==undefined||path=="") return true;
+			return false;
+		},
+        
 		/**
 		 * compare two path
 		 * if path1 equals path2, then 0

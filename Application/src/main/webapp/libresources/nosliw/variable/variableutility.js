@@ -15,7 +15,28 @@ var node_basicUtility;
  */
 var node_variableUtility = function(){
 	
+    var loc_toBaseVariableConvertInfo = function(variable, pathInfoArray){
+		if(variable.prv_isBase==true){
+    		pathInfoArray.push({
+	    		baseVariable : variable
+		    });
+		}
+		else{
+    		pathInfoArray.push({
+	    		adapter : variable.prv_valueAdapter,
+		    	pathToParent : variable.prv_getRelativeVariableInfo().path
+		    });
+			loc_toBaseVariableConvertInfo(variable.prv_getRelativeVariableInfo().parent, pathInfoArray);
+		}
+	};
+
 	return {
+
+        toBaseVariableConvertInfo : function(variable){
+			var out = [];
+			loc_toBaseVariableConvertInfo(variable, out);
+			return out;
+		},
 
         getVariable : function(varObj){
 			var out = varObj;
