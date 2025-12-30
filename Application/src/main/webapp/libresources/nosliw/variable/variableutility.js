@@ -9,31 +9,32 @@ var node_CONSTANT;
 var node_createValueInVar;
 var node_namingConvensionUtility;
 var node_basicUtility;
+var node_createPathToBaseVariableInfo;
 //*******************************************   Start Node Definition  ************************************** 	
 /**
  * 
  */
 var node_variableUtility = function(){
 	
-    var loc_toBaseVariableConvertInfo = function(variable, pathInfoArray){
+    var loc_toBaseVariableConvertInfo = function(variable, outcome){
 		if(variable.prv_isBase==true){
-    		pathInfoArray.push({
+			outcome.addSegment({
 	    		baseVariable : variable
 		    });
 		}
 		else{
-    		pathInfoArray.push({
+    		outcome.addSegment({
 	    		adapter : variable.prv_valueAdapter,
 		    	pathToParent : variable.prv_getRelativeVariableInfo().path
 		    });
-			loc_toBaseVariableConvertInfo(variable.prv_getRelativeVariableInfo().parent, pathInfoArray);
+			loc_toBaseVariableConvertInfo(variable.prv_getRelativeVariableInfo().parent, outcome);
 		}
 	};
 
 	return {
 
         toBaseVariableConvertInfo : function(variable){
-			var out = [];
+    		var out = node_createPathToBaseVariableInfo();
 			loc_toBaseVariableConvertInfo(variable, out);
 			return out;
 		},
@@ -59,6 +60,7 @@ nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = 
 nosliw.registerSetNodeDataEvent("variable.valueinvar.entity.createValueInVar", function(){node_createValueInVar = this.getData();});
 nosliw.registerSetNodeDataEvent("common.namingconvension.namingConvensionUtility", function(){node_namingConvensionUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("variable.entity.createPathToBaseVariableInfo", function(){node_createPathToBaseVariableInfo = this.getData();});
 
 
 //Register Node by Name

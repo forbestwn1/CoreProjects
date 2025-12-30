@@ -18,6 +18,9 @@ public abstract class HAPDataRule extends HAPSerializableImp{
 	public static String RULETYPE = "ruleType";
 
 	@HAPAttribute
+	public static String CRITERIA = "criteria";
+
+	@HAPAttribute
 	public static String IMPLEMENTATION = "implementation";
 
 	private String m_ruleType;
@@ -50,6 +53,9 @@ public abstract class HAPDataRule extends HAPSerializableImp{
 		super.buildJsonMap(jsonMap, typeJsonMap);
 		jsonMap.put(RULETYPE, this.getRuleType());
 		jsonMap.put(IMPLEMENTATION, HAPUtilityJson.buildJson(m_implementation, HAPSerializationFormat.JSON));
+		if(this.m_dataCriteria!=null) {
+			jsonMap.put(CRITERIA, this.m_dataCriteria.toStringValue(HAPSerializationFormat.LITERATE));	
+		}
 	}
 	
 	@Override

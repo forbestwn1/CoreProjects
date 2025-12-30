@@ -39,25 +39,6 @@ var node_createRuleValidationItem = function(ruleDef, data){
  	
 var node_ruleExecuteUtility = function(){
 
-    var loc_getRuleDefinitionsFromVariable = function(variable){
-		var definition = variable.prv_info==undefined?undefined:variable.prv_info.definition;
-		if(definition!=undefined){
-			var dataDefinition;
-			
-			var defType = definition[node_COMMONATRIBUTECONSTANT.ELEMENTSTRUCTURE_TYPE];
-			if(defType==node_COMMONCONSTANT.CONTEXT_ELEMENTTYPE_DATA){
-				dataDefinition = definition[node_COMMONATRIBUTECONSTANT.ELEMENTSTRUCTURE_DATA];
-			}
-			else if(defType==node_COMMONCONSTANT.CONTEXT_ELEMENTTYPE_RELATIVE_FOR_VALUE&&definition[node_COMMONATRIBUTECONSTANT.ELEMENTSTRUCTURE_INHERITDEFINITION]==false){
-                dataDefinition = definition[node_COMMONATRIBUTECONSTANT.ELEMENTSTRUCTURE_DEFINITION][node_COMMONATRIBUTECONSTANT.ELEMENTSTRUCTURE_DATA];
-			}
-			
-			if(dataDefinition!=undefined){
-				return dataDefinition[node_COMMONATRIBUTECONSTANT.DATADEFINITION_RULE];
-			}
-		}
-	};
-
 	var loc_getCollectRuleInfoRequest = function(variable, operationService, allRuleInfo, handlers, request){
 
 		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
@@ -66,7 +47,7 @@ var node_ruleExecuteUtility = function(){
 		var operationData = operationService.parms;
 
 		if(command==node_CONSTANT.WRAPPER_OPERATION_SET){
-   			var dataRuleDefs = loc_getRuleDefinitionsFromVariable(variable);
+   			var dataRuleDefs = node_ruleUtility.getRuleDefinitionsFromVariable(variable);
    			
    			_.each(dataRuleDefs, function(dataRuleDef, i){
         		var opService = operationService.clone();
@@ -177,11 +158,12 @@ var node_ruleExecuteUtility = function(){
 			
 			var adapters = [];
 			var path = "";
-			for(var i in toRootPathInfo){
-				path = node_namingConvensionUtility.cascadePath(path, toRootPathInfo[i].pathToParent, false);
-				var adapter = toRootPathInfo[i].adapter;
+			var pathSegments = toRootPathInfo.getSegments(); 
+			for(var i in pathSegments){
+				path = node_namingConvensionUtility.cascadePath(path, pathSegments[i].pathToParent, false);
+				var adapter = pathSegments[i].adapter;
 				if(adapter!=undefined){
-				    if(node_pathUtility.isEmptyPath()){
+				    if(node_pathUtility.isEmptyPath(path)){
 						adapters.push(adapter);
 					}
 					else{
@@ -189,7 +171,7 @@ var node_ruleExecuteUtility = function(){
 					}
 				}
 			}
-			opService.parms.path = path;
+			opService.parms.path = toRootPathInfo.getPath();
 			
 			if(adapters.length>0){
 				out.addRequest(loc_getExecuteAdapterRequest(opService.parms.value, adapters, 0, {
@@ -201,7 +183,7 @@ var node_ruleExecuteUtility = function(){
 
     		out.addRequest(node_createServiceRequestInfoSimple(undefined, function(){
 				return {
-					rootVariable : toRootPathInfo[toRootPathInfo.length-1].baseVariable,
+					rootVariable : toRootPathInfo.getBaseVariable(),
 					operationService : opService
 				};
 		    }));

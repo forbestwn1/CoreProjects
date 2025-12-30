@@ -154,7 +154,7 @@
 		{
 			"info": {
 				"name" : "local-uipage",
-				"status": "disabled",
+				"status": "disabled1",
 				"description" : ""
 			},
 			"brickId":"test0|uipage;1.0.0"  
@@ -163,7 +163,7 @@
 		{
 			"info": {
 				"name" : "eventhandler_tag_custom-test_complex_task_script",
-				"status": "disabled",
+				"status": "disabled1",
 				"description" : ""
 			},
 			"brick":{
@@ -177,7 +177,7 @@
 		{
 			"info": {
 				"name" : "eventhandler_tag_normal-test_complex_task_script",
-				"status": "disabled",
+				"status": "disabled1",
 				"description" : ""
 			},
 			"brick":{
@@ -192,7 +192,7 @@
 		{
 			"info": {
 				"name" : "variable-test_complex_script",
-				"status": "disabled1",
+				"status": "disabled",
 				"description" : ""
 			},
 			"relation": [

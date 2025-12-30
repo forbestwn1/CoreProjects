@@ -16,6 +16,7 @@ var packageObj = library.getChildPackage("test");
 	var node_basicUtility;
 	var node_createHandleEachElementProcessor;
 	var node_namingConvensionUtility;
+	var node_ruleUtility;
 //*******************************************   Start Node Definition  ************************************** 	
 
 var node_createUICustomerTagTest = function(envObj){
@@ -54,7 +55,6 @@ var node_createUICustomerTagTest = function(envObj){
 					}));
 				});
 			});
-    		
 		}
 	};
 
@@ -107,7 +107,10 @@ var node_createUICustomerTagTest = function(envObj){
 		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 		out.addRequest(loc_envObj.getDataOperationRequestGet(loc_inputVariableInfos[attrName].variable, "", {
 			success : function(requestInfo, data){
-				loc_inputVariableInfos[attrName].view.val(node_basicUtility.stringify(data.value));
+				var inputVarInfo = loc_inputVariableInfos[attrName];
+				inputVarInfo.valueView.val(node_basicUtility.stringify(data.value));
+            	inputVarInfo.ruleView.val(node_basicUtility.stringify(inputVarInfo.ruleInfo));
+				
 			}
 		}));
 		return out;
@@ -184,10 +187,11 @@ var node_createUICustomerTagTest = function(envObj){
 		_.each(loc_inputVariableInfos, function(varInfo, varName){
     		var varWrapperView = $('<div/>');
 			varWrapperView.append($('<br>'+varName+':<br>'));
-        	varInfo.view = $('<textarea rows="6" cols="150" style="resize: none; border:solid 1px;" data-role="none"></textarea>');
+        	varInfo.valueView = $('<textarea rows="6" cols="150" style="resize: none; border:solid 1px;" data-role="none"></textarea>');
+        	varInfo.ruleView = $('<textarea rows="6" cols="150" style="resize: none; border:solid 1px;" data-role="none"></textarea>');
         	
-			varInfo.view.bind('change', function(){
-    			var currentData = node_basicUtility.toObject(loc_inputVariableInfos[varName].view.val());
+			varInfo.valueView.bind('change', function(){
+    			var currentData = node_basicUtility.toObject(loc_inputVariableInfos[varName].valueView.val());
     			
 				loc_envObj.executeBatchDataOperationRequest([
 					loc_envObj.getDataOperationSet(loc_inputVariableInfos[varName].variable, "", currentData)
@@ -201,7 +205,8 @@ var node_createUICustomerTagTest = function(envObj){
 				});
 			});
         	
-			varWrapperView.append(varInfo.view);
+			varWrapperView.append(varInfo.valueView);
+			varWrapperView.append(varInfo.ruleView);
 			variablesWrapperView.append(varWrapperView);
 		});
 		loc_containerrView.append(variablesWrapperView);
@@ -296,7 +301,9 @@ var node_createUICustomerTagTest = function(envObj){
 			var out = node_createServiceRequestInfoSequence(undefined, undefined, request);
 			_.each(loc_inputVariableInfos, function(varInfo, varName){
 				var dataVariable = loc_envObj.createVariableByName(varName);
-				varInfo.variable = dataVariable; 
+				varInfo.variable = dataVariable;
+				varInfo.ruleInfo = node_ruleUtility.collectRuleInfo(dataVariable);
+				 
 				out.addRequest(loc_getUpdateAttributeVariableViewRequest(varName));
 			});	
             
@@ -325,6 +332,7 @@ nosliw.registerSetNodeDataEvent("complexentity.complexEntityUtility", function()
 nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("variable.orderedcontainer.createHandleEachElementProcessor", function(){node_createHandleEachElementProcessor = this.getData();});
 nosliw.registerSetNodeDataEvent("common.namingconvension.namingConvensionUtility", function(){node_namingConvensionUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("rule.ruleUtility", function(){node_ruleUtility = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createUICustomerTagTest", node_createUICustomerTagTest); 
