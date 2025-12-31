@@ -27,4 +27,6 @@ public class HAPManualDefinitionBlockTaskTaskScript extends HAPManualDefinitionB
 	public HAPResourceId getScriptResourceId() {   return (HAPResourceId)this.getAttributeValueOfValue(HAPBlockTaskTaskScript.SCRIPTRESOURCEID);  }
 	public void setScriptResourceId(HAPResourceId resourceId) {    this.setAttributeValueWithValue(HAPBlockTaskTaskScript.SCRIPTRESOURCEID, resourceId);      }
 	
+	public Object getExtra() {   return this.getAttributeValueOfValue(HAPBlockTaskTaskScript.EXTRA);  }
+	public void setExtra(Object extra) {    this.setAttributeValueWithValue(HAPBlockTaskTaskScript.EXTRA, extra);  }
 }

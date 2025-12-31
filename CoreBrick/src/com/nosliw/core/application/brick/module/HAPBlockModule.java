@@ -8,13 +8,13 @@ import com.nosliw.core.application.brick.container.HAPBrickContainer;
 public interface HAPBlockModule {
 
 	@HAPAttribute
-	public static String LIFECYCLE = "lifecycle";
+	public static String TASK = "task";
 
 	@HAPAttribute
 	public static String COMMAND = "command";
 
 	@HAPAttribute
-	public static String BRICK = "brick";
+	public static String PAGE = "page";
 
 	HAPBrickContainer getTasks();
 

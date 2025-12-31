@@ -29,8 +29,9 @@ public class HAPTestBasic {
 
 //		HAPUtilityBundle.getBrickBundle(new HAPResourceIdSimple(HAPEnumBrickType.TEST_COMPLEX_1_100.getBrickType(), "1.0.0", "event"), brickMan, null);
 
-		HAPUtilityBundle.getBrickBundle(new HAPResourceIdSimple(HAPEnumBrickType.TEST_COMPLEX_1_100.getBrickType(), "1.0.0", "basic"), brickMan, null);
+//		HAPUtilityBundle.getBrickBundle(new HAPResourceIdSimple(HAPEnumBrickType.TEST_COMPLEX_1_100.getBrickType(), "1.0.0", "basic"), brickMan, null);
 	
+		HAPUtilityBundle.getBrickBundle(new HAPResourceIdSimple(HAPEnumBrickType.MODULE_100.getBrickType(), "1.0.0", "basic"), brickMan, null);
 	}
 
 }

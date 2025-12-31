@@ -1,0 +1,76 @@
+{
+	"info": {
+		"name": "test0",
+		"description": "test expression group entity"
+	},
+	"brick": {
+	
+	    "task" : [
+	        {
+	    		"info": {
+		    		"name" : "navigation",
+			    	"status": "disabled1",
+				    "description" : ""
+			    },
+        		"brickType" : {
+		    	    "brickType" : "taskTaskScript",
+			        "version" : "1.0.0"
+		        },
+		        "brick" : {
+    				"scriptResourceId": "task_task_navigation",
+    				"extra": {
+    				    "page" : "page2inmodule"
+    				}
+		        }
+	        },
+	        {
+	    		"info": {
+		    		"name" : "nosliw_init",
+			    	"status": "disabled1",
+				    "description" : ""
+			    },
+        		"brickType" : {
+		    	    "brickType" : "taskTaskScript",
+			        "version" : "1.0.0"
+		        },
+		        "brick" : {
+    				"scriptResourceId": "task_task_presentpage",
+    				"extra": {
+    				    "page" : "page1inmodule"
+    				}
+		        }
+	        }
+	    ],
+	    
+	    "page" : [
+    		{
+	    		"info": {
+		    		"name" : "page1inmodule",
+			    	"status": "disabled1",
+				    "description" : ""
+			    },
+        		"brickType" : {
+		    	    "brickType" : "uipage",
+			        "version" : "1.0.0"
+		        },
+		        "brick" : {
+    			    "brickId":"page1|uipage;1.0.0"
+		        }
+			},  
+    		{
+	    		"info": {
+		    		"name" : "page2inmodule",
+			    	"status": "disabled1",
+				    "description" : ""
+			    },
+        		"brickType" : {
+		    	    "brickType" : "uipage",
+			        "version" : "1.0.0"
+		        },
+		        "brick" : {
+    			    "brickId":"page2|uipage;1.0.0"
+		        }
+			}  
+	    ]
+	}
+}

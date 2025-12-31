@@ -1,27 +1,18 @@
 package com.nosliw.core.application.division.manual.brick.module;
 
+import com.nosliw.core.application.brick.container.HAPBrickContainer;
+import com.nosliw.core.application.brick.module.HAPBlockModule;
 import com.nosliw.core.application.division.manual.core.HAPManualBrickImp;
-import com.nosliw.core.xxx.application1.brick.container.HAPBrickContainer;
-import com.nosliw.core.xxx.application1.brick.module.HAPBlockModule;
 
 public class HAPManualBlockModule extends HAPManualBrickImp implements HAPBlockModule{
 
 	@Override
-	public HAPBrickContainer getLifecycles() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	public HAPBrickContainer getTasks() {   return (HAPBrickContainer)this.getAttributeValueOfBrick(HAPBlockModule.TASK);   }   
 
 	@Override
-	public HAPBrickContainer getCommands() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	public HAPBrickContainer getCommands() {   return (HAPBrickContainer)this.getAttributeValueOfBrick(HAPBlockModule.COMMAND);   }
 
 	@Override
-	public HAPBrickContainer getBricks() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	public HAPBrickContainer getPages() {   return (HAPBrickContainer)this.getAttributeValueOfBrick(HAPBlockModule.PAGE);   }
 
 }

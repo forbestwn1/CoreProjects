@@ -1,9 +1,10 @@
 package com.nosliw.core.application.division.manual.brick.module;
 
+import com.nosliw.common.interfac.HAPEntityOrReference;
+import com.nosliw.core.application.brick.HAPEnumBrickType;
+import com.nosliw.core.application.brick.module.HAPBlockModule;
 import com.nosliw.core.application.division.manual.brick.container.HAPManualDefinitionBrickContainer;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionBrick;
-import com.nosliw.core.xxx.application1.brick.HAPEnumBrickType;
-import com.nosliw.core.xxx.application1.brick.module.HAPBlockModule;
 
 public class HAPManualDefinitionBlockModule extends HAPManualDefinitionBrick{
 
@@ -15,13 +16,18 @@ public class HAPManualDefinitionBlockModule extends HAPManualDefinitionBrick{
 
 	@Override
 	protected void init() {
-		this.setAttributeValueWithBrick(HAPBlockModule.BRICK, this.getManualBrickManager().newBrickDefinition(HAPEnumBrickType.CONTAINER_100));
+		this.setAttributeValueWithBrick(HAPBlockModule.TASK, this.getManualBrickManager().newBrickDefinition(HAPEnumBrickType.CONTAINER_100));
 		this.setAttributeValueWithBrick(HAPBlockModule.COMMAND, this.getManualBrickManager().newBrickDefinition(HAPEnumBrickType.CONTAINER_100));
-		this.setAttributeValueWithBrick(HAPBlockModule.LIFECYCLE, this.getManualBrickManager().newBrickDefinition(HAPEnumBrickType.CONTAINER_100));
+		this.setAttributeValueWithBrick(HAPBlockModule.PAGE, this.getManualBrickManager().newBrickDefinition(HAPEnumBrickType.CONTAINER_100));
 	}
 
-	public HAPManualDefinitionBrickContainer getBricks() {	return (HAPManualDefinitionBrickContainer)this.getAttributeValueOfBrick(HAPBlockModule.BRICK);	}
-	public HAPManualDefinitionBrickContainer getLifecycles() {	return (HAPManualDefinitionBrickContainer)this.getAttributeValueOfBrick(HAPBlockModule.LIFECYCLE);	}
-	public HAPManualDefinitionBrickContainer getCommand() {	return (HAPManualDefinitionBrickContainer)this.getAttributeValueOfBrick(HAPBlockModule.COMMAND);	}
+	public HAPManualDefinitionBrickContainer getTasks() {   return (HAPManualDefinitionBrickContainer)this.getAttributeValueOfBrick(HAPBlockModule.TASK);   }
+	public void addTask(HAPEntityOrReference task) {    this.getTasks().addElementWithBrickOrReference(task);    }
 	
+	public HAPManualDefinitionBrickContainer getCommands() {   return (HAPManualDefinitionBrickContainer)this.getAttributeValueOfBrick(HAPBlockModule.COMMAND);   }
+	public void addCommand(HAPEntityOrReference command) {    this.getCommands().addElementWithBrickOrReference(command);    }
+
+	public HAPManualDefinitionBrickContainer getPages() {   return (HAPManualDefinitionBrickContainer)this.getAttributeValueOfBrick(HAPBlockModule.PAGE);   }
+	public void addPage(HAPEntityOrReference page) {    this.getPages().addElementWithBrickOrReference(page);    }
+
 }
