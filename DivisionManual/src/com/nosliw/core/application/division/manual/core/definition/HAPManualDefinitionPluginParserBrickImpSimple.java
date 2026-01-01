@@ -10,4 +10,13 @@ public class HAPManualDefinitionPluginParserBrickImpSimple extends HAPManualDefi
 			HAPManualManagerBrick manualDivisionEntityMan, HAPManagerApplicationBrick brickMan) {
 		super(brickTypeId, brickClass, manualDivisionEntityMan, brickMan);
 	}
+
+	@Override
+	protected void parseDefinitionContentJson(HAPManualDefinitionBrick brickDefinition, Object jsonValue, HAPManualDefinitionContextParse parseContext) {
+	    super.parseDefinitionContentJson(brickDefinition, jsonValue, parseContext);
+	    this.parseSimpleDefinitionContentJson(brickDefinition, jsonValue, parseContext);
+	}
+	
+	protected void parseSimpleDefinitionContentJson(HAPManualDefinitionBrick brickDefinition, Object jsonValue, HAPManualDefinitionContextParse parseContext) {}
+
 }

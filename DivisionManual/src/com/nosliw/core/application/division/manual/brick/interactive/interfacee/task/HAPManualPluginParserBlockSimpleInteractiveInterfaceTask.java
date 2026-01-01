@@ -19,7 +19,7 @@ public class HAPManualPluginParserBlockSimpleInteractiveInterfaceTask extends HA
 	}
 	
 	@Override
-	protected void parseDefinitionContentJson(HAPManualDefinitionBrick entityDefinition, Object jsonValue, HAPManualDefinitionContextParse parseContext) {
+	protected void parseSimpleDefinitionContentJson(HAPManualDefinitionBrick entityDefinition, Object jsonValue, HAPManualDefinitionContextParse parseContext) {
 		HAPManualDefinitionBlockInteractiveInterfaceTask taskInteractiveDef = (HAPManualDefinitionBlockInteractiveInterfaceTask)entityDefinition;
 		
 		JSONObject jsonObj = (JSONObject)jsonValue;

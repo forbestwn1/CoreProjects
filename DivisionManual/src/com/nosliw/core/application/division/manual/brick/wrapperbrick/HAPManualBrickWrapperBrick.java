@@ -9,9 +9,6 @@ public class HAPManualBrickWrapperBrick extends HAPManualBrickWithEntityInfo imp
 	public static final String INFO = "info";
 	
 	@Override
-	public HAPEntityOrReference getBrick() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	public HAPEntityOrReference getBrick() {   return this.getAttributeValueOfBrick(BRICK);  }
 
 }

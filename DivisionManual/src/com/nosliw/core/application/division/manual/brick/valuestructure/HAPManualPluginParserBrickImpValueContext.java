@@ -19,7 +19,7 @@ public class HAPManualPluginParserBrickImpValueContext extends HAPManualDefiniti
 	}
 	
 	@Override
-	protected void parseDefinitionContentJson(HAPManualDefinitionBrick entityDefinition, Object jsonValue, HAPManualDefinitionContextParse parseContext) {
+	protected void parseSimpleDefinitionContentJson(HAPManualDefinitionBrick entityDefinition, Object jsonValue, HAPManualDefinitionContextParse parseContext) {
 		HAPManualParserValueContext.parseValueContextContentJson((HAPManualDefinitionBrickValueContext)entityDefinition, jsonValue, parseContext, this.m_dataRuleMan);
 	}
 }

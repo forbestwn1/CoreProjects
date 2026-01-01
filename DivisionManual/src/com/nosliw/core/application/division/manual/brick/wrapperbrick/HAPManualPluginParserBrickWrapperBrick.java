@@ -2,7 +2,6 @@ package com.nosliw.core.application.division.manual.brick.wrapperbrick;
 
 import org.json.JSONObject;
 
-import com.nosliw.common.info.HAPUtilityEntityInfo;
 import com.nosliw.core.application.HAPIdBrickType;
 import com.nosliw.core.application.HAPManagerApplicationBrick;
 import com.nosliw.core.application.HAPUtilityBrickId;
@@ -20,7 +19,7 @@ public class HAPManualPluginParserBrickWrapperBrick extends HAPManualDefinitionP
 	}
 
 	@Override
-	protected void parseDefinitionContentJson(HAPManualDefinitionBrick brickManual, Object jsonValue, HAPManualDefinitionContextParse parseContext) {
+	protected void parseSimpleDefinitionContentJson(HAPManualDefinitionBrick brickManual, Object jsonValue, HAPManualDefinitionContextParse parseContext) {
 		HAPManualDefinitionBrickWrapperBrick wrapperBrick = (HAPManualDefinitionBrickWrapperBrick)brickManual;
 		
 		JSONObject jsonObj = null;
@@ -30,8 +29,6 @@ public class HAPManualPluginParserBrickWrapperBrick extends HAPManualDefinitionP
 		else {
 			jsonObj = new JSONObject(jsonValue);
 		}
-		
-		HAPUtilityEntityInfo.buildEntityInfoByJson(jsonObj.getJSONObject(HAPManualBrickWrapperBrick.INFO), wrapperBrick);
 		
 		HAPIdBrickType brickTypeId = HAPUtilityBrickId.parseBrickTypeId(jsonObj.get(HAPManualDefinitionBrickWrapperBrick.BRICKTYPE));
 		

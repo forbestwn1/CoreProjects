@@ -6,6 +6,7 @@ import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import com.nosliw.common.info.HAPEntityInfo;
 import com.nosliw.common.info.HAPUtilityEntityInfo;
 import com.nosliw.common.parm.HAPManagerParm;
 import com.nosliw.common.parm.HAPParms;
@@ -20,6 +21,9 @@ import com.nosliw.core.application.common.interactive.HAPWithBlockInteractiveExp
 import com.nosliw.core.application.common.interactive.HAPWithBlockInteractiveTask;
 import com.nosliw.core.application.common.withvariable.HAPWithVariableDebugDefinition;
 import com.nosliw.core.application.division.manual.core.HAPManualManagerBrick;
+import com.nosliw.core.application.entity.script.HAPWithScriptReference;
+import com.nosliw.core.resource.HAPFactoryResourceId;
+import com.nosliw.core.resource.HAPResourceId;
 
 public class HAPManualDefinitionPluginParserBrickImp implements HAPManualDefinitionPluginParserBrick{
 
@@ -114,7 +118,46 @@ public class HAPManualDefinitionPluginParserBrickImp implements HAPManualDefinit
 	protected void postParseDefinitionContent(HAPManualDefinitionBrick brick) {}
 	
 
-	protected void parseDefinitionContentJson(HAPManualDefinitionBrick brickManual, Object jsonValue, HAPManualDefinitionContextParse parseContext) {}
+	protected void parseDefinitionContentJson(HAPManualDefinitionBrick brickDefinition, Object jsonValue, HAPManualDefinitionContextParse parseContext) {
+		if(jsonValue instanceof JSONObject) {
+			JSONObject jsonObj = (JSONObject)jsonValue;
+			
+//			this.parseSimpleEntityAttributeJson(jsonObj, entityId, HAPWithAttachment.ATTACHMENT, HAPConstantShared.RUNTIME_RESOURCE_TYPE_ATTACHMENT, null, parserContext);
+			
+			//entity info
+			if(brickDefinition instanceof HAPEntityInfo) {
+				HAPUtilityEntityInfo.buildEntityInfoByJson(jsonObj, (HAPEntityInfo)brickDefinition);
+			}
+			
+			//parms
+	        if(brickDefinition instanceof HAPWithParms) {
+	        	this.parseParmsAttribute((HAPWithParms)brickDefinition, jsonObj);
+	        }
+			
+			//task interface
+	        if(brickDefinition instanceof HAPWithBlockInteractiveTask) {
+	        	this.parseTaskInterfaceAttribute(brickDefinition, jsonObj, parseContext);
+	        }
+			
+	        //expression interface
+	        if(brickDefinition instanceof HAPWithBlockInteractiveExpression) {
+	        	this.parseExpressionInterfaceAttribute(brickDefinition, jsonObj, parseContext);
+	        }
+
+	        //variable for debug attirbute
+	        if(brickDefinition instanceof HAPWithVariableDebugDefinition) {
+	        	this.parseDebugVariable(brickDefinition, jsonObj, parseContext);
+	        }
+
+	        //script resource attribute
+	        if(brickDefinition instanceof HAPWithScriptReference) {
+	    		Object scriptObj = jsonObj.opt(HAPWithScriptReference.SCRIPTRESOURCEID);
+	    		HAPResourceId scriptResourceId = HAPFactoryResourceId.tryNewInstance(HAPConstantShared.RUNTIME_RESOURCE_TYPE_SCRIPT, null, scriptObj, false);
+	    		brickDefinition.setAttributeValueWithValue(HAPWithScriptReference.SCRIPTRESOURCEID, scriptResourceId);
+	        }
+			
+		}
+	}
 
 	protected void parseDefinitionContentHtml(HAPManualDefinitionBrick brickManual, Object obj, HAPManualDefinitionContextParse parseContext) {}
 

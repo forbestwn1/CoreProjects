@@ -1,12 +1,12 @@
 package com.nosliw.core.application.division.manual.brick.service.provider;
 
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.core.application.brick.HAPEnumBrickType;
 import com.nosliw.core.application.division.manual.core.HAPManualManagerBrick;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionBrick;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionContextParse;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionPluginParserBrickImpSimple;
-import com.nosliw.core.xxx.application1.brick.HAPEnumBrickType;
-import com.nosliw.data.core.runtime.HAPRuntimeEnvironment;
+import com.nosliw.core.xxx.runtimeenv.HAPRuntimeEnvironment;
 
 public class HAPManualPluginParserBlockServiceProvider extends HAPManualDefinitionPluginParserBrickImpSimple{
 
@@ -15,7 +15,7 @@ public class HAPManualPluginParserBlockServiceProvider extends HAPManualDefiniti
 	}
 	
 	@Override
-	protected void parseDefinitionContentJson(HAPManualDefinitionBrick entityDefinition, Object jsonValue, HAPManualDefinitionContextParse parseContext) {
+	protected void parseSimpleDefinitionContentJson(HAPManualDefinitionBrick entityDefinition, Object jsonValue, HAPManualDefinitionContextParse parseContext) {
 		HAPManualDefinitionBlockSimpleServiceProvider entity = (HAPManualDefinitionBlockSimpleServiceProvider)entityDefinition;
 		entity.buildObject(jsonValue, HAPSerializationFormat.JSON);
 	}

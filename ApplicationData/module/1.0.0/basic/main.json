@@ -7,11 +7,9 @@
 	
 	    "task" : [
 	        {
-	    		"info": {
-		    		"name" : "navigation",
-			    	"status": "disabled1",
-				    "description" : ""
-			    },
+	    		"name" : "navigation",
+		    	"status": "disabled1",
+			    "description" : "",
         		"brickType" : {
 		    	    "brickType" : "taskTaskScript",
 			        "version" : "1.0.0"
@@ -24,11 +22,9 @@
 		        }
 	        },
 	        {
-	    		"info": {
-		    		"name" : "nosliw_init",
-			    	"status": "disabled1",
-				    "description" : ""
-			    },
+	    		"name" : "nosliw_init",
+		    	"status": "disabled1",
+			    "description" : "",
         		"brickType" : {
 		    	    "brickType" : "taskTaskScript",
 			        "version" : "1.0.0"

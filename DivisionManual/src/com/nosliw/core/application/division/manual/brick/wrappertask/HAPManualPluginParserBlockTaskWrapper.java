@@ -18,7 +18,7 @@ public class HAPManualPluginParserBlockTaskWrapper extends HAPManualDefinitionPl
 	}
 	
 	@Override
-	protected void parseDefinitionContentJson(HAPManualDefinitionBrick entityDefinition, Object jsonValue, HAPManualDefinitionContextParse parseContext) {
+	protected void parseSimpleDefinitionContentJson(HAPManualDefinitionBrick entityDefinition, Object jsonValue, HAPManualDefinitionContextParse parseContext) {
 		JSONObject jsonObj = (JSONObject)jsonValue;
 	
 		HAPManualDefinitionBlockTaskWrapper taskWrapperDef = (HAPManualDefinitionBlockTaskWrapper)entityDefinition;

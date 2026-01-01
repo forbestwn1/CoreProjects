@@ -19,7 +19,7 @@ public class HAPManualPluginParserBlockDataExpressionLibrary extends HAPManualDe
 	}
 
 	@Override
-	protected void parseDefinitionContentJson(HAPManualDefinitionBrick entityDefinition, Object jsonValue, HAPManualDefinitionContextParse parseContext) {
+	protected void parseSimpleDefinitionContentJson(HAPManualDefinitionBrick entityDefinition, Object jsonValue, HAPManualDefinitionContextParse parseContext) {
 		HAPManualDefinitionBlockDataExpressionLibrary dataExpressionLibrary = (HAPManualDefinitionBlockDataExpressionLibrary)entityDefinition;
 
 		JSONArray dataExpressionArray = (JSONArray)jsonValue;

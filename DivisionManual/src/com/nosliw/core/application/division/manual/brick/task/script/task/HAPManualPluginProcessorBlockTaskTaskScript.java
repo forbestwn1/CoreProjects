@@ -22,6 +22,7 @@ public class HAPManualPluginProcessorBlockTaskTaskScript extends HAPManualPlugin
 		HAPManualBlockTaskTaskScript executableBlock = (HAPManualBlockTaskTaskScript)blockPair.getRight();
 
 		executableBlock.setScriptResourceId(definitionBlock.getScriptResourceId());
+		executableBlock.setParms(definitionBlock.getParms());
 	}
 
 	@Override

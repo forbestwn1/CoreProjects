@@ -22,7 +22,7 @@ public class HAPManualPluginParserAdapterDataAssociationForExpression  extends H
 	}
 	
 	@Override
-	protected void parseDefinitionContentJson(HAPManualDefinitionBrick brickManual, Object jsonValue, HAPManualDefinitionContextParse parseContext) {
+	protected void parseSimpleDefinitionContentJson(HAPManualDefinitionBrick brickManual, Object jsonValue, HAPManualDefinitionContextParse parseContext) {
 		HAPManualDefinitionAdapterDataAssociationForExpression entity = (HAPManualDefinitionAdapterDataAssociationForExpression)brickManual;
 		JSONObject daJsonObj =  ((JSONObject)jsonValue).optJSONObject(HAPManualDefinitionAdapterDataAssociationForExpression.DEFINITION);
 		HAPDefinitionDataAssociationForExpression dataAssociationForExpression = HAPDefinitionParserDataAssociationForExpression.parse(daJsonObj, this.m_dataRuleMan);

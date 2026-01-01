@@ -22,12 +22,12 @@ public class HAPManualDefinitionBlockModule extends HAPManualDefinitionBrick{
 	}
 
 	public HAPManualDefinitionBrickContainer getTasks() {   return (HAPManualDefinitionBrickContainer)this.getAttributeValueOfBrick(HAPBlockModule.TASK);   }
-	public void addTask(HAPEntityOrReference task) {    this.getTasks().addElementWithBrickOrReference(task);    }
+	public void addTask(HAPManualDefinitionBrick taskBrickWrapper) {    this.getTasks().addElementWithBrick(taskBrickWrapper);    }
 	
+	public HAPManualDefinitionBrickContainer getPages() {   return (HAPManualDefinitionBrickContainer)this.getAttributeValueOfBrick(HAPBlockModule.PAGE);   }
+	public void addPage(HAPManualDefinitionBrick page) {    this.getPages().addElementWithBrick(page);    }
+
 	public HAPManualDefinitionBrickContainer getCommands() {   return (HAPManualDefinitionBrickContainer)this.getAttributeValueOfBrick(HAPBlockModule.COMMAND);   }
 	public void addCommand(HAPEntityOrReference command) {    this.getCommands().addElementWithBrickOrReference(command);    }
-
-	public HAPManualDefinitionBrickContainer getPages() {   return (HAPManualDefinitionBrickContainer)this.getAttributeValueOfBrick(HAPBlockModule.PAGE);   }
-	public void addPage(HAPEntityOrReference page) {    this.getPages().addElementWithBrickOrReference(page);    }
 
 }

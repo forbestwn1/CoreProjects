@@ -22,7 +22,7 @@ public class HAPManualPluginParserBlockSimpleInteractiveInterfaceExpression exte
 	}
 	
 	@Override
-	protected void parseDefinitionContentJson(HAPManualDefinitionBrick entityDefinition, Object jsonValue, HAPManualDefinitionContextParse parseContext) {
+	protected void parseSimpleDefinitionContentJson(HAPManualDefinitionBrick entityDefinition, Object jsonValue, HAPManualDefinitionContextParse parseContext) {
 		HAPManualDefinitionBlockInteractiveInterfaceExpression expressionInteractiveDef = (HAPManualDefinitionBlockInteractiveInterfaceExpression)entityDefinition;
 		
 		JSONObject jsonObj = (JSONObject)jsonValue;

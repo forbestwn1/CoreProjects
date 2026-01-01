@@ -2,7 +2,6 @@ package com.nosliw.core.application.division.manual.brick.dataexpression.lib;
 
 import org.json.JSONObject;
 
-import com.nosliw.common.info.HAPUtilityEntityInfo;
 import com.nosliw.core.application.HAPManagerApplicationBrick;
 import com.nosliw.core.application.brick.HAPEnumBrickType;
 import com.nosliw.core.application.common.dataexpression.definition.HAPDefinitionDataExpressionStandAlone;
@@ -30,11 +29,9 @@ public class HAPManualPluginParserBlockDataExpressionElementInLibrary extends HA
 	}
 	
 	@Override
-	protected void parseDefinitionContentJson(HAPManualDefinitionBrick brickDefinition, Object jsonValue, HAPManualDefinitionContextParse parseContext) {
+	protected void parseSimpleDefinitionContentJson(HAPManualDefinitionBrick brickDefinition, Object jsonValue, HAPManualDefinitionContextParse parseContext) {
 		HAPManualDefinitionBlockDataExpressionElementInLibrary brick = (HAPManualDefinitionBlockDataExpressionElementInLibrary)brickDefinition;
 
-		HAPUtilityEntityInfo.buildEntityInfoByJson(jsonValue, brick);
-		
 		HAPDefinitionDataExpressionStandAlone value = HAPDefinitionDataExpressionStandAlone.parse((JSONObject)jsonValue, m_dataRuleMan);  
 		value.setExpression(this.m_dataExpressionParser.parseExpression(value.getExpressionStr()));
 		

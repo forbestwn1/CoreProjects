@@ -29,7 +29,7 @@ public class HAPManualPluginParserBlockDataExpressionStandAlone extends HAPManua
 	}
 	
 	@Override
-	protected void parseDefinitionContentJson(HAPManualDefinitionBrick brickDefinition, Object jsonValue, HAPManualDefinitionContextParse parseContext) {
+	protected void parseSimpleDefinitionContentJson(HAPManualDefinitionBrick brickDefinition, Object jsonValue, HAPManualDefinitionContextParse parseContext) {
 		HAPManualDefinitionBlockDataExpressionStandAlone brick = (HAPManualDefinitionBlockDataExpressionStandAlone)brickDefinition;
 
 		HAPDefinitionDataExpressionStandAlone value = HAPDefinitionDataExpressionStandAlone.parse((JSONObject)jsonValue, m_dataRuleMan); 
