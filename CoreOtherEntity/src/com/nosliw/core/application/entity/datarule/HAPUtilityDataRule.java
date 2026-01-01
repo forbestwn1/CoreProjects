@@ -3,6 +3,7 @@ package com.nosliw.core.application.entity.datarule;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.nosliw.common.parm.HAPWithParms;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.common.datadefinition.HAPDataDefinitionReadonly;
 import com.nosliw.core.application.common.datadefinition.HAPDefinitionParm;
@@ -16,6 +17,11 @@ import com.nosliw.core.data.criteria.HAPDataTypeCriteriaId;
 
 public class HAPUtilityDataRule {
 
+	public static void setRuleDefParm(HAPWithParms withParms, HAPDataRule dataRule) {
+		withParms.getParms().setParm(HAPConstantShared.PARM_RULETASK_RULEDEF, dataRule);
+	}
+	
+	
 	public static HAPInteractiveExpression buildExpressionInterface(HAPDataTypeCriteria dataCriteria) {
 		HAPDefinitionParm parm = new HAPDefinitionParm();
 		parm.getDataDefinition().setCriteria(dataCriteria);

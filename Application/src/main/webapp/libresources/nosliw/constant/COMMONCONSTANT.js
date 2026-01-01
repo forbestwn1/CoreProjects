@@ -654,7 +654,8 @@ var COMMONCONSTANT=
   "VALUEADDRESSCATEGARY_TASKCONTEXT": "taskContext",
   "VALUEADDRESSCATEGARY_FLOWCONTEXT": "flowContext",
   "EVENT_HANDLERTYPE_TASK": "task",
-  "EVENT_HANDLERTYPE_SCRIPT": "script"
+  "EVENT_HANDLERTYPE_SCRIPT": "script",
+  "PARM_RULETASK_RULEDEF": "ruleDef"
 };
 
 //*******************************************   End Node Definition  ************************************** 	

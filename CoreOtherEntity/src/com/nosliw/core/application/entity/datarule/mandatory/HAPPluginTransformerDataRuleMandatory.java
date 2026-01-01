@@ -6,6 +6,7 @@ import com.nosliw.core.application.HAPDomainValueStructure;
 import com.nosliw.core.application.brick.task.script.task.HAPBlockTaskTaskScriptImp;
 import com.nosliw.core.application.entity.datarule.HAPDataRule;
 import com.nosliw.core.application.entity.datarule.HAPPluginTransformerDataRuleImp;
+import com.nosliw.core.application.entity.datarule.HAPUtilityDataRule;
 import com.nosliw.core.resource.HAPFactoryResourceId;
 
 public class HAPPluginTransformerDataRuleMandatory extends HAPPluginTransformerDataRuleImp{
@@ -21,8 +22,8 @@ public class HAPPluginTransformerDataRuleMandatory extends HAPPluginTransformerD
 		
 		out.setScriptResourceId(HAPFactoryResourceId.newInstance(HAPConstantShared.RUNTIME_RESOURCE_TYPE_SCRIPT, "1.0.0", "task_datavalidation_mandatory"));
 		
-		out.setExtra(dataRule);
-		
+		HAPUtilityDataRule.setRuleDefParm(out, dataRule);
+
 		return out;
 	}
 

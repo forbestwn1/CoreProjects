@@ -2,6 +2,7 @@ package com.nosliw.core.application.division.manual.core.definition;
 
 import org.json.JSONObject;
 
+import com.nosliw.common.parm.HAPWithParms;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.HAPIdBrickType;
 import com.nosliw.core.application.HAPManagerApplicationBrick;
@@ -28,6 +29,11 @@ public class HAPManualDefinitionPluginParserBrickImpComplex extends HAPManualDef
 		parseBrickAttributeJson(brickDefinition, jsonObj, HAPWithValueContext.VALUECONTEXT, HAPManualEnumBrickType.VALUECONTEXT_100, null, parseContext);	
 		
 //		this.parseSimpleEntityAttributeJson(jsonObj, entityId, HAPWithAttachment.ATTACHMENT, HAPConstantShared.RUNTIME_RESOURCE_TYPE_ATTACHMENT, null, parserContext);
+		
+		//parms
+        if(brickDefinition instanceof HAPWithParms) {
+        	this.parseParmsAttribute((HAPWithParms)brickDefinition, jsonObj);
+        }
 		
 		//task interface
         if(brickDefinition instanceof HAPWithBlockInteractiveTask) {

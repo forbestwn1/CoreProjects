@@ -1097,6 +1097,9 @@
 			<definition name="EVENT_HANDLERTYPE_TASK" value="task"/>
 			<definition name="EVENT_HANDLERTYPE_SCRIPT" value="script"/>
 
+			<definition type="space"/>
+			<definition name="PARM_RULETASK_RULEDEF" value="ruleDef"/>
+
 		</definitions>
 	</constants>
 </root>

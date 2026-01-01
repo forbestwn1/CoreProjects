@@ -18,7 +18,7 @@
 		        },
 		        "brick" : {
     				"scriptResourceId": "task_task_navigation",
-    				"extra": {
+    				"parm": {
     				    "page" : "page2inmodule"
     				}
 		        }
@@ -35,7 +35,7 @@
 		        },
 		        "brick" : {
     				"scriptResourceId": "task_task_presentpage",
-    				"extra": {
+    				"parm": {
     				    "page" : "page1inmodule"
     				}
 		        }

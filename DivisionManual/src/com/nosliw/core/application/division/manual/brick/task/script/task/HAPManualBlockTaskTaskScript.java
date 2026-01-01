@@ -1,6 +1,8 @@
 package com.nosliw.core.application.division.manual.brick.task.script.task;
 
 import com.nosliw.common.interfac.HAPEntityOrReference;
+import com.nosliw.common.parm.HAPParms;
+import com.nosliw.common.parm.HAPWithParms;
 import com.nosliw.core.application.brick.task.script.task.HAPBlockTaskTaskScript;
 import com.nosliw.core.application.division.manual.core.HAPManualBrickImp;
 import com.nosliw.core.resource.HAPResourceId;
@@ -22,7 +24,9 @@ public class HAPManualBlockTaskTaskScript extends HAPManualBrickImp implements H
 	public void setScriptResourceId(HAPResourceId resourceId) {    this.setAttributeValueWithValue(SCRIPTRESOURCEID, resourceId);  }
 	
 	@Override
-	public Object getExtra() {   return this.getAttributeValueOfValue(EXTRA);  }
-	public void setExtra(Object extra) {    this.setAttributeValueWithValue(EXTRA, extra);  }
+	public HAPParms getParms() {   return (HAPParms)this.getAttributeValueOfValue(HAPWithParms.PARM);  }
+	@Override
+	public void setParms(HAPParms parms) {   this.setAttributeValueWithValue(HAPWithParms.PARM, parms);  }
+
 }
  

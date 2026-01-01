@@ -1068,4 +1068,8 @@ public class HAPConstantShared {
 		public static final String EVENT_HANDLERTYPE_SCRIPT = "script";
 
 
+
+		public static final String PARM_RULETASK_RULEDEF = "ruleDef";
+
+
 }

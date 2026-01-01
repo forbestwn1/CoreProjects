@@ -41,6 +41,12 @@ var node_complexEntityUtility = function(){
 	};
 
 	var loc_out = {
+		
+		getParmValue : function(brickDef, parmName){
+          	var parms = brickDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.WITHPARMS_PARM);
+			return parms[parmName];
+		},
+		
 		//find all resourc id attibute, do preinit, build adapter
 		getBuildAttributeWithResourceId : function(entityCore, handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);

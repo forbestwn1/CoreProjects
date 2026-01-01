@@ -7,6 +7,9 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.nosliw.common.info.HAPUtilityEntityInfo;
+import com.nosliw.common.parm.HAPManagerParm;
+import com.nosliw.common.parm.HAPParms;
+import com.nosliw.common.parm.HAPWithParms;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.utils.HAPConstantShared;
@@ -47,6 +50,12 @@ public class HAPManualDefinitionPluginParserBrickImp implements HAPManualDefinit
 			out = this.m_brickClass.newInstance();
 			out.setManualBrickManager(this.getManualDivisionBrickManager());
 			out.setBrickManager(this.getBrickManager());
+
+			//create parms attribute
+			if(out instanceof HAPWithParms) {
+				((HAPWithParms)out).setParms(new HAPParms());
+			}
+			
 			out.init();
 		}
 		catch(Exception e) {
@@ -150,6 +159,16 @@ public class HAPManualDefinitionPluginParserBrickImp implements HAPManualDefinit
 		}
 	}
 
+	//parse parm attribute
+	protected void parseParmsAttribute(HAPWithParms parentBrick, JSONObject attrEntityObj) {
+		JSONObject parmJsonObj = attrEntityObj.optJSONObject(HAPWithParms.PARM);
+		if(parmJsonObj!=null) {
+			HAPParms parms = HAPManagerParm.getInstance().parseParms(parmJsonObj);
+			parentBrick.setParms(parms);
+		}
+	}
+	
+	
 	//parse task interface
 	protected void parseTaskInterfaceAttribute(HAPManualDefinitionBrick parentBrick, JSONObject attrEntityObj, HAPManualDefinitionContextParse parserContext) {
 		this.parseBrickAttributeJson(parentBrick, attrEntityObj, HAPWithBlockInteractiveTask.TASKINTERFACE, HAPEnumBrickType.INTERACTIVETASKINTERFACE_100, null, parserContext);

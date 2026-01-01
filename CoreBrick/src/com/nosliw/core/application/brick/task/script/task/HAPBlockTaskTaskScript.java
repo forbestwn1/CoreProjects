@@ -1,18 +1,13 @@
 package com.nosliw.core.application.brick.task.script.task;
 
-import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
+import com.nosliw.common.parm.HAPWithParms;
 import com.nosliw.core.application.HAPBrick;
 import com.nosliw.core.application.common.interactive.HAPWithBlockInteractiveTask;
 import com.nosliw.core.application.entity.script.HAPWithScriptReference;
 
 @HAPEntityWithAttribute
-public interface HAPBlockTaskTaskScript extends HAPBrick, HAPWithBlockInteractiveTask, HAPWithScriptReference{
+public interface HAPBlockTaskTaskScript extends HAPBrick, HAPWithBlockInteractiveTask, HAPWithScriptReference, HAPWithParms{
 
-	@HAPAttribute
-	public static String EXTRA = "extra";
-	
-	Object getExtra();
-	
 }
 

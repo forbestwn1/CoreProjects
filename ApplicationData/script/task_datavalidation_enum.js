@@ -57,7 +57,7 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 				success : function(request, dataValue){
 					var value = dataValue==undefined? undefined : dataValue.value;
 					
-            		var dataRuleDef = loc_complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.BLOCKTASKTASKSCRIPT_EXTRA);
+            		var dataRuleDef = node_complexEntityUtility.getParmValue(loc_complexEntityDef, node_COMMONCONSTANT.PARM_RULETASK_RULEDEF); 
 					var enumDataSet = dataRuleDef[node_COMMONATRIBUTECONSTANT.DATARULEENUM_DATASET];
 					
 					if(enumDataSet==undefined){

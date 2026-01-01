@@ -4,7 +4,6 @@ import org.json.JSONObject;
 
 import com.nosliw.core.application.HAPManagerApplicationBrick;
 import com.nosliw.core.application.brick.HAPEnumBrickType;
-import com.nosliw.core.application.brick.task.script.task.HAPBlockTaskTaskScript;
 import com.nosliw.core.application.division.manual.core.HAPManualManagerBrick;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionBrick;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionContextParse;
@@ -20,9 +19,5 @@ public class HAPManualPluginParserBlockTaskTaskScript extends HAPManualDefinitio
 	protected void parseComplexDefinitionContentJson(HAPManualDefinitionBrick entityDefinition, JSONObject jsonObj, HAPManualDefinitionContextParse parseContext) {
 		HAPManualDefinitionBlockTaskTaskScript taskBrick = (HAPManualDefinitionBlockTaskTaskScript)entityDefinition;
 
-		JSONObject extraJsonObj = jsonObj.optJSONObject(HAPBlockTaskTaskScript.EXTRA);
-		if(extraJsonObj!=null) {
-			taskBrick.setExtra(extraJsonObj);
-		}
 	}
 }
