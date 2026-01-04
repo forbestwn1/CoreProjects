@@ -15,24 +15,24 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.core.application.entity.datarule.HAPManagerDataRule;
 
 @HAPEntityWithAttribute
-public class HAPContainerInfoDynamic extends HAPSerializableImp{
+public class HAPDynamicDefinitionContainer extends HAPSerializableImp{
 
 	@HAPAttribute
 	public static final String ELEMENT = "element";
 	
-	private Map<String, HAPInfoDynamic> m_elements;
+	private Map<String, HAPDynamicDefinitionItem> m_elements;
 
-	public HAPContainerInfoDynamic() {
-		this.m_elements = new LinkedHashMap<String, HAPInfoDynamic>();
+	public HAPDynamicDefinitionContainer() {
+		this.m_elements = new LinkedHashMap<String, HAPDynamicDefinitionItem>();
 	}
 	
-	public void addElement(HAPInfoDynamic ele) {
+	public void addElement(HAPDynamicDefinitionItem ele) {
 		this.m_elements.put(ele.getName(), ele);
 	}
 
-	public HAPInfoDynamic getDescent(String path) {
+	public HAPDynamicDefinitionItem getDescent(String path) {
 		HAPComplexPath complexPath = new HAPComplexPath(path);
-		HAPInfoDynamic out = this.m_elements.get(complexPath.getRoot());
+		HAPDynamicDefinitionItem out = this.m_elements.get(complexPath.getRoot());
 		
 		for(String seg : complexPath.getPathSegs()) {
 			out = out.getChild(seg);
@@ -46,21 +46,20 @@ public class HAPContainerInfoDynamic extends HAPSerializableImp{
 		jsonMap.put(ELEMENT, HAPManagerSerialize.getInstance().toStringValue(m_elements, HAPSerializationFormat.JSON));
 	}
 	
-	public static HAPContainerInfoDynamic parse(Object json, HAPManagerDataRule dataRuleMan) {
-		HAPContainerInfoDynamic out = new HAPContainerInfoDynamic();
+	public static HAPDynamicDefinitionContainer parse(Object json, HAPDynamicDefinitionContainer dynamicInfo, HAPManagerDataRule dataRuleMan) {
 		if(json instanceof JSONArray) {
-			parseElements(out, (JSONArray)json, dataRuleMan);
+			parseElements(dynamicInfo, (JSONArray)json, dataRuleMan);
 		}
 		else if(json instanceof JSONObject) {
-			parseElements(out, ((JSONObject)json).optJSONArray(ELEMENT), dataRuleMan);
+			parseElements(dynamicInfo, ((JSONObject)json).optJSONArray(ELEMENT), dataRuleMan);
 		}
-		return out;
+		return dynamicInfo;
 	}
 
-	private static void parseElements(HAPContainerInfoDynamic out, JSONArray jsonArray, HAPManagerDataRule dataRuleMan) {
+	private static void parseElements(HAPDynamicDefinitionContainer out, JSONArray jsonArray, HAPManagerDataRule dataRuleMan) {
 		if(jsonArray!=null) {
 			for(int i=0; i<jsonArray.length(); i++) {
-				out.addElement(HAPInfoDynamic.parse(jsonArray.get(i), dataRuleMan));
+				out.addElement(HAPDynamicDefinitionItem.parse(jsonArray.get(i), dataRuleMan));
 			}
 		}
 	}

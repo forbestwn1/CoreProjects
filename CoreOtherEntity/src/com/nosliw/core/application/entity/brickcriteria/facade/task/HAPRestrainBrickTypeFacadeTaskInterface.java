@@ -1,4 +1,4 @@
-package com.nosliw.core.application.common.dynamiccriteria;
+package com.nosliw.core.application.entity.brickcriteria.facade.task;
 
 import org.json.JSONObject;
 
@@ -6,9 +6,10 @@ import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.core.application.HAPBrick;
 import com.nosliw.core.application.common.interactive.HAPInteractiveTask;
+import com.nosliw.core.application.entity.brickcriteria.facade.HAPRestrainBrickFacade;
 import com.nosliw.core.application.entity.datarule.HAPManagerDataRule;
 
-public class HAPRestrainBrickTypeFacadeTaskInterface extends HAPSerializableImp implements HAPRestrainBrickTypeFacade{
+public class HAPRestrainBrickTypeFacadeTaskInterface extends HAPSerializableImp implements HAPRestrainBrickFacade{
 
 	public final static String INTERFACE = "interface"; 
 	
@@ -26,7 +27,7 @@ public class HAPRestrainBrickTypeFacadeTaskInterface extends HAPSerializableImp 
 
 	@Override
 	public String getType() {
-		return HAPRestrainBrickTypeFacade.TYPE_RESTRAIN_TASK_INTERFACE;
+		return HAPRestrainBrickFacade.TYPE_RESTRAIN_TASK_INTERFACE;
 	}
 	
 	public static HAPRestrainBrickTypeFacadeTaskInterface parse(JSONObject jsonObj, HAPManagerDataRule dataRuleMan) {

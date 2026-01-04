@@ -11,8 +11,8 @@ import com.nosliw.core.application.HAPUtilityBrick;
 import com.nosliw.core.application.HAPUtilityBrickReference;
 import com.nosliw.core.application.HAPUtilityBundle;
 import com.nosliw.core.application.HAPWrapperValueOfReferenceResource;
-import com.nosliw.core.application.dynamic.HAPInputDynamic;
-import com.nosliw.core.application.dynamic.HAPInputDynamicSingle;
+import com.nosliw.core.application.dynamic.HAPDynamicExecuteInputItem;
+import com.nosliw.core.application.dynamic.HAPDynamicExecuteInputItemSingle;
 
 public class HAPManualUtilityProcessBrickPath {
 
@@ -57,10 +57,10 @@ public class HAPManualUtilityProcessBrickPath {
 				HAPAttributeInBrick attr = HAPUtilityBrick.getDescendantAttribute(bundle, path);
 				if(attr.getValueWrapper().getValueType().equals(HAPConstantShared.ENTITYATTRIBUTE_VALUETYPE_RESOURCEID)) {
 					HAPWrapperValueOfReferenceResource resourceIdWrapper = (HAPWrapperValueOfReferenceResource)attr.getValueWrapper();
-					for(HAPInputDynamic taskRef : resourceIdWrapper.getDynamicTaskInput().getDyanmicTaskReference().values()) {
+					for(HAPDynamicExecuteInputItem taskRef : resourceIdWrapper.getDynamicTaskInput().getDyanmicTaskReference().values()) {
 						switch(taskRef.getType()) {
 						case HAPConstantShared.DYNAMICTASK_REF_TYPE_SINGLE:
-							HAPInputDynamicSingle simpleDynamicTask = (HAPInputDynamicSingle)taskRef;
+							HAPDynamicExecuteInputItemSingle simpleDynamicTask = (HAPDynamicExecuteInputItemSingle)taskRef;
 							normalizeBrickReferenceInBundle(simpleDynamicTask.getTaskId(), path, false, processContext);
 							break;
 						}

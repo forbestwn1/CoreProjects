@@ -28,24 +28,24 @@ import com.nosliw.core.application.division.manual.core.definition.HAPManualDefi
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionWrapperValue;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionWrapperValueBrick;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionWrapperValueReferenceResource;
-import com.nosliw.core.application.dynamic.HAPInputDynamic;
+import com.nosliw.core.application.dynamic.HAPDynamicExecuteInputItem;
 import com.nosliw.core.xxx.application.division.manual.core.definition1.HAPManualDefinitionWrapperValueDynamic;
 
-public class HAPManualProcessProcessorInit {
+public class HAPManualUtilityProcessorInit {
 
 	public static HAPManualWrapperBrickRoot process(HAPManualDefinitionWrapperBrickRoot rootBrickDefWrapper, HAPManualContextProcessBrick processContext) {
 		HAPManualDefinitionBrick brickDef = rootBrickDefWrapper.getBrick();
 		//build executable tree
-		HAPManualWrapperBrickRoot out = new HAPManualWrapperBrickRoot(HAPManualProcessProcessorInit.buildExecutableTree(brickDef, processContext));
+		HAPManualWrapperBrickRoot out = new HAPManualWrapperBrickRoot(HAPManualUtilityProcessorInit.buildExecutableTree(brickDef, processContext));
 		out.setName(processContext.getRootBrickName());
 		out.setDefinition(rootBrickDefWrapper);
 		processContext.getCurrentBundle().addRootBrickWrapper(out);
 		
 		//brick init
-		HAPManualProcessProcessorInit.initBricks(processContext);
+		HAPManualUtilityProcessorInit.initBricks(processContext);
 
 		//init
-		HAPManualProcessProcessorInit.processComplexBrickInit(processContext);
+		HAPManualUtilityProcessorInit.processComplexBrickInit(processContext);
 		return out;
 	}
 	
@@ -79,7 +79,7 @@ public class HAPManualProcessProcessorInit {
 					//resource reference
 					HAPManualDefinitionWrapperValueReferenceResource resourceRefValueDef = (HAPManualDefinitionWrapperValueReferenceResource)attrValueInfo;
 					HAPWrapperValueOfReferenceResource resourceRefValue = new HAPWrapperValueOfReferenceResource(resourceRefValueDef.getResourceId());
-					for(HAPInputDynamic dynamicTask : resourceRefValueDef.getDyanmicInput().getDyanmicTaskReference().values()) {
+					for(HAPDynamicExecuteInputItem dynamicTask : resourceRefValueDef.getDyanmicInput().getDyanmicTaskReference().values()) {
 						resourceRefValue.getDynamicTaskInput().addDynamicTaskReference(dynamicTask);
 					}
 					attrExe.setValueWrapper(resourceRefValue);

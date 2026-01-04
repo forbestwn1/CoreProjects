@@ -41,7 +41,7 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 		updateView : function(view){
 		},
 
-		getTaskExecuteRequest : function(handlers, request){
+		getTaskExecuteRequest : function(taskRuntimeEnv, handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 			var valuePortContainer = node_getEntityObjectInterface(loc_out).getInternalValuePortContainer();
 			var withValuePort = loc_envInterface[node_CONSTANT.INTERFACE_WITHVALUEPORT];

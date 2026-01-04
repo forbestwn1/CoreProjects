@@ -13,24 +13,24 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.entity.datarule.HAPManagerDataRule;
 
 @HAPEntityWithAttribute
-public class HAPInfoDynamicNode extends HAPInfoDynamic{
+public class HAPDynamicDefinitionItemNode extends HAPDynamicDefinitionItem{
 
 	@HAPAttribute
 	public static final String CHILD = "child";
 	
-	private Map<String, HAPInfoDynamic> m_children;
+	private Map<String, HAPDynamicDefinitionItem> m_children;
 	
 	@Override
 	public String getType() {
-		return HAPConstantShared.DYNAMICTASK_INFO_TYPE_NODE;
+		return HAPConstantShared.DYNAMICDEFINITION_ITEMTYPE_NODE;
 	}
 	
-	public void addChild(HAPInfoDynamic child) {
+	public void addChild(HAPDynamicDefinitionItem child) {
 		this.m_children.put(child.getId(), child);
 	}
 	
 	@Override
-	public HAPInfoDynamic getChild(String childName) {   return this.m_children.get(childName);     }
+	public HAPDynamicDefinitionItem getChild(String childName) {   return this.m_children.get(childName);     }
 
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
@@ -38,13 +38,13 @@ public class HAPInfoDynamicNode extends HAPInfoDynamic{
 		jsonMap.put(CHILD, HAPManagerSerialize.getInstance().toStringValue(this.m_children.values(), HAPSerializationFormat.JSON));
 	}
 
-	public static HAPInfoDynamicNode parseNode(JSONObject jsonObj, HAPManagerDataRule dataRuleMan) {
-		HAPInfoDynamicNode out = new HAPInfoDynamicNode();
-		HAPInfoDynamic.parseToDynamicInfo(out, jsonObj);
+	public static HAPDynamicDefinitionItemNode parseNode(JSONObject jsonObj, HAPManagerDataRule dataRuleMan) {
+		HAPDynamicDefinitionItemNode out = new HAPDynamicDefinitionItemNode();
+		HAPDynamicDefinitionItem.parseToDynamicInfo(out, jsonObj);
 		
 		JSONArray childArray = jsonObj.getJSONArray(CHILD);
 		for(int i=0; i<childArray.length(); i++) {
-			out.addChild(HAPInfoDynamic.parse(childArray.getJSONObject(i), dataRuleMan));
+			out.addChild(HAPDynamicDefinitionItem.parse(childArray.getJSONObject(i), dataRuleMan));
 		}
 		
 		return out;

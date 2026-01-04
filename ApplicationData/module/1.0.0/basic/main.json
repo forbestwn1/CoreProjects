@@ -15,7 +15,7 @@
 			        "version" : "1.0.0"
 		        },
 		        "brick" : {
-    				"scriptResourceId": "task_task_navigation",
+    				"scriptResourceId": "task_page_navigation",
     				"parm": {
     				    "page" : "page2inmodule"
     				}
@@ -30,7 +30,7 @@
 			        "version" : "1.0.0"
 		        },
 		        "brick" : {
-    				"scriptResourceId": "task_task_presentpage",
+    				"scriptResourceId": "task_page_present",
     				"parm": {
     				    "page" : "page1inmodule"
     				}

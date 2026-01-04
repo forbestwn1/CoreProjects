@@ -1,12 +1,13 @@
-package com.nosliw.core.application.common.dynamiccriteria;
+package com.nosliw.core.application.entity.brickcriteria.facade;
 
 import org.json.JSONObject;
 
 import com.nosliw.common.serialization.HAPSerializable;
 import com.nosliw.core.application.HAPBrick;
+import com.nosliw.core.application.entity.brickcriteria.facade.task.HAPRestrainBrickTypeFacadeTaskInterface;
 import com.nosliw.core.application.entity.datarule.HAPManagerDataRule;
 
-public interface HAPRestrainBrickTypeFacade extends HAPSerializable{
+public interface HAPRestrainBrickFacade extends HAPSerializable{
 
 	public final static String TYPE = "type"; 
 
@@ -16,8 +17,8 @@ public interface HAPRestrainBrickTypeFacade extends HAPSerializable{
 	
 	String[] isValid(HAPBrick brick);
 	
-	public static HAPRestrainBrickTypeFacade parseBrickTypeFacadeRestrain(JSONObject jsonObj, HAPManagerDataRule dataRuleMan) {
-		HAPRestrainBrickTypeFacade out = null;
+	public static HAPRestrainBrickFacade parseBrickTypeFacadeRestrain(JSONObject jsonObj, HAPManagerDataRule dataRuleMan) {
+		HAPRestrainBrickFacade out = null;
 		
 		String type = jsonObj.getString(TYPE);
 		

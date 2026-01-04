@@ -7,7 +7,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.core.application.dynamic.HAPContainerInputDynamic;
+import com.nosliw.core.application.dynamic.HAPDynamicExecuteInputContainer;
 import com.nosliw.core.resource.HAPResourceDependency;
 import com.nosliw.core.resource.HAPResourceId;
 import com.nosliw.core.runtime.HAPRuntimeInfo;
@@ -23,12 +23,12 @@ public class HAPWrapperValueOfReferenceResource extends HAPWrapperValue{
 	private HAPResourceId m_resourceId;
 	
 	//for resource need dynamic input
-	private HAPContainerInputDynamic m_dynamicInput;
+	private HAPDynamicExecuteInputContainer m_dynamicInput;
 	
 	public HAPWrapperValueOfReferenceResource(HAPResourceId resourceId) {
 		super(HAPConstantShared.ENTITYATTRIBUTE_VALUETYPE_RESOURCEID);
 		this.m_resourceId = resourceId;
-		this.m_dynamicInput = new HAPContainerInputDynamic();
+		this.m_dynamicInput = new HAPDynamicExecuteInputContainer();
 	}
 	
 	@Override
@@ -36,7 +36,7 @@ public class HAPWrapperValueOfReferenceResource extends HAPWrapperValue{
 
 	public HAPResourceId getResourceId() {    return this.m_resourceId;     }
 	
-	public HAPContainerInputDynamic getDynamicTaskInput(){    return this.m_dynamicInput;        }
+	public HAPDynamicExecuteInputContainer getDynamicTaskInput(){    return this.m_dynamicInput;        }
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){

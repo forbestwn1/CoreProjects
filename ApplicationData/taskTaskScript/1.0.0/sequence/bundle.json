@@ -1,0 +1,14 @@
+{
+	"dynamic" : [
+		{
+			"name" : "task",	
+			"type" : "set",
+			"criteria" : {
+				"type" : "facadeSimple",
+				"facade" : "task",
+				"restrain" : {
+				}
+			}	
+		}
+	]
+}

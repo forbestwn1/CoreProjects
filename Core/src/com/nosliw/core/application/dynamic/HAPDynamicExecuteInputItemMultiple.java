@@ -13,33 +13,33 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.HAPIdBrickInBundle;
 
-public class HAPInputDynamicMultiple extends HAPInputDynamic{
+public class HAPDynamicExecuteInputItemMultiple extends HAPDynamicExecuteInputItem{
 
 	@HAPAttribute
-	public final static String TASKIDS = "taskIds"; 
+	public final static String BRICKIDS = "brickIds"; 
 	
-	private List<HAPIdBrickInBundle> m_taskIds;
+	private List<HAPIdBrickInBundle> m_brickIds;
 	
-	public HAPInputDynamicMultiple() {
-		this.m_taskIds = new ArrayList<HAPIdBrickInBundle>();
+	public HAPDynamicExecuteInputItemMultiple() {
+		this.m_brickIds = new ArrayList<HAPIdBrickInBundle>();
 	}
 	
 	@Override
 	public String getType() {   return HAPConstantShared.DYNAMICTASK_REF_TYPE_MULTIPLE;  }
 
-	public List<HAPIdBrickInBundle> getTaskIds() {    return this.m_taskIds;     }
-	public void addTaskId(HAPIdBrickInBundle taskId) {    this.m_taskIds.add(taskId);      }
+	public List<HAPIdBrickInBundle> getBrickIds() {    return this.m_brickIds;     }
+	public void addBrickId(HAPIdBrickInBundle brickId) {    this.m_brickIds.add(brickId);      }
 	
 	@Override
 	protected boolean buildObjectByJson(Object json){
 		super.buildObjectByJson(json);
 		JSONObject jsonObj = (JSONObject)json;
 		
-		JSONArray taskIdJsonArray = jsonObj.getJSONArray(TASKIDS);
-		for(int i=0; i<taskIdJsonArray.length(); i++) {
-			HAPIdBrickInBundle taskId = new HAPIdBrickInBundle();
-			taskId.buildObject(taskIdJsonArray.getJSONObject(i), HAPSerializationFormat.JSON);
-			this.addTaskId(taskId);
+		JSONArray brickIdJsonArray = jsonObj.getJSONArray(BRICKIDS);
+		for(int i=0; i<brickIdJsonArray.length(); i++) {
+			HAPIdBrickInBundle brickId = new HAPIdBrickInBundle();
+			brickId.buildObject(brickIdJsonArray.getJSONObject(i), HAPSerializationFormat.JSON);
+			this.addBrickId(brickId);
 		}
 		return true;
 	}
@@ -47,7 +47,7 @@ public class HAPInputDynamicMultiple extends HAPInputDynamic{
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(TASKIDS, HAPManagerSerialize.getInstance().toStringValue(m_taskIds, HAPSerializationFormat.JSON));
+		jsonMap.put(BRICKIDS, HAPManagerSerialize.getInstance().toStringValue(m_brickIds, HAPSerializationFormat.JSON));
 	}
 
 }

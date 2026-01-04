@@ -9,16 +9,16 @@ import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.HAPIdBrickInBundle;
 
-public class HAPInputDynamicSingle extends HAPInputDynamic{
+public class HAPDynamicExecuteInputItemSingle extends HAPDynamicExecuteInputItem{
 
 	@HAPAttribute
 	public final static String BRICKID = "brickId"; 
 	
 	private HAPIdBrickInBundle m_brickId;
 	
-	public HAPInputDynamicSingle() {	}
+	public HAPDynamicExecuteInputItemSingle() {	}
 	
-	public HAPInputDynamicSingle(HAPIdBrickInBundle brickId) {
+	public HAPDynamicExecuteInputItemSingle(HAPIdBrickInBundle brickId) {
 		this.m_brickId = brickId;
 	}
 	

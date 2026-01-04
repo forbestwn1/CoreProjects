@@ -84,8 +84,8 @@ var node_taskExecuteUtility = function(){
 			}
 		}));
 		return out;		
-	};
-
+  };
+  
   var loc_out = {
 	  
 	registerTaskLifecycleEventListener : function(taskEntityCore, listenerEventObj, handler, thisContext){

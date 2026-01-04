@@ -15,7 +15,7 @@ import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.serialization.HAPUtilityJson;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.core.application.dynamic.HAPContainerInfoDynamic;
+import com.nosliw.core.application.dynamic.HAPDynamicDefinitionContainer;
 import com.nosliw.core.resource.HAPResourceDependency;
 import com.nosliw.core.resource.HAPResourceIdSimple;
 import com.nosliw.core.resource.HAPWithResourceDependency;
@@ -47,8 +47,8 @@ public class HAPBundle extends HAPSerializableImp implements HAPWithResourceDepe
 	//processed value structure
 	private HAPDomainValueStructure m_valueStructureDomain;
 	
-	//need task input during runtime
-	private HAPContainerInfoDynamic m_dynamicInfo;
+	//need dynamic input during runtime
+	private HAPDynamicDefinitionContainer m_dynamicInfo;
 	
 	private Object m_extraData;
 
@@ -59,7 +59,7 @@ public class HAPBundle extends HAPSerializableImp implements HAPWithResourceDepe
 		this.m_exportResourceInfos = new ArrayList<HAPInfoExportResource>();
 		this.m_branchBricks = new LinkedHashMap<String, HAPWrapperBrickRoot>();
 	
-		this.m_dynamicInfo = new HAPContainerInfoDynamic(); 
+		this.m_dynamicInfo = new HAPDynamicDefinitionContainer(); 
 		
 		HAPInfoExportResource defaultExport = new HAPInfoExportResource(new HAPPath());
 		defaultExport.setName(HAPConstantShared.NAME_DEFAULT);
@@ -96,7 +96,7 @@ public class HAPBundle extends HAPSerializableImp implements HAPWithResourceDepe
 	private HAPWrapperBrickRoot getBranchBrickWrapper(String branch) {     return this.m_branchBricks.get(branch);         }
 	public Map<String, HAPWrapperBrickRoot> getBranchBrickWrappers() {     return this.m_branchBricks;         }
 	
-	public HAPContainerInfoDynamic getDynamicTaskInfo() {     return this.m_dynamicInfo;        }
+	public HAPDynamicDefinitionContainer getDynamicInfo() {     return this.m_dynamicInfo;        }
 	
 	public Object getExtraData() {   return this.m_extraData;    }
 	public void setExtraData(Object data) {   this.m_extraData = data;    }

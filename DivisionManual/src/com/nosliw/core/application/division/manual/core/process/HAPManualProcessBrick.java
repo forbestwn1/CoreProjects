@@ -13,7 +13,7 @@ public class HAPManualProcessBrick {
 		HAPManualUtilityProcessorPre.process(rootBrickDefWrapper, runtimeMan, dataExpressionParser, processContext);
 		
 		//init brick
-		HAPManualWrapperBrickRoot out = HAPManualProcessProcessorInit.process(rootBrickDefWrapper, processContext);
+		HAPManualWrapperBrickRoot out = HAPManualUtilityProcessorInit.process(rootBrickDefWrapper, processContext);
 		
 		HAPManualUtilityProcessBrickPath.processComplexBrickNormalizeBrickPath(processContext);
 		

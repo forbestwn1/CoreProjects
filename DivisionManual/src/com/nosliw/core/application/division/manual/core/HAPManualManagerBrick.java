@@ -33,6 +33,7 @@ import com.nosliw.core.application.division.manual.core.process.HAPManualPluginP
 import com.nosliw.core.application.division.manual.core.process.HAPManualPluginProcessorBlock;
 import com.nosliw.core.application.division.manual.core.process.HAPManualPluginProcessorBrick;
 import com.nosliw.core.application.division.manual.core.process.HAPManualProcessBrick;
+import com.nosliw.core.application.dynamic.HAPDynamicDefinitionContainer;
 import com.nosliw.core.application.entity.datarule.HAPManagerDataRule;
 import com.nosliw.core.application.entity.datarule.HAPProcessorRuleInBundle;
 import com.nosliw.core.data.HAPDataTypeHelper;
@@ -112,7 +113,7 @@ public class HAPManualManagerBrick implements HAPPluginDivision{
 				JSONObject bundleInfoObj = new JSONObject(HAPUtilityFile.readFile(bundleInfoFile));
 				Object dynamicTaskObj = bundleInfoObj.opt(HAPBundle.DYNAMIC);
 				if(dynamicTaskObj!=null) {
-					out.getDynamicTaskInfo().buildObject(dynamicTaskObj, HAPSerializationFormat.JSON);
+					HAPDynamicDefinitionContainer.parse(dynamicTaskObj, out.getDynamicInfo(), m_dataRuleManager);
 				}
 			}
 

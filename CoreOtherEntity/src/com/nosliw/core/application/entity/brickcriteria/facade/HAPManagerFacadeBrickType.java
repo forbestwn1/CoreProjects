@@ -1,4 +1,4 @@
-package com.nosliw.core.application.bricktypefacade;
+package com.nosliw.core.application.entity.brickcriteria.facade;
 
 public class HAPManagerFacadeBrickType {
 

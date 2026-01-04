@@ -44,11 +44,11 @@ var node_createDynamicInputContainer = function(dynamicInputDefs, dynamicInputSo
 		prepareDyanmicInputRequest : function(inputId, handlers, request){
 			var out = loc_dynamicInputs[inputId];
 			if(out==undefined){
-				var dynamicInputDef = loc_dynamicInputDefs[node_COMMONATRIBUTECONSTANT.CONTAINERINPUTDYNAMIC_ELEMENT][inputId];
-				var refType = dynamicInputDef[node_COMMONATRIBUTECONSTANT.INPUTDYNAMIC_TYPE];
+				var dynamicInputDef = loc_dynamicInputDefs[node_COMMONATRIBUTECONSTANT.DYNAMICEXECUTEINPUTCONTAINER_ELEMENT][inputId];
+				var refType = dynamicInputDef[node_COMMONATRIBUTECONSTANT.DYNAMICEXECUTEINPUTITEM_TYPE];
 				if(refType==node_COMMONCONSTANT.DYNAMICTASK_REF_TYPE_SINGLE){
-					var relativePath = dynamicInputDef[node_COMMONATRIBUTECONSTANT.INPUTDYNAMIC_BRICKID][node_COMMONATRIBUTECONSTANT.IDBRICKINBUNDLE_RELATIVEPATH];
-					var absolutePath = dynamicInputDef[node_COMMONATRIBUTECONSTANT.INPUTDYNAMIC_BRICKID][node_COMMONATRIBUTECONSTANT.IDBRICKINBUNDLE_IDPATH];
+					var relativePath = dynamicInputDef[node_COMMONATRIBUTECONSTANT.DYNAMICEXECUTEINPUTITEM_BRICKID][node_COMMONATRIBUTECONSTANT.IDBRICKINBUNDLE_RELATIVEPATH];
+					var absolutePath = dynamicInputDef[node_COMMONATRIBUTECONSTANT.DYNAMICEXECUTEINPUTITEM_BRICKID][node_COMMONATRIBUTECONSTANT.IDBRICKINBUNDLE_IDPATH];
 					var dynamicInputEntityCore = node_complexEntityUtility.getBrickCoreByRelativePath(loc_dynamicInputBundleCore, relativePath);
 					
 //					var dynamicInputEntityCore = node_complexEntityUtility.getDescendantCore(loc_dynamicInputSourceBundleCore, absolutePath);

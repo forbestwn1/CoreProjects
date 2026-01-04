@@ -2,7 +2,7 @@
 	"dynamic" : [
 		{
 			"name" : "task",	
-			"type" : "simple",
+			"type" : "single",
 			"criteria" : {
 				"type" : "facadeSimple",
 				"facade" : "task",

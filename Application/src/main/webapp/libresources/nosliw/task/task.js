@@ -43,7 +43,7 @@ var node_createTaskCore = function(taskImp, entityCore){
 	
 //	var loc_lifecycleHandlers = [];
 	
-	var loc_runtimeEnv = node_createValueContainerList();
+	var loc_runtimeEnv = [];
 
 	var loc_initSetupRequests = [];
 	
@@ -54,16 +54,40 @@ var node_createTaskCore = function(taskImp, entityCore){
 		if(taskSetup.getInitTaskRequest()!=undefined) loc_initSetupRequests.push(taskSetup.getInitTaskRequest());
 		
 		//add runtime env
-		if(taskSetup.getRuntimeEnv()!=undefined)  loc_runtimeEnv.addChild(taskSetup.getRuntimeEnv());
+		if(taskSetup.getRuntimeEnv()!=undefined){
+			if(node_basicUtility.isArray(taskSetup.getRuntimeEnv())==true){
+				_.each(taskSetup.getRuntimeEnv(), function(item, i){
+					loc_runtimeEnv(item);
+				});
+			}
+			else{
+    			loc_runtimeEnv.push(taskSetup.getRuntimeEnv());
+			}
+		}
 	};
 	
 	var loc_triggerLifecycleEvent = function(event, eventData,request){
 		loc_lifecycleEventObject.triggerEvent(event, eventData, request);
 	}
 	
+    var loc_taskRuntimeEnv = {
+	  
+	   getRuntimeValue : function(domain, name, parms){
+		   var i = loc_runtimeEnv.length-1;
+           while(i>=0){
+			   var value = loc_runtimeEnv[i].getRuntimeValue(domain, name, parms);
+			   if(value!=undefined){
+				   return value;
+			   }
+		       i--;  
+		   }
+	   }
+    };
+
+	
 	var loc_out = {
 	
-		getRuntimeEnv : function(){   return loc_runtimeEnv;      },
+//		getRuntimeEnv : function(){   return loc_runtimeEnv;      },
 		
 //		registerLifecycleHandler : function(handler){  loc_lifecycleHandlers.push(handler);  },
 		
@@ -82,7 +106,7 @@ var node_createTaskCore = function(taskImp, entityCore){
 	
 		getTaskExecuteRequest : function(handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-			out.addRequest(loc_taskImp.getTaskExecuteRequest(loc_runtimeEnv, {
+			out.addRequest(loc_taskImp.getTaskExecuteRequest(loc_taskRuntimeEnv, {
 				success : function(request, taskResult){
 					loc_taskResult = taskResult;
 					loc_triggerLifecycleEvent("finish", loc_taskResult, request);
@@ -91,7 +115,7 @@ var node_createTaskCore = function(taskImp, entityCore){
 			}));
 			return out;
 		},
-		
+
 		addTaskSetup : function(taskSetup){
 			if(taskSetup!=undefined){
 				if(node_basicUtility.isArray(taskSetup)==true){

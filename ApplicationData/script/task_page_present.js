@@ -1,13 +1,4 @@
-
-if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.getResourceService()!=undefined) nosliw.runtime.getResourceService().importResource({"id":{"resourceTypeId":{"resourceType":"script",
-"version":"1.0.0"
-},
-"id":"*task_task_test1"
-},
-"children":[],
-"dependency":{},
-"info":{}
-}, {"script":function(complexEntityDef, valueContextId, bundleCore, configure){
+function(complexEntityDef, valueContextId, bundleCore, configure){
 
 	var node_createServiceRequestInfoSequence = nosliw.getNodeData("request.request.createServiceRequestInfoSequence");
 	var node_createServiceRequestInfoSimple = nosliw.getNodeData("request.request.createServiceRequestInfoSimple");
@@ -82,29 +73,6 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 				}
 			}));
 			
-
-/*			
-			var result = {
-			    "resultName": "success",
-			    "resultValue": {
-			        "task_result_success_string1": {
-			            "dataTypeId": "test.string;1.0.0",
-			            "valueFormat": "JSON",
-			            "value": "default value of parm111111",
-			            "info": {}
-			        }
-			    }
-			};
-
-			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-			out.addRequest(node_interactiveUtility.getSetTaskResultToValuePortRequest(result, valuePortContainer, {
-				success : function(){
-					loc_taskResult = result;
-					return result;
-				}
-			}));
-*/
-			
 			return out;
 		},
 		
@@ -114,7 +82,3 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 	loc_out = node_makeObjectWithApplicationInterface(loc_out, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_TASK, loc_facadeTaskCore);
 	return loc_out;
 }
-
-}, {"loadPattern":"file"
-});
-

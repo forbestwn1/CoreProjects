@@ -13,19 +13,19 @@ import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 
 @HAPEntityWithAttribute
-public class HAPContainerInputDynamic extends HAPSerializableImp{
+public class HAPDynamicExecuteInputContainer extends HAPSerializableImp{
 
 	@HAPAttribute
 	public final static String ELEMENT = "element"; 
 	
-	private Map<String, HAPInputDynamic> m_dynamicInputs;
+	private Map<String, HAPDynamicExecuteInputItem> m_dynamicInputs;
 
-	public HAPContainerInputDynamic() {
-		this.m_dynamicInputs = new LinkedHashMap<String, HAPInputDynamic>();
+	public HAPDynamicExecuteInputContainer() {
+		this.m_dynamicInputs = new LinkedHashMap<String, HAPDynamicExecuteInputItem>();
 	}
 	
-	public Map<String, HAPInputDynamic> getDyanmicTaskReference() {		return this.m_dynamicInputs;	}
-	public void addDynamicTaskReference(HAPInputDynamic ref) {   this.m_dynamicInputs.put(ref.getName(), ref);     }
+	public Map<String, HAPDynamicExecuteInputItem> getDyanmicTaskReference() {		return this.m_dynamicInputs;	}
+	public void addDynamicTaskReference(HAPDynamicExecuteInputItem ref) {   this.m_dynamicInputs.put(ref.getName(), ref);     }
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
@@ -39,7 +39,7 @@ public class HAPContainerInputDynamic extends HAPSerializableImp{
 		
 		JSONArray dynamicTaskRefsArray = jsonObj.optJSONArray(ELEMENT);
 		for(int i=0; i<dynamicTaskRefsArray.length(); i++) {
-			this.addDynamicTaskReference(HAPInputDynamic.parse(dynamicTaskRefsArray.getJSONObject(i)));
+			this.addDynamicTaskReference(HAPDynamicExecuteInputItem.parse(dynamicTaskRefsArray.getJSONObject(i)));
 		}
 		return true;  
 	}

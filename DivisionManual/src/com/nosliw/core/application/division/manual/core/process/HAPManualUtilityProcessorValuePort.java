@@ -21,11 +21,6 @@ import com.nosliw.core.application.HAPHandlerDownwardImpAttribute;
 import com.nosliw.core.application.HAPInfoValueStructureRuntime;
 import com.nosliw.core.application.HAPResultBrickDescentValue;
 import com.nosliw.core.application.HAPUtilityBrick;
-import com.nosliw.core.application.bricktypefacade.HAPEnumFacadeSingleBrickType;
-import com.nosliw.core.application.common.dynamiccriteria.HAPCriteriaDynamic;
-import com.nosliw.core.application.common.dynamiccriteria.HAPRestrainBrickTypeFacade;
-import com.nosliw.core.application.common.dynamiccriteria.HAPRestrainBrickTypeFacadeTaskInterface;
-import com.nosliw.core.application.common.dynamiccriteria.HAPUtilityDynamicCriteria;
 import com.nosliw.core.application.common.interactive.HAPUtilityInteractiveTaskValuePort;
 import com.nosliw.core.application.common.parentrelation.HAPManualDefinitionBrickRelation;
 import com.nosliw.core.application.common.parentrelation.HAPManualDefinitionBrickRelationValueContext;
@@ -49,7 +44,12 @@ import com.nosliw.core.application.division.manual.core.definition.HAPManualDefi
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionBrick;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionUtilityBrick;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionWrapperValueBrick;
-import com.nosliw.core.application.dynamic.HAPInfoDynamicLeaf;
+import com.nosliw.core.application.dynamic.HAPDynamicDefinitionCriteria;
+import com.nosliw.core.application.dynamic.HAPDynamicDefinitionItemLeaf;
+import com.nosliw.core.application.entity.brickcriteria.facade.HAPRestrainBrickFacade;
+import com.nosliw.core.application.entity.brickcriteria.facade.HAPUtilityCriteriaDynamicFacade;
+import com.nosliw.core.application.entity.brickcriteria.facade.task.HAPRestrainBrickTypeFacadeTaskInterface;
+import com.nosliw.core.application.entity.brickfacade.HAPManagerBrickTypeFacade;
 import com.nosliw.core.application.valueport.HAPIdValuePortInBundle;
 import com.nosliw.core.application.valueport.HAPUtilityValuePort;
 
@@ -138,10 +138,10 @@ public class HAPManualUtilityProcessorValuePort {
 					((HAPManualPluginProcessorBlockImp)manualBrickMan.getBlockProcessPlugin(complexBrick.getBrickType())).processOtherValuePortBuild(path, processContext);
 				}
 				else if(result.getDyanmicValue()!=null) {
-					HAPInfoDynamicLeaf dynamicInfo = (HAPInfoDynamicLeaf)bundle.getDynamicTaskInfo().getDescent(result.getDyanmicValue().getDynamicId());
-					HAPCriteriaDynamic dynamicCriteria = dynamicInfo.getCriteria();
+					HAPDynamicDefinitionItemLeaf dynamicInfo = (HAPDynamicDefinitionItemLeaf)bundle.getDynamicInfo().getDescent(result.getDyanmicValue().getDynamicId());
+					HAPDynamicDefinitionCriteria dynamicCriteria = dynamicInfo.getCriteria();
 					
-					HAPRestrainBrickTypeFacadeTaskInterface taskRestrain = (HAPRestrainBrickTypeFacadeTaskInterface)HAPUtilityDynamicCriteria.getSimpleFacadeDynamicCriteriaRestrain(dynamicCriteria, HAPEnumFacadeSingleBrickType.FACADENAME_TASK, HAPRestrainBrickTypeFacade.TYPE_RESTRAIN_TASK_INTERFACE);
+					HAPRestrainBrickTypeFacadeTaskInterface taskRestrain = (HAPRestrainBrickTypeFacadeTaskInterface)HAPUtilityCriteriaDynamicFacade.getSimpleFacadeDynamicCriteriaRestrain(dynamicCriteria, HAPManagerBrickTypeFacade.FACADENAME_TASK, HAPRestrainBrickFacade.TYPE_RESTRAIN_TASK_INTERFACE);
 					if(taskRestrain!=null) {
 						HAPUtilityInteractiveTaskValuePort.buildValuePortGroupForInteractiveTask(result.getDyanmicValue(), taskRestrain.getTaskInteractiveInterface(), processContext.getCurrentBundle().getValueStructureDomain());
 						

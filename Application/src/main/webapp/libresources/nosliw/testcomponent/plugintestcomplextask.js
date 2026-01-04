@@ -98,7 +98,7 @@ var loc_createTestTaskCore = function(complexEntityDef, valueContextId, bundleCo
 			
 		},
 		
-		getTaskExecuteRequest : function(handlers, request){
+		getTaskExecuteRequest : function(taskRuntimeEnv, handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 			var withValuePort = loc_envInterface[node_CONSTANT.INTERFACE_WITHVALUEPORT];
 

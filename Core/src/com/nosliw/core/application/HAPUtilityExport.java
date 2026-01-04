@@ -92,7 +92,7 @@ public class HAPUtilityExport {
 
 		//bundle infor
 		Map<String, String> bundleJsonMap = new LinkedHashMap<String, String>();
-		bundleJsonMap.put(HAPBundle.DYNAMIC, bundle.getDynamicTaskInfo().toStringValue(HAPSerializationFormat.JSON));
+		bundleJsonMap.put(HAPBundle.DYNAMIC, bundle.getDynamicInfo().toStringValue(HAPSerializationFormat.JSON));
 		HAPUtilityFile.writeJsonFile(bundleFolder, "bundle.json", HAPUtilityJson.buildMapJson(bundleJsonMap));
 		
 		//write package definition
