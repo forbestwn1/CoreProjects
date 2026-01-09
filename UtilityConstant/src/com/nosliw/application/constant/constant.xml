@@ -1088,6 +1088,12 @@
 			<definition name="DYNAMICTASK_REF_TYPE_MULTIPLE" value="multiple"/>
 
 			<definition type="space"/>
+			<definition name="BRICKTYPECRITERIA_TYPE_FACADE" value="facade"/>
+
+			<definition type="space"/>
+			<definition name="BRICKTYPECRITERIA_RESTRAIN_TASKINTERFACE" value="taskInterface"/>
+
+			<definition type="space"/>
 			<definition name="BRICKFACADE_TYPE_SIMPLE" value="simple"/>
 			<definition name="BRICKFACADE_TYPE_COMPLEX" value="complex"/>
 

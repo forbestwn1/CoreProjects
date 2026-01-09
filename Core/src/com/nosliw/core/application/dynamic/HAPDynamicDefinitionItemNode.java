@@ -1,16 +1,14 @@
 package com.nosliw.core.application.dynamic;
 
+import java.util.HashSet;
 import java.util.Map;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
+import java.util.Set;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.core.application.entity.datarule.HAPManagerDataRule;
 
 @HAPEntityWithAttribute
 public class HAPDynamicDefinitionItemNode extends HAPDynamicDefinitionItem{
@@ -31,6 +29,7 @@ public class HAPDynamicDefinitionItemNode extends HAPDynamicDefinitionItem{
 	
 	@Override
 	public HAPDynamicDefinitionItem getChild(String childName) {   return this.m_children.get(childName);     }
+	public Set<HAPDynamicDefinitionItem> getChildren(){    return new HashSet(this.m_children.values());     }
 
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
@@ -38,15 +37,4 @@ public class HAPDynamicDefinitionItemNode extends HAPDynamicDefinitionItem{
 		jsonMap.put(CHILD, HAPManagerSerialize.getInstance().toStringValue(this.m_children.values(), HAPSerializationFormat.JSON));
 	}
 
-	public static HAPDynamicDefinitionItemNode parseNode(JSONObject jsonObj, HAPManagerDataRule dataRuleMan) {
-		HAPDynamicDefinitionItemNode out = new HAPDynamicDefinitionItemNode();
-		HAPDynamicDefinitionItem.parseToDynamicInfo(out, jsonObj);
-		
-		JSONArray childArray = jsonObj.getJSONArray(CHILD);
-		for(int i=0; i<childArray.length(); i++) {
-			out.addChild(HAPDynamicDefinitionItem.parse(childArray.getJSONObject(i), dataRuleMan));
-		}
-		
-		return out;
-	}
 }

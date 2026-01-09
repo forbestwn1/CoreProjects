@@ -1,29 +1,19 @@
 package com.nosliw.core.application.dynamic;
 
-import org.json.JSONObject;
+import com.nosliw.common.serialization.HAPSerializableImp;
 
-import com.nosliw.common.serialization.HAPSerializable;
-import com.nosliw.core.application.entity.brickcriteria.facade.HAPCriteriaBrickFacade;
-import com.nosliw.core.application.entity.datarule.HAPManagerDataRule;
-
-public interface HAPDynamicDefinitionCriteria extends HAPSerializable{
+public class HAPDynamicDefinitionCriteria extends HAPSerializableImp{
 
 	public final static String TYPE = "type"; 
 
-	public final static String TYPE_FACADE_SIMPLE = "facadeSimple";
+	private String m_type;
 	
-	String getCriteriaType();
-	
-	public static HAPDynamicDefinitionCriteria parseDynamicCriteria(JSONObject jsonObj, HAPManagerDataRule dataRuleMan) {
-		HAPDynamicDefinitionCriteria out = null;
-		
-		String type = jsonObj.getString(TYPE);
-		
-		switch(type) {
-		case TYPE_FACADE_SIMPLE:
-			out = HAPCriteriaBrickFacade.parse(jsonObj, dataRuleMan); 
-			break;
-		}
-		return out;
+	public HAPDynamicDefinitionCriteria(String type) {
+		this.m_type = type;
 	}
+	
+	public String getType() {
+		return this.m_type;
+	}
+
 }

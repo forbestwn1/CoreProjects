@@ -1055,6 +1055,14 @@ public class HAPConstantShared {
 
 
 
+		public static final String BRICKTYPECRITERIA_TYPE_FACADE = "facade";
+
+
+
+		public static final String BRICKTYPECRITERIA_RESTRAIN_TASKINTERFACE = "taskInterface";
+
+
+
 		public static final String BRICKFACADE_TYPE_SIMPLE = "simple";
 		public static final String BRICKFACADE_TYPE_COMPLEX = "complex";
 

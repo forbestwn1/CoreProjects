@@ -44,12 +44,9 @@ import com.nosliw.core.application.division.manual.core.definition.HAPManualDefi
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionBrick;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionUtilityBrick;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionWrapperValueBrick;
-import com.nosliw.core.application.dynamic.HAPDynamicDefinitionCriteria;
 import com.nosliw.core.application.dynamic.HAPDynamicDefinitionItemLeaf;
-import com.nosliw.core.application.entity.brickcriteria.facade.HAPRestrainBrickFacade;
-import com.nosliw.core.application.entity.brickcriteria.facade.HAPUtilityCriteriaDynamicFacade;
+import com.nosliw.core.application.dynamic.HAPDynamicUtilityDefinition;
 import com.nosliw.core.application.entity.brickcriteria.facade.task.HAPRestrainBrickTypeFacadeTaskInterface;
-import com.nosliw.core.application.entity.brickfacade.HAPManagerBrickTypeFacade;
 import com.nosliw.core.application.valueport.HAPIdValuePortInBundle;
 import com.nosliw.core.application.valueport.HAPUtilityValuePort;
 
@@ -139,13 +136,10 @@ public class HAPManualUtilityProcessorValuePort {
 				}
 				else if(result.getDyanmicValue()!=null) {
 					HAPDynamicDefinitionItemLeaf dynamicInfo = (HAPDynamicDefinitionItemLeaf)bundle.getDynamicInfo().getDescent(result.getDyanmicValue().getDynamicId());
-					HAPDynamicDefinitionCriteria dynamicCriteria = dynamicInfo.getCriteria();
-					
-					HAPRestrainBrickTypeFacadeTaskInterface taskRestrain = (HAPRestrainBrickTypeFacadeTaskInterface)HAPUtilityCriteriaDynamicFacade.getSimpleFacadeDynamicCriteriaRestrain(dynamicCriteria, HAPManagerBrickTypeFacade.FACADENAME_TASK, HAPRestrainBrickFacade.TYPE_RESTRAIN_TASK_INTERFACE);
-					if(taskRestrain!=null) {
-						HAPUtilityInteractiveTaskValuePort.buildValuePortGroupForInteractiveTask(result.getDyanmicValue(), taskRestrain.getTaskInteractiveInterface(), processContext.getCurrentBundle().getValueStructureDomain());
-						
-					}
+					List<HAPRestrainBrickTypeFacadeTaskInterface> restrains = HAPDynamicUtilityDefinition.getCriteriaRestrain(dynamicInfo, HAPConstantShared.BRICKTYPECRITERIA_RESTRAIN_TASKINTERFACE, HAPRestrainBrickTypeFacadeTaskInterface.class);
+                    if(restrains!=null&&restrains.size()>0) {
+						HAPUtilityInteractiveTaskValuePort.buildValuePortGroupForInteractiveTask(result.getDyanmicValue(), restrains.get(0).getTaskInteractiveInterface(), processContext.getCurrentBundle().getValueStructureDomain());
+                    }
 				}
 				return true;
 			}

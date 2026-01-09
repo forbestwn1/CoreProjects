@@ -2,12 +2,9 @@ package com.nosliw.core.application.dynamic;
 
 import java.util.Map;
 
-import org.json.JSONObject;
-
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.core.application.entity.datarule.HAPManagerDataRule;
 
 @HAPEntityWithAttribute
 public abstract class HAPDynamicDefinitionItemLeaf extends HAPDynamicDefinitionItem{
@@ -28,11 +25,6 @@ public abstract class HAPDynamicDefinitionItemLeaf extends HAPDynamicDefinitionI
 
 	@Override
 	public HAPDynamicDefinitionItem getChild(String childName) {   return null;    }
-
-	public static void parseToDynamicLeafInfo(HAPDynamicDefinitionItemLeaf dynamicLeafInfo, JSONObject jsonObj, HAPManagerDataRule dataRuleMan) {
-		HAPDynamicDefinitionItem.parseToDynamicInfo(dynamicLeafInfo, jsonObj);
-		dynamicLeafInfo.setCriteria(HAPDynamicDefinitionCriteria.parseDynamicCriteria(jsonObj.getJSONObject(CRITERIA), dataRuleMan));
-	}
 
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){

@@ -33,7 +33,8 @@ import com.nosliw.core.application.division.manual.core.process.HAPManualPluginP
 import com.nosliw.core.application.division.manual.core.process.HAPManualPluginProcessorBlock;
 import com.nosliw.core.application.division.manual.core.process.HAPManualPluginProcessorBrick;
 import com.nosliw.core.application.division.manual.core.process.HAPManualProcessBrick;
-import com.nosliw.core.application.dynamic.HAPDynamicDefinitionContainer;
+import com.nosliw.core.application.dynamic.HAPDynamicUtilityParser;
+import com.nosliw.core.application.entity.brickcriteria.HAPManagerBrickCriteria;
 import com.nosliw.core.application.entity.datarule.HAPManagerDataRule;
 import com.nosliw.core.application.entity.datarule.HAPProcessorRuleInBundle;
 import com.nosliw.core.data.HAPDataTypeHelper;
@@ -62,6 +63,8 @@ public class HAPManualManagerBrick implements HAPPluginDivision{
 
 	private HAPManagerDataRule m_dataRuleManager;
 	
+	private HAPManagerBrickCriteria m_brickCriteriaMan;
+	
 	public HAPManualManagerBrick() {
 		this.m_brickParserPlugin = new LinkedHashMap<String, HAPManualDefinitionPluginParserBrick>();
 		this.m_brickProcessorPlugin = new LinkedHashMap<String, HAPManualPluginProcessorBrick>();
@@ -86,6 +89,9 @@ public class HAPManualManagerBrick implements HAPPluginDivision{
 	
 	@Autowired
 	private void setRuntimeManager(HAPRuntimeManager runtimeMan) {    this.m_runtimeMan = runtimeMan;      }
+	
+	@Autowired
+	private void setBrickCriteriaManager(HAPManagerBrickCriteria brickCriteriaMan) {   this.m_brickCriteriaMan = brickCriteriaMan;        }
 	
 	@Autowired
 	private void setDataRuleManager(HAPManagerDataRule dataRuleManager) {   this.m_dataRuleManager = dataRuleManager;        }
@@ -113,7 +119,7 @@ public class HAPManualManagerBrick implements HAPPluginDivision{
 				JSONObject bundleInfoObj = new JSONObject(HAPUtilityFile.readFile(bundleInfoFile));
 				Object dynamicTaskObj = bundleInfoObj.opt(HAPBundle.DYNAMIC);
 				if(dynamicTaskObj!=null) {
-					HAPDynamicDefinitionContainer.parse(dynamicTaskObj, out.getDynamicInfo(), m_dataRuleManager);
+					HAPDynamicUtilityParser.parseDynamicDefinitionContainer(dynamicTaskObj, out.getDynamicInfo(), this.m_brickCriteriaMan);
 				}
 			}
 

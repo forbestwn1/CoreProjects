@@ -1,10 +1,9 @@
 package com.nosliw.core.application.dynamic;
 
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.Map;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
+import java.util.Set;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
@@ -12,7 +11,6 @@ import com.nosliw.common.path.HAPComplexPath;
 import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.core.application.entity.datarule.HAPManagerDataRule;
 
 @HAPEntityWithAttribute
 public class HAPDynamicDefinitionContainer extends HAPSerializableImp{
@@ -24,6 +22,10 @@ public class HAPDynamicDefinitionContainer extends HAPSerializableImp{
 
 	public HAPDynamicDefinitionContainer() {
 		this.m_elements = new LinkedHashMap<String, HAPDynamicDefinitionItem>();
+	}
+	
+	public Set<HAPDynamicDefinitionItem> getItems(){
+		return new HashSet(this.m_elements.values());
 	}
 	
 	public void addElement(HAPDynamicDefinitionItem ele) {
@@ -46,21 +48,4 @@ public class HAPDynamicDefinitionContainer extends HAPSerializableImp{
 		jsonMap.put(ELEMENT, HAPManagerSerialize.getInstance().toStringValue(m_elements, HAPSerializationFormat.JSON));
 	}
 	
-	public static HAPDynamicDefinitionContainer parse(Object json, HAPDynamicDefinitionContainer dynamicInfo, HAPManagerDataRule dataRuleMan) {
-		if(json instanceof JSONArray) {
-			parseElements(dynamicInfo, (JSONArray)json, dataRuleMan);
-		}
-		else if(json instanceof JSONObject) {
-			parseElements(dynamicInfo, ((JSONObject)json).optJSONArray(ELEMENT), dataRuleMan);
-		}
-		return dynamicInfo;
-	}
-
-	private static void parseElements(HAPDynamicDefinitionContainer out, JSONArray jsonArray, HAPManagerDataRule dataRuleMan) {
-		if(jsonArray!=null) {
-			for(int i=0; i<jsonArray.length(); i++) {
-				out.addElement(HAPDynamicDefinitionItem.parse(jsonArray.get(i), dataRuleMan));
-			}
-		}
-	}
 }
