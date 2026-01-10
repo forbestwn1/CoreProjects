@@ -31,7 +31,7 @@ public class HAPDynamicUtilityParser {
 		HAPDynamicDefinitionItem out = null;
 		
 		JSONObject jsonObj = (JSONObject)obj;
-		String type = jsonObj.getString(HAPDynamicDefinitionItem.TYPE);
+		String type = jsonObj.getString(HAPDynamicDefinitionItem.DYNAMICITEMTYPE);
 		
 		switch(type) {
 		case HAPConstantShared.DYNAMICDEFINITION_ITEMTYPE_SET:
@@ -71,21 +71,33 @@ public class HAPDynamicUtilityParser {
 
 	private static HAPDynamicDefinitionCriteria parseDynamicCriteria(JSONObject jsonObj, HAPManagerBrickCriteria brickCriteriaMan) {
 		
-		String type = (String)jsonObj.opt(HAPDynamicDefinitionCriteria.TYPE);
+		String type = (String)jsonObj.opt(HAPDynamicDefinitionCriteria.STRUCTURE);
 		if(type==null) {
 			type = HAPConstantShared.DYNAMICDEFINITION_CRITERIA_SIMPLE;
 		}
 		
 		switch(type) {
 		case HAPConstantShared.DYNAMICDEFINITION_CRITERIA_SIMPLE:
+		{
 			HAPDynamicDefinitionCriteriaSimple out = new HAPDynamicDefinitionCriteriaSimple();
-			Object criteriaObj = jsonObj.opt(HAPDynamicDefinitionCriteriaSimple.CRITERIA);
+			Object criteriaObj = jsonObj.opt(HAPDynamicDefinitionCriteriaSimple.DEFINITION);
 			if(criteriaObj==null) {
 				criteriaObj = jsonObj;
 			}
 			HAPCriteriaBrick brickCriteria = brickCriteriaMan.parseCriteria(criteriaObj);
-			out.setBrickCriteria(brickCriteria);
+			out.setCriteriaDefinition(brickCriteria);
 			return out;
+		}
+		case HAPConstantShared.DYNAMICDEFINITION_CRITERIA_COMPLEX:
+		{
+			HAPDynamicDefinitionCriteriaComplex out = new HAPDynamicDefinitionCriteriaComplex();
+			JSONArray childrenJsonArray = jsonObj.getJSONArray(HAPDynamicDefinitionCriteriaComplex.CHILDREN);
+			for(int i=0; i<childrenJsonArray.length(); i++) {
+				HAPDynamicDefinitionCriteria childCriteria = parseDynamicCriteria(childrenJsonArray.getJSONObject(i), brickCriteriaMan);
+				out.addChild(childCriteria);
+			}
+			return out;
+		}
 		}
 		return null;
 	}

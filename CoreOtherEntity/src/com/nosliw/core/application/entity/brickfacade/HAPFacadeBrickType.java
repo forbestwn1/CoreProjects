@@ -1,13 +1,19 @@
 package com.nosliw.core.application.entity.brickfacade;
 
-import com.nosliw.common.info.HAPEntityInfo;
+import com.nosliw.common.info.HAPEntityInfoImp;
 
-public interface HAPFacadeBrickType extends HAPEntityInfo{
+public abstract class HAPFacadeBrickType extends HAPEntityInfoImp{
 
-	public final static String TYPE = "type"; 
+	public final static String STRUCTURETYPE = "structureType"; 
 	
-	public final static String TYPE_SIMPLE = "simpleFacade"; 
+	private String m_structureType;
 	
-	String getType();
+	public HAPFacadeBrickType(String structureType) {
+		this.m_structureType = structureType;
+	}
+	
+	public String getStructureType() {
+		return this.m_structureType;
+	}
 
 }

@@ -10,7 +10,7 @@ import com.nosliw.common.info.HAPEntityInfoImp;
 public abstract class HAPDynamicDefinitionItem extends HAPEntityInfoImp{
 
 	@HAPAttribute
-	public final static String TYPE = "type"; 
+	public final static String DYNAMICITEMTYPE = "dynamicItemType"; 
 
 	public abstract String getType();
 
@@ -20,7 +20,7 @@ public abstract class HAPDynamicDefinitionItem extends HAPEntityInfoImp{
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(TYPE, this.getType());
+		jsonMap.put(DYNAMICITEMTYPE, this.getType());
 	}
 
 	

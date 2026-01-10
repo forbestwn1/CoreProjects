@@ -54,7 +54,7 @@ public class HAPExpressionScriptImp extends HAPWithVariableImp implements HAPExp
 //	@Override
 //	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 //		super.buildJsonMap(jsonMap, typeJsonMap);
-//		jsonMap.put(TYPE, this.getType());
+//		jsonMap.put(DYNAMICITEMTYPE, this.getType());
 //		jsonMap.put(VARIABLEKEYS, HAPUtilityJson.buildJson(this.m_varKeys, HAPSerializationFormat.JSON));
 //		jsonMap.put(DATAEXPRESSIONIDS, HAPUtilityJson.buildJson(this.m_dataExpressionId, HAPSerializationFormat.JSON));
 //		

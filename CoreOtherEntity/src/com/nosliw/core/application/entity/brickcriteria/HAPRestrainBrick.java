@@ -1,5 +1,7 @@
 package com.nosliw.core.application.entity.brickcriteria;
 
+import java.util.Map;
+
 import com.nosliw.common.serialization.HAPSerializableImp;
 
 public class HAPRestrainBrick extends HAPSerializableImp{
@@ -16,4 +18,9 @@ public class HAPRestrainBrick extends HAPSerializableImp{
 	
 //	String[] isValid(HAPBrick brick);
 	
+	@Override
+	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		super.buildJsonMap(jsonMap, typeJsonMap);
+		jsonMap.put(TYPE, this.m_type);
+	}
 }

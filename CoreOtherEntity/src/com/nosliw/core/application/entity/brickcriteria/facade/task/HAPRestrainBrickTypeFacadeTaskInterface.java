@@ -1,7 +1,10 @@
 package com.nosliw.core.application.entity.brickcriteria.facade.task;
 
+import java.util.Map;
+
 import org.json.JSONObject;
 
+import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.common.interactive.HAPInteractiveTask;
@@ -35,5 +38,11 @@ public class HAPRestrainBrickTypeFacadeTaskInterface extends HAPRestrainBrick{
 		m_interactiveTaskInterface.buildObject(jsonObj.getJSONObject(INTERFACE), HAPSerializationFormat.JSON);
 		
 		return true;
+	}
+
+	@Override
+	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		super.buildJsonMap(jsonMap, typeJsonMap);
+		jsonMap.put(INTERFACE, HAPManagerSerialize.getInstance().toStringValue(m_interactiveTaskInterface, HAPSerializationFormat.JSON));
 	}
 }

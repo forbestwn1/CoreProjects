@@ -2,12 +2,15 @@ package com.nosliw.core.application.entity.brickcriteria;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
+import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.serialization.HAPSerializableImp;
+import com.nosliw.common.serialization.HAPSerializationFormat;
 
 public abstract class HAPCriteriaBrick extends HAPSerializableImp{
 
-	public final static String CRITERIATYPE = "criteriaTsype"; 
+	public final static String CRITERIATYPE = "criteriaType"; 
 
 	public final static String RESTRAIN = "restrain"; 
 
@@ -26,7 +29,10 @@ public abstract class HAPCriteriaBrick extends HAPSerializableImp{
 	
 	public void addRestrain(HAPRestrainBrick restrain) {   this.m_restrains.add(restrain);      }
 	
-	
-	
-	
+	@Override
+	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
+		super.buildJsonMap(jsonMap, typeJsonMap);
+		jsonMap.put(CRITERIATYPE, this.m_criteriaType);
+		jsonMap.put(RESTRAIN, HAPManagerSerialize.getInstance().toStringValue(m_restrains, HAPSerializationFormat.JSON));
+	}
 }

@@ -2,39 +2,43 @@
 	"dynamic" : [
 		{
 			"name" : "task",	
-			"type" : "single",
+			"dynamicItemType" : "single",
 			"criteria" : {
-				"type" : "facadeSimple",
-				"facade" : "task",
-				"restrain" : {
-					"type" : "taskInterface",
-					"interface" : {
-						"request" : [
-							{
-								"name" : "task_request_string1",
-								"dataDefinition" : {
-									"criteria" : "test.string;1.0.0",
-									"initData" : {
-										"dataTypeId": "test.string;1.0.0",
-										"value": "default value of request string1"
-									}
-								}
-							}
-						],
-						"result" : {
-							"success": {
-								"output": [
-									{
-										"name" : "task_result_success_string1",
-										"dataDefinition" : {
-											"criteria" : "test.string;1.0.0"
-										}
-									}
-								]
-							}
-						}
-					}
-				}
+			    "definition" : {
+			        "criteriaType" : "facade",
+     				"facade" : "task",
+			        "restrain" : [
+        				{
+		        			"type" : "taskInterface",
+				        	"interface" : {
+		    				    "request" : [
+    		    					{
+	    		    					"name" : "task_request_string1",
+					        			"dataDefinition" : {
+        									"criteria" : "test.string;1.0.0",
+	         								"initData" : {
+		        								"dataTypeId": "test.string;1.0.0",
+			        							"value": "default value of request string1"
+				        					}
+			    		    			}
+		    				    	}
+        						],
+				        		"result" : {
+						        	"success": {
+        								"output": [
+		        							{
+				        						"name" : "task_result_success_string1",
+						        				"dataDefinition" : {
+								        			"criteria" : "test.string;1.0.0"
+										        }
+        									}
+		        						]
+				        			}
+        						}
+        					}
+		        		}
+			        ]
+			    }
 			}	
 		}
 	]

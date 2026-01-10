@@ -33,9 +33,9 @@ public class HAPDynamicUtilityDefinition {
 	}
 
 	private static void getBrickCriterias(HAPDynamicDefinitionCriteria dynamicCriteriaDef, List<HAPCriteriaBrick> out) {
-		String type = dynamicCriteriaDef.getType();
+		String type = dynamicCriteriaDef.getStructure();
 		if(type.equals(HAPConstantShared.DYNAMICDEFINITION_CRITERIA_SIMPLE)) {
-			out.add(((HAPDynamicDefinitionCriteriaSimple)dynamicCriteriaDef).getBrickCriteria());
+			out.add(((HAPDynamicDefinitionCriteriaSimple)dynamicCriteriaDef).getCriteriaDefinition());
 		}
 		else if(type.equals(HAPConstantShared.DYNAMICDEFINITION_CRITERIA_COMPLEX)) {
 			((HAPDynamicDefinitionCriteriaComplex)dynamicCriteriaDef).getChildren().forEach(child->getBrickCriterias(child, out));
