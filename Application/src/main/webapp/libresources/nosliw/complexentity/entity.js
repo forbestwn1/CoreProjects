@@ -55,7 +55,8 @@ var node_createDynamicInputContainer = function(dynamicInputDefs, dynamicInputSo
 					
 					
 					var factory = node_getApplicationInterface(dynamicInputEntityCore, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_FACTORY);
-					if(factory==undefined){
+//					if(factory==undefined){
+	                if(true){
 						return node_createServiceRequestInfoSimple(undefined, function(request){
 							var dynamicInput = loc_createDynamicInput(dynamicInputEntityCore);
 							loc_dynamicInputs[inputId] = dynamicInput;

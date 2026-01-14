@@ -15,6 +15,10 @@ import com.nosliw.core.xxx.application.common.structure.HAPElementStructureLeafR
 public class HAPUtilityParserElement {
 
 	public static HAPElementStructure parseStructureElement(JSONObject eleDefJson, HAPManagerDataRule dataRuleMan) {
+		if(eleDefJson==null) {
+			return null;
+		}
+		
 		HAPElementStructure out = null;
 		
 		Object defRefObj = eleDefJson.opt(HAPElementStructureLeafRelativeForDefinition.REFERENCE);

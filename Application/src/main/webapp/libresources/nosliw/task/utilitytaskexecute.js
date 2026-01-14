@@ -24,6 +24,57 @@ var packageObj = library;
 
 var node_taskExecuteUtility = function(){
 
+  var loc_getExecuteInteractiveRequest = function(interactiveEntityCore, taskSetup, adapters, handlers, request){
+      var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+
+	  var interactiveFactory = node_getApplicationInterface(interactiveEntityCore, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_FACTORY);
+      if(interactiveFactory!=undefined){
+		out.addRequest(interactiveFactory.getCreateEntityRequest());
+	  }
+	  else{
+		out.addRequest(node_createServiceRequestInfoSimple(undefined, function(){
+			return interactiveEntityCore;
+		}));
+	  }
+	  
+	  out.addRequest(node_createServiceRequestInfoCommon(undefined, {
+		  success : function(request, entityCore){
+				var taskCore = loc_getTaskCoreFromTaskEntityCore(entityCore); 
+				taskCore.addTaskSetup(taskSetup);
+				//init task
+				return taskCore.getTaskInitRequest(undefined, {
+					success : function(request){
+                        var beforesRequest = node_createServiceRequestInfoSequence(undefined, {
+							success : function(request){
+                				return taskCore.getTaskExecuteRequest({
+				                	success : function(request, result){
+                                        var aftersRequest = node_createServiceRequestInfoSequence(undefined, {
+											success : function(request){
+												return result;
+											}
+										});
+                                        _.each(adapters, function(adapter, i){
+                                            var wrapperAdapter = node_getApplicationInterface(adapter, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_ADAPTER_WRAPPER);
+                                        	aftersRequest.addRequest(wrapperAdapter.getAfterRequest(result, interactiveEntityCore));
+                                        });
+                					}
+                				});
+							}
+						});
+                        _.each(adapters, function(adapter, i){
+                            var wrapperAdapter = node_getApplicationInterface(adapter, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_ADAPTER_WRAPPER);
+                        	beforesRequest.addRequest(wrapperAdapter.getBeforeRequest(interactiveEntityCore));
+                        });
+                        return beforesRequest;
+					}
+				});
+		  }
+	  }));
+	  
+	  return out;
+  };
+
+
   var loc_getTaskCoreFromTaskEntityCore = function(taskEntityCore){
 		var taskEntityCore = node_complexEntityUtility.getCoreEntity(taskEntityCore);
 		var taskCoreFacade = node_getApplicationInterface(taskEntityCore, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_TASK);

@@ -67,6 +67,7 @@ var node_createDynamicCore = function(dynamicDef, bundleCore, configure){
 		},
 
 		updateView : function(view){    
+/*
 			loc_parentView = view;
 			
 			var entityCore = this.getDynamicInput().getDynamicCoreEntity();
@@ -89,6 +90,7 @@ var node_createDynamicCore = function(dynamicDef, bundleCore, configure){
 				loc_parentView.append(loc_outputView);
 				
 			}
+*/			
 		},
 		
 

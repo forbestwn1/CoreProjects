@@ -80,39 +80,6 @@ public class HAPInteractiveTask extends HAPSerializableImp implements HAPInterac
 	}
 	
 	@Override
-	protected boolean buildObjectByJson(Object json){
-		JSONObject jsonObj = (JSONObject)json;
-		
-		JSONArray parmsArray = jsonObj.optJSONArray(REQUEST);
-		if(parmsArray!=null) {
-			this.m_request.buildObject(parmsArray, HAPSerializationFormat.JSON);
-		}
-		
-		Object resutltsObj = jsonObj.opt(RESULT);
-		if(resutltsObj!=null) {
-			if(resutltsObj instanceof JSONObject) {
-				JSONObject resultObject = (JSONObject)resutltsObj;
-				for(Object key : resultObject.keySet()) {
-					String name = (String)key;
-					HAPInteractiveResultTask resultEle = new HAPInteractiveResultTask();
-					resultEle.buildObject(resultObject.get(name), HAPSerializationFormat.JSON);
-					resultEle.setName(name);
-					this.m_results.add(resultEle);
-				}
-			}
-			else if(resutltsObj instanceof JSONArray) {
-				JSONArray resultArray = (JSONArray)resutltsObj;
-				for(int i=0; i<resultArray.length(); i++) {
-					HAPInteractiveResultTask resultEle = new HAPInteractiveResultTask();
-					resultEle.buildObject(resultArray.getJSONObject(i), HAPSerializationFormat.JSON);
-					this.m_results.add(resultEle);
-				}
-			}
-		}
-		return true;  
-	}
-
-	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		jsonMap.put(REQUEST, HAPManagerSerialize.getInstance().toStringValue(this.m_request, HAPSerializationFormat.JSON));
 		

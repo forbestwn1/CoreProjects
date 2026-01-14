@@ -40,10 +40,30 @@
 			]
 		},
 
+		{
+			"info": {
+				"name" : "dynamic_event_trigure-test_complex_script",
+				"status": "disabled1",
+				"description" : ""
+			},
+			"brick":{
+				"script": "complexscript_test_triggueevent",
+				"taskTrigguer" : [
+					{
+						"trigguerInfo" : {
+							"name" : "dynamicEventTrigue",
+							"handlerId" : {
+								"idPath" : "dynamicSingleTask-taskTaskScript"
+							}
+						}
+					}
+				]
+			}
+		},
 
 		{
 			"info": {
-				"name" : "test5-taskTaskScript",
+				"name" : "dynamicSingleTask-taskTaskScript",
 				"status": "disabled1",
 				"description" : ""
 			},
@@ -51,7 +71,7 @@
 			"adapter": [
 				{
 					"name" : "taskAdapter",
-					"status": "disabled1",
+					"status": "disabled",
 					"brickTypeId" : {
 						"brickType": "dataAssociationForTask",
 						"version": "1.0.0"

@@ -15,7 +15,7 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 	var node_CONSTANT = nosliw.getNodeData("constant.CONSTANT");
 	var node_createValuePortElementInfo = nosliw.getNodeData("valueport.createValuePortElementInfo");
 	var node_complexEntityUtility = nosliw.getNodeData("complexentity.complexEntityUtility");
-	var node_taskUtility = nosliw.getNodeData("task.taskUtility");
+	var node_taskExecuteUtility = nosliw.getNodeData("task.taskExecuteUtility");
 	var node_requestServiceProcessor = nosliw.getNodeData("request.requestServiceProcessor");
 	var node_getWithValuePortInterface = nosliw.getNodeData("valueport.getWithValuePortInterface");
 	var node_getEntityObjectInterface = nosliw.getNodeData("complexentity.getEntityObjectInterface");
@@ -76,6 +76,7 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 			var containerView =  $('<div></div>');
 			_.each(loc_taskTrigguers, function(taskTrigguer, i){
 				var trigguerInfo = taskTrigguer[node_COMMONATRIBUTECONSTANT.TESTTASKTRIGGUER_TRIGGUERINFO];
+				var trigguerType = trigguerInfo[node_COMMONATRIBUTECONSTANT.INFOTRIGGUERTASK_TRIGGUERTYPE];
 				var trigguerName = trigguerInfo[node_COMMONATRIBUTECONSTANT.ENTITYINFO_NAME];
 				var taskTrigueView = $('<button>Triggue Task : '+trigguerName+'</button>');
 				var eventResultView = $('<textarea rows="5" cols="150" style="resize: none; border:solid 1px;" data-role="none"></textarea>');
@@ -93,7 +94,6 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 							
 							var valuePortName;
 							var rootEleName;
-							var trigguerType = trigguerInfo[node_COMMONATRIBUTECONSTANT.INFOTRIGGUERTASK_TRIGGUERTYPE];
 							if(trigguerType==node_COMMONCONSTANT.TASK_TRIGGUER_DATAVALIDATION){
 								valuePortName = node_COMMONCONSTANT.VALUEPORT_NAME_INTERACT_REQUEST;
 								rootEleName = node_COMMONCONSTANT.NAME_ROOT_DATA;
@@ -103,17 +103,19 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 								rootEleName = node_COMMONCONSTANT.NAME_ROOT_EVENT;
 							}
 							
-							return node_utilityNamedVariable.setValuePortValueByGroupNameRequest(
-								internalValuePortContainer,
-								trigguerInfo[node_COMMONATRIBUTECONSTANT.INFOTRIGGUERTASK_VALUEPORTGROUPNAME],
-								valuePortName,
-								rootEleName,
-								taskTrigguer[node_COMMONATRIBUTECONSTANT.TESTTASKTRIGGUER_TESTDATA],
-								handlers, request);
+							if(valuePortName!=undefined){
+    							return node_utilityNamedVariable.setValuePortValueByGroupNameRequest(
+	    							internalValuePortContainer,
+		    						trigguerInfo[node_COMMONATRIBUTECONSTANT.INFOTRIGGUERTASK_VALUEPORTGROUPNAME],
+			    					valuePortName,
+				    				rootEleName,
+					    			taskTrigguer[node_COMMONATRIBUTECONSTANT.TESTTASKTRIGGUER_TESTDATA],
+						    		handlers, request);
+							}
 						}
 					);
 					
-					var taskExeRequest = node_taskUtility.getExecuteWrapperedTaskWithAdapterRequest(handlerEntityCoreWrapper, undefined, taskSetup, {
+					var taskExeRequest = node_taskExecuteUtility.getExecuteWrapperedTaskWithAdapterRequest(handlerEntityCoreWrapper, undefined, taskSetup, {
 						success : function(request, taskResult){
 							eventResultView.val(JSON.stringify(taskResult));
 						}

@@ -60,12 +60,10 @@ public class HAPManualPluginProcessorBlockComplexTestComplexScript extends HAPMa
 			HAPIdBrickInBundle handlerIdInBundle = trigguerInfo.getHandlerId();
 			
 			String trigguerType = trigguerInfo.getTrigguerType();
-			if(trigguerType.equals(HAPConstantShared.TASK_TRIGGUER_EVENTHANDLE)) {
-//				HAPManualBlockTaskWrapper taskWrapperBrick = (HAPManualBlockTaskWrapper)HAPUtilityBrick.getDescdentBrickLocal(bundle, handlerIdInBundle, processContext.getRootBrickName());
-//				HAPManualUtilityTask.buildValuePortGroupForInteractiveTaskEventHandler(taskWrapperBrick, trigguerInfo.getEventDataDefinition(), bundle.getValueStructureDomain());
+			if(HAPConstantShared.TASK_TRIGGUER_EVENTHANDLE.equals(trigguerType)) {
 				HAPManualUtilityTask.buildValuePortGroupForInteractiveTaskEventHandler(bundle, new HAPPath(handlerIdInBundle.getIdPath()), processContext.getRootBrickName(), trigguerInfo.getEventDataDefinition(), bundle.getValueStructureDomain());
 			}
-			else if(trigguerType.equals(HAPConstantShared.TASK_TRIGGUER_DATAVALIDATION)) {
+			else if(HAPConstantShared.TASK_TRIGGUER_DATAVALIDATION.equals(trigguerType)) {
 				HAPManualUtilityTask.buildValuePortGroupForInteractiveTaskDataValidation(bundle, new HAPPath(handlerIdInBundle.getIdPath()), processContext.getRootBrickName(), trigguerInfo.getEventDataDefinition(), bundle.getValueStructureDomain());
 			}
 			trigguerInfo.setExternalValuePortGroupName(HAPManualUtilityTask.getExternalValuePortGroupNameOfInteractiveTask(bundle, new HAPPath(handlerIdInBundle.getIdPath()), processContext.getRootBrickName(), processContext.getResourceManager(), processContext.getRuntimeInfo()));

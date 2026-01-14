@@ -68,8 +68,12 @@ public class HAPInfoTrigguerTask extends HAPEntityInfoImp{
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(TRIGGUERTYPE, this.m_trigguerType);
-		jsonMap.put(DATADEFINITION, m_dataDefinition.toStringValue(HAPSerializationFormat.JSON));
+		if(this.m_trigguerType!=null) {
+			jsonMap.put(TRIGGUERTYPE, this.m_trigguerType);
+		}
+		if(m_dataDefinition!=null) {
+			jsonMap.put(DATADEFINITION, m_dataDefinition.toStringValue(HAPSerializationFormat.JSON));
+		}
 		jsonMap.put(HANDLERID, this.m_handlerId.toStringValue(HAPSerializationFormat.JSON));
 		jsonMap.put(VALUEPORTGROUPNAME, m_externalValuePortGroupName);
 	}

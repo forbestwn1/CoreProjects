@@ -77,8 +77,6 @@
 			]
 		},
 		
-		
-		
 		{
 			"info": {
 				"name" : "test1-test_complex_1",
@@ -91,7 +89,7 @@
 					"mode" : "runtime"
 				}
 			],
-			"resourceId":"test_complex_1|1.0.0|dynamic_provider",  
+			"resourceId":"test_complex_1|1.0.0|dynamic_provider_single",  
 			"dynamicInput" : { 
 				"element" :
 				[ 
@@ -103,11 +101,54 @@
 						}
 					}
 				]
-			},		
+			}		
+		},
+
+		{
+			"info": {
+				"name" : "test1-taskTaskScript",
+				"status": "disabled1",
+				"description" : ""
+			},
+			"relation": [
+				{
+					"type" : "valueContext",
+					"mode" : "runtime"
+				}
+			],
+			"brick":{
+				"scriptResourceId": "task_task_test1",
+				"taskInterface" : {
+					"request" : [
+						{
+							"name" : "task_request_string1",
+							"dataDefinition" : {
+								"criteria" : "test.string;1.0.0",
+								"initData" : {
+									"dataTypeId": "test.string;1.0.0",
+									"value": "default value of request string1"
+								}
+							}
+						}
+					],
+					"result" : {
+						"success": {
+							"output": [
+								{
+									"name" : "task_result_success_string1",
+									"dataDefinition" : {
+										"criteria" : "test.string;1.0.0"
+									}
+								}
+							]
+						}
+					}
+				}
+			},
 			"adapter": [
 				{
 					"name" : "taskAdapter11",
-					"status": "disabled",
+					"status": "disabled1",
 					"brickTypeId" : {
 						"brickType": "dataAssociationForTask",
 						"version": "1.0.0"
@@ -162,50 +203,6 @@
 					}
 				}
 			]
-		},
-
-
-		{
-			"info": {
-				"name" : "test1-taskTaskScript",
-				"status": "disabled1",
-				"description" : ""
-			},
-			"relation": [
-				{
-					"type" : "valueContext",
-					"mode" : "runtime"
-				}
-			],
-			"brick":{
-				"scriptResourceId": "task_task_test1",
-				"taskInterface" : {
-					"request" : [
-						{
-							"name" : "task_request_string1",
-							"dataDefinition" : {
-								"criteria" : "test.string;1.0.0",
-								"initData" : {
-									"dataTypeId": "test.string;1.0.0",
-									"value": "default value of request string1"
-								}
-							}
-						}
-					],
-					"result" : {
-						"success": {
-							"output": [
-								{
-									"name" : "task_result_success_string1",
-									"dataDefinition" : {
-										"criteria" : "test.string;1.0.0"
-									}
-								}
-							]
-						}
-					}
-				}
-			}
 
 		}
 		

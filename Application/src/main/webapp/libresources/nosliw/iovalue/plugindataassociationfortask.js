@@ -46,7 +46,22 @@ var loc_createDataAssociationForTaskAdapter = function(dataAssociationTask){
 		});
 	};
 	
+	var loc_wrapperAdapterFacade = {
+		
+		getBeforeRequest : function(baseEntityCore, handlers, request){
+			return loc_dataAssociationIn.getExecuteRequest(baseEntityCore, handlers, request);
+		},
+		
+		getAfterRequest : function(result, baseEntityCore, handlers, request){
+			return loc_dataAssociationOut[result.resultName].getExecuteRequest(baseEntityCore, handlers, request);
+		}
+		
+	};
+	
 	var loc_out = {
+		
+		
+		
 		
 		getExecuteTaskRequest : function(baseEntityCore, taskSetup, handlers, request){
 			
@@ -64,7 +79,7 @@ var loc_createDataAssociationForTaskAdapter = function(dataAssociationTask){
 	};
 	
 	loc_init(dataAssociationTask);
-	return loc_out;
+	return node_makeObjectWithApplicationInterface(loc_out, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_ADAPTER_WRAPPER, loc_wrapperAdapterFacade);
 };
 
 
