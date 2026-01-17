@@ -57,7 +57,7 @@ var loc_createTaskCore = function(taskDef, configure){
 	};
 
 	var loc_updateTaskValuePortContainerInfo = function(taskEntityCore){
-		var taskEntityCore = node_complexEntityUtility.getCoreEntity(taskEntityCore);
+		var taskEntityCore = node_complexEntityUtility.getCoreBrick(taskEntityCore);
 		if(loc_taskInfoView!=undefined){
 				loc_taskInfoView.text("    valuePortContainer:  "
 					+node_getEntityObjectInterface(taskEntityCore).getInternalValuePortContainer().getId()

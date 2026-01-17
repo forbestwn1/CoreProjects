@@ -31,7 +31,7 @@ var node_complexEntityUtility = function(){
 				if(processOut!=false){
     				var childNode = treeNodeInterface.getChild(childName);
 	    			var childValue = childNode.getChildValue();
-		    		var childEntityCore = loc_out.getCoreEntity(childValue);
+		    		var childEntityCore = loc_out.getCoreBrick(childValue);
 		    		if(childEntityCore!=undefined && node_getObjectType(childEntityCore)!=node_CONSTANT.TYPEDOBJECT_TYPE_BUNDLE){
 				    	loc_traverseNode(childEntityCore, processorInfo);
 					}
@@ -39,6 +39,38 @@ var node_complexEntityUtility = function(){
 			});
 		}
 	};
+
+	var loc_getCoreEntityByRelativePath = function(baseEntityCore, relativePath){
+			var hostEntityCore = baseEntityCore;
+			if(relativePath!=undefined && relativePath!=""){
+				var segs = relativePath.split(node_COMMONCONSTANT.SEPERATOR_LEVEL2);
+				_.each(segs, function(seg, i){
+					var treeNodeInterface = node_getEntityTreeNodeInterface(hostEntityCore);
+					if(seg.startsWith(node_COMMONCONSTANT.NAME_PARENT)) {
+						hostEntityCore = treeNodeInterface.getParentCore();
+						if(node_getObjectType(hostEntityCore)==node_CONSTANT.TYPEDOBJECT_TYPE_BUNDLE){
+							//for bundle node
+							hostEntityCore = node_getEntityTreeNodeInterface(hostEntityCore).getParentCore();
+						}
+					}
+					else if(seg.startsWith(node_COMMONCONSTANT.NAME_CHILD)) {
+						var childName = seg.substring(node_COMMONCONSTANT.NAME_CHILD.length+node_COMMONCONSTANT.SEPERATOR_LEVEL1.length);
+						if(childName.startsWith(node_COMMONCONSTANT.SYMBOL_KEYWORD)){
+							childName = childName.substring(node_COMMONCONSTANT.SYMBOL_KEYWORD.length);
+						}
+						var childTreeNode = treeNodeInterface.getChild(childName)
+						hostEntityCore = childTreeNode.getChildValue().getCoreEntity();
+						if(node_getObjectType(hostEntityCore)==node_CONSTANT.TYPEDOBJECT_TYPE_BUNDLE){
+							//for bundle node
+//							hostEntityCore = hostEntityCore.getMainEntityCore();
+						}
+					}
+				});		
+			}
+			
+			return loc_out.getCoreEntity(hostEntityCore);
+	};
+    
 
 	var loc_out = {
 		
@@ -74,33 +106,27 @@ var node_complexEntityUtility = function(){
 		},
 		
 		getBrickCoreByRelativePath : function(baseEntityCore, relativePath){
-			var hostEntityCore = baseEntityCore;
-			if(relativePath!=undefined && relativePath!=""){
-				var segs = relativePath.split(node_COMMONCONSTANT.SEPERATOR_LEVEL2);
-				_.each(segs, function(seg, i){
-					var treeNodeInterface = node_getEntityTreeNodeInterface(hostEntityCore);
-					if(seg.startsWith(node_COMMONCONSTANT.NAME_PARENT)) {
-						hostEntityCore = treeNodeInterface.getParentCore();
-						if(node_getObjectType(hostEntityCore)==node_CONSTANT.TYPEDOBJECT_TYPE_BUNDLE){
-							//for bundle node
-							hostEntityCore = node_getEntityTreeNodeInterface(hostEntityCore).getParentCore();
-						}
-					}
-					else if(seg.startsWith(node_COMMONCONSTANT.NAME_CHILD)) {
-						var childName = seg.substring(node_COMMONCONSTANT.NAME_CHILD.length+node_COMMONCONSTANT.SEPERATOR_LEVEL1.length);
-						if(childName.startsWith(node_COMMONCONSTANT.SYMBOL_KEYWORD)){
-							childName = childName.substring(node_COMMONCONSTANT.SYMBOL_KEYWORD.length);
-						}
-						var childTreeNode = treeNodeInterface.getChild(childName)
-						hostEntityCore = childTreeNode.getChildValue().getCoreEntity();
-						if(node_getObjectType(hostEntityCore)==node_CONSTANT.TYPEDOBJECT_TYPE_BUNDLE){
-							//for bundle node
-//							hostEntityCore = hostEntityCore.getMainEntityCore();
-						}
-					}
-				});		
+			var entityCore = loc_getCoreEntityByRelativePath(baseEntityCore, relativePath);
+			return node_complexEntityUtility.getCoreBrick(entityCore);
+		},
+
+		getBrickPackageByRelativePath : function(baseEntityCore, brickInBundlePackageDef){
+			var brickIdInBundle = brickInBundlePackageDef[node_COMMONATRIBUTECONSTANT.PACKAGEBRICKINBUNDLE_BRICKID];
+			var entityCore = loc_getCoreEntityByRelativePath(baseEntityCore, brickIdInBundle[node_COMMONATRIBUTECONSTANT.IDBRICKINBUNDLE_RELATIVEPATH]);
+			
+			var out = loc_createCoreEntityPackage(entityCore);
+			out.setIsAdapterExplicit(brickInBundlePackageDef[node_COMMONATRIBUTECONSTANT.ISADAPTEREXPLICIT]);
+			
+			var adapters = loc_out.getAdapters();
+			_.each(brickInBundlePackageDef[node_COMMONATRIBUTECONSTANT.PACKAGEBRICKINBUNDLE_ADAPATERS], function(adapterName){
+				out.addAdpater(adapters[adapterName]);
+			});
+			
+			var coreDataType = node_getObjectType(entityCore);
+			if(coreDataType==node_CONSTANT.TYPEDOBJECT_TYPE_DYNAMIC){
+				out.setChildCoreEntityPackage(entityCore.getDynamicInput().getCoreEntityPackage());
 			}
-			return node_complexEntityUtility.getCoreEntity(hostEntityCore);
+			return out;
 		},
 
 		getDescendantCore : function(entity, path){
@@ -176,6 +202,11 @@ var node_complexEntityUtility = function(){
 			if(dataType==node_CONSTANT.TYPEDOBJECT_TYPE_COMPONENTRUNTIME){
 				out = obj.getCoreEntity();
 			}
+			return out;
+		},
+		
+		getCoreBrick : function(obj){
+			var out = loc_out.getCoreEntity(obj);
 			
 			var coreDataType = node_getObjectType(out);
 			if(coreDataType==node_CONSTANT.TYPEDOBJECT_TYPE_BUNDLE){
@@ -205,6 +236,12 @@ var node_complexEntityUtility = function(){
 				return parm;
 			}
 		},
+	
+	    getAdapters : function(coreEntity){
+    		var adapters = node_getEntityTreeNodeInterface(entityCore).getAdapters();
+            return adapters;			
+		},
+	
 	
 		getAttributeAdapterExecuteRequest : function(parentCoreEntity, attrName, adapterName, extraInfo, handlers, request){
 			var attrNode = node_getEntityTreeNodeInterface(parentCoreEntity).getChild(attrName);

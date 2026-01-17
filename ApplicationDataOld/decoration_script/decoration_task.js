@@ -54,7 +54,7 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 				var treeNodeInterface = node_getEntityTreeNodeInterface(parentEntityCore);
 				var childNode = treeNodeInterface.getChild(childName);
 				var childValue = childNode.getChildValue();
-				var childEntityCore = node_complexEntityUtility.getCoreEntity(childValue);
+				var childEntityCore = node_complexEntityUtility.getCoreBrick(childValue);
 				var taskInterface = loc_getCoreTaskInterface(childEntityCore);
 				if(taskInterface!=undefined){
 					var parentEntityDef = node_getBasicEntityObjectInterface(parentEntityCore).getEntityDefinition();

@@ -76,15 +76,15 @@ var node_taskExecuteUtility = function(){
 
 
   var loc_getTaskCoreFromTaskEntityCore = function(taskEntityCore){
-		var taskEntityCore = node_complexEntityUtility.getCoreEntity(taskEntityCore);
+		var taskEntityCore = node_complexEntityUtility.getCoreBrick(taskEntityCore);
 		var taskCoreFacade = node_getApplicationInterface(taskEntityCore, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_TASK);
 		var taskCore = taskCoreFacade.getTaskCore();
 		return taskCore;
   };
 
-  var loc_getTaskAdapter = function(entityCore, adapterName){
+  var loc_discoverTaskAdapters = function(entityCore){
+	  var out = [];
 		var adapters = node_getEntityTreeNodeInterface(entityCore).getAdapters();
-		var taskAdapter;
 		if(adapterName==undefined){
 			//if adapter name not provided, then find adapter for task
 			for(var name in adapters){
@@ -92,8 +92,21 @@ var node_taskExecuteUtility = function(){
 				var adapterDef = node_getBasicEntityObjectInterface(adapter).getEntityDefinition();
 				var adapterBrickType = adapterDef.getBrickType()[node_COMMONATRIBUTECONSTANT.IDBRICKTYPE_BRICKTYPE]; 
 				if(adapterBrickType==node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_DATAASSOCIATIONFORTASK||adapterBrickType==node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_DATAASSOCIATIONFOREXPRESSION){
-					taskAdapter = adapter;
+					out.push(adapter);
 				}
+			}
+		}
+	  return out;
+  };
+
+  var loc_getTaskAdapter = function(entityCore, adapterName){
+		var adapters = node_getEntityTreeNodeInterface(entityCore).getAdapters();
+		var taskAdapter;
+		if(adapterName==undefined){
+			//if adapter name not provided, then find adapter for task
+			var adapters = loc_discoverTaskAdapters();
+			if(adapters.length==1){
+				taskAdapter = adapters[0];
 			}
 		}
 		else{
@@ -187,6 +200,38 @@ var node_taskExecuteUtility = function(){
 		}));
 
 		return out;		
+	},
+
+    getExecuteInteractiveRequest : function(interactiveEntityCore, taskSetup, adapters, handlers, request){
+		return loc_getExecuteInteractiveRequest(interactiveEntityCore, taskSetup, adapters, handlers, request);
+	},
+
+    getExecuteInteractiveBrickPackageRequest : function(interactiveBrickPackage, taskSetup, handlers, request){
+		
+		var adapters = [];
+		var interactiveEntityCore = interactiveBrickPackage.getCoreEntity();
+		
+		_.each(interactiveBrickPackage.getAdapters(), function(adapter){
+			adapters.push(adapter);
+		});
+		
+		if(interactiveBrickPackage.getIsAdapterExplicit()==false){
+			var a1 = loc_discoverTaskAdapters(interactiveEntityCore);
+			if(a1.length==1)   adapters.push(a1[0]);
+		}
+		
+		//child
+		var childEntityCorePackage = interactiveBrickPackage.getChildCoreEntityPackage();
+		if(childEntityCorePackage!=null){
+			interactiveEntityCore = childEntityCorePackage.getCoreEntity();
+			
+    		if(childEntityCorePackage.getIsAdapterExplicit()==false){
+	    		var a2 = loc_discoverTaskAdapters(interactiveEntityCore);
+		    	if(a2.length==1)   adapters.push(a2[0]);
+		    }
+		}
+		
+		return loc_getExecuteInteractiveRequest(interactiveEntityCore, taskSetup, adapters, handlers, request);
 	},
 
   };

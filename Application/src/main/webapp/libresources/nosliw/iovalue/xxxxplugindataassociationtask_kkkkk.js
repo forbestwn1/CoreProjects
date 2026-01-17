@@ -56,7 +56,7 @@ var loc_createDataAssociationTaskAdapter = function(dataAssociationTask){
 				var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 				out.addRequest(inIO.getDataValueRequest(undefined, {
 					success : function(request, taskInputValue){
-						var taskInterface = node_getApplicationInterface(node_complexEntityUtility.getCoreEntity(childRuntime), node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_TASK);
+						var taskInterface = node_getApplicationInterface(node_complexEntityUtility.getCoreBrick(childRuntime), node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_TASK);
 						var taskInput = extraInfo==undefined?undefined:extraInfo.taskInput;
 						var requirement = extraInfo==undefined?undefined:extraInfo.requirement;
 						return taskInterface.getExecuteRequest(taskInputValue.default, requirement, {

@@ -98,7 +98,8 @@
 						"name" : "task",
 						"brickId" : {
 							"idPath" : "#main.test1-taskTaskScript"
-						}
+						},
+						"adapters" : ["taskAdapter11"]
 					}
 				]
 			}		

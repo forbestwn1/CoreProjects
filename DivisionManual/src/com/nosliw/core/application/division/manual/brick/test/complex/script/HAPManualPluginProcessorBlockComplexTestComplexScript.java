@@ -43,7 +43,7 @@ public class HAPManualPluginProcessorBlockComplexTestComplexScript extends HAPMa
 
 		for(HAPTestTaskTrigguer taskTrigguer : definitionBlock.getTaskTrigguers()) {
 			HAPInfoTrigguerTask trigguerInfo = taskTrigguer.getTaskTrigguerInfo();
-			HAPIdBrickInBundle handlerIdInBundle = trigguerInfo.getHandlerId();
+			HAPIdBrickInBundle handlerIdInBundle = trigguerInfo.getHandlerId().getBrickId();
 			HAPManualUtilityProcessBrickPath.normalizeBrickReferenceInBundle(handlerIdInBundle, pathFromRoot, false, processContext);
 		}
 	}
@@ -57,7 +57,7 @@ public class HAPManualPluginProcessorBlockComplexTestComplexScript extends HAPMa
 
 		for(HAPTestTaskTrigguer taskTrigguer : definitionBlock.getTaskTrigguers()) {
 			HAPInfoTrigguerTask trigguerInfo = taskTrigguer.getTaskTrigguerInfo();
-			HAPIdBrickInBundle handlerIdInBundle = trigguerInfo.getHandlerId();
+			HAPIdBrickInBundle handlerIdInBundle = trigguerInfo.getHandlerId().getBrickId();
 			
 			String trigguerType = trigguerInfo.getTrigguerType();
 			if(HAPConstantShared.TASK_TRIGGUER_EVENTHANDLE.equals(trigguerType)) {

@@ -14,18 +14,45 @@ var packageObj = library.getChildPackage("entity");
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
-var loc_createDynamicInput = function(dynamicEntity){
+var loc_createDynamicInput = function(coreEntityPackage){
 	
-	var loc_dynamicEntity = dynamicEntity;
+	var loc_coreEntityPackage = coreEntityPackage;
 	
 	var loc_out = {
 		
-		getDynamicCoreEntity : function(){    return loc_dynamicEntity;    },
+		getCoreEntityPackage : function(){    return coreEntityPackage;     },
+		
+		getDynamicCoreEntity : function(){    return loc_coreEntityPackage.getCoreEntity();    },
 		
 	};
 	return loc_out;
 };
 
+
+var loc_createCoreEntityPackage = function(coreEntity){
+	
+	var loc_coreEntity = coreEntity;
+	var loc_adapters = [];
+	var loc_isAdapterExplicit;
+	
+	var loc_childCoreEntityPackage;
+	
+	var loc_out = {
+		
+		getCoreEntity : function(){    return loc_coreEntity;    },
+		
+		addAdpater : function(adapter){   loc_adapters.push(adapter);   },
+		getAdapters : function(){   return loc_adapters;    },
+		
+		getIsAdapterExplicit : function(){    return loc_isAdapterExplicit;       },
+		setIsAdapterExplicit : function(isAdapterExplicit){   loc_isAdapterExplicit = isAdapterExplicit;       },
+		
+		getChildCoreEntityPackage : function(){   return loc_childCoreEntityPackage;      },
+		setChildCoreEntityPackage : function(childCoreEntityPackage){   loc_childCoreEntityPackage = childCoreEntityPackage;      },
+		
+	};
+	return loc_out;
+};
 
 var node_createDynamicInputContainer = function(dynamicInputDefs, dynamicInputSourceBundleCore){
 	
@@ -47,19 +74,21 @@ var node_createDynamicInputContainer = function(dynamicInputDefs, dynamicInputSo
 				var dynamicInputDef = loc_dynamicInputDefs[node_COMMONATRIBUTECONSTANT.DYNAMICEXECUTEINPUTCONTAINER_ELEMENT][inputId];
 				var refType = dynamicInputDef[node_COMMONATRIBUTECONSTANT.DYNAMICEXECUTEINPUTITEM_TYPE];
 				if(refType==node_COMMONCONSTANT.DYNAMICTASK_REF_TYPE_SINGLE){
-					var relativePath = dynamicInputDef[node_COMMONATRIBUTECONSTANT.DYNAMICEXECUTEINPUTITEM_BRICKID][node_COMMONATRIBUTECONSTANT.IDBRICKINBUNDLE_RELATIVEPATH];
-					var absolutePath = dynamicInputDef[node_COMMONATRIBUTECONSTANT.DYNAMICEXECUTEINPUTITEM_BRICKID][node_COMMONATRIBUTECONSTANT.IDBRICKINBUNDLE_IDPATH];
-					var dynamicInputEntityCore = node_complexEntityUtility.getBrickCoreByRelativePath(loc_dynamicInputBundleCore, relativePath);
+					var brickPackage = dynamicInputDef[node_COMMONATRIBUTECONSTANT.DYNAMICEXECUTEINPUTITEM_BRICKPACKAGE];
+					var adapterNames = dynamicInputDef[node_COMMONATRIBUTECONSTANT.DYNAMICEXECUTEINPUTITEM_ADAPATERS];
+					
+					var relativePath = brickPackage[node_COMMONATRIBUTECONSTANT.PACKAGEBRICKINBUNDLE_BRICKID][node_COMMONATRIBUTECONSTANT.IDBRICKINBUNDLE_RELATIVEPATH];
+					var absolutePath = brickPackage[node_COMMONATRIBUTECONSTANT.PACKAGEBRICKINBUNDLE_BRICKID][node_COMMONATRIBUTECONSTANT.IDBRICKINBUNDLE_IDPATH];
+					var dynamicInputEntityPackage = node_complexEntityUtility.getBrickPackageByRelativePath(loc_dynamicInputBundleCore, brickPackage);
 					
 //					var dynamicInputEntityCore = node_complexEntityUtility.getDescendantCore(loc_dynamicInputSourceBundleCore, absolutePath);
 					
 					
-					var factory = node_getApplicationInterface(dynamicInputEntityCore, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_FACTORY);
+					var factory = node_getApplicationInterface(dynamicInputEntityPackage.getCoreEntity(), node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_FACTORY);
 //					if(factory==undefined){
 	                if(true){
 						return node_createServiceRequestInfoSimple(undefined, function(request){
-							var dynamicInput = loc_createDynamicInput(dynamicInputEntityCore);
-							loc_dynamicInputs[inputId] = dynamicInput;
+							var dynamicInput = loc_createDynamicInput(dynamicInputEntityPackage);
 							return dynamicInput;  
 						}, handlers, request);
 					}
@@ -294,5 +323,6 @@ nosliw.registerSetNodeDataEvent("component.getApplicationInterface", function(){
 packageObj.createChildNode("EntityIdInDomain", node_EntityIdInDomain); 
 packageObj.createChildNode("createBrickDefinition", node_createBrickDefinition); 
 packageObj.createChildNode("createDynamicInputContainer", node_createDynamicInputContainer); 
+packageObj.createChildNode("createCoreEntityPackage", loc_createCoreEntityPackage); 
 
 })(packageObj);

@@ -7,26 +7,25 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.core.application.HAPIdBrickInBundle;
+import com.nosliw.core.application.HAPPackageBrickInBundle;
 
 public class HAPDynamicExecuteInputItemSingle extends HAPDynamicExecuteInputItem{
 
 	@HAPAttribute
-	public final static String BRICKID = "brickId"; 
+	public final static String BRICKPACKAGE = "brickPackage"; 
 	
-	private HAPIdBrickInBundle m_brickId;
+	private HAPPackageBrickInBundle m_brickPackage;
 	
 	public HAPDynamicExecuteInputItemSingle() {	}
 	
-	public HAPDynamicExecuteInputItemSingle(HAPIdBrickInBundle brickId) {
-		this.m_brickId = brickId;
+	public HAPDynamicExecuteInputItemSingle(HAPPackageBrickInBundle brickPackage) {
+		this.m_brickPackage = brickPackage;
 	}
 	
 	@Override
 	public String getType() {   return HAPConstantShared.DYNAMICTASK_REF_TYPE_SINGLE;  }
 
-	public HAPIdBrickInBundle getTaskId() {    return this.m_brickId;     }
-	public void setTaskId(HAPIdBrickInBundle taskId) {    this.m_brickId = taskId;      }
+	public HAPPackageBrickInBundle getBrickPackage() {    return this.m_brickPackage;    }
 	
 	@Override
 	protected boolean buildObjectByJson(Object json){
@@ -34,9 +33,12 @@ public class HAPDynamicExecuteInputItemSingle extends HAPDynamicExecuteInputItem
 		
 		JSONObject jsonObj = (JSONObject)json;
 		
-		JSONObject taskIdJsonObj = jsonObj.getJSONObject(BRICKID);
-		this.m_brickId = new HAPIdBrickInBundle();
-		this.m_brickId.buildObject(taskIdJsonObj, HAPSerializationFormat.JSON);
+		JSONObject brickPackageJsonObj = jsonObj.optJSONObject(BRICKPACKAGE);
+		if(brickPackageJsonObj==null) {
+			brickPackageJsonObj = jsonObj;
+		}
+		this.m_brickPackage = new HAPPackageBrickInBundle();
+		this.m_brickPackage.buildObject(brickPackageJsonObj, HAPSerializationFormat.JSON);
 		
 		return true;
 	}
@@ -44,7 +46,6 @@ public class HAPDynamicExecuteInputItemSingle extends HAPDynamicExecuteInputItem
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(BRICKID, this.m_brickId.toStringValue(HAPSerializationFormat.JSON));
+		jsonMap.put(BRICKPACKAGE, this.m_brickPackage.toStringValue(HAPSerializationFormat.JSON));
 	}
-
 }

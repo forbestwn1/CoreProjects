@@ -8,7 +8,7 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.info.HAPEntityInfoImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.core.application.HAPIdBrickInBundle;
+import com.nosliw.core.application.HAPPackageBrickInBundle;
 import com.nosliw.core.application.common.structure.HAPElementStructure;
 import com.nosliw.core.application.common.structure.HAPUtilityParserElement;
 import com.nosliw.core.application.entity.datarule.HAPManagerDataRule;
@@ -32,7 +32,7 @@ public class HAPInfoTrigguerTask extends HAPEntityInfoImp{
 	
 	private HAPElementStructure m_dataDefinition;
 
-	private HAPIdBrickInBundle m_handlerId;
+	private HAPPackageBrickInBundle m_handlerId;
 	
 	private String m_externalValuePortGroupName;
 
@@ -44,8 +44,8 @@ public class HAPInfoTrigguerTask extends HAPEntityInfoImp{
 	public HAPElementStructure getEventDataDefinition() {   return this.m_dataDefinition;      }
 	public void setEventDataDefinition(HAPElementStructure dataDef) {   this.m_dataDefinition = dataDef;      }
 	
-	public HAPIdBrickInBundle getHandlerId() {   return this.m_handlerId;     }
-	public void setHandlerId(HAPIdBrickInBundle handlerId) {   this.m_handlerId = handlerId;    }
+	public HAPPackageBrickInBundle getHandlerId() {   return this.m_handlerId;     }
+	public void setHandlerId(HAPPackageBrickInBundle handlerId) {   this.m_handlerId = handlerId;    }
 	
 	public void setExternalValuePortGroupName(String name) {    this.m_externalValuePortGroupName = name;       }
 	
@@ -58,7 +58,7 @@ public class HAPInfoTrigguerTask extends HAPEntityInfoImp{
 		out.setTrigguerType((String)jsonObj.opt(TRIGGUERTYPE));
 		out.setEventDataDefinition(HAPUtilityParserElement.parseStructureElement(jsonObj.optJSONObject(DATADEFINITION), dataRuleMan));
 		
-		HAPIdBrickInBundle handlerId = new HAPIdBrickInBundle();
+		HAPPackageBrickInBundle handlerId = new HAPPackageBrickInBundle();
 		handlerId.buildObject(jsonObj.opt(HANDLERID), HAPSerializationFormat.JSON);
 		out.setHandlerId(handlerId);
 		

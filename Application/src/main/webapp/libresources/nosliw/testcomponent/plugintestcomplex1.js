@@ -99,7 +99,7 @@ var loc_createTestComplex1ComponentCore = function(complexEntityDef, configure){
 				attributeView.append(valuePortView);
 				
 				//adapter view
-				var childEntityCore = node_complexEntityUtility.getCoreEntity(child.getChildValue());
+				var childEntityCore = node_complexEntityUtility.getCoreBrick(child.getChildValue());
 				var childEntityType = node_getComponentInterface(childEntityCore).getDataType();
 				var taskFacade = node_getApplicationInterface(childEntityCore, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_TASK);
 				if(childEntityType[node_COMMONATRIBUTECONSTANT.IDBRICKTYPE_BRICKTYPE]==node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_TASKWRAPPER){
