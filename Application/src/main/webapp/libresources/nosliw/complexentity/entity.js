@@ -20,7 +20,7 @@ var loc_createDynamicInput = function(coreEntityPackage){
 	
 	var loc_out = {
 		
-		getCoreEntityPackage : function(){    return coreEntityPackage;     },
+		getCoreEntityPackage : function(){    return loc_coreEntityPackage;     },
 		
 		getDynamicCoreEntity : function(){    return loc_coreEntityPackage.getCoreEntity();    },
 		
@@ -29,26 +29,46 @@ var loc_createDynamicInput = function(coreEntityPackage){
 };
 
 
-var loc_createCoreEntityPackage = function(coreEntity){
+var node_createCoreEntityPackage = function(coreEntity){
 	
 	var loc_coreEntity = coreEntity;
-	var loc_adapters = [];
+	var loc_adapterNames = [];
 	var loc_isAdapterExplicit;
 	
-	var loc_childCoreEntityPackage;
+	var loc_baseCoreEntityPackage;
 	
 	var loc_out = {
 		
 		getCoreEntity : function(){    return loc_coreEntity;    },
 		
-		addAdpater : function(adapter){   loc_adapters.push(adapter);   },
-		getAdapters : function(){   return loc_adapters;    },
+		addAdapterName : function(adapterName){   loc_adapterNames.push(adapterName);     },
+		getAdapterNames : function(){   return loc_adapterNames;   },
 		
 		getIsAdapterExplicit : function(){    return loc_isAdapterExplicit;       },
 		setIsAdapterExplicit : function(isAdapterExplicit){   loc_isAdapterExplicit = isAdapterExplicit;       },
 		
-		getChildCoreEntityPackage : function(){   return loc_childCoreEntityPackage;      },
-		setChildCoreEntityPackage : function(childCoreEntityPackage){   loc_childCoreEntityPackage = childCoreEntityPackage;      },
+		getBaseCoreEntityPackage : function(){   return loc_baseCoreEntityPackage;      },
+		setBaseCoreEntityPackage : function(coreEntityPackage){   loc_baseCoreEntityPackage = coreEntityPackage;      },
+		
+		setRootCoreEntityPackage : function(rootCoreEntityPackage){
+			if(loc_baseCoreEntityPackage==undefined){
+				loc_baseCoreEntityPackage = rootCoreEntityPackage;
+			}
+			else{
+				loc_baseCoreEntityPackage.setRootCoreEntityPackage(rootCoreEntityPackage);
+			}
+		},
+		
+		getRootCoreEntityPackage : function(){
+			var out;
+			if(loc_baseCoreEntityPackage==undefined){
+				out = loc_out;
+			}
+			else{
+				out = loc_baseCoreEntityPackage.getRootCoreEntityPackage();
+			}
+			return out;
+		}
 		
 	};
 	return loc_out;
@@ -89,6 +109,7 @@ var node_createDynamicInputContainer = function(dynamicInputDefs, dynamicInputSo
 	                if(true){
 						return node_createServiceRequestInfoSimple(undefined, function(request){
 							var dynamicInput = loc_createDynamicInput(dynamicInputEntityPackage);
+							loc_dynamicInputs[inputId] = dynamicInput;
 							return dynamicInput;  
 						}, handlers, request);
 					}
@@ -323,6 +344,6 @@ nosliw.registerSetNodeDataEvent("component.getApplicationInterface", function(){
 packageObj.createChildNode("EntityIdInDomain", node_EntityIdInDomain); 
 packageObj.createChildNode("createBrickDefinition", node_createBrickDefinition); 
 packageObj.createChildNode("createDynamicInputContainer", node_createDynamicInputContainer); 
-packageObj.createChildNode("createCoreEntityPackage", loc_createCoreEntityPackage); 
+packageObj.createChildNode("createCoreEntityPackage", node_createCoreEntityPackage); 
 
 })(packageObj);

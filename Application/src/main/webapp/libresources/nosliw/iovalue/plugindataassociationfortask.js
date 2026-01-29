@@ -12,6 +12,7 @@ var packageObj = library;
 	var node_createDataAssociation;
 	var node_taskExecuteUtility;
 	var node_getApplicationInterface;
+	var node_makeObjectWithApplicationInterface;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -95,6 +96,7 @@ nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_Se
 nosliw.registerSetNodeDataEvent("iovalue.createDataAssociation", function(){node_createDataAssociation = this.getData();});
 nosliw.registerSetNodeDataEvent("task.taskExecuteUtility", function(){node_taskExecuteUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("component.getApplicationInterface", function(){node_getApplicationInterface = this.getData();});
+nosliw.registerSetNodeDataEvent("component.makeObjectWithApplicationInterface", function(){node_makeObjectWithApplicationInterface = this.getData();});
 
 
 //Register Node by Name

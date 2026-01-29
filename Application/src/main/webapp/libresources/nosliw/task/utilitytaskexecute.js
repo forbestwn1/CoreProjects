@@ -19,61 +19,103 @@ var packageObj = library;
 	var node_getApplicationInterface;
 	var node_getEntityObjectInterface;
 	var node_getBasicEntityObjectInterface;
+	var node_createServiceRequestInfoCommon;
 
 //*******************************************   Start Node Definition  ************************************** 	
 
 var node_taskExecuteUtility = function(){
 
-  var loc_getExecuteInteractiveRequest = function(interactiveEntityCore, taskSetup, adapters, handlers, request){
+  var loc_discoverInteractiveAdapters = function(entityCore, adapterNames, isExplicit){
+	  var out = [];
+		var adapters = node_getEntityTreeNodeInterface(entityCore).getAdapters();
+		
+		if(adapterNames!=undefined&&adapterNames.length>0){
+			_.each(adapterNames, function(adapterName, i){
+				out.push(adapters[adapterName]);
+			});
+		}
+		else{
+    		if(isExplicit==false||isExplicit==undefined){
+                //implied adapter			
+    			for(var name in adapters){
+	    			var adapter = adapters[name];
+		    		var adapterDef = node_getBasicEntityObjectInterface(adapter).getEntityDefinition();
+			    	var adapterBrickType = adapterDef.getBrickType()[node_COMMONATRIBUTECONSTANT.IDBRICKTYPE_BRICKTYPE]; 
+				    if(adapterBrickType==node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_DATAASSOCIATIONFORTASK||adapterBrickType==node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_DATAASSOCIATIONFOREXPRESSION){
+					    out.push(adapter);
+				    }
+			    }
+	    	}
+		}
+	  return out;
+  };
+
+  var loc_getInteractiveEntityCoreRequest = function(interactiveBrickPackage, handlers, request){
       var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 
+      var getInteractiveEntityCoreRequest = node_createServiceRequestInfoSequence(undefined, {
+		  success : function(request, interactiveEntityCore){
+			  interactiveBrickPackage.setRootCoreEntityPackage(node_createCoreEntityPackage(interactiveEntityCore));
+			  return interactiveEntityCore;
+		  }
+	  });
+
+      
+      var interactiveEntityCore = interactiveBrickPackage.getCoreEntity();
+      
 	  var interactiveFactory = node_getApplicationInterface(interactiveEntityCore, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_FACTORY);
       if(interactiveFactory!=undefined){
-		out.addRequest(interactiveFactory.getCreateEntityRequest());
+		getInteractiveEntityCoreRequest.addRequest(interactiveFactory.getCreateEntityRequest());
 	  }
 	  else{
-		out.addRequest(node_createServiceRequestInfoSimple(undefined, function(){
+		getInteractiveEntityCoreRequest.addRequest(node_createServiceRequestInfoSimple(undefined, function(){
 			return interactiveEntityCore;
 		}));
 	  }
 	  
-	  out.addRequest(node_createServiceRequestInfoCommon(undefined, {
-		  success : function(request, entityCore){
-				var taskCore = loc_getTaskCoreFromTaskEntityCore(entityCore); 
-				taskCore.addTaskSetup(taskSetup);
-				//init task
-				return taskCore.getTaskInitRequest(undefined, {
-					success : function(request){
-                        var beforesRequest = node_createServiceRequestInfoSequence(undefined, {
-							success : function(request){
-                				return taskCore.getTaskExecuteRequest({
-				                	success : function(request, result){
-                                        var aftersRequest = node_createServiceRequestInfoSequence(undefined, {
-											success : function(request){
-												return result;
-											}
-										});
-                                        _.each(adapters, function(adapter, i){
-                                            var wrapperAdapter = node_getApplicationInterface(adapter, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_ADAPTER_WRAPPER);
-                                        	aftersRequest.addRequest(wrapperAdapter.getAfterRequest(result, interactiveEntityCore));
-                                        });
-                					}
-                				});
-							}
-						});
-                        _.each(adapters, function(adapter, i){
-                            var wrapperAdapter = node_getApplicationInterface(adapter, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_ADAPTER_WRAPPER);
-                        	beforesRequest.addRequest(wrapperAdapter.getBeforeRequest(interactiveEntityCore));
-                        });
-                        return beforesRequest;
-					}
-				});
-		  }
-	  }));
-	  
+	  out.addRequest(getInteractiveEntityCoreRequest);
 	  return out;
   };
 
+
+  var loc_buildInteractiveInfoRequest = function(interactiveBrickPackage, interactiveInfo, handlers, request){
+
+        if(interactiveInfo==undefined){
+			interactiveInfo = {
+				adapters : []
+			};
+		}
+
+		//check base first
+		var baseEntityCorePackage = interactiveBrickPackage.getBaseCoreEntityPackage();
+		if(baseEntityCorePackage!=undefined){
+			var adapters = loc_discoverInteractiveAdapters(interactiveBrickPackage.getCoreEntity(), interactiveBrickPackage.getAdapterNames(), interactiveBrickPackage.getIsAdapterExplicit());
+			_.each(adapters, function(adapter){
+				interactiveInfo.adapters.push({
+					adapter : adapter,
+					baseEntityCore : interactiveBrickPackage.getCoreEntity()
+				});
+			});
+			return loc_buildInteractiveInfoRequest(baseEntityCorePackage, interactiveInfo, handlers, request);
+		}
+		else{
+            var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+			out.addRequest(loc_getInteractiveEntityCoreRequest(interactiveBrickPackage, {
+				success : function(request, interactiveCoreEntity){
+					interactiveInfo.coreEntity = interactiveCoreEntity;
+         			var adapters = loc_discoverInteractiveAdapters(interactiveCoreEntity, interactiveBrickPackage, interactiveBrickPackage.getIsAdapterExplicit());
+        			_.each(adapters, function(adapter){
+		    		    interactiveInfo.adapters.push({
+        					adapter : adapter,
+		        			baseEntityCore : interactiveCoreEntity
+				        });
+			        });
+					return interactiveInfo;
+				}
+			}));
+			return out;
+		}
+  };
 
   var loc_getTaskCoreFromTaskEntityCore = function(taskEntityCore){
 		var taskEntityCore = node_complexEntityUtility.getCoreBrick(taskEntityCore);
@@ -82,29 +124,53 @@ var node_taskExecuteUtility = function(){
 		return taskCore;
   };
 
-  var loc_discoverTaskAdapters = function(entityCore){
-	  var out = [];
-		var adapters = node_getEntityTreeNodeInterface(entityCore).getAdapters();
-		if(adapterName==undefined){
-			//if adapter name not provided, then find adapter for task
-			for(var name in adapters){
-				var adapter = adapters[name];
-				var adapterDef = node_getBasicEntityObjectInterface(adapter).getEntityDefinition();
-				var adapterBrickType = adapterDef.getBrickType()[node_COMMONATRIBUTECONSTANT.IDBRICKTYPE_BRICKTYPE]; 
-				if(adapterBrickType==node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_DATAASSOCIATIONFORTASK||adapterBrickType==node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_DATAASSOCIATIONFOREXPRESSION){
-					out.push(adapter);
-				}
+  var loc_getExecuteInteractiveEntityCoreRequest = function(interactiveEntityCore, taskSetup, adapters, handlers, request){
+      var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+
+    	var taskCore = loc_getTaskCoreFromTaskEntityCore(interactiveEntityCore); 
+		taskCore.addTaskSetup(taskSetup);
+		//init task
+		out.addRequest(taskCore.getTaskInitRequest(undefined, {
+			success : function(request){
+                var executeRequest = node_createServiceRequestInfoSequence();
+
+                _.each(adapters, function(adapterInfo, i){
+                    var wrapperAdapter = node_getApplicationInterface(adapterInfo.adapter, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_ADAPTER_WRAPPER);
+                   	executeRequest.addRequest(wrapperAdapter.getBeforeRequest(adapterInfo.baseEntityCore));
+                });
+
+			    executeRequest.addRequest(taskCore.getTaskExecuteRequest({
+               	    success : function(request, result){
+                        var aftersRequest = node_createServiceRequestInfoSequence(undefined, {
+    				        success : function(request){
+						        return result;
+					        }
+				        });
+                        _.each(adapters, function(adapterInfo, i){
+                            var wrapperAdapter = node_getApplicationInterface(adapterInfo.adapter, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_ADAPTER_WRAPPER);
+                               	aftersRequest.addRequest(wrapperAdapter.getAfterRequest(result, adapterInfo.baseEntityCore));
+                        });
+                        return aftersRequest;
+              		}
+           		}));
+
+                return executeRequest;
 			}
-		}
+		}));
+
 	  return out;
   };
+
+
+
+
 
   var loc_getTaskAdapter = function(entityCore, adapterName){
 		var adapters = node_getEntityTreeNodeInterface(entityCore).getAdapters();
 		var taskAdapter;
 		if(adapterName==undefined){
 			//if adapter name not provided, then find adapter for task
-			var adapters = loc_discoverTaskAdapters();
+			var adapters = loc_discoverInteractiveAdapters();
 			if(adapters.length==1){
 				taskAdapter = adapters[0];
 			}
@@ -202,36 +268,20 @@ var node_taskExecuteUtility = function(){
 		return out;		
 	},
 
-    getExecuteInteractiveRequest : function(interactiveEntityCore, taskSetup, adapters, handlers, request){
+    getExecuteInteractiveRequest1 : function(interactiveEntityCore, taskSetup, adapters, handlers, request){
 		return loc_getExecuteInteractiveRequest(interactiveEntityCore, taskSetup, adapters, handlers, request);
 	},
 
     getExecuteInteractiveBrickPackageRequest : function(interactiveBrickPackage, taskSetup, handlers, request){
+		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 		
-		var adapters = [];
-		var interactiveEntityCore = interactiveBrickPackage.getCoreEntity();
+		out.addRequest(loc_buildInteractiveInfoRequest(interactiveBrickPackage, undefined, {
+			success : function(request, interactiveInfo){
+                return loc_getExecuteInteractiveEntityCoreRequest(interactiveInfo.coreEntity, taskSetup, interactiveInfo.adapters);			
+			}
+		}));
 		
-		_.each(interactiveBrickPackage.getAdapters(), function(adapter){
-			adapters.push(adapter);
-		});
-		
-		if(interactiveBrickPackage.getIsAdapterExplicit()==false){
-			var a1 = loc_discoverTaskAdapters(interactiveEntityCore);
-			if(a1.length==1)   adapters.push(a1[0]);
-		}
-		
-		//child
-		var childEntityCorePackage = interactiveBrickPackage.getChildCoreEntityPackage();
-		if(childEntityCorePackage!=null){
-			interactiveEntityCore = childEntityCorePackage.getCoreEntity();
-			
-    		if(childEntityCorePackage.getIsAdapterExplicit()==false){
-	    		var a2 = loc_discoverTaskAdapters(interactiveEntityCore);
-		    	if(a2.length==1)   adapters.push(a2[0]);
-		    }
-		}
-		
-		return loc_getExecuteInteractiveRequest(interactiveEntityCore, taskSetup, adapters, handlers, request);
+        return out;		
 	},
 
   };
@@ -244,6 +294,7 @@ var node_taskExecuteUtility = function(){
 nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("constant.COMMONCONSTANT", function(){node_COMMONCONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){node_COMMONATRIBUTECONSTANT = this.getData();});
+nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoCommon", function(){	node_createServiceRequestInfoCommon = this.getData();	});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequence", function(){	node_createServiceRequestInfoSequence = this.getData();	});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple", function(){node_createServiceRequestInfoSimple = this.getData();});
 nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();});
@@ -257,6 +308,7 @@ nosliw.registerSetNodeDataEvent("complexentity.complexEntityUtility", function()
 nosliw.registerSetNodeDataEvent("component.getApplicationInterface", function(){node_getApplicationInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("complexentity.getEntityObjectInterface", function(){node_getEntityObjectInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("common.interfacedef.getBasicEntityObjectInterface", function(){node_getBasicEntityObjectInterface = this.getData();});
+
 
 //Register Node by Name
 packageObj.createChildNode("taskExecuteUtility", node_taskExecuteUtility); 

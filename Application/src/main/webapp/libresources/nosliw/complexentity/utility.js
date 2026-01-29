@@ -16,6 +16,7 @@ var packageObj = library;
 	var node_createConfigure;
 	var node_getEntityTreeNodeInterface;
 	var node_namingConvensionUtility;
+	var loc_createCoreEntityPackage;
 
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -110,21 +111,31 @@ var node_complexEntityUtility = function(){
 			return node_complexEntityUtility.getCoreBrick(entityCore);
 		},
 
+		getValuePortCoreEntityByRelativePath : function(baseEntityCore, relativePath){
+			var entityCore = loc_getCoreEntityByRelativePath(baseEntityCore, relativePath);
+			
+			var out = loc_out.getCoreEntity(entityCore);
+			var coreDataType = node_getObjectType(out);
+			if(coreDataType==node_CONSTANT.TYPEDOBJECT_TYPE_BUNDLE){
+				out = out.getMainEntityCore();
+			}
+			return out;
+		},
+
 		getBrickPackageByRelativePath : function(baseEntityCore, brickInBundlePackageDef){
 			var brickIdInBundle = brickInBundlePackageDef[node_COMMONATRIBUTECONSTANT.PACKAGEBRICKINBUNDLE_BRICKID];
 			var entityCore = loc_getCoreEntityByRelativePath(baseEntityCore, brickIdInBundle[node_COMMONATRIBUTECONSTANT.IDBRICKINBUNDLE_RELATIVEPATH]);
 			
-			var out = loc_createCoreEntityPackage(entityCore);
+			var out = node_createCoreEntityPackage(entityCore);
 			out.setIsAdapterExplicit(brickInBundlePackageDef[node_COMMONATRIBUTECONSTANT.ISADAPTEREXPLICIT]);
 			
-			var adapters = loc_out.getAdapters();
 			_.each(brickInBundlePackageDef[node_COMMONATRIBUTECONSTANT.PACKAGEBRICKINBUNDLE_ADAPATERS], function(adapterName){
-				out.addAdpater(adapters[adapterName]);
+				out.addAdapterName(adapterName);
 			});
 			
 			var coreDataType = node_getObjectType(entityCore);
 			if(coreDataType==node_CONSTANT.TYPEDOBJECT_TYPE_DYNAMIC){
-				out.setChildCoreEntityPackage(entityCore.getDynamicInput().getCoreEntityPackage());
+				out.setBaseCoreEntityPackage(entityCore.getDynamicInput().getCoreEntityPackage());
 			}
 			return out;
 		},
@@ -237,7 +248,7 @@ var node_complexEntityUtility = function(){
 			}
 		},
 	
-	    getAdapters : function(coreEntity){
+	    getAdapters : function(entityCore){
     		var adapters = node_getEntityTreeNodeInterface(entityCore).getAdapters();
             return adapters;			
 		},
@@ -334,6 +345,7 @@ nosliw.registerSetNodeDataEvent("resource.utility", function(){node_resourceUtil
 nosliw.registerSetNodeDataEvent("component.createConfigure", function(){node_createConfigure = this.getData();});
 nosliw.registerSetNodeDataEvent("complexentity.getEntityTreeNodeInterface", function(){node_getEntityTreeNodeInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("common.namingconvension.namingConvensionUtility", function(){node_namingConvensionUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("complexentity.entity.createCoreEntityPackage", function(){node_createCoreEntityPackage = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("complexEntityUtility", node_complexEntityUtility); 

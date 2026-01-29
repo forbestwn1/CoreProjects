@@ -29,7 +29,7 @@ var loc_getValuePort = function(valuePortEndPoint, baseEntityCore){
 	var valuePortRef = valuePortEndPoint[node_COMMONATRIBUTECONSTANT.ENDPOINTINTUNNELVALUEPORT_VALUEPORTREF];
 	var relativePath = valuePortRef[node_COMMONATRIBUTECONSTANT.IDVALUEPORTINBUNDLE_BRICKID][node_COMMONATRIBUTECONSTANT.IDBRICKINBUNDLE_RELATIVEPATH];
 	var valuePortId = valuePortRef[node_COMMONATRIBUTECONSTANT.IDVALUEPORTINBUNDLE_VALUEPORTID];
-	var hostEntityCore = node_complexEntityUtility.getBrickCoreByRelativePath(baseEntityCore, relativePath);
+	var hostEntityCore = node_complexEntityUtility.getValuePortCoreEntityByRelativePath(baseEntityCore, relativePath);
 	
 	var valuePortSide = valuePortRef[node_COMMONATRIBUTECONSTANT.IDVALUEPORTINBUNDLE_VALUEPORTSIDE];
 	var valuePortContainer;

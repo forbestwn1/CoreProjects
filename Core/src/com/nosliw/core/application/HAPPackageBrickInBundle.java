@@ -46,6 +46,7 @@ public class HAPPackageBrickInBundle extends HAPSerializableImp{
     }
     
     public boolean isAdapterExplicit() {    return this.m_isAdapterExplicit;      }
+    public void setIsAdapterExplicit(boolean isAdapterExplicit) {    this.m_isAdapterExplicit = isAdapterExplicit;     }
     
 	@Override
 	protected boolean buildObjectByJson(Object json){
@@ -55,11 +56,15 @@ public class HAPPackageBrickInBundle extends HAPSerializableImp{
 		
 		JSONObject brickIdJsonObj = jsonObj.optJSONObject(BRICKID);
 		if(brickIdJsonObj!=null) {
+			Object isAdapterExplicitObj = jsonObj.opt(ISADAPTEREXPLICIT);
+			if(isAdapterExplicitObj!=null) {
+				this.m_isAdapterExplicit = ((Boolean)isAdapterExplicitObj).booleanValue();
+			}
+			
 			JSONArray adapterJsonArray = jsonObj.optJSONArray(ADAPATERS);
 			if(adapterJsonArray!=null&&adapterJsonArray.length()>0) {
-		    	this.m_isAdapterExplicit = true; 
 				for(int i=0; i<adapterJsonArray.length(); i++) {
-					this.m_adapterNames.add(adapterJsonArray.getString(i));
+					this.addAdapter(adapterJsonArray.getString(i));
 				}
 			}
 		}
