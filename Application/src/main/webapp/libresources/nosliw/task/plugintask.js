@@ -56,7 +56,7 @@ var loc_createTaskCore = function(taskDef, configure){
 		return loc_indexId + "";
 	};
 
-	var loc_updateTaskValuePortContainerInfo = function(taskEntityCore){
+	var loc_updateViewTaskValuePortContainerInfo = function(taskEntityCore){
 		var taskEntityCore = node_complexEntityUtility.getCoreBrick(taskEntityCore);
 		if(loc_taskInfoView!=undefined){
 				loc_taskInfoView.text("    valuePortContainer:  "
@@ -67,7 +67,7 @@ var loc_createTaskCore = function(taskDef, configure){
 		
 	};
 	
-	var loc_updateTaskResultView = function(taskResult){
+	var loc_updateViewTaskResult = function(taskResult){
 		var resultStr = node_basicUtility.stringify(taskResult);
 		console.log(resultStr);
 		loc_outputView.val(resultStr);
@@ -80,11 +80,11 @@ var loc_createTaskCore = function(taskDef, configure){
 				return node_complexEntityUtility.getBuildAttributeWithResourceId(loc_out, {
 					success : function(request){
 						var taskEntityCore = node.getChildValue().getCoreEntity();
-						loc_updateTaskValuePortContainerInfo(taskEntityCore);
+						loc_updateViewTaskValuePortContainerInfo(taskEntityCore);
 						
 						node_taskExecuteUtility.registerTaskLifecycleEventListener(taskEntityCore, undefined, function(event, eventData, request){
 							if(event=="finish"){
-								loc_updateTaskResultView(eventData);
+								loc_updateViewTaskResult(eventData);
 							}
 						}, taskEntityCore);
 				
@@ -124,10 +124,10 @@ var loc_createTaskCore = function(taskDef, configure){
 				var taskId = loc_createTaskId();
 				out.addRequest(loc_createTaskEntityCoreRequest(taskId, {
 					success : function(request, taskEntityCore){
-						loc_updateTaskValuePortContainerInfo(taskEntityCore);
+						loc_updateViewTaskValuePortContainerInfo(taskEntityCore);
 						return node_taskExecuteUtility.getExecuteEntityTaskWithAdapterRequest(taskEntityCore, undefined, undefined, {
 							success : function(request, taskResult){
-								loc_updateTaskResultView(taskResult);
+								loc_updateViewTaskResult(taskResult);
 								return taskResult;
 							}
 						});

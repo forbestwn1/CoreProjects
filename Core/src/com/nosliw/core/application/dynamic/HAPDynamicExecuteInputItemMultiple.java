@@ -11,35 +11,35 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.core.application.HAPIdBrickInBundle;
+import com.nosliw.core.application.HAPPackageBrickInBundle;
 
 public class HAPDynamicExecuteInputItemMultiple extends HAPDynamicExecuteInputItem{
 
 	@HAPAttribute
-	public final static String BRICKIDS = "brickIds"; 
+	public final static String BRICKPACKAGES = "brickPackages"; 
 	
-	private List<HAPIdBrickInBundle> m_brickIds;
+	private List<HAPPackageBrickInBundle> m_brickPackages;
 	
 	public HAPDynamicExecuteInputItemMultiple() {
-		this.m_brickIds = new ArrayList<HAPIdBrickInBundle>();
+		this.m_brickPackages = new ArrayList<HAPPackageBrickInBundle>();
 	}
 	
 	@Override
 	public String getType() {   return HAPConstantShared.DYNAMICTASK_REF_TYPE_MULTIPLE;  }
 
-	public List<HAPIdBrickInBundle> getBrickIds() {    return this.m_brickIds;     }
-	public void addBrickId(HAPIdBrickInBundle brickId) {    this.m_brickIds.add(brickId);      }
+	public List<HAPPackageBrickInBundle> getBrickPackages() {    return this.m_brickPackages;     }
+	public void addBrickPackage(HAPPackageBrickInBundle brickPackage) {    this.m_brickPackages.add(brickPackage);      }
 	
 	@Override
 	protected boolean buildObjectByJson(Object json){
 		super.buildObjectByJson(json);
 		JSONObject jsonObj = (JSONObject)json;
 		
-		JSONArray brickIdJsonArray = jsonObj.getJSONArray(BRICKIDS);
+		JSONArray brickIdJsonArray = jsonObj.getJSONArray(BRICKPACKAGES);
 		for(int i=0; i<brickIdJsonArray.length(); i++) {
-			HAPIdBrickInBundle brickId = new HAPIdBrickInBundle();
-			brickId.buildObject(brickIdJsonArray.getJSONObject(i), HAPSerializationFormat.JSON);
-			this.addBrickId(brickId);
+			HAPPackageBrickInBundle brickPackage = new HAPPackageBrickInBundle();
+			brickPackage.buildObject(brickIdJsonArray.getJSONObject(i), HAPSerializationFormat.JSON);
+			this.addBrickPackage(brickPackage);
 		}
 		return true;
 	}
@@ -47,7 +47,7 @@ public class HAPDynamicExecuteInputItemMultiple extends HAPDynamicExecuteInputIt
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(BRICKIDS, HAPManagerSerialize.getInstance().toStringValue(m_brickIds, HAPSerializationFormat.JSON));
+		jsonMap.put(BRICKPACKAGES, HAPManagerSerialize.getInstance().toStringValue(m_brickPackages, HAPSerializationFormat.JSON));
 	}
 
 }

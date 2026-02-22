@@ -92,7 +92,7 @@ var node_makeObjectEntityObjectInterface = function(rawEntity, internalValuePort
 				if(attrValueWrapper.getValueType()==node_COMMONCONSTANT.ENTITYATTRIBUTE_VALUETYPE_BRICK){
 					var attrEntityDef = attrValueWrapper.getEntityDefinition();
 
-					out.addRequest(nosliw.runtime.getComplexEntityService().getCreateEntityRuntimeRequest(attrEntityDef, loc_out, loc_bundleCore, variationPoints, childConfigure, {
+					out.addRequest(nosliw.runtime.getComplexEntityService().getCreateBrickRuntimeRequest(attrEntityDef, loc_out, loc_bundleCore, variationPoints, childConfigure, {
 						success : function(request, entityRuntime){
 							node_getEntityTreeNodeInterface(entityRuntime.getCoreEntity()).setParentCore(rawEntity);
 							return nosliw.runtime.getComplexEntityService().getCreateAdaptersRequest(attrDef, {

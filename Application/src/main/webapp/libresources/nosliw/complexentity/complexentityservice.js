@@ -75,6 +75,8 @@ var packageObj = library;
 
 //*******************************************   Start Node Definition  ************************************** 	
 
+//coreEntity : entity with valuePortContianer, adapter. for example, brick, dynamic
+
 var node_createComplexEntityRuntimeService = function() {
 	
 	var loc_entityPlugins = {};
@@ -94,7 +96,7 @@ var node_createComplexEntityRuntimeService = function() {
 		return out;
 	};
 
-	var loc_getCreateEntityCoreRequest = function(rawEntityDef, internalValuePortContainerId, externalValuePortContainerId, bundleCore, configure, handlers, request){
+	var loc_getCreateBrickCoreRequest = function(rawEntityDef, internalValuePortContainerId, externalValuePortContainerId, bundleCore, configure, handlers, request){
 		var brickDef = node_createBrickDefinition(rawEntityDef);
 		var brickType = brickDef.getBrickType();
 		var complexEntityPlugin = loc_entityPlugins[brickType[node_COMMONATRIBUTECONSTANT.IDBRICKTYPE_BRICKTYPE]][brickType[node_COMMONATRIBUTECONSTANT.IDBRICKTYPE_VERSION]];
@@ -169,7 +171,7 @@ var node_createComplexEntityRuntimeService = function() {
 		return out;
 	};
 
-	var loc_getCreateEntityRuntimeRequest = function(entityDef, parentEntityCore, bundleCore, variationPoints, configure, handlers, request){
+	var loc_getCreateBrickRuntimeRequest = function(entityDef, parentEntityCore, bundleCore, variationPoints, configure, handlers, request){
 
 		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 		
@@ -186,7 +188,7 @@ var node_createComplexEntityRuntimeService = function() {
 		out.addRequest(variationPoints.afterValueContext(entityDef, internalValuePortContainerId, bundleCore, runtimeConfigureInfo.coreConfigure));
 		
 		//new complexCore through complex plugin
-		out.addRequest(loc_getCreateEntityCoreRequest(entityDef, internalValuePortContainerId, externalValuePortContainerId, bundleCore, runtimeConfigureInfo.coreConfigure, {
+		out.addRequest(loc_getCreateBrickCoreRequest(entityDef, internalValuePortContainerId, externalValuePortContainerId, bundleCore, runtimeConfigureInfo.coreConfigure, {
 			success : function(request, componentCore){
 				//create runtime
 				return node_createComponentRuntime(componentCore, runtimeConfigureInfo.decorations, request);
@@ -196,6 +198,34 @@ var node_createComplexEntityRuntimeService = function() {
 		return out;
 	};
 
+	var loc_buildBundleCore = function(bundleCoreEntity, bundleEntityDef, configure){
+		bundleCoreEntity = loc_buildOtherObject(bundleCoreEntity, bundleEntityDef, configure);
+		bundleCoreEntity = node_makeObjectEntityObjectInterface(bundleCoreEntity, 
+		    function(){
+   				return node_getEntityObjectInterface(bundleCoreEntity.getMainEntityCore()).getInternalValuePortContainer();
+    		}, 
+		    function(){
+   				return node_getEntityObjectInterface(bundleCoreEntity.getMainEntityCore()).getExternalValuePortContainer();
+    		}, 
+		bundleCoreEntity);
+		return bundleCoreEntity;
+    };
+
+	var loc_buildOtherObject = function(entity, entityDef, configure){
+		
+		entity = node_makeObjectWithEmbededEntityInterface(entity);
+		
+		entity = node_makeObjectBasicEntityObjectInterface(entity, entityDef, configure);
+
+		entity = node_makeObjectEntityTreeNodeInterface(entity);
+		
+		entity = node_makeObjectWithComponentInterface(node_getObjectType(entity), entity, false);
+		
+		entity = node_makeObjectWithId(entity);
+
+		return entity;
+	};
+	
 	var loc_init = function(){
 
 //		loc_out.registerEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_WRAPPERBRICK, "1.0.0", node_createWrapperBrickPlugin());
@@ -249,21 +279,6 @@ var node_createComplexEntityRuntimeService = function() {
 	};
 
 
-	var loc_buildOtherObject = function(entity, entityDef, configure){
-		
-		entity = node_makeObjectWithEmbededEntityInterface(entity);
-		
-		entity = node_makeObjectBasicEntityObjectInterface(entity, entityDef, configure);
-
-		entity = node_makeObjectEntityTreeNodeInterface(entity);
-		
-		entity = node_makeObjectWithComponentInterface(node_getObjectType(entity), entity, false);
-		
-		entity = node_makeObjectWithId(entity);
-
-		return entity;
-	};
-	
 	var loc_out = {
 
 		getCreateApplicationRequest : function(parm, configureInfo, runtimeContext, envInterface, handlers, request){
@@ -320,20 +335,10 @@ var node_createComplexEntityRuntimeService = function() {
 			node_requestServiceProcessor.processRequest(requestInfo);
 		},		
 
-/*
-		//create package runtime object
-		createPackageRuntime : function(parm, configure, request){
-			//create runtime object
-			var packageCore = node_createPackageCore(parm, configure);
-			packageCore = loc_buildOtherObject(packageCore, parm, configure);
-			return node_createComponentRuntime(packageCore, undefined, request); 
-		},
-*/
-
 		getCreateBundleRuntimeRequest : function(parm, configure, handlers, request){
 			return node_createServiceRequestInfoSimple("createBundleRuntimeRequest", function(request){
 				var bundleCore = node_createBundleCore(parm, configure);
-				bundleCore = loc_buildOtherObject(bundleCore, parm, configure);
+				bundleCore = loc_buildBundleCore(bundleCore, parm, configure);
 				var bundleRuntime = node_createComponentRuntime(bundleCore, undefined);
 				return bundleRuntime;
 			}, handlers, request);
@@ -343,7 +348,7 @@ var node_createComplexEntityRuntimeService = function() {
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 			out.addRequest(node_createServiceRequestInfoSimple("createBundleRuntimeRequest", function(request){
 				var bundleCore = node_createBundleCore(parm, configure);
-				bundleCore = loc_buildOtherObject(bundleCore, parm, configure);
+				bundleCore = loc_buildBundleCore(bundleCore, parm, configure);
 				var bundleRuntime = node_createComponentRuntime(bundleCore, undefined);
 				return node_getComponentInterface(bundleRuntime.getCoreEntity()).getPreInitRequest({
 					success : function(request){
@@ -354,6 +359,14 @@ var node_createComplexEntityRuntimeService = function() {
 			return out;
 		},
 				
+		getCreateDynamicRuntimeRequest : function(dynamicDef, parentCore, bundleCore, variationPoints, configure, handlers, request){
+			return loc_getCreateDynamicRuntimeRequest(dynamicDef, parentCore, bundleCore, variationPoints, configure, handlers, request);
+		},
+
+		getCreateBrickRuntimeRequest : function(entityDef, parentCore, bundleCore, variationPoints, configure, handlers, request){
+			return loc_getCreateBrickRuntimeRequest(entityDef, parentCore, bundleCore, variationPoints, configure, handlers, request);
+		},
+
 		getCreateAdaptersRequest : function(attrDef, handlers, request){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("createAdaptersRequest", {}), handlers, request);
 	
@@ -380,6 +393,16 @@ var node_createComplexEntityRuntimeService = function() {
 			return loc_getCreateAdapterRequest(adapterDefinition, handlers, request);
 		},
 
+		registerEntityPlugin : function(entityType, version, entityPlugin){
+			loc_entityPlugins[entityType] = {};
+			loc_entityPlugins[entityType][version] = node_buildEntityPlugInObject(entityPlugin);
+		},
+	
+		registerAdapterPlugin : function(adapterType, version, adapterPlugin){
+			loc_adapterPlugins[adapterType] = {};
+			loc_adapterPlugins[adapterType][version] = node_buildAdapterPlugInObject(adapterPlugin);
+		},
+		
 
 
 
@@ -399,24 +422,6 @@ var node_createComplexEntityRuntimeService = function() {
 			return out;
 		},
 
-		getCreateEntityRuntimeRequest : function(entityDef, parentCore, bundleCore, variationPoints, configure, handlers, request){
-			return loc_getCreateEntityRuntimeRequest(entityDef, parentCore, bundleCore, variationPoints, configure, handlers, request);
-		},
-
-		getCreateDynamicRuntimeRequest : function(dynamicDef, parentCore, bundleCore, variationPoints, configure, handlers, request){
-			return loc_getCreateDynamicRuntimeRequest(dynamicDef, parentCore, bundleCore, variationPoints, configure, handlers, request);
-		},
-
-		registerEntityPlugin : function(entityType, version, entityPlugin){
-			loc_entityPlugins[entityType] = {};
-			loc_entityPlugins[entityType][version] = node_buildEntityPlugInObject(entityPlugin);
-		},
-	
-		registerAdapterPlugin : function(adapterType, version, adapterPlugin){
-			loc_adapterPlugins[adapterType] = {};
-			loc_adapterPlugins[adapterType][version] = node_buildAdapterPlugInObject(adapterPlugin);
-		},
-		
 	};
 
 	loc_init();

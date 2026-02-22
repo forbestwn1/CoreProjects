@@ -981,6 +981,8 @@
 
 			<definition type="space"/>
 			<definition name="PREFIX_ELEMENTID_COTAINER" value="ContainerElement_"/>
+			<definition name="PREFIX_BRICKATTRIBUTE_INTERPRET" value="_interpret_"/>
+			<definition name="PREFIX_BRICKATTRIBUTE_FACTORY" value="_factory_"/>
 
 			<definition type="space"/>
 			<definition name="IODATASET_VALUECONTEXT" value="VALUECONTEXT"/>

@@ -931,6 +931,8 @@ public class HAPConstantShared {
 
 
 		public static final String PREFIX_ELEMENTID_COTAINER = "ContainerElement_";
+		public static final String PREFIX_BRICKATTRIBUTE_INTERPRET = "_interpret_";
+		public static final String PREFIX_BRICKATTRIBUTE_FACTORY = "_factory_";
 
 
 

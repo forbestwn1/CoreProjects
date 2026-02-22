@@ -63,7 +63,7 @@ var node_createDynamicCore = function(dynamicDef, bundleCore, configure){
 		},
 
 		getEntityInitRequest : function(handlers, request){
-			return loc_bundleCore.getDynamicInputContainer().prepareDyanmicInputRequest(loc_dynamicDef[node_COMMONATRIBUTECONSTANT.VALUEOFDYNAMIC_DYNAMICID], handlers, request);
+//			return loc_bundleCore.getDynamicInputContainer().prepareDyanmicInputRequest(loc_dynamicDef[node_COMMONATRIBUTECONSTANT.VALUEOFDYNAMIC_DYNAMICID], handlers, request);
 		},
 
 		updateView : function(view){    

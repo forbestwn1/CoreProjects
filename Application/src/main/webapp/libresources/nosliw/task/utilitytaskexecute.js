@@ -53,27 +53,18 @@ var node_taskExecuteUtility = function(){
   var loc_getInteractiveEntityCoreRequest = function(interactiveBrickPackage, handlers, request){
       var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 
-      var getInteractiveEntityCoreRequest = node_createServiceRequestInfoSequence(undefined, {
-		  success : function(request, interactiveEntityCore){
-			  interactiveBrickPackage.setRootCoreEntityPackage(node_createCoreEntityPackage(interactiveEntityCore));
-			  return interactiveEntityCore;
-		  }
-	  });
-
-      
-      var interactiveEntityCore = interactiveBrickPackage.getCoreEntity();
-      
-	  var interactiveFactory = node_getApplicationInterface(interactiveEntityCore, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_FACTORY);
-      if(interactiveFactory!=undefined){
-		getInteractiveEntityCoreRequest.addRequest(interactiveFactory.getCreateEntityRequest());
+      var coreEntityRef = interactiveBrickPackage.getCoreEntityReference();
+      var baseCoreEntity = coreEntityRef.getBaseCoreEntity();
+      var remainingPath = coreEntityRef.getRemainingPath();
+      if(remainingPath!=undefined&&remainingPath==node_COMMONATRIBUTECONSTANT.BLOCKTASKWRAPPER_TASK){
+    	  var interactiveFactory = node_getApplicationInterface(baseCoreEntity, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_FACTORY);
+          out.addRequest(interactiveFactory.getCreateEntityRequest());
 	  }
 	  else{
-		getInteractiveEntityCoreRequest.addRequest(node_createServiceRequestInfoSimple(undefined, function(){
-			return interactiveEntityCore;
-		}));
+          out.addRequest(getInteractiveEntityCoreRequest.addRequest(node_createServiceRequestInfoSimple(undefined, function(){
+			  return baseCoreEntity;
+		  })));
 	  }
-	  
-	  out.addRequest(getInteractiveEntityCoreRequest);
 	  return out;
   };
 
@@ -89,11 +80,11 @@ var node_taskExecuteUtility = function(){
 		//check base first
 		var baseEntityCorePackage = interactiveBrickPackage.getBaseCoreEntityPackage();
 		if(baseEntityCorePackage!=undefined){
-			var adapters = loc_discoverInteractiveAdapters(interactiveBrickPackage.getCoreEntity(), interactiveBrickPackage.getAdapterNames(), interactiveBrickPackage.getIsAdapterExplicit());
+			var adapters = loc_discoverInteractiveAdapters(interactiveBrickPackage.getCoreEntityReference().getBaseCoreEntity(), interactiveBrickPackage.getAdapterInfo().getAdapterNames(), interactiveBrickPackage.getAdapterInfo().getIsAdapterExplicit());
 			_.each(adapters, function(adapter){
 				interactiveInfo.adapters.push({
 					adapter : adapter,
-					baseEntityCore : interactiveBrickPackage.getCoreEntity()
+					baseEntityCore : interactiveBrickPackage.getCoreEntityReference().getBaseCoreEntity()
 				});
 			});
 			return loc_buildInteractiveInfoRequest(baseEntityCorePackage, interactiveInfo, handlers, request);
@@ -103,7 +94,7 @@ var node_taskExecuteUtility = function(){
 			out.addRequest(loc_getInteractiveEntityCoreRequest(interactiveBrickPackage, {
 				success : function(request, interactiveCoreEntity){
 					interactiveInfo.coreEntity = interactiveCoreEntity;
-         			var adapters = loc_discoverInteractiveAdapters(interactiveCoreEntity, interactiveBrickPackage, interactiveBrickPackage.getIsAdapterExplicit());
+         			var adapters = loc_discoverInteractiveAdapters(interactiveCoreEntity, interactiveBrickPackage.getAdapterInfo().getAdapterNames(), interactiveBrickPackage.getAdapterInfo().getIsAdapterExplicit());
         			_.each(adapters, function(adapter){
 		    		    interactiveInfo.adapters.push({
         					adapter : adapter,

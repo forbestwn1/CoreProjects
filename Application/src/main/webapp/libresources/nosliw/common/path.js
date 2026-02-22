@@ -72,6 +72,13 @@ var node_pathUtility = function(){
 			return out;
 		},
 		
+		combinePathSegs : function(segs){
+			var out = "";
+			_.each(segs, function(seg, index){
+				out = node_namingConvensionUtility.cascadePath(out, seg);
+			});
+			return out;
+		},
 	}
 	
 	return loc_out;

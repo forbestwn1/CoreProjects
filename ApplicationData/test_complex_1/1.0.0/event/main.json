@@ -41,8 +41,8 @@
 				"description" : ""
 			},
 			"brick":{
-				"script1": "complextask_test_basic",
-				"variable" : [
+				"script": "complextask_test_basic",
+				"variable1" : [
 					{
 						"name" : "eventData",
 						"elementPath": "event",
@@ -84,7 +84,7 @@
 			"adapter":[
 				{
 					"name" : "taskAdapter",
-					"status": "disabled",
+					"status": "disabled1",
 					"brickTypeId" : {
 						"brickType": "dataAssociationForTask",
 						"version": "1.0.0"

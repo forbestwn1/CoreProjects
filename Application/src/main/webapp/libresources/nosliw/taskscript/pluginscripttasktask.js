@@ -33,7 +33,8 @@ var node_createScriptTaskTaskPlugin = function(){
 			}));
 			
 			return out;
-		},
+		}
+		
 	};
 
 	return loc_out;

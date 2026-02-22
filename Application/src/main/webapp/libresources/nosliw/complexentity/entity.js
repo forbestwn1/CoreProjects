@@ -14,6 +14,7 @@ var packageObj = library.getChildPackage("entity");
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
+
 var loc_createDynamicInput = function(coreEntityPackage){
 	
 	var loc_coreEntityPackage = coreEntityPackage;
@@ -29,46 +30,65 @@ var loc_createDynamicInput = function(coreEntityPackage){
 };
 
 
-var node_createCoreEntityPackage = function(coreEntity){
+var node_createReferenceCoreEntity = function(baseCoreEntity, remainingPath){
 	
-	var loc_coreEntity = coreEntity;
+	var loc_baseCoreEntity = baseCoreEntity;
+	
+	var loc_remainingPath = remainingPath;
+	
+	var loc_out = {
+		
+    	getBaseCoreEntity : function(){    return loc_baseCoreEntity;       },
+	
+	    getRemainingPath : function(){   return loc_remainingPath;     }
+		
+	};
+    return loc_out;	
+};
+
+
+var node_createAdapterInfo = function(adapterNames, isAdapterExplicit){
 	var loc_adapterNames = [];
-	var loc_isAdapterExplicit;
+	var loc_isAdapterExplicit = false;
+	
+	var loc_init = function(adapterNames, isAdapterExplicit){
+		if(adapterNames!=undefined){
+			loc_adapterNames = adapterNames;
+		}
+		if(isAdapterExplicit!=undefined){
+			loc_isAdapterExplicit = isAdapterExplicit;
+		}
+	};
+
+	var loc_out = {
+		
+    	getAdapterNames : function(){    return loc_adapterNames;       },
+		addAdapterName : function(adapterName){   loc_adapterNames.push(adapterName);     },
+	
+	    getIsAdapterExplicit : function(){   return loc_isAdapterExplicit;     },
+		setIsAdapterExplicit : function(isAdapterExplicit){   loc_isAdapterExplicit = isAdapterExplicit;       },
+		
+	};
+	
+	loc_init(adapterNames, isAdapterExplicit);
+    return loc_out;	
+};
+
+var node_createCoreEntityPackage = function(coreEntityReference, adapterInfo){
+	
+	var loc_coreEntityRef = coreEntityReference;
+	var loc_adapterInfo = adapterInfo;
 	
 	var loc_baseCoreEntityPackage;
 	
 	var loc_out = {
 		
-		getCoreEntity : function(){    return loc_coreEntity;    },
+		getCoreEntityReference : function(){    return loc_coreEntityRef;    },
 		
-		addAdapterName : function(adapterName){   loc_adapterNames.push(adapterName);     },
-		getAdapterNames : function(){   return loc_adapterNames;   },
-		
-		getIsAdapterExplicit : function(){    return loc_isAdapterExplicit;       },
-		setIsAdapterExplicit : function(isAdapterExplicit){   loc_isAdapterExplicit = isAdapterExplicit;       },
+		getAdapterInfo : function(){   return loc_adapterInfo;   },
 		
 		getBaseCoreEntityPackage : function(){   return loc_baseCoreEntityPackage;      },
 		setBaseCoreEntityPackage : function(coreEntityPackage){   loc_baseCoreEntityPackage = coreEntityPackage;      },
-		
-		setRootCoreEntityPackage : function(rootCoreEntityPackage){
-			if(loc_baseCoreEntityPackage==undefined){
-				loc_baseCoreEntityPackage = rootCoreEntityPackage;
-			}
-			else{
-				loc_baseCoreEntityPackage.setRootCoreEntityPackage(rootCoreEntityPackage);
-			}
-		},
-		
-		getRootCoreEntityPackage : function(){
-			var out;
-			if(loc_baseCoreEntityPackage==undefined){
-				out = loc_out;
-			}
-			else{
-				out = loc_baseCoreEntityPackage.getRootCoreEntityPackage();
-			}
-			return out;
-		}
 		
 	};
 	return loc_out;
@@ -81,58 +101,101 @@ var node_createDynamicInputContainer = function(dynamicInputDefs, dynamicInputSo
 	var loc_dynamicInputBundleCore = dynamicInputSourceBundleCore;
 	
 	var loc_dynamicInputs = {};
+
+
+    var loc_XXXXXXXXcreateDynamicInputRequest = function(brickPackage, handlers, request){
+		
+		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+
+		var brickPackage = dynamicInputDef[node_COMMONATRIBUTECONSTANT.DYNAMICEXECUTEINPUTITEM_BRICKPACKAGE];
+					
+		var relativePath = brickPackage[node_COMMONATRIBUTECONSTANT.PACKAGEBRICKINBUNDLE_BRICKID][node_COMMONATRIBUTECONSTANT.IDBRICKINBUNDLE_RELATIVEPATH];
+		var absolutePath = brickPackage[node_COMMONATRIBUTECONSTANT.PACKAGEBRICKINBUNDLE_BRICKID][node_COMMONATRIBUTECONSTANT.IDBRICKINBUNDLE_IDPATH];
+		var dynamicInputEntityPackage = node_complexEntityUtility.getBrickPackageByRelativePath(loc_dynamicInputBundleCore, brickPackage);
+					
+		var factory = node_getApplicationInterface(dynamicInputEntityPackage.getCoreEntity(), node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_FACTORY);
+//					if(factory==undefined){
+        if(true){
+			out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
+    			return loc_createDynamicInput(dynamicInputEntityPackage);
+		    }));
+		}
+		else{
+		    //is factory
+			out.addRequest(factory.getCreateEntityRequest({
+				success : function(request, entityCore){
+					return loc_createDynamicInput(entityCore);
+				}
+			}));
+			return out;
+		}
+		return out;
+	};
+
+    var loc_createDynamicInput = function(brickPackage){
+		var relativePath = brickPackage[node_COMMONATRIBUTECONSTANT.PACKAGEBRICKINBUNDLE_BRICKID][node_COMMONATRIBUTECONSTANT.IDBRICKINBUNDLE_RELATIVEPATH];
+		var absolutePath = brickPackage[node_COMMONATRIBUTECONSTANT.PACKAGEBRICKINBUNDLE_BRICKID][node_COMMONATRIBUTECONSTANT.IDBRICKINBUNDLE_IDPATH];
+		var dynamicInputEntityPackage = node_complexEntityUtility.getBrickPackageByRelativePath(loc_dynamicInputBundleCore, brickPackage);
+		return loc_createDynamicInput(dynamicInputEntityPackage)
+	};
 	
 	var loc_out = {
 		
 		getDynamicInput : function(inputId){
-			return loc_dynamicInputs[inputId];
+			var out = loc_dynamicInputs[inputId];
+			
+			if(out == undefined){
+				var dynamicInputDef = loc_dynamicInputDefs[node_COMMONATRIBUTECONSTANT.DYNAMICEXECUTEINPUTCONTAINER_ELEMENT][inputId];
+				var refType = dynamicInputDef[node_COMMONATRIBUTECONSTANT.DYNAMICEXECUTEINPUTITEM_TYPE];
+				if(refType==node_COMMONCONSTANT.DYNAMICTASK_REF_TYPE_SINGLE){
+					var brickPackage = dynamicInputDef[node_COMMONATRIBUTECONSTANT.DYNAMICEXECUTEINPUTITEM_BRICKPACKAGE];
+					out = loc_createDynamicInput(brickPackage);
+				}
+    			else if(refType==node_COMMONCONSTANT.DYNAMICTASK_REF_TYPE_MULTIPLE){
+		    		out = [];
+			    	_.each(dynamicInputDef[node_COMMONATRIBUTECONSTANT.DYNAMICEXECUTEINPUTITEM_BRICKPACKAGES], function(brickPackage, i){
+						out.push(loc_createDynamicInput(brickPackage));
+				    });
+			    }
+				loc_dynamicInputs[inputId] = out;
+			}
+			return out;
 		},
 		
-		prepareDyanmicInputRequest : function(inputId, handlers, request){
+		XXXXXprepareDyanmicInputRequest : function(inputId, handlers, request){
 			var out = loc_dynamicInputs[inputId];
 			if(out==undefined){
 				var dynamicInputDef = loc_dynamicInputDefs[node_COMMONATRIBUTECONSTANT.DYNAMICEXECUTEINPUTCONTAINER_ELEMENT][inputId];
 				var refType = dynamicInputDef[node_COMMONATRIBUTECONSTANT.DYNAMICEXECUTEINPUTITEM_TYPE];
 				if(refType==node_COMMONCONSTANT.DYNAMICTASK_REF_TYPE_SINGLE){
 					var brickPackage = dynamicInputDef[node_COMMONATRIBUTECONSTANT.DYNAMICEXECUTEINPUTITEM_BRICKPACKAGE];
-					var adapterNames = dynamicInputDef[node_COMMONATRIBUTECONSTANT.DYNAMICEXECUTEINPUTITEM_ADAPATERS];
 					
-					var relativePath = brickPackage[node_COMMONATRIBUTECONSTANT.PACKAGEBRICKINBUNDLE_BRICKID][node_COMMONATRIBUTECONSTANT.IDBRICKINBUNDLE_RELATIVEPATH];
-					var absolutePath = brickPackage[node_COMMONATRIBUTECONSTANT.PACKAGEBRICKINBUNDLE_BRICKID][node_COMMONATRIBUTECONSTANT.IDBRICKINBUNDLE_IDPATH];
-					var dynamicInputEntityPackage = node_complexEntityUtility.getBrickPackageByRelativePath(loc_dynamicInputBundleCore, brickPackage);
-					
-//					var dynamicInputEntityCore = node_complexEntityUtility.getDescendantCore(loc_dynamicInputSourceBundleCore, absolutePath);
-					
-					
-					var factory = node_getApplicationInterface(dynamicInputEntityPackage.getCoreEntity(), node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_FACTORY);
-//					if(factory==undefined){
-	                if(true){
-						return node_createServiceRequestInfoSimple(undefined, function(request){
-							var dynamicInput = loc_createDynamicInput(dynamicInputEntityPackage);
+					var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+					out.addRequest(loc_createDynamicInputRequest(brickPackage, {
+						success : function(request, dynamicInput){
 							loc_dynamicInputs[inputId] = dynamicInput;
-							return dynamicInput;  
-						}, handlers, request);
-					}
-					else{
-						//is factory
-						var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-						out.addRequest(factory.getCreateEntityRequest({
-							success : function(request, entityCore){
-								var dynamicInput = loc_createDynamicInput(entityCore);
-								loc_dynamicInputs[inputId] = dynamicInput;
-								return dynamicInput;  
-							}
-						}));
-						return out;
-					}
+							return dynamicInput;
+						}
+					}));
+					return out;
 				}
 			}
-			else{
-					return node_createServiceRequestInfoSimple(undefined, function(request){
-						return out;  
-					}, handlers, request);
+			else if(refType==node_COMMONCONSTANT.DYNAMICTASK_REF_TYPE_MULTIPLE){
+				var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+				
+				loc_dynamicInputs[inputId] = [];
+				_.each(dynamicInputDef[node_COMMONATRIBUTECONSTANT.DYNAMICEXECUTEINPUTITEM_BRICKPACKAGES], function(brickPackage, i){
+					out.addRequest(loc_createDynamicInputRequest(brickPackage, {
+						success : function(request, dynamicInput){
+							loc_dynamicInputs[inputId].push(dynamicInput);
+						}
+					}));
+				});
+    			out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
+        			return loc_dynamicInputs[inputId];
+		        }));
+		        return out;
 			}
-			
 		}
 	};
 	
@@ -345,5 +408,7 @@ packageObj.createChildNode("EntityIdInDomain", node_EntityIdInDomain);
 packageObj.createChildNode("createBrickDefinition", node_createBrickDefinition); 
 packageObj.createChildNode("createDynamicInputContainer", node_createDynamicInputContainer); 
 packageObj.createChildNode("createCoreEntityPackage", node_createCoreEntityPackage); 
+packageObj.createChildNode("createReferenceCoreEntity", node_createReferenceCoreEntity); 
+packageObj.createChildNode("createAdapterInfo", node_createAdapterInfo); 
 
 })(packageObj);
