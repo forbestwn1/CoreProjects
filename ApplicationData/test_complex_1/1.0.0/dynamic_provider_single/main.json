@@ -71,7 +71,7 @@
 			"adapter": [
 				{
 					"name" : "taskAdapter",
-					"status": "disabled",
+					"status": "disabled1",
 					"brickTypeId" : {
 						"brickType": "dataAssociationForTask",
 						"version": "1.0.0"

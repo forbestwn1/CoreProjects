@@ -151,7 +151,10 @@ var node_createComplexEntityRuntimeService = function() {
 			dynamicCore = node_makeObjectEntityObjectInterface(dynamicCore, undefined, function(){
 					var dynamicInputEntity = dynamicCore.getDynamicInput();
 					if(dynamicInputEntity!=undefined){
-						return node_getEntityObjectInterface(dynamicInputEntity.getCoreEntityPackage().getRootCoreEntityPackage().getCoreEntity()).getExternalValuePortContainer();
+						var coreEntity = dynamicInputEntity.getCoreEntityPackage().getRootCoreEntityPackage().getCoreEntityReference().getCoreEntity();
+						if(coreEntity!=undefined){
+    						return node_getEntityObjectInterface(coreEntity).getExternalValuePortContainer();
+						}
 					}
 				}, bundleCore);
 			

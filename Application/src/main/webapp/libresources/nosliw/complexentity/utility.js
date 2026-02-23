@@ -17,6 +17,9 @@ var packageObj = library;
 	var node_getEntityTreeNodeInterface;
 	var node_namingConvensionUtility;
 	var loc_createCoreEntityPackage;
+	var node_createReferenceCoreEntity;
+	var node_pathUtility
+    var node_createAdapterInfo;
 
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -269,7 +272,10 @@ var node_complexEntityUtility = function(){
 				out = out.getMainEntityCore();
 			}
 			else if(coreDataType==node_CONSTANT.TYPEDOBJECT_TYPE_DYNAMIC){
-				out = out.getDynamicInput().getDynamicCoreEntity();
+				var coreEntityRef = out.getDynamicInput().getCoreEntityPackage().getCoreEntityReference();
+				if(coreEntityRef.getRemainingPath()==undefined){
+					out = coreEntityRef.getBaseCoreEntity();
+				}
 			}
 			return out;
 		},
@@ -391,6 +397,10 @@ nosliw.registerSetNodeDataEvent("component.createConfigure", function(){node_cre
 nosliw.registerSetNodeDataEvent("complexentity.getEntityTreeNodeInterface", function(){node_getEntityTreeNodeInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("common.namingconvension.namingConvensionUtility", function(){node_namingConvensionUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("complexentity.entity.createCoreEntityPackage", function(){node_createCoreEntityPackage = this.getData();});
+nosliw.registerSetNodeDataEvent("complexentity.entity.createReferenceCoreEntity", function(){node_createReferenceCoreEntity = this.getData();});
+nosliw.registerSetNodeDataEvent("common.path.pathUtility", function(){node_pathUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("complexentity.entity.createAdapterInfo", function(){node_createAdapterInfo = this.getData();});
+
 
 //Register Node by Name
 packageObj.createChildNode("complexEntityUtility", node_complexEntityUtility); 

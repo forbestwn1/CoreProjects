@@ -58,12 +58,18 @@ var node_taskExecuteUtility = function(){
       var remainingPath = coreEntityRef.getRemainingPath();
       if(remainingPath!=undefined&&remainingPath==node_COMMONATRIBUTECONSTANT.BLOCKTASKWRAPPER_TASK){
     	  var interactiveFactory = node_getApplicationInterface(baseCoreEntity, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_FACTORY);
-          out.addRequest(interactiveFactory.getCreateEntityRequest());
+          out.addRequest(interactiveFactory.getCreateEntityRequest({
+			  success : function(request, brickCore){
+				  coreEntityRef.setCoreEntity(brickCore);
+				  return brickCore;
+			  }
+		  }));
 	  }
 	  else{
-          out.addRequest(getInteractiveEntityCoreRequest.addRequest(node_createServiceRequestInfoSimple(undefined, function(){
+          out.addRequest(node_createServiceRequestInfoSimple(undefined, function(){
+			  coreEntityRef.setCoreEntity(baseCoreEntity);
 			  return baseCoreEntity;
-		  })));
+		  }));
 	  }
 	  return out;
   };

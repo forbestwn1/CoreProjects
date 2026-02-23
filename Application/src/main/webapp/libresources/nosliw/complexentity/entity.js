@@ -15,15 +15,13 @@ var packageObj = library.getChildPackage("entity");
 //*******************************************   Start Node Definition  ************************************** 	
 
 
-var loc_createDynamicInput = function(coreEntityPackage){
+var node_createDynamicInput = function(coreEntityPackage){
 	
 	var loc_coreEntityPackage = coreEntityPackage;
 	
 	var loc_out = {
 		
 		getCoreEntityPackage : function(){    return loc_coreEntityPackage;     },
-		
-		getDynamicCoreEntity : function(){    return loc_coreEntityPackage.getCoreEntity();    },
 		
 	};
 	return loc_out;
@@ -36,11 +34,16 @@ var node_createReferenceCoreEntity = function(baseCoreEntity, remainingPath){
 	
 	var loc_remainingPath = remainingPath;
 	
+	var loc_coreEntity;
+	
 	var loc_out = {
 		
     	getBaseCoreEntity : function(){    return loc_baseCoreEntity;       },
 	
-	    getRemainingPath : function(){   return loc_remainingPath;     }
+	    getRemainingPath : function(){   return loc_remainingPath;     },
+		
+		setCoreEntity : function(coreEntity){   loc_coreEntity = coreEntity;     },
+		getCoreEntity : function(){    return loc_coreEntity;      }
 		
 	};
     return loc_out;	
@@ -90,6 +93,13 @@ var node_createCoreEntityPackage = function(coreEntityReference, adapterInfo){
 		getBaseCoreEntityPackage : function(){   return loc_baseCoreEntityPackage;      },
 		setBaseCoreEntityPackage : function(coreEntityPackage){   loc_baseCoreEntityPackage = coreEntityPackage;      },
 		
+		getRootCoreEntityPackage : function(){
+			var out = this;
+			if(this.getBaseCoreEntityPackage()!=undefined){
+				out = this.getBaseCoreEntityPackage().getRootCoreEntityPackage();
+			}
+			return out;
+		}
 	};
 	return loc_out;
 };
@@ -132,11 +142,11 @@ var node_createDynamicInputContainer = function(dynamicInputDefs, dynamicInputSo
 		return out;
 	};
 
-    var loc_createDynamicInput = function(brickPackage){
-		var relativePath = brickPackage[node_COMMONATRIBUTECONSTANT.PACKAGEBRICKINBUNDLE_BRICKID][node_COMMONATRIBUTECONSTANT.IDBRICKINBUNDLE_RELATIVEPATH];
-		var absolutePath = brickPackage[node_COMMONATRIBUTECONSTANT.PACKAGEBRICKINBUNDLE_BRICKID][node_COMMONATRIBUTECONSTANT.IDBRICKINBUNDLE_IDPATH];
-		var dynamicInputEntityPackage = node_complexEntityUtility.getBrickPackageByRelativePath(loc_dynamicInputBundleCore, brickPackage);
-		return loc_createDynamicInput(dynamicInputEntityPackage)
+    var loc_createDynamicInput = function(brickPackageDef){
+		var relativePath = brickPackageDef[node_COMMONATRIBUTECONSTANT.PACKAGEBRICKINBUNDLE_BRICKID][node_COMMONATRIBUTECONSTANT.IDBRICKINBUNDLE_RELATIVEPATH];
+		var absolutePath = brickPackageDef[node_COMMONATRIBUTECONSTANT.PACKAGEBRICKINBUNDLE_BRICKID][node_COMMONATRIBUTECONSTANT.IDBRICKINBUNDLE_IDPATH];
+		var dynamicInputEntityPackage = node_complexEntityUtility.getBrickPackageByRelativePath(loc_dynamicInputBundleCore, brickPackageDef);
+		return node_createDynamicInput(dynamicInputEntityPackage)
 	};
 	
 	var loc_out = {

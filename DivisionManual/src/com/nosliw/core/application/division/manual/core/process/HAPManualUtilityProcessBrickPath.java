@@ -61,7 +61,7 @@ public class HAPManualUtilityProcessBrickPath {
 						switch(taskRef.getType()) {
 						case HAPConstantShared.DYNAMICTASK_REF_TYPE_SINGLE:
 							HAPDynamicExecuteInputItemSingle simpleDynamicTask = (HAPDynamicExecuteInputItemSingle)taskRef;
-							normalizeBrickReferenceInBundle(simpleDynamicTask.getBrickPackage().getBrickId(), path, false, processContext);
+							normalizeBrickReferenceInBundle(simpleDynamicTask.getBrickPackage().getBrickId(), path, true, processContext);
 							break;
 						}
 					}
