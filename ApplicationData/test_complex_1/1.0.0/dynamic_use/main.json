@@ -79,8 +79,8 @@
 		
 		{
 			"info": {
-				"name" : "test1-test_complex_1",
-				"status": "disabled1",
+				"name" : "dynamic_provider_single-test_complex_1",
+				"status": "disabled",
 				"description" : ""
 			},
 			"relation": [
@@ -100,6 +100,38 @@
 							"idPath" : "#main.test1-taskTaskScript"
 						},
 						"adapters1" : ["taskAdapter11"]
+					}
+				]
+			}		
+		},
+
+		{
+			"info": {
+				"name" : "dynamic_provider_multiple-test_complex_1",
+				"status": "disabled1",
+				"description" : ""
+			},
+			"relation": [
+				{
+					"type" : "valueContext",
+					"mode" : "runtime"
+				}
+			],
+			"resourceId":"test_complex_1|1.0.0|dynamic_provider_set",  
+			"dynamicInput" : { 
+				"element" :
+				[ 
+					{
+						"type" : "multiple",
+						"name" : "tasks",
+						"brickPackages" : [
+						    {
+         						"brickId" : {
+		    		    			"idPath" : "#main.test1-taskTaskScript"
+			        			},
+						        "adapters1" : ["taskAdapter11"]
+						    }
+						]
 					}
 				]
 			}		

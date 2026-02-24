@@ -1,4 +1,13 @@
-function(complexEntityDef, valueContextId, bundleCore, configure){
+
+if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.getResourceService()!=undefined) nosliw.runtime.getResourceService().importResource({"id":{"resourceTypeId":{"resourceType":"script",
+"version":"1.0.0"
+},
+"id":"*task_complex_sequence_test"
+},
+"children":[],
+"dependency":{},
+"info":{}
+}, {"script":function(complexEntityDef, valueContextId, bundleCore, configure){
 
 	var node_createServiceRequestInfoSequence = nosliw.getNodeData("request.request.createServiceRequestInfoSequence");
 	var node_createServiceRequestInfoSimple = nosliw.getNodeData("request.request.createServiceRequestInfoSimple");
@@ -77,3 +86,7 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 	loc_out = node_makeObjectWithApplicationInterface(loc_out, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_TASK, loc_facadeTaskCore);
 	return loc_out;
 }
+
+}, {"loadPattern":"file"
+});
+

@@ -39,18 +39,20 @@ public abstract class HAPManualPluginProcessorBlockImp extends HAPManualPluginPr
 		
 		if(blockPair.getLeft() instanceof HAPWithBlockInteractiveTask) {
 			HAPEntityOrReference taskInterfaceBrickOrRef = ((HAPWithBlockInteractiveTask)blockPair.getLeft()).getTaskInterface();
+			HAPInteractiveTask taskInterface = null;
 			if(taskInterfaceBrickOrRef!=null) {
-				HAPInteractiveTask taskInterface = getInteractiveTask(taskInterfaceBrickOrRef, processContext.getBrickManager());
-				HAPManualUtilityTask.buildValuePortGroupForInteractiveTask(blockPair.getRight(), taskInterface, processContext.getCurrentBundle().getValueStructureDomain());
+				taskInterface = getInteractiveTask(taskInterfaceBrickOrRef, processContext.getBrickManager());
 			}
+			HAPManualUtilityTask.buildValuePortGroupForInteractiveTask(blockPair.getRight(), taskInterface, processContext.getCurrentBundle().getValueStructureDomain());
 		}
 
 		if(blockPair.getLeft() instanceof HAPWithBlockInteractiveExpression) {
 			HAPEntityOrReference expressionInterfaceBrickOrRef = ((HAPWithBlockInteractiveExpression)blockPair.getLeft()).getExpressionInterface();
+			HAPInteractiveExpression expressionInterface = null;
 			if(expressionInterfaceBrickOrRef!=null) {
-				HAPInteractiveExpression expressionInterface = getInteractiveExpression(expressionInterfaceBrickOrRef, processContext.getBrickManager());
-				HAPManualUtilityTask.buildValuePortGroupForInteractiveExpression(blockPair.getRight(), expressionInterface, processContext.getCurrentBundle().getValueStructureDomain());
+				expressionInterface = getInteractiveExpression(expressionInterfaceBrickOrRef, processContext.getBrickManager());
 			}
+			HAPManualUtilityTask.buildValuePortGroupForInteractiveExpression(blockPair.getRight(), expressionInterface, processContext.getCurrentBundle().getValueStructureDomain());
 		}
     }
 	

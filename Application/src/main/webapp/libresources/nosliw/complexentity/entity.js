@@ -113,35 +113,6 @@ var node_createDynamicInputContainer = function(dynamicInputDefs, dynamicInputSo
 	var loc_dynamicInputs = {};
 
 
-    var loc_XXXXXXXXcreateDynamicInputRequest = function(brickPackage, handlers, request){
-		
-		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-
-		var brickPackage = dynamicInputDef[node_COMMONATRIBUTECONSTANT.DYNAMICEXECUTEINPUTITEM_BRICKPACKAGE];
-					
-		var relativePath = brickPackage[node_COMMONATRIBUTECONSTANT.PACKAGEBRICKINBUNDLE_BRICKID][node_COMMONATRIBUTECONSTANT.IDBRICKINBUNDLE_RELATIVEPATH];
-		var absolutePath = brickPackage[node_COMMONATRIBUTECONSTANT.PACKAGEBRICKINBUNDLE_BRICKID][node_COMMONATRIBUTECONSTANT.IDBRICKINBUNDLE_IDPATH];
-		var dynamicInputEntityPackage = node_complexEntityUtility.getBrickPackageByRelativePath(loc_dynamicInputBundleCore, brickPackage);
-					
-		var factory = node_getApplicationInterface(dynamicInputEntityPackage.getCoreEntity(), node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_FACTORY);
-//					if(factory==undefined){
-        if(true){
-			out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
-    			return loc_createDynamicInput(dynamicInputEntityPackage);
-		    }));
-		}
-		else{
-		    //is factory
-			out.addRequest(factory.getCreateEntityRequest({
-				success : function(request, entityCore){
-					return loc_createDynamicInput(entityCore);
-				}
-			}));
-			return out;
-		}
-		return out;
-	};
-
     var loc_createDynamicInput = function(brickPackageDef){
 		var relativePath = brickPackageDef[node_COMMONATRIBUTECONSTANT.PACKAGEBRICKINBUNDLE_BRICKID][node_COMMONATRIBUTECONSTANT.IDBRICKINBUNDLE_RELATIVEPATH];
 		var absolutePath = brickPackageDef[node_COMMONATRIBUTECONSTANT.PACKAGEBRICKINBUNDLE_BRICKID][node_COMMONATRIBUTECONSTANT.IDBRICKINBUNDLE_IDPATH];
@@ -172,41 +143,6 @@ var node_createDynamicInputContainer = function(dynamicInputDefs, dynamicInputSo
 			return out;
 		},
 		
-		XXXXXprepareDyanmicInputRequest : function(inputId, handlers, request){
-			var out = loc_dynamicInputs[inputId];
-			if(out==undefined){
-				var dynamicInputDef = loc_dynamicInputDefs[node_COMMONATRIBUTECONSTANT.DYNAMICEXECUTEINPUTCONTAINER_ELEMENT][inputId];
-				var refType = dynamicInputDef[node_COMMONATRIBUTECONSTANT.DYNAMICEXECUTEINPUTITEM_TYPE];
-				if(refType==node_COMMONCONSTANT.DYNAMICTASK_REF_TYPE_SINGLE){
-					var brickPackage = dynamicInputDef[node_COMMONATRIBUTECONSTANT.DYNAMICEXECUTEINPUTITEM_BRICKPACKAGE];
-					
-					var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-					out.addRequest(loc_createDynamicInputRequest(brickPackage, {
-						success : function(request, dynamicInput){
-							loc_dynamicInputs[inputId] = dynamicInput;
-							return dynamicInput;
-						}
-					}));
-					return out;
-				}
-			}
-			else if(refType==node_COMMONCONSTANT.DYNAMICTASK_REF_TYPE_MULTIPLE){
-				var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-				
-				loc_dynamicInputs[inputId] = [];
-				_.each(dynamicInputDef[node_COMMONATRIBUTECONSTANT.DYNAMICEXECUTEINPUTITEM_BRICKPACKAGES], function(brickPackage, i){
-					out.addRequest(loc_createDynamicInputRequest(brickPackage, {
-						success : function(request, dynamicInput){
-							loc_dynamicInputs[inputId].push(dynamicInput);
-						}
-					}));
-				});
-    			out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
-        			return loc_dynamicInputs[inputId];
-		        }));
-		        return out;
-			}
-		}
 	};
 	
 	return loc_out;

@@ -7,11 +7,13 @@ import com.nosliw.core.application.HAPBrick;
 import com.nosliw.core.application.HAPBundle;
 import com.nosliw.core.application.HAPHandlerDownward;
 import com.nosliw.core.application.HAPIdBrickInBundle;
+import com.nosliw.core.application.HAPPackageBrickInBundle;
 import com.nosliw.core.application.HAPUtilityBrick;
 import com.nosliw.core.application.HAPUtilityBrickReference;
 import com.nosliw.core.application.HAPUtilityBundle;
 import com.nosliw.core.application.HAPWrapperValueOfReferenceResource;
 import com.nosliw.core.application.dynamic.HAPDynamicExecuteInputItem;
+import com.nosliw.core.application.dynamic.HAPDynamicExecuteInputItemMultiple;
 import com.nosliw.core.application.dynamic.HAPDynamicExecuteInputItemSingle;
 
 public class HAPManualUtilityProcessBrickPath {
@@ -62,6 +64,12 @@ public class HAPManualUtilityProcessBrickPath {
 						case HAPConstantShared.DYNAMICTASK_REF_TYPE_SINGLE:
 							HAPDynamicExecuteInputItemSingle simpleDynamicTask = (HAPDynamicExecuteInputItemSingle)taskRef;
 							normalizeBrickReferenceInBundle(simpleDynamicTask.getBrickPackage().getBrickId(), path, true, processContext);
+							break;
+						case HAPConstantShared.DYNAMICTASK_REF_TYPE_MULTIPLE:
+							HAPDynamicExecuteInputItemMultiple multipleDynamicTask = (HAPDynamicExecuteInputItemMultiple)taskRef;
+							for(HAPPackageBrickInBundle brickPackageId : multipleDynamicTask.getBrickPackages()) {
+								normalizeBrickReferenceInBundle(brickPackageId.getBrickId(), path, true, processContext);
+							}
 							break;
 						}
 					}

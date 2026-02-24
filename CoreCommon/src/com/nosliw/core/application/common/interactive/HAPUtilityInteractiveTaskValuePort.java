@@ -95,23 +95,29 @@ public class HAPUtilityInteractiveTaskValuePort {
 	public static void buildValuePortGroupForInteractiveTask(Pair<HAPContainerValuePorts, HAPContainerValuePorts> valuePortContainerPair, HAPInteractiveTask taskInteractive, HAPDomainValueStructure valueStructureDomain) {
 		//request
 		Pair<HAPValuePort, HAPValuePort> requestValuePortPair = getOrCreateTaskInteractiveRequestValuePort(valuePortContainerPair);
-		buildInteractiveRequestValuePort(requestValuePortPair, taskInteractive.getRequestParms(), valueStructureDomain);
 		
-		//result
-		for(HAPInteractiveResultTask result : taskInteractive.getResult()) {
-			Pair<HAPValuePort, HAPValuePort> resultValuePortPair = getOrCreateTaskInteractiveResultValuePort(result.getName(), valuePortContainerPair);
-			buildTaskInteractiveResultValuePort(resultValuePortPair, result, valueStructureDomain);
+		if(taskInteractive!=null) {
+			buildInteractiveRequestValuePort(requestValuePortPair, taskInteractive.getRequestParms(), valueStructureDomain);
+			
+			//result
+			for(HAPInteractiveResultTask result : taskInteractive.getResult()) {
+				Pair<HAPValuePort, HAPValuePort> resultValuePortPair = getOrCreateTaskInteractiveResultValuePort(result.getName(), valuePortContainerPair);
+				buildTaskInteractiveResultValuePort(resultValuePortPair, result, valueStructureDomain);
+			}
 		}
 	}
 
 	public static void buildValuePortGroupForInteractiveExpression(Pair<HAPContainerValuePorts, HAPContainerValuePorts> valuePortContainerPair, HAPInteractiveExpression expressionInteractive, HAPDomainValueStructure valueStructureDomain) {
 		//request
 		Pair<HAPValuePort, HAPValuePort> requestValuePortPair = getOrCreateExpressionInteractiveRequestValuePort(valuePortContainerPair);
-		buildInteractiveRequestValuePort(requestValuePortPair, expressionInteractive.getRequestParms(), valueStructureDomain);
 		
-		//result
-		Pair<HAPValuePort, HAPValuePort> resultValuePortPair = getOrCreateExpressionInteractiveResultValuePort(valuePortContainerPair);
-		buildExpressionInteractiveResultValuePort(resultValuePortPair, expressionInteractive.getResult(), valueStructureDomain);
+		if(expressionInteractive!=null) {
+			buildInteractiveRequestValuePort(requestValuePortPair, expressionInteractive.getRequestParms(), valueStructureDomain);
+			
+			//result
+			Pair<HAPValuePort, HAPValuePort> resultValuePortPair = getOrCreateExpressionInteractiveResultValuePort(valuePortContainerPair);
+			buildExpressionInteractiveResultValuePort(resultValuePortPair, expressionInteractive.getResult(), valueStructureDomain);
+		}
 	}
 
 	private static Pair<HAPValuePort, HAPValuePort> getOrCreateTaskInteractiveRequestValuePort(Pair<HAPContainerValuePorts, HAPContainerValuePorts> valuePortContainerPair){

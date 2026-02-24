@@ -40,17 +40,36 @@
 			]
 		},
 
+		{
+			"info": {
+				"name" : "dynamic_event_trigure-test_complex_script",
+				"status": "disabled1",
+				"description" : ""
+			},
+			"brick":{
+				"script": "complexscript_test_triggueevent",
+				"taskTrigguer" : [
+					{
+						"trigguerInfo" : {
+							"name" : "dynamicEventTrigue",
+							"handlerId" : {
+								"idPath" : "dynamicSetTask-taskTaskScript"
+							}
+						}
+					}
+				]
+			}
+		},
 
 		{
 			"info": {
-				"name" : "test5-taskTaskScript",
+				"name" : "dynamicSetTask-taskTaskScript",
 				"status": "disabled1",
 				"description" : ""
 			},
     		"scriptResourceId": "task_complex_sequence_test",
 			"parm" : {
 			    "tasks" : "tasks"
-			
 			}
 		},
 		
