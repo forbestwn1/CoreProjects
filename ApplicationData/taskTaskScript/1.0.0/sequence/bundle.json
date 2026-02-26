@@ -1,13 +1,15 @@
 {
 	"dynamic" : [
 		{
-			"name" : "task",	
-			"type" : "set",
+			"name" : "tasks",	
+			"dynamicItemType" : "set",
 			"criteria" : {
-				"type" : "facadeSimple",
-				"facade" : "task",
-				"restrain" : {
-				}
+			    "definition" : {
+			        "criteriaType" : "facade",
+     				"facade" : "task",
+			        "restrain" : [
+			        ]
+			    }
 			}	
 		}
 	]

@@ -87,7 +87,7 @@ var node_createTaskCore = function(taskImp, entityCore){
 	
 	var loc_out = {
 	
-//		getRuntimeEnv : function(){   return loc_runtimeEnv;      },
+		getRuntimeEnv : function(){   return loc_runtimeEnv;      },
 		
 //		registerLifecycleHandler : function(handler){  loc_lifecycleHandlers.push(handler);  },
 		

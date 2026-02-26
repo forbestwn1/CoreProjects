@@ -15,6 +15,7 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 	var node_makeObjectWithApplicationInterface = nosliw.getNodeData("component.makeObjectWithApplicationInterface");
 	var node_interactiveUtility = nosliw.getNodeData("task.interactiveUtility");
 	var node_createTaskCore = nosliw.getNodeData("task.createTaskCore");
+	var node_createTaskSetup = nosliw.getNodeData("task.createTaskSetup");
 
     var loc_bundleCore;
     var loc_complexEntityDef;
@@ -54,7 +55,7 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 			var allResults = [];
 			var dynamicInputs = loc_bundleCore.getDynamicInputContainer().getDynamicInput(loc_tasksInputName);
 			_.each(dynamicInputs, function(dynamicInput){
-				out.addRequest(node_taskExecuteUtility.getExecuteInteractiveBrickPackageRequest(dynamicInput.getCoreEntityPackage(), undefined, {
+				out.addRequest(node_taskExecuteUtility.getExecuteInteractiveBrickPackageRequest(dynamicInput.getCoreEntityPackage(), node_createTaskSetup(undefined, loc_taskCore.getRuntimeEnv()), {
 					success : function(request, taskResult){
 						allResults.push(taskResult);
 					}

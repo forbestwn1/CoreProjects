@@ -36,6 +36,8 @@ public abstract class HAPManualDefinitionBrick extends HAPSerializableImp implem
 
 	public final static String ATTRIBUTE = "attribute"; 
 	
+	public final static String BRICKTYPE = "brickType"; 
+	
 	final private static String ATTR_IDINDEX = HAPUtilityNosliw.buildNosliwFullName("idIndex"); 
 
 	static private String VALUECONTEXT = "valueContext"; 
@@ -248,6 +250,7 @@ public abstract class HAPManualDefinitionBrick extends HAPSerializableImp implem
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
+		jsonMap.put(BRICKTYPE, this.m_brickTypeId.toStringValue(HAPSerializationFormat.JSON));
 		Map<String, String> attrMap = new LinkedHashMap<String, String>();
 		for(HAPManualDefinitionAttributeInBrick attribute : this.getAllAttributes()) {
 			attrMap.put(attribute.getName(),  attribute.toStringValue(HAPSerializationFormat.JSON));

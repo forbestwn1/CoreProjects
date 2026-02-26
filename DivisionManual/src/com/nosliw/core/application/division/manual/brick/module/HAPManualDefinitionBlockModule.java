@@ -4,9 +4,10 @@ import com.nosliw.common.interfac.HAPEntityOrReference;
 import com.nosliw.core.application.brick.HAPEnumBrickType;
 import com.nosliw.core.application.brick.module.HAPBlockModule;
 import com.nosliw.core.application.division.manual.brick.container.HAPManualDefinitionBrickContainer;
+import com.nosliw.core.application.division.manual.common.task.HAPManualDefinitionWithBrickTasks;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionBrick;
 
-public class HAPManualDefinitionBlockModule extends HAPManualDefinitionBrick{
+public class HAPManualDefinitionBlockModule extends HAPManualDefinitionBrick implements HAPManualDefinitionWithBrickTasks{
 
 	public static final String BRICKTYPE = "brickType";
 
@@ -16,11 +17,11 @@ public class HAPManualDefinitionBlockModule extends HAPManualDefinitionBrick{
 
 	@Override
 	protected void init() {
-		this.setAttributeValueWithBrick(HAPBlockModule.TASK, this.getManualBrickManager().newBrickDefinition(HAPEnumBrickType.CONTAINER_100));
 		this.setAttributeValueWithBrick(HAPBlockModule.COMMAND, this.getManualBrickManager().newBrickDefinition(HAPEnumBrickType.CONTAINER_100));
 		this.setAttributeValueWithBrick(HAPBlockModule.PAGE, this.getManualBrickManager().newBrickDefinition(HAPEnumBrickType.CONTAINER_100));
 	}
 
+	@Override
 	public HAPManualDefinitionBrickContainer getTasks() {   return (HAPManualDefinitionBrickContainer)this.getAttributeValueOfBrick(HAPBlockModule.TASK);   }
 	public void addTask(HAPManualDefinitionBrick taskBrickWrapper) {    this.getTasks().addElementWithBrick(taskBrickWrapper);    }
 	

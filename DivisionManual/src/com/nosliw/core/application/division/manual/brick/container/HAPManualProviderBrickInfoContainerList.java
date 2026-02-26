@@ -21,17 +21,17 @@ public class HAPManualProviderBrickInfoContainerList extends HAPManualProviderBr
 	}
 	
 	@Override
-	public HAPIdBrickType getBrickTypeId() {  return HAPEnumBrickType.CONTAINER_100;   }
+	public HAPIdBrickType getBrickTypeId() {  return HAPEnumBrickType.CONTAINERLIST_100;   }
 
 	@Override
 	protected HAPManualInfoBrickType newBrickTypeInfo() {   return new HAPManualInfoBrickType(false);  }
 
 	@Override
 	protected HAPManualDefinitionPluginParserBrick newBrickParser() {
-		return new HAPManualDefinitionPluginParserBrickImp(HAPEnumBrickType.CONTAINER_100, HAPManualDefinitionBrickContainer.class, this.getManualBrickManager(), this.getBrickManager());
+		return new HAPManualDefinitionPluginParserBrickImp(HAPEnumBrickType.CONTAINERLIST_100, HAPManualDefinitionBrickContainerList.class, this.getManualBrickManager(), this.getBrickManager());
 	}
 
 	@Override
-	protected HAPManualPluginProcessorBrick newBrickProcessor() {   return new HAPManualPluginProcessorBlockImpEmpty(HAPEnumBrickType.CONTAINER_100, HAPManualBrickContainer.class);  }
+	protected HAPManualPluginProcessorBrick newBrickProcessor() {   return new HAPManualPluginProcessorBlockImpEmpty(HAPEnumBrickType.CONTAINERLIST_100, HAPManualBrickContainerList.class);  }
 
 }

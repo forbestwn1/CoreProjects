@@ -24,12 +24,6 @@ public class HAPManualPluginParserBlockModule extends HAPManualDefinitionPluginP
 	protected void parseComplexDefinitionContentJson(HAPManualDefinitionBrick brickDefinition, JSONObject jsonObj, HAPManualDefinitionContextParse parseContext) {
 		HAPManualDefinitionBlockModule moduleBrick = (HAPManualDefinitionBlockModule)brickDefinition; 
 		
-		JSONArray taskArrayJson = jsonObj.optJSONArray(HAPBlockModule.TASK);
-		for(int i=0; i<taskArrayJson.length(); i++) {
-			HAPManualDefinitionBrickWrapperBrick task = (HAPManualDefinitionBrickWrapperBrick)HAPManualDefinitionUtilityParserBrick.parseBrickDefinition(taskArrayJson.getJSONObject(i), HAPEnumBrickType.WRAPPERBRICK_100, HAPSerializationFormat.JSON, parseContext);
-			moduleBrick.addTask(task);
-		}
-		
 		JSONArray pageArrayJson = jsonObj.optJSONArray(HAPBlockModule.PAGE);
 		for(int i=0; i<pageArrayJson.length(); i++) {
 			HAPManualDefinitionBrickWrapperBrick page = (HAPManualDefinitionBrickWrapperBrick)HAPManualDefinitionUtilityParserBrick.parseBrickDefinition(pageArrayJson.getJSONObject(i), HAPEnumBrickType.WRAPPERBRICK_100, HAPSerializationFormat.JSON, parseContext);

@@ -1,0 +1,12 @@
+{
+	"info": {
+		"name": "sequence",
+		"description": "sequence"
+	},
+	"brick":{
+   		"scriptResourceId": "task_complex_sequence_test",
+		"parm" : {
+		    "tasks" : "tasks"
+		}
+	}
+}

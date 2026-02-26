@@ -20,6 +20,9 @@ import com.nosliw.core.application.brick.HAPEnumBrickType;
 import com.nosliw.core.application.common.interactive.HAPWithBlockInteractiveExpression;
 import com.nosliw.core.application.common.interactive.HAPWithBlockInteractiveTask;
 import com.nosliw.core.application.common.withvariable.HAPWithVariableDebugDefinition;
+import com.nosliw.core.application.division.manual.brick.container.HAPManualDefinitionBrickContainer;
+import com.nosliw.core.application.division.manual.brick.wrapperbrick.HAPManualDefinitionBrickWrapperBrick;
+import com.nosliw.core.application.division.manual.common.task.HAPManualDefinitionWithBrickTasks;
 import com.nosliw.core.application.division.manual.core.HAPManualManagerBrick;
 import com.nosliw.core.application.entity.script.HAPWithScriptReference;
 import com.nosliw.core.resource.HAPFactoryResourceId;
@@ -87,7 +90,14 @@ public class HAPManualDefinitionPluginParserBrickImp implements HAPManualDefinit
 			//parse entity content
 			switch(format) {
 			case JSON:
-				this.parseDefinitionContentJson(out, HAPUtilityJson.toJsonObject(content), parseContext);
+				Object jsonObj = HAPUtilityJson.toJsonObject(content);
+				if(jsonObj instanceof JSONObject) {
+					if(!HAPUtilityEntityInfo.isEnabled((JSONObject)jsonObj)) {
+						//if disabled, then return null
+						return null;
+					}
+				}
+				this.parseDefinitionContentJson(out, jsonObj, parseContext);
 				break;
 			case HTML:
 				this.parseDefinitionContentHtml(out, content, parseContext);
@@ -123,11 +133,16 @@ public class HAPManualDefinitionPluginParserBrickImp implements HAPManualDefinit
 			JSONObject jsonObj = (JSONObject)jsonValue;
 			
 //			this.parseSimpleEntityAttributeJson(jsonObj, entityId, HAPWithAttachment.ATTACHMENT, HAPConstantShared.RUNTIME_RESOURCE_TYPE_ATTACHMENT, null, parserContext);
-			
+
 			//entity info
 			if(brickDefinition instanceof HAPEntityInfo) {
 				HAPUtilityEntityInfo.buildEntityInfoByJson(jsonObj, (HAPEntityInfo)brickDefinition);
 			}
+			
+			//tasks container
+	        if(brickDefinition instanceof HAPManualDefinitionWithBrickTasks) {
+	        	this.parseTaskContainerAttribute(brickDefinition, jsonObj, parseContext);
+	        }
 			
 			//parms
 	        if(brickDefinition instanceof HAPWithParms) {
@@ -202,6 +217,19 @@ public class HAPManualDefinitionPluginParserBrickImp implements HAPManualDefinit
 		}
 	}
 
+	//parse task container
+	protected void parseTaskContainerAttribute(HAPManualDefinitionBrick parentBrick, JSONObject attrEntityObj, HAPManualDefinitionContextParse parserContext) {
+		HAPManualDefinitionBrickContainer taskContainer = (HAPManualDefinitionBrickContainer)parserContext.getManualBrickManager().newBrickDefinition(HAPEnumBrickType.CONTAINER_100);
+		parentBrick.setAttributeValueWithBrick(HAPManualDefinitionWithBrickTasks.TASK, taskContainer);
+		JSONArray taskArrayJson = attrEntityObj.optJSONArray(HAPManualDefinitionWithBrickTasks.TASK);
+		for(int i=0; i<taskArrayJson.length(); i++) {
+			HAPManualDefinitionBrickWrapperBrick task = (HAPManualDefinitionBrickWrapperBrick)HAPManualDefinitionUtilityParserBrick.parseBrickDefinition(taskArrayJson.getJSONObject(i), HAPEnumBrickType.WRAPPERBRICK_100, HAPSerializationFormat.JSON, parserContext);
+			if(task!=null) {
+				taskContainer.addElementWithBrick(task);
+			}
+		}
+	}
+	
 	//parse parm attribute
 	protected void parseParmsAttribute(HAPWithParms parentBrick, JSONObject attrEntityObj) {
 		JSONObject parmJsonObj = attrEntityObj.optJSONObject(HAPWithParms.PARM);
@@ -210,7 +238,6 @@ public class HAPManualDefinitionPluginParserBrickImp implements HAPManualDefinit
 			parentBrick.setParms(parms);
 		}
 	}
-	
 	
 	//parse task interface
 	protected void parseTaskInterfaceAttribute(HAPManualDefinitionBrick parentBrick, JSONObject attrEntityObj, HAPManualDefinitionContextParse parserContext) {
@@ -247,12 +274,8 @@ public class HAPManualDefinitionPluginParserBrickImp implements HAPManualDefinit
 		boolean out = true;
 		if(entityObj instanceof JSONObject) {
 			JSONObject jsonObj = (JSONObject)entityObj;
-			JSONObject extraJsonObj = jsonObj.optJSONObject("extra");
-			if(extraJsonObj!=null) {
-				return HAPUtilityEntityInfo.isEnabled(extraJsonObj);
-			}
+			return HAPUtilityEntityInfo.isEnabled(jsonObj);
 		}
-		
 		return out;
 	}
 }

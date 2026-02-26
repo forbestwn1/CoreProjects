@@ -7,8 +7,35 @@
 	
 	    "task" : [
 	        {
-	    		"name" : "navigation",
+	    		"name" : "nosliw_init",
 		    	"status": "disabled1",
+			    "description" : "",
+        		"brickType" : {
+		    	    "brickType" : "taskTaskScript",
+			        "version" : "1.0.0"
+		        },
+    			"resourceId":"taskTaskScript|1.0.0|sequence",  
+    			"dynamicInput" : { 
+	    			"element" :
+		    		[ 
+			    		{
+				    		"type" : "multiple",
+					    	"name" : "tasks",
+						    "brickPackages" : [
+						        {
+         						    "brickId" : {
+		    		    			    "idPath" : "#main.task.present"
+    			        			}
+		    				    }
+			    			]
+				    	}
+    				]
+	    		}		
+	        },
+
+	        {
+	    		"name" : "navigation",
+		    	"status": "disabled",
 			    "description" : "",
         		"brickType" : {
 		    	    "brickType" : "taskTaskScript",
@@ -22,8 +49,8 @@
 		        }
 	        },
 	        {
-	    		"name" : "nosliw_init",
-		    	"status": "disabled1",
+	    		"name" : "present",
+		    	"status": "disabled",
 			    "description" : "",
         		"brickType" : {
 		    	    "brickType" : "taskTaskScript",

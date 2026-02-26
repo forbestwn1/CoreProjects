@@ -162,6 +162,9 @@ var node_taskExecuteUtility = function(){
 
 
 
+
+
+
   var loc_getTaskAdapter = function(entityCore, adapterName){
 		var adapters = node_getEntityTreeNodeInterface(entityCore).getAdapters();
 		var taskAdapter;
@@ -219,6 +222,23 @@ var node_taskExecuteUtility = function(){
 		var taskCore = loc_getTaskCoreFromTaskEntityCore(taskEntityCore); 
         taskCore.registerLifecycleEventListener(listenerEventObj, handler, thisContext);
 	},
+
+    getExecuteInteractiveBrickPackageRequest : function(interactiveBrickPackage, taskSetup, handlers, request){
+		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
+		
+		out.addRequest(loc_buildInteractiveInfoRequest(interactiveBrickPackage, undefined, {
+			success : function(request, interactiveInfo){
+                return loc_getExecuteInteractiveEntityCoreRequest(interactiveInfo.coreEntity, taskSetup, interactiveInfo.adapters);			
+			}
+		}));
+		
+        return out;		
+	},
+
+
+
+
+
 	  
 	getExecuteEntityTaskRequest : function(entityCore, taskSetup, onInitTaskRequest, onFinishTaskRequest, handlers, request){
 		return loc_getExecuteTaskRequest(loc_getTaskCoreFromTaskEntityCore(entityCore), taskSetup, onInitTaskRequest, onFinishTaskRequest, handlers, request);
@@ -263,22 +283,6 @@ var node_taskExecuteUtility = function(){
 		}));
 
 		return out;		
-	},
-
-    getExecuteInteractiveRequest1 : function(interactiveEntityCore, taskSetup, adapters, handlers, request){
-		return loc_getExecuteInteractiveRequest(interactiveEntityCore, taskSetup, adapters, handlers, request);
-	},
-
-    getExecuteInteractiveBrickPackageRequest : function(interactiveBrickPackage, taskSetup, handlers, request){
-		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-		
-		out.addRequest(loc_buildInteractiveInfoRequest(interactiveBrickPackage, undefined, {
-			success : function(request, interactiveInfo){
-                return loc_getExecuteInteractiveEntityCoreRequest(interactiveInfo.coreEntity, taskSetup, interactiveInfo.adapters);			
-			}
-		}));
-		
-        return out;		
 	},
 
   };

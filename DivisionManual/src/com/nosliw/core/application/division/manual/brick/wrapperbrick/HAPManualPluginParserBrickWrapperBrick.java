@@ -32,7 +32,9 @@ public class HAPManualPluginParserBrickWrapperBrick extends HAPManualDefinitionP
 		
 		HAPIdBrickType brickTypeId = HAPUtilityBrickId.parseBrickTypeId(jsonObj.get(HAPManualDefinitionBrickWrapperBrick.BRICKTYPE));
 		
-		this.parseBrickAttributeJson(wrapperBrick, jsonObj, HAPBrickWrapperBrick.BRICK, brickTypeId, null, parseContext);
+//		HAPManualDefinitionAttributeInBrick parseAttribute(String attrName, JSONObject jsonObj, HAPIdBrickType entityTypeIfNotProvided, HAPIdBrickType adapterTypeId, HAPManualDefinitionContextParse parseContext)
+		
+		this.parseBrickAttributeSelfJson(wrapperBrick, jsonObj, HAPBrickWrapperBrick.BRICK, brickTypeId, null, parseContext);
 		
 	}
 }
