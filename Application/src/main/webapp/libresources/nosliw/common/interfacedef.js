@@ -123,6 +123,7 @@ var node_makeObjectWithId = function(obj, id){
 			getId : function(){		return loc_id; },
 		});
 	}
+	obj.____id____ = loc_id;
 	
 	return node_buildInterface(obj, node_CONSTANT.INTERFACE_WITHID, loc_id);
 };

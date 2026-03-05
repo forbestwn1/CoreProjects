@@ -1092,4 +1092,8 @@ public class HAPConstantShared {
 		public static final String PARM_RULETASK_RULEDEF = "ruleDef";
 
 
+
+		public static final String BUNDLEBRANCH_NAME_RULETASKS = "ruleTasks";
+
+
 }

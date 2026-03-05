@@ -26,7 +26,7 @@ public class HAPProcessorRuleInBundle {
 	public static void process(HAPBundle bundle, HAPManagerDataRule dataRuleManager, HAPManagerApplicationBrick brickManager) {
 		
 		//build new branch to host data rule tasks
-		String validationTaskBranchName = "validationRuleTasks";
+		String validationTaskBranchName = HAPConstantShared.BUNDLEBRANCH_NAME_RULETASKS;
 		
 		HAPBrickContainerImp containerBrick = new HAPBrickContainerImp(); 
 		
@@ -49,9 +49,12 @@ public class HAPProcessorRuleInBundle {
                 }
 			}
 		}
-		HAPWrapperBrickRoot validationRuleTaskBranchRoot = new HAPWrapperBrickRoot(containerBrick);
-		validationRuleTaskBranchRoot.setName(validationTaskBranchName);
-		bundle.addRootBrickWrapper(validationRuleTaskBranchRoot);
+		
+		if(!containerBrick.isEmpty()) {
+			HAPWrapperBrickRoot validationRuleTaskBranchRoot = new HAPWrapperBrickRoot(containerBrick);
+			validationRuleTaskBranchRoot.setName(validationTaskBranchName);
+			bundle.addRootBrickWrapper(validationRuleTaskBranchRoot);
+		}
 	}
 	
 	private static void buildRuildForDataElement(HAPElementStructureLeafData dataEle, HAPBrickContainerImp containerBrick, String validationTaskBranchName, HAPDomainValueStructure valueStructureDomain, HAPManagerDataRule dataRuleManager, HAPManagerApplicationBrick brickManager) {

@@ -59,8 +59,12 @@ public class HAPProviderResourcePluginBrick extends HAPProviderResourcePluginImp
 			this.registerPlugin(HAPUtilityBrickId.getResourceTypeIdFromBrickTypeId(HAPEnumBrickType.TEST_COMPLEX_1_100), new HAPPluginResourceManagerImpBrick(this.m_resourceManager, this.m_brickManager));
 			this.registerPlugin(HAPUtilityBrickId.getResourceTypeIdFromBrickTypeId(HAPEnumBrickType.TEST_COMPLEX_SCRIPT_100), new HAPPluginResourceManagerImpBrick(this.m_resourceManager, this.m_brickManager));
 	
+			this.registerPlugin(HAPUtilityBrickId.getResourceTypeIdFromBrickTypeId(HAPEnumBrickType.MODULE_100), new HAPPluginResourceManagerImpBrick(this.m_resourceManager, this.m_brickManager));
+
 			this.registerPlugin(HAPUtilityBrickId.getResourceTypeIdFromBrickTypeId(HAPEnumBrickType.TASKWRAPPER_100), new HAPPluginResourceManagerImpBrick(this.m_resourceManager, this.m_brickManager));
-			
+
+			this.registerPlugin(HAPUtilityBrickId.getResourceTypeIdFromBrickTypeId(HAPEnumBrickType.TASK_TASK_SCRIPT_100), new HAPPluginResourceManagerImpBrick(this.m_resourceManager, this.m_brickManager));
+
 			this.registerPlugin(HAPUtilityBrickId.getResourceTypeIdFromBrickTypeId(HAPEnumBrickType.DATAEXPRESSIONLIB_100), new HAPPluginResourceManagerImpBrick(this.m_resourceManager, this.m_brickManager));
 			this.registerPlugin(HAPUtilityBrickId.getResourceTypeIdFromBrickTypeId(HAPEnumBrickType.DATAEXPRESSIONGROUP_100), new HAPPluginResourceManagerImpBrick(this.m_resourceManager, this.m_brickManager));
 	

@@ -50,7 +50,7 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 				success : function(request, requestValues){
 					var result = {
 					    "resultName": "success",
-					    "resultValue": "present successfully"
+					    "resultValue": "navigate successfully"
 					};
 					return  node_interactiveUtility.getSetTaskResultToValuePortRequest(result, valuePortContainer, {
 						success : function(){

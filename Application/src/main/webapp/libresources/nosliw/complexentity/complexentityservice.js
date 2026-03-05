@@ -43,6 +43,7 @@ var packageObj = library;
 	var node_buildComplexEntityCreationVariationPointObject;
     var node_createDynamicCore;
     
+    var node_createModulePlugin;
 	var node_createTestComplex1Plugin;
 	var node_createTestComplexScriptPlugin;
 	var node_createTestComplexTaskPlugin;
@@ -65,6 +66,8 @@ var packageObj = library;
 	var node_createFlowTaskPlugin;
 	var node_createTaskActivityPlugin;
 	var node_createDynamicActivityPlugin;
+	
+	var node_createWrapperBrickPlugin;
 	
 	var node_createContainerPlugin;
 	var node_createContainerListPlugin;
@@ -235,6 +238,8 @@ var node_createComplexEntityRuntimeService = function() {
 
 //		loc_out.registerEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_MODULE, "1.0.0", node_createModulekPlugin());
 
+		loc_out.registerEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_MODULE, "1.0.0", node_createModulePlugin());
+
 		//complex entity plugin
 		loc_out.registerEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_TEST_COMPLEX_1, "1.0.0", node_createTestComplex1Plugin());
 		loc_out.registerEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_TEST_COMPLEX_SCRIPT, "1.0.0", node_createTestComplexScriptPlugin());
@@ -264,6 +269,7 @@ var node_createComplexEntityRuntimeService = function() {
 		loc_out.registerEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_FLOW_ACTIVITYTASK, "1.0.0", node_createTaskActivityPlugin());
 		loc_out.registerEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_FLOW_ACTIVITYDYNAMIC, "1.0.0", node_createDynamicActivityPlugin());
 
+		loc_out.registerEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_WRAPPERBRICK, "1.0.0", node_createWrapperBrickPlugin());
 
 
 		//simple entity plugin
@@ -476,7 +482,7 @@ nosliw.registerSetNodeDataEvent("common.interfacedef.makeObjectWithType", functi
 nosliw.registerSetNodeDataEvent("complexentity.buildComplexEntityCreationVariationPointObject", function(){node_buildComplexEntityCreationVariationPointObject = this.getData();});
 nosliw.registerSetNodeDataEvent("complexentity.createDynamicCore", function(){node_createDynamicCore = this.getData();});
 
-
+nosliw.registerSetNodeDataEvent("testcomponent.createModulePlugin", function(){node_createModulePlugin = this.getData();});
 nosliw.registerSetNodeDataEvent("testcomponent.createTestComplex1Plugin", function(){node_createTestComplex1Plugin = this.getData();});
 nosliw.registerSetNodeDataEvent("testcomponent.createTestComplexScriptPlugin", function(){node_createTestComplexScriptPlugin = this.getData();});
 nosliw.registerSetNodeDataEvent("testcomponent.createTestComplexTaskPlugin", function(){node_createTestComplexTaskPlugin = this.getData();});
@@ -500,6 +506,9 @@ nosliw.registerSetNodeDataEvent("scripttaskgroup.createScriptTaskGroupEntityPlug
 nosliw.registerSetNodeDataEvent("taskflow.createFlowTaskPlugin", function(){node_createFlowTaskPlugin = this.getData();});
 nosliw.registerSetNodeDataEvent("taskflow.createTaskActivityPlugin", function(){node_createTaskActivityPlugin = this.getData();});
 nosliw.registerSetNodeDataEvent("taskflow.createDynamicActivityPlugin", function(){node_createDynamicActivityPlugin = this.getData();});
+
+nosliw.registerSetNodeDataEvent("wrapperbrick.createWrapperBrickPlugin", function(){node_createWrapperBrickPlugin = this.getData();});
+
 
 nosliw.registerSetNodeDataEvent("entitycontainer.createContainerPlugin", function(){node_createContainerPlugin = this.getData();});
 nosliw.registerSetNodeDataEvent("entitycontainer.createContainerListPlugin", function(){node_createContainerListPlugin = this.getData();});

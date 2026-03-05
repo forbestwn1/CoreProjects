@@ -42,7 +42,7 @@
 			        "version" : "1.0.0"
 		        },
 		        "brick" : {
-    				"scriptResourceId": "task_page_navigation",
+    				"scriptResourceId": "task_page_navigate",
     				"parm": {
     				    "page" : "page2inmodule"
     				}

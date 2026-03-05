@@ -9,6 +9,11 @@ var packageObj = library;
 	var node_createServiceRequestInfoSimple;
 	var node_createServiceRequestInfoSequence;
 	var node_basicUtility;
+    var node_createCoreEntityPackage;
+    var node_createReferenceCoreEntity;
+    var node_createAdapterInfo;
+	var node_complexEntityUtility;
+	var node_taskExecuteUtility;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -29,7 +34,7 @@ var node_createModulePlugin = function(){
 var loc_createModuleCore = function(complexEntityDef, valueContextId, bundleCore, configure){
 	var loc_complexEntityDef = complexEntityDef;
 	var loc_envInterface = {};
-	var loc_brick;
+	var loc_tasks;
 	
 	
 	var loc_lifecycleInit = function(){
@@ -44,16 +49,18 @@ var loc_createModuleCore = function(complexEntityDef, valueContextId, bundleCore
 
 		getEntityInitRequest : function(handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-			out.addRequest(loc_envInterface[node_CONSTANT.INTERFACE_ENTITY].createAttributeRequest(node_COMMONATRIBUTECONSTANT.BRICKWRAPPERBRICK_BRICK, undefined, {
+			out.addRequest(loc_envInterface[node_CONSTANT.INTERFACE_ENTITY].createAttributeRequest(node_COMMONATRIBUTECONSTANT.WITHBRICKTASKS_TASK, undefined, {
 				success : function(request, node){
-					loc_brick = node_complexEntityUtility.getBrickNode(node).getChildValue().getCoreEntity();
+					loc_tasks = node_complexEntityUtility.getBrickNode(node).getChildValue().getCoreEntity();
+					var taskCoreEntity = loc_tasks.getChildCoreEntity("nosliw_init");
+					return node_taskExecuteUtility.getExecuteInteractiveBrickPackageRequest(node_createCoreEntityPackage(node_createReferenceCoreEntity(taskCoreEntity.getBrickCoreEntity()), node_createAdapterInfo(undefined, false)));
 				}
 			}));
 			return out;
 		},
 
 		updateView : function(view){
-			loc_brick.updateView(view);
+			loc_tasks.updateView(view);
 			return view;
 		}
 		
@@ -71,6 +78,11 @@ nosliw.registerSetNodeDataEvent("constant.COMMONATRIBUTECONSTANT", function(){no
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple", function(){	node_createServiceRequestInfoSimple = this.getData();	});
 nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSequence", function(){	node_createServiceRequestInfoSequence = this.getData();	});
 nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("complexentity.entity.createCoreEntityPackage", function(){node_createCoreEntityPackage = this.getData();});
+nosliw.registerSetNodeDataEvent("complexentity.entity.createReferenceCoreEntity", function(){node_createReferenceCoreEntity = this.getData();});
+nosliw.registerSetNodeDataEvent("complexentity.entity.createAdapterInfo", function(){node_createAdapterInfo = this.getData();});
+nosliw.registerSetNodeDataEvent("complexentity.complexEntityUtility", function(){node_complexEntityUtility = this.getData();});
+nosliw.registerSetNodeDataEvent("task.taskExecuteUtility", function(){node_taskExecuteUtility = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createModulePlugin", node_createModulePlugin); 

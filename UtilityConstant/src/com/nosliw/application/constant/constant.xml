@@ -1117,6 +1117,9 @@
 			<definition type="space"/>
 			<definition name="PARM_RULETASK_RULEDEF" value="ruleDef"/>
 
+			<definition type="space"/>
+			<definition name="BUNDLEBRANCH_NAME_RULETASKS" value="ruleTasks"/>
+
 		</definitions>
 	</constants>
 </root>

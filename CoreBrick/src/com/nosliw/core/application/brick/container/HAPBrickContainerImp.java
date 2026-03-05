@@ -26,7 +26,9 @@ public class HAPBrickContainerImp extends HAPBrickImp implements HAPBrickContain
 		}
 		return out;
 	}
-	 
+	
+	public boolean isEmpty() {   return this.getElements().isEmpty();     }
+	
 	public String addElementWithBrickOrReference(HAPEntityOrReference brickOrRef) {
 		return this.addElementAnom(brickOrRef);
 	}

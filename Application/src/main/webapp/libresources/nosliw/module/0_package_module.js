@@ -1,1 +1,1 @@
-var library = nosliw.getPackage("dataservice");
+var library = nosliw.getPackage("module");
