@@ -10,28 +10,26 @@
 	    		"name" : "nosliw_init",
 		    	"status": "disabled1",
 			    "description" : "",
-        		"brickType" : {
-		    	    "brickType" : "taskTaskScript",
-			        "version" : "1.0.0"
-		        },
-    			"resourceId":"taskTaskScript|1.0.0|sequence",  
-    			"dynamicInput" : { 
-	    			"element" :
-		    		[ 
-			    		{
-				    		"type" : "multiple",
-					    	"name" : "tasks",
-						    "brickPackages" : [
-						        {
-                    		    	"status": "disabled1",
-         						    "brickId" : {
-		    		    			    "idPath" : "#main.task.present.brick"
-    			        			}
-		    				    }
-			    			]
-				    	}
-    				]
-	    		}		
+		        "brick" : {
+        			"resourceId":"taskTaskScript|1.0.0|sequence",  
+        			"dynamicInput" : { 
+	        			"element" :
+		        		[ 
+			        		{
+				        		"type" : "multiple",
+					        	"name" : "tasks",
+    						    "brickPackages" : [
+	    					        {
+                        		    	"status": "disabled1",
+         	    					    "brickId" : {
+		    	    	    			    "idPath" : "#main.task.present.brick"
+    			            			}
+		    			    	    }
+    			    			]
+	    			    	}
+    	    			]
+	    	    	}		
+		        }
 	        },
 
 	        {
@@ -73,13 +71,9 @@
 			    	"status": "disabled1",
 				    "description" : ""
 			    },
-        		"brickType" : {
-		    	    "brickType" : "uipage",
-			        "version" : "1.0.0"
-		        },
 		        "brick" : {
     			    "brickId":"page1|uipage;1.0.0"
-		        }
+   			    }
 			},  
     		{
 	    		"info": {
@@ -87,13 +81,9 @@
 			    	"status": "disabled1",
 				    "description" : ""
 			    },
-        		"brickType" : {
-		    	    "brickType" : "uipage",
-			        "version" : "1.0.0"
-		        },
 		        "brick" : {
     			    "brickId":"page2|uipage;1.0.0"
-		        }
+   			    }
 			}  
 	    ]
 	}

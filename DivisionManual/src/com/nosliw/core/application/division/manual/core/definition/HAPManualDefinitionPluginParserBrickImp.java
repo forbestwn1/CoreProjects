@@ -222,10 +222,12 @@ public class HAPManualDefinitionPluginParserBrickImp implements HAPManualDefinit
 		HAPManualDefinitionBrickContainer taskContainer = (HAPManualDefinitionBrickContainer)parserContext.getManualBrickManager().newBrickDefinition(HAPEnumBrickType.CONTAINER_100);
 		parentBrick.setAttributeValueWithBrick(HAPManualDefinitionWithBrickTasks.TASK, taskContainer);
 		JSONArray taskArrayJson = attrEntityObj.optJSONArray(HAPManualDefinitionWithBrickTasks.TASK);
-		for(int i=0; i<taskArrayJson.length(); i++) {
-			HAPManualDefinitionBrickWrapperBrick task = (HAPManualDefinitionBrickWrapperBrick)HAPManualDefinitionUtilityParserBrick.parseBrickDefinition(taskArrayJson.getJSONObject(i), HAPEnumBrickType.WRAPPERBRICK_100, HAPSerializationFormat.JSON, parserContext);
-			if(task!=null) {
-				taskContainer.addElementWithBrick(task);
+		if(taskArrayJson!=null) {
+			for(int i=0; i<taskArrayJson.length(); i++) {
+				HAPManualDefinitionBrickWrapperBrick task = (HAPManualDefinitionBrickWrapperBrick)HAPManualDefinitionUtilityParserBrick.parseBrickDefinition(taskArrayJson.getJSONObject(i), HAPEnumBrickType.WRAPPERBRICK_100, HAPSerializationFormat.JSON, parserContext);
+				if(task!=null) {
+					taskContainer.addElementWithBrick(task);
+				}
 			}
 		}
 	}

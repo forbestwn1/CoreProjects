@@ -30,11 +30,13 @@ public class HAPManualPluginParserBrickWrapperBrick extends HAPManualDefinitionP
 			jsonObj = new JSONObject(jsonValue);
 		}
 		
-		HAPIdBrickType brickTypeId = HAPUtilityBrickId.parseBrickTypeId(jsonObj.get(HAPManualDefinitionBrickWrapperBrick.BRICKTYPE));
+		HAPIdBrickType brickTypeId = null;
+		Object brickTypeObj = jsonObj.opt(HAPManualDefinitionBrickWrapperBrick.BRICKTYPE);
+		if(brickTypeObj!=null) {
+			brickTypeId = HAPUtilityBrickId.parseBrickTypeId(brickTypeObj);
+		}
 		
-//		HAPManualDefinitionAttributeInBrick parseAttribute(String attrName, JSONObject jsonObj, HAPIdBrickType entityTypeIfNotProvided, HAPIdBrickType adapterTypeId, HAPManualDefinitionContextParse parseContext)
-		
-		this.parseBrickAttributeSelfJson(wrapperBrick, jsonObj, HAPBrickWrapperBrick.BRICK, brickTypeId, null, parseContext);
+		this.parseBrickAttributeJson(wrapperBrick, jsonObj, HAPBrickWrapperBrick.BRICK, brickTypeId, null, parseContext);
 		
 	}
 }

@@ -22,7 +22,7 @@ public class HAPManualDefinitionBlockModule extends HAPManualDefinitionBrick imp
 	}
 
 	@Override
-	public HAPManualDefinitionBrickContainer getTasks() {   return (HAPManualDefinitionBrickContainer)this.getAttributeValueOfBrick(HAPBlockModule.TASK);   }
+	public HAPManualDefinitionBrickContainer getTasks() {   return (HAPManualDefinitionBrickContainer)this.getAttributeValueOfBrick(HAPManualDefinitionWithBrickTasks.TASK);   }
 	public void addTask(HAPManualDefinitionBrick taskBrickWrapper) {    this.getTasks().addElementWithBrick(taskBrickWrapper);    }
 	
 	public HAPManualDefinitionBrickContainer getPages() {   return (HAPManualDefinitionBrickContainer)this.getAttributeValueOfBrick(HAPBlockModule.PAGE);   }
