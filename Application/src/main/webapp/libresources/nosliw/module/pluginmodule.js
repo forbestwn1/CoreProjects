@@ -52,8 +52,6 @@ var loc_createModuleCore = function(complexEntityDef, valueContextId, bundleCore
 			out.addRequest(loc_envInterface[node_CONSTANT.INTERFACE_ENTITY].createAttributeRequest(node_COMMONATRIBUTECONSTANT.WITHBRICKTASKS_TASK, undefined, {
 				success : function(request, node){
 					loc_tasks = node_complexEntityUtility.getBrickNode(node).getChildValue().getCoreEntity();
-					var taskCoreEntity = loc_tasks.getChildCoreEntity("nosliw_init");
-					return node_taskExecuteUtility.getExecuteInteractiveBrickPackageRequest(node_createCoreEntityPackage(node_createReferenceCoreEntity(taskCoreEntity.getBrickCoreEntity()), node_createAdapterInfo(undefined, false)));
 				}
 			}));
 			return out;
@@ -62,6 +60,12 @@ var loc_createModuleCore = function(complexEntityDef, valueContextId, bundleCore
 		updateView : function(view){
 			loc_tasks.updateView(view);
 			return view;
+		},
+		
+		getPostInitRequest : function(handlers, request){
+			var taskCoreEntity = loc_tasks.getChildCoreEntity("nosliw_init");
+			return node_taskExecuteUtility.getExecuteInteractiveBrickPackageRequest(node_createCoreEntityPackage(node_createReferenceCoreEntity(taskCoreEntity.getBrickCoreEntity()), node_createAdapterInfo(undefined, false)), undefined, handlers, request);
+			
 		}
 		
 	};

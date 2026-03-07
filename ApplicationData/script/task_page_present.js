@@ -46,21 +46,12 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 			var valuePortContainer = node_getEntityObjectInterface(loc_out).getInternalValuePortContainer();
 			var withValuePort = loc_envInterface[node_CONSTANT.INTERFACE_WITHVALUEPORT];
 			
-			out.addRequest(node_interactiveUtility.getGetTaskRequestValuesFromValuePortRequest(valuePortContainer, {
-				success : function(request, requestValues){
-					var result = {
-					    "resultName": "success",
-					    "resultValue": "present successfully"
-					};
-					return  node_interactiveUtility.getSetTaskResultToValuePortRequest(result, valuePortContainer, {
-						success : function(){
-							loc_taskResult = result;
-							return result;
-						}
-					});
-				}
+			out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
+				return {
+				    "resultName": "success",
+				    "resultValue": "present successfully"
+				};
 			}));
-			
 			return out;
 		},
 		

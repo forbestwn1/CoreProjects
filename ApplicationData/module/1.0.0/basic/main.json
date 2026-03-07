@@ -23,8 +23,9 @@
 					    	"name" : "tasks",
 						    "brickPackages" : [
 						        {
+                    		    	"status": "disabled1",
          						    "brickId" : {
-		    		    			    "idPath" : "#main.task.present"
+		    		    			    "idPath" : "#main.task.present.brick"
     			        			}
 		    				    }
 			    			]
@@ -50,7 +51,7 @@
 	        },
 	        {
 	    		"name" : "present",
-		    	"status": "disabled",
+		    	"status": "disabled1",
 			    "description" : "",
         		"brickType" : {
 		    	    "brickType" : "taskTaskScript",

@@ -17,6 +17,22 @@ var node_pathUtility = function(){
 	
 	var loc_out = {
 
+        parsePathSegments : function(pathObj){
+			var out;
+			if(node_basicUtility.isArray(pathObj)){
+				out = pathObj;
+			}
+			else{
+				if(node_basicUtility.isStringEmpty(pathObj)){
+					out = [];
+				}
+				else{
+    				out = node_namingConvensionUtility.parsePathInfos(pathObj);
+				}
+			}
+			return out;
+		},
+
         isEmptyPath : function(path){
 			if(path==undefined||path=="") return true;
 			return false;

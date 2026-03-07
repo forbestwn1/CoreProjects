@@ -56,8 +56,9 @@ var node_taskExecuteUtility = function(){
       var coreEntityRef = interactiveBrickPackage.getCoreEntityReference();
       var baseCoreEntity = coreEntityRef.getBaseCoreEntity();
       var remainingPath = coreEntityRef.getRemainingPath();
-      if(remainingPath!=undefined&&remainingPath==node_COMMONATRIBUTECONSTANT.BLOCKTASKWRAPPER_TASK){
-    	  var interactiveFactory = node_getApplicationInterface(baseCoreEntity, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_FACTORY);
+
+   	  var interactiveFactory = node_getApplicationInterface(baseCoreEntity, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_FACTORY);
+      if(interactiveFactory!=undefined){   //remainingPath!=undefined&&remainingPath==node_COMMONATRIBUTECONSTANT.BLOCKTASKWRAPPER_TASK){
           out.addRequest(interactiveFactory.getCreateEntityRequest({
 			  success : function(request, brickCore){
 				  coreEntityRef.setCoreEntity(brickCore);

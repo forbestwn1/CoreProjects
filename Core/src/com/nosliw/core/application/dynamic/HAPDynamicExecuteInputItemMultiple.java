@@ -8,6 +8,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.nosliw.common.constant.HAPAttribute;
+import com.nosliw.common.info.HAPUtilityEntityInfo;
 import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
@@ -37,9 +38,12 @@ public class HAPDynamicExecuteInputItemMultiple extends HAPDynamicExecuteInputIt
 		
 		JSONArray brickIdJsonArray = jsonObj.getJSONArray(BRICKPACKAGES);
 		for(int i=0; i<brickIdJsonArray.length(); i++) {
-			HAPPackageBrickInBundle brickPackage = new HAPPackageBrickInBundle();
-			brickPackage.buildObject(brickIdJsonArray.getJSONObject(i), HAPSerializationFormat.JSON);
-			this.addBrickPackage(brickPackage);
+			JSONObject eleJsonObj = brickIdJsonArray.getJSONObject(i);
+			if(HAPUtilityEntityInfo.isEnabled(eleJsonObj)){
+				HAPPackageBrickInBundle brickPackage = new HAPPackageBrickInBundle();
+				brickPackage.buildObject(eleJsonObj, HAPSerializationFormat.JSON);
+				this.addBrickPackage(brickPackage);
+			}
 		}
 		return true;
 	}

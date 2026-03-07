@@ -59,7 +59,7 @@ public class HAPUtilityPath {
 		StringBuffer out = new StringBuffer();
 		for(int j=i; j<baseEntityIdPathSegs.length; j++) {
 			if(index!=0) {
-				out.append(HAPConstantShared.SEPERATOR_LEVEL2);
+				out.append(HAPConstantShared.SEPERATOR_PATH);
 			}
 			out.append(HAPConstantShared.NAME_PARENT);
 			index++;
@@ -67,7 +67,7 @@ public class HAPUtilityPath {
 		
 		for(int j=i; j<entityIdPathSegs.length; j++) {
 			if(index!=0) {
-				out.append(HAPConstantShared.SEPERATOR_LEVEL2);
+				out.append(HAPConstantShared.SEPERATOR_PATH);
 			}
 			out.append(HAPConstantShared.NAME_CHILD);
 			out.append(HAPConstantShared.SEPERATOR_LEVEL1);
@@ -79,7 +79,7 @@ public class HAPUtilityPath {
 	
 	public static String fromRelativeToAbsolutePath(String relativePath, String basePath) {
 		HAPPath path = new HAPPath(basePath);
-		String[] segs = relativePath.split("\\"+HAPConstantShared.SEPERATOR_LEVEL2);
+		String[] segs = relativePath.split("\\"+HAPConstantShared.SEPERATOR_PATH);
 		for(String seg : segs) {
 			if(seg.startsWith(HAPConstantShared.NAME_PARENT)) {
 				path = path.trimLast().getLeft();
