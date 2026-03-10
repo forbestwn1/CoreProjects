@@ -35,10 +35,15 @@ var loc_createModuleCore = function(complexEntityDef, valueContextId, bundleCore
 	var loc_complexEntityDef = complexEntityDef;
 	var loc_envInterface = {};
 	var loc_tasks;
+	var loc_pages;
 	
 	
 	var loc_lifecycleInit = function(){
 				
+	};
+	
+	var loc_presentPage = function(){
+		
 	};
 	
 	var loc_out = {
@@ -54,11 +59,18 @@ var loc_createModuleCore = function(complexEntityDef, valueContextId, bundleCore
 					loc_tasks = node_complexEntityUtility.getBrickNode(node).getChildValue().getCoreEntity();
 				}
 			}));
+
+			out.addRequest(loc_envInterface[node_CONSTANT.INTERFACE_ENTITY].createAttributeRequest(node_COMMONATRIBUTECONSTANT.BLOCKMODULE_PAGE, undefined, {
+				success : function(request, node){
+					loc_pages = node_complexEntityUtility.getBrickNode(node).getChildValue().getCoreEntity();
+				}
+			}));
 			return out;
 		},
 
 		updateView : function(view){
 			loc_tasks.updateView(view);
+			loc_pages.updateView(view);
 			return view;
 		},
 		

@@ -72,22 +72,28 @@ var node_createTaskCore = function(taskImp, entityCore){
 	
     var loc_taskRuntimeEnv = {
 	  
-	   getRuntimeValue : function(domain, name, parms){
+	  getValue : function(name, parms){
 		   var i = loc_runtimeEnv.length-1;
-           while(i>=0){
-			   var value = loc_runtimeEnv[i].getRuntimeValue(domain, name, parms);
-			   if(value!=undefined){
-				   return value;
-			   }
-		       i--;  
+		   if(i>0){
+               while(i>=0){
+	    		   var value = loc_runtimeEnv[i].getValue(name, parms);
+		    	   if(value!=undefined){
+			    	   return value;
+			       }
+    		       i--;  
+	    	   }
 		   }
-	   }
+		   else{
+			   return nosliw.runtime.runtimeEnv.getValue(name, parms);
+		   }
+	  }
     };
 
 	
 	var loc_out = {
 	
-		getRuntimeEnv : function(){   return loc_runtimeEnv;      },
+	    getRuntimeEnv : function(){   return loc_taskRuntimeEnv;     },
+		getRuntimeEnvValue : function(name, parms){   return loc_taskRuntimeEnv.getValue(name, parms);      },
 		
 //		registerLifecycleHandler : function(handler){  loc_lifecycleHandlers.push(handler);  },
 		

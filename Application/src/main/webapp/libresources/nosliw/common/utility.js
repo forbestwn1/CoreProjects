@@ -135,6 +135,10 @@ var node_basicUtility =
 			return Array.isArray(value);
 		},
 		
+		isFunction : function(value){
+			return typeof value === "function";
+		},
+		
 		parsePostSegment : function(value){
 			var segments;
 			if(node_basicUtility.isArray(value)){

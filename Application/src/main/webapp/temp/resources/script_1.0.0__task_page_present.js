@@ -29,6 +29,10 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 	
 	var loc_taskCore;
 	
+	var loc_complexEntityDef;
+	
+	var loc_pageName;
+	
 	var loc_facadeTaskCore = {
 		//return a task
 		getTaskCore : function(){
@@ -37,7 +41,9 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 	};
 
 	var loc_init = function(complexEntityDef, valueContextId, bundleCore, configure){
+		loc_complexEntityDef = complexEntityDef;
 		loc_taskCore = node_createTaskCore(loc_out, loc_out);
+        loc_pageName = node_complexEntityUtility.getParmValue(loc_complexEntityDef, "page"); 
 	};
 
 	var loc_out = {
@@ -54,6 +60,10 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 			var valuePortContainer = node_getEntityObjectInterface(loc_out).getInternalValuePortContainer();
 			var withValuePort = loc_envInterface[node_CONSTANT.INTERFACE_WITHVALUEPORT];
+			
+			out.addRequest(loc_taskCore.getRuntimeEnvValue("ui.presentPage", {
+				"page" :  loc_pageName
+			}));
 			
 			out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
 				return {

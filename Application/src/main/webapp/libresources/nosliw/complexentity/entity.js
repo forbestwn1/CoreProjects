@@ -11,8 +11,40 @@ var packageObj = library.getChildPackage("entity");
 	var node_makeObjectWithType;
 	var node_complexEntityUtility;
 	var node_getApplicationInterface;
+	var node_basicUtility;
 	
 //*******************************************   Start Node Definition  ************************************** 	
+
+var node_createRuntimeEnvironment = function(parent, values, configure){
+	
+	if(values==undefined && parent!=undefined)  return parent;
+	
+	var loc_parent = parent;
+	var loc_values = values;
+	var loc_configure = configure;
+	
+	var loc_out = {
+		
+		getValue : function(name, parms){
+			var value;
+			var obj = values[name];
+			if(node_basicUtility.isFunction(obj)){
+				//function
+				value = obj.call(parms);
+			}
+			else{
+				//value
+				value = obj;
+    			if(value==undefined&&loc_parent!=undefined){
+	    			value = loc_parent.getValue(name, parms);
+		    	}
+			}
+			return value;
+		}
+	};
+	
+	return loc_out;
+};
 
 
 var node_createDynamicInput = function(coreEntityPackage){
@@ -348,8 +380,10 @@ nosliw.registerSetNodeDataEvent("request.request.createServiceRequestInfoSimple"
 nosliw.registerSetNodeDataEvent("common.interfacedef.makeObjectWithType", function(){node_makeObjectWithType = this.getData();});
 nosliw.registerSetNodeDataEvent("complexentity.complexEntityUtility", function(){node_complexEntityUtility = this.getData();	});
 nosliw.registerSetNodeDataEvent("component.getApplicationInterface", function(){node_getApplicationInterface = this.getData();});
+nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();});
 
 //Register Node by Name
+packageObj.createChildNode("createRuntimeEnvironment", node_createRuntimeEnvironment); 
 packageObj.createChildNode("EntityIdInDomain", node_EntityIdInDomain); 
 packageObj.createChildNode("createBrickDefinition", node_createBrickDefinition); 
 packageObj.createChildNode("createDynamicInputContainer", node_createDynamicInputContainer); 

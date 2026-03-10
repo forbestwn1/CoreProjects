@@ -37,12 +37,21 @@ $(document).on("nosliwActive", function(){
 	var node_requestServiceProcessor = nosliw.getNodeData("request.requestServiceProcessor");
 	var node_ResourceId = nosliw.getNodeData("resource.entity.ResourceId");
 	var node_createStateBackupService = nosliw.getNodeData("component.createStateBackupService");
-
+	var node_createRuntimeEnvironment = nosliw.getNodeData("complexentity.entity.createRuntimeEnvironment");
 	
 	var parms = node_basicUtility.getParmsInUrl();
 	var resourceType = node_namingConvensionUtility.cascadeLevel1(parms.resourceType, "1.0.0");
 	var resourceId = parms.resourceId;
 	var configure = parms.configure;
+	
+	var values = {
+			"ui.presentPage" : function(parms){
+				//loc_framework7View.router.navigate(loc_getRoutePathByUiId(uiId));
+				console.log("ui.presentPage was called");
+			}	
+		};
+		
+	nosliw.runtime.runtimeEnv = node_createRuntimeEnvironment(undefined, values); 
 	
 	var runtimeContext = {
 		view : $('#mainDiv').get(),

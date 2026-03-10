@@ -28,6 +28,10 @@ var node_taskUtility = function(){
 
   var loc_out = {
 	  
+	createTaskRuntimeEnv : function(values){
+		return node_createRuntimeEnvironment(nosliw.runtime.runtimeEnv, values);
+	},
+	  
     createTaskFunctionWithSettingValuePortValues : function(valuePortGroupType, valuePortName, setValueByName){
         		
 		return function(coreEntity, handlers, request){
