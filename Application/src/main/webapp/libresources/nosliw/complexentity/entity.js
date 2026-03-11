@@ -30,7 +30,7 @@ var node_createRuntimeEnvironment = function(parent, values, configure){
 			var obj = values[name];
 			if(node_basicUtility.isFunction(obj)){
 				//function
-				value = obj.call(parms);
+				value = obj.call(loc_out, parms);
 			}
 			else{
 				//value

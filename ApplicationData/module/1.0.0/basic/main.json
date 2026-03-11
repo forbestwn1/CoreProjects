@@ -66,21 +66,17 @@
 	    
 	    "page" : [
     		{
-	    		"info": {
-		    		"name" : "page1inmodule",
-			    	"status": "disabled1",
-				    "description" : ""
-			    },
+	    		"name" : "page1inmodule",
+		    	"status": "disabled1",
+			    "description" : "",
 		        "brick" : {
     			    "brickId":"page1|uipage;1.0.0"
    			    }
 			},  
     		{
-	    		"info": {
-		    		"name" : "page2inmodule",
-			    	"status": "disabled1",
-				    "description" : ""
-			    },
+	    		"name" : "page2inmodule",
+		    	"status": "disabled1",
+			    "description" : "",
 		        "brick" : {
     			    "brickId":"page2|uipage;1.0.0"
    			    }

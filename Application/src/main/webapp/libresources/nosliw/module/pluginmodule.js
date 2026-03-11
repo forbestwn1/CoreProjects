@@ -70,14 +70,24 @@ var loc_createModuleCore = function(complexEntityDef, valueContextId, bundleCore
 
 		updateView : function(view){
 			loc_tasks.updateView(view);
-			loc_pages.updateView(view);
+
+			//register pages
+            var pages = {};
+            _.each(loc_pages.getChildrenEntity(), function(childEntity, name){
+				var pageCoreEntity = childEntity.getCoreEntity().getBrickCoreEntity();
+				pages[name] = pageCoreEntity;
+			});
+
+            nosliw.runtime.runtimeEnv.getValue("ui.registerAllPages", {
+				"pageCoreEntitys" : pages
+			});
+
 			return view;
 		},
 		
 		getPostInitRequest : function(handlers, request){
 			var taskCoreEntity = loc_tasks.getChildCoreEntity("nosliw_init");
 			return node_taskExecuteUtility.getExecuteInteractiveBrickPackageRequest(node_createCoreEntityPackage(node_createReferenceCoreEntity(taskCoreEntity.getBrickCoreEntity()), node_createAdapterInfo(undefined, false)), undefined, handlers, request);
-			
 		}
 		
 	};

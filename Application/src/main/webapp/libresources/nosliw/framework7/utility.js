@@ -10,6 +10,10 @@ var node_COMMONCONSTANT;
 // indicator ui to indicate the start of request and end of request
 var node_utility = function(){
 	
+	var loc_presentPage = function(pageName){
+		
+	};
+	
 	var loc_out = {
 		
 		createTypicalFramework7App : function(root){
@@ -43,8 +47,13 @@ var node_utility = function(){
 					}
 				}
 			});
-		}
+		},
+		
+		createRuntimeEnvValues : function(){
 			
+			
+		},
+		
 	};
 	return loc_out;
 }();
