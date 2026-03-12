@@ -1,4 +1,4 @@
-package com.nosliw.core.xxx.application.entity.service;
+package com.nosliw.core.application.entity.service;
 
 import java.io.InputStream;
 import java.util.LinkedHashMap;

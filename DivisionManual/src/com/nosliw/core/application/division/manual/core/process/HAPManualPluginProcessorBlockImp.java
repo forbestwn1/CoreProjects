@@ -41,7 +41,7 @@ public abstract class HAPManualPluginProcessorBlockImp extends HAPManualPluginPr
 			HAPEntityOrReference taskInterfaceBrickOrRef = ((HAPWithBlockInteractiveTask)blockPair.getLeft()).getTaskInterface();
 			HAPInteractiveTask taskInterface = null;
 			if(taskInterfaceBrickOrRef!=null) {
-				taskInterface = getInteractiveTask(taskInterfaceBrickOrRef, processContext.getBrickManager());
+				taskInterface = getInteractiveTask(taskInterfaceBrickOrRef, processContext.getBrickManager(), processContext);
 			}
 			HAPManualUtilityTask.buildValuePortGroupForInteractiveTask(blockPair.getRight(), taskInterface, processContext.getCurrentBundle().getValueStructureDomain());
 		}
@@ -50,13 +50,13 @@ public abstract class HAPManualPluginProcessorBlockImp extends HAPManualPluginPr
 			HAPEntityOrReference expressionInterfaceBrickOrRef = ((HAPWithBlockInteractiveExpression)blockPair.getLeft()).getExpressionInterface();
 			HAPInteractiveExpression expressionInterface = null;
 			if(expressionInterfaceBrickOrRef!=null) {
-				expressionInterface = getInteractiveExpression(expressionInterfaceBrickOrRef, processContext.getBrickManager());
+				expressionInterface = getInteractiveExpression(expressionInterfaceBrickOrRef, processContext.getBrickManager(), processContext);
 			}
 			HAPManualUtilityTask.buildValuePortGroupForInteractiveExpression(blockPair.getRight(), expressionInterface, processContext.getCurrentBundle().getValueStructureDomain());
 		}
     }
 	
-	private HAPInteractiveTask getInteractiveTask(HAPEntityOrReference brickOrRef, HAPManagerApplicationBrick brickManager) {
+	private HAPInteractiveTask getInteractiveTask(HAPEntityOrReference brickOrRef, HAPManagerApplicationBrick brickManager, HAPManualContextProcessBrick processContext) {
 		HAPInteractiveTask out = null;
 		String type = brickOrRef.getEntityOrReferenceType();
 		if(type.equals(HAPConstantShared.BRICK)) {
@@ -64,13 +64,13 @@ public abstract class HAPManualPluginProcessorBlockImp extends HAPManualPluginPr
 			out = taskInterfaceBrick.getValue();
 		}
 		else if(type.equals(HAPConstantShared.RESOURCEID)) {
-			HAPBlockInteractiveInterfaceTask taskInterfaceBlock = (HAPBlockInteractiveInterfaceTask)HAPUtilityBrick.getBrickByResource(HAPUtilityResourceId.normalizeResourceId((HAPResourceId)brickOrRef), brickManager);
+			HAPBlockInteractiveInterfaceTask taskInterfaceBlock = (HAPBlockInteractiveInterfaceTask)HAPUtilityBrick.getBrickByResource(HAPUtilityResourceId.normalizeResourceId((HAPResourceId)brickOrRef), brickManager, processContext.getRuntimeInfo());
 			out = taskInterfaceBlock.getValue();
 		}
 		return out;
 	}
 	
-	private HAPInteractiveExpression getInteractiveExpression(HAPEntityOrReference brickOrRef, HAPManagerApplicationBrick brickManager) {
+	private HAPInteractiveExpression getInteractiveExpression(HAPEntityOrReference brickOrRef, HAPManagerApplicationBrick brickManager, HAPManualContextProcessBrick processContext) {
 		HAPInteractiveExpression out = null;
 		String type = brickOrRef.getEntityOrReferenceType();
 		if(type.equals(HAPConstantShared.BRICK)) {
@@ -78,7 +78,7 @@ public abstract class HAPManualPluginProcessorBlockImp extends HAPManualPluginPr
 			out = expressionInterfaceBrick.getValue();
 		}
 		else if(type.equals(HAPConstantShared.RESOURCEID)) {
-			HAPBlockInteractiveInterfaceExpression expressionInterfaceBlock = (HAPBlockInteractiveInterfaceExpression)HAPUtilityBrick.getBrickByResource(HAPUtilityResourceId.normalizeResourceId((HAPResourceId)brickOrRef), brickManager);
+			HAPBlockInteractiveInterfaceExpression expressionInterfaceBlock = (HAPBlockInteractiveInterfaceExpression)HAPUtilityBrick.getBrickByResource(HAPUtilityResourceId.normalizeResourceId((HAPResourceId)brickOrRef), brickManager, processContext.getRuntimeInfo());
 			out = expressionInterfaceBlock.getValue();
 		}
 		return out;

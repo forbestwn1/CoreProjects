@@ -7,14 +7,15 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.resource.HAPInfoResourceIdNormalize;
 import com.nosliw.core.resource.HAPResourceId;
 import com.nosliw.core.resource.HAPUtilityResourceId;
+import com.nosliw.core.runtime.HAPRuntimeInfo;
 
 public class HAPUtilityBrick {
 
-	public static HAPBrick getBrickByResource(HAPInfoResourceIdNormalize normalizedResourceId, HAPManagerApplicationBrick brickMan) {
-		HAPBundle bundle = HAPUtilityBundle.getBrickBundle(normalizedResourceId.getRootResourceId(), brickMan);
+	public static HAPBrick getBrickByResource(HAPInfoResourceIdNormalize normalizedResourceId, HAPManagerApplicationBrick brickMan, HAPRuntimeInfo runtimeInfo) {
+		HAPBundle bundle = HAPUtilityBundle.getBrickBundle(normalizedResourceId.getRootResourceId(), brickMan, runtimeInfo);
 		return getDescdentBrickLocal(bundle, normalizedResourceId.getPath(), HAPConstantShared.NAME_ROOTBRICK_MAIN);
 	}
-	
+
 	public static HAPAttributeInBrick getAttributeInBrick(HAPBrick brick, String attrName) {
 		HAPAttributeInBrick out = null;
 		for(HAPAttributeInBrick attr : brick.getAttributes()) {
@@ -24,7 +25,6 @@ public class HAPUtilityBrick {
 		}
 		return out;
 	}
-
 
 	public static HAPIdBrickType getBrickType(HAPEntityOrReference brickOrRef, HAPManagerApplicationBrick brickManager) {
 		HAPIdBrickType out = null;
@@ -38,14 +38,14 @@ public class HAPUtilityBrick {
 		return out;
 	}
 	
-	public static HAPBrick getBrick(HAPEntityOrReference brickOrRef, HAPManagerApplicationBrick brickManager) {
+	public static HAPBrick getBrick(HAPEntityOrReference brickOrRef, HAPManagerApplicationBrick brickManager, HAPRuntimeInfo runtimeInfo) {
 		HAPBrick out = null;
 		String type = brickOrRef.getEntityOrReferenceType();
 		if(type.equals(HAPConstantShared.BRICK)) {
 			out = (HAPBrick)brickOrRef;
 		}
 		else if(type.equals(HAPConstantShared.RESOURCEID)) {
-			out = HAPUtilityBrick.getBrickByResource(HAPUtilityResourceId.normalizeResourceId((HAPResourceId)brickOrRef), brickManager);			
+			out = HAPUtilityBrick.getBrickByResource(HAPUtilityResourceId.normalizeResourceId((HAPResourceId)brickOrRef), brickManager, runtimeInfo);			
 		}
 		return out;
 	}

@@ -49,11 +49,6 @@ var node_utility = function(){
 			});
 		},
 		
-		createRuntimeEnvValues : function(){
-			
-			
-		},
-		
 	};
 	return loc_out;
 }();

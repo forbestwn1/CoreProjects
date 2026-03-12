@@ -3,44 +3,47 @@
 		"name": "test data association",
 		"description": ""
 	},
-	"entity": [
+	"brick": [
 		{
-			"embeded": {
-				"info": {
-					"name" : "adapter-serviceprovider",
-					"status": "disabled1"
-				},
-				"entity" : {
-					"serviceKey" : {
-						"id" : "TestBasicService"
-					}
+			"info": {
+				"name" : "adapter-serviceprovider",
+				"status": "disabled1"
+			},
+			"brick" : {
+				"serviceKey" : {
+					"id" : "TestBasicService"
 				}
 			},
 			"adapter":[
 				{
 					"name1" : "serviceAdapter",
 					"status": "disabled1",
-					"entityType" : "dataAssociationTask",
-					"entity" : {
-						"in" : {
-							"serviceParm1" : {
-								"definition" : {
-									"mapping" : {
-										"elementPath": "parm1"
-									}
-								}
-							}
-						},
-						"out" : {
-							"success" : {
-								"output1" : {
-									"definition" : {
-										"mapping" : {
-											"elementPath": "outputInService1"
-										}
-									}
-								}
-							}
+					"brickTypeId" : {
+						"brickType": "dataAssociationForTask",
+						"version": "1.0.0"
+					},
+					"brick" : {
+						"definition" : {
+    						"in" : {
+	    						"serviceParm1" : {
+		    						"definition" : {
+			    						"mapping" : {
+				    						"elementPath": "parm1"
+					    				}
+						    		}
+							     }
+    						},
+	    					"out" : {
+		    					"success" : {
+			    					"output1" : {
+				    					"definition" : {
+					    					"mapping" : {
+						    					"elementPath": "outputInService1"
+    										}
+	    								}
+		    						}
+			    				}
+				     		}
 						}
 					}
 				}
@@ -58,7 +61,7 @@
 					}
 				}
 			},			
-			"entity":{
+			"brick":{
 				"scriptName": "complexscript_debug_variablelocalbyname",
 				"parm" : {
 					"variable" : []
@@ -70,7 +73,7 @@
 				"name": "valueContext",
 				"status": "disabled1"
 			},
-			"entity": [
+			"brick": [
 				{
 					"scope" : "public",
 					"valueStructure" : {

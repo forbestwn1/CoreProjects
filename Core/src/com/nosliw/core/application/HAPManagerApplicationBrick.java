@@ -42,7 +42,7 @@ public class HAPManagerApplicationBrick {
 	@Autowired
 	private void setDivisionPlugins(List<HAPPluginDivision> divisionPlugins) {
 		for(HAPPluginDivision divisionPlugin : divisionPlugins) {
-			this.m_divisionPlugin.put(divisionPlugin.getDivisionName(), divisionPlugin);
+			this.registerDivisionInfo(divisionPlugin);
 		}
 	}
 	
@@ -115,12 +115,12 @@ public class HAPManagerApplicationBrick {
 		return this.getAllVersions(entityType).get(0);
 	}
 
-	public void registerDivisionInfo(String division, HAPPluginDivision divisionPlugin) {
-		this.m_divisionPlugin.put(division, divisionPlugin);
+	public void registerDivisionInfo(HAPPluginDivision divisionPlugin) {
+		this.m_divisionPlugin.put(divisionPlugin.getDivisionName(), divisionPlugin);
 		Set<HAPIdBrickType> brickTypes = divisionPlugin.getBrickTypes();
 		if(brickTypes!=null) {
 			for(HAPIdBrickType brickType : brickTypes) {
-				this.m_divisionByBrickType.put(brickType, division);
+				this.m_divisionByBrickType.put(brickType, divisionPlugin.getDivisionName());
 			}
 		}
 	}

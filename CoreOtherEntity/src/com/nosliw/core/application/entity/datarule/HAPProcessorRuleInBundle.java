@@ -20,10 +20,11 @@ import com.nosliw.core.application.common.structure.HAPRootInStructure;
 import com.nosliw.core.application.common.structure.HAPStructure;
 import com.nosliw.core.data.criteria.HAPDataTypeCriteria;
 import com.nosliw.core.data.criteria.HAPUtilityCriteria;
+import com.nosliw.core.runtime.HAPRuntimeInfo;
 
 public class HAPProcessorRuleInBundle {
 
-	public static void process(HAPBundle bundle, HAPManagerDataRule dataRuleManager, HAPManagerApplicationBrick brickManager) {
+	public static void process(HAPBundle bundle, HAPManagerDataRule dataRuleManager, HAPManagerApplicationBrick brickManager, HAPRuntimeInfo runtimeInfo) {
 		
 		//build new branch to host data rule tasks
 		String validationTaskBranchName = HAPConstantShared.BUNDLEBRANCH_NAME_RULETASKS;
@@ -40,12 +41,12 @@ public class HAPProcessorRuleInBundle {
 				String eleType = ele.getType();
                 if(eleType.equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_DATA)) {
                 	HAPElementStructureLeafData dataEle = (HAPElementStructureLeafData)ele;
-                	buildRuildForDataElement(dataEle, containerBrick, validationTaskBranchName, valueStructureDomain, dataRuleManager, brickManager);
+                	buildRuildForDataElement(dataEle, containerBrick, validationTaskBranchName, valueStructureDomain, dataRuleManager, brickManager, runtimeInfo);
                 }
                 if(eleType.equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_RELATIVE_FOR_VALUE)) {
                 	HAPElementStructureLeafRelativeForValue forValueElement = (HAPElementStructureLeafRelativeForValue)ele;
                 	HAPElementStructureLeafData dataEle = forValueElement.getDefinition();
-                	buildRuildForDataElement(dataEle, containerBrick, validationTaskBranchName, valueStructureDomain, dataRuleManager, brickManager);
+                	buildRuildForDataElement(dataEle, containerBrick, validationTaskBranchName, valueStructureDomain, dataRuleManager, brickManager, runtimeInfo);
                 }
 			}
 		}
@@ -57,7 +58,7 @@ public class HAPProcessorRuleInBundle {
 		}
 	}
 	
-	private static void buildRuildForDataElement(HAPElementStructureLeafData dataEle, HAPBrickContainerImp containerBrick, String validationTaskBranchName, HAPDomainValueStructure valueStructureDomain, HAPManagerDataRule dataRuleManager, HAPManagerApplicationBrick brickManager) {
+	private static void buildRuildForDataElement(HAPElementStructureLeafData dataEle, HAPBrickContainerImp containerBrick, String validationTaskBranchName, HAPDomainValueStructure valueStructureDomain, HAPManagerDataRule dataRuleManager, HAPManagerApplicationBrick brickManager, HAPRuntimeInfo runtimeInfo) {
     	for(HAPDefinitionDataRule ruleDef : dataEle.getDataDefinition().getRules()) {
     		HAPDataRule rule = ruleDef.getDataRule();
     		HAPDataTypeCriteria ruleCriteria = HAPUtilityCriteria.getChildCriteriaByPath(dataEle.getCriteria(), ruleDef.getPath());

@@ -5,17 +5,18 @@ var packageObj = library;
 //get used node
 var node_CONSTANT;
 var node_COMMONCONSTANT;
+var node_framework7Utility;
 //*******************************************   Start Node Definition  ************************************** 	
 
 // indicator ui to indicate the start of request and end of request
-var node_createRuntimeEnvValues = function(framework7App){
+var node_createRuntimeEnv = function(parentView){
 	
-	var loc_framework7App = framework7App;
+	var loc_framework7App;
+
 	var loc_framework7View;
+	var loc_containerView;
 	
-	var loc_containerView = $('<div class="view view-main" style="height1:1200px;overflow-y1: scroll; "></div>');
-	
-	$("#moduleDiv").append(loc_containerView);
+	var loc_values;
 	
 	var loc_getRoutePathByUiId = function(uiId){	return "/"+uiId+"/";  };
 	
@@ -53,12 +54,33 @@ var node_createRuntimeEnvValues = function(framework7App){
 
 		loc_framework7View = loc_framework7App.views.create(loc_containerView, viewConfigure);
 	};
+
+    
+	var loc_init = function(parentView){
+    	loc_framework7App = node_framework7Utility.createTypicalFramework7App(parentView); 
+		
+		loc_containerView = $('<div class="view view-main" style="height1:1200px;overflow-y1: scroll; "></div>');
+
+    	$(parentView).append(loc_containerView);
 	
-	var loc_out = {	};
+	    loc_values = {};
+    	loc_values["ui.registerAllPages"] = loc_registerAllPages; 
+	    loc_values["ui.presentPage"] = loc_presentPage; 
+	    
+	   	//ui indicator
+    	node_framework7Utility.createRequestStatusIndicatorUI(loc_framework7App);
+
+	};
 	
-	loc_out["ui.registerAllPages"] = loc_registerAllPages; 
-	loc_out["ui.presentPage"] = loc_presentPage; 
+	var loc_out = {	
+		
+		getValues : function(){
+			return loc_values;
+		}
+		
+	};
 	
+	loc_init(parentView);
 	return loc_out;
 };
 	
@@ -67,8 +89,9 @@ var node_createRuntimeEnvValues = function(framework7App){
 //populate dependency node data
 nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("constant.COMMONCONSTANT", function(){node_COMMONCONSTANT = this.getData();});
+nosliw.registerSetNodeDataEvent("framework7.utility", function(){node_framework7Utility = this.getData();});
 
 //Register Node by Name
-packageObj.createChildNode("createRuntimeEnvValues", node_createRuntimeEnvValues); 
+packageObj.createChildNode("createRuntimeEnv", node_createRuntimeEnv); 
 
 })(packageObj);
