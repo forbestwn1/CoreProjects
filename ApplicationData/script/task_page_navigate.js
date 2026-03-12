@@ -46,13 +46,17 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 			var valuePortContainer = node_getEntityObjectInterface(loc_out).getInternalValuePortContainer();
 			var withValuePort = loc_envInterface[node_CONSTANT.INTERFACE_WITHVALUEPORT];
 			
+			out.addRequest(loc_taskCore.getRuntimeEnvValue("ui.navigatePage", {
+				"page" :  loc_pageName
+			}));
+			
 			out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
 				return {
 				    "resultName": "success",
 				    "resultValue": "navigate successfully"
 				};
 			}));
-			
+
 			return out;
 		},
 		

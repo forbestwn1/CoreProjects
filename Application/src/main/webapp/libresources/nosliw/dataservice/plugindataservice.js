@@ -46,7 +46,7 @@ var loc_createDataServiceProvider = function(serviceProvider, configure){
 	
 	var loc_envInterface = {};
 
-	var loc_taskContext;
+	var loc_taskCore = node_createTaskCore(loc_out, loc_out);
 	
 	var loc_taskResult;
 
@@ -83,25 +83,21 @@ var loc_createDataServiceProvider = function(serviceProvider, configure){
 		
 	};
 	
-	var loc_facadeTaskFactory = {
+	var loc_facadeTaskCore = {
 		//return a task
-		createTask : function(taskContext){
-			loc_taskContext = taskContext;
-			return loc_out;
+		getTaskCore : function(){
+			return loc_taskCore;
 		},
 	};
 
+	var loc_init = function(serviceProvider, configure){
+		loc_taskCore = node_createTaskCore(loc_out, loc_out);;
+	};
 
 	var loc_out = {
 		
 		setEnvironmentInterface : function(envInterface){		loc_envInterface = envInterface;	},
 		
-		getTaskInitRequest : function(handlers, request){
-			if(loc_taskContext!=undefined){
-				return loc_taskContext.getInitTaskRequest(loc_out, handlers, request);
-			}
-		},
-
 		getTaskExecuteRequest : function(taskRuntimeEnv, handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
     		var valuePortContainer = loc_envInterface[node_CONSTANT.INTERFACE_ENTITY].getInternalValuePortContainer();
@@ -128,7 +124,8 @@ var loc_createDataServiceProvider = function(serviceProvider, configure){
 		
 	};
 
-	loc_out = node_makeObjectWithApplicationInterface(loc_out, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_FACTORY, loc_facadeTaskFactory);
+    loc_init(serviceProvider, configure);
+	loc_out = node_makeObjectWithApplicationInterface(loc_out, node_CONSTANT.INTERFACE_APPLICATIONENTITY_FACADE_TASK, loc_facadeTaskCore);
 	return loc_out;
 };
 

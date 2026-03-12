@@ -17,6 +17,11 @@ var node_createRuntimeEnv = function(parentView){
 	var loc_containerView;
 	
 	var loc_values;
+	var loc_uiStack = [];
+	
+	var loc_getUIStack = function(){   return loc_uiStack;  }
+	
+	var loc_clearUIStack = function(){   loc_uiStack = [];  }
 	
 	var loc_getRoutePathByUiId = function(uiId){	return "/"+uiId+"/";  };
 	
@@ -24,9 +29,15 @@ var node_createRuntimeEnv = function(parentView){
     	return $("<div class='page stacked' data-name="+pageName+"/>");
 	};
 	
+	var loc_navigatePage = function(parms){
+		loc_framework7View.router.navigate(loc_getRoutePathByUiId(parms.page));
+		loc_getUIStack().push(parms.page);
+	};
+	
 	var loc_presentPage = function(parms){
 		loc_framework7View.router.navigate(loc_getRoutePathByUiId(parms.page));
 	};
+	
 	
 	var loc_registerAllPages = function(parms){
 		var pagesCoreEntitys = parms.pageCoreEntitys;
@@ -66,6 +77,7 @@ var node_createRuntimeEnv = function(parentView){
 	    loc_values = {};
     	loc_values["ui.registerAllPages"] = loc_registerAllPages; 
 	    loc_values["ui.presentPage"] = loc_presentPage; 
+	    loc_values["ui.navigatePage"] = loc_navigatePage; 
 	    
 	   	//ui indicator
     	node_framework7Utility.createRequestStatusIndicatorUI(loc_framework7App);
