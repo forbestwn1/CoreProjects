@@ -18,22 +18,23 @@ var packageObj = library;
 var node_uiEventUtility = function(){
 	
     var loc_getHandleEventWithTask = function(eventHandlerRefTask, eventData, currentBrickCore, handlers, request){
-		var taskBrickId = eventHandlerRefTask[node_COMMONATRIBUTECONSTANT.EVENTREFERENCEHANDLER_TASKBRICKID];
-		var relativePath = taskBrickId[node_COMMONATRIBUTECONSTANT.IDBRICKINBUNDLE_RELATIVEPATH];
-		var handlerEntityCoreWrapper = node_complexEntityUtility.getBrickCoreByRelativePath(currentBrickCore, relativePath);
-
+		var taskBrickPackage = eventHandlerRefTask[node_COMMONATRIBUTECONSTANT.EVENTREFERENCEHANDLER_TASKBRICKPACKAGE];
+		
+		var coreEntityPackage = node_complexEntityUtility.getBrickPackageByRelativePath(currentBrickCore, taskBrickPackage);
+		
 		var taskSetup = node_createTaskSetup(
 			node_taskUtility.createTaskFunctionWithSettingValuePortValues(
 				node_COMMONCONSTANT.VALUEPORTGROUP_TYPE_EVENT, 
 				node_COMMONCONSTANT.VALUEPORT_TYPE_EVENT, 
 				eventData)
 		);
-					
-		var out = node_taskExecuteUtility.getExecuteWrapperedTaskWithAdapterRequest(handlerEntityCoreWrapper, undefined, taskSetup, {
+
+		var out = node_taskExecuteUtility.getExecuteInteractiveBrickPackageRequest(coreEntityPackage, taskSetup, {
 			success : function(request, taskResult){
-//					eventResultView.val(JSON.stringify(taskResult));
+				console.log(JSON.stringify(taskResult));
 			}
 		});
+		
 		return out;
 	};
 

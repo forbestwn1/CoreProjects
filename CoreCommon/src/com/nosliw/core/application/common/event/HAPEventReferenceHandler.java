@@ -8,7 +8,7 @@ import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityNamingConversion;
-import com.nosliw.core.application.HAPIdBrickInBundle;
+import com.nosliw.core.application.HAPPackageBrickInBundle;
 
 @HAPEntityWithAttribute
 public abstract class HAPEventReferenceHandler extends HAPSerializableImp{
@@ -21,13 +21,13 @@ public abstract class HAPEventReferenceHandler extends HAPSerializableImp{
 	public static HAPEventReferenceHandler parseHandlerInfo(Object obj) {
 		if(obj instanceof String) {
 			String str = (String)obj;
-			String[] segs = HAPUtilityNamingConversion.parseParts(str);
+			String[] segs = HAPUtilityNamingConversion.parseDetails(str);
 			String handlerType = segs[0];
 			if(HAPConstantShared.EVENT_HANDLERTYPE_TASK.equals(handlerType)) {
 				HAPEventReferenceHandlerTask out = new HAPEventReferenceHandlerTask();
-				HAPIdBrickInBundle taskId = new HAPIdBrickInBundle();
-				taskId.buildObject(segs[1], HAPSerializationFormat.LITERATE);
-				out.setTaskBrickId(taskId);
+				HAPPackageBrickInBundle taskPackage = new HAPPackageBrickInBundle();
+				taskPackage.buildObject(segs[1], HAPSerializationFormat.LITERATE);
+				out.setTaskBrickPackage(taskPackage);
 				return out;
 			}
 			else if(HAPConstantShared.EVENT_HANDLERTYPE_SCRIPT.equals(handlerType)) {

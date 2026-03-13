@@ -5,25 +5,25 @@ import java.util.Map;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.core.application.HAPIdBrickInBundle;
+import com.nosliw.core.application.HAPPackageBrickInBundle;
 
 public class HAPEventReferenceHandlerTask extends HAPEventReferenceHandler{
 
 	@HAPAttribute
-	public static final String TASKBRICKID = "taskBrickId";
+	public static final String TASKBRICKPACKAGE = "taskBrickPackage";
 
-	private HAPIdBrickInBundle m_taskBrickId;
+	private HAPPackageBrickInBundle m_taskBrickPackage;
 	
 	@Override
 	public String getHandlerType() {   return HAPConstantShared.EVENT_HANDLERTYPE_TASK;   }
 
-	public void setTaskBrickId(HAPIdBrickInBundle taskBrickId) {	this.m_taskBrickId = taskBrickId;	}
+	public void setTaskBrickPackage(HAPPackageBrickInBundle taskBrickId) {	this.m_taskBrickPackage = taskBrickId;	}
 	
-	public HAPIdBrickInBundle getTaskBrickId() {    return this.m_taskBrickId;      }
+	public HAPPackageBrickInBundle getTaskBrickPackage() {    return this.m_taskBrickPackage;      }
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		super.buildJsonMap(jsonMap, typeJsonMap);
-		jsonMap.put(TASKBRICKID, this.getTaskBrickId().toStringValue(HAPSerializationFormat.JSON));
+		jsonMap.put(TASKBRICKPACKAGE, this.getTaskBrickPackage().toStringValue(HAPSerializationFormat.JSON));
 	}
 }

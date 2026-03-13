@@ -13,7 +13,7 @@ import com.nosliw.core.application.division.manual.core.HAPManualBrick;
 public class HAPManualUtilityEvent {
 
 	public static void buildValuePortForEventHandlerTask(HAPEventDefinition eventDef, HAPEventReferenceHandlerTask handlerTask, String rootNameIfNotProvide, HAPBundle bundle) {
-		HAPManualBrick childBrick = (HAPManualBrick)HAPUtilityTask.getDescdentBrickLocalTask(bundle, new HAPPath(handlerTask.getTaskBrickId().getIdPath()), rootNameIfNotProvide);
+		HAPManualBrick childBrick = (HAPManualBrick)HAPUtilityTask.getDescdentBrickLocalTask(bundle, new HAPPath(handlerTask.getTaskBrickPackage().getBrickId().getIdPath()), rootNameIfNotProvide);
 		if(childBrick!=null) {
 			HAPEventUtilityValuePort.buildValuePortGroupForEventHandler(Pair.of(childBrick.getOtherInternalValuePortContainer(), childBrick.getOtherExternalValuePortContainer()), eventDef, bundle.getValueStructureDomain());
 		}

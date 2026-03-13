@@ -12,6 +12,7 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
+import com.nosliw.common.utils.HAPUtilityNamingConversion;
 
 @HAPEntityWithAttribute
 public class HAPPackageBrickInBundle extends HAPSerializableImp{
@@ -47,6 +48,26 @@ public class HAPPackageBrickInBundle extends HAPSerializableImp{
     
     public boolean isAdapterExplicit() {    return this.m_isAdapterExplicit;      }
     public void setIsAdapterExplicit(boolean isAdapterExplicit) {    this.m_isAdapterExplicit = isAdapterExplicit;     }
+    
+	@Override
+	protected boolean buildObjectByLiterate(String literateValue){	
+		String[] parts = HAPUtilityNamingConversion.parseParts(literateValue);
+		int len = parts.length;
+		if(len>0) {
+			this.m_brickId = new HAPIdBrickInBundle();
+			this.m_brickId.buildObject(parts[0], HAPSerializationFormat.LITERATE);
+		}
+		if(len>1) {
+			for(String adapter : HAPUtilityNamingConversion.parseElements(parts[1])) {
+				this.m_adapterNames.add(adapter);
+			}
+		}
+		if(len>2) {
+			this.m_isAdapterExplicit = Boolean.valueOf(parts[2]);
+		}
+		
+		return true;  
+	}
     
 	@Override
 	protected boolean buildObjectByJson(Object json){

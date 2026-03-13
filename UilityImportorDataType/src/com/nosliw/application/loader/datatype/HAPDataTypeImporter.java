@@ -11,6 +11,7 @@ import com.nosliw.common.clss.HAPClassFilter;
 import com.nosliw.common.strvalue.HAPStringableValueEntity;
 import com.nosliw.common.strvalue.io.HAPStringableEntityImporterXML;
 import com.nosliw.common.strvalue.valueinfo.HAPValueInfoManager;
+import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.core.data.HAPDataTypeId;
 import com.nosliw.core.data.HAPDataTypePicture;
@@ -21,7 +22,6 @@ import com.nosliw.core.data.HAPRelationship;
 import com.nosliw.core.data.HAPRelationshipPathSegment;
 import com.nosliw.core.data.HAPUtilityData;
 import com.nosliw.core.data.criteria.HAPDataTypeCriteriaId;
-import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.data.core.imp.HAPDataAccessDataType;
 import com.nosliw.data.core.imp.HAPDataTypeImp;
 import com.nosliw.data.core.imp.HAPDataTypeImpLoad;
@@ -32,6 +32,7 @@ import com.nosliw.data.core.imp.HAPOperationImp;
 import com.nosliw.data.core.imp.HAPOperationVarInfoImp;
 import com.nosliw.data.core.imp.HAPRelationshipImp;
 
+
 public class HAPDataTypeImporter {
 	
 	private HAPDataAccessDataType m_dataAccess; 
@@ -39,7 +40,7 @@ public class HAPDataTypeImporter {
 	public HAPDataTypeImporter(HAPDataAccessDataType dataAccess){
 		this.m_dataAccess = dataAccess;
 	}
-	
+
 	public void loadAllDataType(){
 		this.m_dataAccess.createDBTable(HAPDataTypeImpLoad._VALUEINFO_NAME);
 		this.m_dataAccess.createDBTable(HAPOperationImp._VALUEINFO_NAME);
@@ -69,7 +70,7 @@ public class HAPDataTypeImporter {
 		
 		List<HAPDataTypeImp> dataTypes = this.m_dataAccess.getAllDataTypes();
 		for(HAPDataTypeImp dataType : dataTypes){
-			HAPDataTypePictureImp dataTypePic = this.buildDataTypePicture((HAPDataTypeId)dataType.getName());
+			HAPDataTypePictureImp dataTypePic = this.buildDataTypePicture(dataType.getName());
 			this.m_dataAccess.saveDataTypePicture(dataTypePic);
 		}
 	}
@@ -89,7 +90,7 @@ public class HAPDataTypeImporter {
 		List<HAPDataTypeOperationImp> currentDataTypeOperations = this.m_dataAccess.getNormalDataTypeOperations(dataType.getName());
 		if(currentDataTypeOperations.size()==0){
 			//not build yet
-			HAPDataTypePictureImp pic = this.m_dataAccess.getDataTypePicture((HAPDataTypeId)dataType.getName());
+			HAPDataTypePictureImp pic = this.m_dataAccess.getDataTypePicture(dataType.getName());
 			
 			//operations from parent
 			List<HAPDataTypeId> parentsId = dataType.getParentsInfo();
@@ -99,7 +100,7 @@ public class HAPDataTypeImporter {
 					Map<String, HAPDataTypeOperationImp> parentDataTypeOperations = buildDataTypeOperations(parentRelationship.getTargetDataType());
 					for(String opeartionName : parentDataTypeOperations.keySet()){
 						HAPDataTypeOperationImp dataTypeOp = parentDataTypeOperations.get(opeartionName);
-						HAPDataTypeOperationImp dataTypeOperation = dataTypeOp.extendPathSegment(new HAPRelationshipPathSegment(parentId), (HAPDataTypeId)pic.getSourceDataType().getName());
+						HAPDataTypeOperationImp dataTypeOperation = dataTypeOp.extendPathSegment(new HAPRelationshipPathSegment(parentId), pic.getSourceDataType().getName());
 						out.put(dataTypeOperation.getName(), dataTypeOperation);
 					}
 				}
@@ -110,7 +111,7 @@ public class HAPDataTypeImporter {
 				Map<String, HAPDataTypeOperationImp> ataTypeOperations = buildDataTypeOperations(relationship.getTargetDataType());
 				for(String opeartionName : ataTypeOperations.keySet()){
 					HAPDataTypeOperationImp dataTypeOp = ataTypeOperations.get(opeartionName);
-					HAPDataTypeOperationImp dataTypeOperation = dataTypeOp.extendPathSegment(new HAPRelationshipPathSegment(dataType.getLinkedVersion()), (HAPDataTypeId)pic.getSourceDataType().getName());
+					HAPDataTypeOperationImp dataTypeOperation = dataTypeOp.extendPathSegment(new HAPRelationshipPathSegment(dataType.getLinkedVersion()), pic.getSourceDataType().getName());
 					out.put(dataTypeOperation.getName(), dataTypeOperation);
 				}
 			}
@@ -118,7 +119,7 @@ public class HAPDataTypeImporter {
 			//store all datat type operation (normal + new + others)
 			List<HAPDataTypeOperationImp> toSave = new ArrayList<HAPDataTypeOperationImp>();
 			//operations from own
-			List<HAPOperationImp> ownOperations = this.m_dataAccess.getOperationInfosByDataType((HAPDataTypeId)dataType.getName());
+			List<HAPOperationImp> ownOperations = this.m_dataAccess.getOperationInfosByDataType(dataType.getName());
 			for(HAPOperationImp ownOperation : ownOperations){
 				HAPDataTypeOperationImp ownDataTypeOperation = new HAPDataTypeOperationImp(ownOperation);
 				if(HAPUtilityData.isNormalDataOpration(ownOperation)){
@@ -198,7 +199,7 @@ public class HAPDataTypeImporter {
 	private void buildDataTypePictureFromLinkedDataType(HAPDataTypeImp dataType, HAPDataTypePictureImp out){
 		HAPDataTypeId linkedDataTypeId = dataType.getLinkedDataTypeId();
 		if(linkedDataTypeId!=null){
-			HAPDataTypeImp connectDataType = (HAPDataTypeImp)this.getDataType(linkedDataTypeId);
+			HAPDataTypeImp connectDataType = this.getDataType(linkedDataTypeId);
 			HAPDataTypePicture connectDataTypePic = this.getDataTypePicture(linkedDataTypeId);
 			if(connectDataTypePic==null){
 				connectDataTypePic = this.buildDataTypePicture(linkedDataTypeId);
@@ -207,8 +208,11 @@ public class HAPDataTypeImporter {
 			boolean isRoot = connectRelationships.size()==1;
 			for(HAPRelationship connectRelationship : connectRelationships){
 				HAPRelationshipImp relationship = ((HAPRelationshipImp)connectRelationship).extendPathSegmentSource(new HAPRelationshipPathSegment(linkedDataTypeId.getVersion()), dataType);
-				if(isRoot)   relationship.setTargetType(HAPConstantShared.DATATYPE_RELATIONSHIPTYPE_ROOT);
-				else relationship.setTargetType(HAPConstantShared.DATATYPE_RELATIONSHIPTYPE_INTERMEDIA);
+				if(isRoot) {
+					relationship.setTargetType(HAPConstantShared.DATATYPE_RELATIONSHIPTYPE_ROOT);
+				} else {
+					relationship.setTargetType(HAPConstantShared.DATATYPE_RELATIONSHIPTYPE_INTERMEDIA);
+				}
 				out.addRelationship(relationship);
 			}
 		}
@@ -218,7 +222,7 @@ public class HAPDataTypeImporter {
 		List<HAPDataTypeId> parentsDataTypeId = dataType.getParentsInfo();
 		if(parentsDataTypeId!=null){
 			for(HAPDataTypeId parentDataTypeId : parentsDataTypeId){
-				HAPDataTypeImp connectDataType = (HAPDataTypeImp)this.getDataType(parentDataTypeId);
+				HAPDataTypeImp connectDataType = this.getDataType(parentDataTypeId);
 				HAPDataTypePicture connectDataTypePic = this.getDataTypePicture(parentDataTypeId);
 				if(connectDataTypePic==null){
 					connectDataTypePic = this.buildDataTypePicture(parentDataTypeId);
@@ -227,8 +231,11 @@ public class HAPDataTypeImporter {
 				boolean isRoot = connectRelationships.size()==1;
 				for(HAPRelationship connectRelationship : connectRelationships){
 					HAPRelationshipImp relationship = ((HAPRelationshipImp)connectRelationship).extendPathSegmentSource(new HAPRelationshipPathSegment(parentDataTypeId), dataType);
-					if(isRoot)   relationship.setTargetType(HAPConstantShared.DATATYPE_RELATIONSHIPTYPE_ROOT);
-					else relationship.setTargetType(HAPConstantShared.DATATYPE_RELATIONSHIPTYPE_INTERMEDIA);
+					if(isRoot) {
+						relationship.setTargetType(HAPConstantShared.DATATYPE_RELATIONSHIPTYPE_ROOT);
+					} else {
+						relationship.setTargetType(HAPConstantShared.DATATYPE_RELATIONSHIPTYPE_INTERMEDIA);
+					}
 					out.addRelationship(relationship);
 				}
 			}

@@ -699,7 +699,7 @@
 		{
 			"info": {
 				"name" : "debug_variableman-test_complex_script",
-				"status": "disabled1",
+				"status": "disabled",
 				"description" : ""
 			},
 			"brick":{

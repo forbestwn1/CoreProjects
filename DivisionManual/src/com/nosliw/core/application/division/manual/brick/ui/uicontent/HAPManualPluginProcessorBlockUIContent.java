@@ -80,7 +80,7 @@ public class HAPManualPluginProcessorBlockUIContent extends HAPManualPluginProce
 			String handlerType = handler.getHandlerType();
 			if(handlerType.equals(HAPConstantShared.EVENT_HANDLERTYPE_TASK)) {
 				HAPEventReferenceHandlerTask handlerTask = (HAPEventReferenceHandlerTask)handler;
-				HAPManualUtilityProcessBrickPath.normalizeBrickReferenceInBundle(handlerTask.getTaskBrickId(), pathFromRoot, false, processContext);
+				HAPManualUtilityProcessBrickPath.normalizeBrickReferenceInBundle(handlerTask.getTaskBrickPackage().getBrickId(), pathFromRoot, false, processContext);
 			}
 		}
 	}

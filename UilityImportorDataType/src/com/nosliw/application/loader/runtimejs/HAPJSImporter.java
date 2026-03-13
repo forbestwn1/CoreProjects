@@ -25,6 +25,10 @@ import com.nosliw.core.data.HAPDataTypeConverter;
 import com.nosliw.core.data.HAPDataTypeId;
 import com.nosliw.core.data.HAPDataTypeVersion;
 import com.nosliw.core.data.HAPOperationId;
+import com.nosliw.core.data.HAPResourceIdDataType;
+import com.nosliw.core.data.HAPResourceIdJSHelper;
+import com.nosliw.core.data.HAPResourceIdOperation;
+import com.nosliw.core.gateway.HAPResourceIdJSGateway;
 import com.nosliw.core.resource.HAPResourceDependency;
 import com.nosliw.core.resource.HAPResourceHelper;
 import com.nosliw.core.resource.HAPResourceIdSimple;
@@ -36,11 +40,6 @@ import com.nosliw.data.core.imp.runtime.js.HAPModuleRuntimeJS;
 import com.nosliw.data.core.imp.runtime.js.resource.HAPResourceDataHelperImp;
 import com.nosliw.data.core.imp.runtime.js.resource.HAPResourceDataJSConverterImp;
 import com.nosliw.data.core.imp.runtime.js.resource.HAPResourceDataJSOperationImp;
-import com.nosliw.data.core.runtime.HAPResourceIdOperation;
-import com.nosliw.data.core.runtime.js.resource.HAPResourceIdDataType;
-import com.nosliw.data.core.runtime.js.resource.HAPResourceIdJSGateway;
-import com.nosliw.data.core.runtime.js.resource.HAPResourceIdJSHelper;
-import com.nosliw.data.core.runtime.js.resource.HAPResourceIdJSLibrary;
 
 public class HAPJSImporter {
 
