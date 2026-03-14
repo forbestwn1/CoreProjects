@@ -1,10 +1,14 @@
 package com.nosliw.core.application.valueport;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.commons.lang3.tuple.Pair;
 
 import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.path.HAPUtilityPath;
 import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.core.application.HAPBundle;
 import com.nosliw.core.application.HAPDomainValueStructure;
 import com.nosliw.core.application.HAPIdBrickInBundle;
@@ -17,6 +21,28 @@ import com.nosliw.core.runtime.HAPRuntimeInfo;
 
 public class HAPUtilityValuePort {
 
+	public static List<HAPIdValuePort> queryValuePorts(HAPContainerValuePorts valuePortContainer, String idDirection){
+		List<HAPIdValuePort> out = new ArrayList<HAPIdValuePort>();
+		for(HAPGroupValuePorts group : valuePortContainer.getValuePortGroups()) {
+			for(HAPValuePort valuePort : group.getValuePorts()) {
+				if(isIODirectionCompatible(valuePort.getIODirection(), idDirection)) {
+					out.add(new HAPIdValuePort(group.getId(), valuePort.getName()));
+				}
+			}
+		}
+		return out;
+	}
+	
+	public static boolean isIODirectionCompatible(String ioDir, String expectIODir) {
+		if(expectIODir==null) {
+			return true;
+		}
+		if(HAPConstantShared.IO_DIRECTION_BOTH.equals(ioDir)) {
+			return true;
+		}
+		return HAPUtilityBasic.isEquals(ioDir, expectIODir);
+	}
+	
 	public static Pair<HAPValuePort, HAPValuePort> getOrCreateValuePort(Pair<HAPContainerValuePorts, HAPContainerValuePorts> valuePortContainers, String valuePortGroupType, String valuePortType, String valuePortName, Pair<String, String> io){
 		
 		return Pair.of(
@@ -121,7 +147,7 @@ public class HAPUtilityValuePort {
 		}
 
 		//normalize value port id
-		HAPIdValuePortInBrick valuePortIdInBrick = out.getValuePortId();
+		HAPIdValuePort valuePortIdInBrick = out.getValuePortId();
 		Pair<HAPContainerValuePorts, HAPContainerValuePorts> valuePortContainerPair = HAPUtilityBrickValuePort.getDescdentValuePortContainerInfo(currentBundle, brickRootNameIfNotProvided, new HAPPath(brickId.getIdPath()), resourceMan, runtimeInfo).getValuePortContainerPair();
 		HAPContainerValuePorts valuePortContainer;
 		if(HAPConstantShared.VALUEPORTGROUP_SIDE_INTERNAL.equals(out.getValuePortSide())) {

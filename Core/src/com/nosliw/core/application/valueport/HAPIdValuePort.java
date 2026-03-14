@@ -11,7 +11,7 @@ import com.nosliw.common.utils.HAPUtilityNamingConversion;
 
 //value port id within entity
 @HAPEntityWithAttribute
-public class HAPIdValuePortInBrick extends HAPSerializableImp{
+public class HAPIdValuePort extends HAPSerializableImp{
 
 	@HAPAttribute
 	public static final String GROUP = "group";
@@ -23,15 +23,15 @@ public class HAPIdValuePortInBrick extends HAPSerializableImp{
 
 	private String m_name;
 
-	public HAPIdValuePortInBrick() {
+	public HAPIdValuePort() {
 	}
 	
-	public HAPIdValuePortInBrick(String group, String name) {
+	public HAPIdValuePort(String group, String name) {
 		this.m_group = group;
 		this.m_name = name;
 	}
 	
-	public HAPIdValuePortInBrick(String strValue) {
+	public HAPIdValuePort(String strValue) {
 		this.parseKey(strValue);
 	}
 	
@@ -53,8 +53,8 @@ public class HAPIdValuePortInBrick extends HAPSerializableImp{
 	}
 	
 	@Override
-	public HAPIdValuePortInBrick cloneValue() {
-		return new HAPIdValuePortInBrick(this.m_group, this.m_name);
+	public HAPIdValuePort cloneValue() {
+		return new HAPIdValuePort(this.m_group, this.m_name);
 	}
 
 	@Override

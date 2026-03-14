@@ -69,7 +69,7 @@ public class HAPContainerValuePorts extends HAPSerializableImp{
 	}
 
 	
-	public HAPValuePort getValuePort(HAPIdValuePortInBrick valuePortId) {
+	public HAPValuePort getValuePort(HAPIdValuePort valuePortId) {
 		String groupName = null;
 		if(valuePortId==null||valuePortId.getValuePortGroup()==null) {
 			groupName = this.getDefaultGroupName();
@@ -86,10 +86,10 @@ public class HAPContainerValuePorts extends HAPSerializableImp{
 		return group.getValuePort(valuePortName);
 	}
 
-	public HAPIdValuePortInBrick normalizeValuePortId(HAPIdValuePortInBrick valuePortId, String ioDirection) {
-		HAPIdValuePortInBrick out = valuePortId;
+	public HAPIdValuePort normalizeValuePortId(HAPIdValuePort valuePortId, String ioDirection) {
+		HAPIdValuePort out = valuePortId;
 		if(out==null) {
-			out = new HAPIdValuePortInBrick();
+			out = new HAPIdValuePort();
 		}
 		String valuePortGroupId = out.getValuePortGroup();
 		if(valuePortGroupId==null) {

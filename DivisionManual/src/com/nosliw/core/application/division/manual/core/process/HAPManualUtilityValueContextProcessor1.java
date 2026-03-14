@@ -255,7 +255,7 @@ public class HAPManualUtilityValueContextProcessor1 {
 							HAPIdValuePortInBundle valuePortRef = rootRef.getValuePortId();
 							if(valuePortRef==null) {
 								String valuePortName = rootRef.getValuePortName();
-								HAPIdValuePortInBrick valuePortId = null;
+								HAPIdValuePort valuePortId = null;
 								if(valuePortName==null) {
 									valuePortId = HAPUtilityBrickValuePort.getDefaultValuePortIdInEntity(parentComplexEntity);
 								}

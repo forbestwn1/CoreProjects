@@ -20,7 +20,7 @@ import com.nosliw.core.application.division.manual.core.definition.HAPManualDefi
 import com.nosliw.core.application.division.manual.core.process.HAPManualContextProcessBrick;
 import com.nosliw.core.application.division.manual.core.process.HAPManualPluginProcessorBlockImp;
 import com.nosliw.core.application.valueport.HAPIdElement;
-import com.nosliw.core.application.valueport.HAPIdValuePortInBrick;
+import com.nosliw.core.application.valueport.HAPIdValuePort;
 import com.nosliw.core.application.valueport.HAPIdValuePortInBundle;
 import com.nosliw.core.application.valueport.HAPReferenceElement;
 import com.nosliw.core.application.valueport.HAPUtilityResovleElement;
@@ -81,7 +81,7 @@ public class HAPManualPluginProcessorBlockComplexTestComplexTask extends HAPManu
 					String varName = output.getName();
 					HAPReferenceElement varDef = new HAPReferenceElement(varName);
 					varDef.setIODirection(HAPConstantShared.IO_DIRECTION_IN);
-					varDef.setValuePortId(new HAPIdValuePortInBundle(null, HAPConstantShared.VALUEPORTGROUP_SIDE_INTERNAL, new HAPIdValuePortInBrick(HAPConstantShared.VALUEPORTGROUP_TYPE_INTERACTIVETASK, null)));
+					varDef.setValuePortId(new HAPIdValuePortInBundle(null, HAPConstantShared.VALUEPORTGROUP_SIDE_INTERNAL, new HAPIdValuePort(HAPConstantShared.VALUEPORTGROUP_TYPE_INTERACTIVETASK, null)));
 					varRefs.put(varName, varDef);
 				}
 			}
@@ -95,7 +95,7 @@ public class HAPManualPluginProcessorBlockComplexTestComplexTask extends HAPManu
 			String varName = HAPConstantShared.NAME_ROOT_RESULT;
 			HAPReferenceElement varDef = new HAPReferenceElement(varName);
 			varDef.setIODirection(HAPConstantShared.IO_DIRECTION_IN);
-			varDef.setValuePortId(new HAPIdValuePortInBundle(null, HAPConstantShared.VALUEPORTGROUP_SIDE_INTERNAL, new HAPIdValuePortInBrick(HAPConstantShared.VALUEPORTGROUP_TYPE_INTERACTIVEEXPRESSION, null)));
+			varDef.setValuePortId(new HAPIdValuePortInBundle(null, HAPConstantShared.VALUEPORTGROUP_SIDE_INTERNAL, new HAPIdValuePort(HAPConstantShared.VALUEPORTGROUP_TYPE_INTERACTIVEEXPRESSION, null)));
 			varRefs.put(varName, varDef);
 		}
 		
@@ -112,7 +112,7 @@ public class HAPManualPluginProcessorBlockComplexTestComplexTask extends HAPManu
 			String varName = requestParm.getName();
 			HAPReferenceElement varDef = new HAPReferenceElement(varName);
 			varDef.setIODirection(HAPConstantShared.IO_DIRECTION_OUT);
-			varDef.setValuePortId(new HAPIdValuePortInBundle(null, HAPConstantShared.VALUEPORTGROUP_SIDE_INTERNAL, new HAPIdValuePortInBrick(valuePortGroup, null)));
+			varDef.setValuePortId(new HAPIdValuePortInBundle(null, HAPConstantShared.VALUEPORTGROUP_SIDE_INTERNAL, new HAPIdValuePort(valuePortGroup, null)));
 			varRefs.put(varName, varDef);
 		}
 	}

@@ -182,7 +182,7 @@
 			},
 			"brick":{
 				"scriptResourceId": "task_debug_eventhandler",
-				"variable1": ["eventData"]
+				"variable": ["eventData"]
 			},
 			"adapter": [
 			]

@@ -17,7 +17,7 @@ import com.nosliw.core.application.division.manual.common.valuecontext.HAPManual
 import com.nosliw.core.application.division.manual.common.valuecontext.HAPManualWrapperStructure;
 import com.nosliw.core.application.valueport.HAPIdElement;
 import com.nosliw.core.application.valueport.HAPIdRootElement;
-import com.nosliw.core.application.valueport.HAPIdValuePortInBrick;
+import com.nosliw.core.application.valueport.HAPIdValuePort;
 import com.nosliw.core.xxx.application.common.structure.HAPRootStructure;
 import com.nosliw.core.xxx.application.common.structure.HAPUtilityStructure;
 import com.nosliw.core.xxx.application.valueport.HAPValueStructureInValuePort11111;
@@ -29,8 +29,8 @@ public class HAPManualUtilityValueContext {
 
 
 	
-	public static HAPIdValuePortInBrick createValuePortIdValueContext(HAPExecutableEntity complexEntity) {
-		return new HAPIdValuePortInBrick(complexEntity.getPathFromRoot().toString(), HAPConstantShared.VALUEPORT_TYPE_VALUECONTEXT, HAPConstantShared.NAME_DEFAULT);
+	public static HAPIdValuePort createValuePortIdValueContext(HAPExecutableEntity complexEntity) {
+		return new HAPIdValuePort(complexEntity.getPathFromRoot().toString(), HAPConstantShared.VALUEPORT_TYPE_VALUECONTEXT, HAPConstantShared.NAME_DEFAULT);
 	}
 	
 	public static String getExtensionValueStructure(HAPValueContext valueContext, String groupType) {

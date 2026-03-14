@@ -56,7 +56,7 @@ public class HAPResultReferenceResolve extends HAPSerializableImp{
 	public String valuePortSide;
 	
 	//value port id
-	public HAPIdValuePortInBrick valuePortId;
+	public HAPIdValuePort valuePortId;
 	
 	//resolved structure runtime id
 	public String structureId;
