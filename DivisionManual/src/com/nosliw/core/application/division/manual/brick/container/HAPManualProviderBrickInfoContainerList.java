@@ -10,7 +10,6 @@ import com.nosliw.core.application.division.manual.core.HAPManualProviderBrickIn
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionPluginParserBrick;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionPluginParserBrickImp;
 import com.nosliw.core.application.division.manual.core.process.HAPManualInfoBrickType;
-import com.nosliw.core.application.division.manual.core.process.HAPManualPluginProcessorBlockImpEmpty;
 import com.nosliw.core.application.division.manual.core.process.HAPManualPluginProcessorBrick;
 
 @Component
@@ -32,6 +31,9 @@ public class HAPManualProviderBrickInfoContainerList extends HAPManualProviderBr
 	}
 
 	@Override
-	protected HAPManualPluginProcessorBrick newBrickProcessor() {   return new HAPManualPluginProcessorBlockImpEmpty(HAPEnumBrickType.CONTAINERLIST_100, HAPManualBrickContainerList.class);  }
+	protected HAPManualPluginProcessorBrick newBrickProcessor() {
+		return new HAPManualPluginProcessorBlockContainerList();
+//		return new HAPManualPluginProcessorBlockImpEmpty(HAPEnumBrickType.CONTAINERLIST_100, HAPManualBrickContainerList.class);  
+	}
 
 }
