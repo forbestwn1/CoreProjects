@@ -41,7 +41,7 @@
 	
 	"event" : [
 		{
-		    "name" : "eventNormal",
+		    "name" : "event_normal",
 			"dataDefinition" : {
 			    "eventData" : {
 				    "definition":{

@@ -169,7 +169,7 @@ var node_createUICustomerTagTest = function(envObj){
 	    			"value": "event data string"
 				}
 			};
-			loc_envObj.trigueEvent("event1", eventData);
+			loc_envObj.trigueEvent("event_normal", eventData);
 		});
 		triggueEventWrapperView.append(triggueEventButtonView);
 		loc_containerrView.append(triggueEventWrapperView);
