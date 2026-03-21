@@ -44,8 +44,8 @@ var node_complexEntityUtility = function(){
 		}
 	};
 
-    var loc_getChildCoreEntity = function(entityCore, childName){
-		var childCoreEntityInfo = loc_getChildCoreEntityInfo(entityCore, childName);
+    var loc_getChildCoreEntity = function(entityCore, childName, isRoot){
+		var childCoreEntityInfo = loc_getChildCoreEntityInfo(entityCore, childName, isRoot);
 		if(childCoreEntityInfo.remainPath!=undefined){
 			throw new Error("Invalid path!");
 		}
@@ -54,12 +54,16 @@ var node_complexEntityUtility = function(){
 		}
 	};
 
-    var loc_getChildCoreEntityInfo = function(entityCore, childName){
+    var loc_getChildCoreEntityInfo = function(entityCore, childName, isRoot){
 		var out = {
 			error : false			
 		};
 
-		if(node_getObjectType(entityCore)==node_CONSTANT.TYPEDOBJECT_TYPE_BUNDLE || node_getObjectType(entityCore)==node_CONSTANT.TYPEDOBJECT_TYPE_DYNAMIC){
+        if(isRoot==undefined)    isRoot = false;
+ 
+        var entityCoreType = node_getObjectType(entityCore);
+        
+		if(isRoot==false && (entityCoreType==node_CONSTANT.TYPEDOBJECT_TYPE_BUNDLE || entityCoreType==node_CONSTANT.TYPEDOBJECT_TYPE_DYNAMIC)){
 			//for bundle or dynamic node, error
 			out.error = true;
 			throw new Error("Invalid path!");
@@ -95,7 +99,7 @@ var node_complexEntityUtility = function(){
 					     remainPath.push(childName);
 					}
 					else{
-						var childInfo = loc_getChildCoreEntityInfo(hostEntityCore, childName);
+						var childInfo = loc_getChildCoreEntityInfo(hostEntityCore, childName, i==0);
 						if(childInfo.remainPath!=undefined){
     					     //for attribute need interpret
 	    				     remainPath = [];
@@ -114,6 +118,7 @@ var node_complexEntityUtility = function(){
 	var loc_getCoreEntityReferenceByRelativePath = function(baseEntityCore, relativePath){
 			var hostEntityCore = baseEntityCore;
 			var remainPath;
+			var isRoot = 0;
 			if(relativePath!=undefined && relativePath!=""){
 				var segs = node_pathUtility.parsePathSegments(relativePath); 
 				_.each(segs, function(seg, i){
@@ -136,8 +141,7 @@ var node_complexEntityUtility = function(){
 						     remainPath.push(childName);
 						}
 						else{
-							
-							var childInfo = loc_getChildCoreEntityInfo(hostEntityCore, childName);
+							var childInfo = loc_getChildCoreEntityInfo(hostEntityCore, childName, isRoot==0);
 							if(childInfo.remainPath!=undefined){
 	    					     //for attribute need interpret
 		    				     remainPath = [];
@@ -147,6 +151,7 @@ var node_complexEntityUtility = function(){
 	        					hostEntityCore = childInfo.coreEntity;
 							}
 						}
+						isRoot++;
 					}
 				});		
 			}
@@ -223,7 +228,7 @@ var node_complexEntityUtility = function(){
 			
 			var pathSegs = node_pathUtility.parsePathSegments(path);;
 			_.each(pathSegs, function(pathSeg, i){
-				out = loc_getChildCoreEntity(out, pathSet);
+				out = loc_getChildCoreEntity(out, pathSeg, i==0);
 			});
 			return out;
 		},

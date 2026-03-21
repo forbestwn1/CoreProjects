@@ -18,7 +18,9 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 
 	var loc_envInterface = {};
 	
+	var loc_complexEntityDef;
 	var loc_taskCore;
+	var loc_pageName;
 	
 	var loc_facadeTaskCore = {
 		//return a task
@@ -28,7 +30,9 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 	};
 
 	var loc_init = function(complexEntityDef, valueContextId, bundleCore, configure){
+		loc_complexEntityDef = complexEntityDef;
 		loc_taskCore = node_createTaskCore(loc_out, loc_out);
+        loc_pageName = node_complexEntityUtility.getParmValue(loc_complexEntityDef, "page"); 
 	};
 
 	var loc_out = {

@@ -34,7 +34,7 @@
 
 	        {
 	    		"name" : "navigation",
-		    	"status": "disabled",
+		    	"status": "disabled1",
 			    "description" : "",
         		"brickType" : {
 		    	    "brickType" : "taskTaskScript",

@@ -2,7 +2,7 @@
 if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.getResourceService()!=undefined) nosliw.runtime.getResourceService().importResource({"id":{"resourceTypeId":{"resourceType":"script",
 "version":"1.0.0"
 },
-"id":"*task_datavalidation_enum"
+"id":"*task_page_navigate"
 },
 "children":[],
 "dependency":{},
@@ -24,15 +24,12 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 	var node_makeObjectWithApplicationInterface = nosliw.getNodeData("component.makeObjectWithApplicationInterface");
 	var node_interactiveUtility = nosliw.getNodeData("task.interactiveUtility");
 	var node_createTaskCore = nosliw.getNodeData("task.createTaskCore");
-	var node_dataUtility = nosliw.getNodeData("common.utility.dataUtility");
-	var node_TaskResult = nosliw.getNodeData("task.TaskResult");
-	var node_ruleUtility = nosliw.getNodeData("rule.ruleUtility");
 
-    var loc_complexEntityDef;
-    
 	var loc_envInterface = {};
 	
+	var loc_complexEntityDef;
 	var loc_taskCore;
+	var loc_pageName;
 	
 	var loc_facadeTaskCore = {
 		//return a task
@@ -44,6 +41,7 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 	var loc_init = function(complexEntityDef, valueContextId, bundleCore, configure){
 		loc_complexEntityDef = complexEntityDef;
 		loc_taskCore = node_createTaskCore(loc_out, loc_out);
+        loc_pageName = node_complexEntityUtility.getParmValue(loc_complexEntityDef, "page"); 
 	};
 
 	var loc_out = {
@@ -60,30 +58,16 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 			var valuePortContainer = node_getEntityObjectInterface(loc_out).getInternalValuePortContainer();
 			var withValuePort = loc_envInterface[node_CONSTANT.INTERFACE_WITHVALUEPORT];
-
-			var dataVariable = valuePortContainer.getVariableByName(node_COMMONCONSTANT.VALUEPORTGROUP_TYPE_INTERACTIVETASK, node_COMMONCONSTANT.VALUEPORT_NAME_INTERACT_REQUEST, node_COMMONCONSTANT.NAME_ROOT_DATA);
-			out.addRequest(dataVariable.getGetValueRequest({
-				success : function(request, dataValue){
-					var value = dataValue==undefined? undefined : dataValue.value;
-					
-            		var dataRuleDef = node_complexEntityUtility.getParmValue(loc_complexEntityDef, node_COMMONCONSTANT.PARM_RULETASK_RULEDEF); 
-					var enumDataSet = dataRuleDef[node_COMMONATRIBUTECONSTANT.DATARULEENUM_DATASET];
-					
-					if(enumDataSet==undefined){
-						//for enum code, try get enum data set
-					}
-
-					for(var i in enumDataSet){
-						if(node_dataUtility.isDataEqual(enumDataSet[i], value)==true){
-    						return node_ruleUtility.createRuleValidationSuccessResult(); 
-						}
-					}
-
-    				return node_ruleUtility.createRuleValidationFailResult({
-						"dataTypeId": "test.string;1.0.0",
-						"value": "value is not valid"
-					}); 
-				}
+			
+			out.addRequest(loc_taskCore.getRuntimeEnvValue("ui.navigatePage", {
+				"page" :  loc_pageName
+			}));
+			
+			out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
+				return {
+				    "resultName": "success",
+				    "resultValue": "navigate successfully"
+				};
 			}));
 
 			return out;

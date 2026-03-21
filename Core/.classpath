@@ -31,7 +31,6 @@
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/CoreCommon"/>
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/UtilityParserCriteria"/>
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/Common"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/CoreBrick"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/CoreOtherEntity"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

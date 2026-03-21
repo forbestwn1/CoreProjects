@@ -161,7 +161,7 @@ var node_createUICustomerTagTest = function(envObj){
 
         //triggue event 
 		var triggueEventWrapperView = $('<div/>');
-	    var triggueEventButtonView = $('<button type="button">'+"TriggueEvent"+'</button>');	
+	    var triggueEventButtonView = $('<button type="button">'+"Triggue Event In Customer Tag"+'</button>');	
 		triggueEventButtonView.bind('click', function(){
 			var eventData = {
 				"eventData": {

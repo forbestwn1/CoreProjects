@@ -3,12 +3,108 @@
 <body>
 Page1!!!!!
 
-        <!--button nosliw-event_click="task:task.navigation.brick">Button to Triggue event</button-->
+        <button nosliw-event_click="task|task.navigation.brick">Button to navigate to next page</button>
+
+ 		<nosliw-debug_test data_float="page_public_float"/>
+
+ 		<nosliw-debug_test data_string="page_public_string"/>
 
 </body>
 
 	<valuecontext>
 		[
+			{
+				"scope" : "public",
+				"valueStructure" : {
+					"root" : {
+						"page_public_string": {
+							"definition":{
+								"data": {
+								    "criteria" : "test.string;1.0.0",
+								    "rule" : [
+								        {
+                            				"name" : "mandatory",
+				                            "status": "disabled",
+								            "ruleType" : "mandatory"
+								        },
+								        {
+                            				"name" : "enum",
+				                            "status": "disabled1",
+								            "ruleType" : "enum",
+								            "dataSet" : [
+                								{
+				                					dataTypeId: "test.string;1.0.0",
+								                	value: "default value of page_public_string1"
+								                },
+                								{
+				                					dataTypeId: "test.string;1.0.0",
+								                	value: "default value of page_public_string2"
+								                },
+                								{
+				                					dataTypeId: "test.string;1.0.0",
+								                	value: "default value of page_public_string3"
+								                }
+								            ]
+								        }
+								    ]
+								} 
+							}
+						},
+						"page_public_float": {
+							"definition":{
+								"data": {
+								    "criteria" : "test.float;1.0.0",
+								    "rule" : [
+								        {
+                            				"name" : "expression",
+				                            "status": "disabled1",
+								            "ruleType" : "expression",
+								            "expression" : "?(data)?.largerThan(data:&(#test##float___5000)&).opposite()"
+								        }
+								    ]
+								} 
+							}
+						},
+						"page_public_url": {
+							"definition":{
+								"data": "test.url;1.0.0"
+							}
+						},
+						"page_public_array": {
+							"definition":{
+								"data": "test.array;1.0.0%||element:test.string;1.0.0||%"
+							}
+						}
+					},
+					"initValue": {
+						"page_public_string": {
+							"dataTypeId": "test.string;1.0.0",
+							"value": "default value of page_public_string1"
+						},
+						"page_public_float": {
+							"dataTypeId": "test.float;1.0.0",
+							"value": "100"
+						},
+						"page_public_url": {
+							"dataTypeId": "test.url;1.0.0",
+							"value": "default value of page_public_url"
+						},
+						"page_public_array": {
+							"dataTypeId": "test.array;1.0.0",
+							"value": [
+								{
+									dataTypeId: "test.string;1.0.0",
+									value: "This is my world 1111!"
+								},
+								{
+									dataTypeId: "test.string;1.0.0",
+									value: "This is my world 2222!"
+								}
+							]
+						}
+					}
+				}
+			}
 		]
 	</valuecontext>
 

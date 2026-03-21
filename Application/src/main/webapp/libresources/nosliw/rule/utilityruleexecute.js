@@ -289,7 +289,7 @@ var node_ruleExecuteUtility = function(){
 					var allRuleInfo = [];
 					return loc_getCollectRuleInfoRequest(baseOpInfo.rootVariable, baseOpInfo.operationService, allRuleInfo, {
 						success : function(request){
-							console.log(JSON.stringify(allRuleInfo));
+//							console.log(JSON.stringify(allRuleInfo));
 							
 							return loc_executeRuleValidationsRequest(allRuleInfo, bundleCore, {
 								success : function(request, ruleValidationResults){
