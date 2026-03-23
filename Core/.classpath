@@ -33,6 +33,6 @@
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/Common"/>
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/CoreCommon"/>
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/CoreData"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/CoreRuntime"/>
+	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/CoreRuntime"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

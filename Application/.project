@@ -15,7 +15,10 @@
 		<project>CoreOtherEntity</project>
 		<project>CoreBrick</project>
 		<project>Runtime</project>
-		<project>XXXDivisionStory</project>
+		<project>CoreInfrastructure</project>
+		<project>CoreData</project>
+		<project>CoreResource</project>
+		<project>CoreRuntime</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
