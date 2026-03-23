@@ -11,7 +11,7 @@ import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.core.data.criteria.HAPDataTypeCriteria;
-import com.nosliw.core.data.criteria.HAPParserCriteria;
+import com.nosliw.core.data.criteria.HAPParserCriteriaImp;
 import com.nosliw.core.data.criteria.HAPUtilityCriteria;
 
 @HAPEntityWithAttribute
@@ -57,11 +57,11 @@ public abstract class HAPDataDefinition extends HAPSerializableImp{
 	@Override
 	public boolean buildObject(Object value, HAPSerializationFormat format) {
 		if(value instanceof String) {
-			this.m_criteria = HAPParserCriteria.getInstance().parseCriteria((String)value);
+			this.m_criteria = HAPParserCriteriaImp.getInstance().parseCriteria((String)value);
 		}
 		else if(value instanceof JSONObject){
 			JSONObject jsonValue = (JSONObject)value;
-			this.m_criteria = HAPParserCriteria.getInstance().parseCriteria((String)jsonValue.opt(CRITERIA));
+			this.m_criteria = HAPParserCriteriaImp.getInstance().parseCriteria((String)jsonValue.opt(CRITERIA));
 		}
 		return true;
 	}

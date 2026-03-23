@@ -15,7 +15,7 @@ import com.nosliw.common.utils.HAPUtilityFile;
 import com.nosliw.core.application.common.scriptexpressio.HAPExpressionScriptImp;
 import com.nosliw.core.application.common.scriptexpressio.HAPSegmentScriptExpression;
 import com.nosliw.core.data.HAPData;
-import com.nosliw.core.runtime.HAPRuntimeTask;
+import com.nosliw.core.runtime.execute.HAPTaskRuntime;
 import com.nosliw.core.runtime.js.rhino.HAPGatewayRhinoTaskResponse;
 import com.nosliw.core.runtime.js.rhino.HAPRuntimeImpRhino;
 
@@ -87,7 +87,7 @@ public class HAPUtilityScriptForExecuteJSScript {
 	}
 
 	//build script for execute script expression task 
-	public static HAPJSScriptInfo buildRequestScriptForExecuteScriptTask(HAPInfoRuntimeTaskScriptExpressionGroup taskInfo, HAPRuntimeTask task, HAPRuntimeImpRhino runtime){
+	public static HAPJSScriptInfo buildRequestScriptForExecuteScriptTask(HAPInfoRuntimeTaskScriptExpressionGroup taskInfo, HAPTaskRuntime task, HAPRuntimeImpRhino runtime){
 		Map<String, Object> variableValue = taskInfo.getVariablesValue();
 
 		Map<String, String> templateParms = new LinkedHashMap<String, String>();

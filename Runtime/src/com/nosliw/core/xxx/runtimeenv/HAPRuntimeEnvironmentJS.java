@@ -7,9 +7,6 @@ import com.nosliw.common.constant.HAPEntityWithAttribute;
 public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 
 	@HAPAttribute
-	public static final String NODENAME_GATEWAY = "gatewayObj";
-	
-	@HAPAttribute
 	public static final String GATEWAY_CODETABLE = "codeTable";
 
 //	@HAPAttribute
@@ -60,7 +57,7 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 	
 	private HAPManagerCronJob m_cronJobManager;
 	
-	private HAPRuntime m_runtime;
+	private HAPExecutorRuntime m_runtime;
 	
 	public HAPRuntimeEnvironmentJS(){}
 	
@@ -81,7 +78,7 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 			HAPManagerApplicationBrick brickManager,
 			HAPManagerUITag uiTagManager, 
 		    HAPManagerCronJob cronJobManager,
-		    HAPRuntime runtime){
+		    HAPExecutorRuntime runtime){
 		super();
 		this.init(dataTypeManager, dataTypeHelper, codeTableManager, resourceMan, taskManager, activityManager, processManager, processRuntime, dataExpressionParser, gatewayManager, serviceManager, dynamicResourceManager, resourceDefManager, brickManager, uiTagManager, cronJobManager, runtime);
 	}
@@ -103,7 +100,7 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 				HAPManagerApplicationBrick brickManager,
 				HAPManagerUITag uiTagManager,
 			    HAPManagerCronJob cronJobManager,
-			    HAPRuntime runtime){ 
+			    HAPExecutorRuntime runtime){ 
 		this.m_dataTypeManager = dataTypeManager;
 		this.m_dataTypeHelper = dataTypeHelper;
 		this.m_resourceManager = resourceMan;
@@ -335,7 +332,7 @@ public abstract class HAPRuntimeEnvironmentJS implements HAPRuntimeEnvironment{
 	public HAPManagerCronJob getCronJobManager() {  return this.m_cronJobManager;	}
 
 	@Override
-	public HAPRuntime getRuntime() {		return this.m_runtime;	}
+	public HAPExecutorRuntime getRuntime() {		return this.m_runtime;	}
 	
 	@Override
 	public HAPDataTypeHelper getDataTypeHelper() {   return this.m_dataTypeHelper;   }

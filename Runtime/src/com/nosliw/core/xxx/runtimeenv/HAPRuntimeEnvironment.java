@@ -43,7 +43,7 @@ public interface HAPRuntimeEnvironment {
 	
 	HAPManagerCronJob getCronJobManager();
 	
-	HAPRuntime getRuntime();
+	HAPExecutorRuntime getRuntime();
 
 	HAPDataTypeHelper getDataTypeHelper();
 	*/

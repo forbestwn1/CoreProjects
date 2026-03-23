@@ -7,7 +7,7 @@ import com.nosliw.common.info.HAPUtilityEntityInfo;
 import com.nosliw.core.application.entity.datarule.HAPDataRule;
 import com.nosliw.core.application.entity.datarule.HAPManagerDataRule;
 import com.nosliw.core.data.HAPUtilityData;
-import com.nosliw.core.data.criteria.HAPParserCriteria;
+import com.nosliw.core.data.criteria.HAPParserCriteriaImp;
 
 public class HAPParserDataDefinition {
 
@@ -77,7 +77,7 @@ public class HAPParserDataDefinition {
 //
 //			String ruleCriteriaStr = (String)jsonValue.opt(RULECRITERIA);
 //			if(ruleCriteriaStr!=null) {
-//				this.m_ruleCriteria = HAPParserCriteria.getInstance().parseCriteria(ruleCriteriaStr);
+//				this.m_ruleCriteria = HAPParserCriteriaImp.getInstance().parseCriteria(ruleCriteriaStr);
 //			}
 			
 		}
@@ -91,11 +91,11 @@ public class HAPParserDataDefinition {
 	
 	private static void parseToDataDefinition(Object obj, HAPDataDefinition dataDefinition) {
 		if(obj instanceof String) {
-			dataDefinition.setCriteria(HAPParserCriteria.getInstance().parseCriteria((String)obj));
+			dataDefinition.setCriteria(HAPParserCriteriaImp.getInstance().parseCriteria((String)obj));
 		}
 		else if(obj instanceof JSONObject){
 			JSONObject jsonValue = (JSONObject)obj;
-			dataDefinition.setCriteria(HAPParserCriteria.getInstance().parseCriteria((String)jsonValue.opt(HAPDataDefinition.CRITERIA)));
+			dataDefinition.setCriteria(HAPParserCriteriaImp.getInstance().parseCriteria((String)jsonValue.opt(HAPDataDefinition.CRITERIA)));
 		}
 	}
 	

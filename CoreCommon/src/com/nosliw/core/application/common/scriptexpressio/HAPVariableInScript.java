@@ -4,7 +4,7 @@ import java.util.Map;
 
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
-import com.nosliw.core.xxx.application1.HAPExecutableImp;
+import com.nosliw.core.resource.infrastructure.HAPExecutableImp;
 
 @HAPEntityWithAttribute
 public class HAPVariableInScript extends HAPExecutableImp{

@@ -14,7 +14,7 @@ import com.nosliw.core.application.valueport.HAPReferenceElement;
 import com.nosliw.core.data.HAPData;
 import com.nosliw.core.data.HAPUtilityData;
 import com.nosliw.core.data.criteria.HAPDataTypeCriteria;
-import com.nosliw.core.data.criteria.HAPParserCriteria;
+import com.nosliw.core.data.criteria.HAPParserCriteriaImp;
 
 /**
  * This is variable info for expression 
@@ -106,7 +106,7 @@ public class HAPVariableDefinition extends HAPEntityInfoWritableImp{
 	@Override
 	public boolean buildObject(Object value, HAPSerializationFormat format) {
 		if(value instanceof String) {
-			this.m_dataInfo.setCriteria(HAPParserCriteria.getInstance().parseCriteria((String)value));
+			this.m_dataInfo.setCriteria(HAPParserCriteriaImp.getInstance().parseCriteria((String)value));
 		}
 		else if(value instanceof JSONObject){
 			JSONObject jsonValue = (JSONObject)value;

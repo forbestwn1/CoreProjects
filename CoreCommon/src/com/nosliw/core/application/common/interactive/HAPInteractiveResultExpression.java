@@ -10,7 +10,7 @@ import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.serialization.HAPSerializableImp;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.core.data.criteria.HAPDataTypeCriteria;
-import com.nosliw.core.data.criteria.HAPParserCriteria;
+import com.nosliw.core.data.criteria.HAPParserCriteriaImp;
 
 @HAPEntityWithAttribute
 public class HAPInteractiveResultExpression extends HAPSerializableImp{
@@ -35,11 +35,11 @@ public class HAPInteractiveResultExpression extends HAPSerializableImp{
 			JSONObject jsonObj = (JSONObject)json;
 			String criteriaStr = (String)jsonObj.opt(DATACRITERIA);
 			if(criteriaStr!=null) {
-				this.m_dataCriteria = HAPParserCriteria.getInstance().parseCriteria(criteriaStr);
+				this.m_dataCriteria = HAPParserCriteriaImp.getInstance().parseCriteria(criteriaStr);
 			}
 		}
 		else if(json instanceof String) {
-			this.m_dataCriteria = HAPParserCriteria.getInstance().parseCriteria((String)json);
+			this.m_dataCriteria = HAPParserCriteriaImp.getInstance().parseCriteria((String)json);
 		}
 		return true;  
 	}

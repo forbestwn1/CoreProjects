@@ -23,7 +23,7 @@ import com.nosliw.core.application.valueport.HAPUtilityValuePort;
 import com.nosliw.core.application.valueport.HAPValuePort;
 import com.nosliw.core.application.valueport.HAPWithExternalValuePort;
 import com.nosliw.core.data.HAPData;
-import com.nosliw.core.data.criteria.HAPParserCriteria;
+import com.nosliw.core.data.criteria.HAPParserCriteriaImp;
 
 public class HAPUtilityInteractiveTaskValuePort {
 
@@ -81,7 +81,7 @@ public class HAPUtilityInteractiveTaskValuePort {
 			if(errorEle==null) {
 				Set<HAPRootInStructure> roots = new HashSet<HAPRootInStructure>();
 				HAPRootInStructure root = new HAPRootInStructure();
-				root.setDefinition(new HAPElementStructureLeafData(HAPParserCriteria.getInstance().parseCriteria("test.string;1.0.0")));
+				root.setDefinition(new HAPElementStructureLeafData(HAPParserCriteriaImp.getInstance().parseCriteria("test.string;1.0.0")));
 				root.setName(errorRootName);
 				roots.add(root);
 				

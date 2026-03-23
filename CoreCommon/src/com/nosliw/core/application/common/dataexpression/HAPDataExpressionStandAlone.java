@@ -13,8 +13,8 @@ import com.nosliw.core.application.common.interactive.HAPWithInteractiveExpressi
 import com.nosliw.core.data.matcher.HAPMatchers;
 import com.nosliw.core.resource.HAPManagerResource;
 import com.nosliw.core.resource.HAPResourceDependency;
+import com.nosliw.core.resource.infrastructure.HAPExecutableImp;
 import com.nosliw.core.runtime.HAPRuntimeInfo;
-import com.nosliw.core.xxx.application1.HAPExecutableImp;
 
 @HAPEntityWithAttribute
 public class HAPDataExpressionStandAlone extends HAPExecutableImp implements HAPWithInteractiveExpression{

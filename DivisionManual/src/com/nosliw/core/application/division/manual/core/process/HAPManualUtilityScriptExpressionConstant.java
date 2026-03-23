@@ -85,7 +85,7 @@ public class HAPManualUtilityScriptExpressionConstant {
 		if(!taskInfo.isEmpty()) {
 			HAPRuntimeTaskExecuteRhinoScriptExpressionConstantGroup task = new HAPRuntimeTaskExecuteRhinoScriptExpressionConstantGroup(taskInfo);
 
-			HAPServiceData serviceData = runtimeMan.getRuntime(HAPRuntimeManager.RUNTIME_JS_RHION).executeTaskSync(task);
+			HAPServiceData serviceData = runtimeMan.getRuntimeExecutor(HAPRuntimeManager.RUNTIME_JS_RHION).executeTaskSync(task);
 			JSONObject serviceDataJson = (JSONObject)serviceData.getData();
 			
 			for(Object key : serviceDataJson.keySet()) {

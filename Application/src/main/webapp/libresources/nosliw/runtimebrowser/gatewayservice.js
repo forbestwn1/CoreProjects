@@ -32,7 +32,7 @@ var node_createGatewayService = function(){
 	var loc_configureName = "gateway";
 	
 	var loc_getGatewayObject = function(){
-		return nosliw.getNodeData(node_COMMONATRIBUTECONSTANT.RUNTIME_NODENAME_GATEWAY);
+		return nosliw.getNodeData(node_COMMONATRIBUTECONSTANT.EXECUTORRUNTIMEWITHSCRIPT_NODENAME_GATEWAY);
 	};
 	
 	nosliw.registerSetNodeDataEvent("runtime", function(){
@@ -130,7 +130,7 @@ var node_createGatewayService = function(){
 		
 	};
 	
-	nosliw.createNode(node_COMMONATRIBUTECONSTANT.RUNTIME_NODENAME_GATEWAY, {
+	nosliw.createNode(node_COMMONATRIBUTECONSTANT.EXECUTORRUNTIMEWITHSCRIPT_NODENAME_GATEWAY, {
 		executeGateway : function(gatewayId, command, parms){
 			
 		}

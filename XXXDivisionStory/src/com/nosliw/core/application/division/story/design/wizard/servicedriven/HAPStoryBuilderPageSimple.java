@@ -61,7 +61,7 @@ import com.nosliw.core.data.HAPData;
 import com.nosliw.core.data.HAPDataType;
 import com.nosliw.core.data.HAPDataTypeId;
 import com.nosliw.core.data.criteria.HAPDataTypeCriteria;
-import com.nosliw.core.data.criteria.HAPParserCriteria;
+import com.nosliw.core.data.criteria.HAPParserCriteriaImp;
 import com.nosliw.core.data.criteria.HAPUtilityCriteria;
 import com.nosliw.core.xxx.application.common.datadefinition.HAPVariableDataInfo;
 import com.nosliw.core.xxx.application.common.datadefinition.HAPVariableDefinition;
@@ -447,7 +447,7 @@ public class HAPStoryBuilderPageSimple implements HAPStoryBuilderStory{
 		HAPStoryUINode dataUINode = null;
 		HAPStoryUIDataInfo uiDataInfo = layoutUINode.getDataInfo(varName);
 		HAPVariableDataInfo dataTypeInfo = uiDataInfo.getDataType();
-		HAPDataTypeCriteria dataTypeCriteria = HAPParserCriteria.getInstance().parseCriteria("test.string;1.0.0");     //dataTypeInfo.getCriteria();  kkkkkk
+		HAPDataTypeCriteria dataTypeCriteria = HAPParserCriteriaImp.getInstance().parseCriteria("test.string;1.0.0");     //dataTypeInfo.getCriteria();  kkkkkk
 		Set<HAPDataTypeId> dataTypeIds = dataTypeCriteria.getValidDataTypeId(this.m_runtimeEnv.getDataTypeHelper());
 		HAPDataTypeId dataTypeId = dataTypeIds.iterator().next();
 		HAPDataType dataType = this.m_runtimeEnv.getDataTypeManager().getDataType(dataTypeId);

@@ -32,7 +32,7 @@ public class HAPRuntimeEnvironmentImpBrowser extends HAPRuntimeEnvironmentJS{
 	public HAPRuntimeEnvironmentImpBrowser(HAPModuleRuntimeJS runtimeJSModule) {
 		this.m_runtimeJSModule = runtimeJSModule;
 		
-		HAPRuntime runtime = new HAPRuntimeImpRhino(this);
+		HAPExecutorRuntime runtime = new HAPRuntimeImpRhino(this);
 		HAPDataTypeManager dataTypeManager = new HAPDataTypeManagerImp(runtimeJSModule.getDataTypeDataAccess());
 		HAPDataTypeHelper dataTypeHelper = new HAPDataTypeHelperImp(runtime, this.m_runtimeJSModule.getDataTypeDataAccess());
 		HAPManagerCodeTable codeTableManager = new HAPManagerCodeTable();

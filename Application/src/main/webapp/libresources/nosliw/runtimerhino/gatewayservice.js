@@ -22,7 +22,7 @@ var packageObj = library;
 var node_createGatewayService = function(){
 	
 	var loc_getGatewayObject = function(){
-		return nosliw.getNodeData(node_COMMONATRIBUTECONSTANT.RUNTIME_NODENAME_GATEWAY);
+		return nosliw.getNodeData(node_COMMONATRIBUTECONSTANT.EXECUTORRUNTIMEWITHSCRIPT_NODENAME_GATEWAY);
 	};
 	
 	var loc_out = {
