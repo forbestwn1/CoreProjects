@@ -5,6 +5,7 @@ import java.util.Map;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.HAPBrick;
 import com.nosliw.core.application.HAPResourceDataBrick;
+import com.nosliw.core.application.HAPUtilityBrickResource;
 import com.nosliw.core.application.common.constant.HAPDefinitionConstant;
 import com.nosliw.core.application.common.dataexpression.HAPOperand;
 import com.nosliw.core.application.common.dataexpression.definition.HAPDefinitionDataExpression;
@@ -23,7 +24,6 @@ import com.nosliw.core.data.HAPData;
 import com.nosliw.core.resource.HAPFactoryResourceId;
 import com.nosliw.core.resource.HAPManagerResource;
 import com.nosliw.core.resource.HAPResourceId;
-import com.nosliw.core.resource.HAPUtilityResource;
 import com.nosliw.core.runtime.HAPRuntimeInfo;
 import com.nosliw.core.xxx.application.valueport.HAPInfoElementResolve;
 
@@ -129,7 +129,7 @@ public class HAPBasicUtilityProcessorDataExpression {
 
 					HAPResourceId refResourceId = HAPFactoryResourceId.newInstance(referenceOperandDef.getReference());
 					referenceOperand.setResourceId(refResourceId);
-					HAPResourceDataBrick resourceData = HAPUtilityResource.getResourceData(refResourceId, resourceMan, runtimeInfo);
+					HAPResourceDataBrick resourceData = HAPUtilityBrickResource.getResourceData(refResourceId, resourceMan, runtimeInfo);
 					HAPBrick referedResourceBrick = resourceData.getBrick();
 					
 					Map<String, HAPOperand> referenceMapping = referenceOperand.getMapping();

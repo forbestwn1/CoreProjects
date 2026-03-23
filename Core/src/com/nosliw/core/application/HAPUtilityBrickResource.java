@@ -3,12 +3,24 @@ package com.nosliw.core.application;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
+import com.google.common.collect.Lists;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.resource.HAPManagerResource;
+import com.nosliw.core.resource.HAPResourceId;
 import com.nosliw.core.resource.HAPUtilityResource;
 import com.nosliw.core.runtime.HAPRuntimeInfo;
 
 public class HAPUtilityBrickResource {
+
+	public static HAPBrick getResourceDataBrick(HAPResourceId resourceId, HAPManagerResource resourceMan, HAPRuntimeInfo runtimeInfo) {
+		HAPResourceDataBrick brickResourceData = (HAPResourceDataBrick)resourceMan.getResources(Lists.asList(resourceId, new HAPResourceId[0]), runtimeInfo).getLoadedResource(resourceId).getResourceData();
+		return brickResourceData.getBrick();
+	}
+	public static HAPResourceDataBrick getResourceData(HAPResourceId resourceId, HAPManagerResource resourceMan, HAPRuntimeInfo runtimeInfo) {
+		HAPResourceDataBrick brickResourceData = (HAPResourceDataBrick)resourceMan.getResources(Lists.asList(resourceId, new HAPResourceId[0]), runtimeInfo).getLoadedResource(resourceId).getResourceData();
+		return brickResourceData;
+	}
+
 
 	public static HAPResourceDataBrick getExportResourceData(HAPBundle bundle, String name, HAPManagerResource resourceMan, HAPRuntimeInfo runtimeInfo) {
 		if(name==null) {
