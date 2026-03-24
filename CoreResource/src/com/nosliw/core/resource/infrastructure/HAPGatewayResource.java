@@ -7,6 +7,7 @@ import java.util.Map;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.nosliw.common.constant.HAPAttribute;
@@ -51,7 +52,11 @@ public class HAPGatewayResource extends HAPGatewayImp{
 	
 	private HAPManagerResource m_resourceManager;
 	
-	public HAPGatewayResource(HAPManagerResource resourceManager){
+	public HAPGatewayResource(){
+	}
+	
+	@Autowired
+	public void setResourceManager(HAPManagerResource resourceManager) {
 		this.m_resourceManager = resourceManager;
 	}
 	

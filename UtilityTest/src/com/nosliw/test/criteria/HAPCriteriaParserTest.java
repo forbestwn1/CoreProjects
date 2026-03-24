@@ -4,7 +4,7 @@ package com.nosliw.test.criteria;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.core.data.criteria.HAPDataTypeCriteria;
 import com.nosliw.core.data.criteria.HAPParserCriteriaImp;
-import com.nosliw.data.criteria.parser.imp.generated.ParseException;
+import com.nosliw.core.data.criteria.parser.imp.generated.ParseException;
 import com.nosliw.common.serialization.HAPManagerSerialize;
 
 public class HAPCriteriaParserTest {

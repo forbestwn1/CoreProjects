@@ -3,15 +3,11 @@
 	<name>Application</name>
 	<comment></comment>
 	<projects>
-		<project>DataTypeManager</project>
 		<project>Common</project>
-		<project>Core</project>
 		<project>MiniApp</project>
 		<project>DivisionManual</project>
 		<project>LibraryDataTypeTest</project>
 		<project>CoreCommon</project>
-		<project>UtilityParserCriteria</project>
-		<project>UtilityParserExpression</project>
 		<project>CoreOtherEntity</project>
 		<project>CoreBrick</project>
 		<project>Runtime</project>
@@ -19,6 +15,8 @@
 		<project>CoreData</project>
 		<project>CoreResource</project>
 		<project>CoreRuntime</project>
+		<project>CoreApplication</project>
+		<project>UtilityParserExpression</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

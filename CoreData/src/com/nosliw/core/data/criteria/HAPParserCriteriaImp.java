@@ -11,9 +11,9 @@ import java.util.Set;
 
 import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.core.data.HAPDataTypeId;
-import com.nosliw.data.criteria.parser.imp.generated.HAPCriteriaParserGenerated;
-import com.nosliw.data.criteria.parser.imp.generated.HAPCriteriaParserGeneratedConstants;
-import com.nosliw.data.criteria.parser.imp.generated.SimpleNode;
+import com.nosliw.core.data.criteria.parser.imp.generated.HAPCriteriaParserGenerated;
+import com.nosliw.core.data.criteria.parser.imp.generated.HAPCriteriaParserGeneratedConstants;
+import com.nosliw.core.data.criteria.parser.imp.generated.SimpleNode;
 
 public class HAPParserCriteriaImp implements HAPCriteriaParserGeneratedConstants{
 
