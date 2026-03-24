@@ -31,7 +31,11 @@ public class HAPBasicPluginProcessorEntityWithVariableDataExpression implements 
 	private HAPManagerResource m_resourceMan;
 	private HAPDataTypeHelper m_dataTypeHelper;
 	
-	public HAPBasicPluginProcessorEntityWithVariableDataExpression(HAPDataTypeHelper dataTypeHelper) {
+	public HAPBasicPluginProcessorEntityWithVariableDataExpression() {
+	}
+	
+	@Autowired
+	private void setDataTypeHelper(HAPDataTypeHelper dataTypeHelper) {
 		this.m_dataTypeHelper = dataTypeHelper;
 	}
 

@@ -9,7 +9,7 @@ import org.mozilla.javascript.Scriptable;
 import com.nosliw.common.serialization.HAPJsonTypeScript;
 import com.nosliw.common.serialization.HAPSerializationFormat;
 import com.nosliw.common.utils.HAPConstantShared;
-import com.nosliw.common.value.HAPUtilityRhinoValue;
+import com.nosliw.core.runtime.js.rhino.HAPUtilityRhinoValue;
 import com.nosliw.data.core.domain.HAPContextParser;
 import com.nosliw.data.core.domain.HAPIdEntityInDomain;
 import com.nosliw.data.core.domain.definition.HAPPluginEntityDefinitionInDomainImpComplex;

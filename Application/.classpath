@@ -19,8 +19,6 @@
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/DivisionManual"/>
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/MiniApp"/>
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/LibraryDataTypeTest"/>
-	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/CoreBrick"/>
-	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/CoreCommon"/>
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/CoreOtherEntity"/>
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/CoreData"/>
 	<classpathentry combineaccessrules="false" exported="true" kind="src" path="/CoreInfrastructure"/>

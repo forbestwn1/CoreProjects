@@ -13,7 +13,6 @@ import com.nosliw.common.exception.HAPServiceData;
 import com.nosliw.common.script.HAPJSScriptInfo;
 import com.nosliw.common.serialization.HAPManagerSerialize;
 import com.nosliw.common.serialization.HAPSerializationFormat;
-import com.nosliw.common.value.HAPUtilityRhinoValue;
 import com.nosliw.core.gateway.HAPGatewayManager;
 import com.nosliw.core.gateway.HAPGatewayOutput;
 

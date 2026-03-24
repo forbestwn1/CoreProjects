@@ -1,4 +1,4 @@
-package com.nosliw.core.xxx.application.common.structure;
+package com.nosliw.core.application.common.structure;
 
 import java.util.Map;
 
@@ -6,7 +6,6 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.core.application.common.dataexpression.definition.HAPParserDataExpression;
-import com.nosliw.core.application.common.structure.HAPElementStructure;
 
 public class HAPElementStructureLeafConstantReference extends HAPElementStructure{
 

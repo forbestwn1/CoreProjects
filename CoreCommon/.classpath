@@ -13,7 +13,8 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry combineaccessrules="false" kind="src" path="/CoreData"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/CoreApplication"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/Common"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/CoreInfrastructure"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/CoreResource"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

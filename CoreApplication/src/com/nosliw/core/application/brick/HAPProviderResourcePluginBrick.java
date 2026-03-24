@@ -9,7 +9,6 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.HAPManagerApplicationBrick;
 import com.nosliw.core.application.HAPPluginResourceManagerImpBrick;
 import com.nosliw.core.application.HAPUtilityBrickId;
-import com.nosliw.core.application.entity.configure.HAPPluginResourceManagerConfigure;
 import com.nosliw.core.resource.HAPFactoryResourceTypeId;
 import com.nosliw.core.resource.HAPIdResourceType;
 import com.nosliw.core.resource.HAPManagerResource;
@@ -73,13 +72,9 @@ public class HAPProviderResourcePluginBrick extends HAPProviderResourcePluginImp
 			this.registerPlugin(HAPUtilityBrickId.getResourceTypeIdFromBrickTypeId(HAPEnumBrickType.SERVICEPROFILE_100), new HAPPluginResourceManagerImpBrick(this.m_resourceManager, this.m_brickManager));
 			this.registerPlugin(HAPUtilityBrickId.getResourceTypeIdFromBrickTypeId(HAPEnumBrickType.SERVICEINTERFACE_100), new HAPPluginResourceManagerImpBrick(this.m_resourceManager, this.m_brickManager));
 	
+			this.registerPlugin(HAPUtilityBrickId.getResourceTypeIdFromBrickTypeId(HAPEnumBrickType.UIPAGE_100), new HAPPluginResourceManagerImpBrick(this.m_resourceManager, this.m_brickManager));
 			
 			this.registerPlugin(HAPFactoryResourceTypeId.newInstance(HAPConstantShared.RUNTIME_RESOURCE_TYPE_DECORATION_SCRIPT), new HAPPluginResourceManagerImpBrick(this.m_resourceManager, this.m_brickManager));
-	
-			
-			this.registerPlugin(HAPFactoryResourceTypeId.newInstance(HAPConstantShared.RUNTIME_RESOURCE_TYPE_CONFIGURE), new HAPPluginResourceManagerConfigure());
-	
-			this.registerPlugin(HAPUtilityBrickId.getResourceTypeIdFromBrickTypeId(HAPEnumBrickType.UIPAGE_100), new HAPPluginResourceManagerImpBrick(this.m_resourceManager, this.m_brickManager));
 		}
 		return super.getResourceManagerPlugins();
 	}
