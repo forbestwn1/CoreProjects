@@ -7,7 +7,7 @@ import org.apache.commons.lang3.tuple.Pair;
 
 import com.nosliw.common.interfac.HAPEntityOrReference;
 import com.nosliw.core.application.HAPDomainValueStructure;
-import com.nosliw.core.application.brick.dataexpression.standalone.HAPBlockDataExpressionStandAloneImp;
+import com.nosliw.core.application.brick.task.wrapper.dataexpression.HAPBlockTaskWrapperDataExpressionImp;
 import com.nosliw.core.application.common.dataexpression.HAPDataExpressionStandAlone;
 import com.nosliw.core.application.common.dataexpression.definition.HAPDefinitionDataExpressionStandAlone;
 import com.nosliw.core.application.common.dataexpression.imp.basic.HAPBasicExpressionData;
@@ -36,7 +36,7 @@ public class HAPPluginTransformerDataRuleExpression extends HAPPluginTransformer
 	public HAPEntityOrReference transformDataRule(HAPDataRule dataRule, HAPDomainValueStructure valueStructureDomian) {
 		HAPDataRuleExpression expressionDataRule = (HAPDataRuleExpression)dataRule;
 
-		HAPBlockDataExpressionStandAloneImp brick = new HAPBlockDataExpressionStandAloneImp();
+		HAPBlockTaskWrapperDataExpressionImp brick = new HAPBlockTaskWrapperDataExpressionImp();
 
 		HAPInteractiveExpression interactive = this.buildValuePortGroupForRuleTaskBrickExpression(expressionDataRule, brick, valueStructureDomian); 
 		
@@ -44,7 +44,7 @@ public class HAPPluginTransformerDataRuleExpression extends HAPPluginTransformer
 		dataExpressionStandAloneDef.setExpression(expressionDataRule.getExpressionDefinition());		
 		dataExpressionStandAloneDef.setExpressionInteractive(interactive);
 		
-		HAPDataExpressionStandAlone dataExpressionStandAloneExe = brick.getValue();
+		HAPDataExpressionStandAlone dataExpressionStandAloneExe = brick.getDataExpression();
 		dataExpressionStandAloneExe.setExpression(new HAPBasicExpressionData(HAPBasicUtilityProcessorDataExpression.buildBasicOperand(dataExpressionStandAloneDef.getExpression().getOperand())));
 		
 		//interactive request

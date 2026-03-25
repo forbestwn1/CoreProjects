@@ -141,7 +141,7 @@ var node_createUICustomerTagTest = function(envObj){
 	};
 
 	var loc_initViews = function(handlers, request){
-		loc_containerrView = $('<div/>');
+		loc_containerrView = $('<div style="border-width:thick; border-style:solid; border-color:red"/>');
 
         //reference customer tag
         if(loc_referencedCustomTags!=undefined){
@@ -150,8 +150,8 @@ var node_createUICustomerTagTest = function(envObj){
     		
     		_.each(loc_referencedCustomTags, function(ref, i){
         		var referenceCustomWrapperView = $('<div/>');
-    			referenceCustomWrapperView.append($('<br>Custom Tag UIId: ' + ref.getUIId() + ' <br>'));
-        	    var referenceCustomEventView = $('<textarea rows="6" cols="150" style="resize: none; border:solid 1px;" data-role="none"></textarea>');
+    			referenceCustomWrapperView.append($('<br>Referenced Custom Tag UIId: ' + ref.getUIId() + ' <br>'));
+        	    var referenceCustomEventView = $('<textarea rows="2" cols="150" style="resize: none; border:solid 1px;" data-role="none" placeholder="event from reference customer tag"></textarea>');
      			referenceCustomWrapperView.append(referenceCustomEventView);
      			loc_referenceCustomEventViews.push(referenceCustomEventView);
      			
@@ -177,7 +177,7 @@ var node_createUICustomerTagTest = function(envObj){
 		//attribute view
 		var attributesWrapperView = $('<div/>');
 		attributesWrapperView.append($('<br>Attributes: <br>'));
-    	loc_attributesView = $('<textarea rows="6" cols="150" style="resize: none; border:solid 1px;" data-role="none"></textarea>');
+    	loc_attributesView = $('<textarea rows="2" cols="150" style="resize: none; border:solid 1px;" data-role="none"></textarea>');
 		attributesWrapperView.append(loc_attributesView);
 		loc_containerrView.append(attributesWrapperView);
 
@@ -187,8 +187,8 @@ var node_createUICustomerTagTest = function(envObj){
 		_.each(loc_inputVariableInfos, function(varInfo, varName){
     		var varWrapperView = $('<div/>');
 			varWrapperView.append($('<br>'+varName+':<br>'));
-        	varInfo.valueView = $('<textarea rows="6" cols="150" style="resize: none; border:solid 1px;" data-role="none"></textarea>');
-        	varInfo.ruleView = $('<textarea rows="6" cols="150" style="resize: none; border:solid 1px;" data-role="none"></textarea>');
+        	varInfo.valueView = $('<textarea rows="2" cols="150" style="resize: none; border:solid 1px;" data-role="none" placeholder="variable value"></textarea>');
+        	varInfo.ruleView = $('<textarea rows="2" cols="150" style="resize: none; border:solid 1px;" data-role="none" placeholder="variable rule"></textarea>');
         	
 			varInfo.valueView.bind('change', function(){
     			var currentData = node_basicUtility.toObject(loc_inputVariableInfos[varName].valueView.val());

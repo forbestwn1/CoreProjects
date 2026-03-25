@@ -9,8 +9,8 @@ import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.HAPInfoBrickType;
 import com.nosliw.core.application.HAPPluginBrick;
 import com.nosliw.core.application.HAPProviderPluginBrick;
-import com.nosliw.core.application.brick.dataexpression.library.HAPPluginBrickDataExpressionLibrary;
-import com.nosliw.core.application.brick.scriptexpression.library.HAPPluginBrickScriptExpressionLibrary;
+import com.nosliw.core.application.brick.expression.dataexpression.library.HAPPluginBrickDataExpressionLibrary;
+import com.nosliw.core.application.brick.expression.scriptexpression.library.HAPPluginBrickScriptExpressionLibrary;
 import com.nosliw.core.application.brick.service.interfacee.HAPPluginBrickServiceInterface;
 import com.nosliw.core.application.brick.service.profile.HAPPluginBrickServiceProfile;
 import com.nosliw.core.application.brick.wrappertask.HAPPluginBrickTaskWrapper;
@@ -45,6 +45,8 @@ public class HAPProviderPluginBrickImp implements HAPProviderPluginBrick{
 
 		out.add(new HAPPluginBrick(HAPEnumBrickType.INTERACTIVETASKINTERFACE_100));
 		out.add(new HAPPluginBrick(HAPEnumBrickType.INTERACTIVEEXPRESSIONINTERFACE_100));
+
+		out.add(new HAPPluginBrick(HAPEnumBrickType.TASKWRAPPERDATAEXPRESSION, new HAPInfoBrickType(HAPConstantShared.TASK_TYPE_TASK)));
 
 		out.add(new HAPPluginBrick(HAPEnumBrickType.DATAEXPRESSIONSTANDALONE_100, new HAPInfoBrickType(HAPConstantShared.TASK_TYPE_EXPRESSION)));
 		out.add(new HAPPluginBrickDataExpressionLibrary());

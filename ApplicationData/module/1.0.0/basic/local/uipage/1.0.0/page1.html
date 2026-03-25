@@ -1,14 +1,29 @@
 <!DOCTYPE html>
 <html>
 <body>
+
+  <div style="overflow-y:scroll; height:600px;">
 Page1!!!!!
 
         <button nosliw-event_click="task|task.navigation.brick">Button to navigate to next page</button>
 
+ 		<!--nosliw-debug_test reference_tag="name:name1"/-->
+
+ 		<!--nosliw-debug_test nosliw-metadata="name:name1" data_string="page_public_string"/-->
+
+
  		<nosliw-debug_test data_float="page_public_float"/>
 
- 		<nosliw-debug_test data_string="page_public_string"/>
+ 		<!--nosliw-debug_test data_array="page_public_array">
+ 		     <br>
+ 		     <a nosliw-event_click="task|task.navigation.brick"><%=?(element)?.value%></a>
+ 		     index : <%=JSON.stringify(?(index)?)%>
+ 		     value : <%=?(element)?.value%>
+ 		</nosliw-debug_test-->
 
+        End of the page
+
+</div>
 </body>
 
 	<valuecontext>

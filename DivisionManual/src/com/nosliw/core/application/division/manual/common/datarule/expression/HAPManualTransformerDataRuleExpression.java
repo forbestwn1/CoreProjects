@@ -8,7 +8,7 @@ import com.nosliw.core.application.common.datadefinition.HAPDefinitionParm;
 import com.nosliw.core.application.common.datadefinition.HAPDefinitionResult;
 import com.nosliw.core.application.common.dataexpression.definition.HAPDefinitionDataExpressionStandAlone;
 import com.nosliw.core.application.common.interactive.HAPInteractiveExpression;
-import com.nosliw.core.application.division.manual.brick.dataexpression.standalone.HAPManualDefinitionBlockDataExpressionStandAlone;
+import com.nosliw.core.application.division.manual.brick.expression.dataexpression.standalone.HAPManualDefinitionBlockDataExpressionStandAlone;
 import com.nosliw.core.application.division.manual.common.datarule.HAPManualTransformerDataRule;
 import com.nosliw.core.application.division.manual.core.HAPManualManagerBrick;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionBrick;
