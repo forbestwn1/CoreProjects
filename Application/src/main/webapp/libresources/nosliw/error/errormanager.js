@@ -87,8 +87,10 @@ var node_createErrorManager = function(){
 				loc_clearErrorInStorage();
 			},
 			error : function(request, serviceData){
+				var kkkk = 5555;
 			},
 			exception : function(request, serviceData){
+				var kkkk = 5555;
 			},
 		});
 		node_requestServiceProcessor.processRequest(gatewayRequest);

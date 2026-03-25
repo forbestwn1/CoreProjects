@@ -42,23 +42,25 @@ public class HAPGatewayServlet extends HAPServiceServlet{
 		out = this.getGatewayManager().executeGateway(gatewayId, command, parms, new HAPRuntimeInfo(HAPConstantShared.RUNTIME_LANGUAGE_JS, HAPConstantShared.RUNTIME_ENVIRONMENT_BROWSER));
 		if(out.isSuccess()){
 			HAPGatewayOutput output = (HAPGatewayOutput)out.getData();
-			for(HAPJSScriptInfo scriptInfo : output.getScripts()){
-				String file = scriptInfo.isFile();
-				if(file==null){
-					if(HAPUtilityResource.LOADRESOURCEBYFILE_MODE_ALWAYS.equals(HAPSystemUtility.getLoadResourceByFileMode())){
-						String name = "gatewayCommand_"+gatewayId+"_"+command+""+index++;
-						String resourceFile = HAPSystemFolderUtility.getResourceTempFileFolder() + name + ".js";
-						resourceFile = HAPUtilityFile.writeFile(resourceFile, scriptInfo.getScript());
-						scriptInfo.setFile(HAPUtilityJSLibrary.getBrowserScriptPath(resourceFile));
-						scriptInfo.setScript(null);
+			if(output!=null) {
+				for(HAPJSScriptInfo scriptInfo : output.getScripts()){
+					String file = scriptInfo.isFile();
+					if(file==null){
+						if(HAPUtilityResource.LOADRESOURCEBYFILE_MODE_ALWAYS.equals(HAPSystemUtility.getLoadResourceByFileMode())){
+							String name = "gatewayCommand_"+gatewayId+"_"+command+""+index++;
+							String resourceFile = HAPSystemFolderUtility.getResourceTempFileFolder() + name + ".js";
+							resourceFile = HAPUtilityFile.writeFile(resourceFile, scriptInfo.getScript());
+							scriptInfo.setFile(HAPUtilityJSLibrary.getBrowserScriptPath(resourceFile));
+							scriptInfo.setScript(null);
+						}
+						else {
+							String escaptedScript = StringEscapeUtils.escapeJavaScript(scriptInfo.getScript());
+							scriptInfo.setScript(escaptedScript);
+						}
 					}
-					else {
-						String escaptedScript = StringEscapeUtils.escapeJavaScript(scriptInfo.getScript());
-						scriptInfo.setScript(escaptedScript);
+					else{
+						scriptInfo.setFile(HAPUtilityJSLibrary.getBrowserScriptPath(file));
 					}
-				}
-				else{
-					scriptInfo.setFile(HAPUtilityJSLibrary.getBrowserScriptPath(file));
 				}
 			}
 		}

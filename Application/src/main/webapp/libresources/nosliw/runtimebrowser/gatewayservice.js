@@ -90,19 +90,21 @@ var node_createGatewayService = function(){
 
 				var gatewayRemoteServiceRequest = node_createServiceRequestInfoRemote(loc_configureName, new node_ServiceInfo(gatewayId+";"+command, parms), undefined, {
 					success : function(requestInfo, gatewayOutput){
-						var gatewayOutputData = gatewayOutput[node_COMMONATRIBUTECONSTANT.GATEWAYOUTPUT_DATA];
-						out.setData(gatewayOutputData, "gatewayOutputData");
-						var gatewayOutputScripts = gatewayOutput[node_COMMONATRIBUTECONSTANT.GATEWAYOUTPUT_SCRIPTS];
 						var requests = [];
-						//process script info output 
-						_.each(gatewayOutputScripts, function(scriptInfo, i, list){
-							var file = scriptInfo[node_COMMONATRIBUTECONSTANT.JSSCRIPTINFO_FILE];
-							var script = scriptInfo[node_COMMONATRIBUTECONSTANT.JSSCRIPTINFO_SCRIPT];
-							if(file!=undefined)		requests.push(loc_getLoadFileRequest(file));
-							if(script!=undefined)		requests.push(loc_getLoadScriptRequest(script));
-						});
+						if(gatewayOutput!=undefined){
+    						var gatewayOutputData = gatewayOutput[node_COMMONATRIBUTECONSTANT.GATEWAYOUTPUT_DATA];
+	    					out.setData(gatewayOutputData, "gatewayOutputData");
+		    				var gatewayOutputScripts = gatewayOutput[node_COMMONATRIBUTECONSTANT.GATEWAYOUTPUT_SCRIPTS];
+			    			//process script info output 
+				    		_.each(gatewayOutputScripts, function(scriptInfo, i, list){
+					    		var file = scriptInfo[node_COMMONATRIBUTECONSTANT.JSSCRIPTINFO_FILE];
+						    	var script = scriptInfo[node_COMMONATRIBUTECONSTANT.JSSCRIPTINFO_SCRIPT];
+							    if(file!=undefined)		requests.push(loc_getLoadFileRequest(file));
+    							if(script!=undefined)		requests.push(loc_getLoadScriptRequest(script));
+	    					});
 						
-						requests.push( node_createServiceRequestInfoSimple({}, function(request){  return out.getData("gatewayOutputData")})  );
+    						requests.push( node_createServiceRequestInfoSimple({}, function(request){  return out.getData("gatewayOutputData")})  );
+						}
 						
 						if(requests.length>0)  return requests;
 					}

@@ -70,7 +70,7 @@ var loc_createTaskCore = function(taskDef, configure){
 	var loc_updateViewTaskResult = function(taskResult){
 		var resultStr = node_basicUtility.stringify(taskResult);
 		console.log(resultStr);
-		loc_outputView.val(resultStr);
+		if(loc_outputView!=undefined)		loc_outputView.val(resultStr);
 	};
 
 	var loc_createTaskEntityCoreRequest = function(taskId, handlers, request){

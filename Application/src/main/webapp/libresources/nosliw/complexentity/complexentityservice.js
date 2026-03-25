@@ -53,6 +53,7 @@ var packageObj = library;
 	var node_createDataAssociationForTaskAdapterPlugin;
 	var node_createDataAssociationForExpressionAdapterPlugin;
 	var node_createDataServiceEntityPlugin;
+	var node_createDataExpressionStandalonePlugin;
 	var node_createDataExpressionGroupPlugin;
 	var node_createScriptExpressionGroupPlugin;
 	var node_createDataExpressionSinglePlugin;
@@ -246,13 +247,16 @@ var node_createComplexEntityRuntimeService = function() {
 		loc_out.registerEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_TEST_COMPLEX_TASK, "1.0.0", node_createTestComplexTaskPlugin());
 		loc_out.registerEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_TEST_COMPLEX_TASK_SCRIPT, "1.0.0", node_createTestComplexTaskScriptPlugin());
 
+		loc_out.registerEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_DATAEXPRESSIONSTANDALONE, "1.0.0", node_createDataExpressionStandalonePlugin());
 		loc_out.registerEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_DATAEXPRESSIONGROUP, "1.0.0", node_createDataExpressionGroupPlugin());
 		loc_out.registerEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_DATAEXPRESSIONGROUPTEMP, "1.0.0", node_createDataExpressionGroupPlugin());
+
 
 		loc_out.registerEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_SCRIPTEXPRESSIONGROUP, "1.0.0", node_createScriptExpressionGroupPlugin());
 
 		loc_out.registerEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_DATAEXPRESSIONSINGLE, "1.0.0", node_createDataExpressionSinglePlugin());
 		loc_out.registerEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_DATAEXPRESSIONLIBELEMENT, "1.0.0", node_createDataExpressionLibraryElementPlugin());
+
 
 //		loc_out.registerEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_SCRIPTEXPRESSIONGROUP, "1.0.0", node_createExpressionGroupPlugin());
 		loc_out.registerEntityPlugin(node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_SCRIPTEXPRESSIONGROUPTEMP, "1.0.0", node_createExpressionGroupPlugin());
@@ -492,12 +496,15 @@ nosliw.registerSetNodeDataEvent("iovalue.createDataAssociationInteractiveAdapter
 nosliw.registerSetNodeDataEvent("iovalue.createDataAssociationForTaskAdapterPlugin", function(){node_createDataAssociationForTaskAdapterPlugin = this.getData();});
 nosliw.registerSetNodeDataEvent("iovalue.createDataAssociationForExpressionAdapterPlugin", function(){node_createDataAssociationForExpressionAdapterPlugin = this.getData();});
 nosliw.registerSetNodeDataEvent("dataservice.createDataServiceEntityPlugin", function(){node_createDataServiceEntityPlugin = this.getData();});
+
+nosliw.registerSetNodeDataEvent("expression.createDataExpressionStandalonePlugin", function(){node_createDataExpressionStandalonePlugin = this.getData();});
 nosliw.registerSetNodeDataEvent("expression.createDataExpressionGroupPlugin", function(){node_createDataExpressionGroupPlugin = this.getData();});
 nosliw.registerSetNodeDataEvent("expression.createScriptExpressionGroupPlugin", function(){node_createScriptExpressionGroupPlugin = this.getData();});
 nosliw.registerSetNodeDataEvent("expression.createDataExpressionSinglePlugin", function(){node_createDataExpressionSinglePlugin = this.getData();});
 nosliw.registerSetNodeDataEvent("expression.createDataExpressionLibraryElementPlugin", function(){node_createDataExpressionLibraryElementPlugin = this.getData();});
 nosliw.registerSetNodeDataEvent("task.createTaskPlugin", function(){node_createTaskPlugin = this.getData();});
 nosliw.registerSetNodeDataEvent("taskscript.createScriptTaskTaskPlugin", function(){node_createScriptTaskTaskPlugin = this.getData();});
+
 
 nosliw.registerSetNodeDataEvent("expression.createExpressionGroupPlugin", function(){node_createExpressionGroupPlugin = this.getData();});
 nosliw.registerSetNodeDataEvent("expression.createExpressionSinglePlugin", function(){node_createExpressionSinglePlugin = this.getData();});
