@@ -72,17 +72,19 @@ var loc_createTaskWrapperDataExpressionCore = function(complexEntityDef, valueCo
 			out.addRequest(node_expressionUtility.getExecuteDataExpressionRequest(dataExpression, loc_envInterface[node_CONSTANT.INTERFACE_WITHVALUEPORT], undefined, {
 				success : function(request, result){
 					loc_expressionResult = result;
-					return node_interactiveUtility.getSetExpressionResultToValuePortRequest(result, valuePortContainer, {
+					if(loc_expressionResult.value==false){
+           				loc_taskResult = node_ruleUtility.createRuleValidationFailResult({
+   			    			"dataTypeId": "test.string;1.0.0",
+            				"value": "value is not valid"
+       					}); 
+					}
+					else{
+           				loc_taskResult = node_ruleUtility.createRuleValidationSuccessResult(loc_expressionResult); 
+					}
+
+					return node_interactiveUtility.getSetTaskResultToValuePortRequest(loc_taskResult, valuePortContainer, {
 						success : function(){
-							if(loc_expressionResult.value==false){
-                				return node_ruleUtility.createRuleValidationFailResult({
-        			    			"dataTypeId": "test.string;1.0.0",
-		            				"value": "value is not valid"
-            					}); 
-							}
-							else{
-                				return node_ruleUtility.createRuleValidationSuccessResult(loc_expressionResult); 
-							}
+							return loc_taskResult;
 						}
 					});
 				}

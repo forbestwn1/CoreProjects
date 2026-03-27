@@ -33,7 +33,7 @@ public class HAPManualPluginProcessorBlockTaskWrapperDataExpression extends HAPM
 	private HAPManagerWithVariablePlugin m_withVariableMan;
 	
 	public HAPManualPluginProcessorBlockTaskWrapperDataExpression(HAPManagerWithVariablePlugin withVariableMan) {
-		super(HAPEnumBrickType.TASKWRAPPER_100, HAPManualBlockDataTaskWrapperDataExpression.class);
+		super(HAPEnumBrickType.TASKWRAPPERDATAEXPRESSION, HAPManualBlockDataTaskWrapperDataExpression.class);
 		this.m_withVariableMan = withVariableMan;
 	}
 

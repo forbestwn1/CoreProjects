@@ -14,14 +14,16 @@ import com.nosliw.core.application.common.dataexpression.imp.basic.HAPBasicExpre
 import com.nosliw.core.application.common.dataexpression.imp.basic.HAPBasicPluginProcessorEntityWithVariableDataExpression;
 import com.nosliw.core.application.common.dataexpression.imp.basic.HAPBasicUtilityProcessorDataExpression;
 import com.nosliw.core.application.common.dataexpression.imp.basic.HAPBasicWrapperOperand;
-import com.nosliw.core.application.common.interactive.HAPInteractiveExpression;
+import com.nosliw.core.application.common.interactive.HAPInteractiveTask;
 import com.nosliw.core.application.common.withvariable.HAPContainerVariableInfo;
 import com.nosliw.core.application.common.withvariable.HAPManagerWithVariablePlugin;
 import com.nosliw.core.application.common.withvariable.HAPUtilityWithVarible;
 import com.nosliw.core.application.entity.datarule.HAPDataRule;
 import com.nosliw.core.application.entity.datarule.HAPPluginTransformerDataRuleImp;
 import com.nosliw.core.application.valueport.HAPUtilityValuePortVariable;
+import com.nosliw.core.data.HAPDataTypeId;
 import com.nosliw.core.data.criteria.HAPDataTypeCriteria;
+import com.nosliw.core.data.criteria.HAPDataTypeCriteriaId;
 import com.nosliw.core.data.matcher.HAPMatchers;
 
 public class HAPPluginTransformerDataRuleExpression extends HAPPluginTransformerDataRuleImp{
@@ -38,17 +40,16 @@ public class HAPPluginTransformerDataRuleExpression extends HAPPluginTransformer
 
 		HAPBlockTaskWrapperDataExpressionImp brick = new HAPBlockTaskWrapperDataExpressionImp();
 
-		HAPInteractiveExpression interactive = this.buildValuePortGroupForRuleTaskBrickExpression(expressionDataRule, brick, valueStructureDomian); 
+		HAPInteractiveTask interactive = this.buildValuePortGroupForRuleTaskBrickTask(expressionDataRule, brick, valueStructureDomian); 
 		
 		HAPDefinitionDataExpressionStandAlone dataExpressionStandAloneDef = new HAPDefinitionDataExpressionStandAlone(); 
 		dataExpressionStandAloneDef.setExpression(expressionDataRule.getExpressionDefinition());		
-		dataExpressionStandAloneDef.setExpressionInteractive(interactive);
 		
 		HAPDataExpressionStandAlone dataExpressionStandAloneExe = brick.getDataExpression();
 		dataExpressionStandAloneExe.setExpression(new HAPBasicExpressionData(HAPBasicUtilityProcessorDataExpression.buildBasicOperand(dataExpressionStandAloneDef.getExpression().getOperand())));
 		
 		//interactive request
-		dataExpressionStandAloneExe.setExpressionInteractive(new HAPInteractiveExpression(dataExpressionStandAloneDef.getRequestParms(), dataExpressionStandAloneDef.getResult()));
+//		dataExpressionStandAloneExe.setExpressionInteractive(new HAPInteractiveExpression(dataExpressionStandAloneDef.getRequestParms(), dataExpressionStandAloneDef.getResult()));
 
 		HAPContainerVariableInfo varInfoContainer = new HAPContainerVariableInfo(brick, valueStructureDomian);
 
@@ -66,7 +67,7 @@ public class HAPPluginTransformerDataRuleExpression extends HAPPluginTransformer
 		
 		//discover
 		Map<String, HAPDataTypeCriteria> expections = new LinkedHashMap<String, HAPDataTypeCriteria>();
-		expections.put(HAPBasicPluginProcessorEntityWithVariableDataExpression.RESULT, dataExpressionStandAloneExe.getExpressionInterface().getResult().getDataDefinition().getCriteria());
+		expections.put(HAPBasicPluginProcessorEntityWithVariableDataExpression.RESULT, new HAPDataTypeCriteriaId(new HAPDataTypeId("boolean", "1.0.0"), null));
 		Pair<HAPContainerVariableInfo, Map<String, HAPMatchers>> discoverResult = HAPUtilityWithVarible.discoverVariableCriteria(dataExpression, expections, varInfoContainer, this.m_withVariableMan);
 		varInfoContainer = discoverResult.getLeft();
 		
@@ -74,13 +75,7 @@ public class HAPPluginTransformerDataRuleExpression extends HAPPluginTransformer
 		HAPUtilityValuePortVariable.updateValuePortElements(varInfoContainer, valueStructureDomian);
 		
 		//result
-		HAPDataTypeCriteria resultCriteria = operandWrapper.getOperand().getOutputCriteria();
-		if(dataExpressionStandAloneExe.getExpressionInterface().getResult().getDataDefinition().getCriteria()==null) {
-			dataExpressionStandAloneExe.getExpressionInterface().getResult().getDataDefinition().setCriteria(resultCriteria);
-		}
-		else {
-			dataExpressionStandAloneExe.setResultMatchers(discoverResult.getRight().get(HAPBasicPluginProcessorEntityWithVariableDataExpression.RESULT));
-		}
+		dataExpressionStandAloneExe.setResultMatchers(discoverResult.getRight().get(HAPBasicPluginProcessorEntityWithVariableDataExpression.RESULT));
 		
 		return brick;
 	}
