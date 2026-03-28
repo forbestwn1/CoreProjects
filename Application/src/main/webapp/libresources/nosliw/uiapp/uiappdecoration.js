@@ -314,7 +314,7 @@ nosliw.registerSetNodeDataEvent("iovalue.entity.createIODataSet", function(){nod
 nosliw.registerSetNodeDataEvent("iovalue.entity.createDynamicData", function(){node_createDynamicIOData = this.getData();});
 nosliw.registerSetNodeDataEvent("uiapp.ModuleInfo", function(){node_ModuleInfo = this.getData();});
 nosliw.registerSetNodeDataEvent("common.service.ServiceInfo", function(){node_ServiceInfo = this.getData();	});
-nosliw.registerSetNodeDataEvent("component.createConfigure", function(){node_createConfigure = this.getData();});
+nosliw.registerSetNodeDataEvent("configure.createConfigure", function(){node_createConfigure = this.getData();});
 nosliw.registerSetNodeDataEvent("component.getComponentLifecycleInterface", function(){node_getComponentLifecycleInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("common.event.createEventObject", function(){node_createEventObject = this.getData();});
 nosliw.registerSetNodeDataEvent("request.requestServiceProcessor", function(){node_requestServiceProcessor = this.getData();});

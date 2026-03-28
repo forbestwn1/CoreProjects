@@ -210,7 +210,7 @@ nosliw.registerSetNodeDataEvent("common.interfacedef.makeObjectWithType", functi
 nosliw.registerSetNodeDataEvent("valueport.createValuePortDomain", function(){nod_createValuePortDomain = this.getData();});
 nosliw.registerSetNodeDataEvent("resource.utility", function(){node_resourceUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("debug.createPackageDebugView", function(){node_createPackageDebugView = this.getData();});
-nosliw.registerSetNodeDataEvent("component.createConfigure", function(){node_createConfigure = this.getData();});
+nosliw.registerSetNodeDataEvent("configure.createConfigure", function(){node_createConfigure = this.getData();});
 nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("component.componentUtility", function(){node_componentUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("common.namingconvension.namingConvensionUtility", function(){node_namingConvensionUtility = this.getData();});

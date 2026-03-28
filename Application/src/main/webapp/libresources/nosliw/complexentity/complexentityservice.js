@@ -77,6 +77,7 @@ var packageObj = library;
 	var node_createWrapperBrickPlugin;
 	var node_createModulePlugin;
 	var node_getObjectId;
+	var node_configureUtility;
 
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -300,7 +301,7 @@ var node_createComplexEntityRuntimeService = function() {
 		getCreateApplicationRequest : function(parm, configureInfo, runtimeContext, envInterface, handlers, request){
 			var out = node_createServiceRequestInfoSequence("getCreateApplicationRequest", handlers, request);
 			
-			out.addRequest(node_complexEntityUtility.getRootConfigureRequest(configureInfo, {
+			out.addRequest(node_configureUtility.getRootConfigureRequest(configureInfo, {
 				success : function(request, configure){
 					var application = node_createApplication(parm, configure);
 		
@@ -529,6 +530,7 @@ nosliw.registerSetNodeDataEvent("complexentity.createContainerPlugin", function(
 nosliw.registerSetNodeDataEvent("module.createModulePlugin", function(){node_createModulePlugin = this.getData();});
 nosliw.registerSetNodeDataEvent("common.interfacedef.getObjectId", function(){node_getObjectId = this.getData();});
 
+nosliw.registerSetNodeDataEvent("configure.configureUtility", function(){node_configureUtility = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createComplexEntityRuntimeService", node_createComplexEntityRuntimeService); 

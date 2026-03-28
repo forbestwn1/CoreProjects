@@ -353,54 +353,6 @@ var node_complexEntityUtility = function(){
 			
 			return adapter.getExecuteRequest(parentCoreEntity, childInput, extraInfo, handlers, request);
 		},
-	
-		getRootConfigureRequest : function(configure, handlers, request){
-			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
-	
-			var getConfigureValueRequest = node_createServiceRequestInfoSequence(undefined, {
-				success : function(request, configureObject){
-					
-					var configureValue = configureObject==undefined?undefined:configureObject[node_basicUtility.buildNosliwFullName(node_CONSTANT.CONFIGURE_ROOT_VALUE)];
-					var configureGlobal;
-					var configureParms;
-					
-					if(configureValue!=undefined){
-						configureGlobal = configureObject[node_basicUtility.buildNosliwFullName(node_CONSTANT.CONFIGURE_ROOT_GLOBAL)];
-						configureParms = configureObject[node_basicUtility.buildNosliwFullName(node_CONSTANT.CONFIGURE_ROOT_PARM)];
-					}
-					else{
-						configureValue = configureObject;
-					}
-					
-					return node_createConfigure(configureValue, configureGlobal, configureParms);
-				}
-			});
-			if(typeof configure === 'object'){
-				getConfigureValueRequest.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
-					return configure;
-				}));
-			}
-			else if(typeof configure === 'string'){
-				var configureName = configure;
-				var settingName;
-				var index = configure.indexOf("-");
-				if(index!=-1){
-					configureName = configure.substring(0, index);
-					settingName = configure.substring(index+1);
-				}
-				
-				var configureResourceId = new node_ResourceId(configureName, node_COMMONCONSTANT.RUNTIME_RESOURCE_TYPE_CONFIGURE, "1.0.0");
-				getConfigureValueRequest.addRequest(nosliw.runtime.getResourceService().getGetResourcesRequest(configureResourceId, {
-					success : function(requestInfo, resourceTree){
-						var configureValue = node_resourceUtility.getResourceFromTree(resourceTree, configureResourceId).resourceData[node_COMMONATRIBUTECONSTANT.RESOURCEDATACONFIGURE_CONFIGURE];
-						if(settingName!=undefined)   configureValue = configureValue[settingName];
-						return configureValue;
-					}
-				}));
-			}
-			out.addRequest(getConfigureValueRequest);
-			return out;
-		},
 		
 	};
 
@@ -419,7 +371,7 @@ nosliw.registerSetNodeDataEvent("common.interfacedef.getObjectType", function(){
 nosliw.registerSetNodeDataEvent("common.interfacedef.getObjectId", function(){node_getObjectId = this.getData();});
 nosliw.registerSetNodeDataEvent("resource.entity.ResourceId", function(){	node_ResourceId = this.getData();	});
 nosliw.registerSetNodeDataEvent("resource.utility", function(){node_resourceUtility = this.getData();});
-nosliw.registerSetNodeDataEvent("component.createConfigure", function(){node_createConfigure = this.getData();});
+nosliw.registerSetNodeDataEvent("configure.createConfigure", function(){node_createConfigure = this.getData();});
 nosliw.registerSetNodeDataEvent("complexentity.getEntityTreeNodeInterface", function(){node_getEntityTreeNodeInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("common.namingconvension.namingConvensionUtility", function(){node_namingConvensionUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("complexentity.entity.createCoreEntityPackage", function(){node_createCoreEntityPackage = this.getData();});

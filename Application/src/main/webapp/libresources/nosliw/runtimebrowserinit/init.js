@@ -37,6 +37,7 @@ nosliw.init = function(configure){
 		"nosliw.uicontent",
 		"nosliw.dataservice",
 		"nosliw.debug",
+		"nosliw.configure",
 		"nosliw.component",
 		"nosliw.complexentity",
 		"nosliw.testcomponent",
