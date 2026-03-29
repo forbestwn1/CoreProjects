@@ -16,13 +16,14 @@ var packageObj = library;
 var node_createScriptBasedPlugin = function(){
 	
 	var loc_out = {
-		getCreateEntityCoreRequest : function(complexEntityDef, valueContextId, bundleCore, configure, handlers, request){
+		
+		getCreateEntityCoreRequest : function(complexEntityDef, internalValuePortContainerId, externalValuePortContainerId, bundleCore, configure, handlers, request){
 			var out = node_createServiceRequestInfoSequence(new node_ServiceInfo("createScriptBasedCoreEntity"), handlers, request);
 
 			//run script
 			out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
 				var scriptFun = complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.WITHSCRIPT_SCRIPT);
-				return scriptFun(complexEntityDef, valueContextId, bundleCore, configure);
+				return scriptFun(complexEntityDef, internalValuePortContainerId, bundleCore, configure);
 			}));
 
 			return out;

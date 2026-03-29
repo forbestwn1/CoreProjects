@@ -55,7 +55,7 @@ $(document).on("nosliwActive", function(){
 	nosliw.runtime.runtimeEnv = node_createRuntimeEnvironment(undefined, node_createRuntimeEnv($("#moduleDiv").get()).getValues()); 
 	
 	var runtimeContext = {
-		view : $('#mainDiv').get(),
+		view : $('#moduleDiv').get(),
 		backupState : node_createStateBackupService(resourceId[node_COMMONATRIBUTECONSTANT.RESOURCEID_RESOURCETYPE], resourceId[[node_COMMONATRIBUTECONSTANT.RESOURCEID_ID]], "1.0.0", nosliw.runtime.getStoreService()),
 	};
 
