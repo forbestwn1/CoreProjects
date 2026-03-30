@@ -301,7 +301,9 @@ var node_createValueStructure = function(id, valuePortContainer, request){
 				success : function(request, result){
 					var out = {};
 					_.each(result.getResults(), function(result, name){
-						out[name] = result.value;
+						if(result!=undefined){
+							out[name] = result.value;
+						}
 					});
 					return out;
 //					return result.getResults();

@@ -39,7 +39,7 @@ public class HAPProviderPluginBrickImp implements HAPProviderPluginBrick{
 		out.add(new HAPPluginBrick(HAPEnumBrickType.TASK_TASK_SCRIPT_100, new HAPInfoBrickType(HAPConstantShared.TASK_TYPE_TASK)));
 		out.add(new HAPPluginBrick(HAPEnumBrickType.TASK_EXPRESSION_SCRIPT_100, new HAPInfoBrickType(HAPConstantShared.TASK_TYPE_EXPRESSION)));
 
-		out.add(new HAPPluginBrick(HAPEnumBrickType.SERVICEPROVIDER_100));
+		out.add(new HAPPluginBrick(HAPEnumBrickType.SERVICEPROVIDER_100, new HAPInfoBrickType(HAPConstantShared.TASK_TYPE_TASK)));
 		out.add(new HAPPluginBrickServiceProfile());
 		out.add(new HAPPluginBrickServiceInterface());
 

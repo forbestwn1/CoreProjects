@@ -20,6 +20,7 @@ var packageObj = library;
 	var node_createValuePortValueFlat;
 	var node_interactiveUtility;
 	var node_getEntityObjectInterface;
+	var node_createTaskCore;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -46,7 +47,7 @@ var loc_createDataServiceProvider = function(serviceProvider, configure){
 	
 	var loc_envInterface = {};
 
-	var loc_taskCore = node_createTaskCore(loc_out, loc_out);
+	var loc_taskCore;
 	
 	var loc_taskResult;
 
@@ -65,13 +66,14 @@ var loc_createDataServiceProvider = function(serviceProvider, configure){
 		    }
 		};
 
+		/*
 		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 		out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
 			return result;
 		}));
 		return out;
+		*/
 
-/*
 		var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 		out.addRequest(nosliw.runtime.getDataService().getExecuteDataServiceRequest(loc_serviceProvider.getAttributeValue(node_COMMONATRIBUTECONSTANT.BLOCKSERVICEPROVIDER_SERVICEID)[node_COMMONATRIBUTECONSTANT.KEYSERVICE_ID], parms, {
 			success: function(rquest, resultValue){
@@ -79,7 +81,6 @@ var loc_createDataServiceProvider = function(serviceProvider, configure){
 			}
 		}));
 		return out;
-*/
 		
 	};
 	
@@ -149,6 +150,7 @@ nosliw.registerSetNodeDataEvent("component.makeObjectWithApplicationInterface", 
 nosliw.registerSetNodeDataEvent("valueport.createValuePortValueFlat", function(){	node_createValuePortValueFlat = this.getData();	});
 nosliw.registerSetNodeDataEvent("task.interactiveUtility", function(){	node_interactiveUtility = this.getData();	});
 nosliw.registerSetNodeDataEvent("complexentity.getEntityObjectInterface", function(){node_getEntityObjectInterface = this.getData();});
+nosliw.registerSetNodeDataEvent("task.createTaskCore", function(){node_createTaskCore = this.getData();});
 
 
 //Register Node by Name

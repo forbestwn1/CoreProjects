@@ -88,6 +88,10 @@ var node_createRuntimeEnv = function(parentView){
 		
 		getValues : function(){
 			return loc_values;
+		},
+		
+		getView : function(){
+			return loc_containerView;
 		}
 		
 	};

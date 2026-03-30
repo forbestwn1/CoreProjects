@@ -129,7 +129,7 @@
 					},
 					"<%=&(nosliwattribute_arrayindex)&%>" : {
 						"definition" : {
-							"criteria" : "test.integer;1.0.0"
+							"data" : "test.integer;1.0.0"
 						},
 						"info":{
 							"instantiate" : "manual"

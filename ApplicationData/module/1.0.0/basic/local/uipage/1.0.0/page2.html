@@ -3,11 +3,33 @@
 <body>
 Page2!!!!!
 
+ 		<nosliw-debug_test data_string="page2_public_string"/>
+
 
 </body>
 
 	<valuecontext>
 		[
+			{
+				"scope" : "public",
+				"valueStructure" : {
+					"root" : {
+						"page2_public_string": {
+							"definition":{
+								"data": {
+								    "criteria" : "test.string;1.0.0",
+								} 
+							}
+						}
+					},
+					"initValue": {
+						"page2_public_string": {
+							"dataTypeId": "test.string;1.0.0",
+							"value": "default value of page_public_string1"
+						}
+					}
+				}
+			}		
 		]
 	</valuecontext>
 

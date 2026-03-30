@@ -16,22 +16,110 @@
 	        			"element" :
 		        		[ 
 			        		{
+								"name" : "tasks",
 				        		"type" : "multiple",
-					        	"name" : "tasks",
     						    "brickPackages" : [
 	    					        {
                         		    	"status": "disabled1",
          	    					    "brickId" : {
 		    	    	    			    "idPath" : "#main.task.present.brick"
     			            			}
-		    			    	    }
+		    			    	    },
+    								{
+	    								"status": "disabled1",
+		    						    "brickId" : {
+			    						    "idPath" : "#main.task.dataSource.brick",
+											"adapters" : ["init"]
+				    					}
+					    			}
     			    			]
 	    			    	}
     	    			]
-	    	    	}		
+	    	    	}
 		        }
 	        },
 
+			{
+				"name" : "dataSource",
+				"status": "disabled1",
+			    "description" : "",
+				"brickType" : {
+				    "brickType" : "serviceprovider",
+			        "version" : "1.0.0"
+			    },
+			    "brick" : {
+					"brick" : {
+    					"serviceKey" : {
+	    					"id" : "TestServiceArray"
+		    			}
+					},
+    				"adapter" : [
+ 	    				{
+		    				"name" : "init",
+			    			"status": "disabled1",
+				    		"brickTypeId" : {
+					    		"brickType": "dataAssociationForTask",
+    							"version": "1.0.0"
+	    					},
+		    				"brick" : {
+			    				"definition" : {
+				    				"in" : {
+					    				"type" : "mapping",
+						    			"mapping" : [
+							    			{
+								    			"status": "disabled1",
+									    		"target" : {
+										    		"rootName" : "serviceParm1",
+											    	"ioDirection" : "IN",
+    												"valuePortId" : {
+	    												"valuePortId" : {
+		    												"group" : "taskInteractive"
+			    										}
+				    								}
+					    						},
+    											"definition" : {
+	    											"value" : {
+		    											"dataTypeId": "test.string;1.0.0",
+			    										"value": "input parm value for init"
+				    								}
+					    						}
+    										}
+	    								]
+		    						},
+			    					"out" : {
+				    					"success" : {
+					    					"type" : "mapping",
+						    				"mapping" : [
+							    				{
+								    				"target" : {
+									    				"valuePortId": {
+										    				"brickId" : {
+											    				"idPath" : "#main.page.page1inmodule.brick.UIContent"
+												    		}
+													    },
+				    									"rootName" : "page1_public_array"
+			    									},
+		    										"definition" : {
+	    												"mapping" : {
+    														"elementPath": "outputArrayInService1",
+		    												"valuePortId" : {
+	    														"valuePortId" : {
+    																"group" : "taskInteractive"
+											    				}
+										    				}
+									    				}
+								    				}
+							    				}
+						    				]
+					    				}
+				    				}
+			    				}
+		    				}
+	    				}
+    				]
+			    }
+			},
+			
 	        {
 	    		"name" : "navigation",
 		    	"status": "disabled1",
