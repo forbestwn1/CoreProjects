@@ -23,6 +23,9 @@ import com.nosliw.core.application.brick.ui.uicontent.HAPUIEmbededScriptExpressi
 import com.nosliw.core.application.brick.ui.uicontent.HAPUIEventHandlerInfoNormal;
 import com.nosliw.core.application.common.scriptexpressio.HAPUtilityScriptExpressionParser;
 import com.nosliw.core.application.common.scriptexpressio.definition.HAPDefinitionContainerScriptExpression;
+import com.nosliw.core.application.division.manual.brick.container.HAPManualDefinitionBrickContainer;
+import com.nosliw.core.application.division.manual.brick.wrapperbrick.HAPManualDefinitionBrickWrapperBrick;
+import com.nosliw.core.application.division.manual.common.task.HAPManualDefinitionWithBrickTasks;
 import com.nosliw.core.application.division.manual.common.valuecontext.HAPManualParserValueContext;
 import com.nosliw.core.application.division.manual.core.HAPManualManagerBrick;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionBrick;
@@ -51,6 +54,9 @@ public class HAPManualPluginParserBlockComplexUIContent extends HAPManualDefinit
 		//parse value context
 		parseValueContext(element, uiContent, parseContext, this.m_dataRuleMan);
 
+		//parse tasks
+		parseTasks(element, uiContent, parseContext, this.m_dataRuleMan);
+		
 		parseDescendantTags(element, uiContent, parseContext);
 		
 		//parse script expression in content
@@ -234,7 +240,29 @@ public class HAPManualPluginParserBlockComplexUIContent extends HAPManualDefinit
 		}
 	}
 	
+	private void parseTasks(Element ele, HAPManualDefinitionBlockComplexUIContent brickManualDef, HAPManualDefinitionContextParse parseContext, HAPManagerDataRule dataRuleMan) {
+		HAPManualDefinitionBrickContainer taskContainer = (HAPManualDefinitionBrickContainer)parseContext.getManualBrickManager().newBrickDefinition(HAPEnumBrickType.CONTAINER_100);
+		brickManualDef.setAttributeValueWithBrick(HAPManualDefinitionWithBrickTasks.TASK, taskContainer);
+		
+		List<Element> tasksEles = HAPUtilityUIResourceParser.getChildElementsByTag(ele, HAPManualDefinitionWithBrickTasks.TASK);
+		for(Element valueContextEle : tasksEles){
+			JSONArray taskArrayJson = new JSONArray(Parser.unescapeEntities(valueContextEle.html(), false));
+			for(int i=0; i<taskArrayJson.length(); i++) {
+				HAPManualDefinitionBrickWrapperBrick task = (HAPManualDefinitionBrickWrapperBrick)HAPManualDefinitionUtilityParserBrick.parseBrickDefinition(taskArrayJson.getJSONObject(i), HAPEnumBrickType.WRAPPERBRICK_100, HAPSerializationFormat.JSON, parseContext);
+				if(task!=null) {
+					taskContainer.addElementWithBrick(task);
+				}
+			}
+			break;
+		}
+		for(Element tasksEle : tasksEles) {
+			tasksEle.remove();
+		}
+	}
 
+	
+	
+	
 	
 
 	

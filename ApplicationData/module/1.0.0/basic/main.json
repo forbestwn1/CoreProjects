@@ -39,6 +39,7 @@
 		        }
 	        },
 
+
 			{
 				"name" : "dataSource",
 				"status": "disabled1",
@@ -121,8 +122,8 @@
 			},
 			
 	        {
-	    		"name" : "navigation",
-		    	"status": "disabled1",
+	    		"name" : "navigateToPage2",
+		    	"status": "disabled",
 			    "description" : "",
         		"brickType" : {
 		    	    "brickType" : "taskTaskScript",

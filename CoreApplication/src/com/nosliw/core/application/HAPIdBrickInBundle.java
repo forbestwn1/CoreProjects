@@ -7,6 +7,7 @@ import org.json.JSONObject;
 import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.common.serialization.HAPSerializableImp;
+import com.nosliw.common.utils.HAPConstantShared;
 
 @HAPEntityWithAttribute
 public class HAPIdBrickInBundle extends HAPSerializableImp{
@@ -43,7 +44,12 @@ public class HAPIdBrickInBundle extends HAPSerializableImp{
 
 	@Override
 	protected boolean buildObjectByLiterate(String literateValue){	
-		this.m_idPath = literateValue;
+		if(literateValue.startsWith(HAPConstantShared.SEPERATOR_PATH)) {
+			this.m_relativePath = literateValue.substring(HAPConstantShared.SEPERATOR_PATH.length());
+		}
+		else {
+			this.m_idPath = literateValue;
+		}
 		return true;  
 	}
 

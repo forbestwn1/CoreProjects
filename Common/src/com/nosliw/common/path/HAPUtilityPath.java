@@ -3,9 +3,28 @@ package com.nosliw.common.path;
 import org.apache.commons.lang3.tuple.Pair;
 
 import com.nosliw.common.utils.HAPConstantShared;
+import com.nosliw.common.utils.HAPUtilityBasic;
+import com.nosliw.common.utils.HAPUtilityNamingConversion;
 
 public class HAPUtilityPath {
 
+	public static String combinePath(String[] segs) {
+		String out = null;
+		int j = 0;
+		for(int i=0; i<segs.length; i++) {
+			if(!HAPUtilityBasic.isStringEmpty(segs[i])) {
+				if(j==0) {
+					out = segs[i];
+				}
+				else {
+					out = HAPUtilityNamingConversion.cascadeComponentPath(out, segs[i]);
+				}
+				j++;
+			}
+		}
+		return out;
+	}
+	
 	public static int comparePath(HAPPath path, HAPPath basePath) {
 		if(path.isEmpty()&&basePath.isEmpty()) {
 			return 0;
@@ -69,8 +88,6 @@ public class HAPUtilityPath {
 			if(index!=0) {
 				out.append(HAPConstantShared.SEPERATOR_PATH);
 			}
-			out.append(HAPConstantShared.NAME_CHILD);
-			out.append(HAPConstantShared.SEPERATOR_LEVEL1);
 			out.append(entityIdPathSegs[j]);
 			index++;
 		}
@@ -84,9 +101,9 @@ public class HAPUtilityPath {
 			if(seg.startsWith(HAPConstantShared.NAME_PARENT)) {
 				path = path.trimLast().getLeft();
 			}
-			else if(seg.startsWith(HAPConstantShared.NAME_CHILD)) {
-				String[] ss = seg.split("\\"+HAPConstantShared.SEPERATOR_LEVEL1);
-				path = path.appendSegment(ss[1]);
+			else{
+				//child
+				path = path.appendSegment(seg);
 			}
 		}
 		return path.toString();

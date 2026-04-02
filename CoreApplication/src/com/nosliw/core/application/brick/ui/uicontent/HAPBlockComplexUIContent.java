@@ -6,9 +6,10 @@ import com.nosliw.common.constant.HAPAttribute;
 import com.nosliw.common.constant.HAPEntityWithAttribute;
 import com.nosliw.core.application.HAPBrick;
 import com.nosliw.core.application.common.scriptexpressio.HAPContainerScriptExpression;
+import com.nosliw.core.application.common.task.HAPWithBrickTasks;
 
 @HAPEntityWithAttribute
-public interface HAPBlockComplexUIContent extends HAPBrick{
+public interface HAPBlockComplexUIContent extends HAPBrick, HAPWithBrickTasks{
 
 	@HAPAttribute
 	static final public String HTML = "html";

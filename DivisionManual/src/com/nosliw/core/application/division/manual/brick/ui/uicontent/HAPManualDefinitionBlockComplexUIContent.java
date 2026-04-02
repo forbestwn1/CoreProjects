@@ -15,14 +15,16 @@ import com.nosliw.core.application.brick.ui.uicontent.HAPUIEventHandlerInfoNorma
 import com.nosliw.core.application.common.constant.HAPDefinitionConstant;
 import com.nosliw.core.application.common.parentrelation.HAPManualDefinitionBrickRelation;
 import com.nosliw.core.application.common.scriptexpressio.definition.HAPDefinitionContainerScriptExpression;
+import com.nosliw.core.application.division.manual.brick.container.HAPManualDefinitionBrickContainer;
 import com.nosliw.core.application.division.manual.brick.container.HAPManualDefinitionBrickContainerList;
+import com.nosliw.core.application.division.manual.common.task.HAPManualDefinitionWithBrickTasks;
 import com.nosliw.core.application.division.manual.core.HAPManualEnumBrickType;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionAttributeInBrick;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionBrick;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionWrapperValueBrick;
 import com.nosliw.core.xxx.application1.HAPWithValueContext;
 
-public class HAPManualDefinitionBlockComplexUIContent extends HAPManualDefinitionBrick{
+public class HAPManualDefinitionBlockComplexUIContent extends HAPManualDefinitionBrick  implements HAPManualDefinitionWithBrickTasks{
 
 	private static final String ID_INDEX = "idIndex";
 	
@@ -80,6 +82,10 @@ public class HAPManualDefinitionBlockComplexUIContent extends HAPManualDefinitio
 	public Map<String, HAPDefinitionConstant> getConstantsFromParent(){    return (Map<String, HAPDefinitionConstant>)this.getAttributeValueOfValue(CONSTANTFROMPARENT);   }
 	public void addConstantFromParent(HAPDefinitionConstant constant) {    this.getConstantsFromParent().put(constant.getName(), constant);        }
 
+	@Override
+	public HAPManualDefinitionBrickContainer getTasks() {   return (HAPManualDefinitionBrickContainer)this.getAttributeValueOfBrick(HAPManualDefinitionWithBrickTasks.TASK);   }
+	public void addTask(HAPManualDefinitionBrick taskBrickWrapper) {    this.getTasks().addElementWithBrick(taskBrickWrapper);    }
+	
 	@Override
 	public Map<String, HAPDefinitionConstant> getConstantDefinitions(){
 		Map<String, HAPDefinitionConstant> out = new LinkedHashMap<String, HAPDefinitionConstant>();

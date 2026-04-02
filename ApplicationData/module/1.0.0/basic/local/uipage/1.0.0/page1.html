@@ -5,7 +5,7 @@
   <div style="overflow-y:scroll; height:600px;">
 Page1!!!!!
 
-        <button nosliw-event_click="task|task.navigation.brick">Button to navigate to next page</button>
+        <button nosliw-event_click="task|.task.navigateToPage2.brick">Button to navigate to next page</button>
 
  		<!--nosliw-debug_test reference_tag="name:name1"/-->
 
@@ -14,17 +14,129 @@ Page1!!!!!
 
  		<!--nosliw-debug_test data_float="page1_public_float"/-->
 
- 		<nosliw-debug_test data_array="page1_public_array">
+ 		<!--nosliw-debug_test data_array="page1_public_array">
  		     <br>
- 		     <a nosliw-event_click="task|task.navigation.brick"><%=?(element)?.value%></a>
+ 		     <a nosliw-event_click="task|.task.presentElement.brick"><%=?(element)?.value%></a>
  		     index : <%=JSON.stringify(?(index)?)%>
  		     value : <%=?(element)?.value%>
- 		</nosliw-debug_test>
+
+            <task>
+            [
+	    		{
+		    		"name" : "presentElement",
+			    	"status": "disabled",
+    			    "description" : "",
+	    		    "brick" : {
+		    			"resourceId":"taskTaskScript|1.0.0|sequence",  
+			    		"dynamicInput" : { 
+				    		"element" :
+			    	    	[
+			        	    	{
+							    	"name" : "tasks",
+				        		    "type" : "multiple",
+    							    "brickPackages" : [
+	    						        {
+		    	            		    	"status": "disabled1",
+			        					    "brickId" : {
+				        	    			    "idPath" : ".task.executeAdapterForPresent.brick"
+				                			}
+						        	    },
+							            {
+			            		        	"status": "disabled",
+			    					        "brickId" : {
+				    	    			        "idPath" : ".task.navigateToPage2.brick"
+    				            			}
+	    					    	    },
+		    		    			]
+			    		    	}
+				    		]
+    			    	}
+	    		    }
+		    	},
+    	        {
+	        		"name" : "navigateToPage2",
+		        	"status": "disabled",
+			        "description" : "",
+        		    "brickType" : {
+    		    	    "brickType" : "taskTaskScript",
+	    		        "version" : "1.0.0"
+		            },
+		            "brick" : {
+    			    	"scriptResourceId": "task_page_navigate",
+    				    "parm": {
+        				    "page" : "page2inmodule"
+         				}
+		            }
+	            },
+	    		{
+		    		"name" : "executeAdapterForPresent",
+     		    	"status": "disabled",
+	    		    "description" : "",
+            		"brickType" : {
+		        	    "brickType" : "taskTaskScript",
+			            "version" : "1.0.0"
+    		        },
+	    	        "brick" : {
+    	    			"scriptResourceId": "task_adpater_execute",
+    		    		"parm": {
+    		    		    "relativePath" : "",
+    			    	    "adapter" : "elementToPage2"
+    				    }
+    		        }
+		    	}
+            ]
+            </task>
+
+            <adapter>
+            [
+				{
+					"name" : "elementToPage2",
+					"status": "disabled",
+					"entityType" : "dataAssociation",
+					"entity" : {
+						"direction": "upStream",
+						"mapping" : {
+							"element" : {
+								"definition" : {
+									"mapping" : {
+										"elementPath": "child_tree_public.a"
+									}
+								}
+							}
+						}
+					}
+				}
+            ]
+            </adapter>
+
+ 		</nosliw-debug_test-->
 
         End of the page
 
 </div>
 </body>
+    <task>
+        [
+
+    	        {
+	        		"name" : "navigateToPage2",
+		        	"status": "disabled1",
+			        "description" : "",
+        		    "brickType" : {
+    		    	    "brickType" : "taskTaskScript",
+	    		        "version" : "1.0.0"
+		            },
+		            "brick" : {
+    			    	"scriptResourceId": "task_page_navigate",
+    				    "parm": {
+        				    "page" : "page2inmodule"
+         				}
+		            }
+	            },
+
+        ]
+    </task>
+
 
 	<valuecontext>
 		[

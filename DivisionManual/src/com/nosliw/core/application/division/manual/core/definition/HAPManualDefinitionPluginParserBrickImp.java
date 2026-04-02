@@ -5,6 +5,8 @@ import java.util.List;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+import org.jsoup.nodes.Element;
+import org.jsoup.parser.Parser;
 
 import com.nosliw.common.info.HAPEntityInfo;
 import com.nosliw.common.info.HAPUtilityEntityInfo;
@@ -21,6 +23,7 @@ import com.nosliw.core.application.common.interactive.HAPWithBlockInteractiveExp
 import com.nosliw.core.application.common.interactive.HAPWithBlockInteractiveTask;
 import com.nosliw.core.application.common.withvariable.HAPWithVariableDebugDefinition;
 import com.nosliw.core.application.division.manual.brick.container.HAPManualDefinitionBrickContainer;
+import com.nosliw.core.application.division.manual.brick.ui.uicontent.HAPUtilityUIResourceParser;
 import com.nosliw.core.application.division.manual.brick.wrapperbrick.HAPManualDefinitionBrickWrapperBrick;
 import com.nosliw.core.application.division.manual.common.task.HAPManualDefinitionWithBrickTasks;
 import com.nosliw.core.application.division.manual.core.HAPManualManagerBrick;
@@ -132,7 +135,7 @@ public class HAPManualDefinitionPluginParserBrickImp implements HAPManualDefinit
 		if(jsonValue instanceof JSONObject) {
 			JSONObject jsonObj = (JSONObject)jsonValue;
 			
-//			this.parseSimpleEntityAttributeJson(jsonObj, entityId, HAPWithAttachment.ATTACHMENT, HAPConstantShared.RUNTIME_RESOURCE_TYPE_ATTACHMENT, null, parserContext);
+//			this.parseSimpleEntityAttributeJson(jsonObj, entityId, HAPWithAttachment.ATTACHMENT, HAPConstantShared.RUNTIME_RESOURCE_TYPE_ATTACHMENT, null, parseContext);
 
 			//entity info
 			if(brickDefinition instanceof HAPEntityInfo) {
@@ -188,14 +191,13 @@ public class HAPManualDefinitionPluginParserBrickImp implements HAPManualDefinit
 	}
 
 	//*************************************   attribute parse helper
-	protected void parseBrickAttribute(HAPManualDefinitionBrick parentBrick, Object obj, String attributeName, HAPIdBrickType entityTypeIfNotProvided, HAPIdBrickType adapterTypeId, HAPSerializationFormat format, HAPManualDefinitionContextParse parserContext) {
+	protected void parseBrickAttribute(HAPManualDefinitionBrick parentBrick, Object obj, String attributeName, HAPIdBrickType entityTypeIfNotProvided, HAPIdBrickType adapterTypeId, HAPSerializationFormat format, HAPManualDefinitionContextParse parseContext) {
 		switch(format) {
 		case JSON:
-			parseBrickAttributeJson(parentBrick, (JSONObject)obj, attributeName, entityTypeIfNotProvided, adapterTypeId, parserContext);			
+			parseBrickAttributeJson(parentBrick, (JSONObject)obj, attributeName, entityTypeIfNotProvided, adapterTypeId, parseContext);			
 			break;
 		case HTML:
-			HAPManualDefinitionBrick brickDef = HAPManualDefinitionUtilityParserBrick.parseBrickDefinition(obj, entityTypeIfNotProvided, format, parserContext);
-			parentBrick.setAttributeValueWithBrick(attributeName, brickDef);
+			parseBrickAttributeHtml(parentBrick, (Element)obj, attributeName, entityTypeIfNotProvided, adapterTypeId, parseContext);
 			break;
 		case JAVASCRIPT:
 			break;
@@ -203,28 +205,54 @@ public class HAPManualDefinitionPluginParserBrickImp implements HAPManualDefinit
 		}
 	}
 	
-	protected void parseBrickAttributeJson(HAPManualDefinitionBrick parentBrick, JSONObject jsonObj, String attributeName, HAPIdBrickType entityTypeIfNotProvided, HAPIdBrickType adapterTypeId, HAPManualDefinitionContextParse parserContext) {
+	protected void parseBrickAttributeHtml(HAPManualDefinitionBrick parentBrick, Element htmlEle, String attributeName, HAPIdBrickType entityTypeIfNotProvided, HAPIdBrickType adapterTypeId, HAPManualDefinitionContextParse parseContext) {
+		HAPManualDefinitionAttributeInBrick attribute = new HAPManualDefinitionAttributeInBrick();
+		attribute.setName(attributeName);
+		
+		//parse adapter
+		List<Element> adaptersEles = HAPUtilityUIResourceParser.getChildElementsByTag(htmlEle, HAPManualDefinitionAttributeInBrick.ADAPTER);
+		for(Element adaptersEle : adaptersEles){
+			JSONArray adapterArrayJson = new JSONArray(Parser.unescapeEntities(adaptersEle.html(), false));
+			for(int i=0; i<adapterArrayJson.length(); i++) {
+				
+				List<HAPManualDefinitionAdapter> adapters = HAPManualDefinitionUtilityParserBrickFormatJson.parseAdapters(adapterArrayJson.getJSONObject(i), adapterTypeId, parseContext);
+				adapters.forEach(adapter->attribute.addAdapter(adapter));
+			}
+			break;
+		}
+		for(Element tasksEle : adaptersEles) {
+			tasksEle.remove();
+		}
+
+		//parse brick
+		HAPManualDefinitionBrick brickDef = HAPManualDefinitionUtilityParserBrick.parseBrickDefinition(htmlEle, entityTypeIfNotProvided, HAPSerializationFormat.HTML, parseContext);
+		attribute.setValueWrapper(new HAPManualDefinitionWrapperValueBrick(brickDef));
+		
+		parentBrick.setAttribute(attribute);
+	}
+	
+	protected void parseBrickAttributeJson(HAPManualDefinitionBrick parentBrick, JSONObject jsonObj, String attributeName, HAPIdBrickType entityTypeIfNotProvided, HAPIdBrickType adapterTypeId, HAPManualDefinitionContextParse parseContext) {
 		JSONObject attrEntityObj = jsonObj.optJSONObject(attributeName);
 		if(attrEntityObj!=null) {
-			parseBrickAttributeSelfJson(parentBrick, attrEntityObj, attributeName, entityTypeIfNotProvided, adapterTypeId, parserContext);
+			parseBrickAttributeSelfJson(parentBrick, attrEntityObj, attributeName, entityTypeIfNotProvided, adapterTypeId, parseContext);
 		}
 	}
 	
-	protected void parseBrickAttributeSelfJson(HAPManualDefinitionBrick parentBrick, JSONObject attrEntityObj, String attributeName, HAPIdBrickType entityTypeIfNotProvided, HAPIdBrickType adapterTypeId, HAPManualDefinitionContextParse parserContext) {
+	protected void parseBrickAttributeSelfJson(HAPManualDefinitionBrick parentBrick, JSONObject attrEntityObj, String attributeName, HAPIdBrickType entityTypeIfNotProvided, HAPIdBrickType adapterTypeId, HAPManualDefinitionContextParse parseContext) {
 		if(isAttributeEnabledJson(attrEntityObj)) {
-			HAPManualDefinitionAttributeInBrick attribute = HAPManualDefinitionUtilityParserBrickFormatJson.parseAttribute(attributeName, attrEntityObj, entityTypeIfNotProvided, adapterTypeId, parserContext);
+			HAPManualDefinitionAttributeInBrick attribute = HAPManualDefinitionUtilityParserBrickFormatJson.parseAttribute(attributeName, attrEntityObj, entityTypeIfNotProvided, adapterTypeId, parseContext);
 			parentBrick.setAttribute(attribute);
 		}
 	}
 
 	//parse task container
-	protected void parseTaskContainerAttribute(HAPManualDefinitionBrick parentBrick, JSONObject attrEntityObj, HAPManualDefinitionContextParse parserContext) {
-		HAPManualDefinitionBrickContainer taskContainer = (HAPManualDefinitionBrickContainer)parserContext.getManualBrickManager().newBrickDefinition(HAPEnumBrickType.CONTAINER_100);
+	protected void parseTaskContainerAttribute(HAPManualDefinitionBrick parentBrick, JSONObject attrEntityObj, HAPManualDefinitionContextParse parseContext) {
+		HAPManualDefinitionBrickContainer taskContainer = (HAPManualDefinitionBrickContainer)parseContext.getManualBrickManager().newBrickDefinition(HAPEnumBrickType.CONTAINER_100);
 		parentBrick.setAttributeValueWithBrick(HAPManualDefinitionWithBrickTasks.TASK, taskContainer);
 		JSONArray taskArrayJson = attrEntityObj.optJSONArray(HAPManualDefinitionWithBrickTasks.TASK);
 		if(taskArrayJson!=null) {
 			for(int i=0; i<taskArrayJson.length(); i++) {
-				HAPManualDefinitionBrickWrapperBrick task = (HAPManualDefinitionBrickWrapperBrick)HAPManualDefinitionUtilityParserBrick.parseBrickDefinition(taskArrayJson.getJSONObject(i), HAPEnumBrickType.WRAPPERBRICK_100, HAPSerializationFormat.JSON, parserContext);
+				HAPManualDefinitionBrickWrapperBrick task = (HAPManualDefinitionBrickWrapperBrick)HAPManualDefinitionUtilityParserBrick.parseBrickDefinition(taskArrayJson.getJSONObject(i), HAPEnumBrickType.WRAPPERBRICK_100, HAPSerializationFormat.JSON, parseContext);
 				if(task!=null) {
 					taskContainer.addElementWithBrick(task);
 				}
@@ -242,17 +270,17 @@ public class HAPManualDefinitionPluginParserBrickImp implements HAPManualDefinit
 	}
 	
 	//parse task interface
-	protected void parseTaskInterfaceAttribute(HAPManualDefinitionBrick parentBrick, JSONObject attrEntityObj, HAPManualDefinitionContextParse parserContext) {
-		this.parseBrickAttributeJson(parentBrick, attrEntityObj, HAPWithBlockInteractiveTask.TASKINTERFACE, HAPEnumBrickType.INTERACTIVETASKINTERFACE_100, null, parserContext);
+	protected void parseTaskInterfaceAttribute(HAPManualDefinitionBrick parentBrick, JSONObject attrEntityObj, HAPManualDefinitionContextParse parseContext) {
+		this.parseBrickAttributeJson(parentBrick, attrEntityObj, HAPWithBlockInteractiveTask.TASKINTERFACE, HAPEnumBrickType.INTERACTIVETASKINTERFACE_100, null, parseContext);
 	}
 	
 	//parse expression interface
-	protected void parseExpressionInterfaceAttribute(HAPManualDefinitionBrick parentBrick, JSONObject attrEntityObj, HAPManualDefinitionContextParse parserContext) {
-		this.parseBrickAttributeJson(parentBrick, attrEntityObj, HAPWithBlockInteractiveExpression.EXPRESSIONINTERFACE, HAPEnumBrickType.INTERACTIVEEXPRESSIONINTERFACE_100, null, parserContext);
+	protected void parseExpressionInterfaceAttribute(HAPManualDefinitionBrick parentBrick, JSONObject attrEntityObj, HAPManualDefinitionContextParse parseContext) {
+		this.parseBrickAttributeJson(parentBrick, attrEntityObj, HAPWithBlockInteractiveExpression.EXPRESSIONINTERFACE, HAPEnumBrickType.INTERACTIVEEXPRESSIONINTERFACE_100, null, parseContext);
 	}
 	
 	//parse variable attribute for debug
-	protected void parseDebugVariable(HAPManualDefinitionBrick parentBrick, JSONObject attrEntityObj, HAPManualDefinitionContextParse parserContext) {
+	protected void parseDebugVariable(HAPManualDefinitionBrick parentBrick, JSONObject attrEntityObj, HAPManualDefinitionContextParse parseContext) {
 		List<String> vars = new ArrayList<String>();
 		Object varObj = attrEntityObj.opt(HAPWithVariableDebugDefinition.VARIABLE);
 		if(varObj!=null) {

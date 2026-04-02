@@ -62,7 +62,7 @@ var loc_createUIContentComponentCore = function(complexEntityDef, valueContextId
 
     var loc_uiIdByCustomerTagMetaData = {};
 
-
+    var loc_tasks;
 
 	//object store all the functions for js block
 	var loc_scriptObject = loc_complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.BLOCKCOMPLEXUICONTENT_SCRIPT);
@@ -187,6 +187,14 @@ var loc_createUIContentComponentCore = function(complexEntityDef, valueContextId
 		getEntityInitRequest : function(handlers, request){
 			var out = node_createServiceRequestInfoSequence(undefined, handlers, request);
 
+			//tasks
+			out.addRequest(loc_envInterface[node_CONSTANT.INTERFACE_ENTITY].createAttributeRequest(node_COMMONATRIBUTECONSTANT.WITHBRICKTASKS_TASK, undefined, {
+				success : function(request, node){
+					loc_tasks = node_complexEntityUtility.getBrickNode(node).getChildValue().getCoreEntity();
+					var kkkk = 5555;
+				}
+			}));
+			
 			//content view			
 			loc_viewContainer = node_createViewContainer(loc_idNameSpace);
 			var html = _.unescape(loc_complexEntityDef.getAttributeValue(node_COMMONATRIBUTECONSTANT.BLOCKCOMPLEXUICONTENT_HTML));
