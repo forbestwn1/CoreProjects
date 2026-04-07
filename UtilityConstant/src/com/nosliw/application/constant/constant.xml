@@ -1024,7 +1024,7 @@
 
 
 			<definition type="space"/>
-			<definition name="NAME_PARENT" value="pppppparentttttt"/>
+			<definition name="NAME_PARENT" value="#parent#"/>
 			<definition name="NAME_CHILD" value="chilllllllld"/>
 
 			<definition type="space"/>

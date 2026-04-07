@@ -27,7 +27,7 @@ var node_createRuntimeEnvironment = function(parent, values, configure){
 		
 		getValue : function(name, parms){
 			var value;
-			var obj = values[name];
+			var obj = loc_values[name];
 			if(node_basicUtility.isFunction(obj)){
 				//function
 				value = obj.call(loc_out, parms);

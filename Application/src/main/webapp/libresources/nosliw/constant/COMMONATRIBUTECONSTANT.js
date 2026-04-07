@@ -560,8 +560,6 @@ var COMMONATRIBUTECONSTANT=
   "RESOURCEID_ID": "id",
   "RESOURCEID_STRUCUTRE": "structure",
   "RESOURCEID_SUP": "supliment",
-  "RESOURCEID_BUILDER": "builder",
-  "RESOURCEID_PARMS": "parms",
   "RESOURCEID_PARENT": "parent",
   "RESOURCEID_PATH": "path",
   "RESOURCEID_BASEPATH": "basePath",

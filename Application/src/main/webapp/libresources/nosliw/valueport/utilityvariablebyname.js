@@ -45,14 +45,17 @@ var node_utilityNamedVariable = function(){
 		},
 		
 		setValuesPortValueRequest : function(valuePortContainer, valuePortGroupType, valuePortName, setValueByName, handlers, request){        
-			var setValuesInfo = [];
-			_.each(setValueByName, function(value, name){
-				setValuesInfo.push({
-					elementId : node_createValuePortElementInfo(undefined, name),
-					value : value
+			var valuePort = valuePortContainer.createValuePortByGroupType(valuePortGroupType, valuePortName);
+			if(valuePort!=undefined){
+				var setValuesInfo = [];
+				_.each(setValueByName, function(value, name){
+					setValuesInfo.push({
+						elementId : node_createValuePortElementInfo(undefined, name),
+						value : value
+					});
 				});
-			});
-			return valuePortContainer.createValuePortByGroupType(valuePortGroupType, valuePortName).setValuesRequest(setValuesInfo, handlers, request);
+				return valuePort.setValuesRequest(setValuesInfo, handlers, request);
+			}
 		},
 		
 		createValuePortVariable : function(valuePortContainer, valuePortGroupType, valuePortName){

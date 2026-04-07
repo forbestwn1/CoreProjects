@@ -613,7 +613,7 @@ var COMMONCONSTANT=
   "VALUEPORT_NAME_ERROR": "error",
   "VALUEPORT_NAME_INTERACT_REQUEST": "interactiveRequest",
   "VALUEPORT_NAME_INTERACT_RESULT": "interactiveResult",
-  "NAME_PARENT": "pppppparentttttt",
+  "NAME_PARENT": "#parent#",
   "NAME_CHILD": "chilllllllld",
   "EMBEDEDVALUE_TYPE_ENTITYID": "entityId",
   "EMBEDEDVALUE_TYPE_BRICK": "brick",

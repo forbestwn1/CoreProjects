@@ -5,7 +5,7 @@
   <div style="overflow-y:scroll; height:600px;">
 Page1!!!!!
 
-        <button nosliw-event_click="task|.task.navigateToPage2.brick">Button to navigate to next page</button>
+        <!--button nosliw-event_click="task|.task.navigateToPage2.brick">Button to navigate to next page</button-->
 
  		<!--nosliw-debug_test reference_tag="name:name1"/-->
 
@@ -14,7 +14,7 @@ Page1!!!!!
 
  		<!--nosliw-debug_test data_float="page1_public_float"/-->
 
- 		<!--nosliw-debug_test data_array="page1_public_array">
+ 		<nosliw-debug_test data_array="page1_public_array">
  		     <br>
  		     <a nosliw-event_click="task|.task.presentElement.brick"><%=?(element)?.value%></a>
  		     index : <%=JSON.stringify(?(index)?)%>
@@ -24,7 +24,7 @@ Page1!!!!!
             [
 	    		{
 		    		"name" : "presentElement",
-			    	"status": "disabled",
+			    	"status": "disabled1",
     			    "description" : "",
 	    		    "brick" : {
 		    			"resourceId":"taskTaskScript|1.0.0|sequence",  
@@ -36,17 +36,17 @@ Page1!!!!!
 				        		    "type" : "multiple",
     							    "brickPackages" : [
 	    						        {
-		    	            		    	"status": "disabled1",
+		    	            		    	"status": "disabled",
 			        					    "brickId" : {
-				        	    			    "idPath" : ".task.executeAdapterForPresent.brick"
+				        	    			    "relativePath" : "#parent#.executeAdapterForPresent.brick"
 				                			}
 						        	    },
 							            {
-			            		        	"status": "disabled",
+			            		        	"status": "disabled1",
 			    					        "brickId" : {
-				    	    			        "idPath" : ".task.navigateToPage2.brick"
+				    	    			        "relativePath" : "#parent#.navigateToPage2.brick"
     				            			}
-	    					    	    },
+	    					    	    }
 		    		    			]
 			    		    	}
 				    		]
@@ -55,7 +55,7 @@ Page1!!!!!
 		    	},
     	        {
 	        		"name" : "navigateToPage2",
-		        	"status": "disabled",
+		        	"status": "disabled1",
 			        "description" : "",
         		    "brickType" : {
     		    	    "brickType" : "taskTaskScript",
@@ -109,18 +109,18 @@ Page1!!!!!
             ]
             </adapter>
 
- 		</nosliw-debug_test-->
+ 		</nosliw-debug_test>
 
         End of the page
 
 </div>
 </body>
-    <task>
+    <!--task>
         [
 
     	        {
 	        		"name" : "navigateToPage2",
-		        	"status": "disabled1",
+		        	"status": "disabled",
 			        "description" : "",
         		    "brickType" : {
     		    	    "brickType" : "taskTaskScript",
@@ -135,7 +135,7 @@ Page1!!!!!
 	            },
 
         ]
-    </task>
+    </task-->
 
 
 	<valuecontext>

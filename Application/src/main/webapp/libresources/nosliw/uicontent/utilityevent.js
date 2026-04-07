@@ -22,11 +22,16 @@ var node_uiEventUtility = function(){
 		
 		var coreEntityPackage = node_complexEntityUtility.getBrickPackageByRelativePath(currentBrickCore, taskBrickPackage);
 		
+		var envValuesForEvent = {
+			"eventData" : eventData
+		};
+		
 		var taskSetup = node_createTaskSetup(
 			node_taskUtility.createTaskFunctionWithSettingValuePortValues(
 				node_COMMONCONSTANT.VALUEPORTGROUP_TYPE_EVENT, 
 				node_COMMONCONSTANT.VALUEPORT_TYPE_EVENT, 
-				eventData)
+				eventData),
+			node_taskUtility.createTaskRuntimeEnv(envValuesForEvent)
 		);
 
 		var out = node_taskExecuteUtility.getExecuteInteractiveBrickPackageRequest(coreEntityPackage, taskSetup, {

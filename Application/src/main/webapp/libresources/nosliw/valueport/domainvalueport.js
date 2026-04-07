@@ -213,7 +213,9 @@ var loc_createValuePortContainer = function(id, valuePortContainerDef, variableD
 
 		createValuePortByGroupType : function(valuePortGroupType, valuePortName){    
 			var valuePortInfo = this.getValuePortInfoByGroupTypeAndValuePortName(valuePortGroupType, valuePortName);
-			return this.createValuePort(valuePortInfo.groupName, valuePortInfo.valuePortName);
+			if(valuePortInfo!=undefined){
+				return this.createValuePort(valuePortInfo.groupName, valuePortInfo.valuePortName);
+			}
 		},
 
 		getParentValuePortContainer : function(){   return loc_parentValuePortContainer;    },

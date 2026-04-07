@@ -59,6 +59,8 @@ var node_utility = function(){
 nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("constant.COMMONCONSTANT", function(){node_COMMONCONSTANT = this.getData();});
 
+
+
 //Register Node by Name
 packageObj.createChildNode("utility", node_utility); 
 
