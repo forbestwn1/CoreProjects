@@ -8,12 +8,34 @@ import com.nosliw.core.runtime.HAPRuntimeManager;
 
 public class HAPManualProcessBrick {
 
-	public static HAPWrapperBrickRoot processRootBrick(HAPManualDefinitionWrapperBrickRoot rootBrickDefWrapper, HAPRuntimeManager runtimeMan, HAPParserDataExpression dataExpressionParser, HAPManualContextProcessBrick processContext) {
+	public static HAPWrapperBrickRoot processRootBrickInit(HAPManualDefinitionWrapperBrickRoot rootBrickDefWrapper, HAPRuntimeManager runtimeMan, HAPParserDataExpression dataExpressionParser, HAPManualContextProcessBrick processContext) {
 		//process definition first
 		HAPManualUtilityProcessorPre.process(rootBrickDefWrapper, runtimeMan, dataExpressionParser, processContext);
 		
 		//init brick
 		HAPManualWrapperBrickRoot out = HAPManualUtilityProcessorInit.process(rootBrickDefWrapper, processContext);
+		
+//		HAPManualUtilityProcessBrickPath.processComplexBrickNormalizeBrickPath(processContext);
+//		
+//		//process value port
+//		HAPManualUtilityProcessorValuePort.process(processContext);
+//		
+//		//process variable
+//		HAPManualUtilityProcessorVariable.process(processContext);
+//		
+//		//process brick
+//		HAPManualUtilityProcessorBrick.process(processContext);
+//		
+//		//process adapter
+//		HAPManualUtilityProcessorAdapter.processAdapterInAttribute(processContext);
+//		
+//		//post process
+//		HAPManualUtilityProcessorPost.process(processContext);
+		
+		return out;
+	}
+
+	public static void processRootBrick(HAPManualContextProcessBrick processContext) {
 		
 		HAPManualUtilityProcessBrickPath.processComplexBrickNormalizeBrickPath(processContext);
 		
@@ -32,6 +54,8 @@ public class HAPManualProcessBrick {
 		//post process
 		HAPManualUtilityProcessorPost.process(processContext);
 		
-		return out;
 	}
+
+
+
 }

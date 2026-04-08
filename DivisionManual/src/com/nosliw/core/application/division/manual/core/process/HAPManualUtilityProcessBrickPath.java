@@ -19,7 +19,7 @@ import com.nosliw.core.application.dynamic.HAPDynamicExecuteInputItemSingle;
 public class HAPManualUtilityProcessBrickPath {
 
 	public static void normalizeBrickReferenceInBundle(HAPIdBrickInBundle brickIdInBundle, HAPPath basePath, boolean processEnd, HAPManualContextProcessBrick processContext) {
-		HAPUtilityBrickReference.normalizeBrickReferenceInBundle(brickIdInBundle, basePath.getPath(), processEnd, processContext.getRootBrickName(), processContext.getCurrentBundle());
+		HAPUtilityBrickReference.normalizeBrickReferenceInBundle(brickIdInBundle, basePath.getPath(), processEnd, processContext.getRootBrickName(), processContext.getAliasMapping() , processContext.getCurrentBundle());
 	}
 	
 //	public static void normalizeBrickPath(HAPIdBrickInBundle brickIdInBundle, HAPManualContextProcessBrick processContext) {

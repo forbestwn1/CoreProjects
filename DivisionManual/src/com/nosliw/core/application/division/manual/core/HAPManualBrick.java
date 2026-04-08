@@ -35,7 +35,6 @@ public abstract class HAPManualBrick extends HAPBrickImp{
 
 	private HAPBundle m_bundle; 
 
-	
 	public HAPManualBrick() {
 		this.m_valueContext = new HAPManualValueContext(); 
 		this.m_otherInternalValuePortsContainer = new HAPContainerValuePorts();

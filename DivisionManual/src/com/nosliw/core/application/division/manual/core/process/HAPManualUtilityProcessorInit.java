@@ -65,6 +65,7 @@ public class HAPManualUtilityProcessorInit {
 			if(HAPManualUtilityProcess.isAttributeAutoProcess(attrDef, processContext.getBrickManager())) {
 				HAPManualAttributeInBrick attrExe = new HAPManualAttributeInBrick();
 				attrExe.setName(attrDef.getName());
+				attrExe.setInfo(attrDef.getInfo());
 				brick.setAttribute(attrExe);
 
 				HAPManualDefinitionWrapperValue attrValueInfo = attrDef.getValueWrapper();

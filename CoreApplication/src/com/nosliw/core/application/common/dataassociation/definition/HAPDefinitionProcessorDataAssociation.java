@@ -1,5 +1,7 @@
 package com.nosliw.core.application.common.dataassociation.definition;
 
+import java.util.Map;
+
 import com.nosliw.common.path.HAPPath;
 import com.nosliw.common.utils.HAPConstantShared;
 import com.nosliw.core.application.HAPBundle;
@@ -14,6 +16,7 @@ public class HAPDefinitionProcessorDataAssociation {
 			HAPDefinitionDataAssociation daDef,
 			HAPPath baseBlockPath, 
 			HAPPath secondBlockPath,
+		    Map<String, HAPPath> aliasMapping,
 			HAPBundle currentBundle, 
 			String rootBrickName,
 			HAPDataTypeHelper dataTypeHelper,
@@ -24,7 +27,7 @@ public class HAPDefinitionProcessorDataAssociation {
 		HAPDataAssociation out = null;
 		String daType = daDef.getType();
 		if(daType.equals(HAPConstantShared.DATAASSOCIATION_TYPE_MAPPING)) {
-			out = HAPDefinitionProcessorMappingDataAssociation.processValueMapping((HAPDefinitionDataAssociationMapping)daDef, baseBlockPath, secondBlockPath, currentBundle, rootBrickName, dataTypeHelper, resourceMan, runtimeInfo);
+			out = HAPDefinitionProcessorMappingDataAssociation.processValueMapping((HAPDefinitionDataAssociationMapping)daDef, baseBlockPath, secondBlockPath, aliasMapping, currentBundle, rootBrickName, dataTypeHelper, resourceMan, runtimeInfo);
 		}
 		
 		return out;

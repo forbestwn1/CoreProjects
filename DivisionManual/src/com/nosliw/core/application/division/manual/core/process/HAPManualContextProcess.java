@@ -69,5 +69,7 @@ public class HAPManualContextProcess {
 		}
 		this.m_aliasToPathId.put(alias, pathId);
 	}
+	public void setAliasMapping(Map<String, HAPPath> aliasToPathId) {  this.m_aliasToPathId.putAll(aliasToPathId);  }
+	public Map<String, HAPPath> getAliasMapping(){   return this.m_aliasToPathId;     }
 	
 }

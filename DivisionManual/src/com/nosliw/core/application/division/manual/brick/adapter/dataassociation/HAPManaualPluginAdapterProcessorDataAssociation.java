@@ -29,7 +29,7 @@ public class HAPManaualPluginAdapterProcessorDataAssociation extends HAPManualPl
 		for(HAPDefinitionDataAssociation da : das) {
 			HAPPath baseBlockPath = processContext.getRootPathForBaseBrick();
 			HAPPath secondBlockPath = this.getSecondBlockPath(processContext);
-			HAPDataAssociationMapping daMappingExe = (HAPDataAssociationMapping)HAPDefinitionProcessorDataAssociation.processDataAssociation(da, baseBlockPath, secondBlockPath, processContext.getCurrentBundle(), processContext.getRootBrickName(), processContext.getDataTypeHelper(), processContext.getResourceManager(), processContext.getRuntimeInfo());
+			HAPDataAssociationMapping daMappingExe = (HAPDataAssociationMapping)HAPDefinitionProcessorDataAssociation.processDataAssociation(da, baseBlockPath, secondBlockPath, processContext.getAliasMapping(), processContext.getCurrentBundle(), processContext.getRootBrickName(), processContext.getDataTypeHelper(), processContext.getResourceManager(), processContext.getRuntimeInfo());
 			for(HAPTunnel tunnel : daMappingExe.getTunnels()) {
 				daExe.addTunnel(tunnel);
 			}

@@ -2,6 +2,7 @@ package com.nosliw.core.application.valueport;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -116,7 +117,7 @@ public class HAPUtilityValuePort {
 	}
 	
 
-	public static HAPIdValuePortInBundle normalizeInBundleValuePortId(HAPIdValuePortInBundle valuePortIdInBundle, String valuePortSideIfNotProvided, String ioDirection, HAPPath blockPathFromRootIfNotProvided, HAPPath baseBlockPathFromRoot, String brickRootNameIfNotProvided, HAPBundle currentBundle, HAPManagerResource resourceMan, HAPRuntimeInfo runtimeInfo) {
+	public static HAPIdValuePortInBundle normalizeInBundleValuePortId(HAPIdValuePortInBundle valuePortIdInBundle, String valuePortSideIfNotProvided, String ioDirection, HAPPath blockPathFromRootIfNotProvided, HAPPath baseBlockPathFromRoot, String brickRootNameIfNotProvided, Map<String, HAPPath> aliasMapping, HAPBundle currentBundle, HAPManagerResource resourceMan, HAPRuntimeInfo runtimeInfo) {
 		HAPIdValuePortInBundle out = valuePortIdInBundle;
 		if(out==null) {
 			out = new HAPIdValuePortInBundle();
@@ -128,7 +129,7 @@ public class HAPUtilityValuePort {
 			brickId = new HAPIdBrickInBundle(blockPathFromRootIfNotProvided.toString());
 		}
 
-		HAPUtilityBrickReference.normalizeBrickReferenceInBundle(brickId, baseBlockPathFromRoot.getPath(), true, brickRootNameIfNotProvided, currentBundle);
+		HAPUtilityBrickReference.normalizeBrickReferenceInBundle(brickId, baseBlockPathFromRoot.getPath(), true, brickRootNameIfNotProvided, aliasMapping, currentBundle);
 //		brickId.setIdPath(HAPUtilityBrickPath.normalizeBrickPath(new HAPPath(brickId.getIdPath()), brickRootNameIfNotProvided, true, currentBundle).toString());
 
 		out.setBlockId(brickId);

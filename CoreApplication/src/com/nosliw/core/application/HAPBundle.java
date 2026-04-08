@@ -95,6 +95,7 @@ public class HAPBundle extends HAPSerializableImp implements HAPWithResourceDepe
 	public void setBranchBrickWrapper(String branch, HAPWrapperBrickRoot brickWrapper) {     this.m_branchBricks.put(branch, brickWrapper);        }
 	private HAPWrapperBrickRoot getBranchBrickWrapper(String branch) {     return this.m_branchBricks.get(branch);         }
 	public Map<String, HAPWrapperBrickRoot> getBranchBrickWrappers() {     return this.m_branchBricks;         }
+	public Set<String> getBranchNames(){   return this.m_branchBricks.keySet();    }
 	
 	public HAPDynamicDefinitionContainer getDynamicInfo() {     return this.m_dynamicInfo;        }
 	

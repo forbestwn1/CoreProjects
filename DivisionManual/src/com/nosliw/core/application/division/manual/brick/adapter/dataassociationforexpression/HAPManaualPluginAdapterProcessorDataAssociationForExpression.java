@@ -28,10 +28,10 @@ public class HAPManaualPluginAdapterProcessorDataAssociationForExpression extend
 		
 		HAPPath baseBlockPath = processContext.getRootPathForBaseBrick();
 		HAPPath secondBlockPath = this.getSecondBlockPath(processContext);
-		HAPDataAssociation daForRequest = HAPDefinitionProcessorDataAssociation.processDataAssociation(daForExpressionDef.getInDataAssociation(), baseBlockPath, secondBlockPath, processContext.getCurrentBundle(), processContext.getRootBrickName(), processContext.getDataTypeHelper(), processContext.getResourceManager(), processContext.getRuntimeInfo());
+		HAPDataAssociation daForRequest = HAPDefinitionProcessorDataAssociation.processDataAssociation(daForExpressionDef.getInDataAssociation(), baseBlockPath, secondBlockPath, processContext.getAliasMapping(), processContext.getCurrentBundle(), processContext.getRootBrickName(), processContext.getDataTypeHelper(), processContext.getResourceManager(), processContext.getRuntimeInfo());
 		daForExpressionExe.setInDataAssociation(daForRequest);
 
-		HAPDataAssociation daForResponse = HAPDefinitionProcessorDataAssociation.processDataAssociation(daForExpressionDef.getOutDataAssociation(), baseBlockPath, secondBlockPath, processContext.getCurrentBundle(), processContext.getRootBrickName(), processContext.getDataTypeHelper(), processContext.getResourceManager(), processContext.getRuntimeInfo());
+		HAPDataAssociation daForResponse = HAPDefinitionProcessorDataAssociation.processDataAssociation(daForExpressionDef.getOutDataAssociation(), baseBlockPath, secondBlockPath, processContext.getAliasMapping(), processContext.getCurrentBundle(), processContext.getRootBrickName(), processContext.getDataTypeHelper(), processContext.getResourceManager(), processContext.getRuntimeInfo());
 		daForExpressionExe.setOutDataAssociation(daForResponse);
 		
 		daAdapterExe.setDataAssciation(daForExpressionExe);

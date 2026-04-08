@@ -126,6 +126,10 @@ public class HAPUtilityEntityInfo {
 			entityInfo.setStatus(HAPConstantShared.ENTITYINFO_STATUS_DISABLED);
 		}
 	}
+	
+	public static String getAlias(HAPInfo info) {
+		return (String)info.getValue(HAPConstantShared.ENTITYINFO_INFONAME_ALIAS);
+	}
 
 	public static void processEntityId(HAPEntityInfo entityInfo) {
 		String id = entityInfo.getId();

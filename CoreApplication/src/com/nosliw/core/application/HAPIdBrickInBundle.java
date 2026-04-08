@@ -18,11 +18,16 @@ public class HAPIdBrickInBundle extends HAPSerializableImp{
 	@HAPAttribute
 	public static final String RELATIVEPATH = "relativePath";
 	
+	@HAPAttribute
+	public static final String ALIAS = "alias";
+	
 	private String m_idPath;
 	
 	//for runtime purpose, as absolute path may lead to multiple brick
 	private String m_relativePath;
 
+	private String m_alias;
+	
 	public HAPIdBrickInBundle() {}
 
 	public HAPIdBrickInBundle(String idPath) {
@@ -35,16 +40,25 @@ public class HAPIdBrickInBundle extends HAPSerializableImp{
 	public String getRelativePath() {   return this.m_relativePath;     }
 	public void setRelativePath(String path) {    this.m_relativePath = path;     }
 
+	public String getAlias() {    return this.m_alias;     }
+	public void setAlias(String alias) {      this.m_alias = alias;      }
+	
 	@Override
 	public HAPIdBrickInBundle cloneValue() {
 		HAPIdBrickInBundle out = new HAPIdBrickInBundle(this.m_idPath);
 		out.setRelativePath(this.getRelativePath());
+		out.setAlias(this.getAlias());
 		return out;
 	}
 
 	@Override
 	protected boolean buildObjectByLiterate(String literateValue){	
-		if(literateValue.startsWith(HAPConstantShared.SEPERATOR_PATH)) {
+		if(literateValue.startsWith(HAPConstantShared.SYMBOL_ALIAS)) {
+			//if alias
+			this.m_alias = literateValue.substring(HAPConstantShared.SYMBOL_ALIAS.length());
+		}
+		else if(literateValue.startsWith(HAPConstantShared.SEPERATOR_PATH)) {
+			//if relative path
 			this.m_relativePath = literateValue.substring(HAPConstantShared.SEPERATOR_PATH.length());
 		}
 		else {
@@ -62,6 +76,7 @@ public class HAPIdBrickInBundle extends HAPSerializableImp{
 			JSONObject jsonObj = (JSONObject)obj;
 			this.m_idPath = (String)jsonObj.opt(IDPATH);
 			this.m_relativePath = (String)jsonObj.opt(RELATIVEPATH);
+			this.m_alias = jsonObj.optString(ALIAS);
 		}
 		return true;  
 	}
@@ -70,5 +85,6 @@ public class HAPIdBrickInBundle extends HAPSerializableImp{
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){
 		jsonMap.put(IDPATH, m_idPath);
 		jsonMap.put(RELATIVEPATH, m_relativePath);
+		jsonMap.put(ALIAS, this.m_alias);
 	}
 }

@@ -37,6 +37,7 @@ public class HAPConstantShared {
 
 
 
+		public static final String SYMBOL_ALIAS = "@";
 		public static final String SYMBOL_KEYWORD = "#";
 		public static final String SYMBOL_GROUP = "@";
 		public static final String SYMBOL_ENTITYNAME_COMMON = "..";
@@ -723,6 +724,7 @@ public class HAPConstantShared {
 
 
 		public static final String ENTITYINFO_INFONAME_DISABLE = "disable";
+		public static final String ENTITYINFO_INFONAME_ALIAS = "nosliw_alias";
 
 
 

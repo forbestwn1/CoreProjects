@@ -194,6 +194,7 @@
 			<definition name="ENTITYOPERATION_SCOPE_ENTITY" value="2" type="int"/>
 			<definition name="ENTITYOPERATION_SCOPE_OPERATION" value="3" type="int"/>
 			<definition type="space"/>
+			<definition name="SYMBOL_ALIAS" value="@"/>
 			<definition name="SYMBOL_KEYWORD" value="#"/>
 			<definition name="SYMBOL_GROUP" value="@"/>
 			<definition name="SYMBOL_ENTITYNAME_COMMON" value=".."/>
@@ -803,6 +804,7 @@
 
 			<definition type="space"/>
 			<definition name="ENTITYINFO_INFONAME_DISABLE" value="disable"/>
+			<definition name="ENTITYINFO_INFONAME_ALIAS" value="nosliw_alias"/>
 
 			<definition type="space"/>
 			<definition name="ENTITYINFO_STATUS_DISABLED" value="disabled"/>

@@ -1,6 +1,7 @@
 package com.nosliw.core.application.common.dataassociation.definition;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import com.nosliw.common.exception.HAPServiceData;
@@ -34,6 +35,7 @@ public class HAPDefinitionProcessorMappingDataAssociation {
 			HAPDefinitionDataAssociationMapping daDef,
 			HAPPath baseBlockPath, 
 			HAPPath secondBlockPath,
+			Map<String, HAPPath> aliasMapping,
 			HAPBundle currentBundle, 
 			String rootBrickName,
 			HAPDataTypeHelper dataTypeHelper,
@@ -44,7 +46,7 @@ public class HAPDefinitionProcessorMappingDataAssociation {
 		
 		List<HAPDefinitionMappingItemValue> mappingItems = daDef.getItems();
 		for(HAPDefinitionMappingItemValue mappingItem : mappingItems) {
-			normalizeValuePortId(mappingItem, baseBlockPath, secondBlockPath, daDef.getDirection(), rootBrickName, currentBundle, resourceMan, runtimeInfo);
+			normalizeValuePortId(mappingItem, baseBlockPath, secondBlockPath, daDef.getDirection(), rootBrickName, aliasMapping, currentBundle, resourceMan, runtimeInfo);
 		
 			normalizeValuePortRelativeBrickPath(mappingItem, baseBlockPath);
 			
@@ -108,7 +110,7 @@ public class HAPDefinitionProcessorMappingDataAssociation {
 		}
 	}
 	
-	private static void normalizeValuePortId(HAPDefinitionMappingItemValue mappingItem, HAPPath baseBlockPath, HAPPath secondBlockPath, String direction, String brickRootNameIfNotProvided, HAPBundle currentBundle, HAPManagerResource resourceMan, HAPRuntimeInfo runtimeInfo) {
+	private static void normalizeValuePortId(HAPDefinitionMappingItemValue mappingItem, HAPPath baseBlockPath, HAPPath secondBlockPath, String direction, String brickRootNameIfNotProvided, Map<String, HAPPath> aliasMapping, HAPBundle currentBundle, HAPManagerResource resourceMan, HAPRuntimeInfo runtimeInfo) {
 		HAPReferenceRootElement targetRef = mappingItem.getTarget();
 		
 		final HAPPath sourcePath;
@@ -123,16 +125,16 @@ public class HAPDefinitionProcessorMappingDataAssociation {
 			targetPath = baseBlockPath;
 		}
 		
-		normalizeRootReference(targetRef, HAPConstantShared.IO_DIRECTION_IN, targetPath, baseBlockPath, brickRootNameIfNotProvided, currentBundle, resourceMan, runtimeInfo);
+		normalizeRootReference(targetRef, HAPConstantShared.IO_DIRECTION_IN, targetPath, baseBlockPath, brickRootNameIfNotProvided, aliasMapping, currentBundle, resourceMan, runtimeInfo);
 		
 		if(mappingItem.getDefinition().getType().equals(HAPConstantShared.CONTEXT_ELEMENTTYPE_RELATIVE_FOR_MAPPING)) {
 			HAPElementStructureLeafRelativeForMapping mappingEle = (HAPElementStructureLeafRelativeForMapping)mappingItem.getDefinition();
-			normalizeRootReference(mappingEle.getReference(), HAPConstantShared.IO_DIRECTION_OUT, sourcePath, baseBlockPath, brickRootNameIfNotProvided, currentBundle, resourceMan, runtimeInfo);
+			normalizeRootReference(mappingEle.getReference(), HAPConstantShared.IO_DIRECTION_OUT, sourcePath, baseBlockPath, brickRootNameIfNotProvided, aliasMapping, currentBundle, resourceMan, runtimeInfo);
 		}
 	}
 	
-	private static void normalizeRootReference(HAPReferenceRootElement rootRef, String ioDirection, HAPPath blockPathFromRootIfNotProvided, HAPPath baseBlockPathFromRoot, String brickRootNameIfNotProvided, HAPBundle currentBundle, HAPManagerResource resourceMan, HAPRuntimeInfo runtimeInfo) {
-		rootRef.setValuePortId(HAPUtilityValuePort.normalizeInBundleValuePortId(rootRef.getValuePortId(), HAPConstantShared.VALUEPORTGROUP_SIDE_EXTERNAL, ioDirection, blockPathFromRootIfNotProvided, baseBlockPathFromRoot, brickRootNameIfNotProvided, currentBundle, resourceMan, runtimeInfo));
+	private static void normalizeRootReference(HAPReferenceRootElement rootRef, String ioDirection, HAPPath blockPathFromRootIfNotProvided, HAPPath baseBlockPathFromRoot, String brickRootNameIfNotProvided, Map<String, HAPPath> aliasMapping, HAPBundle currentBundle, HAPManagerResource resourceMan, HAPRuntimeInfo runtimeInfo) {
+		rootRef.setValuePortId(HAPUtilityValuePort.normalizeInBundleValuePortId(rootRef.getValuePortId(), HAPConstantShared.VALUEPORTGROUP_SIDE_EXTERNAL, ioDirection, blockPathFromRootIfNotProvided, baseBlockPathFromRoot, brickRootNameIfNotProvided, aliasMapping, currentBundle, resourceMan, runtimeInfo));
 	}
 	
 
