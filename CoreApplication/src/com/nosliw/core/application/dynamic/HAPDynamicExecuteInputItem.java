@@ -22,13 +22,13 @@ public abstract class HAPDynamicExecuteInputItem extends HAPEntityInfoImp{
 		HAPDynamicExecuteInputItem out = null;
 		JSONObject jsonObj = (JSONObject)obj;
 		Object typeObj = jsonObj.opt(TYPE);
-		String type = typeObj!=null? (String)typeObj : HAPConstantShared.DYNAMICTASK_REF_TYPE_SINGLE;
+		String type = typeObj!=null? (String)typeObj : HAPConstantShared.DYNAMICINPUT_TYPE_BRICKREF_SINGLE;
 		switch(type) {
-		case HAPConstantShared.DYNAMICTASK_REF_TYPE_SINGLE:
+		case HAPConstantShared.DYNAMICINPUT_TYPE_BRICKREF_SINGLE:
 			out = new HAPDynamicExecuteInputItemSingle();
 			out.buildObject(jsonObj, HAPSerializationFormat.JSON);
 			break;
-		case HAPConstantShared.DYNAMICTASK_REF_TYPE_MULTIPLE:
+		case HAPConstantShared.DYNAMICINPUT_TYPE_BRICKREF_MULTIPLE:
 			out = new HAPDynamicExecuteInputItemMultiple();
 			out.buildObject(jsonObj, HAPSerializationFormat.JSON);
 			break;

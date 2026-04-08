@@ -36,7 +36,7 @@ public class HAPWrapperValueOfReferenceResource extends HAPWrapperValue{
 
 	public HAPResourceId getResourceId() {    return this.m_resourceId;     }
 	
-	public HAPDynamicExecuteInputContainer getDynamicTaskInput(){    return this.m_dynamicInput;        }
+	public HAPDynamicExecuteInputContainer getDynamicInput(){    return this.m_dynamicInput;        }
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){

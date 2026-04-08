@@ -160,11 +160,11 @@ var node_createDynamicInputContainer = function(dynamicInputDefs, dynamicInputSo
 			if(out == undefined){
 				var dynamicInputDef = loc_dynamicInputDefs[node_COMMONATRIBUTECONSTANT.DYNAMICEXECUTEINPUTCONTAINER_ELEMENT][inputId];
 				var refType = dynamicInputDef[node_COMMONATRIBUTECONSTANT.DYNAMICEXECUTEINPUTITEM_TYPE];
-				if(refType==node_COMMONCONSTANT.DYNAMICTASK_REF_TYPE_SINGLE){
+				if(refType==node_COMMONCONSTANT.DYNAMICINPUT_TYPE_BRICKREF_SINGLE){
 					var brickPackage = dynamicInputDef[node_COMMONATRIBUTECONSTANT.DYNAMICEXECUTEINPUTITEM_BRICKPACKAGE];
 					out = loc_createDynamicInput(brickPackage);
 				}
-    			else if(refType==node_COMMONCONSTANT.DYNAMICTASK_REF_TYPE_MULTIPLE){
+    			else if(refType==node_COMMONCONSTANT.DYNAMICINPUT_TYPE_BRICKREF_MULTIPLE){
 		    		out = [];
 			    	_.each(dynamicInputDef[node_COMMONATRIBUTECONSTANT.DYNAMICEXECUTEINPUTITEM_BRICKPACKAGES], function(brickPackage, i){
 						out.push(loc_createDynamicInput(brickPackage));

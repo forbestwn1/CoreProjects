@@ -41,7 +41,7 @@ public class HAPUtilityTask {
 				if(brick.getBrickType().equals(HAPEnumBrickType.TASKWRAPPER_100)) {
 					//task wrapper
 					
-					if(!(i==segs.length-1&&!processEnd)) {
+					if(i!=segs.length-1||processEnd) {
 						if(i==segs.length-1||!segs[i+1].equals(HAPBlockTaskWrapper.TASK)) {
 							out = out.appendSegment(HAPBlockTaskWrapper.TASK);
 						}

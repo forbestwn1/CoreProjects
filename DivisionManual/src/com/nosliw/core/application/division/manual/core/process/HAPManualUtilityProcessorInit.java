@@ -80,7 +80,7 @@ public class HAPManualUtilityProcessorInit {
 					HAPManualDefinitionWrapperValueReferenceResource resourceRefValueDef = (HAPManualDefinitionWrapperValueReferenceResource)attrValueInfo;
 					HAPWrapperValueOfReferenceResource resourceRefValue = new HAPWrapperValueOfReferenceResource(resourceRefValueDef.getResourceId());
 					for(HAPDynamicExecuteInputItem dynamicTask : resourceRefValueDef.getDyanmicInput().getDyanmicTaskReference().values()) {
-						resourceRefValue.getDynamicTaskInput().addDynamicTaskReference(dynamicTask);
+						resourceRefValue.getDynamicInput().addDynamicTaskReference(dynamicTask);
 					}
 					attrExe.setValueWrapper(resourceRefValue);
 				}

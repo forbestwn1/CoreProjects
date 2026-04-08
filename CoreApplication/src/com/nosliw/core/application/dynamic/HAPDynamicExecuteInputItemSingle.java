@@ -23,7 +23,7 @@ public class HAPDynamicExecuteInputItemSingle extends HAPDynamicExecuteInputItem
 	}
 	
 	@Override
-	public String getType() {   return HAPConstantShared.DYNAMICTASK_REF_TYPE_SINGLE;  }
+	public String getType() {   return HAPConstantShared.DYNAMICINPUT_TYPE_BRICKREF_SINGLE;  }
 
 	public HAPPackageBrickInBundle getBrickPackage() {    return this.m_brickPackage;    }
 	

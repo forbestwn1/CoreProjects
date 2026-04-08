@@ -12,7 +12,6 @@ import com.nosliw.common.utils.HAPUtilityBasic;
 import com.nosliw.core.application.HAPBundle;
 import com.nosliw.core.application.HAPDomainValueStructure;
 import com.nosliw.core.application.HAPIdBrickInBundle;
-import com.nosliw.core.application.HAPUtilityBrickPath;
 import com.nosliw.core.application.HAPUtilityBrickReference;
 import com.nosliw.core.application.common.structure.HAPElementStructure;
 import com.nosliw.core.application.common.structure.HAPRootInStructure;
@@ -128,7 +127,10 @@ public class HAPUtilityValuePort {
 		if(brickId==null) {
 			brickId = new HAPIdBrickInBundle(blockPathFromRootIfNotProvided.toString());
 		}
-		brickId.setIdPath(HAPUtilityBrickPath.normalizeBrickPath(new HAPPath(brickId.getIdPath()), brickRootNameIfNotProvided, true, currentBundle).toString());
+
+		HAPUtilityBrickReference.normalizeBrickReferenceInBundle(brickId, baseBlockPathFromRoot.getPath(), true, brickRootNameIfNotProvided, currentBundle);
+//		brickId.setIdPath(HAPUtilityBrickPath.normalizeBrickPath(new HAPPath(brickId.getIdPath()), brickRootNameIfNotProvided, true, currentBundle).toString());
+
 		out.setBlockId(brickId);
 		
 		if(out.getValuePortSide()==null) {

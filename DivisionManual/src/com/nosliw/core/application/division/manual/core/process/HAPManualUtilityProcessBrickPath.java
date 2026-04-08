@@ -59,14 +59,14 @@ public class HAPManualUtilityProcessBrickPath {
 				HAPAttributeInBrick attr = HAPUtilityBrick.getDescendantAttribute(bundle, path);
 				if(attr.getValueWrapper().getValueType().equals(HAPConstantShared.ENTITYATTRIBUTE_VALUETYPE_RESOURCEID)) {
 					HAPWrapperValueOfReferenceResource resourceIdWrapper = (HAPWrapperValueOfReferenceResource)attr.getValueWrapper();
-					for(HAPDynamicExecuteInputItem taskRef : resourceIdWrapper.getDynamicTaskInput().getDyanmicTaskReference().values()) {
-						switch(taskRef.getType()) {
-						case HAPConstantShared.DYNAMICTASK_REF_TYPE_SINGLE:
-							HAPDynamicExecuteInputItemSingle simpleDynamicTask = (HAPDynamicExecuteInputItemSingle)taskRef;
+					for(HAPDynamicExecuteInputItem dynamicInputRef : resourceIdWrapper.getDynamicInput().getDyanmicTaskReference().values()) {
+						switch(dynamicInputRef.getType()) {
+						case HAPConstantShared.DYNAMICINPUT_TYPE_BRICKREF_SINGLE:
+							HAPDynamicExecuteInputItemSingle simpleDynamicTask = (HAPDynamicExecuteInputItemSingle)dynamicInputRef;
 							normalizeBrickReferenceInBundle(simpleDynamicTask.getBrickPackage().getBrickId(), path, true, processContext);
 							break;
-						case HAPConstantShared.DYNAMICTASK_REF_TYPE_MULTIPLE:
-							HAPDynamicExecuteInputItemMultiple multipleDynamicTask = (HAPDynamicExecuteInputItemMultiple)taskRef;
+						case HAPConstantShared.DYNAMICINPUT_TYPE_BRICKREF_MULTIPLE:
+							HAPDynamicExecuteInputItemMultiple multipleDynamicTask = (HAPDynamicExecuteInputItemMultiple)dynamicInputRef;
 							for(HAPPackageBrickInBundle brickPackageId : multipleDynamicTask.getBrickPackages()) {
 								normalizeBrickReferenceInBundle(brickPackageId.getBrickId(), path, true, processContext);
 							}

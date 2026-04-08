@@ -1,5 +1,9 @@
 package com.nosliw.core.application.division.manual.core.process;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
+import com.nosliw.common.path.HAPPath;
 import com.nosliw.core.application.HAPBundle;
 import com.nosliw.core.application.HAPManagerApplicationBrick;
 import com.nosliw.core.application.division.manual.core.HAPManualManagerBrick;
@@ -23,6 +27,8 @@ public class HAPManualContextProcess {
 	
 	private HAPRuntimeInfo m_runtimeInfo;
 	
+	private Map<String, HAPPath> m_aliasToPathId;
+	
 	public HAPManualContextProcess(
 			HAPBundle bundle, 
 			String rootBrickName, 
@@ -38,6 +44,7 @@ public class HAPManualContextProcess {
 		this.m_dataTypeHelper = dataTypeHelper;
 		this.m_resourceMan = resourceMan;
 		this.m_runtimeInfo = runtimeInfo;
+		this.m_aliasToPathId = new LinkedHashMap<String, HAPPath>();
 	}
 	
 	public HAPBundle getCurrentBundle(){   return this.m_bundle;  }
@@ -53,5 +60,14 @@ public class HAPManualContextProcess {
 	public HAPManagerResource getResourceManager() {    return this.m_resourceMan;    }
 	
 	public HAPRuntimeInfo getRuntimeInfo() {    return this.m_runtimeInfo;      }
+	
+	public HAPPath getPathIdByAlias(String alias) {    return this.m_aliasToPathId.get(alias);     }
 
+	public void addAlias(String alias, HAPPath pathId) {
+		if(this.getPathIdByAlias(alias)!=null) {
+			throw new RuntimeException();
+		}
+		this.m_aliasToPathId.put(alias, pathId);
+	}
+	
 }

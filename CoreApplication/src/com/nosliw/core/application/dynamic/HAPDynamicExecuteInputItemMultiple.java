@@ -26,7 +26,7 @@ public class HAPDynamicExecuteInputItemMultiple extends HAPDynamicExecuteInputIt
 	}
 	
 	@Override
-	public String getType() {   return HAPConstantShared.DYNAMICTASK_REF_TYPE_MULTIPLE;  }
+	public String getType() {   return HAPConstantShared.DYNAMICINPUT_TYPE_BRICKREF_MULTIPLE;  }
 
 	public List<HAPPackageBrickInBundle> getBrickPackages() {    return this.m_brickPackages;     }
 	public void addBrickPackage(HAPPackageBrickInBundle brickPackage) {    this.m_brickPackages.add(brickPackage);      }

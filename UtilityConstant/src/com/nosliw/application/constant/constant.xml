@@ -1087,8 +1087,8 @@
 
 
 			<definition type="space"/>
-			<definition name="DYNAMICTASK_REF_TYPE_SINGLE" value="single"/>
-			<definition name="DYNAMICTASK_REF_TYPE_MULTIPLE" value="multiple"/>
+			<definition name="DYNAMICINPUT_TYPE_BRICKREF_SINGLE" value="single"/>
+			<definition name="DYNAMICINPUT_TYPE_BRICKREF_MULTIPLE" value="multiple"/>
 
 			<definition type="space"/>
 			<definition name="BRICKTYPECRITERIA_TYPE_FACADE" value="facade"/>

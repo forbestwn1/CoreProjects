@@ -8,17 +8,15 @@ public class HAPUtilityBrickReference {
 	public static void normalizeBrickReferenceInBundle(HAPIdBrickInBundle brickIdInBundle, String basePath, boolean processEnd, String brickRootNameIfNotProvided, HAPBundle currentBundle) {
         //path first
 		if(brickIdInBundle.getRelativePath()!=null&&brickIdInBundle.getIdPath()==null) {
-        	String[] segs = {basePath, brickIdInBundle.getRelativePath()};
-        	brickIdInBundle.setIdPath(HAPUtilityPath.combinePath(segs));
+			brickIdInBundle.setIdPath(HAPUtilityPath.fromRelativeToAbsolutePath(brickIdInBundle.getRelativePath(), basePath));
         }
 		
 		//add root name, task path
 		HAPPath path = HAPUtilityBrickPath.normalizeBrickPath(new HAPPath(brickIdInBundle.getIdPath()), brickRootNameIfNotProvided, processEnd, currentBundle);
-//		path = HAPUtilityTask.figureoutTaskPath(currentBundle, path, brickRootNameIfNotProvided);
 		brickIdInBundle.setIdPath(path.getPath());
 
-		//relative path later
-		calculateBrickIdInBundleRelativePath(brickIdInBundle, new HAPPath(basePath));
+		//recalcuate relative path again even it may provided before
+		brickIdInBundle.setRelativePath(HAPUtilityPath.fromAbsoluteToRelativePath(brickIdInBundle.getIdPath(), basePath));
 	}
 
 	//calcluate relative path
