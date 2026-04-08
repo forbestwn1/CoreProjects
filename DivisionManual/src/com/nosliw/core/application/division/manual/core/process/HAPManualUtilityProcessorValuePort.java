@@ -254,7 +254,7 @@ public class HAPManualUtilityProcessorValuePort {
 						if(root.getDefinition() instanceof HAPElementStructureLeafRelative) {
 							HAPElementStructureLeafRelative relativeEle = (HAPElementStructureLeafRelative)root.getDefinition();
 							HAPPath defaultParentValueContextPath = findDefaultParentValueContext(childBrick.getTreeNodeInfo().getPathFromRoot(), processContext);
-							HAPIdValuePortInBundle normalizedValuePortId = HAPUtilityValuePort.normalizeInBundleValuePortId(relativeEle.getReference().getValuePortId(), HAPConstantShared.VALUEPORTGROUP_SIDE_INTERNAL, valueStructureRuntimeInfo.getIODirection(), defaultParentValueContextPath, defaultParentValueContextPath, processContext.getRootBrickName(), processContext.getAliasMapping(), processContext.getCurrentBundle(), null, null);
+							HAPIdValuePortInBundle normalizedValuePortId = HAPUtilityValuePort.normalizeInBundleValuePortId(relativeEle.getReference().getValuePortId(), HAPConstantShared.VALUEPORTGROUP_SIDE_INTERNAL, valueStructureRuntimeInfo.getIODirection(), defaultParentValueContextPath, defaultParentValueContextPath, processContext.getRootBrickName(), processContext.getCurrentBundle().getAliasMappings(), processContext.getCurrentBundle(), null, null);
 							relativeEle.getReference().setValuePortId(normalizedValuePortId);
 						}
 					}

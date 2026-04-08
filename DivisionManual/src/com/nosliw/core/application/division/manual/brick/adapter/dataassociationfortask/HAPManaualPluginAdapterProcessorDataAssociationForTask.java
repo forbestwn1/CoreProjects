@@ -34,13 +34,13 @@ public class HAPManaualPluginAdapterProcessorDataAssociationForTask extends HAPM
 		
 		HAPDefinitionDataAssociation inDA = daForTaskDef.getInDataAssociation();
 		if(inDA!=null) {
-			HAPDataAssociation daForRequest = HAPDefinitionProcessorDataAssociation.processDataAssociation(inDA, baseBlockPath, secondBlockPath, processContext.getAliasMapping(), processContext.getCurrentBundle(), processContext.getRootBrickName(), processContext.getDataTypeHelper(), processContext.getResourceManager(), processContext.getRuntimeInfo());
+			HAPDataAssociation daForRequest = HAPDefinitionProcessorDataAssociation.processDataAssociation(inDA, baseBlockPath, secondBlockPath, processContext.getCurrentBundle().getAliasMappings(), processContext.getCurrentBundle(), processContext.getRootBrickName(), processContext.getDataTypeHelper(), processContext.getResourceManager(), processContext.getRuntimeInfo());
 			daForTaskExe.setInDataAssociation(daForRequest);
 		}
 		
 		Map<String, HAPDefinitionDataAssociation> outDaDefs = daForTaskDef.getOutDataAssociations();
 		for(Object key : outDaDefs.keySet()) {
-			HAPDataAssociation daForResponse = HAPDefinitionProcessorDataAssociation.processDataAssociation(daForTaskDef.getOutDataAssociations().get(key), baseBlockPath, secondBlockPath, processContext.getAliasMapping(), processContext.getCurrentBundle(), processContext.getRootBrickName(), processContext.getDataTypeHelper(), processContext.getResourceManager(), processContext.getRuntimeInfo());
+			HAPDataAssociation daForResponse = HAPDefinitionProcessorDataAssociation.processDataAssociation(daForTaskDef.getOutDataAssociations().get(key), baseBlockPath, secondBlockPath, processContext.getCurrentBundle().getAliasMappings(), processContext.getCurrentBundle(), processContext.getRootBrickName(), processContext.getDataTypeHelper(), processContext.getResourceManager(), processContext.getRuntimeInfo());
 			daForTaskExe.addOutDataAssociation((String)key, daForResponse);
 		}
 		

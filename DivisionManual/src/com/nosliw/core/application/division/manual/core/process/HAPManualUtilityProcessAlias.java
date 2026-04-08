@@ -1,7 +1,5 @@
 package com.nosliw.core.application.division.manual.core.process;
 
-import java.util.Map;
-
 import com.nosliw.common.info.HAPUtilityEntityInfo;
 import com.nosliw.common.path.HAPPath;
 import com.nosliw.core.application.HAPAttributeInBrick;
@@ -12,7 +10,7 @@ import com.nosliw.core.application.HAPUtilityBundle;
 
 public class HAPManualUtilityProcessAlias {
 
-	public static void processBrickAlias(Map<String, HAPPath> aliasMapping, HAPManualContextProcessBrick processContext) {
+	public static void processBrickAlias(HAPManualContextProcessBrick processContext) {
 		
 		HAPManualUtilityBrickTraverse.traverseTree(processContext, new HAPHandlerDownward() {
 
@@ -29,7 +27,10 @@ public class HAPManualUtilityProcessAlias {
 				HAPAttributeInBrick attr = HAPUtilityBrick.getDescendantAttribute(bundle, path);
 				String alias = HAPUtilityEntityInfo.getAlias(attr.getInfo());
 				if(alias!=null) {
-					aliasMapping.put(alias, path);
+					if(processContext.getCurrentBundle().getBrickPathByAlias(alias)!=null) {
+						throw new RuntimeException();
+					}
+					processContext.getCurrentBundle().addAliasMapping(alias, path);
 				}
 				
 				return true;

@@ -142,19 +142,17 @@ public class HAPManualManagerBrick implements HAPPluginDivision{
 
 		//process alias
 		Map<String, HAPPath> aliasMapping = new LinkedHashMap<String, HAPPath>();
-		HAPManualUtilityProcessAlias.processBrickAlias(aliasMapping, new HAPManualContextProcessBrick(out, HAPConstantShared.NAME_ROOTBRICK_MAIN, this, this.m_brickManager, this.m_dataTypeHelper, this.m_resourceMan, runtimeInfo));
+		HAPManualUtilityProcessAlias.processBrickAlias(new HAPManualContextProcessBrick(out, HAPConstantShared.NAME_ROOTBRICK_MAIN, this, this.m_brickManager, this.m_dataTypeHelper, this.m_resourceMan, runtimeInfo));
 		for(String branchName : out.getBranchNames()) {
-			HAPManualUtilityProcessAlias.processBrickAlias(aliasMapping, new HAPManualContextProcessBrick(out, branchName, this, this.m_brickManager, this.m_dataTypeHelper, this.m_resourceMan, runtimeInfo));
+			HAPManualUtilityProcessAlias.processBrickAlias(new HAPManualContextProcessBrick(out, branchName, this, this.m_brickManager, this.m_dataTypeHelper, this.m_resourceMan, runtimeInfo));
 		}
 		
 		//process root bricks
 		{
 			HAPManualContextProcessBrick cp = new HAPManualContextProcessBrick(out, HAPConstantShared.NAME_ROOTBRICK_MAIN, this, this.m_brickManager, this.m_dataTypeHelper, this.m_resourceMan, runtimeInfo);
-			cp.setAliasMapping(aliasMapping);
 			HAPManualProcessBrick.processRootBrick(cp);
 			for(String branchName : out.getBranchNames()) {
 				cp = new HAPManualContextProcessBrick(out, branchName, this, this.m_brickManager, this.m_dataTypeHelper, this.m_resourceMan, runtimeInfo);
-				cp.setAliasMapping(aliasMapping);
 				HAPManualProcessBrick.processRootBrick(cp);
 			}
 		}

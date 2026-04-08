@@ -49,6 +49,8 @@ public class HAPBundle extends HAPSerializableImp implements HAPWithResourceDepe
 	
 	//need dynamic input during runtime
 	private HAPDynamicDefinitionContainer m_dynamicInfo;
+
+	private Map<String, HAPPath> m_aliasMapping;
 	
 	private Object m_extraData;
 
@@ -58,6 +60,7 @@ public class HAPBundle extends HAPSerializableImp implements HAPWithResourceDepe
 		this.m_valueStructureDomain = new HAPDomainValueStructure();
 		this.m_exportResourceInfos = new ArrayList<HAPInfoExportResource>();
 		this.m_branchBricks = new LinkedHashMap<String, HAPWrapperBrickRoot>();
+		this.m_aliasMapping = new LinkedHashMap<String, HAPPath>();
 	
 		this.m_dynamicInfo = new HAPDynamicDefinitionContainer(); 
 		
@@ -102,6 +105,9 @@ public class HAPBundle extends HAPSerializableImp implements HAPWithResourceDepe
 	public Object getExtraData() {   return this.m_extraData;    }
 	public void setExtraData(Object data) {   this.m_extraData = data;    }
 
+	public Map<String, HAPPath> getAliasMappings(){    return this.m_aliasMapping;     }
+	public void addAliasMapping(String alias, HAPPath path) {    this.m_aliasMapping.put(alias, path);       }
+	public HAPPath getBrickPathByAlias(String alias) {    return this.m_aliasMapping.get(alias);      }
 	
 	public Set<HAPResourceIdSimple> getResourceDependency(){
 		Set<HAPResourceIdSimple> out = new HashSet<HAPResourceIdSimple>();
