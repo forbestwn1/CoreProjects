@@ -1,6 +1,5 @@
 package com.nosliw.core.application.division.manual.core.process;
 
-import com.nosliw.common.path.HAPPath;
 import com.nosliw.core.application.HAPBundle;
 import com.nosliw.core.application.HAPManagerApplicationBrick;
 import com.nosliw.core.application.division.manual.core.HAPManualManagerBrick;
@@ -54,7 +53,5 @@ public class HAPManualContextProcess {
 	public HAPManagerResource getResourceManager() {    return this.m_resourceMan;    }
 	
 	public HAPRuntimeInfo getRuntimeInfo() {    return this.m_runtimeInfo;      }
-	
-	public HAPPath getPathIdByAlias(String alias) {    return this.m_aliasToPathId.get(alias);     }
 
 }
