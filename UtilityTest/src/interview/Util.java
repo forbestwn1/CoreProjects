@@ -1,23 +1,50 @@
 package interview;
 
+import java.util.List;
+
 public class Util {
 
-	private int length;
+    public static int sumupPrice(List<Cart> carts, FiterFunction<CartItem> filter) {
+    	int out = 0;
+         
+    	if(carts != null) {
+        	for(Cart cart : carts) {
+        		for(CartItem item : cart.getItems()) {
+        			
+        			if(filter.filter(item)) {
+        				out = out + item.getPrice();
+        			}
+        			
+//        			if(item.getPrice()%2==0) {
+//        				out = out + item.getPrice();
+//        			}
+        			
+        		}
+        	}
+    		
+    	}
+    	
+    	
+    	return out;
+    }
 	
-	public Util(int length) {
-		this.length = length;
-	}
-	
-	public String compare(StringCompare strCompare) {
-	
-		int len1 = strCompare.getFirst()==null?0 : strCompare.getFirst().length();
-		int len2 = strCompare.getSecond()==null?0 : strCompare.getSecond().length();
-		
-		if(len1+len2>this.length) {
-			return null;
-		} else {
-			return strCompare.getSecond();
-		}
-	}
-	
+    //2 cart each cart have 2 items
+    
+    //edge case
+    //
+    
 }
+
+
+public interface FiterFunction<T>{
+	boolean filter(T t);
+}
+
+
+
+
+
+
+
+
+
