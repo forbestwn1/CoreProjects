@@ -19,6 +19,7 @@ var packageObj = library;
 	var node_complexEntityUtility;
 	var node_basicUtility;
 	var node_createDynamicInputContainer;
+	var node_pathUtility;
 
 //*******************************************   Start Node Definition  **************************************
 
@@ -97,7 +98,9 @@ var node_makeObjectEntityObjectInterface = function(rawEntity, internalValuePort
 							node_getEntityTreeNodeInterface(entityRuntime.getCoreEntity()).setParentCore(rawEntity);
 							return nosliw.runtime.getComplexEntityService().getCreateAdaptersRequest(attrDef, {
 								success : function(request, adapters){
-									node_getEntityTreeNodeInterface(entityRuntime.getCoreEntity()).setAdapters(adapters);
+									var childTreeNodeEntityInterface = node_getEntityTreeNodeInterface(entityRuntime.getCoreEntity());
+									childTreeNodeEntityInterface.setAdapters(adapters);
+									childTreeNodeEntityInterface.setDefPath(node_pathUtility.combinePath(treeNodeEntityInterface.getDefPath(), attrName));
 									return treeNodeEntityInterface.addChild(childName, entityRuntime, true);
 								}
 							});
@@ -117,9 +120,11 @@ var node_makeObjectEntityObjectInterface = function(rawEntity, internalValuePort
 
 							return nosliw.runtime.getComplexEntityService().getCreateAdaptersRequest(attrDef, {
 								success : function(request, adapters){
-									node_getEntityTreeNodeInterface(bundleCore).setAdapters(adapters);
+									var childTreeNodeEntityInterface = node_getEntityTreeNodeInterface(bundleCore);
+									childTreeNodeEntityInterface.setAdapters(adapters);
+									childTreeNodeEntityInterface.setDefPath(node_pathUtility.combinePath(treeNodeEntityInterface.getDefPath(), attrName));
 									return treeNodeEntityInterface.addChild(childName, bundleRuntime, true);
-								}	
+								}
 							});
 						}
 					}));
@@ -132,7 +137,9 @@ var node_makeObjectEntityObjectInterface = function(rawEntity, internalValuePort
 							node_getEntityTreeNodeInterface(dynamicRuntime.getCoreEntity()).setParentCore(rawEntity);
 							return nosliw.runtime.getComplexEntityService().getCreateAdaptersRequest(attrDef, {
 								success : function(request, adapters){
-									node_getEntityTreeNodeInterface(dynamicRuntime.getCoreEntity()).setAdapters(adapters);
+									var childTreeNodeEntityInterface = node_getEntityTreeNodeInterface(dynamicRuntime.getCoreEntity());
+									childTreeNodeEntityInterface.setAdapters(adapters);
+									childTreeNodeEntityInterface.setDefPath(node_pathUtility.combinePath(treeNodeEntityInterface.getDefPath(), attrName));
 									return treeNodeEntityInterface.addChild(childName, dynamicRuntime, true);
 								}
 							});
@@ -214,6 +221,8 @@ var node_makeObjectEntityTreeNodeInterface = function(rawEntity){
 	var loc_parentCore;
 	
 	var loc_adapters;
+	
+	var loc_defPath;
 
 	var loc_interfaceEntity = {
 
@@ -238,6 +247,9 @@ var node_makeObjectEntityTreeNodeInterface = function(rawEntity){
 			return child;
 		},
 		
+		getDefPath : function(){     return loc_defPath;    },
+		setDefPath : function(path){     loc_defPath = path;       },
+		
 	};
 
 	var embededEntityInterface =  node_getEmbededEntityInterface(rawEntity);
@@ -249,7 +261,10 @@ var node_makeObjectEntityTreeNodeInterface = function(rawEntity){
 			getChild : function(childName){   return loc_interfaceEntity.getChild(childName);	},
 			
 			addChild : function(childName, entityRuntime, isComplex){   return loc_interfaceEntity.addChild(childName, entityRuntime, isComplex);  },
-			
+
+			getDefPath : function(){     return loc_defPath;    },
+			setDefPath : function(path){     loc_defPath = path;       },
+				
 			processChildren : function(processFun){
 				var that = this;
 				_.each(this.getChildrenName(), function(childName){
@@ -338,8 +353,7 @@ nosliw.registerSetNodeDataEvent("common.interfacedef.getBasicEntityObjectInterfa
 nosliw.registerSetNodeDataEvent("complexentity.complexEntityUtility", function(){node_complexEntityUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("common.utility.basicUtility", function(){node_basicUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("complexentity.entity.createDynamicInputContainer", function(){node_createDynamicInputContainer = this.getData();});
-
-
+nosliw.registerSetNodeDataEvent("common.path.pathUtility", function(){node_pathUtility = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("makeObjectEntityObjectInterface", node_makeObjectEntityObjectInterface); 

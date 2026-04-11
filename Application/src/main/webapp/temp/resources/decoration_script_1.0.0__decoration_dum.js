@@ -85,7 +85,12 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 "valueStructureRuntime":{},
 "definitionByRuntime":{}
 },
-"supportBricks":{}
+"supportBricks":{},
+"exportBrickInfo":{"id":"default",
+"name":"default",
+"displayName":"default",
+"info":{}
+}
 }, {"loadPattern":"file"
 });
 

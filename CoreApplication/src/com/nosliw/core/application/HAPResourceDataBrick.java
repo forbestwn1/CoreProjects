@@ -24,24 +24,32 @@ public class HAPResourceDataBrick extends HAPResourceDataImp {
 	public final static String SUPPORTBRICKS = "supportBricks"; 
 
 	@HAPAttribute
+	public final static String ALIASMAPPING = "aliasMapping"; 
+
+	@HAPAttribute
 	public static final String VALUESTRUCTUREDOMAIN = "valueStructureDomain";
+
+	@HAPAttribute
+	public final static String EXPORTBRICKINFO = "exportBrickInfo"; 
 
 	private HAPBrick m_brick;
 	
 	private Map<String, HAPBrick> m_supportBricks;
 	
+	private Map<String, HAPPath> m_aliasMapping;
+	
 	//processed value structure
 	private HAPDomainValueStructure m_valueStructureDomain;
 	
-	public HAPResourceDataBrick(HAPBrick brick, Map<String, HAPBrick> supportBricks) {
+	private HAPInfoExportBrick m_exportBrickInfo;
+	
+	public HAPResourceDataBrick(HAPBrick brick, Map<String, HAPBrick> supportBricks, HAPInfoExportBrick exportBrickInfo, Map<String, HAPPath> aliasMapping, HAPDomainValueStructure valueStructureDomain) {
 		this.m_supportBricks = new LinkedHashMap<String, HAPBrick>();
 		this.m_supportBricks.putAll(supportBricks);
 		this.m_brick = brick;
-	}
-	
-	public HAPResourceDataBrick(HAPBrick brick, Map<String, HAPBrick> supportBricks, HAPDomainValueStructure valueStructureDomain) {
-		this(brick, supportBricks);
+		this.m_exportBrickInfo = exportBrickInfo;
 		this.m_valueStructureDomain = valueStructureDomain;
+		this.m_aliasMapping = aliasMapping;
 	}
 	
 	public HAPBrick getBrick() {    return this.m_brick;     }
@@ -66,6 +74,8 @@ public class HAPResourceDataBrick extends HAPResourceDataImp {
 			supportBrickMap.put(name, this.m_supportBricks.get(name).toStringValue(HAPSerializationFormat.JSON));
 		}
 		jsonMap.put(SUPPORTBRICKS, HAPUtilityJson.buildMapJson(supportBrickMap));
+		jsonMap.put(ALIASMAPPING, HAPUtilityJson.buildJsonStringValue(this.m_aliasMapping, HAPSerializationFormat.JSON));
+		jsonMap.put(EXPORTBRICKINFO, this.m_exportBrickInfo.toStringValue(HAPSerializationFormat.JSON));
 	}
 	
 	@Override
@@ -81,6 +91,8 @@ public class HAPResourceDataBrick extends HAPResourceDataImp {
 			supportBrickMap.put(name, this.m_supportBricks.get(name).toStringValue(HAPSerializationFormat.JAVASCRIPT));
 		}
 		jsonMap.put(SUPPORTBRICKS, HAPUtilityJson.buildMapJson(supportBrickMap));
+		jsonMap.put(ALIASMAPPING, HAPUtilityJson.buildJsonStringValue(this.m_aliasMapping, HAPSerializationFormat.JAVASCRIPT));
+		jsonMap.put(EXPORTBRICKINFO, this.m_exportBrickInfo.toStringValue(HAPSerializationFormat.JSON));
 	}
 
 	@Override

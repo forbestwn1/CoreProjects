@@ -6,7 +6,7 @@ import java.util.List;
 import com.nosliw.common.path.HAPPath;
 import com.nosliw.core.application.HAPAttributeInBrick;
 import com.nosliw.core.application.HAPBrick;
-import com.nosliw.core.application.HAPInfoExportResource;
+import com.nosliw.core.application.HAPInfoExportBrick;
 import com.nosliw.core.application.HAPPluginBrick;
 import com.nosliw.core.application.brick.HAPEnumBrickType;
 import com.nosliw.core.application.brick.container.HAPBrickContainer;
@@ -19,15 +19,15 @@ public class HAPPluginBrickDataExpressionLibrary extends HAPPluginBrick{
 	}
 
 	@Override
-	public List<HAPInfoExportResource> getExposeResourceInfo(HAPBrick brick){
+	public List<HAPInfoExportBrick> getExposeResourceInfo(HAPBrick brick){
 
-		List<HAPInfoExportResource> out = new ArrayList<HAPInfoExportResource>();
+		List<HAPInfoExportBrick> out = new ArrayList<HAPInfoExportBrick>();
 		
 		HAPBlockDataExpressionLibrary library = (HAPBlockDataExpressionLibrary)brick;
 		HAPBrickContainer containerBrick =  library.getItems();
 		List<HAPAttributeInBrick> eleAttrs = containerBrick.getElements();
 		for(HAPAttributeInBrick eleAttr : eleAttrs) {
-			HAPInfoExportResource exposeInteractiveInterface = new HAPInfoExportResource(new HAPPath(HAPBlockDataExpressionLibrary.ITEM).appendSegment(eleAttr.getName()).appendSegment(HAPBlockTaskWrapper.TASK));
+			HAPInfoExportBrick exposeInteractiveInterface = new HAPInfoExportBrick(new HAPPath(HAPBlockDataExpressionLibrary.ITEM).appendSegment(eleAttr.getName()).appendSegment(HAPBlockTaskWrapper.TASK));
 			exposeInteractiveInterface.setName(eleAttr.getName());
 			out.add(exposeInteractiveInterface);
 		}

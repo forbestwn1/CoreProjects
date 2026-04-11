@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.nosliw.common.path.HAPPath;
 import com.nosliw.core.application.HAPBrick;
-import com.nosliw.core.application.HAPInfoExportResource;
+import com.nosliw.core.application.HAPInfoExportBrick;
 import com.nosliw.core.application.HAPPluginBrick;
 import com.nosliw.core.application.brick.HAPEnumBrickType;
 
@@ -16,10 +16,10 @@ public class HAPPluginBrickServiceInterface extends HAPPluginBrick{
 	}
 
 	@Override
-	public List<HAPInfoExportResource> getExposeResourceInfo(HAPBrick brick){
-		List<HAPInfoExportResource> out = new ArrayList<HAPInfoExportResource>();
+	public List<HAPInfoExportBrick> getExposeResourceInfo(HAPBrick brick){
+		List<HAPInfoExportBrick> out = new ArrayList<HAPInfoExportBrick>();
 		
-		HAPInfoExportResource exposeInteractiveInterface = new HAPInfoExportResource(new HAPPath(HAPBlockServiceInterface.INTERFACE));
+		HAPInfoExportBrick exposeInteractiveInterface = new HAPInfoExportBrick(new HAPPath(HAPBlockServiceInterface.INTERFACE));
 		exposeInteractiveInterface.setName(HAPBlockServiceInterface.CHILD_INTERFACE);
 		out.add(exposeInteractiveInterface);
 

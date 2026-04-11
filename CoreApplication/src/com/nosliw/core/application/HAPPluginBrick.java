@@ -26,6 +26,6 @@ public class HAPPluginBrick {
 	public HAPInfoBrickType getBrickTypeInfo() {    return this.m_brickTypeInfo;     }
 	
 	//what kind of embeded resource to expose
-	public List<HAPInfoExportResource> getExposeResourceInfo(HAPBrick brick){   return new ArrayList<HAPInfoExportResource>();    }
+	public List<HAPInfoExportBrick> getExposeResourceInfo(HAPBrick brick){   return new ArrayList<HAPInfoExportBrick>();    }
 
 }

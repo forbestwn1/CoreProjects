@@ -26,8 +26,8 @@ public class HAPUtilityBrickResource {
 		if(name==null) {
 			name = HAPConstantShared.NAME_DEFAULT;
 		}
-		HAPInfoExportResource exportInfo = null;
-		for(HAPInfoExportResource ei : bundle.getExportResourceInfos()) {
+		HAPInfoExportBrick exportInfo = null;
+		for(HAPInfoExportBrick ei : bundle.getExportResourceInfos()) {
 			if(name.equals(ei.getName())) {
 				exportInfo = ei;
 				break;
@@ -43,7 +43,7 @@ public class HAPUtilityBrickResource {
 				suportBricks.put(n, branches.get(n).getBrick());
 			}
 			
-			out = new HAPResourceDataBrick(brickResult.getBrick(), suportBricks, bundle.getValueStructureDomain());
+			out = new HAPResourceDataBrick(brickResult.getBrick(), suportBricks, exportInfo, bundle.getAliasMappings(), bundle.getValueStructureDomain());
 		}
 		else {
 			out = (HAPResourceDataBrick)HAPUtilityResource.getResource(brickResult.getResourceId(), resourceMan, runtimeInfo).getResourceData();

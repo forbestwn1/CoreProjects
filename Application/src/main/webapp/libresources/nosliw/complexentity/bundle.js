@@ -82,7 +82,9 @@ var node_createBundleCore = function(parm, configure){
 //							loc_valueportDomain = nod_createValuePortDomain(loc_bundleDef[node_COMMONATRIBUTECONSTANT.RESOURCEDATABRICK_VALUESTRUCTUREDOMAIN]);
 							return nosliw.runtime.getComplexEntityService().getCreateBrickRuntimeRequest(brickDef, undefined, loc_out, undefined, loc_configure, {
 								success : function(request, mainEntityRuntime){
-									node_getEntityTreeNodeInterface(mainEntityRuntime.getCoreEntity()).setParentCore(loc_out);
+									var childTreeNodeEntityInterface = node_getEntityTreeNodeInterface(mainEntityRuntime.getCoreEntity());
+									childTreeNodeEntityInterface.setParentCore(loc_out);
+									childTreeNodeEntityInterface.setDefPath(name);
 									loc_envInterface[node_CONSTANT.INTERFACE_TREENODEENTITY].addChild(name, mainEntityRuntime, true);
 								}
 							});
@@ -99,7 +101,9 @@ var node_createBundleCore = function(parm, configure){
 			var entityDef = loc_bundleDef[node_COMMONATRIBUTECONSTANT.RESOURCEDATABRICK_BRICK];
 			return nosliw.runtime.getComplexEntityService().getCreateBrickRuntimeRequest(entityDef, undefined, loc_out, undefined, loc_configure, {
 				success : function(request, mainEntityRuntime){
-					node_getEntityTreeNodeInterface(mainEntityRuntime.getCoreEntity()).setParentCore(loc_out);
+					var childTreeNodeEntityInterface = node_getEntityTreeNodeInterface(mainEntityRuntime.getCoreEntity());
+					childTreeNodeEntityInterface.setParentCore(loc_out);
+					childTreeNodeEntityInterface.setDefPath(node_COMMONATRIBUTECONSTANT.INFOEXPORTBRICK_PATHFROMROOT);
 					loc_envInterface[node_CONSTANT.INTERFACE_TREENODEENTITY].addChild(loc_MAIN_NAME, mainEntityRuntime, true);
 					return node_complexEntityUtility.getBuildAttributeWithResourceId(mainEntityRuntime.getCoreEntity());
 				}
