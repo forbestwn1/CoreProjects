@@ -44,9 +44,10 @@ Page1!!!!!
 				        		    "type" : "multiple",
     							    "brickPackages" : [
 	    						        {
-		    	            		    	"status": "disabled",
+		    	            		    	"status": "disabled1",
 			        					    "brickId" : {
-				        	    			    "relativePath" : "#parent#.executeAdapterForPresent.brick"
+			        					        "alias" : "module.page1.task.executeAdapterToPage2",
+				        	    			    "relativePath1" : "#parent#.executeAdapterForPresent.brick"
 				                			}
 						        	    },
 							            {
@@ -82,13 +83,16 @@ Page1!!!!!
 	            },
 	    		{
 		    		"name" : "executeAdapterForPresent",
-     		    	"status": "disabled",
+     		    	"status": "disabled1",
 	    		    "description" : "",
             		"brickType" : {
 		        	    "brickType" : "taskTaskScript",
 			            "version" : "1.0.0"
     		        },
 	    	        "brick" : {
+    			        "info" : {
+   	    		            "nosliw_alias" : "module.page1.task.executeAdapterToPage2"
+		    	        },
     	    			"scriptResourceId": "task_adpater_execute",
     		    		"parm": {
     		    		    "alias" : "module.page1.list.content",
