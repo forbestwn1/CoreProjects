@@ -168,9 +168,7 @@
 			    "description" : "",
 		        "brick" : {
 					"info" : {
-					    "info" : {
-					        "nosliw_alias" : "module.page2"
-					    }
+						"nosliw_alias" : "module.page2"
 					},
     			    "brickId":"page2|uipage;1.0.0"
    			    }

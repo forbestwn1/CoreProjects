@@ -28,9 +28,9 @@ public class HAPUtilityBrickTraverse {
 	public static void traverseTree(HAPBundle bundle, String rootName, HAPHandlerDownward processor, HAPManagerApplicationBrick brickMan, Object data) {
 		Set<HAPPath> validPath = new HashSet<HAPPath>();
 		
-		traversePreTree(bundle, new HAPPath(HAPUtilityBundle.buildBranchPathSegment(rootName)), processor, brickMan, data, validPath);
+		traversePreTree(bundle, new HAPPath(rootName), processor, brickMan, data, validPath);
 		
-		traversePostTree(bundle, new HAPPath(HAPUtilityBundle.buildBranchPathSegment(rootName)), processor, brickMan, data, validPath);
+		traversePostTree(bundle, new HAPPath(rootName), processor, brickMan, data, validPath);
 	}
 	
 	private static void traversePreTree(HAPBundle bundle, HAPPath path, HAPHandlerDownward processor, HAPManagerApplicationBrick brickMan, Object data, Set<HAPPath> validPath) {

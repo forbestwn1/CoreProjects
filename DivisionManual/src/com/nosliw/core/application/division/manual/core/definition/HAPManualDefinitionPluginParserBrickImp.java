@@ -33,6 +33,10 @@ import com.nosliw.core.resource.HAPResourceId;
 
 public class HAPManualDefinitionPluginParserBrickImp implements HAPManualDefinitionPluginParserBrick{
 
+	public static final String PARENT = "parent";
+	
+	public static final String METAINFO = "metainfo";
+	
 	private Class<? extends HAPManualDefinitionBrick> m_brickClass;
 
 	private HAPManagerApplicationBrick m_brickMan;
@@ -207,27 +211,35 @@ public class HAPManualDefinitionPluginParserBrickImp implements HAPManualDefinit
 	
 	protected void parseBrickAttributeHtml(HAPManualDefinitionBrick parentBrick, Element htmlEle, String attributeName, HAPIdBrickType entityTypeIfNotProvided, HAPIdBrickType adapterTypeId, HAPManualDefinitionContextParse parseContext) {
 		HAPManualDefinitionAttributeInBrick attribute = new HAPManualDefinitionAttributeInBrick();
-		attribute.setName(attributeName);
+		
+		//parse meta info
+		List<Element> metaInfoEles = HAPUtilityUIResourceParser.getChildElementsByTag(htmlEle, HAPManualDefinitionPluginParserBrickImp.METAINFO);
+		for(Element metaInfoEle : metaInfoEles){
+			JSONObject metaInfoObjJson = new JSONObject(Parser.unescapeEntities(metaInfoEle.html(), false));
+			attribute.buildEntityInfoByJson(metaInfoObjJson);
+			break;
+		}
+		for(Element metaInfoEle : metaInfoEles) {
+			metaInfoEle.remove();
+		}
 		
 		//parse adapter
 		List<Element> adaptersEles = HAPUtilityUIResourceParser.getChildElementsByTag(htmlEle, HAPManualDefinitionAttributeInBrick.ADAPTER);
 		for(Element adaptersEle : adaptersEles){
 			JSONArray adapterArrayJson = new JSONArray(Parser.unescapeEntities(adaptersEle.html(), false));
-			for(int i=0; i<adapterArrayJson.length(); i++) {
-				
-				List<HAPManualDefinitionAdapter> adapters = HAPManualDefinitionUtilityParserBrickFormatJson.parseAdapters(adapterArrayJson.getJSONObject(i), adapterTypeId, parseContext);
-				adapters.forEach(adapter->attribute.addAdapter(adapter));
-			}
+			List<HAPManualDefinitionAdapter> adapters = HAPManualDefinitionUtilityParserBrickFormatJson.parseAdapters(adapterArrayJson, adapterTypeId, parseContext);
+			adapters.forEach(adapter->attribute.addAdapter(adapter));
 			break;
 		}
-		for(Element tasksEle : adaptersEles) {
-			tasksEle.remove();
+		for(Element adapterEle : adaptersEles) {
+			adapterEle.remove();
 		}
 
 		//parse brick
 		HAPManualDefinitionBrick brickDef = HAPManualDefinitionUtilityParserBrick.parseBrickDefinition(htmlEle, entityTypeIfNotProvided, HAPSerializationFormat.HTML, parseContext);
 		attribute.setValueWrapper(new HAPManualDefinitionWrapperValueBrick(brickDef));
 		
+		attribute.setName(attributeName);
 		parentBrick.setAttribute(attribute);
 	}
 	

@@ -57,7 +57,7 @@ public class HAPManualDefinitionUtilityParserBrickFormatJson {
 	}
 	
 	public static HAPManualDefinitionAttributeInBrick parseAttribute(String attrName, JSONObject jsonObj, HAPIdBrickType entityTypeIfNotProvided, HAPIdBrickType adapterTypeId, HAPManualDefinitionContextParse parseContext) {
-		HAPEntityInfo info = HAPUtilityEntityInfo.buildEntityInfoFromJson(jsonObj, HAPManualDefinitionAttributeInBrick.INFO);
+		HAPEntityInfo info = HAPUtilityEntityInfo.buildEntityInfoFromJson(jsonObj);
 		
 		if(HAPUtilityEntityInfo.isEnabled(info)) {
 			HAPManualDefinitionAttributeInBrick out = new HAPManualDefinitionAttributeInBrick();

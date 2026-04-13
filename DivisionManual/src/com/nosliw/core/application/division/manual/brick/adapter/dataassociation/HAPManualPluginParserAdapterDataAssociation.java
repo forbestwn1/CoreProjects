@@ -27,6 +27,9 @@ public class HAPManualPluginParserAdapterDataAssociation  extends HAPManualDefin
 		HAPManualDefinitionAdapterDataAssociation entity = (HAPManualDefinitionAdapterDataAssociation)brickManual;
 		
 		Object daObj =  ((JSONObject)jsonValue).opt(HAPManualDefinitionAdapterDataAssociation.DEFINITION);
+		if(daObj==null) {
+			daObj = jsonValue;
+		}
 		if(daObj instanceof JSONObject) {
 			HAPDefinitionDataAssociation da = HAPDefinitionParserDataAssociation.buildDefinitionByJson((JSONObject)daObj, this.m_dataRuleMan);
 			entity.addDataAssciation(da);

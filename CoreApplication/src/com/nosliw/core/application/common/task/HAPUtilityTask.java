@@ -5,7 +5,6 @@ import com.nosliw.common.path.HAPPath;
 import com.nosliw.core.application.HAPBrick;
 import com.nosliw.core.application.HAPBundle;
 import com.nosliw.core.application.HAPUtilityBrick;
-import com.nosliw.core.application.HAPUtilityBundle;
 import com.nosliw.core.application.brick.HAPEnumBrickType;
 import com.nosliw.core.application.brick.wrappertask.HAPBlockTaskWrapper;
 import com.nosliw.core.application.common.brick.HAPBrickImp;
@@ -32,7 +31,7 @@ public class HAPUtilityTask {
 		
 		HAPComplexPath pathInfo = new HAPComplexPath(path.getPath());
 		out = out.appendSegment(pathInfo.getRoot());
-		HAPBrickImp brick = (HAPBrickImp)currentBundle.getRootBrickWrapper(HAPUtilityBundle.getBranchName(pathInfo.getRoot())).getBrick();
+		HAPBrickImp brick = (HAPBrickImp)currentBundle.getRootBrickWrapper(pathInfo.getRoot()).getBrick();
 		
 		String[] segs = pathInfo.getPathSegs();
 		int i = -1;

@@ -20,6 +20,7 @@ public class HAPInfoExportBrick extends HAPEntityInfoImp{
 	}
 	
 	public HAPPath getPathFromRoot() {     return this.m_pathFromRoot;      }
+	public void setPathFromRoot(String path) {    this.m_pathFromRoot = new HAPPath(path);       }
 	
 	@Override
 	protected void buildJsonMap(Map<String, String> jsonMap, Map<String, Class<?>> typeJsonMap){

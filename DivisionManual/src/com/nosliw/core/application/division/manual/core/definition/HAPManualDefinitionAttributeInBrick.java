@@ -27,9 +27,6 @@ public class HAPManualDefinitionAttributeInBrick extends HAPEntityInfoImp implem
 
 	public static final String PARENT = "parent";
 
-	//extra info definition
-	public static final String INFO = "info";
-	
 	//attribute value
 	private HAPManualDefinitionWrapperValue m_valueWrapper;
 	

@@ -25,8 +25,6 @@ var packageObj = library;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
-var loc_MAIN_NAME = "main";
-
 //bundle is executable resource unit
 var node_createBundleCore = function(parm, configure){
 
@@ -103,8 +101,8 @@ var node_createBundleCore = function(parm, configure){
 				success : function(request, mainEntityRuntime){
 					var childTreeNodeEntityInterface = node_getEntityTreeNodeInterface(mainEntityRuntime.getCoreEntity());
 					childTreeNodeEntityInterface.setParentCore(loc_out);
-					childTreeNodeEntityInterface.setDefPath(node_COMMONATRIBUTECONSTANT.INFOEXPORTBRICK_PATHFROMROOT);
-					loc_envInterface[node_CONSTANT.INTERFACE_TREENODEENTITY].addChild(loc_MAIN_NAME, mainEntityRuntime, true);
+					childTreeNodeEntityInterface.setDefPath(loc_bundleDef[node_COMMONATRIBUTECONSTANT.RESOURCEDATABRICK_EXPORTBRICKINFO][node_COMMONATRIBUTECONSTANT.INFOEXPORTBRICK_PATHFROMROOT]);
+					loc_envInterface[node_CONSTANT.INTERFACE_TREENODEENTITY].addChild(node_COMMONCONSTANT.NAME_ROOTBRICK_MAIN, mainEntityRuntime, true);
 					return node_complexEntityUtility.getBuildAttributeWithResourceId(mainEntityRuntime.getCoreEntity());
 				}
 			});
@@ -114,8 +112,12 @@ var node_createBundleCore = function(parm, configure){
 		return out;
 	};
 
+	var loc_getMainEntityNode = function(){		
+		return loc_envInterface[node_CONSTANT.INTERFACE_TREENODEENTITY].getChild(node_COMMONCONSTANT.NAME_ROOTBRICK_MAIN);	
+    };
+
 	var loc_getMainEntity = function(){
-		var mainChild = loc_envInterface[node_CONSTANT.INTERFACE_TREENODEENTITY].getChild(loc_MAIN_NAME);
+		var mainChild = loc_getMainEntityNode();
 		if(mainChild!=undefined)	return mainChild.getChildValue();
 	};
 
@@ -151,7 +153,7 @@ var node_createBundleCore = function(parm, configure){
 
 		getMainEntityRuntime : function(){ return loc_getMainEntity();  },
 
-		getMainEntityNode : function(){		return loc_envInterface[node_CONSTANT.INTERFACE_TREENODEENTITY].getChild(loc_MAIN_NAME);	},
+		getMainEntityNode : function(){		return loc_getMainEntityNode();	},
 
 		setEnvironmentInterface : function(envInterface){	loc_envInterface = envInterface;	},
 		
@@ -191,6 +193,8 @@ var node_createBundleCore = function(parm, configure){
 		getDynamicInputContainer : function(){	return loc_dynamicInputContainer;		},
 		
 		getValueContainer : function(){		return loc_valueContainer;	},
+		
+		getBrickDefPathByAlias : function(alias){    return loc_bundleDef[node_COMMONATRIBUTECONSTANT.RESOURCEDATABRICK_ALIASMAPPING][alias];      }
 		
 	};
 	

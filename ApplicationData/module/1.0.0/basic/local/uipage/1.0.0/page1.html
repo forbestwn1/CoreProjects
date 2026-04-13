@@ -20,6 +20,14 @@ Page1!!!!!
  		     index : <%=JSON.stringify(?(index)?)%>
  		     value : <%=?(element)?.value%>
 
+            <metainfo>
+            {
+	            "info" : {
+   		            "nosliw_alias" : "module.page1.list.content"
+	            }
+	        }
+            </metainfo> 
+
             <task>
             [
 	    		{
@@ -64,9 +72,7 @@ Page1!!!!!
 		            },
 		            "brick" : {
     			        "info" : {
-    			            "info" : {
-    	    		            "nosliw_alias" : "module.page1.task.navigateToPage2"
-    			            }
+   	    		            "nosliw_alias" : "module.page1.task.navigateToPage2"
 		    	        },
     			    	"scriptResourceId": "task_page_navigate",
     				    "parm": {
@@ -85,7 +91,7 @@ Page1!!!!!
 	    	        "brick" : {
     	    			"scriptResourceId": "task_adpater_execute",
     		    		"parm": {
-    		    		    "alias" : "module.page2",
+    		    		    "alias" : "module.page1.list.content",
     			    	    "adapter" : "elementToPage2"
     				    }
     		        }
@@ -97,19 +103,30 @@ Page1!!!!!
             [
 				{
 					"name" : "elementToPage2",
-					"status": "disabled",
-					"entityType" : "dataAssociation",
-					"entity" : {
+					"status": "disabled1",
+					"brickTypeId" : {
+						"brickType": "dataAssociation",
+						"version": "1.0.0"
+					},
+					"brick" : {
+						"type" : "mapping",
 						"direction": "upStream",
-						"mapping" : {
-							"element" : {
+						"mapping" : [
+							 {
+							    "target": {
+							        "valuePortId" : {
+							            "brickId" : "@module.page2.content"
+							        },
+							        "rootName" : "page2_public_string"
+							    
+							    },
 								"definition" : {
 									"mapping" : {
-										"elementPath": "child_tree_public.a"
+										"elementPath": "element"
 									}
 								}
 							}
-						}
+						]
 					}
 				}
             ]

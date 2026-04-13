@@ -5,7 +5,6 @@ import org.apache.commons.lang3.tuple.Pair;
 import com.nosliw.common.path.HAPComplexPath;
 import com.nosliw.common.path.HAPPath;
 import com.nosliw.core.application.HAPIdBrickType;
-import com.nosliw.core.application.HAPUtilityBundle;
 
 public class HAPManualUtilityBrick {
 
@@ -16,7 +15,7 @@ public class HAPManualUtilityBrick {
 	public static HAPComplexPath getBrickFullPathInfo(HAPInfoTreeNode treeNodeInfo) {
 		HAPPath pathNorm = new HAPPath(treeNodeInfo.getPathFromRoot());
 		Pair<String, HAPPath> pathPair = pathNorm.trimFirst();
-		return new HAPComplexPath(HAPUtilityBundle.getBranchName(pathPair.getLeft()), pathPair.getRight());
+		return new HAPComplexPath(pathPair.getLeft(), pathPair.getRight());
 	}
 	
 }

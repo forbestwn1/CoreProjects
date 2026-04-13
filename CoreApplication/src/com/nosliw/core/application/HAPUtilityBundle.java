@@ -17,14 +17,10 @@ public class HAPUtilityBundle {
 		return bundle;
 	}
 
-	public static String buildBranchPathSegment(String branchName) {
-		return HAPConstantShared.SYMBOL_KEYWORD + branchName;
-	}
-	
 	public static String normalizePathWithBranch(String path, String defaultBranch) {
 		String out = path;
-		if(!path.startsWith(HAPConstantShared.SYMBOL_KEYWORD)) {
-			out = HAPUtilityNamingConversion.cascadePath(buildBranchPathSegment(defaultBranch), path);
+		if(path==null||!path.startsWith(HAPConstantShared.SYMBOL_KEYWORD)) {
+			out = HAPUtilityNamingConversion.cascadePath(defaultBranch, path);
 		}
 		return out;
 	}
@@ -32,7 +28,7 @@ public class HAPUtilityBundle {
 	public static HAPComplexPath getBrickFullPathInfo(String path, String defaultBranch) {
 		HAPPath pathNorm = new HAPPath(normalizePathWithBranch(path, defaultBranch));
 		Pair<String, HAPPath> pathPair = pathNorm.trimFirst();
-		return new HAPComplexPath(getBranchName(pathPair.getLeft()), pathPair.getRight());
+		return new HAPComplexPath(pathPair.getLeft(), pathPair.getRight());
 	}
 
 	public static HAPComplexPath getBrickFullPathInfo(String path) {
@@ -41,14 +37,7 @@ public class HAPUtilityBundle {
 	
 	public static HAPComplexPath getBrickFullPathInfo(HAPPath path) {
 		Pair<String, HAPPath> pathPair = path.trimFirst();
-		return new HAPComplexPath(getBranchName(pathPair.getLeft()), pathPair.getRight());
+		return new HAPComplexPath(pathPair.getLeft(), pathPair.getRight());
 	}
 
-	public static String getBranchName(String pathSegment) {
-		String out = pathSegment;
-		if(pathSegment.startsWith(HAPConstantShared.SYMBOL_KEYWORD)) {
-			out = pathSegment.substring(HAPConstantShared.SYMBOL_KEYWORD.length());
-		}
-		return out;
-	}
 }

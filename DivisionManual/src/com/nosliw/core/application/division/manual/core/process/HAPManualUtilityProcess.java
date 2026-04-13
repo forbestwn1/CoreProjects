@@ -10,7 +10,6 @@ import com.nosliw.core.application.HAPHandlerDownward;
 import com.nosliw.core.application.HAPIdBrickType;
 import com.nosliw.core.application.HAPManagerApplicationBrick;
 import com.nosliw.core.application.HAPUtilityBrick;
-import com.nosliw.core.application.HAPUtilityBundle;
 import com.nosliw.core.application.common.parentrelation.HAPManualDefinitionBrickRelationAutoProcess;
 import com.nosliw.core.application.division.manual.core.HAPInfoTreeNode;
 import com.nosliw.core.application.division.manual.core.HAPManualBrick;
@@ -29,7 +28,7 @@ public class HAPManualUtilityProcess {
 			brick.setTreeNodeInfo(new HAPInfoTreeNode());
 		}
 		else {
-			brick.setTreeNodeInfo(new HAPInfoTreeNode(new HAPPath(HAPUtilityBundle.buildBranchPathSegment(rootName)), null));
+			brick.setTreeNodeInfo(new HAPInfoTreeNode(new HAPPath(rootName), null));
 		}
 		return brick;
 	}

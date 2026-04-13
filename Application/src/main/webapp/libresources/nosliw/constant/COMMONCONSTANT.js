@@ -659,7 +659,6 @@ var COMMONCONSTANT=
   "BRICKTYPECRITERIA_RESTRAIN_TASKINTERFACE": "taskInterface",
   "BRICKFACADE_TYPE_SIMPLE": "simple",
   "BRICKFACADE_TYPE_COMPLEX": "complex",
-  "NAME_ROOTBRICK_MAIN": "main",
   "FLOW_DECISION_TYPE_JAVASCRIPT": "javascript",
   "VALUEADDRESSCATEGARY_BUNDLE": "bundle",
   "VALUEADDRESSCATEGARY_TASKCONTEXT": "taskContext",
@@ -667,7 +666,8 @@ var COMMONCONSTANT=
   "EVENT_HANDLERTYPE_TASK": "task",
   "EVENT_HANDLERTYPE_SCRIPT": "script",
   "PARM_RULETASK_RULEDEF": "ruleDef",
-  "BUNDLEBRANCH_NAME_RULETASKS": "ruleTasks"
+  "NAME_ROOTBRICK_MAIN": "#main",
+  "BUNDLEBRANCH_NAME_RULETASKS": "#ruleTasks"
 };
 
 //*******************************************   End Node Definition  ************************************** 	

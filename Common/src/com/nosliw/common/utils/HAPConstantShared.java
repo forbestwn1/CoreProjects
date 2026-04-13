@@ -1073,10 +1073,6 @@ public class HAPConstantShared {
 
 
 
-		public static final String NAME_ROOTBRICK_MAIN = "main";
-
-
-
 		public static final String FLOW_DECISION_TYPE_JAVASCRIPT = "javascript";
 
 
@@ -1096,7 +1092,11 @@ public class HAPConstantShared {
 
 
 
-		public static final String BUNDLEBRANCH_NAME_RULETASKS = "ruleTasks";
+		public static final String NAME_ROOTBRICK_MAIN = "#main";
+
+
+
+		public static final String BUNDLEBRANCH_NAME_RULETASKS = "#ruleTasks";
 
 
 }

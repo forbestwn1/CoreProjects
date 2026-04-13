@@ -13,7 +13,6 @@ import com.nosliw.core.application.HAPUtilityBrickId;
 import com.nosliw.core.application.division.manual.core.HAPManualEnumBrickType;
 import com.nosliw.core.application.division.manual.core.HAPManualManagerBrick;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionAttachment;
-import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionAttributeInBrick;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionBrick;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionContextParse;
 import com.nosliw.core.application.division.manual.core.definition.HAPManualDefinitionPluginParserBrickImp;
@@ -26,6 +25,9 @@ public class HAPManualPluginParserBrickImpDynamic extends HAPManualDefinitionPlu
 
 	public final static String PREFIX_IGNORE = "ignore";
 
+	//extra info definition
+	public static final String INFO = "info";
+	
 	public HAPManualPluginParserBrickImpDynamic(HAPIdBrickType entityTypeId, Class<? extends HAPManualDefinitionBrick> entityClass, HAPManualManagerBrick manualDivisionEntityMan, HAPManagerApplicationBrick brickMan) {
 		super(entityTypeId, entityClass, manualDivisionEntityMan, brickMan);
 	}
@@ -36,7 +38,7 @@ public class HAPManualPluginParserBrickImpDynamic extends HAPManualDefinitionPlu
 		
 		for(int i=0; i<jsonArray.length(); i++) {
 			JSONObject jsonObj = jsonArray.getJSONObject(i);
-			HAPEntityInfo info = HAPUtilityEntityInfo.buildEntityInfoFromJson(jsonObj, HAPManualDefinitionAttributeInBrick.INFO);
+			HAPEntityInfo info = HAPUtilityEntityInfo.buildEntityInfoFromJson(jsonObj, INFO);
 
 			if(HAPUtilityEntityInfo.isEnabled(info)) {
 				String attrName = info.getName();

@@ -72,7 +72,10 @@ public class HAPBundle extends HAPSerializableImp implements HAPWithResourceDepe
 		this.addExportResourceInfo(defaultExport);
 	}
 	
-	public void addExportResourceInfo(HAPInfoExportBrick exportResourceInfo) {		this.m_exportResourceInfos.add(exportResourceInfo);	}
+	public void addExportResourceInfo(HAPInfoExportBrick exportResourceInfo) {		
+		exportResourceInfo.setPathFromRoot(HAPUtilityBundle.normalizePathWithBranch(exportResourceInfo.getPathFromRoot().getPath(), HAPConstantShared.NAME_ROOTBRICK_MAIN));
+		this.m_exportResourceInfos.add(exportResourceInfo);	
+	}
 	public List<HAPInfoExportBrick> getExportResourceInfos(){    return this.m_exportResourceInfos;    }
 	
 	public HAPDomainValueStructure getValueStructureDomain() {	return this.m_valueStructureDomain;	}

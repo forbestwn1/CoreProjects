@@ -4,6 +4,7 @@ var packageObj = library.getChildPackage("path");
 (function(packageObj){
 	//get used node
 	var node_CONSTANT;
+	var node_COMMONCONSTANT;
 	var node_buildInterface;
 	var node_getInterface;
 	var node_makeObjectWithType;
@@ -17,6 +18,44 @@ var node_pathUtility = function(){
 	
 	var loc_out = {
 
+		fromAbsoluteToRelativePath : function(absolutePath, basePath) {
+			var baseEntityIdPathSegs = node_pathUtility.parsePathSegments(basePath);
+			var entityIdPathSegs = node_pathUtility.parsePathSegments(absolutePath);
+			
+			for(var i in baseEntityIdPathSegs){
+				if(i>=entityIdPathSegs.length) {
+					break;
+				} else if(baseEntityIdPathSegs[i]!=entityIdPathSegs[i]) {
+					break;
+				}
+			}
+
+			var out = "";
+			
+			var index = 0;
+			var j = i;
+			while(j<baseEntityIdPathSegs.length){
+				if(index!=0) {
+					out = out + node_COMMONCONSTANT.SEPERATOR_PATH;
+				}
+				out = out + node_COMMONCONSTANT.NAME_PARENT;
+				index++;
+				j++;
+			};
+			
+			j = i;
+			while(j<entityIdPathSegs.length){
+				if(index!=0) {
+					out = out + node_COMMONCONSTANT.SEPERATOR_PATH;
+				}
+				out = out + entityIdPathSegs[j];
+				index++;
+				j++;
+			};
+			
+			return out;
+		},
+		
         parsePathSegments : function(pathObj){
 			var out;
 			if(node_basicUtility.isArray(pathObj)){
@@ -104,6 +143,7 @@ var node_pathUtility = function(){
 //*******************************************   End Node Definition  ************************************** 	
 //populate dependency node data
 nosliw.registerSetNodeDataEvent("constant.CONSTANT", function(){node_CONSTANT = this.getData();});
+nosliw.registerSetNodeDataEvent("constant.COMMONCONSTANT", function(){node_COMMONCONSTANT = this.getData();});
 nosliw.registerSetNodeDataEvent("common.interface.buildInterface", function(){node_buildInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("common.interface.getInterface", function(){node_getInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("common.interfacedef.makeObjectWithType", function(){node_makeObjectWithType = this.getData();});

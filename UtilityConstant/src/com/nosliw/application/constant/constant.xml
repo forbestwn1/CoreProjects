@@ -1103,9 +1103,6 @@
 			<definition name="BRICKFACADE_TYPE_COMPLEX" value="complex"/>
 
 			<definition type="space"/>
-			<definition name="NAME_ROOTBRICK_MAIN" value="main"/>
-
-			<definition type="space"/>
 			<definition name="FLOW_DECISION_TYPE_JAVASCRIPT" value="javascript"/>
 
 			<definition type="space"/>
@@ -1121,7 +1118,10 @@
 			<definition name="PARM_RULETASK_RULEDEF" value="ruleDef"/>
 
 			<definition type="space"/>
-			<definition name="BUNDLEBRANCH_NAME_RULETASKS" value="ruleTasks"/>
+			<definition name="NAME_ROOTBRICK_MAIN" value="#main"/>
+
+			<definition type="space"/>
+			<definition name="BUNDLEBRANCH_NAME_RULETASKS" value="#ruleTasks"/>
 
 		</definitions>
 	</constants>
