@@ -331,7 +331,10 @@ var node_complexEntityUtility = function(){
             return adapters;			
 		},
 	
-	
+		getAdapterExecuteRequest : function(entityCore, adapterName, handlers, request){
+			return loc_out.getAdapters(entityCore)[adapterName].getExecuteRequest(entityCore, handlers, request);
+		},
+			
 		XXXXXgetAttributeAdapterExecuteRequest : function(parentCoreEntity, attrName, adapterName, extraInfo, handlers, request){
 			var attrNode = node_getEntityTreeNodeInterface(parentCoreEntity).getChild(attrName);
 			var adapter = attrNode.getAdapters()[adapterName!=undefined?adapterName:node_COMMONCONSTANT.NAME_DEFAULT];

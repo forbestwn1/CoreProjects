@@ -59,11 +59,9 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 			var brickPath = loc_bundleCore.getBrickDefPathByAlias(loc_brickAlias);
 			var currentDefPath = loc_envInterface[node_CONSTANT.INTERFACE_TREENODEENTITY].getDefPath();
 			var relativePath = node_pathUtility.fromAbsoluteToRelativePath(brickPath, currentDefPath);
-
 			var coreEntityForAdapter = node_complexEntityUtility.getCoreEntityReferenceByRelativePath(loc_out, relativePath).getBaseCoreEntity();
-			var adapterTreeNodeEntityInterface = node_getEntityTreeNodeInterface(coreEntityForAdapter);
-			var adapter = adapterTreeNodeEntityInterface.getAdapters()[loc_adapterName];
-			out.addRequest(adapter.getExecuteRequest(coreEntityForAdapter, {
+			
+			out.addRequest(node_complexEntityUtility.getAdapterExecuteRequest(coreEntityForAdapter, loc_adapterName, {
 				success : function(){
 					return {
 					    "resultName": "success",
@@ -71,6 +69,7 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 					};
 				}
 			}));
+			
 			return out;
 		},
 		
