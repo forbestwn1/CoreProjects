@@ -79,18 +79,6 @@ if(typeof nosliw!='undefined' && nosliw.runtime!=undefined && nosliw.runtime.get
 				}
 			}));
 			
-/*			
-			var adapterTreeNodeEntityInterface = node_getEntityTreeNodeInterface(coreEntityForAdapter);
-			var adapter = adapterTreeNodeEntityInterface.getAdapters()[loc_adapterName];
-			out.addRequest(adapter.getExecuteRequest(coreEntityForAdapter, {
-				success : function(){
-					return {
-					    "resultName": "success",
-					    "resultValue": "adapter successfully"
-					};
-				}
-			}));
-*/			
 			return out;
 		},
 		
