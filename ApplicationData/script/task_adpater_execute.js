@@ -16,6 +16,7 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 	var node_interactiveUtility = nosliw.getNodeData("task.interactiveUtility");
 	var node_createTaskCore = nosliw.getNodeData("task.createTaskCore");
 	var node_pathUtility = nosliw.getNodeData("common.path.pathUtility");
+	var node_getEntityTreeNodeInterface = nosliw.getNodeData("complexentity.getEntityTreeNodeInterface");
 
 	var loc_envInterface = {};
 	
@@ -60,13 +61,15 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 			var relativePath = node_pathUtility.fromAbsoluteToRelativePath(brickPath, currentDefPath);
 
 			var coreEntityForAdapter = node_complexEntityUtility.getCoreEntityReferenceByRelativePath(loc_out, relativePath).getBaseCoreEntity();
-			
-						
-			out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){
-				return {
-				    "resultName": "success",
-				    "resultValue": "present successfully"
-				};
+			var adapterTreeNodeEntityInterface = node_getEntityTreeNodeInterface(coreEntityForAdapter);
+			var adapter = adapterTreeNodeEntityInterface.getAdapters()[loc_adapterName];
+			out.addRequest(adapter.getExecuteRequest(coreEntityForAdapter, {
+				success : function(){
+					return {
+					    "resultName": "success",
+					    "resultValue": "adapter successfully"
+					};
+				}
 			}));
 			return out;
 		},

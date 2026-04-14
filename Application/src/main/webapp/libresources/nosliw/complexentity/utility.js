@@ -332,13 +332,13 @@ var node_complexEntityUtility = function(){
 		},
 	
 	
-		getAttributeAdapterExecuteRequest : function(parentCoreEntity, attrName, adapterName, extraInfo, handlers, request){
+		XXXXXgetAttributeAdapterExecuteRequest : function(parentCoreEntity, attrName, adapterName, extraInfo, handlers, request){
 			var attrNode = node_getEntityTreeNodeInterface(parentCoreEntity).getChild(attrName);
 			var adapter = attrNode.getAdapters()[adapterName!=undefined?adapterName:node_COMMONCONSTANT.NAME_DEFAULT];
 			if(adapter!=undefined)	return this.getAdapterExecuteRequest(parentCoreEntity, attrNode.getChildValue(), adapter, extraInfo, handlers, request);
 		},
 		
-		getAdapterExecuteRequest : function(parentCoreEntity, childRuntime, adapter, extraInfo, handlers, request){
+		XXXXXgetAdapterExecuteRequest : function(parentCoreEntity, childRuntime, adapter, extraInfo, handlers, request){
 			var childInput;
 			var childCore = childRuntime.getCoreEntity==undefined?undefined:childRuntime.getCoreEntity();
 			if(childCore==undefined)   childInput = childRuntime;
