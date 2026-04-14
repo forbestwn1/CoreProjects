@@ -117,19 +117,6 @@ var node_makeObjectEntityObjectInterface = function(rawEntity, internalValuePort
 								}
 							}));
 							return out1;
-/*							
-							return node_getEntityObjectInterface(entityCore).getEntityInitRequest({
-								success : function(){
-									return nosliw.runtime.getComplexEntityService().getCreateAdaptersRequest(attrDef, {
-										success : function(request, adapters){
-											var childTreeNodeEntityInterface = node_getEntityTreeNodeInterface(entityRuntime.getCoreEntity());
-											childTreeNodeEntityInterface.setAdapters(adapters);
-											return treeNodeEntityInterface.addChild(childName, entityRuntime, true);
-										}
-									});
-								}
-							});
-*/							
 						}
 					}));
 				}
@@ -157,18 +144,29 @@ var node_makeObjectEntityObjectInterface = function(rawEntity, internalValuePort
 				}
 				else if(attrValueWrapper.getValueType()==node_COMMONCONSTANT.ENTITYATTRIBUTE_VALUETYPE_DYNAMIC){
 					var dynamicValue = attrValueWrapper.getDynamic()
-					
 					out.addRequest(nosliw.runtime.getComplexEntityService().getCreateDynamicRuntimeRequest(dynamicValue, loc_out, loc_bundleCore, variationPoints, childConfigure, {
 						success : function(request, dynamicRuntime){
-							node_getEntityTreeNodeInterface(dynamicRuntime.getCoreEntity()).setParentCore(rawEntity);
-							return nosliw.runtime.getComplexEntityService().getCreateAdaptersRequest(attrDef, {
-								success : function(request, adapters){
-									var childTreeNodeEntityInterface = node_getEntityTreeNodeInterface(dynamicRuntime.getCoreEntity());
-									childTreeNodeEntityInterface.setAdapters(adapters);
-									childTreeNodeEntityInterface.setDefPath(node_pathUtility.combinePath(treeNodeEntityInterface.getDefPath(), attrName));
-									return treeNodeEntityInterface.addChild(childName, dynamicRuntime, true);
+							//set parent
+							var childTreeNodeEntityInterface = node_getEntityTreeNodeInterface(dynamicRuntime.getCoreEntity());
+							childTreeNodeEntityInterface.setParentCore(rawEntity);
+
+							//def path
+							childTreeNodeEntityInterface.setDefPath(node_pathUtility.combinePath(treeNodeEntityInterface.getDefPath(), attrName));
+							
+							var out1 = node_createServiceRequestInfoSequence(undefined, {
+								success : function(request){
+									return treeNodeEntityInterface.addChild(childName, entityRuntime, true);
 								}
 							});
+							
+							out1.addRequest(dynamicRuntime.getCoreEntity().getEntityInitRequest());
+							out1.addRequest(nosliw.runtime.getComplexEntityService().getCreateAdaptersRequest(attrDef, {
+								success : function(request, adapters){
+									var childTreeNodeEntityInterface = node_getEntityTreeNodeInterface(entityRuntime.getCoreEntity());
+									childTreeNodeEntityInterface.setAdapters(adapters);
+								}
+							}));
+							return out1;
 						}
 					}));
 				}

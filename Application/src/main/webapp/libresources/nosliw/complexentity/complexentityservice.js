@@ -170,15 +170,7 @@ var node_createComplexEntityRuntimeService = function() {
 			
 			var runtimeConfigureInfo = node_componentUtility.processRuntimeConfigure(configure);
 			var dyanmicRuntime =  node_createComponentRuntime(dynamicCore, runtimeConfigureInfo.decorations, request);
-
-			var out1 = node_createServiceRequestInfoSequence(undefined, {
-				success : function(request){
-					return dyanmicRuntime;
-				}
-			});
-			out1.addRequest(dynamicCore.getEntityInitRequest());
-			return out1;
-
+            return dyanmicRuntime;
 		}));
 		
 		return out;
