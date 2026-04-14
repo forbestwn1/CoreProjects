@@ -127,6 +127,9 @@ var node_createComplexEntityRuntimeService = function() {
 				
 				entityCore = node_makeObjectWithType(entityCore, brickType);
 				
+				return entityCore;
+
+/*								
 				var out1 = node_createServiceRequestInfoSequence(undefined, {
 					success : function(request){
 						return entityCore;
@@ -134,6 +137,7 @@ var node_createComplexEntityRuntimeService = function() {
 				});
 				out1.addRequest(node_getEntityObjectInterface(entityCore).getEntityInitRequest());
 				return out1;
+*/				
 			}
 		}));
 		return out;

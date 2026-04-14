@@ -59,7 +59,7 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 			var currentDefPath = loc_envInterface[node_CONSTANT.INTERFACE_TREENODEENTITY].getDefPath();
 			var relativePath = node_pathUtility.fromAbsoluteToRelativePath(brickPath, currentDefPath);
 
-			var coreEntityForAdapter = node_complexEntityUtility.getCoreEntityReferenceByRelativePath(loc_bundleCore, relativePath).getBaseCoreEntity();
+			var coreEntityForAdapter = node_complexEntityUtility.getCoreEntityReferenceByRelativePath(loc_out, relativePath).getBaseCoreEntity();
 			
 						
 			out.addRequest(node_createServiceRequestInfoSimple(undefined, function(request){

@@ -22,6 +22,7 @@ var packageObj = library;
 	var node_buildInterface;
 	var node_complexEntityUtility;
 	var node_getObjectType;
+	var node_getEntityObjectInterface;
 	
 //*******************************************   Start Node Definition  ************************************** 	
 
@@ -84,6 +85,8 @@ var node_createBundleCore = function(parm, configure){
 									childTreeNodeEntityInterface.setParentCore(loc_out);
 									childTreeNodeEntityInterface.setDefPath(name);
 									loc_envInterface[node_CONSTANT.INTERFACE_TREENODEENTITY].addChild(name, mainEntityRuntime, true);
+
+									return node_getEntityObjectInterface(mainEntityRuntime.getCoreEntity()).getEntityInitRequest();
 								}
 							});
 				
@@ -103,7 +106,13 @@ var node_createBundleCore = function(parm, configure){
 					childTreeNodeEntityInterface.setParentCore(loc_out);
 					childTreeNodeEntityInterface.setDefPath(loc_bundleDef[node_COMMONATRIBUTECONSTANT.RESOURCEDATABRICK_EXPORTBRICKINFO][node_COMMONATRIBUTECONSTANT.INFOEXPORTBRICK_PATHFROMROOT]);
 					loc_envInterface[node_CONSTANT.INTERFACE_TREENODEENTITY].addChild(node_COMMONCONSTANT.NAME_ROOTBRICK_MAIN, mainEntityRuntime, true);
-					return node_complexEntityUtility.getBuildAttributeWithResourceId(mainEntityRuntime.getCoreEntity());
+					
+					return node_getEntityObjectInterface(mainEntityRuntime.getCoreEntity()).getEntityInitRequest({
+						success : function(){
+							return node_complexEntityUtility.getBuildAttributeWithResourceId(mainEntityRuntime.getCoreEntity());
+						}
+					});
+					
 				}
 			});
 
@@ -226,6 +235,7 @@ nosliw.registerSetNodeDataEvent("complexentity.getEntityTreeNodeInterface", func
 nosliw.registerSetNodeDataEvent("common.interface.buildInterface", function(){node_buildInterface = this.getData();});
 nosliw.registerSetNodeDataEvent("complexentity.complexEntityUtility", function(){node_complexEntityUtility = this.getData();});
 nosliw.registerSetNodeDataEvent("common.interfacedef.getObjectType", function(){node_getObjectType = this.getData();});
+nosliw.registerSetNodeDataEvent("complexentity.getEntityObjectInterface", function(){node_getEntityObjectInterface = this.getData();});
 
 //Register Node by Name
 packageObj.createChildNode("createBundleCore", node_createBundleCore); 
