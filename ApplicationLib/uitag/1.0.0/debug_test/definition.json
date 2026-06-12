@@ -1,8 +1,9 @@
 {
 	"name" : "debug_test",
-	"type" : "data1",
+	"type" : "data",
 	"description" : "",
 	"base" : "debug_test",
+	"attributeForData" : "data_string",
 	"attribute" : [
 		{
 			"name" : "attribute1",
