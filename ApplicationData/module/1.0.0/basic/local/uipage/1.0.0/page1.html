@@ -9,12 +9,36 @@ Page1!!!!!
 
  		<!--nosliw-debug_test reference_tag="name:name1"/-->
 
- 		<!--nosliw-debug_test nosliw-metadata="name:name1" data_string="page1_public_string"/-->
+<!-- 		
+ 		<br>
+ 		<%=#|?(page1_public_map.stringAttr1)?|#.value%>
+ 		<br>
+-->
 
+ 		<nosliw-debug_test_string data="page1_public_string"/>
+
+
+<!-- 		
+ 		Hello Array : 
+ 		<nosliw-debug_test_array data="page1_public_array">
+ 		<%=?(element)?.value%>
+ 		
+ 		</nosliw-debug_test_array>
+ 		<br>
+-->
+
+ 		
+<!-- 		
+
+ 		Hello static String : <nosliw-debug_test_string_readonly data_string="page1_public_string"/>
+
+
+ 		<nosliw-debug_test nosliw-metadata="name:name1" data_string="page1_public_string"/>
+-->
 
  		<!--nosliw-debug_test data_float="page1_public_float"/-->
 
- 		<nosliw-debug_test data_array="page1_public_array">
+ 		<!-- nosliw-debug_test data_array="page1_public_array">
  		     <br>
  		     <a nosliw-event_click="task|.task.presentElement.brick"><%=?(element)?.value%></a>
  		     index : <%=JSON.stringify(?(index)?)%>
@@ -136,7 +160,7 @@ Page1!!!!!
             ]
             </adapter>
 
- 		</nosliw-debug_test>
+ 		</nosliw-debug_test-->
 
         End of the page
 
@@ -183,7 +207,7 @@ Page1!!!!!
 								        },
 								        {
                             				"name" : "enum",
-				                            "status": "disabled",
+				                            "status": "disabled1",
 								            "ruleType" : "enum",
 								            "dataSet" : [
                 								{
@@ -228,12 +252,17 @@ Page1!!!!!
 							"definition":{
 								"data": "test.array;1.0.0%||element:test.string;1.0.0||%"
 							}
+						},
+						"page1_public_map": {
+							"definition":{
+								"data": "test.map;1.0.0%||stringAttr1:test.string;1.0.0,stringAttr2:test.string;1.0.0||%",
+							}
 						}
 					},
 					"initValue": {
 						"page1_public_string": {
 							"dataTypeId": "test.string;1.0.0",
-							"value": "default value of page1_public_string1"
+							"value": "default value of page_public_string2"
 						},
 						"page1_public_float": {
 							"dataTypeId": "test.float;1.0.0",
@@ -253,9 +282,46 @@ Page1!!!!!
 								{
 									dataTypeId: "test.string;1.0.0",
 									value: "This is my world 2222!"
-								}
+								},
+								{
+									dataTypeId: "test.string;1.0.0",
+									value: "This is my world 3333!"
+								},
+								{
+									dataTypeId: "test.string;1.0.0",
+									value: "This is my world 4444!"
+								},
+								{
+									dataTypeId: "test.string;1.0.0",
+									value: "This is my world 5555!"
+								},
+								{
+									dataTypeId: "test.string;1.0.0",
+									value: "This is my world 6666!"
+								},
+								{
+									dataTypeId: "test.string;1.0.0",
+									value: "This is my world 7777!"
+								},
+								{
+									dataTypeId: "test.string;1.0.0",
+									value: "This is my world 8888!"
+								},
 							]
-						}
+						},
+						"page1_public_map": {
+							"dataTypeId": "test.map;1.0.0",
+							"value": {
+							    "stringAttr1": {
+									"dataTypeId": "test.string;1.0.0",
+									"value": "default value of parent1_public_map.stringAttr1"
+							    },
+							    "stringAttr2": {
+									"dataTypeId": "test.string;1.0.0",
+									"value": "default value of parent1_public_map.stringAttr2"
+							    }
+							}
+						},
 					}
 				}
 			}]

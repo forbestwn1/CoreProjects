@@ -1,0 +1,54 @@
+{
+	"name" : "debug_test_array",
+	"type" : "data",
+	"description" : "",
+	"attributeForData" : [ "data"],
+	"attribute" : [
+		{
+			"name" : "data",
+			"type" : "variable",
+			"dataDefinition" : "test.array;1.0.0",
+			"scope" : "protected"
+		},
+		{
+			"name" : "arrayelement",
+			"defaultValue" : "element"
+		},
+		{
+			"name" : "arrayindex",
+			"defaultValue" : "index"
+		}
+	],
+	
+	"valueContextEmbeded": [
+		{
+            "name" : "embeded_part1",
+			"scope" : "protected",
+			"valueStructure" : {
+				"root": {
+					"<%=&(nosliwattribute_arrayelement)&%>": {
+            			"status": "<%=&(nosliwattribute_data)&==undefined?'disabled':''%>",
+						"definition": {
+							"reference" : {
+								"elementPath": "<%=&(nosliwattribute_data)&%>.element"
+							}
+						},
+						"info":{
+							"instantiate" : "manual"
+						}
+					},
+					"<%=&(nosliwattribute_arrayindex)&%>": {
+            			"status": "<%=&(nosliwattribute_data)&==undefined?'disabled':''%>",
+						"definition": {
+						},
+						"info":{
+							"instantiate" : "manual"
+						}
+					}
+				}
+			}
+		}
+	],
+	"valueContext": [
+	]
+}

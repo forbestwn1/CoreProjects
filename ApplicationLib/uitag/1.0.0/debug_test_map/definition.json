@@ -1,0 +1,54 @@
+{
+	"name" : "debug_test_map",
+	"type" : "data",
+	"description" : "",
+	"attributeForData" : [ "data"],
+	"attribute" : [
+		{
+			"name" : "data",
+			"type" : "variable",
+			"dataDefinition" : "test.map;1.0.0",
+			"scope" : "protected"
+		},
+		{
+			"name" : "mapvalue",
+			"defaultValue" : "mapvalue"
+		},
+		{
+			"name" : "mapkey",
+			"defaultValue" : "mapkey"
+		}
+	],
+	
+	"valueContextEmbeded": [
+		{
+            "name" : "embeded_part1",
+			"scope" : "protected",
+			"valueStructure" : {
+				"root": {
+					"<%=&(nosliwattribute_mapvalue)&%>": {
+            			"status": "<%=&(nosliwattribute_data)&==undefined?'disabled':''%>",
+						"definition": {
+							"reference" : {
+								"elementPath": "<%=&(nosliwattribute_data)&%>.element"
+							}
+						},
+						"info":{
+							"instantiate" : "manual"
+						}
+					},
+					"<%=&(nosliwattribute_mapkey)&%>": {
+            			"status": "<%=&(nosliwattribute_data)&==undefined?'disabled':''%>",
+						"definition": {
+						},
+						"info":{
+							"instantiate" : "manual"
+						}
+					}
+				}
+			}
+		}
+	],
+	"valueContext": [
+	]
+}
