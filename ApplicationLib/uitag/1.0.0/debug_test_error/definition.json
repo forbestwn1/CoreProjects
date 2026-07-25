@@ -1,0 +1,9 @@
+{
+	"name" : "debug_test_error",
+	"description" : "",
+	"attribute" : [
+		{
+			"name" : "reference_tag"
+		}
+	]
+}

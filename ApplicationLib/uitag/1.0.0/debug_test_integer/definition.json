@@ -1,0 +1,22 @@
+{
+	"name" : "debug_test_integer",
+	"type" : "data",
+	"description" : "",
+	"ioMode" : "IN",
+	"base" : "base_simple",
+	"attributeForData" : ["data"],
+	"attribute" : [
+		{
+			"name" : "data",
+			"type" : "variable",
+			"dataDefinition" : "test.integer;1.0.0",
+			"scope" : "protected"
+		}
+	],
+	
+	"valueContextEmbeded": [
+	],
+	"valueContext": [
+	]
+	
+}

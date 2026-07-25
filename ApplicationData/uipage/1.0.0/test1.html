@@ -1,58 +1,9 @@
 <!DOCTYPE html>
 <html>
 <body>
-
-		<style1>
-			.red1 {
-			  color: red;
-			}
-			
-		</style1>
-
-
 Hellooooooo!!!!!
- 		<br>
-
-<nosliw-debug_test_error reference_tag="name:floattag"/>
-
- 		<br>
-<nosliw-debug_test data_float="page1_public_float" nosliw-metadata="name:floattag"/>
-
- 		<br>
-
-<nosliw-debug_test_error reference_tag="name:stringtag"/>
-
- 		<br>
 
 		<br>
-<nosliw-debug_test data_string="page1_public_string" nosliw-metadata="name:stringtag"/>
-		<br>
- 		StringContent:<%=?(page1_public_string)?.value + '   7777 ' %>  
-
-<span class="intag">HHHHHHHHHHHHHHHHHHHHHHHHHHHHHH</span>
-
-
-<!-- 
- 		Hello Array : 
- 		<nosliw-debug_test_array data="page1_public_array">
-
-		<style1>
-			.intag {
-			  color: blue;
-			}
-			
-		</style1>
-
-
-<div>
-<span  class="intag">HHHHHHHHHHHHHHHHHHHHHHHHHHHHHH</span>
- 		<%=?(element)?.value%>
-</div>
- 		
- 		</nosliw-debug_test_array>
- 		<br>
- --> 	    	
-
 
 <!-- 
 
@@ -134,37 +85,37 @@ EXPRESSION IN ATTRIBUTE:<span  style="color:<%=?(public_string)?.value=='red'?'r
 </body>
 <page>
 	<valuecontext>
-		{
-			"item" : [{
+		[
+			{
 				"scope" : "public",
 				"valueStructure" : {
 					"root" : {
-						"page1_public_string": {
+						"public_string": {
 							"definition":{
 								"data": {
 								    "criteria" : "test.string;1.0.0",
 								    "rule" : [
 								        {
                             				"name" : "mandatory",
-				                            "status": "disabled1",
+				                            "status": "disabled",
 								            "ruleType" : "mandatory"
 								        },
 								        {
                             				"name" : "enum",
-				                            "status": "disabled1",
+				                            "status": "disabled",
 								            "ruleType" : "enum",
 								            "dataSet" : [
                 								{
 				                					dataTypeId: "test.string;1.0.0",
-								                	value: "default value of page_public_string1"
+								                	value: "default value of public_string1"
 								                },
                 								{
 				                					dataTypeId: "test.string;1.0.0",
-								                	value: "default value of page_public_string2"
+								                	value: "default value of public_string2"
 								                },
                 								{
 				                					dataTypeId: "test.string;1.0.0",
-								                	value: "default value of page_public_string3"
+								                	value: "default value of public_string3"
 								                }
 								            ]
 								        }
@@ -172,52 +123,52 @@ EXPRESSION IN ATTRIBUTE:<span  style="color:<%=?(public_string)?.value=='red'?'r
 								} 
 							}
 						},
-						"page1_public_float": {
+						"public_float": {
 							"definition":{
 								"data": {
 								    "criteria" : "test.float;1.0.0",
 								    "rule" : [
 								        {
                             				"name" : "expression",
-				                            "status": "disabled1",
+				                            "status": "disabled",
 								            "ruleType" : "expression",
-								            "description" : "should not larger than 5000",
 								            "expression" : "?(data)?.largerThan(data:&(#test##float___5000)&).opposite()"
 								        }
 								    ]
 								} 
 							}
 						},
-						"page1_public_url": {
+						"public_url": {
 							"definition":{
 								"data": "test.url;1.0.0"
 							}
 						},
-						"page1_public_array": {
+						"public_array": {
 							"definition":{
 								"data": "test.array;1.0.0%||element:test.string;1.0.0||%"
-							}
-						},
-						"page1_public_map": {
-							"definition":{
-								"data": "test.map;1.0.0%||stringAttr1:test.string;1.0.0,stringAttr2:test.string;1.0.0||%",
 							}
 						}
 					},
 					"initValue": {
-						"page1_public_string": {
+						"complex": {
+						    "a" : {
+    							"dataTypeId": "test.string;1.0.0",
+	    						"value": "default value of complex.a"
+						    }
+						},
+						"public_string": {
 							"dataTypeId": "test.string;1.0.0",
-							"value": "default value of page_public_string2"
+							"value": "default value of public_string1"
 						},
-						"page1_public_float": {
+						"public_float": {
 							"dataTypeId": "test.float;1.0.0",
-							"value": 100
+							"value": "100"
 						},
-						"page1_public_url": {
+						"public_url": {
 							"dataTypeId": "test.url;1.0.0",
-							"value": "default value of page1_public_url"
+							"value": "default value of public_url"
 						},
-						"page1_public_array": {
+						"public_array": {
 							"dataTypeId": "test.array;1.0.0",
 							"value": [
 								{
@@ -227,50 +178,13 @@ EXPRESSION IN ATTRIBUTE:<span  style="color:<%=?(public_string)?.value=='red'?'r
 								{
 									dataTypeId: "test.string;1.0.0",
 									value: "This is my world 2222!"
-								},
-								{
-									dataTypeId: "test.string;1.0.0",
-									value: "This is my world 3333!"
-								},
-								{
-									dataTypeId: "test.string;1.0.0",
-									value: "This is my world 4444!"
-								},
-								{
-									dataTypeId: "test.string;1.0.0",
-									value: "This is my world 5555!"
-								},
-								{
-									dataTypeId: "test.string;1.0.0",
-									value: "This is my world 6666!"
-								},
-								{
-									dataTypeId: "test.string;1.0.0",
-									value: "This is my world 7777!"
-								},
-								{
-									dataTypeId: "test.string;1.0.0",
-									value: "This is my world 8888!"
-								},
+								}
 							]
-						},
-						"page1_public_map": {
-							"dataTypeId": "test.map;1.0.0",
-							"value": {
-							    "stringAttr1": {
-									"dataTypeId": "test.string;1.0.0",
-									"value": "default value of parent1_public_map.stringAttr1"
-							    },
-							    "stringAttr2": {
-									"dataTypeId": "test.string;1.0.0",
-									"value": "default value of parent1_public_map.stringAttr2"
-							    }
-							}
-						},
+						}
 					}
 				}
-			}]
-		}
-		</valuecontext>
+			}
+		]
+	</valuecontext>
 </page>
 </html>
