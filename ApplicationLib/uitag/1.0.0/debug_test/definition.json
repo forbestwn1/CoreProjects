@@ -40,6 +40,26 @@
 		}
 	],
 	
+	"command" : [
+		{
+			"definition" : {
+				"name" : "setStringData",
+				"interface" : {
+					"request" : [
+						{
+							"name" : "data",
+							"dataDefinition" : {
+								"data": "test.string;1.0.0"
+							}
+						}
+					]
+				}
+			},
+			"handler" : {
+			}
+		}
+	],
+	
 	"event" : [
 		{
 		    "name" : "event_normal",

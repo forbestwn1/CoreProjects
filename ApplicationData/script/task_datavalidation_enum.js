@@ -18,6 +18,7 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 	var node_dataUtility = nosliw.getNodeData("common.utility.dataUtility");
 	var node_TaskResult = nosliw.getNodeData("task.TaskResult");
 	var node_ruleUtility = nosliw.getNodeData("rule.ruleUtility");
+	var node_enumUtility = nosliw.getNodeData("enum.enumUtility");
 
     var loc_complexEntityDef;
     
@@ -55,25 +56,27 @@ function(complexEntityDef, valueContextId, bundleCore, configure){
 			var dataVariable = valuePortContainer.getVariableByName(node_COMMONCONSTANT.VALUEPORTGROUP_TYPE_INTERACTIVETASK, node_COMMONCONSTANT.VALUEPORT_NAME_INTERACT_REQUEST, node_COMMONCONSTANT.NAME_ROOT_DATA);
 			out.addRequest(dataVariable.getGetValueRequest({
 				success : function(request, dataValue){
-					var value = dataValue==undefined? undefined : dataValue.value;
-					
-            		var dataRuleDef = node_complexEntityUtility.getParmValue(loc_complexEntityDef, node_COMMONCONSTANT.PARM_RULETASK_RULEDEF); 
-					var enumDataSet = dataRuleDef[node_COMMONATRIBUTECONSTANT.DATARULEENUM_DATASET];
-					
-					if(enumDataSet==undefined){
-						//for enum code, try get enum data set
-					}
 
-					for(var i in enumDataSet){
-						if(node_dataUtility.isDataEqual(enumDataSet[i], value)==true){
-    						return node_ruleUtility.createRuleValidationSuccessResult(); 
+					var validationRequest = node_createServiceRequestInfoSequence(undefined, handlers, request);
+
+					var dataRuleDef = node_complexEntityUtility.getParmValue(loc_complexEntityDef, node_COMMONCONSTANT.PARM_RULETASK_RULEDEF); 
+
+					validationRequest.addRequest(node_enumUtility.getEnumDataSetFromEnumRuleRequest(dataRuleDef, {
+						success : function(request, enumDataSet){
+							var value = dataValue==undefined? undefined : dataValue.value;
+							for(var i in enumDataSet){
+								if(node_dataUtility.isDataEqual(enumDataSet[i], value)==true){
+									return node_ruleUtility.createRuleValidationSuccessResult(); 
+								}
+							}
+
+							return node_ruleUtility.createRuleValidationFailResult({
+								"dataTypeId": "test.string;1.0.0",
+								"value": "value is not valid"
+							}); 
 						}
-					}
-
-    				return node_ruleUtility.createRuleValidationFailResult({
-						"dataTypeId": "test.string;1.0.0",
-						"value": "value is not valid"
-					}); 
+					}));
+					return validationRequest;
 				}
 			}));
 

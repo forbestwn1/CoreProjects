@@ -1,0 +1,51 @@
+{
+     "eventExport" : [
+		
+		{
+			"emitterId" : {
+				"alias" : "customtagEventSource"
+			},
+			"eventDefinition" : {
+				"name" : "event_normal"
+				
+			}
+		},
+		
+		{
+			"emitterId" : {
+				"alias" : "tagEventSourceParnt"
+			},
+			"childId" : "tagEventSource",
+			"eventDefinition" : {
+				"name" : "click"
+				
+			}
+		}
+		
+	 ],
+
+   "commandExport" : [
+ 	{
+ 		"definition" : {
+ 			"name" : "setData",
+ 			"interface" : {
+ 				"request" : [
+ 					{
+ 						"name" : "data",
+ 						"dataDefinition" : {
+ 							"data": "test.string;1.0.0"
+ 						}
+ 					}
+ 				]
+ 			}
+ 		},
+ 		"handler" : {
+			"type" : "command",
+			"brickId" : {
+				"alias" : "customtagCommandTarget"
+			},
+			"commandName" : "setData"
+ 		}
+ 	}
+   ]
+}
