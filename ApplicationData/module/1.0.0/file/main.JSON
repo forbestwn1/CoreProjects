@@ -1,0 +1,168 @@
+{
+	"info": {
+		"name": "test0",
+		"description": "test expression group entity"
+	},
+	"brick": {
+	
+	    "page" : 
+            [    		{
+	    		"name" : "8",
+			    "description" : "",
+		        "brick" : {
+    			    "brickId":"default|uipage;1.0.0|manual"
+   			    }
+			}
+			
+]
+	    ,
+	    
+	    "valueContext" : {
+	    
+	        
+	    },
+	
+	    "task" : 
+            [	        {
+	    		"name" : "nosliw_init",
+		    	"status": "disabled1",
+			    "description" : "",
+		        "brick" : {
+        			"resourceId":"taskTaskScript|1.0.0|sequence",  
+        			"dynamicInput" : { 
+	        			"element" :
+		        		[ 
+			        		{
+								"name" : "tasks",
+				        		"type" : "multiple",
+    						    "brickPackages" : 
+        		        		     [	    					        {
+                        		    	"status": "disabled1",
+         	    					    "brickId" : {
+		    	    	    			    "alias" : "presentPage27"
+    			            			}
+		    			    	    }
+] 
+	    			    	}
+    	    			]
+	    	    	}
+		        }
+	        }
+, 	        {
+	    		"name" : "presentPage27",
+			    "description" : "Present page",
+        		"brickType" : {
+		    	    "brickType" : "taskTaskScript",
+			        "version" : "1.0.0"
+		        },
+		        "brick" : {
+					"info" : {
+						"nosliw_alias" : "presentPage27"
+					},
+    				"scriptResourceId": "task_page_present",
+    				"parm": {
+    				    "page" : "8"
+    				}
+		        }
+	        }
+, 			{
+				"name" : "commandTask29",
+			    "description" : "data source execute",
+				"brickType" : {
+				    "brickType" : "serviceprovider",
+			        "version" : "1.0.0"
+			    },
+			    "brick" : {
+                    "info": {
+                        "nosliw_alias": "commandTask29"
+                    },
+					"brick" : {
+    					"serviceKey" : {
+	    					"id" : "TestServiceDum"
+		    			}
+					},
+    				"adapter" : [
+ 	    				{
+		    				"name" : "",
+				    		"brickTypeId" : {
+					    		"brickType": "dataAssociationForTask",
+    							"version": "1.0.0"
+	    					},
+		    				"brick" : {
+			    				"definition" : {
+				    				"in" : {
+		"type" : "mapping",
+		"mapping" : [							    				{
+								    				"target" : {
+	"valuePortId": {"valuePortSide":"external",
+"valuePortId":{"group":"taskInteractive",
+"name":"interactiveRequest"
+},
+"key":"_external_taskInteractive.interactiveRequest"
+},
+	"rootName" : "serviceParmString"
+}
+,
+		    										"definition" : {
+	    												"mapping" : {
+    														"elementPath": "serviceParmString",
+		    												"valuePortId" : {"brickId":{"alias":"9"
+},
+"valuePortSide":"external",
+"valuePortId":{"group":"valueContext",
+"name":"valueContext"
+},
+"key":"_external_valueContext.valueContext"
+}
+									    				}
+}
+
+							    				}
+]
+}
+,
+			    					"out" : {"success":{
+		"type" : "mapping",
+		"mapping" : [							    				{
+								    				"target" : {
+	"valuePortId": {"brickId":{"alias":"9"
+},
+"valuePortSide":"external",
+"valuePortId":{"group":"valueContext",
+"name":"valueContext"
+},
+"key":"_external_valueContext.valueContext"
+},
+	"rootName" : "outputInService1"
+}
+,
+		    										"definition" : {
+	    												"mapping" : {
+    														"elementPath": "outputInService1",
+		    												"valuePortId" : {"valuePortSide":"external",
+"valuePortId":{"group":"taskInteractive",
+"name":"interactiveResult_success"
+},
+"key":"_external_taskInteractive.interactiveResult_success"
+}
+									    				}
+}
+
+							    				}
+]
+}
+
+}, 
+			    				}
+		    				}
+	    				}
+    				]
+			    }
+			}
+	
+]
+	    ,
+	    
+	    
+	}
+}

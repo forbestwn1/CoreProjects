@@ -11,17 +11,36 @@
 
 <span class="red1">HHHHHHHHHHHHHHHHHHHHHHHHHHHHHH</span>
 
+<br>
+ 		value : <%=#|?(page1_public_string)?|#.value%>
+
  
+
+	<valuecontext>
+		{
+			"item" : [{
+				"scope" : "public",
+				"valueStructure" : {
+					"root" : {
+						"page1_public_string": {
+							"definition":{
+								"data": {
+								    "criteria" : "test.string;1.0.0",
+								} 
+							}
+						},
+					},
+					"initValue": {
+						"page1_public_string": {
+							"dataTypeId": "test.string;1.0.0",
+							"value": "default value of page_public_string2"
+						},
+					}
+				}
+			}]
+		}
+	</valuecontext>
+
 </body>
-	<valuecontext>
-	{
-	}
-		</valuecontext>
-<page>
-	<valuecontext>
-	{
-	
-	}
-		</valuecontext>
-</page>
+
 </html>

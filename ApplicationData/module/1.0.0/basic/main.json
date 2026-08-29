@@ -26,7 +26,7 @@
     			            			}
 		    			    	    },
     								{
-	    								"status": "disabled",
+	    								"status": "disabled1",
 		    						    "brickId" : {
 			    						    "idPath" : "#main.task.dataSource.brick",
 											"adapters" : ["init"]
@@ -51,7 +51,7 @@
 			    "brick" : {
 					"brick" : {
     					"serviceKey" : {
-	    					"id" : "TestServiceArray"
+	    					"id" : "TestServiceArraySimple"
 		    			}
 					},
     				"adapter" : [

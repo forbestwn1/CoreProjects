@@ -1,0 +1,38 @@
+{
+	"info": {
+		"name": "test.common.configure.root",
+		"description": "test.common.configure.root"
+	},
+	"brick": [
+
+		{
+			"info": {
+				"name": "valueContext",
+				"status": "disabled1"
+			},
+			"brick": [
+				{
+					"scope" : "public",
+					"valueStructure" : {
+						"root": {
+    						"public_float": {
+		                        "status": "disabled1",
+	    						"definition":{
+		    						"data": {
+			    					    "criteria" : "test.float;1.0.0"
+								    } 
+							    }
+						    }
+						},
+						"initValue": {
+    						"public_float": {
+	    						"dataTypeId": "test.float;1.0.0",
+		    					"value": "100"
+			    			}
+						}
+					}
+				}
+			]
+		}
+	]
+}
